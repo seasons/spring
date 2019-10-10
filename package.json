@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/jest": "^24.0.18",
-    "@types/node": "^12.7.12",
-    "@types/react": "^16.9.5",
-    "@types/react-dom": "^16.9.1",
     "apollo-boost": "^0.4.4",
     "graphql": "^14.5.8",
     "lodash": "^4.17.15",
@@ -16,8 +12,7 @@
     "react": "^16.10.2",
     "react-admin": "^2.9.7",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0",
-    "typescript": "^3.6.4"
+    "react-scripts": "3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -48,6 +43,12 @@
     ]
   },
   "devDependencies": {
+    "typescript": "^3.6.4",
+    "@types/lodash": "^4.14.144",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.12",
+    "@types/react": "^16.9.5",
+    "@types/react-dom": "^16.9.1",
     "prettier": "^1.18.2"
   }
 }
