@@ -1,13 +1,15 @@
 // in src/App.js
 import React from "react";
 import { Admin, Resource } from "react-admin";
+import get from "lodash/get";
 import { HttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import buildOpenCrudProvider from "ra-data-opencrud";
+import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud";
 import { ApolloClient } from "apollo-client";
 import { BrandList } from "./Brands";
 import { CategoryList } from "./Categories";
 import { ProductList } from "./Products";
+import overridenQueries from "./Queries";
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -18,12 +20,28 @@ const client = new ApolloClient({
   link
 });
 
+const enhanceBuildQuery = buildQuery => introspectionResults => (
+  fetchType,
+  resourceName,
+  params
+) => {
+  const fragment = get(overridenQueries, `${resourceName}.${fetchType}`);
+
+  return buildQuery(introspectionResults)(
+    fetchType,
+    resourceName,
+    params,
+    fragment
+  );
+};
+
 class App extends React.Component {
   state = { dataProvider: null };
 
   componentDidMount() {
     buildOpenCrudProvider({
-      client
+      client,
+      buildQuery: enhanceBuildQuery(buildQuery)
     }).then(dataProvider => this.setState({ dataProvider }));
   }
 
