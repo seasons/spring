@@ -8,7 +8,7 @@ import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
 import { ApolloClient } from "apollo-client"
 import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
-import { ProductList } from "./Products"
+import { ProductList, ProductEdit } from "./Components/Products"
 import overridenQueries from "./Queries"
 
 const cache = new InMemoryCache()
@@ -33,7 +33,7 @@ class App extends React.Component {
     buildOpenCrudProvider({
       client,
       buildQuery: enhanceBuildQuery(buildQuery),
-    }).then(dataProvider => this.setState({ dataProvider }))
+    } as any).then(dataProvider => this.setState({ dataProvider }))
   }
 
   render() {
@@ -47,7 +47,7 @@ class App extends React.Component {
       <Admin dataProvider={dataProvider}>
         <Resource name="Brand" list={BrandList} />
         <Resource name="Category" list={CategoryList} />
-        <Resource name="Product" list={ProductList} />
+        <Resource name="Product" list={ProductList} edit={ProductEdit} />
       </Admin>
     )
   }
