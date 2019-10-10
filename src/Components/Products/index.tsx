@@ -58,12 +58,6 @@ export const ProductEdit = props => (
       <ReferenceInput source="brand.id" reference="Brand">
         <SelectInput optionText="name" />
       </ReferenceInput>
-      <ReferenceArrayInput label="Attributes" source="attributesIds" reference="Attribute">
-        <SelectArrayInput optionText="value" />
-      </ReferenceArrayInput>
-      <ReferenceArrayInput label="Options" source="optionsIds" reference="Option">
-        <SelectArrayInput optionText="name" />
-      </ReferenceArrayInput>
     </SimpleForm>
   </Edit>
 )
