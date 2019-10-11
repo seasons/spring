@@ -1,5 +1,5 @@
 {
-  "name": "test-admin",
+  "name": "spring",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -43,12 +43,13 @@
     ]
   },
   "devDependencies": {
-    "typescript": "^3.6.4",
-    "@types/lodash": "^4.14.144",
     "@types/jest": "^24.0.18",
+    "@types/lodash": "^4.14.144",
     "@types/node": "^12.7.12",
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.1",
-    "prettier": "^1.18.2"
+    "dotenv": "^8.1.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.4"
   }
 }
