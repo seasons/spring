@@ -17,35 +17,38 @@ export default {
       }
     `,
   },
-  Attribute: {
-    [GET_LIST]: gql`
-      fragment attribute on Attribute {
-        id
-        value
-        category {
-          id
-          name
-        }
-        shop {
-          id
-          name
-        }
-      }
-    `,
-  },
-  Option: {
-    [GET_LIST]: gql`
-      fragment option on Option {
-        id
-        name
-        values {
-          name
-        }
-        shop {
-          id
-          name
-        }
-      }
-    `,
-  },
 }
+
+export const getAllBrands = gql`
+  query getAllBrands {
+    brands {
+      id
+      name
+      slug
+    }
+  }
+`
+
+export const getAllColors = gql`
+  query getAllColors {
+    colors {
+      id
+      name
+    }
+  }
+`
+
+export const productCreateQuery = gql`
+  query productCreateQuery {
+    colors {
+      id
+      name
+    }
+
+    brands {
+      id
+      name
+      slug
+    }
+  }
+`

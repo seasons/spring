@@ -13,6 +13,8 @@ import {
   EditButton,
   DisabledInput,
   TextInput,
+  ImageInput,
+  ImageField,
   LongTextInput,
   DateInput,
   Filter,
@@ -41,23 +43,10 @@ export const ProductList = props => (
         <TextField source="name" />
       </ReferenceField>
       <TextField source="category.name" label="Category Name" />
+
       <EditButton />
     </Datagrid>
   </List>
 )
 
-export const ProductEdit = props => (
-  <Edit title="Edit a product" {...props}>
-    <SimpleForm>
-      <DisabledInput source="id" />
-      <TextInput source="name" />
-      <TextInput source="description" />
-      <ReferenceInput source="category.id" reference="Category">
-        <SelectInput optionText="name" />
-      </ReferenceInput>
-      <ReferenceInput source="brand.id" reference="Brand">
-        <SelectInput optionText="name" />
-      </ReferenceInput>
-    </SimpleForm>
-  </Edit>
-)
+export { ProductEdit } from "./ProductEdit"

@@ -1,4 +1,4 @@
-import { GET_ONE, GET_LIST } from "react-admin"
+import { CREATE, GET_ONE, GET_LIST } from "react-admin"
 import gql from "graphql-tag"
 
 const ProductFragment = gql`
@@ -25,4 +25,5 @@ const ProductFragment = gql`
 export default {
   [GET_LIST]: ProductFragment,
   [GET_ONE]: ProductFragment,
+  [CREATE]: ProductFragment,
 }

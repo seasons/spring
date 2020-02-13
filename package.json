@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "apollo-boost": "^0.4.4",
+    "apollo-link-context": "^1.0.19",
     "graphql": "^14.5.8",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
@@ -11,8 +12,10 @@
     "ra-data-opencrud": "^0.0.7",
     "react": "^16.10.2",
     "react-admin": "^2.9.7",
+    "react-apollo": "^3.1.2",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "styled-components": "^4.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
