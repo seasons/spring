@@ -18,6 +18,7 @@ import { ReservationsList } from "./Reservations"
 import { UserList } from "./users"
 import { CustomerList } from "./Customers"
 import { PackageList } from "./Packages"
+import { DeviasTheme } from "./theme"
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
@@ -74,7 +75,7 @@ class App extends React.Component {
 
     return (
       <ApolloProvider client={client}>
-        <Admin dataProvider={dataProvider}>
+        <Admin dataProvider={dataProvider} theme={DeviasTheme}>
           <Resource name="Brand" list={BrandList} />
           <Resource name="Category" list={CategoryList} />
           <Resource name="Product" list={ProductList} edit={ProductEdit} create={ProductCreate} />
