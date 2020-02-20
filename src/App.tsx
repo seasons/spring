@@ -1,5 +1,5 @@
 import React from "react"
-import { convertLegacyDataProvider, DataProviderContext } from "react-admin"
+import { convertLegacyDataProvider, DataProviderContext, Resource } from "react-admin"
 import { ApolloProvider } from "react-apollo"
 import { ConnectedRouter } from "connected-react-router"
 import { Router } from "react-router-dom"
@@ -18,7 +18,6 @@ import overridenQueries from "./Queries"
 
 import { theme } from "./theme/theme"
 import { ThemeProvider } from "@material-ui/core"
-// import { configureStore } from "./store"
 import configureStore from "./store/adminStore"
 import routes from "./routes"
 
@@ -88,6 +87,7 @@ class App extends React.Component {
         <DataProviderContext.Provider value={dataProvider}>
           <ApolloProvider client={client}>
             <ThemeProvider theme={theme}>
+              <Resource name="Product" intent="registration" />
               <Router history={history}>{renderRoutes(routes)}</Router>
             </ThemeProvider>
           </ApolloProvider>

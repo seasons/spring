@@ -163,15 +163,15 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
   useEffect(() => {
     let mounted = true
 
-    const fetchNotifications = () => {
-      axios.get("/api/account/notifications").then(response => {
-        if (mounted) {
-          setNotifications(response.data.notifications)
-        }
-      })
-    }
+    // const fetchNotifications = () => {
+    //   axios.get("/api/account/notifications").then(response => {
+    //     if (mounted) {
+    //       setNotifications(response.data.notifications)
+    //     }
+    //   })
+    // }
 
-    fetchNotifications()
+    // fetchNotifications()
 
     return () => {
       mounted = false

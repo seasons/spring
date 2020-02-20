@@ -23,12 +23,14 @@ export default ({ authProvider, dataProvider, history }) => {
       ].map(fork)
     )
   }
+
   const sagaMiddleware = createSagaMiddleware()
 
   const store = createStore(
-    // resettableAppReducer,
     reducer,
-    compose(
+    // resettableAppReducer,
+    {},
+    composeWithDevTools(
       applyMiddleware(
         sagaMiddleware,
         routerMiddleware(history)
