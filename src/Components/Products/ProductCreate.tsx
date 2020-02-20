@@ -42,7 +42,7 @@ const ProductImagePreview: React.SFC<any> = ({ record }) => {
   if (record.rawFile) {
     return (
       <ImageContainer>
-        <img src={record.rawFile.preview} />
+        <img src={record.rawFile.preview} alt="" />
       </ImageContainer>
     )
   }

@@ -14,6 +14,10 @@ import { CategoryList } from "./Categories"
 import { ProductList, ProductEdit } from "./Components/Products"
 import overridenQueries from "./Queries"
 import { ProductCreate } from "./Components/Products/ProductCreate"
+import { ReservationsList } from "./Reservations"
+import { UserList } from "./users"
+import { CustomerList } from "./Customers"
+import { PackageList } from "./Packages"
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
@@ -25,7 +29,7 @@ const authLink = setContext(async (_, { headers }) => {
   try {
     // return the headers to the context so httpLink can read them
     const accessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQHN0YWdpbmciLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTgxNTQ4MjI1LCJleHAiOjE1ODIxNTMwMjV9.xWmTorORL1Ou46TtWuQlCTHfDFbPPsDmKpIm5cqEhsM"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQGRldiIsInJvbGVzIjpbImFkbWluIl19LCJpYXQiOjE1ODIwNjIyNjUsImV4cCI6MTU4MjY2NzA2NX0.kb3QWbHBU9gyKslcFW8xnNIdJnmwGra6OoMKckUU2pk"
     return {
       headers: {
         ...headers,
@@ -44,6 +48,7 @@ const client = new ApolloClient({
   link: ApolloLink.from([authLink, link]),
 })
 
+// Override some queries with our own queries
 const enhanceBuildQuery = buildQuery => introspectionResults => (fetchType, resourceName, params) => {
   const fragment = get(overridenQueries, `${resourceName}.${fetchType}`)
 
@@ -73,6 +78,11 @@ class App extends React.Component {
           <Resource name="Brand" list={BrandList} />
           <Resource name="Category" list={CategoryList} />
           <Resource name="Product" list={ProductList} edit={ProductEdit} create={ProductCreate} />
+          <Resource name="Reservation" list={ReservationsList} />
+          <Resource name="User" list={UserList} />
+          <Resource name="Customer" list={CustomerList} />
+          <Resource name="Package" list={PackageList} />
+          <Resource name="PhysicalProduct" />
         </Admin>
       </ApolloProvider>
     )

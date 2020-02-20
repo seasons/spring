@@ -2,26 +2,13 @@ import React from "react"
 import {
   List,
   Datagrid,
-  Edit,
-  Create,
-  SimpleForm,
-  DateField,
-  ArrayField,
-  SingleFieldList,
   ReferenceField,
   TextField,
   EditButton,
-  DisabledInput,
   TextInput,
-  ImageInput,
-  ImageField,
-  LongTextInput,
-  DateInput,
   Filter,
-  ReferenceInput,
   ReferenceArrayInput,
   SelectArrayInput,
-  SelectInput,
 } from "react-admin"
 import { ImagesField } from "../../Fields/ImagesField"
 

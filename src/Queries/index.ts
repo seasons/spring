@@ -4,11 +4,21 @@ import gql from "graphql-tag"
 import Brand from "./Brand"
 import Product from "./Product"
 import Order from "./Order"
+import Reservation from "./Reservation"
+import User from "./User"
+import Customer from "./Customer"
+import Package from "./Package"
+import PhysicalProduct from "./PhysicalProduct"
 
 export default {
   Product,
   Order,
   Brand,
+  Reservation,
+  User,
+  Customer,
+  Package,
+  PhysicalProduct,
   Category: {
     [GET_LIST]: gql`
       fragment category on Category {

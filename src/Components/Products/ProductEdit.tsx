@@ -1,14 +1,5 @@
 import React from "react"
-import {
-  Edit,
-  Create,
-  SimpleForm,
-  DisabledInput,
-  TextInput,
-  ImageInput,
-  ReferenceInput,
-  SelectInput,
-} from "react-admin"
+import { Edit, SimpleForm, DisabledInput, TextInput, ImageInput, ReferenceInput, SelectInput } from "react-admin"
 
 export const ProductEdit = props => (
   <Edit title="Edit a product" {...props}>
@@ -37,5 +28,5 @@ export const ProductEdit = props => (
 
 export const ProductImageField: React.SFC<any> = ({ record, size = "large" }) => {
   const imageURL = record.thumbnails[size].url
-  return <img src={imageURL} />
+  return <img src={imageURL} alt="" />
 }
