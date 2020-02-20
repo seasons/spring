@@ -13,6 +13,7 @@ import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
 import { ProductList, ProductEdit } from "./Components/Products"
 import overridenQueries from "./Queries"
+import { Dashboard } from "./layouts/Dashboard"
 import { ProductCreate } from "./Components/Products/ProductCreate"
 import { ReservationsList } from "./Reservations"
 import { UserList } from "./users"
@@ -30,7 +31,7 @@ const authLink = setContext(async (_, { headers }) => {
   try {
     // return the headers to the context so httpLink can read them
     const accessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQGRldiIsInJvbGVzIjpbImFkbWluIl19LCJpYXQiOjE1ODIwNjIyNjUsImV4cCI6MTU4MjY2NzA2NX0.kb3QWbHBU9gyKslcFW8xnNIdJnmwGra6OoMKckUU2pk"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQHN0YWdpbmciLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTgyMjIyMTQ0LCJleHAiOjE1ODI4MjY5NDR9.__c7FkRSV9oER6SaRtaj2C3cQhE2DZKnaJ6T2wNFAms"
     return {
       headers: {
         ...headers,
@@ -75,7 +76,7 @@ class App extends React.Component {
 
     return (
       <ApolloProvider client={client}>
-        <Admin dataProvider={dataProvider} theme={DeviasTheme}>
+        <Admin dataProvider={dataProvider} theme={DeviasTheme} layout={Dashboard}>
           <Resource name="Brand" list={BrandList} />
           <Resource name="Category" list={CategoryList} />
           <Resource name="Product" list={ProductList} edit={ProductEdit} create={ProductCreate} />
