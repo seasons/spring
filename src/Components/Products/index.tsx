@@ -22,7 +22,16 @@ export const ProductFilter = props => (
 )
 
 export const ProductList = props => (
-  <List filters={<ProductFilter />} {...props}>
+  <List
+    filters={<ProductFilter />}
+    {...props}
+    perPage={10}
+    hasCreate={false}
+    hasEdit={false}
+    hasList={true}
+    hasShow={true}
+    resource={"Product"}
+  >
     <Datagrid>
       <ImagesField source="images" />
       <TextField source="name" />

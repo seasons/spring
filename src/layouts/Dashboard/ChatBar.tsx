@@ -49,15 +49,15 @@ function ChatBar({ open, onClose, className, ...rest }: ChatBarProps) {
   useEffect(() => {
     let mounted = true
 
-    const fetchData = () => {
-      axios.get("/api/chat/activity").then(response => {
-        if (mounted) {
-          setData(response.data)
-        }
-      })
-    }
+    // const fetchData = () => {
+    //   axios.get("/api/chat/activity").then(response => {
+    //     if (mounted) {
+    //       setData(response.data)
+    //     }
+    //   })
+    // }
 
-    fetchData()
+    // fetchData()
 
     return () => {
       mounted = false

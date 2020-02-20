@@ -1,10 +1,10 @@
 import React from "react"
-import { Edit, SimpleForm, DisabledInput, TextInput, ImageInput, ReferenceInput, SelectInput } from "react-admin"
+import { Edit, SimpleForm, TextInput, ImageInput, ReferenceInput, SelectInput } from "react-admin"
 
 export const ProductEdit = props => (
   <Edit title="Edit a product" {...props}>
     <SimpleForm>
-      <DisabledInput source="id" />
+      <TextInput source="id" />
       <ImageInput
         source="images"
         label="Product Images"

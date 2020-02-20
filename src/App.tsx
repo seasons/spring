@@ -1,7 +1,11 @@
-// in src/App.js
 import React from "react"
-import { Admin, Resource } from "react-admin"
+import { convertLegacyDataProvider, DataProviderContext } from "react-admin"
 import { ApolloProvider } from "react-apollo"
+import { ConnectedRouter } from "connected-react-router"
+import { Router } from "react-router-dom"
+import { renderRoutes } from "react-router-config"
+import { createBrowserHistory } from "history"
+import { Provider as StoreProvider } from "react-redux"
 import get from "lodash/get"
 import { ApolloLink } from "apollo-link"
 import { HttpLink } from "apollo-link-http"
@@ -9,17 +13,14 @@ import { setContext } from "apollo-link-context"
 import { InMemoryCache } from "apollo-cache-inmemory"
 import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
 import { ApolloClient } from "apollo-client"
-import { BrandList } from "./Brands"
-import { CategoryList } from "./Categories"
-import { ProductList, ProductEdit } from "./Components/Products"
+
 import overridenQueries from "./Queries"
-import { Dashboard } from "./layouts/Dashboard"
-import { ProductCreate } from "./Components/Products/ProductCreate"
-import { ReservationsList } from "./Reservations"
-import { UserList } from "./users"
-import { CustomerList } from "./Customers"
-import { PackageList } from "./Packages"
-import { DeviasTheme } from "./theme"
+
+import { theme } from "./theme/theme"
+import { ThemeProvider } from "@material-ui/core"
+// import { configureStore } from "./store"
+import configureStore from "./store/adminStore"
+import routes from "./routes"
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
@@ -57,6 +58,8 @@ const enhanceBuildQuery = buildQuery => introspectionResults => (fetchType, reso
   return buildQuery(introspectionResults)(fetchType, resourceName, params, fragment)
 }
 
+const history = createBrowserHistory()
+
 class App extends React.Component {
   state = { dataProvider: null }
 
@@ -64,7 +67,7 @@ class App extends React.Component {
     buildOpenCrudProvider({
       client,
       buildQuery: enhanceBuildQuery(buildQuery),
-    } as any).then(dataProvider => this.setState({ dataProvider }))
+    } as any).then(dataProvider => this.setState({ dataProvider: convertLegacyDataProvider(dataProvider) }))
   }
 
   render() {
@@ -74,19 +77,22 @@ class App extends React.Component {
       return <div>Loading</div>
     }
 
+    const store = configureStore({
+      authProvider: () => Promise.resolve(),
+      dataProvider,
+      history,
+    })
+
     return (
-      <ApolloProvider client={client}>
-        <Admin dataProvider={dataProvider} theme={DeviasTheme} layout={Dashboard}>
-          <Resource name="Brand" list={BrandList} />
-          <Resource name="Category" list={CategoryList} />
-          <Resource name="Product" list={ProductList} edit={ProductEdit} create={ProductCreate} />
-          <Resource name="Reservation" list={ReservationsList} />
-          <Resource name="User" list={UserList} />
-          <Resource name="Customer" list={CustomerList} />
-          <Resource name="Package" list={PackageList} />
-          <Resource name="PhysicalProduct" />
-        </Admin>
-      </ApolloProvider>
+      <StoreProvider store={store}>
+        <DataProviderContext.Provider value={dataProvider}>
+          <ApolloProvider client={client}>
+            <ThemeProvider theme={theme}>
+              <Router history={history}>{renderRoutes(routes)}</Router>
+            </ThemeProvider>
+          </ApolloProvider>
+        </DataProviderContext.Provider>
+      </StoreProvider>
     )
   }
 }

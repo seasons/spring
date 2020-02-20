@@ -102,11 +102,11 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 const popularSearches = ["Devias React Dashboard", "Devias", "Admin Pannel", "Project", "Pages"]
 
-function TopBar({ onOpenNavBarMobile, className, ...rest }) {
+function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
   const classes = useStyles()
-  const history = useHistory()
+  // const history = useHistory()
   const searchRef = useRef(null)
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const notificationsRef = useRef(null)
   const [openSearchPopover, setOpenSearchPopover] = useState(false)
   const [searchValue, setSearchValue] = useState("")
@@ -116,7 +116,7 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }) {
   const [pricingModalOpen, setPricingModalOpen] = useState(false)
 
   const handleLogout = () => {
-    history.push("/auth/login")
+    // history.push("/auth/login")
     // dispatch(logout());
   }
 
