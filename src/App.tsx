@@ -7,6 +7,7 @@ import { HttpLink } from "apollo-link-http"
 import { setContext } from "apollo-link-context"
 import { InMemoryCache } from "apollo-cache-inmemory"
 import { ApolloClient } from "apollo-client"
+import { createMuiTheme } from "@material-ui/core/styles"
 import get from "lodash/get"
 import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
 
@@ -56,6 +57,12 @@ const enhanceBuildQuery = buildQuery => introspectionResults => (fetchType, reso
   return buildQuery(introspectionResults)(fetchType, resourceName, params, fragment)
 }
 
+const theme = createMuiTheme({
+  palette: {
+    type: "dark", // Switching the dark mode on is a single property value change.
+  },
+})
+
 class App extends React.Component {
   state = { dataProvider: null }
 
@@ -75,7 +82,7 @@ class App extends React.Component {
 
     return (
       <ApolloProvider client={client}>
-        <Admin dataProvider={dataProvider}>
+        <Admin theme={theme} dataProvider={dataProvider}>
           <Resource name="Brand" list={BrandList} />
           <Resource name="Category" list={CategoryList} />
           <Resource name="Product" list={ProductList} edit={ProductEdit} create={ProductCreate} />
