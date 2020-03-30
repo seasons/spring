@@ -1,17 +1,22 @@
-// in src/App.js
+// Packages
 import React from "react"
 import { Admin, Resource } from "react-admin"
 import { ApolloProvider } from "react-apollo"
-import get from "lodash/get"
 import { ApolloLink } from "apollo-link"
 import { HttpLink } from "apollo-link-http"
 import { setContext } from "apollo-link-context"
 import { InMemoryCache } from "apollo-cache-inmemory"
-import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
 import { ApolloClient } from "apollo-client"
-import { BrandList } from "./Brands"
-import { CategoryList } from "./Categories"
+import get from "lodash/get"
+import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
+
+// Components
+import { BrandList } from "./Components/Brands"
+import { CategoryList } from "./Components/Categories"
 import { ProductList, ProductEdit } from "./Components/Products"
+import { MemberList } from "./Components/Members"
+
+// Utilities
 import overridenQueries from "./Queries"
 import { ProductCreate } from "./Components/Products/ProductCreate"
 
@@ -25,7 +30,7 @@ const authLink = setContext(async (_, { headers }) => {
   try {
     // return the headers to the context so httpLink can read them
     const accessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQHN0YWdpbmciLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTgxNTQ4MjI1LCJleHAiOjE1ODIxNTMwMjV9.xWmTorORL1Ou46TtWuQlCTHfDFbPPsDmKpIm5cqEhsM"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQHN0YWdpbmciLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTg1MTc3ODA3LCJleHAiOjE1ODU3ODI2MDd9.pdQ4pSkj1lBk_BA2_NVrvFNAgt6bqIaPRuK5_n33jHM"
     return {
       headers: {
         ...headers,
@@ -33,6 +38,7 @@ const authLink = setContext(async (_, { headers }) => {
       },
     }
   } catch (e) {
+    console.error("no access token present!")
     return {
       headers,
     }
@@ -73,6 +79,7 @@ class App extends React.Component {
           <Resource name="Brand" list={BrandList} />
           <Resource name="Category" list={CategoryList} />
           <Resource name="Product" list={ProductList} edit={ProductEdit} create={ProductCreate} />
+          <Resource name="User" list={MemberList} />
         </Admin>
       </ApolloProvider>
     )

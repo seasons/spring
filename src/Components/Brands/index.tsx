@@ -1,20 +1,5 @@
-import React from "react";
-import {
-  List,
-  Datagrid,
-  Edit,
-  Create,
-  SimpleForm,
-  DateField,
-  TextField,
-  ImageField,
-  EditButton,
-  DisabledInput,
-  TextInput,
-  LongTextInput,
-  DateInput,
-  UrlField
-} from "react-admin";
+import React from "react"
+import { List, Datagrid, DateField, TextField, ImageField } from "react-admin"
 
 export const BrandList = props => (
   <List {...props}>
@@ -27,4 +12,4 @@ export const BrandList = props => (
       <DateField source="updatedAt" />
     </Datagrid>
   </List>
-);
+)
