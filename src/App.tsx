@@ -1,7 +1,6 @@
 import React from "react"
 import { convertLegacyDataProvider, DataProviderContext, Resource } from "react-admin"
 import { ApolloProvider } from "react-apollo"
-import { ConnectedRouter } from "connected-react-router"
 import { Router } from "react-router-dom"
 import { renderRoutes } from "react-router-config"
 import { createBrowserHistory } from "history"
@@ -24,6 +23,7 @@ import routes from "./routes"
 const cache = new InMemoryCache()
 const link = new HttpLink({
   uri: "http://localhost:4466/monsoon/dev",
+  // uri: "https://monsoon-staging.seasons.nyc",
 })
 
 const authLink = setContext(async (_, { headers }) => {
@@ -31,7 +31,7 @@ const authLink = setContext(async (_, { headers }) => {
   try {
     // return the headers to the context so httpLink can read them
     const accessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQHN0YWdpbmciLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTgyMjIyMTQ0LCJleHAiOjE1ODI4MjY5NDR9.__c7FkRSV9oER6SaRtaj2C3cQhE2DZKnaJ6T2wNFAms"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQHN0YWdpbmciLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTg1NzYyMDc5LCJleHAiOjE1ODYzNjY4Nzl9.kqBGhmQU1k14i9Ku4dYnEZm3xt9wz2H3bQ5GcW_AaK0"
     return {
       headers: {
         ...headers,

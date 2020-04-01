@@ -34,6 +34,7 @@ import axios from "../../utils/axios"
 import NotificationsPopover from "../../Components/NotificationsPopover"
 import PricingModal from "../../Components/PricingModal"
 import ChatBar from "./ChatBar"
+import { LogoMark } from "../../Icons/LogoMark"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -160,24 +161,6 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
     setOpenSearchPopover(false)
   }
 
-  useEffect(() => {
-    let mounted = true
-
-    // const fetchNotifications = () => {
-    //   axios.get("/api/account/notifications").then(response => {
-    //     if (mounted) {
-    //       setNotifications(response.data.notifications)
-    //     }
-    //   })
-    // }
-
-    // fetchNotifications()
-
-    return () => {
-      mounted = false
-    }
-  }, [])
-
   return (
     <AppBar {...rest} className={clsx(classes.root, className)} color="primary">
       <Toolbar>
@@ -187,7 +170,7 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
           </IconButton>
         </Hidden>
         <RouterLink to="/">
-          <img alt="Logo" src="/images/logos/logo--white.svg" />
+          <LogoMark />
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden smDown>

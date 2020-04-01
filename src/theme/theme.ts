@@ -11,4 +11,3 @@ const baseTheme = {
 } as ThemeOptions
 
 export const theme = createMuiTheme(baseTheme)
-// export const DevuWithRtl = createMuiTheme({ ...baseTheme, direction: "rtl" })

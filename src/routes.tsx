@@ -1,14 +1,14 @@
 import React, { lazy } from "react"
 import { Redirect } from "react-router-dom"
 import { Dashboard } from "./layouts/Dashboard"
-import { ProductCreate } from "./Components/Products/ProductCreate"
+import { ProductCreate } from "./views/Products/ProductCreate"
 import { ReservationsList } from "./Reservations"
 import { UserList } from "./users"
-import { CustomerList } from "./Customers"
+import { CustomerList } from "./views/Customers/Customers"
 import { PackageList } from "./Packages"
-import { BrandList } from "./Brands"
-import { CategoryList } from "./Categories"
-import { ProductList, ProductEdit } from "./Components/Products"
+import { BrandList } from "./views/Brands"
+import { CategoryList } from "./views/Categories"
+import { ProductList, ProductEdit } from "./views/Products"
 
 // <Resource name="Brand" list={BrandList} />
 // <Resource name="Category" list={CategoryList} />
@@ -33,6 +33,11 @@ export default [
         path: "/products",
         exact: true,
         component: props => <ProductList {...props} basePath="/products" resource="Product" />,
+      },
+      {
+        path: "/customers",
+        exact: true,
+        component: props => <CustomerList {...props} basePath="/customers" resource="Customer" />,
       },
     ],
   },
