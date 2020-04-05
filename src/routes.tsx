@@ -8,6 +8,7 @@ import { CustomerList } from "./views/Customers"
 import { ProductList } from "./views/Products"
 import { ReservationsList } from "./views/Reservations"
 import OverviewView from "./views/Overview"
+import AnalyticsView from "./views/Analytics"
 
 // import { ProductList, ProductEdit } from "./views/Products"
 // import { ProductCreate } from "./views/Products/ProductCreate"
@@ -39,6 +40,11 @@ export default [
         path: "/overview",
         exact: true,
         component: OverviewView,
+      },
+      {
+        path: "/analytics",
+        exact: true,
+        component: AnalyticsView,
       },
       {
         path: "/products",
