@@ -15,16 +15,13 @@ function Header({ className, ...rest }: any) {
     <div {...rest} className={clsx(classes.root, className)}>
       <Grid alignItems="flex-end" container justify="space-between" spacing={3}>
         <Grid item>
-          <Typography component="h2" gutterBottom variant="overline">
-            Management
-          </Typography>
           <Typography component="h1" variant="h3">
-            Customers
+            Products
           </Typography>
         </Grid>
         <Grid item>
           <Button color="primary" variant="contained">
-            Add customer
+            Add product
           </Button>
         </Grid>
       </Grid>

@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom"
 
 // Layout
 import { Dashboard } from "./layouts/Dashboard"
-import { CustomerList } from "./views/Customers/Customers"
+import { CustomerList } from "./views/Customers"
 import { ProductList } from "./views/Products"
 // import { ProductList, ProductEdit } from "./views/Products"
 

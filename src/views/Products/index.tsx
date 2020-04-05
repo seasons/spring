@@ -36,10 +36,11 @@ export const ProductList = props => (
         hasList={true}
         hasShow={true}
         resource={"Product"}
+        title="Products"
       >
         <Datagrid>
           <ImagesField source="images" />
-          <TextField source="name" />
+          <TextField source="name" label="Name" />
           <ReferenceField source="brand.id" reference="Brand" label="Brand Name">
             <TextField source="name" />
           </ReferenceField>
