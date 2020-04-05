@@ -1,14 +1,19 @@
-import React, { lazy } from "react"
+// Packages
+import React from "react"
 import { Redirect } from "react-router-dom"
+
+// Layout
 import { Dashboard } from "./layouts/Dashboard"
-import { ProductCreate } from "./views/Products/ProductCreate"
-import { ReservationsList } from "./Reservations"
-import { UserList } from "./users"
 import { CustomerList } from "./views/Customers/Customers"
-import { PackageList } from "./Packages"
-import { BrandList } from "./views/Brands"
-import { CategoryList } from "./views/Categories"
-import { ProductList, ProductEdit } from "./views/Products"
+import { ProductList } from "./views/Products"
+// import { ProductList, ProductEdit } from "./views/Products"
+
+// import { ProductCreate } from "./views/Products/ProductCreate"
+// import { ReservationsList } from "./Reservations"
+// import { UserList } from "./users"
+// import { PackageList } from "./Packages"
+// import { BrandList } from "./views/Brands"
+// import { CategoryList } from "./views/Categories"
 
 // <Resource name="Brand" list={BrandList} />
 // <Resource name="Category" list={CategoryList} />

@@ -1,13 +1,13 @@
 /* eslint-disable react/no-multi-comp */
 /* eslint-disable react/display-name */
-import React from "react"
-import { colors } from "@material-ui/core"
+// import React from "react"
+// import { colors } from "@material-ui/core"
 import BarChartIcon from "@material-ui/icons/BarChart"
 import DashboardIcon from "@material-ui/icons/DashboardOutlined"
 import HomeIcon from "@material-ui/icons/HomeOutlined"
 import PersonIcon from "@material-ui/icons/PersonOutlined"
 import ListIcon from "@material-ui/icons/List"
-import Label from "../../Components/Label"
+// import Label from "../../Components/Label"
 
 export default [
   {

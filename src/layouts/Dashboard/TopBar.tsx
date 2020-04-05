@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef } from "react"
 import { Link as RouterLink } from "react-router-dom"
-import { useHistory } from "react-router"
+// import { useHistory } from "react-router"
 import PropTypes from "prop-types"
 import clsx from "clsx"
-import { useDispatch } from "react-redux"
+// import { useDispatch } from "react-redux"
 import { makeStyles } from "@material-ui/styles"
 import {
   AppBar,
@@ -30,7 +30,7 @@ import PeopleIcon from "@material-ui/icons/PeopleOutline"
 import InputIcon from "@material-ui/icons/Input"
 import MenuIcon from "@material-ui/icons/Menu"
 import SearchIcon from "@material-ui/icons/Search"
-import axios from "../../utils/axios"
+// import axios from "../../utils/axios"
 import NotificationsPopover from "../../Components/NotificationsPopover"
 import PricingModal from "../../Components/PricingModal"
 import ChatBar from "./ChatBar"
@@ -111,7 +111,8 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
   const notificationsRef = useRef(null)
   const [openSearchPopover, setOpenSearchPopover] = useState(false)
   const [searchValue, setSearchValue] = useState("")
-  const [notifications, setNotifications] = useState([])
+  // const [notifications, setNotifications] = useState([])
+  const [notifications] = useState([])
   const [openNotifications, setOpenNotifications] = useState(false)
   const [openChatBar, setOpenChatBar] = useState(false)
   const [pricingModalOpen, setPricingModalOpen] = useState(false)
