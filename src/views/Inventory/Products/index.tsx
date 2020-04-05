@@ -10,9 +10,8 @@ import {
   ReferenceArrayInput,
   SelectArrayInput,
 } from "react-admin"
-import { ImagesField } from "../../Fields/ImagesField"
+import { ImagesField } from "../../../Fields/ImagesField"
 import { Card } from "@material-ui/core"
-import Header from "./Header"
 
 export const ProductFilter = props => (
   <Filter {...props}>
@@ -26,7 +25,6 @@ export const ProductFilter = props => (
 export const ProductList = props => (
   <>
     <Card>
-      <Header />
       <List
         filters={<ProductFilter />}
         {...props}

@@ -9,6 +9,7 @@ import User from "./User"
 import Customer from "./Customer"
 import Package from "./Package"
 import PhysicalProduct from "./PhysicalProduct"
+import Size from "./Size"
 
 export default {
   Product,
@@ -19,6 +20,7 @@ export default {
   Customer,
   Package,
   PhysicalProduct,
+  Size,
   Category: {
     [GET_LIST]: gql`
       fragment category on Category {

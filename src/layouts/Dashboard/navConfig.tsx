@@ -25,7 +25,7 @@ export default [
       },
       {
         title: "Inventory",
-        href: "/inventory",
+        href: "/inventory/products",
         icon: DashboardIcon,
       },
       {

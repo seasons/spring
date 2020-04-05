@@ -105,7 +105,7 @@ function NavItem({ title, href, depth, children, icon: Icon, className, open: op
         activeClassName={classes.active}
         className={clsx(classes.buttonLeaf, `depth-${depth}`)}
         component={RouterLink}
-        exact
+        // exact
         style={style}
         to={href}
       >

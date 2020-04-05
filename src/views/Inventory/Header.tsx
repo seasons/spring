@@ -16,12 +16,12 @@ function Header({ className, ...rest }: any) {
       <Grid alignItems="flex-end" container justify="space-between" spacing={3}>
         <Grid item>
           <Typography component="h1" variant="h3">
-            Products
+            Inventory
           </Typography>
         </Grid>
         <Grid item>
           <Button color="primary" variant="contained">
-            Add product
+            New product
           </Button>
         </Grid>
       </Grid>

@@ -93,9 +93,12 @@ class App extends React.Component {
             <ThemeProvider theme={theme}>
               <Resource name="Product" intent="registration" />
               <Resource name="Customer" intent="registration" />
+              <Resource name="Category" intent="registration" />
               <Resource name="Brand" intent="registration" />
               <Resource name="User" intent="registration" />
               <Resource name="Reservation" intent="registration" />
+              <Resource name="Size" intent="registration" />
+              <Resource name="Tag" intent="registration" />
               <Router history={history}>{renderRoutes(routes)}</Router>
             </ThemeProvider>
           </ApolloProvider>
