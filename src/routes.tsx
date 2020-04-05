@@ -2,10 +2,12 @@
 import React from "react"
 import { Redirect } from "react-router-dom"
 
-// Layout
+// Views
 import { Dashboard } from "./layouts/Dashboard"
 import { CustomerList } from "./views/Customers"
 import { ProductList } from "./views/Products"
+import OverviewView from "./views/Overview"
+
 // import { ProductList, ProductEdit } from "./views/Products"
 
 // import { ProductCreate } from "./views/Products/ProductCreate"
@@ -28,12 +30,17 @@ export default [
   {
     path: "/",
     exact: true,
-    component: () => <Redirect to="/products" />,
+    component: () => <Redirect to="/overview" />,
   },
   {
     route: "*",
     component: Dashboard,
     routes: [
+      {
+        path: "/overview",
+        exact: true,
+        component: OverviewView,
+      },
       {
         path: "/products",
         exact: true,

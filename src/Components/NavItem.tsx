@@ -54,10 +54,10 @@ const useStyles = makeStyles<Theme>(theme => ({
     marginLeft: "auto",
   },
   active: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontWeight: theme.typography.fontWeightMedium,
     "& $icon": {
-      color: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
     },
   },
 }))
