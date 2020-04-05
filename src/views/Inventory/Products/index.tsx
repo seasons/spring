@@ -10,7 +10,7 @@ import {
   ReferenceArrayInput,
   SelectArrayInput,
 } from "react-admin"
-import { ImagesField } from "../../../Fields/ImagesField"
+import { ImagesField } from "fields/ImagesField"
 import { Card } from "@material-ui/core"
 
 export const ProductFilter = props => (

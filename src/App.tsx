@@ -15,7 +15,7 @@ import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
 import { ApolloClient } from "apollo-client"
 
 // Utilities
-import overridenQueries from "./Queries"
+import overridenQueries from "./queries"
 import configureStore from "./store/adminStore"
 import routes from "./routes"
 

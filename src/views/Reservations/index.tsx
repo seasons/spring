@@ -18,7 +18,7 @@ export const ReservationsList = props => (
       <ReferenceField source="user.id" reference="User" label="User Email">
         <TextField source="email" />
       </ReferenceField>
-      <ReferenceArrayField label="Products" reference="PhysicalProduct" source="physicalproduct.id">
+      <ReferenceArrayField label="Product ID" reference="PhysicalProduct" source="physicalproduct.id">
         <SingleFieldList>
           <TextField source="seasonsUID" />
         </SingleFieldList>
@@ -27,10 +27,10 @@ export const ReservationsList = props => (
         {/* TODO: Get a link to customer working */}
         <TextField source="user.email" />
       </ReferenceField>
-      <ReferenceField source="sentPackage.id" reference="Package">
+      <ReferenceField source="sentPackage.id" reference="Package" label="Sent Package ID">
         <TextField source="id" />
       </ReferenceField>
-      <ReferenceField source="returnedPackage.id" reference="Package">
+      <ReferenceField source="returnedPackage.id" reference="Package" label="Returned Package ID">
         <TextField source="id" />
       </ReferenceField>
     </Datagrid>
