@@ -2,10 +2,19 @@ import React from "react"
 import { List, Datagrid, TextField, ReferenceField, ReferenceArrayField, SingleFieldList } from "react-admin"
 
 export const ReservationsList = props => (
-  <List {...props} title="Reservations">
+  <List
+    {...props}
+    perPage={10}
+    hasCreate={false}
+    hasEdit={false}
+    hasList={true}
+    hasShow={true}
+    resource={"Reservation"}
+    title="Reservations"
+  >
     <Datagrid>
-      <TextField source="id" />
-      <TextField source="reservationNumber" />
+      <TextField source="id" label="ID" />
+      <TextField source="reservationNumber" label="Reservation Number" />
       <ReferenceField source="user.id" reference="User" label="User Email">
         <TextField source="email" />
       </ReferenceField>

@@ -6,12 +6,11 @@ import { Redirect } from "react-router-dom"
 import { Dashboard } from "./layouts/Dashboard"
 import { CustomerList } from "./views/Customers"
 import { ProductList } from "./views/Products"
+import { ReservationsList } from "./views/Reservations"
 import OverviewView from "./views/Overview"
 
 // import { ProductList, ProductEdit } from "./views/Products"
-
 // import { ProductCreate } from "./views/Products/ProductCreate"
-// import { ReservationsList } from "./Reservations"
 // import { UserList } from "./users"
 // import { PackageList } from "./Packages"
 // import { BrandList } from "./views/Brands"
@@ -47,9 +46,14 @@ export default [
         component: props => <ProductList {...props} basePath="/products" resource="Product" />,
       },
       {
-        path: "/customers",
+        path: "/members",
         exact: true,
         component: props => <CustomerList {...props} basePath="/customers" resource="Customer" />,
+      },
+      {
+        path: "/reservations",
+        exact: true,
+        component: props => <ReservationsList {...props} basePath="/reservations" resource="Reservation" />,
       },
     ],
   },
