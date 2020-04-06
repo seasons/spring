@@ -15,8 +15,8 @@ import {
   Typography,
   Theme,
 } from "@material-ui/core"
-import axios from "../../utils/axios"
-import StatusBullet from "../../Components/StatusBullet"
+// import axios from "../../utils/axios"
+import StatusBullet from "components/StatusBullet"
 
 const useStyles = makeStyles<Theme>(theme => ({
   drawer: {
@@ -44,10 +44,11 @@ interface ChatBarProps {
 
 function ChatBar({ open, onClose, className, ...rest }: ChatBarProps) {
   const classes = useStyles()
-  const [data, setData]: [any, any] = useState(null)
+  // const [data, setData]: [any, any] = useState(null)
+  const [data]: [any, any] = useState(null)
 
   useEffect(() => {
-    let mounted = true
+    // let mounted = true
 
     // const fetchData = () => {
     //   axios.get("/api/chat/activity").then(response => {
@@ -60,7 +61,7 @@ function ChatBar({ open, onClose, className, ...rest }: ChatBarProps) {
     // fetchData()
 
     return () => {
-      mounted = false
+      // mounted = false
     }
   }, [])
 

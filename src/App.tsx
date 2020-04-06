@@ -1,3 +1,4 @@
+// Packages
 import React from "react"
 import { convertLegacyDataProvider, DataProviderContext, Resource } from "react-admin"
 import { ApolloProvider } from "react-apollo"
@@ -13,12 +14,14 @@ import { InMemoryCache } from "apollo-cache-inmemory"
 import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
 import { ApolloClient } from "apollo-client"
 
-import overridenQueries from "./Queries"
-
-import { theme } from "./theme/theme"
-import { ThemeProvider } from "@material-ui/core"
+// Utilities
+import overridenQueries from "./queries"
 import configureStore from "./store/adminStore"
 import routes from "./routes"
+
+// UI
+import { theme } from "./theme/theme"
+import { ThemeProvider } from "@material-ui/core"
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
@@ -39,6 +42,7 @@ const authLink = setContext(async (_, { headers }) => {
       },
     }
   } catch (e) {
+    console.error("no access token present!")
     return {
       headers,
     }
@@ -88,6 +92,13 @@ class App extends React.Component {
           <ApolloProvider client={client}>
             <ThemeProvider theme={theme}>
               <Resource name="Product" intent="registration" />
+              <Resource name="Customer" intent="registration" />
+              <Resource name="Category" intent="registration" />
+              <Resource name="Brand" intent="registration" />
+              <Resource name="User" intent="registration" />
+              <Resource name="Reservation" intent="registration" />
+              <Resource name="Size" intent="registration" />
+              <Resource name="Tag" intent="registration" />
               <Router history={history}>{renderRoutes(routes)}</Router>
             </ThemeProvider>
           </ApolloProvider>

@@ -1,20 +1,19 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useRef, useEffect } from "react"
+// Packages
+import React, { useState, useRef } from "react"
 import { Link as RouterLink } from "react-router-dom"
-import { useHistory } from "react-router"
 import PropTypes from "prop-types"
 import clsx from "clsx"
-import { useDispatch } from "react-redux"
+
+// UI
 import { makeStyles } from "@material-ui/styles"
 import {
   AppBar,
-  Badge,
   Button,
   IconButton,
   Toolbar,
   Hidden,
   Input,
-  colors,
   Popper,
   Paper,
   List,
@@ -23,17 +22,15 @@ import {
   ListItemText,
   ClickAwayListener,
   Theme,
+  Typography,
 } from "@material-ui/core"
-import LockIcon from "@material-ui/icons/LockOutlined"
-import NotificationsIcon from "@material-ui/icons/NotificationsOutlined"
-import PeopleIcon from "@material-ui/icons/PeopleOutline"
+
+// Icons
 import InputIcon from "@material-ui/icons/Input"
 import MenuIcon from "@material-ui/icons/Menu"
 import SearchIcon from "@material-ui/icons/Search"
-import axios from "../../utils/axios"
-import NotificationsPopover from "../../Components/NotificationsPopover"
-import PricingModal from "../../Components/PricingModal"
-import ChatBar from "./ChatBar"
+
+// Components
 import { LogoMark } from "../../Icons/LogoMark"
 
 const useStyles = makeStyles<Theme>(theme => ({
@@ -70,34 +67,25 @@ const useStyles = makeStyles<Theme>(theme => ({
   searchPopperContent: {
     marginTop: theme.spacing(1),
   },
-  trialButton: {
-    marginLeft: theme.spacing(2),
-    color: theme.palette.common.white,
-    backgroundColor: colors.green[600],
-    "&:hover": {
-      backgroundColor: colors.green[900],
-    },
-  },
-  trialIcon: {
-    marginRight: theme.spacing(1),
-  },
   menuButton: {
     marginRight: theme.spacing(1),
   },
   chatButton: {
     marginLeft: theme.spacing(1),
   },
-  notificationsButton: {
-    marginLeft: theme.spacing(1),
-  },
-  notificationsBadge: {
-    backgroundColor: colors.orange[600],
-  },
   logoutButton: {
     marginLeft: theme.spacing(1),
   },
   logoutIcon: {
     marginRight: theme.spacing(1),
+  },
+  navTitle: {
+    textDecoration: "none",
+    "& h4": {
+      color: theme.palette.primary.contrastText,
+      display: "inline",
+      marginLeft: "10px",
+    },
   },
 }))
 
@@ -106,43 +94,14 @@ const popularSearches = ["Devias React Dashboard", "Devias", "Admin Pannel", "Pr
 function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
   const classes = useStyles()
   // const history = useHistory()
-  const searchRef = useRef(null)
   // const dispatch = useDispatch()
-  const notificationsRef = useRef(null)
+  const searchRef = useRef(null)
   const [openSearchPopover, setOpenSearchPopover] = useState(false)
   const [searchValue, setSearchValue] = useState("")
-  const [notifications, setNotifications] = useState([])
-  const [openNotifications, setOpenNotifications] = useState(false)
-  const [openChatBar, setOpenChatBar] = useState(false)
-  const [pricingModalOpen, setPricingModalOpen] = useState(false)
 
   const handleLogout = () => {
     // history.push("/auth/login")
     // dispatch(logout());
-  }
-
-  const handlePricingModalOpen = () => {
-    setPricingModalOpen(true)
-  }
-
-  const handlePricingModalClose = () => {
-    setPricingModalOpen(false)
-  }
-
-  const handleChatBarOpen = () => {
-    setOpenChatBar(true)
-  }
-
-  const handleChatBarClose = () => {
-    setOpenChatBar(false)
-  }
-
-  const handleNotificationsOpen = () => {
-    setOpenNotifications(true)
-  }
-
-  const handleNotificationsClose = () => {
-    setOpenNotifications(false)
   }
 
   const handleSearchChange = event => {
@@ -169,8 +128,9 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
             <MenuIcon />
           </IconButton>
         </Hidden>
-        <RouterLink to="/">
+        <RouterLink to="/" className={classes.navTitle}>
           <LogoMark />
+          <Typography variant="h4">Seasons Admin</Typography>
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden smDown>
@@ -200,41 +160,14 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
               </Paper>
             </ClickAwayListener>
           </Popper>
-          <Button className={classes.trialButton} onClick={handlePricingModalOpen} variant="contained">
-            <LockIcon className={classes.trialIcon} />
-            Trial expired
-          </Button>
         </Hidden>
-        <IconButton className={classes.chatButton} color="inherit" onClick={handleChatBarOpen}>
-          <Badge badgeContent={6} color="secondary">
-            <PeopleIcon />
-          </Badge>
-        </IconButton>
         <Hidden mdDown>
-          <IconButton
-            className={classes.notificationsButton}
-            color="inherit"
-            onClick={handleNotificationsOpen}
-            ref={notificationsRef}
-          >
-            <Badge badgeContent={notifications.length} classes={{ badge: classes.notificationsBadge }} variant="dot">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
           <Button className={classes.logoutButton} color="inherit" onClick={handleLogout}>
             <InputIcon className={classes.logoutIcon} />
             Sign out
           </Button>
         </Hidden>
       </Toolbar>
-      <NotificationsPopover
-        anchorEl={notificationsRef.current}
-        notifications={notifications}
-        onClose={handleNotificationsClose}
-        open={openNotifications}
-      />
-      <PricingModal onClose={handlePricingModalClose} open={pricingModalOpen} />
-      <ChatBar onClose={handleChatBarClose} open={openChatBar} />
     </AppBar>
   )
 }

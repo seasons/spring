@@ -1,8 +1,11 @@
+// Packages
 import React from "react"
 import { graphql } from "react-apollo"
 import styled from "styled-components"
 import { AutocompleteInput, Create, SimpleForm, SelectArrayInput, TextInput, ImageInput } from "react-admin"
-import { productCreateQuery } from "../../Queries"
+
+// Queries
+import { productCreateQuery } from "queries"
 
 export const ProductCreate = graphql(productCreateQuery)(props => {
   const data: any = props.data
