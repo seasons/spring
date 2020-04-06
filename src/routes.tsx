@@ -8,7 +8,7 @@ import { CustomerList } from "./views/Customers/Customers"
 import { PackageList } from "./Packages"
 import { BrandList } from "./views/Brands"
 import { CategoryList } from "./views/Categories"
-import { ProductList, ProductEdit } from "./views/Products"
+import { ProductList, ProductEdit } from "./views/Products/ProductList"
 
 // <Resource name="Brand" list={BrandList} />
 // <Resource name="Category" list={CategoryList} />

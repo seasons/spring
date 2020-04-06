@@ -1,5 +1,5 @@
 import React from "react"
-import { convertLegacyDataProvider, DataProviderContext, Resource } from "react-admin"
+import { convertLegacyDataProvider, DataProviderContext, Resource, TranslationProvider } from "react-admin"
 import { ApolloProvider } from "react-apollo"
 import { Router } from "react-router-dom"
 import { renderRoutes } from "react-router-config"
@@ -11,6 +11,7 @@ import { HttpLink } from "apollo-link-http"
 import { setContext } from "apollo-link-context"
 import { InMemoryCache } from "apollo-cache-inmemory"
 import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
+import polyglotI18nProvider from "ra-i18n-polyglot"
 import { ApolloClient } from "apollo-client"
 
 import overridenQueries from "./Queries"
@@ -19,6 +20,7 @@ import { theme } from "./theme/theme"
 import { ThemeProvider } from "@material-ui/core"
 import configureStore from "./store/adminStore"
 import routes from "./routes"
+import englishMessages from "./i18n/en"
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
@@ -59,6 +61,10 @@ const enhanceBuildQuery = buildQuery => introspectionResults => (fetchType, reso
 
 const history = createBrowserHistory()
 
+const i18nProvider = polyglotI18nProvider(locale => {
+  return englishMessages
+})
+
 class App extends React.Component {
   state = { dataProvider: null }
 
@@ -83,16 +89,18 @@ class App extends React.Component {
     })
 
     return (
-      <StoreProvider store={store}>
-        <DataProviderContext.Provider value={dataProvider}>
-          <ApolloProvider client={client}>
-            <ThemeProvider theme={theme}>
-              <Resource name="Product" intent="registration" />
-              <Router history={history}>{renderRoutes(routes)}</Router>
-            </ThemeProvider>
-          </ApolloProvider>
-        </DataProviderContext.Provider>
-      </StoreProvider>
+      <TranslationProvider i18nProvider={i18nProvider}>
+        <StoreProvider store={store}>
+          <DataProviderContext.Provider value={dataProvider}>
+            <ApolloProvider client={client}>
+              <ThemeProvider theme={theme}>
+                <Resource name="Product" intent="registration" />
+                <Router history={history}>{renderRoutes(routes)}</Router>
+              </ThemeProvider>
+            </ApolloProvider>
+          </DataProviderContext.Provider>
+        </StoreProvider>
+      </TranslationProvider>
     )
   }
 }

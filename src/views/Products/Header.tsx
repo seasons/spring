@@ -19,12 +19,12 @@ function Header({ className, ...rest }: any) {
             Management
           </Typography>
           <Typography component="h1" variant="h3">
-            Customers
+            Products
           </Typography>
         </Grid>
         <Grid item>
           <Button color="primary" variant="contained">
-            Add customer
+            Add product
           </Button>
         </Grid>
       </Grid>

@@ -173,54 +173,8 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
           <LogoMark />
         </RouterLink>
         <div className={classes.flexGrow} />
-        <Hidden smDown>
-          <div className={classes.search} ref={searchRef}>
-            <SearchIcon className={classes.searchIcon} />
-            <Input
-              className={classes.searchInput}
-              disableUnderline
-              onChange={handleSearchChange}
-              placeholder="Search people &amp; places"
-              value={searchValue}
-            />
-          </div>
-          <Popper anchorEl={searchRef.current} className={classes.searchPopper} open={openSearchPopover} transition>
-            <ClickAwayListener onClickAway={handleSearchPopverClose}>
-              <Paper className={classes.searchPopperContent} elevation={3}>
-                <List>
-                  {popularSearches.map(search => (
-                    <ListItem button key={search} onClick={handleSearchPopverClose}>
-                      <ListItemIcon>
-                        <SearchIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={search} />
-                    </ListItem>
-                  ))}
-                </List>
-              </Paper>
-            </ClickAwayListener>
-          </Popper>
-          <Button className={classes.trialButton} onClick={handlePricingModalOpen} variant="contained">
-            <LockIcon className={classes.trialIcon} />
-            Trial expired
-          </Button>
-        </Hidden>
-        <IconButton className={classes.chatButton} color="inherit" onClick={handleChatBarOpen}>
-          <Badge badgeContent={6} color="secondary">
-            <PeopleIcon />
-          </Badge>
-        </IconButton>
+
         <Hidden mdDown>
-          <IconButton
-            className={classes.notificationsButton}
-            color="inherit"
-            onClick={handleNotificationsOpen}
-            ref={notificationsRef}
-          >
-            <Badge badgeContent={notifications.length} classes={{ badge: classes.notificationsBadge }} variant="dot">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
           <Button className={classes.logoutButton} color="inherit" onClick={handleLogout}>
             <InputIcon className={classes.logoutIcon} />
             Sign out
