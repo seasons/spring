@@ -13,12 +13,12 @@ export const BrandList = props => (
     title="Brands"
   >
     <Datagrid>
-      <TextField source="name" />
-      <TextField source="brandCode" />
-      <ImageField source="logo.thumbnails.small.url" />
-      <TextField source="tier" />
-      <DateField source="createdAt" />
-      <DateField source="updatedAt" />
+      <TextField source="name" label="Name" />
+      <TextField source="brandCode" label="Code" />
+      <ImageField source="logo.thumbnails.small.url" label="Image" />
+      <TextField source="tier" label="Tier" />
+      <DateField source="createdAt" label="CreatedAt" />
+      <DateField source="updatedAt" label="UpdatedAt" />
     </Datagrid>
   </List>
 )

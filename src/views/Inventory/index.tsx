@@ -19,6 +19,9 @@ const useStyles = makeStyles<Theme>(theme => ({
   tabs: {
     marginTop: theme.spacing(3),
   },
+  tab: {
+    textTransform: "none",
+  },
   divider: {
     backgroundColor: colors.grey[300],
   },
@@ -62,7 +65,7 @@ function InventoryView({ match, history, props }) {
         variant="scrollable"
       >
         {tabs.map(tab => (
-          <Tab key={tab.value} label={tab.label} value={tab.value} />
+          <Tab key={tab.value} label={tab.label} value={tab.value} className={classes.tab} />
         ))}
       </Tabs>
       <Divider className={classes.divider} />

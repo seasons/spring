@@ -13,9 +13,9 @@ export const SizeList = props => (
     title="Sizes"
   >
     <Datagrid>
-      <TextField source="slug" />
-      <TextField source="productType" />
-      <TextField source="display" />
+      <TextField source="slug" label="Slug" />
+      <TextField source="productType" label="Product Type" />
+      <TextField source="display" label="Display" />
     </Datagrid>
   </List>
 )

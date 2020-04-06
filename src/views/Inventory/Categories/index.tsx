@@ -13,7 +13,7 @@ export const CategoryList = props => (
     title="Categories"
   >
     <Datagrid>
-      <TextField source="name" />
+      <TextField source="name" label="Name" />
     </Datagrid>
   </List>
 )

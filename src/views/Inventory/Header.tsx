@@ -2,10 +2,13 @@ import React from "react"
 import PropTypes from "prop-types"
 import clsx from "clsx"
 import { makeStyles } from "@material-ui/styles"
-import { Grid, Typography, Button } from "@material-ui/core"
+import { Grid, Typography, Button, Theme } from "@material-ui/core"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles<Theme>(theme => ({
   root: {},
+  addButton: {
+    marginTop: theme.spacing(3),
+  },
 }))
 
 function Header({ className, ...rest }: any) {
@@ -20,7 +23,7 @@ function Header({ className, ...rest }: any) {
           </Typography>
         </Grid>
         <Grid item>
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" className={classes.addButton}>
             New product
           </Button>
         </Grid>

@@ -26,8 +26,8 @@ export const ProductList = props => (
   <>
     <Card>
       <List
-        filters={<ProductFilter />}
         {...props}
+        filters={<ProductFilter />}
         perPage={10}
         hasCreate={false}
         hasEdit={false}
@@ -37,7 +37,7 @@ export const ProductList = props => (
         title="Products"
       >
         <Datagrid>
-          <ImagesField source="images" />
+          <ImagesField source="images" label="Images" />
           <TextField source="name" label="Name" />
           <ReferenceField source="brand.id" reference="Brand" label="Brand Name">
             <TextField source="name" />
