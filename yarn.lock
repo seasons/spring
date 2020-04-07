@@ -3819,13 +3819,6 @@ dom-converter@^0.2:
   dependencies:
     utila "~0.4"
 
-dom-helpers@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
-  integrity sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-
 dom-helpers@^5.0.1:
   version "5.1.3"
   resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.1.3.tgz#7233248eb3a2d1f74aafca31e52c5299cc8ce821"
@@ -8845,10 +8838,10 @@ ra-core@^2.9.7:
     redux-saga "~0.16.0"
     reselect "~3.0.0"
 
-ra-core@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-3.2.2.tgz#a4e4baadd6d04f8af25359c2254bcdd46b342caf"
-  integrity sha512-9qNQEzQEpIR2chHDok1v5IWTX+UzQGei4dwOaCNTJO1O9FNetvXyUehT7XdApuYQNOD9se8+9qaO7CVoWV3SDA==
+ra-core@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-3.4.0.tgz#1d4b49b78cf60eb2b0d2c1584ccfce73611ab9a6"
+  integrity sha512-hpC0r6s6Uodj3e8T06uvBbk/dcv2H/C2Gih+ouAyuKOR4gglAWIPqcpy6SfN5cZrBxbGkvDCFSKDNNMw5067+g==
   dependencies:
     "@testing-library/react" "^8.0.7"
     classnames "~2.2.5"
@@ -8890,13 +8883,13 @@ ra-data-opencrud@^0.0.7:
     pluralize "^7.0.0"
     ra-data-graphql "^2.3.0"
 
-ra-i18n-polyglot@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/ra-i18n-polyglot/-/ra-i18n-polyglot-3.2.2.tgz#6efe51ef2be545458e26de1b2d896d2f6a936e21"
-  integrity sha512-NwLiVuWi1F4xoZs4wQXVRXgOVKw7ByO8d5RcLpwlTLvwba7PfxAv1+K20BZF8Wzm1jsAvolwQy7IpZsQJGgNLg==
+ra-i18n-polyglot@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/ra-i18n-polyglot/-/ra-i18n-polyglot-3.4.0.tgz#fcc2067e55e953c58f496d579837241615eca85b"
+  integrity sha512-53VWZ3C9cza9cqfibzGVBdFAA/zc3c8pLY2yt5RKNiD1taHylZyX0doebC///jOe7OwUaOHv1KnD5WdLaNM93Q==
   dependencies:
     node-polyglot "^2.2.2"
-    ra-core "^3.2.2"
+    ra-core "^3.4.0"
 
 ra-language-english@^2.9.3:
   version "2.9.3"
@@ -8908,15 +8901,17 @@ ra-language-english@^2.9.9:
   resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-2.9.9.tgz#e8d90d40df8e5e66de8a7b3a72f33dd9de638501"
   integrity sha512-tWybE7ZnCRyiVAWcyN02LA4v5oi030A853lLDmTJUJySUMSwqyy3EpAdiLrOXfe3XKEoyIjRLGQK54iX2cQ/Mw==
 
-ra-language-english@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-3.2.0.tgz#2ca13b767d834b43fefd128f48e452449f812b61"
-  integrity sha512-/XmwYWoQoB4MBkkzBCbg/ykCuRGjHQOHLk2ik6n1aM10AWHxiiJNyRw2aoLzH7Vc5rcp4BBJQCuhT+DgfYIJ2Q==
+ra-language-english@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-3.4.0.tgz#1296dd9bd632f175e71f885c9bdbc06379b49d5a"
+  integrity sha512-H2ZapYrn4jPyj7/+aA2X4XUaXQ6t2y5gR8DlSsRZlkmlHVWcpUFlyG2gZCYTDAeVKXO5Dedgf09KlYLJ6p7p0w==
+  dependencies:
+    ra-core "^3.4.0"
 
-ra-ui-materialui@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/ra-ui-materialui/-/ra-ui-materialui-3.2.2.tgz#6f377c40daa8dc2b0019d6b31d166dd2677b133e"
-  integrity sha512-IHWsf55l1p/Tn6EZJrSw8KS3vTVm0bgyfKO6yQpxP6vU59n4ccPQYXWHIjGwS7YUZ/4IisPQ+UNGNi2iBgQ7UA==
+ra-ui-materialui@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/ra-ui-materialui/-/ra-ui-materialui-3.4.0.tgz#9f3f573384ee8c8e91637627fb888bd51a4fd0b9"
+  integrity sha512-nV10aD4Z8ZgmZUcnfNTzAelQCxqdc5cG/KxyYvcqqV9j0oGBrqC9dr00bKLIBHc1oFTVvLwcdPd4p78tO6B+5g==
   dependencies:
     autosuggest-highlight "^3.1.1"
     classnames "~2.2.5"
@@ -8929,7 +8924,7 @@ ra-ui-materialui@^3.2.2:
     prop-types "^15.7.0"
     query-string "^5.1.1"
     react-dropzone "^10.1.7"
-    react-transition-group "^2.2.1"
+    react-transition-group "^4.3.0"
     recompose "~0.26.0"
 
 raf@3.4.1:
@@ -8979,10 +8974,10 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-admin@^3.2.0:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-3.2.2.tgz#d4e911e99aa261f13948c6fe987b238266ddf068"
-  integrity sha512-UOSLB5pd/t7L/GqK+e08A2NQ+daNeKS5scMQR/2RVp44gl55vbgIZ+lrxT+xHKn+KLcJRvkMANu2KliGWUQC6A==
+react-admin@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-3.4.0.tgz#d2806d9bab6f1c73e4f065d6f339389dd8126195"
+  integrity sha512-tgxCAYPkoZa7LC8ImFU8pQVFf5ja4dbxtx4/bgCOYJ7/QbTYdwFhzwuhfspnzRWDO3Tvkx3VTiuObQuR+JIDug==
   dependencies:
     "@material-ui/core" "^4.3.3"
     "@material-ui/icons" "^4.2.1"
@@ -8990,10 +8985,10 @@ react-admin@^3.2.0:
     connected-react-router "^6.5.2"
     final-form "^4.18.5"
     final-form-arrays "^3.0.1"
-    ra-core "^3.2.2"
-    ra-i18n-polyglot "^3.2.2"
-    ra-language-english "^3.2.0"
-    ra-ui-materialui "^3.2.2"
+    ra-core "^3.4.0"
+    ra-i18n-polyglot "^3.4.0"
+    ra-language-english "^3.4.0"
+    ra-ui-materialui "^3.4.0"
     react-final-form "^6.3.3"
     react-final-form-arrays "^3.1.1"
     react-redux "^7.1.0"
@@ -9056,15 +9051,15 @@ react-dev-utils@^9.1.0:
     strip-ansi "5.2.0"
     text-table "0.2.0"
 
-react-dom@^16.10.2:
-  version "16.10.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.10.2.tgz#4840bce5409176bc3a1f2bd8cb10b92db452fda6"
-  integrity sha512-kWGDcH3ItJK4+6Pl9DZB16BXYAZyrYQItU4OMy0jAkv5aNqc+mAKb4TpFtAteI6TJZu+9ZlNhaeNQSVQDHJzkw==
+react-dom@^16.13.1:
+  version "16.13.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
+  integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.16.2"
+    scheduler "^0.19.1"
 
 react-dropzone@^10.1.7:
   version "10.2.1"
@@ -9269,16 +9264,6 @@ react-scripts@3.2.0:
   optionalDependencies:
     fsevents "2.0.7"
 
-react-transition-group@^2.2.1:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.9.0.tgz#df9cdb025796211151a436c69a8f3b97b5b07c8d"
-  integrity sha512-+HzNTCHpeQyl4MJ/bdE0u6XRMe9+XG/+aL4mCxVN4DnPBQ0/5bfHWPDuOZUzYdMj94daZaZdCCc1Dzt9R/xSSg==
-  dependencies:
-    dom-helpers "^3.4.0"
-    loose-envify "^1.4.0"
-    prop-types "^15.6.2"
-    react-lifecycles-compat "^3.0.4"
-
 react-transition-group@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.3.0.tgz#fea832e386cf8796c58b61874a3319704f5ce683"
@@ -9289,10 +9274,10 @@ react-transition-group@^4.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@^16.10.2:
-  version "16.10.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.10.2.tgz#a5ede5cdd5c536f745173c8da47bda64797a4cf0"
-  integrity sha512-MFVIq0DpIhrHFyqLU0S3+4dIcBhhOvBE8bJ/5kHPVOVaGdo0KuiQzpcjCPsf585WvhypqtrMILyoE2th6dT+Lw==
+react@^16.13.1:
+  version "16.13.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
+  integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -9816,10 +9801,10 @@ saxes@^3.1.9:
   dependencies:
     xmlchars "^2.1.1"
 
-scheduler@^0.16.2:
-  version "0.16.2"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.16.2.tgz#f74cd9d33eff6fc554edfb79864868e4819132c1"
-  integrity sha512-BqYVWqwz6s1wZMhjFvLfVR5WXP7ZY32M/wYPo04CcuPM7XZEbV2TBNW7Z0UkguPTl0dWMA59VbNXxK6q+pHItg==
+scheduler@^0.19.1:
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
+  integrity sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
