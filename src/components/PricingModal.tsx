@@ -1,8 +1,11 @@
-import clsx from "clsx"
-import { Button, Dialog, Divider, Grid, Link, Paper, Typography, colors, Theme } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
-import React from "react"
-import { Link as RouterLink } from "react-router-dom"
+import clsx from 'clsx';
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+
+import {
+  Button, colors, Dialog, Divider, Grid, Link, Paper, Theme, Typography
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {

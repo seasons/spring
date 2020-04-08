@@ -1,7 +1,8 @@
-import clsx from "clsx"
-import { colors, Theme } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
-import React from "react"
+import clsx from 'clsx';
+import React from 'react';
+
+import { colors, Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {

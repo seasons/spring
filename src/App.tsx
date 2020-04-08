@@ -1,27 +1,27 @@
-// Packages
-import React from "react"
-import { convertLegacyDataProvider, DataProviderContext, Resource } from "react-admin"
-import { ApolloProvider } from "react-apollo"
-import { Router } from "react-router-dom"
-import { renderRoutes } from "react-router-config"
-import { createBrowserHistory } from "history"
-import { Provider as StoreProvider } from "react-redux"
-import get from "lodash/get"
-import { ApolloLink } from "apollo-link"
-import { HttpLink } from "apollo-link-http"
-import { setContext } from "apollo-link-context"
 import { InMemoryCache } from "apollo-cache-inmemory"
-import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
 import { ApolloClient } from "apollo-client"
+import { ApolloLink } from "apollo-link"
+import { setContext } from "apollo-link-context"
+import { HttpLink } from "apollo-link-http"
+import { createBrowserHistory } from "history"
+import get from "lodash/get"
+import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
+import polyglotI18nProvider from "ra-i18n-polyglot"
 
-// Utilities
-import overridenQueries from "./queries"
-import configureStore from "./store/adminStore"
-import routes from "./routes"
+import React from "react"
+import { convertLegacyDataProvider, DataProviderContext, Resource, TranslationProvider } from "react-admin"
+import { ApolloProvider } from "react-apollo"
+import { Provider as StoreProvider } from "react-redux"
+import { renderRoutes } from "react-router-config"
+import { Router } from "react-router-dom"
 
-// UI
-import { theme } from "./theme/theme"
 import { ThemeProvider } from "@material-ui/core"
+
+import englishMessages from "./i18n/en"
+import overridenQueries from "./queries"
+import routes from "./routes"
+import configureStore from "./store/adminStore"
+import { theme } from "./theme/theme"
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
@@ -63,6 +63,10 @@ const enhanceBuildQuery = buildQuery => introspectionResults => (fetchType, reso
 
 const history = createBrowserHistory()
 
+const i18nProvider = polyglotI18nProvider(locale => {
+  return englishMessages
+})
+
 class App extends React.Component {
   state = { dataProvider: null }
 
@@ -87,23 +91,25 @@ class App extends React.Component {
     })
 
     return (
-      <StoreProvider store={store}>
-        <DataProviderContext.Provider value={dataProvider}>
-          <ApolloProvider client={client}>
-            <ThemeProvider theme={theme}>
-              <Resource name="Product" intent="registration" />
-              <Resource name="Customer" intent="registration" />
-              <Resource name="Category" intent="registration" />
-              <Resource name="Brand" intent="registration" />
-              <Resource name="User" intent="registration" />
-              <Resource name="Reservation" intent="registration" />
-              <Resource name="Size" intent="registration" />
-              <Resource name="Tag" intent="registration" />
-              <Router history={history}>{renderRoutes(routes)}</Router>
-            </ThemeProvider>
-          </ApolloProvider>
-        </DataProviderContext.Provider>
-      </StoreProvider>
+      <TranslationProvider i18nProvider={i18nProvider}>
+        <StoreProvider store={store}>
+          <DataProviderContext.Provider value={dataProvider}>
+            <ApolloProvider client={client}>
+              <ThemeProvider theme={theme}>
+                <Resource name="Product" intent="registration" />
+                <Resource name="Customer" intent="registration" />
+                <Resource name="Category" intent="registration" />
+                <Resource name="Brand" intent="registration" />
+                <Resource name="User" intent="registration" />
+                <Resource name="Reservation" intent="registration" />
+                <Resource name="Size" intent="registration" />
+                <Resource name="Tag" intent="registration" />
+                <Router history={history}>{renderRoutes(routes)}</Router>
+              </ThemeProvider>
+            </ApolloProvider>
+          </DataProviderContext.Provider>
+        </StoreProvider>
+      </TranslationProvider>
     )
   }
 }

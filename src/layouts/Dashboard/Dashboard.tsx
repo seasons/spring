@@ -1,10 +1,12 @@
-import React, { Suspense, useState } from "react"
+import React, { Suspense, useState } from 'react';
 // import { Layout } from "react-admin"
-import { renderRoutes } from "react-router-config"
-import { makeStyles } from "@material-ui/styles"
-import { LinearProgress, Theme } from "@material-ui/core"
-import NavBar from "./NavBar"
-import TopBar from "./TopBar"
+import { renderRoutes } from 'react-router-config';
+
+import { LinearProgress, Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+
+import NavBar from './NavBar';
+import TopBar from './TopBar';
 
 const useStyles = makeStyles<Theme>(theme => ({
   container: {

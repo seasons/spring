@@ -1,11 +1,11 @@
-import { Container, Theme, Tabs, Tab, Divider, colors } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
 import React from "react"
 import { Redirect } from "react-router-dom"
 
+import { colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"
+import { makeStyles } from "@material-ui/styles"
+
 import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
-import Header from "./Header"
 import { ProductList } from "./Products"
 import { SizeList } from "./Sizes"
 import { TagList } from "./Tags"
@@ -60,7 +60,6 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
 
   return (
     <Container maxWidth={false}>
-      <Header />
       <Tabs
         className={classes.tabs}
         indicatorColor={"primary"}
