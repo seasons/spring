@@ -1,8 +1,7 @@
-import React from "react"
-import PropTypes from "prop-types"
 import clsx from "clsx"
 import { makeStyles } from "@material-ui/styles"
 import { Typography, colors, Theme } from "@material-ui/core"
+import React, { ReactNode } from "react"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -25,7 +24,27 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-function Label({ className, variant, color, shape, children, style, ...rest }: any) {
+export type LabelShape = "square" | "rounded"
+export type LabelVariant = "contained" | "outlined"
+
+export interface LabelProps {
+  children: ReactNode
+  className: string
+  color?: string
+  shape?: LabelShape
+  style?: any
+  variant?: LabelVariant
+}
+
+export const Label: React.FunctionComponent<LabelProps> = ({
+  children,
+  className,
+  color = colors.grey[600],
+  shape = "square",
+  style = {},
+  variant = "contained",
+  ...rest
+}) => {
   const classes = useStyles()
   const rootClassName = clsx(
     {
@@ -50,21 +69,3 @@ function Label({ className, variant, color, shape, children, style, ...rest }: a
     </Typography>
   )
 }
-
-Label.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  color: PropTypes.string,
-  shape: PropTypes.oneOf(["square", "rounded"]),
-  style: PropTypes.object,
-  variant: PropTypes.oneOf(["contained", "outlined"]),
-}
-
-Label.defaultProps = {
-  style: {},
-  color: colors.grey[600],
-  variant: "contained",
-  shape: "square",
-}
-
-export default Label
