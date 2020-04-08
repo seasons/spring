@@ -31,7 +31,7 @@ import MenuIcon from "@material-ui/icons/Menu"
 import SearchIcon from "@material-ui/icons/Search"
 
 // Components
-import { LogoMark } from "../../Icons/LogoMark"
+import { LogoMark } from "icons/LogoMark"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
