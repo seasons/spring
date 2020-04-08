@@ -1,12 +1,13 @@
-import React from "react"
-import { makeStyles } from "@material-ui/styles"
 import PropTypes from "prop-types"
+import React from "react"
 import { Redirect } from "react-router-dom"
-import { Container, Theme, Tabs, Tab, Divider, colors } from "@material-ui/core"
 
-import { ProductList } from "./Products"
+import { colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"
+import { makeStyles } from "@material-ui/styles"
+
 import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
+import { ProductList } from "./Products"
 import { SizeList } from "./Sizes"
 import { TagList } from "./Tags"
 

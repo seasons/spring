@@ -1,5 +1,5 @@
-import React from "react"
-import { List, Datagrid, TextField, ReferenceField } from "react-admin"
+import React from 'react';
+import { Datagrid, List, ReferenceField, TextField } from 'react-admin';
 
 export const TagList = props => (
   <List

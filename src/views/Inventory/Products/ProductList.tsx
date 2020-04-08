@@ -1,18 +1,13 @@
-import React from "react"
+import { ImagesField } from 'fields/ImagesField';
+import React from 'react';
 import {
-  List,
-  Datagrid,
-  ReferenceField,
-  TextField,
-  EditButton,
-  TextInput,
-  Filter,
-  ReferenceArrayInput,
-  SelectArrayInput,
-} from "react-admin"
-import { ImagesField } from "fields/ImagesField"
-import { Card } from "@material-ui/core"
-import Header from "../Header"
+    Datagrid, EditButton, Filter, List, ReferenceArrayInput, ReferenceField, SelectArrayInput,
+    TextField, TextInput
+} from 'react-admin';
+
+import { Card } from '@material-ui/core';
+
+import Header from '../Header';
 
 export const ProductFilter = props => (
   <Filter {...props}>

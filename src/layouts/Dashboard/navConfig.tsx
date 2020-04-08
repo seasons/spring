@@ -1,8 +1,8 @@
-import BarChartIcon from "@material-ui/icons/BarChart"
-import DashboardIcon from "@material-ui/icons/DashboardOutlined"
-import HomeIcon from "@material-ui/icons/HomeOutlined"
-import PersonIcon from "@material-ui/icons/PersonOutlined"
-import ListIcon from "@material-ui/icons/List"
+import BarChartIcon from '@material-ui/icons/BarChart';
+import DashboardIcon from '@material-ui/icons/DashboardOutlined';
+import HomeIcon from '@material-ui/icons/HomeOutlined';
+import ListIcon from '@material-ui/icons/List';
+import PersonIcon from '@material-ui/icons/PersonOutlined';
 
 export default [
   {
