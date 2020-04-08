@@ -21,7 +21,7 @@ import {
   Theme,
 } from "@material-ui/core"
 import MoreIcon from "@material-ui/icons/MoreVert"
-import NavItem from "components/NavItem"
+import { NavItem } from "components"
 import navConfig from "./navConfig"
 
 const useStyles = makeStyles<Theme>(theme => ({

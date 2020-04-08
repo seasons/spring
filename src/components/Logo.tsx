@@ -1,6 +1,6 @@
 import React from "react"
 import { LogoMark } from "../Icons/LogoMark"
 
-export function Logo() {
+export const Logo: React.FunctionComponent = () => {
   return <LogoMark />
 }
