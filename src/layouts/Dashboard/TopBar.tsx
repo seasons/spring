@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import clsx from 'clsx';
+import { LogoMark } from 'icons/LogoMark';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -8,8 +9,6 @@ import { AppBar, Button, Hidden, IconButton, Theme, Toolbar, Typography } from '
 import InputIcon from '@material-ui/icons/Input';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/styles';
-
-import { LogoMark } from '../../Icons/LogoMark';
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
