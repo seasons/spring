@@ -1,8 +1,7 @@
-import React from "react"
-import PropTypes from "prop-types"
 import clsx from "clsx"
-import { makeStyles } from "@material-ui/styles"
 import { colors, Theme } from "@material-ui/core"
+import { makeStyles } from "@material-ui/styles"
+import React from "react"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {

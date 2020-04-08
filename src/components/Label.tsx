@@ -1,6 +1,6 @@
 import clsx from "clsx"
-import { makeStyles } from "@material-ui/styles"
 import { Typography, colors, Theme } from "@material-ui/core"
+import { makeStyles } from "@material-ui/styles"
 import React, { ReactNode } from "react"
 
 const useStyles = makeStyles<Theme>(theme => ({
