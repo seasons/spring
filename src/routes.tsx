@@ -1,18 +1,6 @@
 // Packages
 import React from "react"
 import { Redirect } from "react-router-dom"
-<<<<<<< HEAD
-import { Dashboard } from "./layouts/Dashboard"
-import { ProductCreate } from "./views/Products/ProductCreate"
-import { ReservationsList } from "./Reservations"
-import { UserList } from "./users"
-import { CustomerList } from "./views/Customers/Customers"
-import { PackageList } from "./Packages"
-import { BrandList } from "./views/Brands"
-import { CategoryList } from "./views/Categories"
-import { ProductList, ProductEdit } from "./views/Products/ProductList"
-=======
->>>>>>> 5fa4932c64ebeda86f7a515da64fb6edd332e710
 
 // Views
 import { Dashboard } from "./layouts/Dashboard"

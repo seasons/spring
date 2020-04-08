@@ -32,7 +32,7 @@ const authLink = setContext(async (_, { headers }) => {
   try {
     // return the headers to the context so httpLink can read them
     const accessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQHN0YWdpbmciLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTg1NzYyMDc5LCJleHAiOjE1ODYzNjY4Nzl9.kqBGhmQU1k14i9Ku4dYnEZm3xt9wz2H3bQ5GcW_AaK0"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQHN0YWdpbmciLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTg2MDQxNTYxLCJleHAiOjE1ODY2NDYzNjF9.DYMv9_dQj0KxTlQwxcJajF9Qk7vQtPlca2OQ89mHWtE"
     return {
       headers: {
         ...headers,

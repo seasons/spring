@@ -19,21 +19,12 @@ function Header({ className, ...rest }: any) {
       <Grid alignItems="flex-end" container justify="space-between" spacing={3}>
         <Grid item>
           <Typography component="h1" variant="h3">
-<<<<<<< HEAD:src/views/Products/Header.tsx
-            Products
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Button color="primary" variant="contained">
-            Add product
-=======
             Inventory
           </Typography>
         </Grid>
         <Grid item>
           <Button color="primary" variant="contained" className={classes.addButton}>
             New product
->>>>>>> 5fa4932c64ebeda86f7a515da64fb6edd332e710:src/views/Inventory/Header.tsx
           </Button>
         </Grid>
       </Grid>

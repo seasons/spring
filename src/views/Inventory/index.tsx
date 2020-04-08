@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 import { Redirect } from "react-router-dom"
 import { Container, Theme, Tabs, Tab, Divider, colors } from "@material-ui/core"
 
-import Header from "./Header"
 import { ProductList } from "./Products"
 import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
@@ -55,7 +54,6 @@ function InventoryView({ match, history, props }) {
 
   return (
     <Container maxWidth={false}>
-      <Header />
       <Tabs
         className={classes.tabs}
         indicatorColor={"primary"}
