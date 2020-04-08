@@ -1,5 +1,5 @@
-import get from 'lodash/get';
-import React from 'react';
+import React from "react"
+import get from "lodash/get"
 
 export const ImagesField = ({ record = {}, source, label }) => {
   const images = record[source] || []
