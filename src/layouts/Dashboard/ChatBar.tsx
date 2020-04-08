@@ -16,7 +16,7 @@ import {
   Theme,
 } from "@material-ui/core"
 // import axios from "../../utils/axios"
-import StatusBullet from "components/StatusBullet"
+import { StatusBullet } from "components"
 
 const useStyles = makeStyles<Theme>(theme => ({
   drawer: {
@@ -108,10 +108,10 @@ function ChatBar({ open, onClose, className, ...rest }: ChatBarProps) {
                   {connection.active ? (
                     <StatusBullet color="success" size="small" />
                   ) : (
-                    <Typography className={classes.lastActivity} variant="body2">
-                      {moment(connection.lastActivity).fromNow()}
-                    </Typography>
-                  )}
+                      <Typography className={classes.lastActivity} variant="body2">
+                        {moment(connection.lastActivity).fromNow()}
+                      </Typography>
+                    )}
                 </ListItem>
               ))}
           </List>
