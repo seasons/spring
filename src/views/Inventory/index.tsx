@@ -1,13 +1,12 @@
-import React from "react"
-import { makeStyles } from "@material-ui/styles"
-import PropTypes from "prop-types"
-import { Redirect } from "react-router-dom"
 import { Container, Theme, Tabs, Tab, Divider, colors } from "@material-ui/core"
+import { makeStyles } from "@material-ui/styles"
+import React from "react"
+import { Redirect } from "react-router-dom"
 
-import Header from "./Header"
-import { ProductList } from "./Products"
 import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
+import Header from "./Header"
+import { ProductList } from "./Products"
 import { SizeList } from "./Sizes"
 import { TagList } from "./Tags"
 
@@ -30,7 +29,13 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-function InventoryView({ match, history, props }) {
+export interface InventoryViewProps {
+  history: any
+  match: any
+  props?: any
+}
+
+export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ match, history, props }) => {
   const classes = useStyles()
   const { tab: currentTab } = match.params
   const tabs = [
@@ -79,10 +84,3 @@ function InventoryView({ match, history, props }) {
     </Container>
   )
 }
-
-InventoryView.propTypes = {
-  history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-}
-
-export default InventoryView
