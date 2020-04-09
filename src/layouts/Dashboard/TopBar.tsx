@@ -133,38 +133,6 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
           <Typography variant="h4">Seasons Admin</Typography>
         </RouterLink>
         <div className={classes.flexGrow} />
-<<<<<<< HEAD
-
-=======
-        <Hidden smDown>
-          <div className={classes.search} ref={searchRef}>
-            <SearchIcon className={classes.searchIcon} />
-            <Input
-              className={classes.searchInput}
-              disableUnderline
-              onChange={handleSearchChange}
-              placeholder="Search people &amp; places"
-              value={searchValue}
-            />
-          </div>
-          <Popper anchorEl={searchRef.current} className={classes.searchPopper} open={openSearchPopover} transition>
-            <ClickAwayListener onClickAway={handleSearchPopverClose}>
-              <Paper className={classes.searchPopperContent} elevation={3}>
-                <List>
-                  {popularSearches.map(search => (
-                    <ListItem button key={search} onClick={handleSearchPopverClose}>
-                      <ListItemIcon>
-                        <SearchIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={search} />
-                    </ListItem>
-                  ))}
-                </List>
-              </Paper>
-            </ClickAwayListener>
-          </Popper>
-        </Hidden>
->>>>>>> 5fa4932c64ebeda86f7a515da64fb6edd332e710
         <Hidden mdDown>
           <Button className={classes.logoutButton} color="inherit" onClick={handleLogout}>
             <InputIcon className={classes.logoutIcon} />

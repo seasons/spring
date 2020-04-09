@@ -20,12 +20,18 @@ import { ThemeProvider } from "@material-ui/core"
 import configureStore from "./store/adminStore"
 import routes from "./routes"
 import englishMessages from "./i18n/en"
+import { Auth0Provider } from "utils/auth0"
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
   uri: "http://localhost:4466/monsoon/dev",
   // uri: "https://monsoon-staging.seasons.nyc",
 })
+
+const auth0Config = {
+  domain: "seasons-staging.auth0.com",
+  clientId: "fcHPQx7KYqpkqI2yn31fcLgt7nuU2S5D",
+}
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -89,25 +95,34 @@ class App extends React.Component {
     })
 
     return (
-      <TranslationProvider i18nProvider={i18nProvider}>
-        <StoreProvider store={store}>
-          <DataProviderContext.Provider value={dataProvider}>
-            <ApolloProvider client={client}>
-              <ThemeProvider theme={theme}>
-                <Resource name="Product" intent="registration" />
-                <Resource name="Customer" intent="registration" />
-                <Resource name="Category" intent="registration" />
-                <Resource name="Brand" intent="registration" />
-                <Resource name="User" intent="registration" />
-                <Resource name="Reservation" intent="registration" />
-                <Resource name="Size" intent="registration" />
-                <Resource name="Tag" intent="registration" />
-                <Router history={history}>{renderRoutes(routes)}</Router>
-              </ThemeProvider>
-            </ApolloProvider>
-          </DataProviderContext.Provider>
-        </StoreProvider>
-      </TranslationProvider>
+      <Auth0Provider
+        domain={auth0Config.domain}
+        client_id={auth0Config.domain}
+        redirect_uri={window.location.origin}
+        onRedirectCallback={appState => {
+          history.push(appState && appState.targetUrl ? appState.targetUrl : window.location.pathname)
+        }}
+      >
+        <TranslationProvider i18nProvider={i18nProvider}>
+          <StoreProvider store={store}>
+            <DataProviderContext.Provider value={dataProvider}>
+              <ApolloProvider client={client}>
+                <ThemeProvider theme={theme}>
+                  <Resource name="Product" intent="registration" />
+                  <Resource name="Customer" intent="registration" />
+                  <Resource name="Category" intent="registration" />
+                  <Resource name="Brand" intent="registration" />
+                  <Resource name="User" intent="registration" />
+                  <Resource name="Reservation" intent="registration" />
+                  <Resource name="Size" intent="registration" />
+                  <Resource name="Tag" intent="registration" />
+                  <Router history={history}>{renderRoutes(routes)}</Router>
+                </ThemeProvider>
+              </ApolloProvider>
+            </DataProviderContext.Provider>
+          </StoreProvider>
+        </TranslationProvider>
+      </Auth0Provider>
     )
   }
 }
