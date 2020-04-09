@@ -4,11 +4,14 @@ import { Redirect } from "react-router-dom"
 
 // Views
 import { Dashboard } from "./layouts/Dashboard"
-import { CustomerList } from "./views/Members"
-import { InventoryView } from "./views/Inventory"
-import { ReservationsList } from "./views/Reservations"
-import OverviewView from "./views/Overview"
-import AnalyticsView from "./views/Analytics"
+import {
+  AnalyticsView,
+  CustomerList,
+  InventoryView,
+  NewProductView,
+  OverviewView,
+  ReservationsList,
+} from "./views"
 
 export default [
   {
@@ -34,6 +37,11 @@ export default [
         path: "/inventory/:tab",
         exact: true,
         component: props => <InventoryView {...props} basePath="/inventory" resource="Product" />,
+      },
+      {
+        path: "/new-product",
+        exact: true,
+        component: props => <NewProductView {...props} basePath="/new-product" resource="Product" />,
       },
       {
         path: "/members",

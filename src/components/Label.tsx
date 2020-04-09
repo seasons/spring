@@ -19,10 +19,6 @@ const useStyles = makeStyles<Theme>(theme => ({
     whiteSpace: "nowrap",
     padding: theme.spacing(0.5, 1),
   },
-  rounded: {
-    borderRadius: 10,
-    padding: theme.spacing(0.5),
-  },
 }))
 
 export type LabelShape = "square" | "rounded"
@@ -50,18 +46,24 @@ export const Label: React.FunctionComponent<LabelProps> = ({
   const rootClassName = clsx(
     {
       [classes.root]: true,
-      [classes.rounded]: shape === "rounded",
     },
     className
   )
   const finalStyle = { ...style }
+  if (shape === "rounded") {
+    finalStyle.borderRadius = 10
+    finalStyle.padding = 4
+  }
 
-  if (variant === "contained") {
-    finalStyle.backgroundColor = color
-    finalStyle.color = "#FFF"
-  } else {
-    finalStyle.border = `1px solid ${color}`
-    finalStyle.color = color
+  switch (variant) {
+    case "contained":
+      finalStyle.backgroundColor = color
+      finalStyle.color = "#FFF"
+      break
+    case "outlined":
+      finalStyle.border = `1px solid ${color}`
+      finalStyle.color = color
+      break
   }
 
   return (

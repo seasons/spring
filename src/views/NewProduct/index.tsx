@@ -1,27 +1,11 @@
 import React from "react"
 import { Redirect } from "react-router-dom"
+import styled from "styled-components"
 
-import { colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
+import { colors, Container, Box, Theme, Typography } from "@material-ui/core"
 
-const useStyles = makeStyles<Theme>(theme => ({
-  root: {
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-  },
-  tabs: {
-    marginTop: theme.spacing(3),
-  },
-  tab: {
-    textTransform: "none",
-  },
-  divider: {
-    backgroundColor: colors.grey[300],
-  },
-  content: {
-    marginTop: theme.spacing(3),
-  },
-}))
+import { Label } from "components"
+import Header from "views/Overview/Header"
 
 export interface NewProductViewProps {
   history: any
@@ -30,10 +14,11 @@ export interface NewProductViewProps {
 }
 
 export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ match, history, props }) => {
-  const classes = useStyles()
-
   return (
     <Container maxWidth={false}>
+      <Typography color="textPrimary" variant="h2">
+        New product
+       </Typography>
     </Container>
   )
 }
