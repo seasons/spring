@@ -3,10 +3,11 @@ import React from "react"
 import { Box } from "@material-ui/core"
 
 export interface SpacerProps {
-  mt?: number
+  m?: number
   mb?: number
   ml?: number
   mr?: number
+  mt?: number
 }
 
 /**
