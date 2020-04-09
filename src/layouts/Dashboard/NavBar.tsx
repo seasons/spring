@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import clsx from 'clsx';
-import { NavItem } from '../../components';
+import { NavItem } from 'components';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
