@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Box, Button, Container, Grid } from "@material-ui/core"
+import { Box, Button, Container, Grid, GridList, GridListTile } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import { Dropzone } from "./Components"
@@ -12,6 +12,7 @@ export interface NewProductViewProps {
 }
 
 export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ match, history, props }) => {
+  const numImages = 4
   return (
     <Container maxWidth={false}>
       <Box mt={4}>
@@ -24,7 +25,13 @@ export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ m
             <Text variant="h4">Photography</Text>
             <Spacer mt={2} />
             <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
-              <Dropzone onReceivedFiles={() => { console.log("UPLOADED") }} />
+              <GridList cellHeight={516} cols={1}>
+                {[...Array(numImages)].map(index => (
+                  <GridListTile key={index}>
+                    <Dropzone onReceivedFiles={() => { console.log("UPLOADED") }} />
+                  </GridListTile>
+                ))}
+              </GridList>
             </Box>
           </Grid>
           <Grid item xs={8}>
