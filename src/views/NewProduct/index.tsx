@@ -20,6 +20,8 @@ export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ m
         <Text variant="h3">New product</Text>
         <Spacer mt={0.5} />
         <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
+        <Spacer mt={4} />
+        <Text variant="h4">Photography</Text>
       </Box>
     </Container>
   )
