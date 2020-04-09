@@ -10,7 +10,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-function Analytics() {
+export const AnalyticsView: React.FC = (props) => {
   const classes = useStyles()
 
   return (
@@ -19,5 +19,3 @@ function Analytics() {
     </Container>
   )
 }
-
-export default Analytics

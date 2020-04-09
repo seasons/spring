@@ -1,0 +1,6 @@
+export { AnalyticsView } from "./Analytics"
+export { InventoryView } from "./Inventory"
+export { CustomerList } from "./Members"
+export { NewProductView } from "./NewProduct"
+export { OverviewView } from "./Overview"
+export { ReservationsList } from "./Reservations"

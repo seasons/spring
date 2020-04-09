@@ -12,7 +12,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-function Overview() {
+export const OverviewView: React.FC = (props) => {
   const classes = useStyles()
 
   return (
@@ -21,5 +21,3 @@ function Overview() {
     </Container>
   )
 }
-
-export default Overview
