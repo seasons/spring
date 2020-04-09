@@ -22,7 +22,8 @@ export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ m
         <Grid container spacing={5}>
           <Grid item xs={4}>
             <Text variant="h4">Photography</Text>
-            <Box borderColor="#e5e5e5" borderRadius={4} border={1}>
+            <Spacer mt={2} />
+            <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
               <Dropzone onReceivedFiles={() => { console.log("UPLOADED") }} />
             </Box>
           </Grid>
