@@ -1,4 +1,3 @@
-import PropTypes from "prop-types"
 import React from "react"
 import { Redirect } from "react-router-dom"
 
@@ -30,7 +29,13 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-function InventoryView({ match, history, props }) {
+export interface InventoryViewProps {
+  history: any
+  match: any
+  props?: any
+}
+
+export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ match, history, props }) => {
   const classes = useStyles()
   const { tab: currentTab } = match.params
   const tabs = [
@@ -78,10 +83,3 @@ function InventoryView({ match, history, props }) {
     </Container>
   )
 }
-
-InventoryView.propTypes = {
-  history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-}
-
-export default InventoryView

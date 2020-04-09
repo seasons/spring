@@ -1,6 +1,5 @@
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 
 import { Button, Collapse, ListItem, Theme } from '@material-ui/core';
@@ -63,9 +62,28 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-interface NavItemProps {}
+export interface NavItemProps {
+  children?: ReactNode
+  className?: string
+  depth: number
+  href?: string
+  icon: any
+  label: any
+  open?: boolean
+  title: string
+}
 
-function NavItem({ title, href, depth, children, icon: Icon, className, open: openProp, label: Label, ...rest }: any) {
+export const NavItem: React.FunctionComponent<NavItemProps> = ({
+  children,
+  className,
+  depth,
+  href,
+  icon: Icon,
+  label: Label,
+  open: openProp = false,
+  title,
+  ...rest
+}) => {
   const classes = useStyles()
   const [open, setOpen] = useState(openProp)
 
@@ -92,8 +110,8 @@ function NavItem({ title, href, depth, children, icon: Icon, className, open: op
           {open ? (
             <ExpandLessIcon className={classes.expandIcon} color="inherit" />
           ) : (
-            <ExpandMoreIcon className={classes.expandIcon} color="inherit" />
-          )}
+              <ExpandMoreIcon className={classes.expandIcon} color="inherit" />
+            )}
         </Button>
         <Collapse in={open}>{children}</Collapse>
       </ListItem>
@@ -121,20 +139,3 @@ function NavItem({ title, href, depth, children, icon: Icon, className, open: op
     </ListItem>
   )
 }
-
-NavItem.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  depth: PropTypes.number.isRequired,
-  href: PropTypes.string,
-  icon: PropTypes.any,
-  label: PropTypes.any,
-  open: PropTypes.bool,
-  title: PropTypes.string.isRequired,
-}
-
-NavItem.defaultProps = {
-  open: false,
-}
-
-export default NavItem

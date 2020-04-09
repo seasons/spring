@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import { colors, Theme } from '@material-ui/core';
@@ -44,13 +43,21 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
+export type StatusBulletColor = "default" | "primary" | "info" | "success" | "warning" | "error"
+export type StatusBulletSize = "small" | "medium" | "large"
+
 interface StatusBulletProps {
   className?: string
-  size: string
-  color: string
+  color?: StatusBulletColor
+  size?: StatusBulletSize
 }
 
-function StatusBullet({ className, size, color, ...rest }: StatusBulletProps) {
+export const StatusBullet: React.FunctionComponent<StatusBulletProps> = ({
+  className,
+  color = "default",
+  size = "medium",
+  ...rest
+}) => {
   const classes = useStyles()
   const rootClassName = clsx(
     {
@@ -65,20 +72,7 @@ function StatusBullet({ className, size, color, ...rest }: StatusBulletProps) {
     <span
       {...rest}
       className={rootClassName}
-      //
+    //
     />
   )
 }
-
-StatusBullet.propTypes = {
-  className: PropTypes.string,
-  color: PropTypes.oneOf(["default", "primary", "info", "success", "warning", "error"]),
-  size: PropTypes.oneOf(["small", "medium", "large"]),
-}
-
-StatusBullet.defaultProps = {
-  size: "medium",
-  color: "default",
-}
-
-export default StatusBullet

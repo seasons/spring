@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom"
 // Views
 import { Dashboard } from "./layouts/Dashboard"
 import { CustomerList } from "./views/Members"
-import InventoryView from "./views/Inventory"
+import { InventoryView } from "./views/Inventory"
 import { ReservationsList } from "./views/Reservations"
 import OverviewView from "./views/Overview"
 import AnalyticsView from "./views/Analytics"

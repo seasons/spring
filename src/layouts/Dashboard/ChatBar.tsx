@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 // import axios from "../../utils/axios"
-import StatusBullet from 'components/StatusBullet';
+import { StatusBullet } from "../../components"
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import {
-    Avatar, Drawer, List, ListItem, ListItemAvatar, ListItemText, ListSubheader, Theme, Typography
+  Avatar, Drawer, List, ListItem, ListItemAvatar, ListItemText, ListSubheader, Theme, Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
@@ -101,10 +101,10 @@ function ChatBar({ open, onClose, className, ...rest }: ChatBarProps) {
                   {connection.active ? (
                     <StatusBullet color="success" size="small" />
                   ) : (
-                    <Typography className={classes.lastActivity} variant="body2">
-                      {moment(connection.lastActivity).fromNow()}
-                    </Typography>
-                  )}
+                      <Typography className={classes.lastActivity} variant="body2">
+                        {moment(connection.lastActivity).fromNow()}
+                      </Typography>
+                    )}
                 </ListItem>
               ))}
           </List>

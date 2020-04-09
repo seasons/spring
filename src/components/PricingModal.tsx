@@ -1,10 +1,9 @@
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import {
-    Button, colors, Dialog, Divider, Grid, Link, Paper, Theme, Typography
+  Button, colors, Dialog, Divider, Grid, Link, Paper, Theme, Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
@@ -75,13 +74,18 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-interface PricingModalProps {
+export interface PricingModalProps {
   className?: string
   open: boolean
   onClose?: any
 }
 
-function PricingModal({ open, onClose, className, ...rest }: PricingModalProps) {
+export const PricingModal: React.FunctionComponent<PricingModalProps> = ({
+  className,
+  onClose,
+  open,
+  ...rest
+}) => {
   const classes = useStyles()
 
   return (
@@ -188,11 +192,3 @@ function PricingModal({ open, onClose, className, ...rest }: PricingModalProps) 
     </Dialog>
   )
 }
-
-PricingModal.propTypes = {
-  className: PropTypes.string,
-  onClose: PropTypes.func,
-  open: PropTypes.bool,
-}
-
-export default PricingModal
