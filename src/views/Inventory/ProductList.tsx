@@ -10,7 +10,7 @@ import {
   ReferenceArrayInput,
   SelectArrayInput,
 } from "react-admin"
-import { ImagesField } from "../../Fields/ImagesField"
+import { ImagesField } from "fields/ImagesField"
 import { Card } from "@material-ui/core"
 import Header from "./Header"
 
@@ -38,7 +38,7 @@ export const ProductList = props => (
         resource={"Product"}
       >
         <Datagrid>
-          <ImagesField source="images" />
+          <ImagesField source="images" label="Images" />
           <TextField source="name" />
           <ReferenceField source="brand.id" reference="Brand" label="Brand Name">
             <TextField source="name" />
@@ -51,5 +51,3 @@ export const ProductList = props => (
     </Card>
   </>
 )
-
-export { ProductEdit } from "./ProductEdit"
