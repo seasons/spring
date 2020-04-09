@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { Box, Button, Container, Grid, GridList, GridListTile, InputBase, MenuItem, Select, styled, Input } from "@material-ui/core"
 import { withStyles } from '@material-ui/core/styles';
 
-import { Separator, Spacer, Text } from "components"
+import { Separator, Spacer, Text, TextField } from "components"
 import { Dropzone } from "./Components"
 
 export interface NewProductViewProps {
@@ -14,6 +14,7 @@ export interface NewProductViewProps {
 
 export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ match, history, props }) => {
   const [brand, setBrand] = useState("")
+  const [productName, setProductName] = useState("")
   const numImages = 4
   const brands = ["Acne", "Off-White", "Supreme",]
   return (
@@ -59,6 +60,8 @@ export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ m
               </Grid>
               <Grid item xs={6}>
                 <Text variant="h6">Product name</Text>
+                <Spacer mt={1} />
+                <TextField placeholder="Max 50 characters" value={productName} onChange={(value) => setProductName(value)} />
               </Grid>
             </Grid>
           </Grid>
@@ -71,6 +74,6 @@ export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ m
 const StyledSelect = styled(Select)({
   border: '1px solid #e5e5e5',
   borderRadius: 4,
-  height: 48,
+  height: 54,
   width: "100%",
 })
