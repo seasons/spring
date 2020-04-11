@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useDropzone } from 'react-dropzone'
 
 import { Box, Button, Container, Grid, GridList, GridListTile, InputBase, MenuItem, Select, styled, Input } from "@material-ui/core"
 import { withStyles } from '@material-ui/core/styles';
@@ -17,6 +18,9 @@ export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ m
   const [productName, setProductName] = useState("")
   const numImages = 4
   const brands = ["Acne", "Off-White", "Supreme",]
+  const onReceivedImageFile = (imageFile) => {
+    console.log("RECEIVED IMAGE:", imageFile)
+  }
   return (
     <Container maxWidth={false}>
       <Box mt={8}>
@@ -32,7 +36,7 @@ export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ m
               <GridList cellHeight={516} cols={1}>
                 {[...Array(numImages)].map(index => (
                   <GridListTile key={index}>
-                    <Dropzone onReceivedFiles={() => { console.log("UPLOADED") }} />
+                    <Dropzone onReceivedFile={onReceivedImageFile} />
                   </GridListTile>
                 ))}
               </GridList>

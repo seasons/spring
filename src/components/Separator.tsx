@@ -1,8 +1,6 @@
 import styled from "styled-components"
 
-import { space, SpaceProps, width, WidthProps } from "styled-system"
-
-export interface SeparatorProps extends SpaceProps, WidthProps {
+export interface SeparatorProps {
   color?: string
 }
 
@@ -12,8 +10,6 @@ export interface SeparatorProps extends SpaceProps, WidthProps {
 export const Separator = styled.div<SeparatorProps>`
   border: 1px solid ${props => props.color || "#e5e5e5"};
   border-bottom-width: 0;
-  ${space};
-  ${width};
 `
 
 Separator.defaultProps = {

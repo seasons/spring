@@ -1,65 +1,27 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useCallback, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
 import { Box, Button, Container, Grid, styled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import { UploadFileIcon } from "icons"
 
 export interface DropzoneProps {
-  disabled?: boolean
-  onReceivedFiles: any
+  onReceivedFile: (any) => void
 }
 
 export const Dropzone: React.FC<DropzoneProps> = ({
-  disabled = false,
-  onReceivedFiles,
+  onReceivedFile,
 }) => {
-  const [highlight, setHighlight] = useState(false)
-  let fileInputRef: any = React.createRef()
-
-  const openFileDialog = () => {
-    if (disabled) return
-    fileInputRef.current.click()
-  }
-
-  const onFilesAdded = (evt) => {
-    if (disabled) return
-    const files = evt.target.files
-    if (onReceivedFiles) {
-      const array = fileListToArray(files)
-      onReceivedFiles(array)
+  const [imagePreview, setImagePreview] = useState("")
+  const onDrop = useCallback(acceptedFiles => {
+    console.log("GOT FILES:", acceptedFiles)
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0]
+      onReceivedFile(file)
+      setImagePreview(URL.createObjectURL(file))
     }
-  }
-
-  const onDragOver = (evt) => {
-    evt.preventDefault()
-    if (disabled) return
-    setHighlight(true)
-  }
-
-  const onDragLeave = () => {
-    setHighlight(false)
-  }
-
-  const onDrop = (event) => {
-    event.preventDefault()
-
-    if (disabled) return
-
-    const files = event.dataTransfer.files
-    if (onFilesAdded) {
-      const array = fileListToArray(files)
-      onFilesAdded(array)
-    }
-    setHighlight(false)
-  }
-
-  const fileListToArray = (list) => {
-    const array: any[] = []
-    for (var i = 0; i < list.length; i++) {
-      array.push(list.item(i))
-    }
-    return array
-  }
+  }, [onReceivedFile])
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
     <Wrapper
@@ -67,25 +29,26 @@ export const Dropzone: React.FC<DropzoneProps> = ({
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      onDragOver={onDragOver}
-      onDragLeave={onDragLeave}
-      onDrop={onDrop}
-      onClick={openFileDialog}
-      style={{ cursor: disabled ? 'default' : 'pointer' }}
+      {...getRootProps()}
     >
       <input
-        ref={fileInputRef}
-        className="FileInput"
-        type="file"
-        multiple
-        onChange={onFilesAdded}
-        style={{ opacity: 0 }}
+        {...getInputProps()}
       />
-      <UploadFileIcon />
-      <Spacer mt={2} />
-      <Text variant="h6">Select files to upload</Text>
-      <Spacer mt={0.5} />
-      <Text variant="h6" opacity={0.5}>or drag and drop, copy and paste files</Text>
+      {imagePreview
+        ? (
+          <div style={{ display: 'block', width: 'auto', height: '100%' }}>
+            <img src={imagePreview} alt="Preview" />
+          </div>
+        )
+        : (
+          <>
+            <UploadFileIcon />
+            <Spacer mt={2} />
+            <Text variant="h6">Select files to upload</Text>
+            <Spacer mt={0.5} />
+            <Text variant="h6" opacity={0.5}>or drag and drop, copy and paste files</Text>
+          </>
+        )}
     </Wrapper>
   )
 }
