@@ -1,12 +1,12 @@
-import { FullNameField } from 'fields/FullNameField';
+import { FullNameField, ViewEntityField } from 'fields';
 import React from 'react';
-import { Datagrid, List, ReferenceField, TextField } from 'react-admin';
+import { Datagrid, List, TextField } from 'react-admin';
 
 export const CustomerList = props => {
   return (
     <List
       {...props}
-      perPage={15}
+      perPage={10}
       hasCreate={false}
       hasEdit={false}
       hasList={true}
@@ -20,6 +20,7 @@ export const CustomerList = props => {
         <TextField source="detail.shippingAddress.state" label="State" />
         <TextField source="plan" label="Membership" />
         <TextField source="status" label="Status" />
+        <ViewEntityField entityPath="members" source="user.id" label="Actions" />
       </Datagrid>
     </List>
   )

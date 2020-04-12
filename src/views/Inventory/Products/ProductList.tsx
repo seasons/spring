@@ -1,4 +1,4 @@
-import { ImagesField } from 'fields/ImagesField';
+import { ImagesField } from 'fields';
 import React from 'react';
 import {
     Datagrid, EditButton, Filter, List, ReferenceArrayInput, ReferenceField, SelectArrayInput,
