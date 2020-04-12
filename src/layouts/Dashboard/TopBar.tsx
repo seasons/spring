@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import clsx from 'clsx';
-import { LogoMark } from 'icons/LogoMark';
+import { LogoMark } from 'icons';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';

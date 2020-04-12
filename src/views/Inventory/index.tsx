@@ -50,6 +50,10 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
     history.push(value)
   }
 
+  const onNewProductBtnPressed = () => {
+    history.push("/new-product")
+  }
+
   if (!currentTab) {
     return <Redirect to={`/inventory/products`} />
   }
@@ -74,7 +78,7 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
       </Tabs>
       <Divider className={classes.divider} />
       <div className={classes.content}>
-        {currentTab === "products" && <ProductList {...props} basePath="/inventory/products" resource="Product" />}
+        {currentTab === "products" && <ProductList {...props} basePath="/inventory/products" onNewProductBtnPressed={onNewProductBtnPressed} resource="Product" />}
         {currentTab === "brands" && <BrandList {...props} basePath="/inventory/products" resource="Brand" />}
         {currentTab === "categories" && <CategoryList {...props} basePath="/inventory/products" resource="Category" />}
         {currentTab === "sizes" && <SizeList {...props} basePath="/inventory/sizes" resource="Size" />}

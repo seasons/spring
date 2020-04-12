@@ -1,13 +1,13 @@
 import { ImagesField } from 'fields/ImagesField';
 import React from 'react';
 import {
-    Datagrid, EditButton, Filter, List, ReferenceArrayInput, ReferenceField, SelectArrayInput,
-    TextField, TextInput
+  Datagrid, EditButton, Filter, List, ReferenceArrayInput, ReferenceField, SelectArrayInput,
+  TextField, TextInput
 } from 'react-admin';
 
 import { Card } from '@material-ui/core';
 
-import Header from '../Header';
+import { Header } from '../Header';
 
 export const ProductFilter = props => (
   <Filter {...props}>
@@ -18,13 +18,17 @@ export const ProductFilter = props => (
   </Filter>
 )
 
-export const ProductList = props => (
+export interface ProductListInterface {
+  onNewProductBtnPressed: () => void
+}
+
+export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => (
   <>
     <Card>
-      <Header />
+      <Header onNewProductBtnPressed={onNewProductBtnPressed} />
       <List
         filters={<ProductFilter />}
-        {...props}
+        {...rest}
         perPage={10}
         hasCreate={false}
         hasEdit={false}
