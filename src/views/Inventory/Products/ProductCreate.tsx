@@ -1,6 +1,6 @@
 import { productCreateQuery } from 'queries';
 import React, { useEffect, useState } from "react"
-import { useDataProvider, useQuery, Loading, Error, Create, SimpleForm, ImageInput, TextInput } from "react-admin"
+import { useDataProvider, useQuery, Loading, Error, Create, SimpleForm, ImageField, ImageInput, TextInput } from "react-admin"
 import { useDropzone } from 'react-dropzone'
 import { graphql } from 'react-apollo';
 
@@ -9,7 +9,7 @@ import styled from "styled-components"
 import { withStyles } from '@material-ui/core/styles';
 
 import { Separator, Spacer, Text, TextField } from "components"
-import { Dropzone } from "./Components"
+import { ImageInputPlaceholder, ProductImagePreview } from "./Components"
 
 export interface ProductCreateProps {
   history: any
@@ -36,25 +36,27 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     <Create title="Create a Product" {...props}>
       <SimpleForm>
         <ContainerGrid container spacing={5} >
+          <Grid item xs={12}>
+            <Spacer mt={3} />
+            <Text variant="h3">New product</Text>
+            <Spacer mt={0.5} />
+            <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
+            <Spacer mt={4} />
+          </Grid>
           <Grid item xs={4}>
             <Text variant="h4">Photography</Text>
             <Spacer mt={2} />
             <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
               <GridList cellHeight={516} cols={1}>
                 <ImageInput
+                  label={""}
                   source="images"
-                  label="Product Images"
                   accept="image/*"
                   multiple
-                  placeholder={<p>Drop your file here</p>}
+                  placeholder={<ImageInputPlaceholder />}
                 >
                   <ProductImagePreview source="src" />
                 </ImageInput>
-                {[...Array(numImages)].map(index => (
-                  <GridListTile key={index}>
-                    <Dropzone onReceivedFile={onReceivedImageFile} />
-                  </GridListTile>
-                ))}
               </GridList>
             </Box>
           </Grid>
@@ -90,26 +92,6 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     </Create>
   )
 })
-
-const ProductImagePreview: React.SFC<any> = ({ record }) => {
-  console.log("RECORD:", record)
-  if (record.rawFile) {
-    return (
-      <ImageContainer>
-        <img src={record.rawFile.preview} alt="" />
-      </ImageContainer>
-    )
-  }
-
-  return null
-}
-
-const ImageContainer = styled.div`
-  width: 300px;
-  img {
-    width: inherit;
-  }
-`
 
 const ContainerGrid = muiStyled(Grid)({
   width: "100%",
