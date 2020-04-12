@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { useDataProvider, useQuery, Loading, Error, Create, SimpleForm, TextInput } from "react-admin"
 import { useDropzone } from 'react-dropzone'
 
 import { Box, Button, Container, Grid, GridList, GridListTile, InputBase, MenuItem, Select, styled, Input } from "@material-ui/core"
@@ -14,6 +15,11 @@ export interface NewProductViewProps {
 }
 
 export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ match, history, props }) => {
+  // const dataProvider = useDataProvider()
+  // const { data, loading, error } = useQuery({
+  //   type: "getList",
+  //   resource: "Product",
+  // })
   const [brand, setBrand] = useState("")
   const [productName, setProductName] = useState("")
   const numImages = 4
@@ -21,6 +27,22 @@ export const NewProductView: React.FunctionComponent<NewProductViewProps> = ({ m
   const onReceivedImageFile = (imageFile) => {
     console.log("RECEIVED IMAGE:", imageFile)
   }
+
+  // if (data) {
+  //   console.log("GOT BRANDS:", data)
+  // }
+  // if (error) {
+  //   console.log("GOT ERROR:", error)
+  // }
+
+  // return (
+  //   <Create title="New Product" resource="Brands">
+  //     <SimpleForm>
+  //       <TextInput source="name" />
+  //     </SimpleForm>
+  //   </Create>
+  // )
+
   return (
     <Container maxWidth={false}>
       <Box mt={8}>
