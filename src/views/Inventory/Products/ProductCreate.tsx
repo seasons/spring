@@ -10,7 +10,7 @@ import styled from "styled-components"
 import { withStyles } from '@material-ui/core/styles';
 
 import { Separator, Spacer, Text, TextField } from "components"
-import { ImageInputPlaceholder, ProductImagePreview } from "./Components"
+import { ImageInputPlaceholder, ProductImagePreview, ProductCreateGeneralSection } from "./Components"
 
 export interface ProductCreateProps {
   history: any
@@ -65,34 +65,7 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
               </GridList>
             </Box>
           </Grid>
-          <Grid item xs={8}>
-            <Text variant="h4">General</Text>
-            <Spacer mt={2} />
-            <Separator />
-            <Spacer mt={3} />
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Text variant="h6">Brand</Text>
-                <Spacer mt={1} />
-                <StyledSelectInput source="brand" choices={data.brands} />
-              </Grid>
-              <Grid item xs={6}>
-                <Text variant="h6">Product name</Text>
-                <Spacer mt={1} />
-                <StyledTextInput source="name" placeholder="Max 50 characters" />
-              </Grid>
-            </Grid>
-            <Spacer mt={3} />
-            <Grid container>
-              <Text variant="h6">Description</Text>
-              <Spacer mt={1} />
-              <StyledTextInput multiline source="description" placeholder="Max 140 characters" />
-              <Spacer mt={3} />
-              <Text variant="h6">Available sizes</Text>
-              <Spacer mt={1} />
-              <StyledSelectArrayInput source="sizes" choices={sizes.map(size => ({ id: size, name: size }))} />
-            </Grid>
-          </Grid>
+          <ProductCreateGeneralSection brands={data.brands} sizes={sizes} />
         </ContainerGrid>
       </SimpleForm>
     </Create>
