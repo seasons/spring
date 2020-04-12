@@ -1,6 +1,6 @@
 import { productCreateQuery } from 'queries';
 import React, { useEffect, useState } from "react"
-import { useDataProvider, useQuery, Loading, Error, Create, SimpleForm, ImageField, ImageInput, TextInput, SelectInput } from "react-admin"
+import { useDataProvider, useQuery, Loading, Error, Create, SimpleForm, ImageField, ImageInput, TextInput, SelectInput, SelectArrayInput } from "react-admin"
 import { useDropzone } from 'react-dropzone'
 
 import { graphql } from 'react-apollo';
@@ -20,9 +20,6 @@ export interface ProductCreateProps {
 
 export const ProductCreate = graphql(productCreateQuery)(props => {
   const data: any = props?.data
-  const [brand, setBrand] = useState("")
-  const [productName, setProductName] = useState("")
-  const numImages = 4
   const onReceivedImageFile = (imageFile) => {
     console.log("RECEIVED IMAGE:", imageFile)
   }
@@ -31,6 +28,14 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     return <div>Loading</div>
   }
 
+  const sizes = [
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "XXL",
+  ]
   console.log("DATA:", data)
   return (
     <Create title="Create a Product" {...props}>
@@ -77,6 +82,16 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
                 <StyledTextInput source="name" placeholder="Max 50 characters" />
               </Grid>
             </Grid>
+            <Spacer mt={3} />
+            <Grid container>
+              <Text variant="h6">Description</Text>
+              <Spacer mt={1} />
+              <StyledTextInput multiline source="description" placeholder="Max 140 characters" />
+              <Spacer mt={3} />
+              <Text variant="h6">Available sizes</Text>
+              <Spacer mt={1} />
+              <StyledSelectArrayInput source="sizes" choices={sizes.map(size => ({ id: size, name: size }))} />
+            </Grid>
           </Grid>
         </ContainerGrid>
       </SimpleForm>
@@ -89,6 +104,10 @@ const ContainerGrid = muiStyled(Grid)({
 })
 
 const StyledSelectInput = muiStyled(SelectInput)({
+  width: "100%",
+})
+
+const StyledSelectArrayInput = muiStyled(SelectArrayInput)({
   width: "100%",
 })
 
