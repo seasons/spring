@@ -36,6 +36,17 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     "XL",
     "XXL",
   ]
+
+  const statuses = [
+    {
+      id: "Available",
+      name: "Available",
+    },
+    {
+      id: "NotAvailable",
+      name: "Not available",
+    },
+  ]
   console.log("DATA:", data)
   return (
     <Create title="Create a Product" {...props}>
@@ -65,7 +76,7 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
               </GridList>
             </Box>
           </Grid>
-          <ProductCreateGeneralSection brands={data.brands} sizes={sizes} />
+          <ProductCreateGeneralSection brands={data.brands} sizes={sizes} statuses={statuses} />
         </ContainerGrid>
       </SimpleForm>
     </Create>

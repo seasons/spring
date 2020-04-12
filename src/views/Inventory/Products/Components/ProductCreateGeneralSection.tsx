@@ -9,11 +9,13 @@ import { Separator, Spacer, Text, TextField } from "components"
 export interface ProductCreateGeneralSectionProps {
   brands: any[]
   sizes: string[]
+  statuses: any[]
 }
 
 export const ProductCreateGeneralSection: React.FC<ProductCreateGeneralSectionProps> = ({
   brands,
   sizes,
+  statuses,
   ...rest
 }) => {
   return (
@@ -43,6 +45,10 @@ export const ProductCreateGeneralSection: React.FC<ProductCreateGeneralSectionPr
         <Text variant="h6">Available sizes</Text>
         <Spacer mt={1} />
         <StyledSelectArrayInput source="sizes" choices={sizes.map(size => ({ id: size, name: size }))} />
+        <Spacer mt={3} />
+        <Text variant="h6">Available status</Text>
+        <Spacer mt={1} />
+        <StyledSelectInput source="status" choices={statuses} />
       </Grid>
     </Grid>
   )
