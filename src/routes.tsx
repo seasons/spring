@@ -8,7 +8,7 @@ import {
   AnalyticsView,
   CustomerList,
   InventoryView,
-  NewProductView,
+  ProductCreate,
   OverviewView,
   ReservationsList,
 } from "./views"
@@ -39,9 +39,9 @@ export default [
         component: props => <InventoryView {...props} basePath="/inventory" resource="Product" />,
       },
       {
-        path: "/new-product",
+        path: "/product/new",
         exact: true,
-        component: props => <NewProductView {...props} basePath="/new-product" resource="Product" />,
+        component: props => <ProductCreate {...props} basePath="/product/new" resource="Product" />,
       },
       {
         path: "/members",
