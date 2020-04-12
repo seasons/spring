@@ -1,8 +1,8 @@
 import { ImagesField } from 'fields/ImagesField';
 import React from 'react';
 import {
-  Datagrid, EditButton, Filter, List, ReferenceArrayInput, ReferenceField, SelectArrayInput,
-  TextField, TextInput
+    Datagrid, EditButton, Filter, List, ReferenceArrayInput, ReferenceField, SelectArrayInput,
+    TextField, TextInput
 } from 'react-admin';
 
 import { Card } from '@material-ui/core';
@@ -37,7 +37,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         resource={"Product"}
       >
         <Datagrid>
-          <ImagesField source="images" label="Images" />
+          <ImagesField source="images" />
           <TextField source="name" />
           <ReferenceField source="brand.id" reference="Brand" label="Brand Name">
             <TextField source="name" />

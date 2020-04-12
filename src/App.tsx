@@ -1,27 +1,29 @@
-import { InMemoryCache } from "apollo-cache-inmemory"
-import { ApolloClient } from "apollo-client"
-import { ApolloLink } from "apollo-link"
-import { setContext } from "apollo-link-context"
-import { HttpLink } from "apollo-link-http"
-import { createBrowserHistory } from "history"
-import get from "lodash/get"
-import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
-import polyglotI18nProvider from "ra-i18n-polyglot"
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
+import { ApolloLink } from 'apollo-link';
+import { setContext } from 'apollo-link-context';
+import { HttpLink } from 'apollo-link-http';
+import { AppLoader } from 'components';
+import { createBrowserHistory } from 'history';
+import get from 'lodash/get';
+import buildOpenCrudProvider, { buildQuery } from 'ra-data-opencrud';
+import polyglotI18nProvider from 'ra-i18n-polyglot';
+import React from 'react';
+import {
+    convertLegacyDataProvider, DataProviderContext, Resource, TranslationProvider
+} from 'react-admin';
+import { ApolloProvider } from 'react-apollo';
+import { Provider as StoreProvider } from 'react-redux';
+import { renderRoutes } from 'react-router-config';
+import { Router } from 'react-router-dom';
 
-import React from "react"
-import { convertLegacyDataProvider, DataProviderContext, Resource, TranslationProvider } from "react-admin"
-import { ApolloProvider } from "react-apollo"
-import { Provider as StoreProvider } from "react-redux"
-import { renderRoutes } from "react-router-config"
-import { Router } from "react-router-dom"
+import { ThemeProvider } from '@material-ui/core';
 
-import { ThemeProvider } from "@material-ui/core"
-
-import englishMessages from "./i18n/en"
-import overridenQueries from "./queries"
-import routes from "./routes"
-import configureStore from "./store/adminStore"
-import { theme } from "./theme/theme"
+import englishMessages from './i18n/en';
+import overridenQueries from './queries';
+import routes from './routes';
+import configureStore from './store/adminStore';
+import { theme } from './theme/theme';
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
@@ -81,7 +83,7 @@ class App extends React.Component {
     const { dataProvider } = this.state
 
     if (!dataProvider) {
-      return <div>Loading</div>
+      return <AppLoader />
     }
 
     const store = configureStore({
