@@ -5,12 +5,12 @@ import { Form, Field } from "react-final-form"
 
 import { graphql } from 'react-apollo';
 
-import { Box, Grid, GridList, GridListTile, styled as muiStyled, Input } from "@material-ui/core"
+import { Box, Grid, GridList, GridListTile, styled as muiStyled, Input, Button } from "@material-ui/core"
 import styled from "styled-components"
 import { withStyles } from '@material-ui/core/styles';
 
 import { Spacer, Text } from "components"
-import { Dropzone, ProductCreateGeneralSection } from "./Components"
+import { BottomNavBar, Dropzone, ProductCreateGeneralSection } from "./Components"
 
 export interface ProductCreateProps {
   history: any
@@ -48,8 +48,14 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     },
   ]
   const numImages = 4
-  const onSubmit = (values) => {
+  const onCancel = () => {
 
+  }
+  const onNext = () => {
+
+  }
+  const onSubmit = (values) => {
+    console.log("SUBMITTED VALUES", values)
   }
   const sortedBrands = [...data.brands].sort((brandA, brandB) => {
     return brandA.name < brandB.name
@@ -63,32 +69,36 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     <Form
       onSubmit={onSubmit}
       render={({ handleSubmit }) => (
-        <Box mx={5}>
-          <form onSubmit={handleSubmit}>
-            <ContainerGrid container spacing={5} >
-              <Grid item xs={12}>
-                <Spacer mt={3} />
-                <Text variant="h3">New product</Text>
-                <Spacer mt={0.5} />
-                <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
-                <Spacer mt={4} />
-              </Grid>
-              <Grid item xs={4}>
-                <Text variant="h4">Photography</Text>
-                <Spacer mt={2} />
-                <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
-                  <GridList cellHeight={516} cols={1}>
-                    {[...Array(numImages)].map(index => (
-                      <GridListTile key={index}>
-                        <Dropzone onReceivedFile={onReceivedImageFile} />
-                      </GridListTile>
-                    ))}
-                  </GridList>
-                </Box>
-              </Grid>
-              <ProductCreateGeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
-            </ContainerGrid>
-          </form>
+        <Box>
+          <Box mx={5}>
+            <form onSubmit={handleSubmit}>
+              <ContainerGrid container spacing={5} >
+                <Grid item xs={12}>
+                  <Spacer mt={3} />
+                  <Text variant="h3">New product</Text>
+                  <Spacer mt={0.5} />
+                  <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
+                  <Spacer mt={4} />
+                </Grid>
+                <Grid item xs={4}>
+                  <Text variant="h4">Photography</Text>
+                  <Spacer mt={2} />
+                  <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
+                    <GridList cellHeight={516} cols={1}>
+                      {[...Array(numImages)].map(index => (
+                        <GridListTile key={index}>
+                          <Dropzone onReceivedFile={onReceivedImageFile} />
+                        </GridListTile>
+                      ))}
+                    </GridList>
+                  </Box>
+                </Grid>
+                <ProductCreateGeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
+                <Button type="submit">Submit</Button>
+              </ContainerGrid>
+            </form>
+          </Box>
+          <BottomNavBar onCancel={onCancel} onNext={onNext} />
         </Box>
       )}
     />
