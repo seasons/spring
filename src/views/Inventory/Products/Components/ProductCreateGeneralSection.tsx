@@ -1,10 +1,11 @@
 import React from "react"
 import { TextInput, SelectInput, SelectArrayInput } from "react-admin"
+import { Form, Field } from "react-final-form"
 
 import { Grid, styled as muiStyled } from "@material-ui/core"
 import styled from "styled-components"
 
-import { Separator, Spacer, Text, TextField } from "components"
+import { FormSelect, FormTextField, Separator, Spacer, Text } from "components"
 
 export interface ProductCreateGeneralSectionProps {
   brands: any[]
@@ -18,6 +19,10 @@ export const ProductCreateGeneralSection: React.FC<ProductCreateGeneralSectionPr
   statuses,
   ...rest
 }) => {
+  const brandChoices = brands.map(brand => ({
+    value: brand.id,
+    display: brand.name,
+  }))
   return (
     <Grid item xs={8} {...rest}>
       <Text variant="h4">General</Text>
@@ -28,19 +33,19 @@ export const ProductCreateGeneralSection: React.FC<ProductCreateGeneralSectionPr
         <Grid item xs={6}>
           <Text variant="h6">Brand</Text>
           <Spacer mt={1} />
-          <StyledSelectInput source="brand" choices={brands} />
+          <FormSelect name="brand" choices={brandChoices} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Product name</Text>
           <Spacer mt={1} />
-          <StyledTextInput source="name" placeholder="Max 50 characters" />
+          <FormTextField name="name" placeholder="Max 50 characters" />
         </Grid>
       </Grid>
       <Spacer mt={3} />
       <Grid container>
         <Text variant="h6">Description</Text>
         <Spacer mt={1} />
-        <StyledTextInput multiline source="description" placeholder="Max 140 characters" />
+        <FormTextField multiline name="description" placeholder="Max 140 characters" />
         <Spacer mt={3} />
         <Text variant="h6">Available sizes</Text>
         <Spacer mt={1} />

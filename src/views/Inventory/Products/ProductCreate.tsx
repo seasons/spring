@@ -1,16 +1,16 @@
 import { productCreateQuery } from 'queries';
 import React, { useEffect, useState } from "react"
-import { useDataProvider, useQuery, Loading, Error, Create, SimpleForm, ImageField, ImageInput, TextInput, SelectInput, SelectArrayInput } from "react-admin"
-import { useDropzone } from 'react-dropzone'
+import { Create, SimpleForm, TextInput, SelectInput, SelectArrayInput } from "react-admin"
+import { Form, Field } from "react-final-form"
 
 import { graphql } from 'react-apollo';
 
-import { Box, Button, Container, Grid, GridList, GridListTile, InputBase, MenuItem, Select, styled as muiStyled, Input } from "@material-ui/core"
+import { Box, Grid, GridList, GridListTile, styled as muiStyled, Input } from "@material-ui/core"
 import styled from "styled-components"
 import { withStyles } from '@material-ui/core/styles';
 
-import { Separator, Spacer, Text, TextField } from "components"
-import { Dropzone, ImageInputPlaceholder, ProductImagePreview, ProductCreateGeneralSection } from "./Components"
+import { Spacer, Text } from "components"
+import { Dropzone, ProductCreateGeneralSection } from "./Components"
 
 export interface ProductCreateProps {
   history: any
@@ -24,7 +24,7 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     console.log("RECEIVED IMAGE:", imageFile)
   }
 
-  if (!data) {
+  if (!data?.brands) {
     return <div>Loading</div>
   }
 
@@ -48,35 +48,48 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     },
   ]
   const numImages = 4
+  const onSubmit = (values) => {
+
+  }
+  const sortedBrands = [...data.brands].sort((brandA, brandB) => {
+    return brandA.name < brandB.name
+      ? -1
+      : brandA.name === brandB.name
+        ? 0
+        : 1
+  })
   console.log("DATA:", data)
   return (
-    <Create title="Create a Product" {...props}>
-      <SimpleForm>
-        <ContainerGrid container spacing={5} >
-          <Grid item xs={12}>
-            <Spacer mt={3} />
-            <Text variant="h3">New product</Text>
-            <Spacer mt={0.5} />
-            <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
-            <Spacer mt={4} />
-          </Grid>
-          <Grid item xs={4}>
-            <Text variant="h4">Photography</Text>
-            <Spacer mt={2} />
-            <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
-              <GridList cellHeight={516} cols={1}>
-                {[...Array(numImages)].map(index => (
-                  <GridListTile key={index}>
-                    <Dropzone onReceivedFile={onReceivedImageFile} />
-                  </GridListTile>
-                ))}
-              </GridList>
-            </Box>
-          </Grid>
-          <ProductCreateGeneralSection brands={data.brands} sizes={sizes} statuses={statuses} />
-        </ContainerGrid>
-      </SimpleForm>
-    </Create>
+    <Form
+      onSubmit={onSubmit}
+      render={({ handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <ContainerGrid container spacing={5} >
+            <Grid item xs={12}>
+              <Spacer mt={3} />
+              <Text variant="h3">New product</Text>
+              <Spacer mt={0.5} />
+              <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
+              <Spacer mt={4} />
+            </Grid>
+            <Grid item xs={4}>
+              <Text variant="h4">Photography</Text>
+              <Spacer mt={2} />
+              <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
+                <GridList cellHeight={516} cols={1}>
+                  {[...Array(numImages)].map(index => (
+                    <GridListTile key={index}>
+                      <Dropzone onReceivedFile={onReceivedImageFile} />
+                    </GridListTile>
+                  ))}
+                </GridList>
+              </Box>
+            </Grid>
+            <ProductCreateGeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
+          </ContainerGrid>
+        </form>
+      )}
+    />
   )
 })
 
