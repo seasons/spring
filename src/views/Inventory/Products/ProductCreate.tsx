@@ -39,12 +39,12 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
 
   const statuses = [
     {
-      id: "Available",
-      name: "Available",
+      value: "Available",
+      display: "Available",
     },
     {
-      id: "NotAvailable",
-      name: "Not available",
+      value: "NotAvailable",
+      display: "Not available",
     },
   ]
   const numImages = 4
@@ -63,31 +63,33 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     <Form
       onSubmit={onSubmit}
       render={({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <ContainerGrid container spacing={5} >
-            <Grid item xs={12}>
-              <Spacer mt={3} />
-              <Text variant="h3">New product</Text>
-              <Spacer mt={0.5} />
-              <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
-              <Spacer mt={4} />
-            </Grid>
-            <Grid item xs={4}>
-              <Text variant="h4">Photography</Text>
-              <Spacer mt={2} />
-              <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
-                <GridList cellHeight={516} cols={1}>
-                  {[...Array(numImages)].map(index => (
-                    <GridListTile key={index}>
-                      <Dropzone onReceivedFile={onReceivedImageFile} />
-                    </GridListTile>
-                  ))}
-                </GridList>
-              </Box>
-            </Grid>
-            <ProductCreateGeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
-          </ContainerGrid>
-        </form>
+        <Box mx={5}>
+          <form onSubmit={handleSubmit}>
+            <ContainerGrid container spacing={5} >
+              <Grid item xs={12}>
+                <Spacer mt={3} />
+                <Text variant="h3">New product</Text>
+                <Spacer mt={0.5} />
+                <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
+                <Spacer mt={4} />
+              </Grid>
+              <Grid item xs={4}>
+                <Text variant="h4">Photography</Text>
+                <Spacer mt={2} />
+                <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
+                  <GridList cellHeight={516} cols={1}>
+                    {[...Array(numImages)].map(index => (
+                      <GridListTile key={index}>
+                        <Dropzone onReceivedFile={onReceivedImageFile} />
+                      </GridListTile>
+                    ))}
+                  </GridList>
+                </Box>
+              </Grid>
+              <ProductCreateGeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
+            </ContainerGrid>
+          </form>
+        </Box>
       )}
     />
   )
