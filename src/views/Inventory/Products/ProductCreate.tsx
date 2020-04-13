@@ -10,7 +10,7 @@ import styled from "styled-components"
 import { withStyles } from '@material-ui/core/styles';
 
 import { Separator, Spacer, Text, TextField } from "components"
-import { ImageInputPlaceholder, ProductImagePreview, ProductCreateGeneralSection } from "./Components"
+import { Dropzone, ImageInputPlaceholder, ProductImagePreview, ProductCreateGeneralSection } from "./Components"
 
 export interface ProductCreateProps {
   history: any
@@ -47,6 +47,7 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
       name: "Not available",
     },
   ]
+  const numImages = 4
   console.log("DATA:", data)
   return (
     <Create title="Create a Product" {...props}>
@@ -64,15 +65,11 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
             <Spacer mt={2} />
             <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
               <GridList cellHeight={516} cols={1}>
-                <ImageInput
-                  label={""}
-                  source="images"
-                  accept="image/*"
-                  multiple
-                  placeholder={<ImageInputPlaceholder />}
-                >
-                  <ProductImagePreview source="src" />
-                </ImageInput>
+                {[...Array(numImages)].map(index => (
+                  <GridListTile key={index}>
+                    <Dropzone onReceivedFile={onReceivedImageFile} />
+                  </GridListTile>
+                ))}
               </GridList>
             </Box>
           </Grid>
