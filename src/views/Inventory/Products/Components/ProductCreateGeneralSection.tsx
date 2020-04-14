@@ -9,7 +9,7 @@ import { FormSelect, FormTextField, Separator, Spacer, Text } from "components"
 
 export interface ProductCreateGeneralSectionProps {
   brands: any[]
-  sizes: string[]
+  sizes: any[]
   statuses: any[]
 }
 
@@ -23,12 +23,8 @@ export const ProductCreateGeneralSection: React.FC<ProductCreateGeneralSectionPr
     display: brand.name,
     value: brand.id,
   }))
-  const sizeChoices = sizes.map(size => ({
-    display: size,
-    value: size,
-  }))
   return (
-    <Grid item xs={8} {...rest}>
+    <>
       <Text variant="h4">General</Text>
       <Spacer mt={2} />
       <Separator />
@@ -46,25 +42,23 @@ export const ProductCreateGeneralSection: React.FC<ProductCreateGeneralSectionPr
         </Grid>
       </Grid>
       <Spacer mt={3} />
-      <Grid container>
-        <Grid item xs={12}>
-          <Text variant="h6">Description</Text>
-          <Spacer mt={1} />
-          <FormTextField multiline name="description" placeholder="Max 140 characters" />
-          <Spacer mt={3} />
-        </Grid>
-        <Grid item xs={12}>
-          <Text variant="h6">Available sizes</Text>
-          <Spacer mt={1} />
-          <FormSelect multiple name="sizes" choices={sizeChoices} />
-          <Spacer mt={3} />
-        </Grid>
-        <Grid item xs={12}>
-          <Text variant="h6">Available status</Text>
-          <Spacer mt={1} />
-          <FormSelect name="status" choices={statuses} />
-        </Grid>
+      <Grid item xs={12}>
+        <Text variant="h6">Description</Text>
+        <Spacer mt={1} />
+        <FormTextField multiline name="description" placeholder="Max 140 characters" />
+        <Spacer mt={3} />
       </Grid>
-    </Grid>
+      <Grid item xs={12}>
+        <Text variant="h6">Available sizes</Text>
+        <Spacer mt={1} />
+        <FormSelect multiple name="sizes" choices={sizes} />
+        <Spacer mt={3} />
+      </Grid>
+      <Grid item xs={12}>
+        <Text variant="h6">Available status</Text>
+        <Spacer mt={1} />
+        <FormSelect name="status" choices={statuses} />
+      </Grid>
+    </>
   )
 }

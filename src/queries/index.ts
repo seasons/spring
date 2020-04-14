@@ -61,6 +61,11 @@ export const productCreateQuery = gql`
       name
       slug
     }
+
+    categories {
+      id
+      name
+    }
   
     colors {
       id
@@ -69,6 +74,12 @@ export const productCreateQuery = gql`
     }
 
     materials: __type(name: "Material") {
+      enumValues {
+        name
+      }
+    }
+
+    productArchitectures: __type(name: "ProductArchitecture") {
       enumValues {
         name
       }

@@ -1,17 +1,20 @@
 import { MenuItem, Select, styled } from "@material-ui/core"
 import React from "react"
 import { Field } from "react-final-form"
+import { Text } from "components"
 
 export interface FormSelectProps {
-  choices: { display: string, value: any }[]
+  choices: { display: any, value: any }[]
   multiple?: boolean
   name: string
+  onChange?: (event: any) => void
 }
 
 export const FormSelect: React.FC<FormSelectProps> = ({
   choices,
   multiple = false,
   name,
+  onChange,
   ...rest
 }) => {
   return (
@@ -22,12 +25,19 @@ export const FormSelect: React.FC<FormSelectProps> = ({
         <FullWidthSelect
           multiple={multiple}
           name={input.name}
-          value={input.value || []}
+          value={multiple ? input.value || [] : input.value}
           variant="outlined"
-          onChange={input.onChange}
+          onChange={(event) => {
+            if (onChange) {
+              onChange(event)
+            }
+            input.onChange(event)
+          }}
         >
-          {choices.map(({ display, value }) => (
-            <MenuItem value={value}>{display}</MenuItem>
+          {choices.map(({ display, value }, index) => (
+            <MenuItem key={index} value={value}>
+              {display}
+            </MenuItem>
           ))}
         </FullWidthSelect>
       )}

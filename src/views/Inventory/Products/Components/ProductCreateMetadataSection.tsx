@@ -6,65 +6,106 @@ import { Grid, styled as muiStyled } from "@material-ui/core"
 import styled from "styled-components"
 
 import { FormSelect, FormTextField, Separator, Spacer, Text } from "components"
+import { arch } from "os"
 
 export interface ProductCreateMetadataSectionProps {
-  brands: any[]
-  sizes: string[]
-  statuses: any[]
+  architectures: string[]
+  categories: any[]
+  colors: any[]
+  models: any[]
+  sizes: any[]
+  types: string[]
+  setProductType: (string) => void
 }
 
 export const ProductCreateMetadataSection: React.FC<ProductCreateMetadataSectionProps> = ({
-  brands,
+  architectures,
+  categories,
+  colors,
+  models,
   sizes,
-  statuses,
+  types,
+  setProductType,
   ...rest
 }) => {
-  const brandChoices = brands.map(brand => ({
-    display: brand.name,
-    value: brand.id,
+  const modelChoices = models.map(model => ({
+    display: model.name,
+    value: model.id
   }))
-  const sizeChoices = sizes.map(size => ({
-    display: size,
-    value: size,
+  const typeChoices = types.map(type => ({
+    display: type,
+    value: type,
+  }))
+  const architectureChoices = architectures.map(architecture => ({
+    display: architecture,
+    value: architecture,
+  }))
+  const categoryChoices = categories.map(category => ({
+    display: category.name,
+    value: category.id,
+  }))
+  const colorChoices = colors.map(color => ({
+    display: <Text style={{ backgroundColor: color.hexCode }}>{color.name}</ Text>,
+    value: color.id,
   }))
   return (
-    <Grid item xs={8} {...rest}>
-      <Text variant="h4">General</Text>
+    <>
+      <Text variant="h4">Metadata</Text>
       <Spacer mt={2} />
       <Separator />
       <Spacer mt={3} />
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <Text variant="h6">Brand</Text>
+          <Text variant="h6">Model</Text>
           <Spacer mt={1} />
-          <FormSelect name="brand" choices={brandChoices} />
+          <FormSelect name="model" choices={modelChoices} />
         </Grid>
         <Grid item xs={6}>
-          <Text variant="h6">Product name</Text>
+          <Text variant="h6">Model size</Text>
           <Spacer mt={1} />
-          <FormTextField name="name" placeholder="Max 50 characters" />
+          <FormSelect name="modelSize" choices={sizes} />
+        </Grid>
+        <Grid item xs={6}>
+          <Text variant="h6">Type</Text>
+          <Spacer mt={1} />
+          <FormSelect name="productType" choices={typeChoices} onChange={(event) => setProductType(event.target.value)} />
+        </Grid>
+        <Grid item xs={6}>
+          <Text variant="h6">Season</Text>
+          <Spacer mt={1} />
+          <FormTextField name="season" />
+        </Grid>
+        <Grid item xs={6}>
+          <Text variant="h6">Retail price</Text>
+          <Spacer mt={1} />
+          <FormTextField name="retailPrice" />
+        </Grid>
+        <Grid item xs={6}>
+          <Text variant="h6">Architecture</Text>
+          <Spacer mt={1} />
+          <FormSelect name="productArchitecture" choices={architectureChoices} />
+        </Grid>
+        <Grid item xs={6}>
+          <Text variant="h6">Display category</Text>
+          <Spacer mt={1} />
+          <FormSelect name="category" choices={categoryChoices} />
+        </Grid>
+        <Grid item xs={6}>
+          <Text variant="h6">Sub-category</Text>
+          <Spacer mt={1} />
+          <FormSelect name="subCategory" choices={categoryChoices} />
+        </Grid>
+        <Grid item xs={6}>
+          <Text variant="h6">Color</Text>
+          <Spacer mt={1} />
+          <FormSelect name="color" choices={colorChoices} />
+        </Grid>
+        <Grid item xs={6}>
+          <Text variant="h6">Secondary color</Text>
+          <Spacer mt={1} />
+          <FormSelect name="secondaryColor" choices={colorChoices} />
         </Grid>
       </Grid>
-      <Spacer mt={3} />
-      <Grid container>
-        <Grid item xs={12}>
-          <Text variant="h6">Description</Text>
-          <Spacer mt={1} />
-          <FormTextField multiline name="description" placeholder="Max 140 characters" />
-          <Spacer mt={3} />
-        </Grid>
-        <Grid item xs={12}>
-          <Text variant="h6">Available sizes</Text>
-          <Spacer mt={1} />
-          <FormSelect multiple name="sizes" choices={sizeChoices} />
-          <Spacer mt={3} />
-        </Grid>
-        <Grid item xs={12}>
-          <Text variant="h6">Available status</Text>
-          <Spacer mt={1} />
-          <FormSelect name="status" choices={statuses} />
-        </Grid>
-      </Grid>
-    </Grid>
+    </>
   )
 }
