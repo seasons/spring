@@ -1,6 +1,6 @@
-import { FullNameField, ViewEntityField } from 'fields';
-import React from 'react';
-import { Datagrid, List, TextField } from 'react-admin';
+import { FullNameField, ViewEntityField } from "fields"
+import React from "react"
+import { Datagrid, List, TextField } from "react-admin"
 
 export const CustomerList = props => {
   return (

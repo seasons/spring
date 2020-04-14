@@ -1,14 +1,15 @@
-/* eslint-disable no-unused-vars */
-import clsx from 'clsx';
-import { LogoMark } from 'icons';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import clsx from "clsx"
+import { LogoMark } from "icons"
+import PropTypes from "prop-types"
+import React from "react"
+import { Link as RouterLink } from "react-router-dom"
 
-import { AppBar, Button, Hidden, IconButton, Theme, Toolbar, Typography } from '@material-ui/core';
-import InputIcon from '@material-ui/icons/Input';
-import MenuIcon from '@material-ui/icons/Menu';
-import { makeStyles } from '@material-ui/styles';
+import { AppBar, Button, Hidden, IconButton, Theme, Toolbar, Typography } from "@material-ui/core"
+import InputIcon from "@material-ui/icons/Input"
+import MenuIcon from "@material-ui/icons/Menu"
+import { makeStyles } from "@material-ui/styles"
+import { useHistory } from "react-router-dom"
+import { useAuth0 } from "utils/auth0"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -41,12 +42,12 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
   const classes = useStyles()
-  // const history = useHistory()
-  // const dispatch = useDispatch()
+  const history = useHistory()
+  const { logout } = useAuth0()
 
   const handleLogout = () => {
-    // history.push("/auth/login")
-    // dispatch(logout());
+    logout()
+    history.push("/login")
   }
 
   return (
@@ -59,7 +60,7 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
         </Hidden>
         <RouterLink to="/" className={classes.navTitle}>
           <LogoMark />
-          <Typography variant="h4">Seasons Admin</Typography>
+          <Typography variant="h4">Seasons</Typography>
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden mdDown>

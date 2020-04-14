@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from "react"
 
-import { Typography } from '@material-ui/core';
-import { Variant as TypographyVariant } from '@material-ui/core/styles/createTypography';
+import { Typography } from "@material-ui/core"
+import { Variant as TypographyVariant } from "@material-ui/core/styles/createTypography"
 
 export interface TextProps {
   children: ReactNode
   color?: string
-  opacity?: number,
+  opacity?: number
   style?: any
   variant?: TypographyVariant
 }

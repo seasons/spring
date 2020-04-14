@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react"
 
-import { Container, Theme, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Container, Theme, Typography } from "@material-ui/core"
+import { makeStyles } from "@material-ui/styles"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -10,7 +10,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-export const AnalyticsView: React.FC = (props) => {
+export const AnalyticsView: React.FC = props => {
   const classes = useStyles()
 
   return (

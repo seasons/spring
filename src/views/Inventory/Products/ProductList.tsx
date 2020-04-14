@@ -1,13 +1,20 @@
-import { ImagesField } from 'fields';
-import React from 'react';
+import { ImagesField } from "fields"
+import React from "react"
 import {
-    Datagrid, EditButton, Filter, List, ReferenceArrayInput, ReferenceField, SelectArrayInput,
-    TextField, TextInput
-} from 'react-admin';
+  Datagrid,
+  EditButton,
+  Filter,
+  List,
+  ReferenceArrayInput,
+  ReferenceField,
+  SelectArrayInput,
+  TextField,
+  TextInput,
+} from "react-admin"
 
-import { Card } from '@material-ui/core';
+import { Card } from "@material-ui/core"
 
-import { Header } from '../Header';
+import { Header } from "../Header"
 
 export const ProductFilter = props => (
   <Filter {...props}>
@@ -32,9 +39,9 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         perPage={10}
         hasCreate={false}
         hasEdit={false}
-        hasList={true}
-        hasShow={true}
-        resource={"Product"}
+        hasList
+        hasShow
+        resource="Product"
       >
         <Datagrid>
           <ImagesField source="images" />
@@ -50,5 +57,3 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
     </Card>
   </>
 )
-
-export { ProductEdit } from "./ProductEdit"

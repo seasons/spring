@@ -1,7 +1,7 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import React from "react"
+import styled, { keyframes } from "styled-components"
 
-import { Typography } from '@material-ui/core';
+import { Typography } from "@material-ui/core"
 
 const rotate = keyframes`
 from {

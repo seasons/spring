@@ -1,11 +1,11 @@
-import clsx from 'clsx';
-import React, { ReactNode, useState } from 'react';
-import { NavLink as RouterLink } from 'react-router-dom';
+import clsx from "clsx"
+import React, { ReactNode, useState } from "react"
+import { NavLink as RouterLink } from "react-router-dom"
 
-import { Button, Collapse, ListItem, Theme } from '@material-ui/core';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { makeStyles } from '@material-ui/styles';
+import { Button, Collapse, ListItem, Theme } from "@material-ui/core"
+import ExpandLessIcon from "@material-ui/icons/ExpandLess"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import { makeStyles } from "@material-ui/styles"
 
 const useStyles = makeStyles<Theme>(theme => ({
   item: {
@@ -110,8 +110,8 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
           {open ? (
             <ExpandLessIcon className={classes.expandIcon} color="inherit" />
           ) : (
-              <ExpandMoreIcon className={classes.expandIcon} color="inherit" />
-            )}
+            <ExpandMoreIcon className={classes.expandIcon} color="inherit" />
+          )}
         </Button>
         <Collapse in={open}>{children}</Collapse>
       </ListItem>

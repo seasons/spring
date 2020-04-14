@@ -1,5 +1,5 @@
-import gql from 'graphql-tag';
-import { CREATE, GET_LIST, GET_ONE } from 'react-admin';
+import gql from "graphql-tag"
+import { CREATE, GET_LIST, GET_ONE } from "react-admin"
 
 const CustomerFragment = gql`
   fragment customer on Customer {

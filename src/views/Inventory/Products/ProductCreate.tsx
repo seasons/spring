@@ -1,13 +1,13 @@
-import { productCreateQuery } from 'queries';
+import { productCreateQuery } from "queries"
 import React, { useEffect, useState } from "react"
 import { Create, SimpleForm, TextInput, SelectInput, SelectArrayInput } from "react-admin"
 import { Form, Field } from "react-final-form"
 
-import { graphql } from 'react-apollo';
+import { graphql } from "react-apollo"
 
 import { Box, Grid, GridList, GridListTile, styled as muiStyled, Input, Button } from "@material-ui/core"
 import styled from "styled-components"
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles"
 
 import { Spacer, Text } from "components"
 import { BottomNavBar, Dropzone, ProductCreateGeneralSection } from "./Components"
@@ -20,7 +20,7 @@ export interface ProductCreateProps {
 
 export const ProductCreate = graphql(productCreateQuery)(props => {
   const data: any = props?.data
-  const onReceivedImageFile = (imageFile) => {
+  const onReceivedImageFile = imageFile => {
     console.log("RECEIVED IMAGE:", imageFile)
   }
 
@@ -28,14 +28,7 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     return <div>Loading</div>
   }
 
-  const sizes = [
-    "XS",
-    "S",
-    "M",
-    "L",
-    "XL",
-    "XXL",
-  ]
+  const sizes = ["XS", "S", "M", "L", "XL", "XXL"]
 
   const statuses = [
     {
@@ -48,21 +41,13 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     },
   ]
   const numImages = 4
-  const onCancel = () => {
-
-  }
-  const onNext = () => {
-
-  }
-  const onSubmit = (values) => {
+  const onCancel = () => {}
+  const onNext = () => {}
+  const onSubmit = values => {
     console.log("SUBMITTED VALUES", values)
   }
   const sortedBrands = [...data.brands].sort((brandA, brandB) => {
-    return brandA.name < brandB.name
-      ? -1
-      : brandA.name === brandB.name
-        ? 0
-        : 1
+    return brandA.name < brandB.name ? -1 : brandA.name === brandB.name ? 0 : 1
   })
 
   return (
@@ -71,12 +56,14 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
       render={({ handleSubmit }) => (
         <Box mx={5}>
           <form onSubmit={handleSubmit}>
-            <ContainerGrid container spacing={5} >
+            <ContainerGrid container spacing={5}>
               <Grid item xs={12}>
                 <Spacer mt={3} />
                 <Text variant="h3">New product</Text>
                 <Spacer mt={0.5} />
-                <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
+                <Text variant="h5" opacity={0.5}>
+                  Please fill out all required fields
+                </Text>
                 <Spacer mt={4} />
               </Grid>
               <Grid item xs={4}>

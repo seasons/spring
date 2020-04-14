@@ -1,17 +1,8 @@
-// Packages
 import React from "react"
 import { Redirect } from "react-router-dom"
 
-// Views
 import { Dashboard } from "./layouts/Dashboard"
-import {
-  AnalyticsView,
-  CustomerList,
-  InventoryView,
-  ProductCreate,
-  OverviewView,
-  ReservationsList,
-} from "./views"
+import { AnalyticsView, CustomerList, InventoryView, ProductCreate, OverviewView, ReservationsList } from "./views"
 
 export default [
   {

@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react"
 
 export interface FullNameFieldProps {
-  record?: {user: {firstName: string, lastName: string}}
+  record?: { user: { firstName: string; lastName: string } }
   label?: string
 }
 
