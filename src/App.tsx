@@ -28,7 +28,7 @@ import { theme } from './theme/theme';
 const cache = new InMemoryCache()
 const link = new HttpLink({
   uri: "http://localhost:4466/monsoon/dev",
-  // uri: "https://monsoon-staging.seasons.nyc",
+  // uri: "https://monsoon-prisma-staging.herokuapp.com/monsoon/staging",
 })
 
 const authLink = setContext(async (_, { headers }) => {
@@ -36,7 +36,7 @@ const authLink = setContext(async (_, { headers }) => {
   try {
     // return the headers to the context so httpLink can read them
     const accessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQGRldiIsInJvbGVzIjpbImFkbWluIl19LCJpYXQiOjE1ODY1NTIyNDgsImV4cCI6MTU4NzE1NzA0OH0.aMmU7N-IzYcOdkwZafXGAnH-z-hoC6im2KRS04jgNT8"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQGRldiIsInJvbGVzIjpbImFkbWluIl19LCJpYXQiOjE1ODY2NTU0NDYsImV4cCI6MTU4NzI2MDI0Nn0.SeRfFDz_TYckiuvG61Eom3sJXj-Eiq6ENr9nutSYsFI"
     return {
       headers: {
         ...headers,
