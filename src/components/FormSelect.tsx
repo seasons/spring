@@ -1,5 +1,5 @@
-import React from "react"
 import { MenuItem, Select, styled } from "@material-ui/core"
+import React from "react"
 import { Field } from "react-final-form"
 
 export interface FormSelectProps {
@@ -19,7 +19,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({
       multiple={multiple}
       name={name}
       render={({ input }) => (
-        <StyledSelect
+        <FullWidthSelect
           multiple={multiple}
           name={input.name}
           value={input.value || []}
@@ -29,13 +29,13 @@ export const FormSelect: React.FC<FormSelectProps> = ({
           {choices.map(({ display, value }) => (
             <MenuItem value={value}>{display}</MenuItem>
           ))}
-        </StyledSelect>
+        </FullWidthSelect>
       )}
       {...rest}
     />
   )
 }
 
-const StyledSelect = styled(Select)({
+const FullWidthSelect = styled(Select)({
   width: "100%"
 })

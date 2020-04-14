@@ -25,8 +25,8 @@ import { theme } from "./theme/theme"
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
-  uri: "https://monsoon-prisma-staging.herokuapp.com/monsoon/staging",
-  // uri: "https://monsoon-staging.seasons.nyc",
+  uri: "http://localhost:4466/monsoon/dev",
+  // uri: "https://monsoon-prisma-staging.herokuapp.com/monsoon/staging",
 })
 
 const authLink = setContext(async (_, { headers }) => {

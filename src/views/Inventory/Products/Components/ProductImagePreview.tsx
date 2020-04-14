@@ -6,7 +6,6 @@ import { Spacer } from "components"
 
 export interface ProductImagePreviewProps {
   record?: any
-  source: string
 }
 
 export const ProductImagePreview: React.FC<ProductImagePreviewProps> = ({ record }) => {

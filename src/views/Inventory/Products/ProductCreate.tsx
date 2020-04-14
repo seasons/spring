@@ -64,7 +64,7 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
         ? 0
         : 1
   })
-  console.log("DATA:", data)
+
   return (
     <Form
       onSubmit={onSubmit}

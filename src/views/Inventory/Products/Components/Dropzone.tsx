@@ -1,6 +1,6 @@
+import { Box, styled } from "@material-ui/core"
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Box, styled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import { UploadFileIcon } from "icons"

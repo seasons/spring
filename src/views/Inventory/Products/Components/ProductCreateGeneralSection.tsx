@@ -20,8 +20,8 @@ export const ProductCreateGeneralSection: React.FC<ProductCreateGeneralSectionPr
   ...rest
 }) => {
   const brandChoices = brands.map(brand => ({
-    value: brand.id,
     display: brand.name,
+    value: brand.id,
   }))
   const sizeChoices = sizes.map(size => ({
     display: size,
@@ -68,15 +68,3 @@ export const ProductCreateGeneralSection: React.FC<ProductCreateGeneralSectionPr
     </Grid>
   )
 }
-
-const StyledSelectInput = muiStyled(SelectInput)({
-  width: "100%",
-})
-
-const StyledSelectArrayInput = muiStyled(SelectArrayInput)({
-  width: "100%",
-})
-
-const StyledTextInput = muiStyled(TextInput)({
-  width: "100%",
-})
