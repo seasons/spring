@@ -1,11 +1,11 @@
-import palette from '../palette';
+import palette from "../palette"
 
 export default {
   root: {},
   input: {
-    '&::placeholder': {
+    "&::placeholder": {
       opacity: 1,
-      color: palette.text.secondary
-    }
-  }
-};
+      color: palette.text.secondary,
+    },
+  },
+}

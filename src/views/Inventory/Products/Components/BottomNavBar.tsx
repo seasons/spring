@@ -11,14 +11,11 @@ export interface BottomNavBarProps {
 const BUTTON_HEIGHT = 40
 const BUTTON_WIDTH = 148
 
-export const BottomNavBar: React.FC<BottomNavBarProps> = ({
-  onCancel,
-  onNext
-}) => {
+export const BottomNavBar: React.FC<BottomNavBarProps> = ({ onCancel, onNext }) => {
   return (
     <StyledBox>
       <Separator />
-      <FlexBox px={2} display="flex" justifyContent="space-between" alignItems="center" >
+      <FlexBox px={2} display="flex" justifyContent="space-between" alignItems="center">
         <CancelButton onClick={onCancel}>Cancel</CancelButton>
         <NextButton onClick={onNext}>Next</NextButton>
       </FlexBox>

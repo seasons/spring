@@ -3,17 +3,12 @@ import React from "react"
 import { Field } from "react-final-form"
 
 export interface FormSelectProps {
-  choices: { display: string, value: any }[]
+  choices: { display: string; value: any }[]
   multiple?: boolean
   name: string
 }
 
-export const FormSelect: React.FC<FormSelectProps> = ({
-  choices,
-  multiple = false,
-  name,
-  ...rest
-}) => {
+export const FormSelect: React.FC<FormSelectProps> = ({ choices, multiple = false, name, ...rest }) => {
   return (
     <Field
       multiple={multiple}
@@ -37,5 +32,5 @@ export const FormSelect: React.FC<FormSelectProps> = ({
 }
 
 const FullWidthSelect = styled(Select)({
-  width: "100%"
+  width: "100%",
 })

@@ -78,7 +78,14 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
       </Tabs>
       <Divider className={classes.divider} />
       <div className={classes.content}>
-        {currentTab === "products" && <ProductList {...props} basePath="/inventory/products" onNewProductBtnPressed={onNewProductBtnPressed} resource="Product" />}
+        {currentTab === "products" && (
+          <ProductList
+            {...props}
+            basePath="/inventory/products"
+            onNewProductBtnPressed={onNewProductBtnPressed}
+            resource="Product"
+          />
+        )}
         {currentTab === "brands" && <BrandList {...props} basePath="/inventory/products" resource="Brand" />}
         {currentTab === "categories" && <CategoryList {...props} basePath="/inventory/products" resource="Category" />}
         {currentTab === "sizes" && <SizeList {...props} basePath="/inventory/sizes" resource="Size" />}

@@ -1,7 +1,5 @@
-import React from 'react';
-import {
-    Datagrid, List, ReferenceArrayField, ReferenceField, SingleFieldList, TextField
-} from 'react-admin';
+import React from "react"
+import { Datagrid, List, ReferenceArrayField, ReferenceField, SingleFieldList, TextField } from "react-admin"
 
 export const ReservationsList = props => (
   <List
