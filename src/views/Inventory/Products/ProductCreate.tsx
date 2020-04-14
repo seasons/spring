@@ -10,7 +10,7 @@ import styled from "styled-components"
 import { withStyles } from '@material-ui/core/styles';
 
 import { Spacer, Text } from "components"
-import { BottomNavBar, Dropzone, ProductCreateGeneralSection, ProductCreateMetadataSection, ProductCreatePhotographySection } from "./Components"
+import { BottomNavBar, Dropzone, ProductCreateGeneralSection, ProductCreateMetadataSection, ProductCreatePhotographySection, ProductCreateTagsSection } from "./Components"
 
 export interface ProductCreateProps {
   history: any
@@ -25,8 +25,8 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
   console.log("Data:", data)
   if (
     !data?.bottomSizes || !data?.brands || !data?.categories || !data?.colors ||
-    !data?.materials || !data?.productArchitectures || !data?.productFunctions ||
-    !data?.productModels || !data?.productTypes || !data?.topSizes
+    !data?.materials || !data?.products || !data?.productArchitectures ||
+    !data?.productFunctions || !data?.productModels || !data?.productTypes || !data?.topSizes
   ) {
     return <div>Loading</div>
   }
@@ -57,6 +57,8 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
   const materials = getEnumValues(data.materials)
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
+  const productFunctions = data.productFunctions.map(productFunction => productFunction.name)
+  const tags: string[] = Array.from(new Set(data.products.map(product => product.tags.set).flat()))
   const statuses = [
     {
       value: "Available",
@@ -67,7 +69,6 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
       display: "Not available",
     },
   ]
-  const numImages = 4
   const onCancel = () => {
 
   }
@@ -119,6 +120,12 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
                   setProductType={setProductType}
                   sizes={sizes}
                   types={productTypes}
+                />
+                <Spacer mt={6} />
+                <ProductCreateTagsSection
+                  functions={productFunctions}
+                  materials={materials}
+                  tags={tags}
                 />
               </Grid>
               <Button type="submit">Submit</Button>

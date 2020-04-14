@@ -79,6 +79,10 @@ export const productCreateQuery = gql`
       }
     }
 
+    products {
+      tags
+    }
+
     productArchitectures: __type(name: "ProductArchitecture") {
       enumValues {
         name

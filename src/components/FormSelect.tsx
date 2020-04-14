@@ -1,7 +1,6 @@
 import { MenuItem, Select, styled } from "@material-ui/core"
 import React from "react"
 import { Field } from "react-final-form"
-import { Text } from "components"
 
 export interface FormSelectProps {
   choices: { display: any, value: any }[]
