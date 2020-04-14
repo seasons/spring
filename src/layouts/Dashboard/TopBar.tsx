@@ -1,37 +1,16 @@
-/* eslint-disable no-unused-vars */
-// Packages
-import React, { useState, useRef } from "react"
-import { Link as RouterLink } from "react-router-dom"
+import React from "react"
+import { Link as RouterLink, useHistory } from "react-router-dom"
 import PropTypes from "prop-types"
 import clsx from "clsx"
 
-// UI
 import { makeStyles } from "@material-ui/styles"
-import {
-  AppBar,
-  Button,
-  IconButton,
-  Toolbar,
-  Hidden,
-  Input,
-  Popper,
-  Paper,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ClickAwayListener,
-  Theme,
-  Typography,
-} from "@material-ui/core"
+import { AppBar, Button, IconButton, Toolbar, Hidden, Theme, Typography } from "@material-ui/core"
 
-// Icons
 import InputIcon from "@material-ui/icons/Input"
 import MenuIcon from "@material-ui/icons/Menu"
-import SearchIcon from "@material-ui/icons/Search"
 
-// Components
 import { LogoMark } from "../../Icons/LogoMark"
+import { useAuth0 } from "utils/auth0"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -89,35 +68,14 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-const popularSearches = ["Devias React Dashboard", "Devias", "Admin Pannel", "Project", "Pages"]
-
 function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
   const classes = useStyles()
-  // const history = useHistory()
-  // const dispatch = useDispatch()
-  const searchRef = useRef(null)
-  const [openSearchPopover, setOpenSearchPopover] = useState(false)
-  const [searchValue, setSearchValue] = useState("")
+  const history = useHistory()
+  const { logout } = useAuth0()
 
   const handleLogout = () => {
-    // history.push("/auth/login")
-    // dispatch(logout());
-  }
-
-  const handleSearchChange = event => {
-    setSearchValue(event.target.value)
-
-    if (event.target.value) {
-      if (!openSearchPopover) {
-        setOpenSearchPopover(true)
-      }
-    } else {
-      setOpenSearchPopover(false)
-    }
-  }
-
-  const handleSearchPopverClose = () => {
-    setOpenSearchPopover(false)
+    logout()
+    history.push("/login")
   }
 
   return (
@@ -130,7 +88,7 @@ function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
         </Hidden>
         <RouterLink to="/" className={classes.navTitle}>
           <LogoMark />
-          <Typography variant="h4">Seasons Admin</Typography>
+          <Typography variant="h4">Seasons</Typography>
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden mdDown>

@@ -4,7 +4,10 @@ import Auth0Client from "@auth0/auth0-spa-js/dist/typings/Auth0Client"
 
 const DEFAULT_REDIRECT_CALLBACK = (state) => window.history.replaceState({}, document.title, window.location.pathname)
 
-export const Auth0Context = createContext({})
+
+
+export const Auth0Context = createContext<any>(null)
+
 export const useAuth0 = () => useContext(Auth0Context)
 export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_CALLBACK, ...initOptions }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<Boolean>()
@@ -52,13 +55,14 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
     setIsAuthenticated(true)
   }
 
-  const handleRedirectCallback = async () => {
+  const handleRedirectCallback: (url?: string) => Promise<RedirectLoginResult> = async () => {
     setLoading(true)
     await auth0Client?.handleRedirectCallback()
     const user = await auth0Client?.getUser()
     setLoading(false)
     setIsAuthenticated(true)
     setUser(user)
+    return {}
   }
   return (
     <Auth0Context.Provider
@@ -69,12 +73,12 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
         popupOpen,
         loginWithPopup,
         handleRedirectCallback,
-        getIdTokenClaims: (...p) => auth0Client?.getIdTokenClaims(...p),
-        loginWithRedirect: (...p) => auth0Client?.loginWithRedirect(...p),
-        getTokenSilently: (...p) => auth0Client?.getTokenSilently(...p),
-        getTokenWithPopup: (...p) => auth0Client?.getTokenWithPopup(...p),
+        getIdTokenClaims: (...p) => auth0Client!.getIdTokenClaims(...p),
+        loginWithRedirect: (...p) => auth0Client!.loginWithRedirect(...p),
+        getTokenSilently: (...p) => auth0Client!.getTokenSilently(...p),
+        getTokenWithPopup: (...p) => auth0Client!.getTokenWithPopup(...p),
         logout: (...p) => auth0Client?.logout(...p),
-      }}
+      } as any}
     >
       {children}
     </Auth0Context.Provider>
