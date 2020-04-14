@@ -8,6 +8,9 @@ export interface BottomNavBarProps {
   onNext: () => void
 }
 
+const BUTTON_HEIGHT = 40
+const BUTTON_WIDTH = 148
+
 export const BottomNavBar: React.FC<BottomNavBarProps> = ({
   onCancel,
   onNext
@@ -15,10 +18,10 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
   return (
     <StyledBox>
       <Separator />
-      <Box justifyContent="center" alignItems="center">
-        <Button onClick={onCancel}>Cancel</Button>
-        <Button onClick={onNext}>Next</Button>
-      </Box>
+      <FlexBox px={2} display="flex" justifyContent="space-between" alignItems="center" >
+        <CancelButton onClick={onCancel}>Cancel</CancelButton>
+        <NextButton onClick={onNext}>Next</NextButton>
+      </FlexBox>
     </StyledBox>
   )
 }
@@ -26,8 +29,29 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
 const StyledBox = styled(Box)({
   position: "fixed",
   bottom: 0,
-  left: 0,
-  width: "100%",
+  left: 256,
+  right: 0,
   height: 72,
   backgroundColor: "white",
+})
+
+const FlexBox = styled(Box)({
+  height: "100%",
+  width: "auto",
+})
+
+const CancelButton = styled(Button)({
+  backgroundColor: "white",
+  border: "1px solid #dddddd",
+  borderRadius: 4,
+  height: BUTTON_HEIGHT,
+  width: BUTTON_WIDTH,
+})
+
+const NextButton = styled(Button)({
+  backgroundColor: "black",
+  borderRadius: 4,
+  color: "white",
+  height: BUTTON_HEIGHT,
+  width: BUTTON_WIDTH,
 })
