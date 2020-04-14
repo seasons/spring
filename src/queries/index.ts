@@ -55,12 +55,25 @@ export const productCreateQuery = gql`
     colors {
       id
       name
+      hexCode
     }
 
     brands {
       id
       name
       slug
+    }
+
+    topSizes {
+  	  letter
+    }
+
+    bottomSizes {
+      value
+    }
+
+    products {
+      type
     }
   }
 `

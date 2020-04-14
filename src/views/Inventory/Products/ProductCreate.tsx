@@ -20,22 +20,29 @@ export interface ProductCreateProps {
 
 export const ProductCreate = graphql(productCreateQuery)(props => {
   const data: any = props?.data
+  const [productType, setProductType] = useState("Top")
+
+  if (!data?.brands || !data?.colors || !data?.topSizes || !data?.bottomSizes || !data?.products) {
+    return <div>Loading</div>
+  }
+
+  console.log("Data:", data)
+
   const onReceivedImageFile = (imageFile) => {
     console.log("RECEIVED IMAGE:", imageFile)
   }
 
-  if (!data?.brands) {
-    return <div>Loading</div>
+  let sizes
+  switch (productType) {
+    case "Top":
+      sizes = Array.from(new Set(data.topSizes.map(topSize => topSize.letter)))
+      break
+    case "Bottom":
+      sizes = Array.from(new Set(data.bottomSizes.map(bottomSize => bottomSize.value)))
+      break
   }
 
-  const sizes = [
-    "XS",
-    "S",
-    "M",
-    "L",
-    "XL",
-    "XXL",
-  ]
+  const productTypes = Array.from(new Set(data.products.map(product => product.type)))
 
   const statuses = [
     {
