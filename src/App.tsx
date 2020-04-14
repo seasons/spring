@@ -22,6 +22,7 @@ import overridenQueries from "./queries"
 import routes from "./routes"
 import configureStore from "./store/adminStore"
 import { theme } from "./theme/theme"
+import { Auth0Provider } from "utils/auth0"
 
 const cache = new InMemoryCache()
 const link = new HttpLink({

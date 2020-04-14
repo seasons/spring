@@ -44,7 +44,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ route }: any) => {
         appState: { targetUrl: "http://localhost:3000" },
       })
     }
-    fn()
+    // fn()
   }, [loading, isAuthenticated, loginWithRedirect])
 
   return (
