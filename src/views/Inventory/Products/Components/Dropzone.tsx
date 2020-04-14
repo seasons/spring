@@ -1,6 +1,6 @@
-import React, { Component, useCallback, useState } from 'react'
+import { Box, styled } from "@material-ui/core"
+import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Box, Button, Container, Grid, styled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import { UploadFileIcon } from "icons"
@@ -21,7 +21,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({
       setImagePreview(URL.createObjectURL(file))
     }
   }, [onReceivedFile])
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
   return (
     <Wrapper
@@ -36,9 +36,9 @@ export const Dropzone: React.FC<DropzoneProps> = ({
       />
       {imagePreview
         ? (
-          <div style={{ display: 'block', width: 'auto', height: '100%' }}>
-            <img src={imagePreview} alt="Preview" />
-          </div>
+          <Box justifyContent="center" alignItems="center">
+            <img src={imagePreview} alt="Preview" style={{ minWidth: "100%", minHeight: "100%" }} />
+          </Box>
         )
         : (
           <>
