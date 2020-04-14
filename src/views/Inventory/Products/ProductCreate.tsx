@@ -22,11 +22,14 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
   const data: any = props?.data
   const [productType, setProductType] = useState("Top")
 
-  if (!data?.brands || !data?.colors || !data?.topSizes || !data?.bottomSizes || !data?.products) {
+  console.log("Data:", data)
+  if (
+    !data?.bottomSizes || !data?.brands || !data?.colors || !data?.materials ||
+    !data?.productFunctions || !data?.productModels || !data?.productTypes ||
+    !data?.topSizes
+  ) {
     return <div>Loading</div>
   }
-
-  console.log("Data:", data)
 
   const onReceivedImageFile = (imageFile) => {
     console.log("RECEIVED IMAGE:", imageFile)
@@ -42,8 +45,8 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
       break
   }
 
-  const productTypes = Array.from(new Set(data.products.map(product => product.type)))
-
+  const materials = data.materials.enumValues.map(enumValue => enumValue.name)
+  const productTypes = data.productTypes.enumValues.map(enumValue => enumValue.name)
   const statuses = [
     {
       value: "Available",

@@ -52,10 +52,8 @@ export const getAllColors = gql`
 
 export const productCreateQuery = gql`
   query productCreateQuery {
-    colors {
-      id
-      name
-      hexCode
+    bottomSizes {
+      value
     }
 
     brands {
@@ -63,17 +61,37 @@ export const productCreateQuery = gql`
       name
       slug
     }
+  
+    colors {
+      id
+      name
+      hexCode
+    }
+
+    materials: __type(name: "Material") {
+      enumValues {
+        name
+      }
+    }
+
+    productFunctions {
+      id
+      name
+    }
+
+    productModels {
+      id
+      name
+    }
+
+    productTypes: __type(name: "ProductType") {
+      enumValues {
+        name
+      }
+    }
 
     topSizes {
   	  letter
-    }
-
-    bottomSizes {
-      value
-    }
-
-    products {
-      type
     }
   }
 `
