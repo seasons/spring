@@ -1,4 +1,4 @@
-import { ImagesField } from "fields/ImagesField"
+import { ImagesField } from "fields"
 import React from "react"
 import {
   Datagrid,
@@ -44,7 +44,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         resource="Product"
       >
         <Datagrid>
-          <ImagesField source="images" label="Images" />
+          <ImagesField source="images" />
           <TextField source="name" />
           <ReferenceField source="brand.id" reference="Brand" label="Brand Name">
             <TextField source="name" />

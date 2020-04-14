@@ -3,11 +3,11 @@ import { ApolloClient } from "apollo-client"
 import { ApolloLink } from "apollo-link"
 import { setContext } from "apollo-link-context"
 import { HttpLink } from "apollo-link-http"
+import { AppLoader } from "components"
 import { createBrowserHistory } from "history"
 import get from "lodash/get"
 import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
 import polyglotI18nProvider from "ra-i18n-polyglot"
-
 import React from "react"
 import { convertLegacyDataProvider, DataProviderContext, Resource, TranslationProvider } from "react-admin"
 import { ApolloProvider } from "react-apollo"
@@ -18,7 +18,6 @@ import { Router } from "react-router-dom"
 import { ThemeProvider } from "@material-ui/core"
 
 import englishMessages from "./i18n/en"
-import { Auth0Provider } from "utils/auth0"
 import overridenQueries from "./queries"
 import routes from "./routes"
 import configureStore from "./store/adminStore"
@@ -87,7 +86,7 @@ class App extends React.Component {
     const { dataProvider } = this.state
 
     if (!dataProvider) {
-      return <div>Loading</div>
+      return <AppLoader />
     }
 
     const store = configureStore({

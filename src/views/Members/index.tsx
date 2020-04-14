@@ -1,9 +1,8 @@
+import { FullNameField, ViewEntityField } from "fields"
 import React from "react"
-import { Datagrid, List, ReferenceField, TextField } from "react-admin"
+import { Datagrid, List, TextField } from "react-admin"
 
 export const CustomerList = props => {
-  console.log(props)
-
   return (
     <List
       {...props}
@@ -16,10 +15,12 @@ export const CustomerList = props => {
       title="Customers"
     >
       <Datagrid>
-        <TextField source="id" />
-        <ReferenceField source="user.id" reference="User" label="User Email">
-          <TextField source="email" />
-        </ReferenceField>
+        <FullNameField label="Name" />
+        <TextField source="detail.shippingAddress.city" label="City" />
+        <TextField source="detail.shippingAddress.state" label="State" />
+        <TextField source="plan" label="Membership" />
+        <TextField source="status" label="Status" />
+        <ViewEntityField entityPath="members" source="user.id" label="Actions" />
       </Datagrid>
     </List>
   )
