@@ -1,61 +1,109 @@
-// Packages
-import React from "react"
-import { graphql } from "react-apollo"
-import styled from "styled-components"
-import { AutocompleteInput, Create, SimpleForm, SelectArrayInput, TextInput, ImageInput } from "react-admin"
+import { productCreateQuery } from 'queries';
+import React, { useEffect, useState } from "react"
+import { Create, SimpleForm, TextInput, SelectInput, SelectArrayInput } from "react-admin"
+import { Form, Field } from "react-final-form"
 
-// Queries
-import { productCreateQuery } from "queries"
+import { graphql } from 'react-apollo';
+
+import { Box, Grid, GridList, GridListTile, styled as muiStyled, Input, Button } from "@material-ui/core"
+import styled from "styled-components"
+import { withStyles } from '@material-ui/core/styles';
+
+import { Spacer, Text } from "components"
+import { BottomNavBar, Dropzone, ProductCreateGeneralSection } from "./Components"
+
+export interface ProductCreateProps {
+  history: any
+  match: any
+  props?: any
+}
 
 export const ProductCreate = graphql(productCreateQuery)(props => {
-  const data: any = props.data
+  const data: any = props?.data
+  const onReceivedImageFile = (imageFile) => {
+    console.log("RECEIVED IMAGE:", imageFile)
+  }
+
+  if (!data?.brands) {
+    return <div>Loading</div>
+  }
+
+  const sizes = [
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "XXL",
+  ]
+
+  const statuses = [
+    {
+      value: "Available",
+      display: "Available",
+    },
+    {
+      value: "NotAvailable",
+      display: "Not available",
+    },
+  ]
+  const numImages = 4
+  const onCancel = () => {
+
+  }
+  const onNext = () => {
+
+  }
+  const onSubmit = (values) => {
+    console.log("SUBMITTED VALUES", values)
+  }
+  const sortedBrands = [...data.brands].sort((brandA, brandB) => {
+    return brandA.name < brandB.name
+      ? -1
+      : brandA.name === brandB.name
+        ? 0
+        : 1
+  })
+
   return (
-    <Create title="Create a Product" {...props}>
-      <SimpleForm>
-        <ImageInput
-          source="images"
-          label="Product Images"
-          accept="image/*"
-          multiple
-          placeholder={<p>Drop your file here</p>}
-        >
-          <ProductImagePreview source="src" />
-        </ImageInput>
-        <TextInput source="name" />
-        <AutocompleteInput source="brand" choices={data.brands} />
-        <TextInput source="description" options={{ multiLine: true }} />
-        <SelectArrayInput
-          label="Available Sizes"
-          source="availableSizes"
-          choices={[
-            { id: "XS", name: "XS" },
-            { id: "S", name: "S" },
-            { id: "M", name: "M" },
-            { id: "L", name: "L" },
-            { id: "XL", name: "XL" },
-          ]}
-        />
-        <SelectArrayInput label="Available Colors" source="availableColors" choices={data.colors} />
-      </SimpleForm>
-    </Create>
+    <Form
+      onSubmit={onSubmit}
+      render={({ handleSubmit }) => (
+        <Box mx={5}>
+          <form onSubmit={handleSubmit}>
+            <ContainerGrid container spacing={5} >
+              <Grid item xs={12}>
+                <Spacer mt={3} />
+                <Text variant="h3">New product</Text>
+                <Spacer mt={0.5} />
+                <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
+                <Spacer mt={4} />
+              </Grid>
+              <Grid item xs={4}>
+                <Text variant="h4">Photography</Text>
+                <Spacer mt={2} />
+                <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
+                  <GridList cellHeight={516} cols={1}>
+                    {[...Array(numImages)].map(index => (
+                      <GridListTile key={index}>
+                        <Dropzone onReceivedFile={onReceivedImageFile} />
+                      </GridListTile>
+                    ))}
+                  </GridList>
+                </Box>
+                <Spacer mt={9} />
+              </Grid>
+              <ProductCreateGeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
+              <Button type="submit">Submit</Button>
+            </ContainerGrid>
+            <BottomNavBar onCancel={onCancel} onNext={onNext} />
+          </form>
+        </Box>
+      )}
+    />
   )
 })
 
-const ProductImagePreview: React.SFC<any> = ({ record }) => {
-  if (record.rawFile) {
-    return (
-      <ImageContainer>
-        <img src={record.rawFile.preview} alt="" />
-      </ImageContainer>
-    )
-  }
-
-  return null
-}
-
-const ImageContainer = styled.div`
-  width: 300px;
-  img {
-    width: inherit;
-  }
-`
+const ContainerGrid = muiStyled(Grid)({
+  width: "100%",
+})

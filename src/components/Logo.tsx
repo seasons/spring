@@ -1,6 +1,6 @@
-import React from "react"
-import { LogoMark } from "../Icons/LogoMark"
+import { LogoMark } from 'icons';
+import React from 'react';
 
-export function Logo() {
+export const Logo: React.FunctionComponent = () => {
   return <LogoMark />
 }

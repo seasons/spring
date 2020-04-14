@@ -1,8 +1,9 @@
-import { createMuiTheme } from "@material-ui/core"
-import palette from "./palette"
-import typography from "./typography"
-import overrides from "./overrides"
-import { ThemeOptions } from "@material-ui/core/styles/createMuiTheme"
+import { createMuiTheme } from '@material-ui/core';
+import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
+
+import overrides from './overrides';
+import palette from './palette';
+import typography from './typography';
 
 const baseTheme = {
   palette,

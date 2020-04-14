@@ -1,5 +1,5 @@
-import React from "react"
-import { List, Datagrid, TextField } from "react-admin"
+import React from 'react';
+import { Datagrid, List, TextField } from 'react-admin';
 
 export const SizeList = props => (
   <List

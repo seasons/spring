@@ -1,17 +1,20 @@
+import { ImagesField } from "fields/ImagesField"
 import React from "react"
 import {
-  List,
   Datagrid,
-  ReferenceField,
-  TextField,
   EditButton,
-  TextInput,
   Filter,
+  List,
   ReferenceArrayInput,
+  ReferenceField,
   SelectArrayInput,
+  TextField,
+  TextInput,
 } from "react-admin"
-import { ImagesField } from "fields/ImagesField"
+
 import { Card } from "@material-ui/core"
+
+import { Header } from "../Header"
 
 export const ProductFilter = props => (
   <Filter {...props}>
@@ -22,23 +25,27 @@ export const ProductFilter = props => (
   </Filter>
 )
 
-export const ProductList = props => (
+export interface ProductListInterface {
+  onNewProductBtnPressed: () => void
+}
+
+export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => (
   <>
     <Card>
+      <Header onNewProductBtnPressed={onNewProductBtnPressed} />
       <List
-        {...props}
         filters={<ProductFilter />}
+        {...rest}
         perPage={10}
         hasCreate={false}
         hasEdit={false}
-        hasList={true}
-        hasShow={true}
-        resource={"Product"}
-        title="Products"
+        hasList
+        hasShow
+        resource="Product"
       >
         <Datagrid>
           <ImagesField source="images" label="Images" />
-          <TextField source="name" label="Name" />
+          <TextField source="name" />
           <ReferenceField source="brand.id" reference="Brand" label="Brand Name">
             <TextField source="name" />
           </ReferenceField>

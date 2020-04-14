@@ -1,6 +1,7 @@
-import React from "react"
-import { makeStyles } from "@material-ui/styles"
-import { Container, Theme, Typography } from "@material-ui/core"
+import React from 'react';
+
+import { Container, Theme, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -9,7 +10,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-function Analytics() {
+export const AnalyticsView: React.FC = (props) => {
   const classes = useStyles()
 
   return (
@@ -18,5 +19,3 @@ function Analytics() {
     </Container>
   )
 }
-
-export default Analytics

@@ -1,13 +1,12 @@
 import React from "react"
-import { makeStyles } from "@material-ui/styles"
-import PropTypes from "prop-types"
 import { Redirect } from "react-router-dom"
-import { Container, Theme, Tabs, Tab, Divider, colors } from "@material-ui/core"
 
-import Header from "./Header"
-import { ProductList } from "./Products"
+import { colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"
+import { makeStyles } from "@material-ui/styles"
+
 import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
+import { ProductList } from "./Products"
 import { SizeList } from "./Sizes"
 import { TagList } from "./Tags"
 
@@ -30,7 +29,13 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-function InventoryView({ match, history, props }) {
+export interface InventoryViewProps {
+  history: any
+  match: any
+  props?: any
+}
+
+export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ match, history, props }) => {
   const classes = useStyles()
   const { tab: currentTab } = match.params
   const tabs = [
@@ -45,6 +50,10 @@ function InventoryView({ match, history, props }) {
     history.push(value)
   }
 
+  const onNewProductBtnPressed = () => {
+    history.push("/product/new")
+  }
+
   if (!currentTab) {
     return <Redirect to={`/inventory/products`} />
   }
@@ -55,7 +64,6 @@ function InventoryView({ match, history, props }) {
 
   return (
     <Container maxWidth={false}>
-      <Header />
       <Tabs
         className={classes.tabs}
         indicatorColor={"primary"}
@@ -70,7 +78,7 @@ function InventoryView({ match, history, props }) {
       </Tabs>
       <Divider className={classes.divider} />
       <div className={classes.content}>
-        {currentTab === "products" && <ProductList {...props} basePath="/inventory/products" resource="Product" />}
+        {currentTab === "products" && <ProductList {...props} basePath="/inventory/products" onNewProductBtnPressed={onNewProductBtnPressed} resource="Product" />}
         {currentTab === "brands" && <BrandList {...props} basePath="/inventory/products" resource="Brand" />}
         {currentTab === "categories" && <CategoryList {...props} basePath="/inventory/products" resource="Category" />}
         {currentTab === "sizes" && <SizeList {...props} basePath="/inventory/sizes" resource="Size" />}
@@ -79,10 +87,3 @@ function InventoryView({ match, history, props }) {
     </Container>
   )
 }
-
-InventoryView.propTypes = {
-  history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-}
-
-export default InventoryView

@@ -1,31 +1,33 @@
-// Packages
+import { InMemoryCache } from "apollo-cache-inmemory"
+import { ApolloClient } from "apollo-client"
+import { ApolloLink } from "apollo-link"
+import { setContext } from "apollo-link-context"
+import { HttpLink } from "apollo-link-http"
+import { createBrowserHistory } from "history"
+import get from "lodash/get"
+import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
+import polyglotI18nProvider from "ra-i18n-polyglot"
+
 import React from "react"
 import { convertLegacyDataProvider, DataProviderContext, Resource, TranslationProvider } from "react-admin"
 import { ApolloProvider } from "react-apollo"
-import { Router } from "react-router-dom"
-import { renderRoutes } from "react-router-config"
-import { createBrowserHistory } from "history"
 import { Provider as StoreProvider } from "react-redux"
-import get from "lodash/get"
-import { ApolloLink } from "apollo-link"
-import { HttpLink } from "apollo-link-http"
-import { setContext } from "apollo-link-context"
-import { InMemoryCache } from "apollo-cache-inmemory"
-import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
-import polyglotI18nProvider from "ra-i18n-polyglot"
-import { ApolloClient } from "apollo-client"
-import overridenQueries from "./queries"
-import { theme } from "./theme/theme"
+import { renderRoutes } from "react-router-config"
+import { Router } from "react-router-dom"
+
 import { ThemeProvider } from "@material-ui/core"
-import configureStore from "./store/adminStore"
-import routes from "./routes"
+
 import englishMessages from "./i18n/en"
 import { Auth0Provider } from "utils/auth0"
+import overridenQueries from "./queries"
+import routes from "./routes"
+import configureStore from "./store/adminStore"
+import { theme } from "./theme/theme"
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
   uri: "http://localhost:4466/monsoon/dev",
-  // uri: "https://monsoon-staging.seasons.nyc",
+  // uri: "https://monsoon-prisma-staging.herokuapp.com/monsoon/staging",
 })
 
 const auth0Config = {
@@ -38,7 +40,7 @@ const authLink = setContext(async (_, { headers }) => {
   try {
     // return the headers to the context so httpLink can read them
     const accessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQHN0YWdpbmciLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTg2NDU3OTk2LCJleHAiOjE1ODcwNjI3OTZ9.x0E4Ed4r3-FBxvozAyda5eWgaGtMdeuFVvYrdOszDEg"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJtb25zb29uQGRldiIsInJvbGVzIjpbImFkbWluIl19LCJpYXQiOjE1ODY2NTU0NDYsImV4cCI6MTU4NzI2MDI0Nn0.SeRfFDz_TYckiuvG61Eom3sJXj-Eiq6ENr9nutSYsFI"
     return {
       headers: {
         ...headers,

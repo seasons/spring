@@ -1,7 +1,9 @@
-import React from "react"
-import { makeStyles } from "@material-ui/styles"
-import { Container, Theme } from "@material-ui/core"
-import Header from "./Header"
+import React from 'react';
+
+import { Container, Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+
+import Header from './Header';
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -10,7 +12,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-function Overview() {
+export const OverviewView: React.FC = (props) => {
   const classes = useStyles()
 
   return (
@@ -19,5 +21,3 @@ function Overview() {
     </Container>
   )
 }
-
-export default Overview

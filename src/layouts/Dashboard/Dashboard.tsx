@@ -1,5 +1,4 @@
 import React, { Suspense, useState, useEffect } from "react"
-// import { Layout } from "react-admin"
 import { renderRoutes } from "react-router-config"
 import { makeStyles } from "@material-ui/styles"
 import { LinearProgress, Theme } from "@material-ui/core"

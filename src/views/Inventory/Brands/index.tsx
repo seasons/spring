@@ -1,5 +1,5 @@
 import React from "react"
-import { List, Datagrid, DateField, TextField, ImageField } from "react-admin"
+import { Datagrid, DateField, ImageField, List, TextField } from "react-admin"
 
 export const BrandList = props => (
   <List
