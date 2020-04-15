@@ -9,7 +9,6 @@ import InputIcon from "@material-ui/icons/Input"
 import MenuIcon from "@material-ui/icons/Menu"
 import { makeStyles } from "@material-ui/styles"
 import { useHistory } from "react-router-dom"
-import { useAuth0 } from "utils/auth0"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -43,10 +42,9 @@ const useStyles = makeStyles<Theme>(theme => ({
 function TopBar({ onOpenNavBarMobile, className, ...rest }: any) {
   const classes = useStyles()
   const history = useHistory()
-  const { logout } = useAuth0()
 
   const handleLogout = () => {
-    logout()
+    localStorage.clear()
     history.push("/login")
   }
 

@@ -1,8 +1,8 @@
 import React from "react"
-import { TextField, styled } from "@material-ui/core"
+import { TextField, TextFieldProps, styled } from "@material-ui/core"
 import { Field } from "react-final-form"
 
-export interface FormTextFieldProps {
+export type FormTextFieldProps = TextFieldProps & {
   multiline?: boolean
   name: string
   placeholder?: string
@@ -11,9 +11,12 @@ export interface FormTextFieldProps {
 
 export const FormTextField: React.FC<FormTextFieldProps> = ({
   multiline = false,
+  label,
   name,
   placeholder,
+  helperText,
   rows = 5,
+  type,
   ...rest
 }) => {
   return (
@@ -29,6 +32,9 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
           value={input.value}
           variant="outlined"
           onChange={input.onChange}
+          type={type}
+          helperText={helperText}
+          label={label}
         />
       )}
       {...rest}

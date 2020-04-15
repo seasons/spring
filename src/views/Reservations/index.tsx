@@ -18,7 +18,7 @@ export const ReservationsList = props => (
       <ReferenceField source="user.id" reference="User" label="User Email">
         <TextField source="email" />
       </ReferenceField>
-      <ReferenceArrayField label="Product ID" reference="PhysicalProduct" source="physicalproduct.id">
+      <ReferenceArrayField label="Product ID" reference="PhysicalProduct" source="products.id">
         <SingleFieldList>
           <TextField source="seasonsUID" />
         </SingleFieldList>

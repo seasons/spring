@@ -1,10 +1,9 @@
-import React, { Suspense, useState, useEffect } from "react"
+import React, { Suspense, useState } from "react"
 import { renderRoutes } from "react-router-config"
 import { makeStyles } from "@material-ui/styles"
 import { LinearProgress, Theme } from "@material-ui/core"
 import NavBar from "./NavBar"
 import TopBar from "./TopBar"
-import { useAuth0 } from "utils/auth0"
 
 const useStyles = makeStyles<Theme>(theme => ({
   container: {
@@ -33,19 +32,6 @@ interface DashboardProps {}
 export const Dashboard: React.FC<DashboardProps> = ({ route }: any) => {
   const classes = useStyles()
   const [openNavBarMobile, setOpenNavBarMobile] = useState(false)
-  const { loading, isAuthenticated, loginWithRedirect } = useAuth0()
-
-  useEffect(() => {
-    if (loading || isAuthenticated) {
-      return
-    }
-    const fn = async () => {
-      await loginWithRedirect({
-        appState: { targetUrl: "http://localhost:3000" },
-      })
-    }
-    // fn()
-  }, [loading, isAuthenticated, loginWithRedirect])
 
   return (
     <>
