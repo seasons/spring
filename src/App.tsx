@@ -33,8 +33,8 @@ const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
   try {
     // return the headers to the context so httpLink can read them
-    const userSession = localStorage.get("userSession")
-    const token = userSession.token
+    const userSession = JSON.parse(localStorage.userSession)
+    const { token } = userSession
     return {
       headers: {
         ...headers,
