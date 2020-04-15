@@ -1,8 +1,8 @@
-import clsx from 'clsx';
-import React from 'react';
+import clsx from "clsx"
+import React from "react"
 
-import { colors, Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { colors, Theme } from "@material-ui/core"
+import { makeStyles } from "@material-ui/styles"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -72,7 +72,7 @@ export const StatusBullet: React.FunctionComponent<StatusBulletProps> = ({
     <span
       {...rest}
       className={rootClassName}
-    //
+      //
     />
   )
 }

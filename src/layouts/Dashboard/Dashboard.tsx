@@ -1,12 +1,10 @@
-import React, { Suspense, useState } from 'react';
-// import { Layout } from "react-admin"
-import { renderRoutes } from 'react-router-config';
-
-import { LinearProgress, Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-
-import NavBar from './NavBar';
-import TopBar from './TopBar';
+import React, { Suspense, useState, useEffect } from "react"
+import { renderRoutes } from "react-router-config"
+import { makeStyles } from "@material-ui/styles"
+import { LinearProgress, Theme } from "@material-ui/core"
+import NavBar from "./NavBar"
+import TopBar from "./TopBar"
+import { useAuth0 } from "utils/auth0"
 
 const useStyles = makeStyles<Theme>(theme => ({
   container: {
@@ -33,9 +31,22 @@ const useStyles = makeStyles<Theme>(theme => ({
 interface DashboardProps {}
 
 export const Dashboard: React.FC<DashboardProps> = ({ route }: any) => {
-  //   return <Layout {...props} appBar={TopBar} />
   const classes = useStyles()
   const [openNavBarMobile, setOpenNavBarMobile] = useState(false)
+  const { loading, isAuthenticated, loginWithRedirect } = useAuth0()
+
+  useEffect(() => {
+    if (loading || isAuthenticated) {
+      return
+    }
+    const fn = async () => {
+      await loginWithRedirect({
+        appState: { targetUrl: "http://localhost:3000" },
+      })
+    }
+    // fn()
+  }, [loading, isAuthenticated, loginWithRedirect])
+
   return (
     <>
       <TopBar onOpenNavBarMobile={() => setOpenNavBarMobile(true)} />

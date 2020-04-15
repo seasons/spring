@@ -1,11 +1,11 @@
-import { connectRouter, routerMiddleware } from 'connected-react-router';
-import { adminReducer, adminSaga } from 'react-admin';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import createSagaMiddleware from 'redux-saga';
-import { all, fork } from 'redux-saga/effects';
+import { connectRouter, routerMiddleware } from "connected-react-router"
+import { adminReducer, adminSaga } from "react-admin"
+import { applyMiddleware, combineReducers, createStore } from "redux"
+import { composeWithDevTools } from "redux-devtools-extension"
+import createSagaMiddleware from "redux-saga"
+import { all, fork } from "redux-saga/effects"
 
-import sessionReducer from '../reducers/sessionReducer';
+import sessionReducer from "../reducers/sessionReducer"
 
 export default ({ authProvider, dataProvider, history }) => {
   const reducer = combineReducers({

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Edit, ImageInput, ReferenceInput, SelectInput, SimpleForm, TextInput } from 'react-admin';
+import React from "react"
+import { Edit, ImageInput, ReferenceInput, SelectInput, SimpleForm, TextInput } from "react-admin"
 
 export const ProductEdit = props => (
   <Edit title="Edit a product" {...props}>

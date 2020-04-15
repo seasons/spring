@@ -1,20 +1,30 @@
 /* eslint-disable react/no-multi-comp */
-import clsx from 'clsx';
-import { NavItem } from 'components';
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { matchPath, useLocation } from 'react-router';
-import { Link as RouterLink } from 'react-router-dom';
+import clsx from "clsx"
+import { NavItem } from "components"
+import PropTypes from "prop-types"
+import React, { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { matchPath, useLocation } from "react-router"
+import { Link as RouterLink } from "react-router-dom"
 
 import {
-  Avatar, Badge, colors, Divider, Drawer, Hidden, IconButton, Link, List, ListSubheader, Theme,
-  Typography
-} from '@material-ui/core';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import { makeStyles } from '@material-ui/styles';
+  Avatar,
+  Badge,
+  colors,
+  Divider,
+  Drawer,
+  Hidden,
+  IconButton,
+  Link,
+  List,
+  ListSubheader,
+  Theme,
+  Typography,
+} from "@material-ui/core"
+import MoreIcon from "@material-ui/icons/MoreVert"
+import { makeStyles } from "@material-ui/styles"
 
-import navConfig from './navConfig';
+import navConfig from "./navConfig"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {

@@ -3,19 +3,13 @@ import React from "react"
 import { Field } from "react-final-form"
 
 export interface FormSelectProps {
-  choices: { display: any, value: any }[]
+  choices: { display: any; value: any }[]
   multiple?: boolean
   name: string
   onChange?: (event: any) => void
 }
 
-export const FormSelect: React.FC<FormSelectProps> = ({
-  choices,
-  multiple = false,
-  name,
-  onChange,
-  ...rest
-}) => {
+export const FormSelect: React.FC<FormSelectProps> = ({ choices, multiple = false, name, onChange, ...rest }) => {
   return (
     <Field
       multiple={multiple}
@@ -26,7 +20,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({
           name={input.name}
           value={multiple ? input.value || [] : input.value}
           variant="outlined"
-          onChange={(event) => {
+          onChange={event => {
             if (onChange) {
               onChange(event)
             }
@@ -46,5 +40,5 @@ export const FormSelect: React.FC<FormSelectProps> = ({
 }
 
 const FullWidthSelect = styled(Select)({
-  width: "100%"
+  width: "100%",
 })

@@ -1,11 +1,9 @@
-import clsx from 'clsx';
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import clsx from "clsx"
+import React from "react"
+import { Link as RouterLink } from "react-router-dom"
 
-import {
-  Button, colors, Dialog, Divider, Grid, Link, Paper, Theme, Typography
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Button, colors, Dialog, Divider, Grid, Link, Paper, Theme, Typography } from "@material-ui/core"
+import { makeStyles } from "@material-ui/styles"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -80,12 +78,7 @@ export interface PricingModalProps {
   onClose?: any
 }
 
-export const PricingModal: React.FunctionComponent<PricingModalProps> = ({
-  className,
-  onClose,
-  open,
-  ...rest
-}) => {
+export const PricingModal: React.FunctionComponent<PricingModalProps> = ({ className, onClose, open, ...rest }) => {
   const classes = useStyles()
 
   return (

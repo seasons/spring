@@ -6,7 +6,7 @@ export interface FormTextFieldProps {
   multiline?: boolean
   name: string
   placeholder?: string
-  rows?: number,
+  rows?: number
 }
 
 export const FormTextField: React.FC<FormTextFieldProps> = ({

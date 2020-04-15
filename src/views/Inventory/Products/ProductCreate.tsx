@@ -1,12 +1,18 @@
-import { productCreateQuery } from 'queries';
+import { productCreateQuery } from "queries"
 import React, { useState } from "react"
-import { graphql } from 'react-apollo';
+import { graphql } from "react-apollo"
 import { Form } from "react-final-form"
 
 import { Box, Grid, styled as muiStyled, Button } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { BottomNavBar, ProductCreateGeneralSection, ProductCreateMetadataSection, ProductCreatePhotographySection, ProductCreateTagsSection } from "./Components"
+import {
+  BottomNavBar,
+  ProductCreateGeneralSection,
+  ProductCreateMetadataSection,
+  ProductCreatePhotographySection,
+  ProductCreateTagsSection,
+} from "./Components"
 
 export interface ProductCreateProps {
   history: any
@@ -19,14 +25,22 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
   const [productType, setProductType] = useState("Top")
 
   if (
-    !data?.bottomSizes || !data?.brands || !data?.categories || !data?.colors ||
-    !data?.materials || !data?.products || !data?.productArchitectures ||
-    !data?.productFunctions || !data?.productModels || !data?.productTypes || !data?.topSizes
+    !data?.bottomSizes ||
+    !data?.brands ||
+    !data?.categories ||
+    !data?.colors ||
+    !data?.materials ||
+    !data?.products ||
+    !data?.productArchitectures ||
+    !data?.productFunctions ||
+    !data?.productModels ||
+    !data?.productTypes ||
+    !data?.topSizes
   ) {
     return <div>Loading</div>
   }
 
-  const onReceivedImageFile = (imageFile) => {
+  const onReceivedImageFile = imageFile => {
     console.log("RECEIVED IMAGE:", imageFile)
   }
 
@@ -48,7 +62,7 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
       break
   }
 
-  const getEnumValues = (obj) => obj.enumValues.map(enumValue => enumValue.name)
+  const getEnumValues = obj => obj.enumValues.map(enumValue => enumValue.name)
   const materials = getEnumValues(data.materials)
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
@@ -64,27 +78,19 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
       display: "Not available",
     },
   ]
-  const onCancel = () => {
-
-  }
-  const onNext = () => {
-
-  }
-  const onSubmit = (values) => {
+  const onCancel = () => {}
+  const onNext = () => {}
+  const onSubmit = values => {
     console.log("SUBMITTED VALUES", values)
   }
   const sortedBrands = [...data.brands].sort((brandA, brandB) => {
-    return brandA.name < brandB.name
-      ? -1
-      : brandA.name === brandB.name
-        ? 0
-        : 1
+    return brandA.name < brandB.name ? -1 : brandA.name === brandB.name ? 0 : 1
   })
 
   const initialValues = {
     productType,
     retailPrice: 0,
-    status: "NotAvailable"
+    status: "NotAvailable",
   }
   return (
     <Form
@@ -93,12 +99,14 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
       render={({ handleSubmit }) => (
         <Box mx={5}>
           <form onSubmit={handleSubmit}>
-            <ContainerGrid container spacing={5} >
+            <ContainerGrid container spacing={5}>
               <Grid item xs={12}>
                 <Spacer mt={3} />
                 <Text variant="h3">New product</Text>
                 <Spacer mt={0.5} />
-                <Text variant="h5" opacity={0.5}>Please fill out all required fields</Text>
+                <Text variant="h5" opacity={0.5}>
+                  Please fill out all required fields
+                </Text>
                 <Spacer mt={4} />
               </Grid>
               <Grid item xs={4}>
@@ -117,11 +125,7 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
                   types={productTypes}
                 />
                 <Spacer mt={6} />
-                <ProductCreateTagsSection
-                  functions={productFunctions}
-                  materials={materials}
-                  tags={tags}
-                />
+                <ProductCreateTagsSection functions={productFunctions} materials={materials} tags={tags} />
               </Grid>
               <Button type="submit">Submit</Button>
             </ContainerGrid>

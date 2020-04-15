@@ -16,11 +16,7 @@ export interface HeaderProps {
   onNewProductBtnPressed: () => void
 }
 
-export const Header: React.FC<HeaderProps> = ({
-  className,
-  onNewProductBtnPressed,
-  ...rest
-}) => {
+export const Header: React.FC<HeaderProps> = ({ className, onNewProductBtnPressed, ...rest }) => {
   const classes = useStyles()
 
   return (
@@ -37,6 +33,6 @@ export const Header: React.FC<HeaderProps> = ({
           </Button>
         </Grid>
       </Grid>
-    </div >
+    </div>
   )
 }
