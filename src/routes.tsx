@@ -2,13 +2,26 @@ import React from "react"
 import { Redirect } from "react-router-dom"
 
 import { Dashboard } from "./layouts/Dashboard"
-import { AnalyticsView, CustomerList, InventoryView, ProductCreate, OverviewView, ReservationsList } from "./views"
+import {
+  AnalyticsView,
+  CustomerList,
+  InventoryView,
+  ProductCreate,
+  OverviewView,
+  ReservationsList,
+  LoginView,
+} from "./views"
 
 export default [
   {
     path: "/",
     exact: true,
     component: () => <Redirect to="/overview" />,
+  },
+  {
+    path: "/login",
+    exact: true,
+    component: LoginView,
   },
   {
     route: "*",

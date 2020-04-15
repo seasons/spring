@@ -1,10 +1,9 @@
-import React, { Suspense, useState, useEffect } from "react"
+import React, { Suspense, useState } from "react"
 import { renderRoutes } from "react-router-config"
 import { makeStyles } from "@material-ui/styles"
 import { LinearProgress, Theme } from "@material-ui/core"
 import NavBar from "./NavBar"
 import TopBar from "./TopBar"
-import { useAuth0 } from "utils/auth0"
 
 const useStyles = makeStyles<Theme>(theme => ({
   container: {

@@ -9,7 +9,7 @@ import { createBrowserHistory } from "history"
 import get from "lodash/get"
 import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
 import polyglotI18nProvider from "ra-i18n-polyglot"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { convertLegacyDataProvider, DataProviderContext, Resource, TranslationProvider } from "react-admin"
 import { ApolloProvider } from "react-apollo"
 import { Provider as StoreProvider } from "react-redux"
@@ -23,24 +23,18 @@ import overridenQueries from "./queries"
 import routes from "./routes"
 import configureStore from "./store/adminStore"
 import { theme } from "./theme/theme"
-import { Auth0Provider, useAuth0 } from "utils/auth0"
 
 const link = new HttpLink({
-  uri: "http://localhost:4466/monsoon/dev",
-  credentials: "include",
-  // uri: "https://monsoon-prisma-staging.herokuapp.com/monsoon/staging",
+  uri: "http://localhost:4000",
+  // uri: "https://monsoon-staging.herokuapp.com",
 })
-
-const auth0Config = {
-  domain: "seasons-staging.auth0.com",
-  clientId: "fcHPQx7KYqpkqI2yn31fcLgt7nuU2S5D",
-}
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
   try {
     // return the headers to the context so httpLink can read them
-    const token = localStorage.getItem("token")
+    const userSession = localStorage.get("userSession")
+    const token = userSession.token
     return {
       headers: {
         ...headers,
@@ -82,77 +76,57 @@ const i18nProvider = polyglotI18nProvider(locale => {
   return englishMessages
 })
 
-const App: React.FC = () => {
-  const [dataProvider, setDataProvider] = useState(null)
-  const { loading, isAuthenticated, loginWithRedirect } = useAuth0()
+class App extends React.Component {
+  state = { dataProvider: null }
 
-  useEffect(() => {
-    if (loading || isAuthenticated) {
-      return
-    }
-    const fn = async () => {
-      await loginWithRedirect({
-        appState: { targetUrl: "http://localhost:3000" },
-      })
-    }
-    fn()
-  }, [loading, isAuthenticated, loginWithRedirect])
+  componentDidMount() {
+    const isAuthenticated = !!localStorage.getItem("userSession")
 
-  useEffect(() => {
-    if (loading || isAuthenticated) {
-      buildOpenCrudProvider({
-        client,
-        buildQuery: enhanceBuildQuery(buildQuery),
-      } as any).then(dataProvider => setDataProvider(convertLegacyDataProvider(dataProvider)))
+    if (!isAuthenticated && window.location.pathname != "/login") {
+      window.location.href = "/login"
     }
-  })
 
-  if (!dataProvider) {
-    return <AppLoader />
+    buildOpenCrudProvider({
+      client,
+      buildQuery: enhanceBuildQuery(buildQuery),
+    } as any).then(dataProvider => this.setState({ dataProvider: convertLegacyDataProvider(dataProvider) }))
   }
 
-  const store = configureStore({
-    authProvider: () => Promise.resolve(),
-    dataProvider,
-    history,
-  })
+  render() {
+    const { dataProvider } = this.state
 
-  return (
-    <TranslationProvider i18nProvider={i18nProvider}>
-      <StoreProvider store={store}>
-        <DataProviderContext.Provider value={dataProvider}>
-          <ApolloProvider client={client}>
-            <ThemeProvider theme={theme}>
-              <Resource name="Product" intent="registration" />
-              <Resource name="Customer" intent="registration" />
-              <Resource name="Category" intent="registration" />
-              <Resource name="Brand" intent="registration" />
-              <Resource name="User" intent="registration" />
-              <Resource name="Reservation" intent="registration" />
-              <Resource name="Size" intent="registration" />
-              <Resource name="Tag" intent="registration" />
-              <Router history={history}>{renderRoutes(routes)}</Router>
-            </ThemeProvider>
-          </ApolloProvider>
-        </DataProviderContext.Provider>
-      </StoreProvider>
-    </TranslationProvider>
-  )
+    if (!dataProvider) {
+      return <AppLoader />
+    }
+
+    const store = configureStore({
+      authProvider: () => Promise.resolve(),
+      dataProvider,
+      history,
+    })
+
+    return (
+      <TranslationProvider i18nProvider={i18nProvider}>
+        <StoreProvider store={store}>
+          <DataProviderContext.Provider value={dataProvider}>
+            <ApolloProvider client={client}>
+              <ThemeProvider theme={theme}>
+                <Resource name="Product" intent="registration" />
+                <Resource name="Customer" intent="registration" />
+                <Resource name="Category" intent="registration" />
+                <Resource name="Brand" intent="registration" />
+                <Resource name="User" intent="registration" />
+                <Resource name="Reservation" intent="registration" />
+                <Resource name="Size" intent="registration" />
+                <Resource name="Tag" intent="registration" />
+                <Router history={history}>{renderRoutes(routes)}</Router>
+              </ThemeProvider>
+            </ApolloProvider>
+          </DataProviderContext.Provider>
+        </StoreProvider>
+      </TranslationProvider>
+    )
+  }
 }
 
-const LoginManager = props => {
-  return (
-    <Auth0Provider
-      domain={auth0Config.domain}
-      client_id={auth0Config.clientId}
-      redirect_uri={window.location.origin}
-      onRedirectCallback={appState => {
-        history.push(appState && appState.targetUrl ? appState.targetUrl : window.location.pathname)
-      }}
-    >
-      <App {...props} />
-    </Auth0Provider>
-  )
-}
-
-export default LoginManager
+export default App

@@ -9,7 +9,7 @@ export const BrandList = props => (
     hasEdit={false}
     hasList={true}
     hasShow={true}
-    resource={"Brand"}
+    resource="Brand"
     title="Brands"
   >
     <Datagrid>
