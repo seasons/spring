@@ -1,3 +1,4 @@
+export { FormAutocomplete } from "./FormAutocomplete"
 export { FormTextField } from "./FormTextField"
 export { FormSelect } from "./FormSelect"
 export { Label } from "./Label"
