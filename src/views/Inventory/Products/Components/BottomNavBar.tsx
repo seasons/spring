@@ -1,7 +1,7 @@
 import React from "react"
-import { Box, Button, TextField, styled } from "@material-ui/core"
+import { Box, Button, styled } from "@material-ui/core"
 
-import { Separator, Spacer } from "components"
+import { Separator } from "components"
 
 export interface BottomNavBarProps {
   onCancel: () => void
