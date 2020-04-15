@@ -3,21 +3,21 @@ import { Box, Button, styled } from "@material-ui/core"
 
 import { Separator } from "components"
 
-export interface BottomNavBarProps {
-  onCancel: () => void
-  onNext: () => void
+export interface WizardBottomNavBarProps {
+  isLastPage: boolean
+  onPrevious: () => void
 }
 
 const BUTTON_HEIGHT = 40
 const BUTTON_WIDTH = 148
 
-export const BottomNavBar: React.FC<BottomNavBarProps> = ({ onCancel, onNext }) => {
+export const WizardBottomNavBar: React.FC<WizardBottomNavBarProps> = ({ isLastPage, onPrevious }) => {
   return (
     <StyledBox>
       <Separator />
       <FlexBox px={2} display="flex" justifyContent="space-between" alignItems="center">
-        <CancelButton onClick={onCancel}>Cancel</CancelButton>
-        <NextButton onClick={onNext}>Next</NextButton>
+        <PreviousButton onClick={onPrevious}>Previous</PreviousButton>
+        <SubmitButton type="submit">{isLastPage ? "Submit" : "Next"}</SubmitButton>
       </FlexBox>
     </StyledBox>
   )
@@ -37,7 +37,7 @@ const FlexBox = styled(Box)({
   width: "auto",
 })
 
-const CancelButton = styled(Button)({
+const PreviousButton = styled(Button)({
   backgroundColor: "white",
   border: "1px solid #dddddd",
   borderRadius: 4,
@@ -45,7 +45,7 @@ const CancelButton = styled(Button)({
   width: BUTTON_WIDTH,
 })
 
-const NextButton = styled(Button)({
+const SubmitButton = styled(Button)({
   backgroundColor: "black",
   borderRadius: 4,
   color: "white",

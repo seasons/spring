@@ -1,8 +1,4 @@
 export { BottomNavBar } from "./BottomNavBar"
 export { Dropzone } from "./Dropzone"
 export { ImageInputPlaceholder } from "./ImageInputPlaceholder"
-export { ProductCreateGeneralSection } from "./ProductCreateGeneralSection"
-export { ProductCreateMetadataSection } from "./ProductCreateMetadataSection"
-export { ProductCreatePhotographySection } from "./ProductCreatePhotographySection"
-export { ProductCreateTagsSection } from "./ProductCreateTagsSection"
 export { ProductImagePreview } from "./ProductImagePreview"

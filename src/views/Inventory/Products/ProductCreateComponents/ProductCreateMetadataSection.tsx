@@ -26,7 +26,7 @@ export const ProductCreateMetadataSection: React.FC<ProductCreateMetadataSection
 }) => {
   const modelChoices = models.map(model => ({
     display: model.name,
-    value: model.id
+    value: model.id,
   }))
   const typeChoices = types.map(type => ({
     display: type,
@@ -41,7 +41,7 @@ export const ProductCreateMetadataSection: React.FC<ProductCreateMetadataSection
     value: category.id,
   }))
   const colorChoices = colors.map(color => ({
-    display: <Text style={{ backgroundColor: color.hexCode }}>{color.name}</ Text>,
+    display: <Text style={{ backgroundColor: color.hexCode }}>{color.name}</Text>,
     value: color.id,
   }))
   return (
@@ -64,7 +64,7 @@ export const ProductCreateMetadataSection: React.FC<ProductCreateMetadataSection
         <Grid item xs={6}>
           <Text variant="h6">Type</Text>
           <Spacer mt={1} />
-          <FormSelect name="productType" choices={typeChoices} onChange={(event) => setProductType(event.target.value)} />
+          <FormSelect name="productType" choices={typeChoices} onChange={event => setProductType(event.target.value)} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Season</Text>
