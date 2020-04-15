@@ -1,5 +1,6 @@
 export { AppLoader } from "./AppLoader"
 export { FormAutocomplete } from "./FormAutocomplete"
+export { WizardBottomNavBar } from "./WizardBottomNavBar"
 export { FormSelect } from "./FormSelect"
 export { FormTextField } from "./FormTextField"
 export { Label } from "./Label"

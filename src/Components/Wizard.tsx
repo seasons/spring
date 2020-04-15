@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Form } from "react-final-form"
+import { WizardBottomNavBar } from "./WizardBottomNavBar"
 
 export interface WizardProps {
   children: any
@@ -47,19 +48,7 @@ export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, on
       {({ handleSubmit, submitting, values }) => (
         <form onSubmit={handleSubmit}>
           {activePage}
-          <div className="buttons">
-            {pageIndex > 0 && (
-              <button type="button" onClick={previous}>
-                « Previous
-              </button>
-            )}
-            {!isLastPage && <button type="submit">Next »</button>}
-            {isLastPage && (
-              <button type="submit" disabled={submitting}>
-                Submit
-              </button>
-            )}
-          </div>
+          <WizardBottomNavBar onPrevious={previous} isLastPage={isLastPage} />
         </form>
       )}
     </Form>

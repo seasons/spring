@@ -3,10 +3,10 @@ import React from "react"
 import { Box, GridList, GridListTile } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { Dropzone } from "./Dropzone"
+import { Dropzone } from "../Components"
 
 export interface ProductCreatePhotographySectionProps {
-  numImages: number,
+  numImages: number
   onReceivedImageFile: (any) => void
 }
 
