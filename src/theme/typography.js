@@ -2,7 +2,7 @@ import palette from "./palette"
 
 export default {
   fontFamily: [
-    // "Proxima Nova",
+    "ProximaNova-Medium",
     "-apple-system",
     "BlinkMacSystemFont",
     '"Segoe UI"',
@@ -72,7 +72,6 @@ export default {
   body1: {
     color: palette.text.primary,
     fontSize: "14px",
-    letterSpacing: "-0.05px",
     lineHeight: "21px",
   },
   body2: {
