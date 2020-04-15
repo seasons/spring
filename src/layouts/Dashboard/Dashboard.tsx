@@ -33,19 +33,6 @@ interface DashboardProps {}
 export const Dashboard: React.FC<DashboardProps> = ({ route }: any) => {
   const classes = useStyles()
   const [openNavBarMobile, setOpenNavBarMobile] = useState(false)
-  const { loading, isAuthenticated, loginWithRedirect } = useAuth0()
-
-  useEffect(() => {
-    if (loading || isAuthenticated) {
-      return
-    }
-    const fn = async () => {
-      await loginWithRedirect({
-        appState: { targetUrl: "http://localhost:3000" },
-      })
-    }
-    // fn()
-  }, [loading, isAuthenticated, loginWithRedirect])
 
   return (
     <>

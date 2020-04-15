@@ -10,6 +10,7 @@ export const useAuth0 = () => useContext(Auth0Context)
 export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_CALLBACK, ...initOptions }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<Boolean>()
   const [user, setUser] = useState()
+  const [token, setToken] = useState()
   const [auth0Client, setAuth0] = useState<Auth0Client>()
   const [loading, setLoading] = useState(true)
   const [popupOpen, setPopupOpen] = useState(false)
@@ -31,6 +32,10 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser()
         setUser(user)
+
+        const newToken = await auth0FromHook.getTokenSilently()
+        setToken(newToken)
+        localStorage.setItem("token", newToken)
       }
 
       setLoading(false)
@@ -68,6 +73,7 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
         {
           isAuthenticated,
           user,
+          token,
           loading,
           popupOpen,
           loginWithPopup,
