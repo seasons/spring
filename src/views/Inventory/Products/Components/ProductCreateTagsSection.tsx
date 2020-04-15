@@ -1,12 +1,8 @@
 import React from "react"
 
-import { Grid, TextField } from "@material-ui/core"
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import { Grid } from "@material-ui/core"
 
-import { FormAutocomplete, FormSelect, FormTextField, Separator, Spacer, Text } from "components"
-
-const filter = createFilterOptions<string>()
-
+import { FormAutocomplete, Separator, Spacer, Text } from "components"
 
 export interface ProductCreateTagsSectionProps {
   functions: string[]
@@ -14,11 +10,7 @@ export interface ProductCreateTagsSectionProps {
   tags: string[]
 }
 
-export const ProductCreateTagsSection: React.FC<ProductCreateTagsSectionProps> = ({
-  functions,
-  materials,
-  tags,
-}) => {
+export const ProductCreateTagsSection: React.FC<ProductCreateTagsSectionProps> = ({ functions, materials, tags }) => {
   return (
     <>
       <Text variant="h4">Tags</Text>
