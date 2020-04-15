@@ -1,16 +1,12 @@
 import { productCreateQuery } from 'queries';
-import React, { useEffect, useState } from "react"
-import { Create, SimpleForm, TextInput, SelectInput, SelectArrayInput } from "react-admin"
-import { Form, Field } from "react-final-form"
-
+import React, { useState } from "react"
 import { graphql } from 'react-apollo';
+import { Form } from "react-final-form"
 
-import { Box, Grid, GridList, GridListTile, styled as muiStyled, Input, Button } from "@material-ui/core"
-import styled from "styled-components"
-import { withStyles } from '@material-ui/core/styles';
+import { Box, Grid, styled as muiStyled, Button } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { BottomNavBar, Dropzone, ProductCreateGeneralSection, ProductCreateMetadataSection, ProductCreatePhotographySection, ProductCreateTagsSection } from "./Components"
+import { BottomNavBar, ProductCreateGeneralSection, ProductCreateMetadataSection, ProductCreatePhotographySection, ProductCreateTagsSection } from "./Components"
 
 export interface ProductCreateProps {
   history: any
@@ -22,7 +18,6 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
   const data: any = props?.data
   const [productType, setProductType] = useState("Top")
 
-  console.log("Data:", data)
   if (
     !data?.bottomSizes || !data?.brands || !data?.categories || !data?.colors ||
     !data?.materials || !data?.products || !data?.productArchitectures ||

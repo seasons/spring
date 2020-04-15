@@ -7,7 +7,7 @@ const filter = createFilterOptions<string>()
 
 export interface FormAutocompleteProps {
   name: string,
-  options: string[]
+  options: string[],
 }
 
 export const FormAutocomplete: React.FC<FormAutocompleteProps> = ({
@@ -19,12 +19,18 @@ export const FormAutocomplete: React.FC<FormAutocompleteProps> = ({
       multiple
       name={name}
       render={({ input }) => {
-        console.log("INPUT:", input.value)
         return (
           <Autocomplete
             multiple
             onChange={(event: any) => {
-              input.onChange({ target: { name, value: [...input.value, event.target.innerHTML] } })
+              const targetValue = event.target.innerHTML
+              let newValue
+              if (!targetValue || event.target.tagName !== "LI") {
+                newValue = []
+              } else {
+                newValue = Array.from(new Set([...input.value, targetValue]))
+              }
+              input.onChange({ target: { name, value: newValue } })
             }}
             value={input.value || []}
             options={options}

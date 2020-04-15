@@ -1,9 +1,6 @@
 import React from "react"
-import { TextInput, SelectInput, SelectArrayInput } from "react-admin"
-import { Form, Field } from "react-final-form"
 
-import { Grid, styled as muiStyled } from "@material-ui/core"
-import styled from "styled-components"
+import { Grid } from "@material-ui/core"
 
 import { FormSelect, FormTextField, Separator, Spacer, Text } from "components"
 
