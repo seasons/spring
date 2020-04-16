@@ -32,7 +32,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
   navigation: {
     overflow: "auto",
-    padding: theme.spacing(20, 2, 2, 2),
+    padding: theme.spacing(15, 2, 2, 2),
     flexGrow: 1,
   },
   details: {
@@ -41,9 +41,10 @@ const useStyles = makeStyles<Theme>(theme => ({
 }))
 
 const LogoText = styled(Typography)`
+  font-family: "Apercu-Mono", sans-serif;
   color: ${colors.white100};
   letter-spacing: 1px;
-  font-weight: 700;
+  font-weight: 500;
 `
 
 const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: any) => {
@@ -64,6 +65,8 @@ const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: any) => {
         <Spacer ml={2} />
         <LogoText variant="h4">SEASONS</LogoText>
       </Box>
+
+      <Box mt={1} borderBottom={`1px solid ${colors.black85}`}></Box>
 
       <nav className={classes.navigation}>
         <List>
