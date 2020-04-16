@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
+import { useWizard } from "components/Wizard"
 import { ProductCreateGeneralSection } from "./ProductCreateGeneralSection"
 import { ProductCreateMetadataSection } from "./ProductCreateMetadataSection"
 import { ProductCreatePhotographySection } from "./ProductCreatePhotographySection"

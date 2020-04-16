@@ -19,7 +19,7 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
   }
 
   const validateDetails = values => {
-    console.log("VALIDATING:", values)
+    // console.log("VALIDATING:", values)
     // TODO
     const errors = {}
     return errors

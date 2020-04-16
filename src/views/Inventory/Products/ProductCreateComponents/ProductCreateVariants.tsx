@@ -3,10 +3,7 @@ import React, { useState } from "react"
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { ProductCreateGeneralSection } from "./ProductCreateGeneralSection"
-import { ProductCreateMetadataSection } from "./ProductCreateMetadataSection"
-import { ProductCreatePhotographySection } from "./ProductCreatePhotographySection"
-import { ProductCreateTagsSection } from "./ProductCreateTagsSection"
+import { useWizard } from "components/Wizard"
 
 export interface ProductCreateVariantsProps {
   variants: any
@@ -14,6 +11,7 @@ export interface ProductCreateVariantsProps {
 }
 
 export const ProductCreateVariants: React.FC<ProductCreateVariantsProps> = ({ variants }) => {
+  const { values } = useWizard()
   return (
     <Box mx={5}>
       <ContainerGrid container spacing={2}>
