@@ -36,7 +36,7 @@ export const ProductCreateDetails: React.FC<ProductCreateDetailsProps> = ({ data
     console.log("RECEIVED IMAGE:", imageFile)
   }
 
-  let sizes
+  let sizes: any[] = []
   switch (productType) {
     case "Top":
       const topSizes = Array.from(new Set(data.topSizes.map(topSize => topSize.letter)))
