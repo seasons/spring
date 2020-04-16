@@ -3,7 +3,7 @@ import React from "react"
 import { graphql } from "react-apollo"
 
 import { Wizard } from "components"
-import { ProductCreateDetails } from "./ProductCreateComponents"
+import { ProductCreateDetails, ProductCreateVariants } from "./ProductCreateComponents"
 
 export interface ProductCreateProps {
   history: any
@@ -25,15 +25,27 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     return errors
   }
 
+  const validateVariants = values => {
+    const errors = {}
+    return errors
+  }
+
   const initialValues = {
     productType: "Top",
     retailPrice: 0,
     status: "NotAvailable",
   }
 
+  const variants = [
+    { Small: { SKU: "STIS-PNK-SS-015" } },
+    { Medium: { SKU: "STIS-PNK-SS-015" } },
+    { Large: { SKU: "STIS-PNK-SS-015" } },
+  ]
+
   return (
     <Wizard initialValues={initialValues} onSubmit={onSubmit}>
       <ProductCreateDetails data={data} validate={validateDetails} />
+      <ProductCreateVariants variants={variants} validate={validateVariants} />
     </Wizard>
   )
 })
