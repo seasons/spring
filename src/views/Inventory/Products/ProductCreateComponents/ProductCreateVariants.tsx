@@ -9,11 +9,11 @@ import { ProductCreatePhotographySection } from "./ProductCreatePhotographySecti
 import { ProductCreateTagsSection } from "./ProductCreateTagsSection"
 
 export interface ProductCreateVariantsProps {
-  data: any
+  variants: any
   validate: (values: any) => Object
 }
 
-export const ProductCreateVariants: React.FC<ProductCreateVariantsProps> = ({ data }) => {
+export const ProductCreateVariants: React.FC<ProductCreateVariantsProps> = ({ variants }) => {
   return (
     <Box mx={5}>
       <ContainerGrid container spacing={2}>
@@ -26,6 +26,11 @@ export const ProductCreateVariants: React.FC<ProductCreateVariantsProps> = ({ da
           </Text>
           <Spacer mt={4} />
         </Grid>
+        {variants.map((variant, index) => (
+          <Grid key={index} item xs={12}>
+            <Text variant="h6">{variant.size}</Text>
+          </Grid>
+        ))}
       </ContainerGrid>
     </Box>
   )

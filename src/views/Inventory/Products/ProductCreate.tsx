@@ -37,9 +37,9 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
   }
 
   const variants = [
-    { Small: { SKU: "STIS-PNK-SS-015" } },
-    { Medium: { SKU: "STIS-PNK-SS-015" } },
-    { Large: { SKU: "STIS-PNK-SS-015" } },
+    { size: "Small", SKU: "STIS-PNK-SS-015" },
+    { size: "Medium", SKU: "STIS-PNK-SS-015" },
+    { size: "Large", SKU: "STIS-PNK-SS-015" },
   ]
 
   return (
