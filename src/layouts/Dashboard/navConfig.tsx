@@ -6,33 +6,28 @@ import PersonIcon from "@material-ui/icons/PersonOutlined"
 
 export default [
   {
-    subheader: "Pages",
-    items: [
-      {
-        title: "Overview",
-        href: "/overview",
-        icon: HomeIcon,
-      },
-      {
-        title: "Analytics",
-        href: "/analytics",
-        icon: BarChartIcon,
-      },
-      {
-        title: "Members",
-        href: "/members",
-        icon: PersonIcon,
-      },
-      {
-        title: "Inventory",
-        href: "/inventory/products",
-        icon: DashboardIcon,
-      },
-      {
-        title: "Reservations",
-        href: "/reservations",
-        icon: ListIcon,
-      },
-    ],
+    title: "Overview",
+    href: "/overview",
+    icon: HomeIcon,
+  },
+  {
+    title: "Analytics",
+    href: "/analytics",
+    icon: BarChartIcon,
+  },
+  {
+    title: "Members",
+    href: "/members",
+    icon: PersonIcon,
+  },
+  {
+    title: "Inventory",
+    href: "/inventory/products",
+    icon: DashboardIcon,
+  },
+  {
+    title: "Reservations",
+    href: "/reservations",
+    icon: ListIcon,
   },
 ]
