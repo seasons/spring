@@ -1,44 +1,29 @@
-import clsx from "clsx"
-import React, { ReactNode, useState } from "react"
+import React, { ReactNode } from "react"
 import { NavLink as RouterLink } from "react-router-dom"
 
-import { Button, Collapse, ListItem, Theme } from "@material-ui/core"
-import ExpandLessIcon from "@material-ui/icons/ExpandLess"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import styled from "styled-components"
+import { Button, ListItem, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
+import { colors } from "theme"
 
 const useStyles = makeStyles<Theme>(theme => ({
   item: {
-    display: "block",
-    paddingTop: 0,
-    paddingBottom: 0,
-  },
-  itemLeaf: {
     display: "flex",
     paddingTop: 0,
     paddingBottom: 0,
+    marginBottom: theme.spacing(2),
   },
   button: {
     padding: "10px 8px",
     justifyContent: "flex-start",
     textTransform: "none",
+    fontSize: 20,
     letterSpacing: 0,
     width: "100%",
-  },
-  buttonLeaf: {
-    padding: "10px 8px",
-    justifyContent: "flex-start",
-    textTransform: "none",
-    letterSpacing: 0,
-    width: "100%",
-    fontWeight: theme.typography.fontWeightRegular,
-    "&.depth-0": {
-      fontWeight: theme.typography.fontWeightMedium,
-    },
+    color: colors.black50,
   },
   icon: {
-    // @ts-ignore
-    color: theme.palette.icon,
+    color: colors.black50,
     display: "flex",
     alignItems: "center",
     marginRight: theme.spacing(1),
@@ -54,88 +39,53 @@ const useStyles = makeStyles<Theme>(theme => ({
     marginLeft: "auto",
   },
   active: {
-    color: theme.palette.secondary.main,
+    color: colors.white100,
     fontWeight: theme.typography.fontWeightMedium,
     "& $icon": {
-      color: theme.palette.secondary.main,
+      color: colors.white100,
     },
   },
 }))
 
+const ListButton = styled(Button)`
+  padding: 10px 8px;
+  justify-content: flex-start;
+  text-transform: none;
+  font-size: 18px;
+  letter-spacing: 0;
+  width: 100%;
+  color: ${colors.black50};
+
+  &.active {
+    color: ${colors.white100};
+    font-weight: medium;
+  }
+`
+
 export interface NavItemProps {
   children?: ReactNode
   className?: string
-  depth: number
   href?: string
   icon: any
-  label: any
   open?: boolean
   title: string
 }
 
 export const NavItem: React.FunctionComponent<NavItemProps> = ({
   children,
-  className,
-  depth,
   href,
   icon: Icon,
-  label: Label,
   open: openProp = false,
   title,
   ...rest
 }) => {
   const classes = useStyles()
-  const [open, setOpen] = useState(openProp)
-
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen)
-  }
-
-  let paddingLeft = 8
-
-  if (depth > 0) {
-    paddingLeft = 32 + 8 * depth
-  }
-
-  const style = {
-    paddingLeft,
-  }
-
-  if (children) {
-    return (
-      <ListItem {...rest} className={clsx(classes.item, className)} disableGutters key={title}>
-        <Button className={classes.button} onClick={handleToggle} style={style}>
-          {Icon && <Icon className={classes.icon} />}
-          {title}
-          {open ? (
-            <ExpandLessIcon className={classes.expandIcon} color="inherit" />
-          ) : (
-            <ExpandMoreIcon className={classes.expandIcon} color="inherit" />
-          )}
-        </Button>
-        <Collapse in={open}>{children}</Collapse>
-      </ListItem>
-    )
-  }
 
   return (
-    <ListItem {...rest} className={clsx(classes.itemLeaf, className)} disableGutters key={title}>
-      <Button
-        activeClassName={classes.active}
-        className={clsx(classes.buttonLeaf, `depth-${depth}`)}
-        component={RouterLink}
-        // exact
-        style={style}
-        to={href}
-      >
-        {Icon && <Icon className={classes.icon} />}
+    <ListItem {...rest} className={classes.item} disableGutters key={title}>
+      <ListButton component={RouterLink} to={href}>
         {title}
-        {Label && (
-          <span className={classes.label}>
-            <Label />
-          </span>
-        )}
-      </Button>
+      </ListButton>
     </ListItem>
   )
 }

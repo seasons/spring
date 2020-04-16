@@ -1,18 +1,4 @@
-import { colors as muiColors } from "@material-ui/core"
-
-const colors = {
-  ...muiColors,
-  black100: "#000",
-  black85: "#252525",
-  black65: "#5A5A5A",
-  black50: "#7F7F7F",
-  black15: "#D9D9D9",
-  black04: "#F6F6F6",
-  white100: "#fff",
-  green: "#44524A",
-  lightGreen: "#989F9B",
-  blue: "#2B50DF",
-}
+import { colors } from "./colors"
 
 export default {
   primary: {
@@ -41,7 +27,7 @@ export default {
   link: colors.blue[800],
   icon: colors.black85,
   background: {
-    default: "#ffffff",
+    default: colors.white100,
     paper: colors.white100,
   },
   divider: colors.grey[200],

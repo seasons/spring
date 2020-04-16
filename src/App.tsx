@@ -16,8 +16,9 @@ import { Provider as StoreProvider } from "react-redux"
 import { renderRoutes } from "react-router-config"
 import { Router } from "react-router-dom"
 
+import { ThemeProvider as SCThemeProvider } from "styled-components"
 import { ThemeProvider } from "@material-ui/core"
-
+import { StylesProvider } from "@material-ui/core/styles"
 import englishMessages from "./i18n/en"
 import overridenQueries from "./queries"
 import routes from "./routes"
@@ -82,7 +83,7 @@ class App extends React.Component {
   componentDidMount() {
     const isAuthenticated = !!localStorage.getItem("userSession")
 
-    if (!isAuthenticated && window.location.pathname != "/login") {
+    if (!isAuthenticated && window.location?.pathname != "/login") {
       window.location.href = "/login"
     }
 
@@ -110,17 +111,21 @@ class App extends React.Component {
         <StoreProvider store={store}>
           <DataProviderContext.Provider value={dataProvider}>
             <ApolloProvider client={client}>
-              <ThemeProvider theme={theme}>
-                <Resource name="Product" intent="registration" />
-                <Resource name="Customer" intent="registration" />
-                <Resource name="Category" intent="registration" />
-                <Resource name="Brand" intent="registration" />
-                <Resource name="User" intent="registration" />
-                <Resource name="Reservation" intent="registration" />
-                <Resource name="Size" intent="registration" />
-                <Resource name="Tag" intent="registration" />
-                <Router history={history}>{renderRoutes(routes)}</Router>
-              </ThemeProvider>
+              <StylesProvider injectFirst>
+                <SCThemeProvider theme={theme}>
+                  <ThemeProvider theme={theme}>
+                    <Resource name="Product" intent="registration" />
+                    <Resource name="Customer" intent="registration" />
+                    <Resource name="Category" intent="registration" />
+                    <Resource name="Brand" intent="registration" />
+                    <Resource name="User" intent="registration" />
+                    <Resource name="Reservation" intent="registration" />
+                    <Resource name="Size" intent="registration" />
+                    <Resource name="Tag" intent="registration" />
+                    <Router history={history}>{renderRoutes(routes)}</Router>
+                  </ThemeProvider>
+                </SCThemeProvider>
+              </StylesProvider>
             </ApolloProvider>
           </DataProviderContext.Provider>
         </StoreProvider>

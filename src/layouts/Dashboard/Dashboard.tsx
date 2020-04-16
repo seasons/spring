@@ -1,47 +1,44 @@
 import React, { Suspense, useState } from "react"
 import { renderRoutes } from "react-router-config"
-import { makeStyles } from "@material-ui/styles"
-import { LinearProgress, Theme } from "@material-ui/core"
+import { LinearProgress } from "@material-ui/core"
 import NavBar from "./NavBar"
-import TopBar from "./TopBar"
+import styled from "styled-components"
+import { colors } from "theme"
 
-const useStyles = makeStyles<Theme>(theme => ({
-  container: {
-    minHeight: "100vh",
-    display: "flex",
-    "@media all and (-ms-high-contrast:none)": {
-      height: 0, // IE11 fix
-    },
-  },
-  content: {
-    paddingTop: 64,
-    flexGrow: 1,
-    maxWidth: "100%",
-    overflowX: "hidden",
-    [theme.breakpoints.up("lg")]: {
-      paddingLeft: 256,
-    },
-    [theme.breakpoints.down("xs")]: {
-      paddingTop: 56,
-    },
-  },
-}))
+const Container = styled.div`
+  min-height: 100vh;
+  background: ${colors.black100};
+  display: flex;
+`
+
+const Content = styled.div`
+  ${({ theme }) => `
+  flex-grow: 1;
+  max-width: 100%;
+  overflow: hidden;
+  background: ${colors.white100};
+
+  ${theme.breakpoints.up("lg")} {
+    margin-left: 256px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+`}
+`
 
 interface DashboardProps {}
 
 export const Dashboard: React.FC<DashboardProps> = ({ route }: any) => {
-  const classes = useStyles()
   const [openNavBarMobile, setOpenNavBarMobile] = useState(false)
 
   return (
     <>
-      <TopBar onOpenNavBarMobile={() => setOpenNavBarMobile(true)} />
       <NavBar onMobileClose={() => setOpenNavBarMobile(false)} openMobile={openNavBarMobile} />
-      <div className={classes.container}>
-        <div className={classes.content}>
+      <Container>
+        <Content>
           <Suspense fallback={<LinearProgress />}>{renderRoutes(route.routes)}</Suspense>
-        </div>
-      </div>
+        </Content>
+      </Container>
     </>
   )
 }
