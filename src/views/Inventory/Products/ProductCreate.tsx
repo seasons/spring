@@ -1,8 +1,9 @@
 import { productCreateQuery } from "queries"
+import { Box } from "@material-ui/core"
 import React from "react"
 import { graphql } from "react-apollo"
 
-import { Wizard } from "components"
+import { Spacer, Wizard } from "components"
 import { ProductCreateDetails, ProductCreateVariants } from "./ProductCreateComponents"
 
 export interface ProductCreateProps {
@@ -37,15 +38,18 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
   }
 
   const variants = [
-    { size: "Small", SKU: "STIS-PNK-SS-015" },
-    { size: "Medium", SKU: "STIS-PNK-SS-015" },
-    { size: "Large", SKU: "STIS-PNK-SS-015" },
+    { size: "Small", sku: "STIS-PNK-SS-015", type: "Top" },
+    { size: "Medium", sku: "STIS-PNK-SS-015", type: "Top" },
+    { size: "Large", sku: "STIS-PNK-SS-015", type: "Top" },
   ]
 
   return (
-    <Wizard initialValues={initialValues} onSubmit={onSubmit}>
-      <ProductCreateDetails data={data} validate={validateDetails} />
-      <ProductCreateVariants variants={variants} validate={validateVariants} />
-    </Wizard>
+    <Box>
+      <Wizard initialValues={initialValues} onSubmit={onSubmit}>
+        <ProductCreateDetails data={data} validate={validateDetails} />
+        <ProductCreateVariants variants={variants} validate={validateVariants} />
+      </Wizard>
+      <Spacer mt={9} />
+    </Box>
   )
 })

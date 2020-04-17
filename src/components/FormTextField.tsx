@@ -3,13 +3,16 @@ import { TextField, TextFieldProps, styled } from "@material-ui/core"
 import { Field } from "react-final-form"
 
 export type FormTextFieldProps = TextFieldProps & {
+  disabled?: boolean
   multiline?: boolean
   name: string
   placeholder?: string
   rows?: number
+  value?: string
 }
 
 export const FormTextField: React.FC<FormTextFieldProps> = ({
+  disabled = false,
   multiline = false,
   label,
   name,
@@ -17,6 +20,7 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
   helperText,
   rows = 5,
   type,
+  value,
   ...rest
 }) => {
   return (
@@ -24,12 +28,13 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
       name={name}
       render={({ input }) => (
         <StyledTextField
+          disabled={disabled}
           fullWidth
           multiline={multiline}
           rows={multiline ? rows : 0}
           name={input.name}
           placeholder={placeholder}
-          value={input.value}
+          value={value || input.value}
           variant="outlined"
           onChange={input.onChange}
           type={type}

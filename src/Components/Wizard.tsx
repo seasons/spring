@@ -13,7 +13,7 @@ export interface WizardContextProps {
 }
 
 export const WizardContext = createContext<WizardContextProps>({ values: null })
-export const useWizard = () => useContext(WizardContext)
+export const useWizardContext = () => useContext(WizardContext)
 
 export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, onSubmit }) => {
   const [pageIndex, setPageIndex] = useState(0)

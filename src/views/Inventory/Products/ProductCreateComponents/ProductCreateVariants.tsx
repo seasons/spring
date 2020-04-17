@@ -3,7 +3,8 @@ import React, { useState } from "react"
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { useWizard } from "components/Wizard"
+import { useWizardContext } from "components/Wizard"
+import { ProductCreateVariantSizeSection } from "./ProductCreateVariantSizeSection"
 
 export interface ProductCreateVariantsProps {
   variants: any
@@ -11,7 +12,7 @@ export interface ProductCreateVariantsProps {
 }
 
 export const ProductCreateVariants: React.FC<ProductCreateVariantsProps> = ({ variants }) => {
-  const { values } = useWizard()
+  const { values } = useWizardContext()
   return (
     <Box mx={5}>
       <ContainerGrid container spacing={2}>
@@ -25,9 +26,7 @@ export const ProductCreateVariants: React.FC<ProductCreateVariantsProps> = ({ va
           <Spacer mt={4} />
         </Grid>
         {variants.map((variant, index) => (
-          <Grid key={index} item xs={12}>
-            <Text variant="h6">{variant.size}</Text>
-          </Grid>
+          <ProductCreateVariantSizeSection variant={variant} key={index} />
         ))}
       </ContainerGrid>
     </Box>
