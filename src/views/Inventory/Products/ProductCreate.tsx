@@ -1,15 +1,10 @@
 import { productCreateQuery } from "queries"
 import { Box } from "@material-ui/core"
 import React from "react"
-import { graphql, useQuery } from "react-apollo"
+import { useQuery } from "react-apollo"
 
 import { Spacer, Wizard } from "components"
-import {
-  ProductCreateDetails,
-  ProductCreateVariants,
-  ProductCreatePhysicalProductSection,
-  ProductCreatePhysicalProducts,
-} from "./ProductCreateComponents"
+import { ProductCreateDetails, ProductCreateVariants, ProductCreatePhysicalProducts } from "./ProductCreateComponents"
 
 export interface ProductCreateProps {
   history: any

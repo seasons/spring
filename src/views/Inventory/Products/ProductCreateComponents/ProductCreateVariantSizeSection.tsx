@@ -2,7 +2,7 @@ import React from "react"
 
 import { Grid } from "@material-ui/core"
 
-import { FormSelect, FormTextField, Separator, Spacer, Text } from "components"
+import { FormTextField, Separator, Spacer, Text } from "components"
 
 export interface ProductCreateVariantSizeSectionProps {
   variant: any
@@ -12,7 +12,6 @@ export const ProductCreateVariantSizeSection: React.FC<ProductCreateVariantSizeS
   const { size, sku, type } = variant
   let typeSpecificFirstRowFields: string[] = []
   let typeSpecificSecondRowFields: string[] = []
-  console.log(size)
   switch (type) {
     case "Top":
       typeSpecificFirstRowFields = ["Shoulder", "Chest"]

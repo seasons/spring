@@ -1,9 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { useWizardContext } from "components/Wizard"
 import { ProductCreatePhysicalProductSection } from "./ProductCreatePhysicalProductSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 
