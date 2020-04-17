@@ -1,7 +1,7 @@
 import { productCreateQuery } from "queries"
 import { Box } from "@material-ui/core"
 import React from "react"
-import { graphql } from "react-apollo"
+import { graphql, useQuery } from "react-apollo"
 
 import { Spacer, Wizard } from "components"
 import {
@@ -17,10 +17,11 @@ export interface ProductCreateProps {
   props?: any
 }
 
-export const ProductCreate = graphql(productCreateQuery)(props => {
-  const data: any = props?.data
+export const ProductCreate = props => {
+  const { data, loading, error } = useQuery(productCreateQuery)
 
   if (
+    loading ||
     !data?.bottomSizes ||
     !data?.brands ||
     !data?.categories ||
@@ -83,4 +84,4 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
       <Spacer mt={9} />
     </Box>
   )
-})
+}
