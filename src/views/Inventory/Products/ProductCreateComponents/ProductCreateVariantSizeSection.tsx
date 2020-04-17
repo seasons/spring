@@ -10,8 +10,21 @@ export interface ProductCreateVariantSizeSectionProps {
 
 export const ProductCreateVariantSizeSection: React.FC<ProductCreateVariantSizeSectionProps> = ({ variant }) => {
   const { size, sku, type } = variant
-  const firstRowFields = ["SKU", "Weight", "Shoulder", "Chest"]
-  const secondRowFields = ["Total count", "Length", "Sleeve", "Neck"]
+  let typeSpecificFirstRowFields: string[] = []
+  let typeSpecificSecondRowFields: string[] = []
+  console.log(size)
+  switch (type) {
+    case "Top":
+      typeSpecificFirstRowFields = ["Shoulder", "Chest"]
+      typeSpecificSecondRowFields = ["Length", "Sleeve", "Neck"]
+      break
+    case "Bottom":
+      typeSpecificFirstRowFields = ["Value", "Waist"]
+      typeSpecificSecondRowFields = ["Rise", "Hem", "Inseam"]
+      break
+  }
+  const firstRowFields = ["SKU", "Weight", ...typeSpecificFirstRowFields]
+  const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
   return (
     <>
       <Grid container>
@@ -29,7 +42,7 @@ export const ProductCreateVariantSizeSection: React.FC<ProductCreateVariantSizeS
             <Spacer mt={1} />
             <FormTextField
               disabled={field === "SKU"}
-              name={field.toLowerCase()}
+              name={`${sku}${field.toLowerCase()}`}
               value={field === "SKU" ? sku : undefined}
             />
           </Grid>
@@ -41,7 +54,7 @@ export const ProductCreateVariantSizeSection: React.FC<ProductCreateVariantSizeS
           <Grid item key={index} xs={3}>
             <Text variant="h5">{field}</Text>
             <Spacer mt={1} />
-            <FormTextField name={field.toLowerCase().replace(" ", "")} />
+            <FormTextField name={`${sku}${field.toLowerCase().replace(" ", "")}`} />
           </Grid>
         ))}
         <Grid item xs={12}>

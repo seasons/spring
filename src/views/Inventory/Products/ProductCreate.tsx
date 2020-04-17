@@ -39,14 +39,14 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
 
   const variants = [
     { size: "Small", sku: "STIS-PNK-SS-015", type: "Top" },
-    { size: "Medium", sku: "STIS-PNK-SS-015", type: "Top" },
+    { size: "Medium", sku: "STIS-PNK-SS-015", type: "Bottom" },
     { size: "Large", sku: "STIS-PNK-SS-015", type: "Top" },
   ]
 
   return (
     <Box>
       <Wizard initialValues={initialValues} onSubmit={onSubmit}>
-        <ProductCreateDetails data={data} validate={validateDetails} />
+        {/* <ProductCreateDetails data={data} validate={validateDetails} /> */}
         <ProductCreateVariants variants={variants} validate={validateVariants} />
       </Wizard>
       <Spacer mt={9} />
