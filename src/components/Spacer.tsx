@@ -1,8 +1,9 @@
 import React from "react"
 
-import { Box } from "@material-ui/core"
+import { Box, Grid } from "@material-ui/core"
 
 export interface SpacerProps {
+  grid?: boolean
   m?: number
   mb?: number
   ml?: number
@@ -13,6 +14,13 @@ export interface SpacerProps {
 /**
  * A component used to inject space where it's needed
  */
-export const Spacer: React.FC<SpacerProps> = props => {
-  return <Box {...props} />
+export const Spacer: React.FC<SpacerProps> = ({ grid, ...rest }) => {
+  if (grid) {
+    return (
+      <Grid item xs={12}>
+        <Box {...rest} />
+      </Grid>
+    )
+  }
+  return <Box {...rest} />
 }

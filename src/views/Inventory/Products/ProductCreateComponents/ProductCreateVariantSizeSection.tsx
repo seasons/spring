@@ -31,7 +31,7 @@ export const ProductCreateVariantSizeSection: React.FC<ProductCreateVariantSizeS
         <Grid item xs={12}>
           <Text variant="h4">{size}</Text>
           <Spacer mt={2} />
-          <Separator height={0.99} />
+          <Separator />
           <Spacer mt={3} />
         </Grid>
       </Grid>
@@ -42,24 +42,20 @@ export const ProductCreateVariantSizeSection: React.FC<ProductCreateVariantSizeS
             <Spacer mt={1} />
             <FormTextField
               disabled={field === "SKU"}
-              name={`${sku}${field.toLowerCase()}`}
+              name={`${sku}_${field.toLowerCase()}`}
               value={field === "SKU" ? sku : undefined}
             />
           </Grid>
         ))}
-        <Grid item xs={12}>
-          <Spacer mt={3} />
-        </Grid>
+        <Spacer grid mt={3} />
         {secondRowFields.map((field, index) => (
           <Grid item key={index} xs={3}>
             <Text variant="h5">{field}</Text>
             <Spacer mt={1} />
-            <FormTextField name={`${sku}${field.toLowerCase().replace(" ", "")}`} />
+            <FormTextField name={`${sku}_${field.toLowerCase().replace(" ", "")}`} />
           </Grid>
         ))}
-        <Grid item xs={12}>
-          <Spacer mt={3} />
-        </Grid>
+        <Spacer grid mt={3} />
       </Grid>
     </>
   )

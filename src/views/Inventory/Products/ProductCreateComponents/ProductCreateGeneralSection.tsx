@@ -14,7 +14,6 @@ export const ProductCreateGeneralSection: React.FC<ProductCreateGeneralSectionPr
   brands,
   sizes,
   statuses,
-  ...rest
 }) => {
   const brandChoices = brands.map(brand => ({
     display: brand.name,

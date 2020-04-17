@@ -4,7 +4,12 @@ import React from "react"
 import { graphql } from "react-apollo"
 
 import { Spacer, Wizard } from "components"
-import { ProductCreateDetails, ProductCreateVariants } from "./ProductCreateComponents"
+import {
+  ProductCreateDetails,
+  ProductCreateVariants,
+  ProductCreatePhysicalProductSection,
+  ProductCreatePhysicalProducts,
+} from "./ProductCreateComponents"
 
 export interface ProductCreateProps {
   history: any
@@ -15,18 +20,41 @@ export interface ProductCreateProps {
 export const ProductCreate = graphql(productCreateQuery)(props => {
   const data: any = props?.data
 
+  if (
+    !data?.bottomSizes ||
+    !data?.brands ||
+    !data?.categories ||
+    !data?.colors ||
+    !data?.materials ||
+    !data?.physicalProductStatuses ||
+    !data?.products ||
+    !data?.productArchitectures ||
+    !data?.productFunctions ||
+    !data?.productModels ||
+    !data?.productTypes ||
+    !data?.topSizes
+  ) {
+    return <div>Loading</div>
+  }
+
   const onSubmit = values => {
     console.log("SUBMITTED VALUES FINAL:", values)
   }
 
   const validateDetails = values => {
-    // console.log("VALIDATING:", values)
     // TODO
     const errors = {}
     return errors
   }
 
   const validateVariants = values => {
+    // TODO
+    const errors = {}
+    return errors
+  }
+
+  const validatePhysicalProducts = values => {
+    // TODO
     const errors = {}
     return errors
   }
@@ -37,17 +65,20 @@ export const ProductCreate = graphql(productCreateQuery)(props => {
     status: "NotAvailable",
   }
 
+  // TEMP: Mock data
   const variants = [
     { size: "Small", sku: "STIS-PNK-SS-015", type: "Top" },
     { size: "Medium", sku: "STIS-PNK-SS-015", type: "Bottom" },
     { size: "Large", sku: "STIS-PNK-SS-015", type: "Top" },
   ]
+  const skus = ["STIS-PNK-SS-015", "STIS-PNK-SS-015", "STIS-PNK-SS-015"]
 
   return (
     <Box>
       <Wizard initialValues={initialValues} onSubmit={onSubmit}>
-        {/* <ProductCreateDetails data={data} validate={validateDetails} /> */}
+        <ProductCreateDetails data={data} validate={validateDetails} />
         <ProductCreateVariants variants={variants} validate={validateVariants} />
+        <ProductCreatePhysicalProducts data={data} skus={skus} validate={validatePhysicalProducts} />
       </Wizard>
       <Spacer mt={9} />
     </Box>

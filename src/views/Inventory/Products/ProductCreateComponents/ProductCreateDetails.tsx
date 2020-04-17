@@ -6,6 +6,7 @@ import { ProductCreateGeneralSection } from "./ProductCreateGeneralSection"
 import { ProductCreateMetadataSection } from "./ProductCreateMetadataSection"
 import { ProductCreatePhotographySection } from "./ProductCreatePhotographySection"
 import { ProductCreateTagsSection } from "./ProductCreateTagsSection"
+import { getEnumValues, getFormSelectChoices } from "utils/form"
 
 export interface ProductCreateDetailsProps {
   data: any
@@ -28,7 +29,7 @@ export const ProductCreateDetails: React.FC<ProductCreateDetailsProps> = ({ data
     !data?.productTypes ||
     !data?.topSizes
   ) {
-    return <div>Loading</div>
+    return null
   }
 
   const onReceivedImageFile = imageFile => {
@@ -38,22 +39,15 @@ export const ProductCreateDetails: React.FC<ProductCreateDetailsProps> = ({ data
   let sizes: any[] = []
   switch (productType) {
     case "Top":
-      const topSizes = Array.from(new Set(data.topSizes.map(topSize => topSize.letter)))
-      sizes = topSizes.map(topSize => ({
-        display: topSize,
-        value: topSize,
-      }))
+      const topSizes: string[] = Array.from(new Set(data.topSizes.map(topSize => topSize.letter)))
+      sizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
-      const bottomSizes = Array.from(new Set(data.bottomSizes.map(bottomSize => bottomSize.value)))
-      sizes = bottomSizes.map(bottomSize => ({
-        display: bottomSize,
-        value: bottomSize,
-      }))
+      const bottomSizes: string[] = Array.from(new Set(data.bottomSizes.map(bottomSize => bottomSize.value)))
+      sizes = getFormSelectChoices(bottomSizes)
       break
   }
 
-  const getEnumValues = obj => obj.enumValues.map(enumValue => enumValue.name)
   const materials = getEnumValues(data.materials)
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)

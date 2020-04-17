@@ -3,6 +3,7 @@ import React from "react"
 import { Grid } from "@material-ui/core"
 
 import { FormSelect, FormTextField, Separator, Spacer, Text } from "components"
+import { getFormSelectChoices } from "utils/form"
 
 export interface ProductCreateMetadataSectionProps {
   architectures: string[]
@@ -22,20 +23,13 @@ export const ProductCreateMetadataSection: React.FC<ProductCreateMetadataSection
   sizes,
   types,
   setProductType,
-  ...rest
 }) => {
   const modelChoices = models.map(model => ({
     display: model.name,
     value: model.id,
   }))
-  const typeChoices = types.map(type => ({
-    display: type,
-    value: type,
-  }))
-  const architectureChoices = architectures.map(architecture => ({
-    display: architecture,
-    value: architecture,
-  }))
+  const typeChoices = getFormSelectChoices(types)
+  const architectureChoices = getFormSelectChoices(architectures)
   const categoryChoices = categories.map(category => ({
     display: category.name,
     value: category.id,
