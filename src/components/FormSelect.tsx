@@ -1,6 +1,8 @@
-import { FormControl, FormHelperText, MenuItem, Select, styled } from "@material-ui/core"
+import { MenuItem, Select } from "@material-ui/core"
 import React from "react"
 import { Field } from "react-final-form"
+
+import { FormControl } from "./FormControl"
 
 export interface FormSelectProps {
   choices: { display: any; value: any }[]
@@ -15,7 +17,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({ choices, multiple = fals
       multiple={multiple}
       name={name}
       render={({ input, meta }) => (
-        <FullWidthControl error={true} style={{ width: "100%" }}>
+        <FormControl error={meta.error}>
           <Select
             multiple={multiple}
             name={input.name}
@@ -34,14 +36,9 @@ export const FormSelect: React.FC<FormSelectProps> = ({ choices, multiple = fals
               </MenuItem>
             ))}
           </Select>
-          {meta.error && <FormHelperText>{meta.error}</FormHelperText>}
-        </FullWidthControl>
+        </FormControl>
       )}
       {...rest}
     />
   )
 }
-
-const FullWidthControl = styled(FormControl)({
-  width: "100%",
-})

@@ -4,6 +4,7 @@ import { Box, Button, styled } from "@material-ui/core"
 import { Separator } from "components"
 
 export interface WizardBottomNavBarProps {
+  isFirstPage: boolean
   isLastPage: boolean
   onPrevious: () => void
 }
@@ -11,12 +12,15 @@ export interface WizardBottomNavBarProps {
 const BUTTON_HEIGHT = 40
 const BUTTON_WIDTH = 148
 
-export const WizardBottomNavBar: React.FC<WizardBottomNavBarProps> = ({ isLastPage, onPrevious }) => {
+export const WizardBottomNavBar: React.FC<WizardBottomNavBarProps> = ({ isFirstPage, isLastPage, onPrevious }) => {
+  const previousButtonVisiblity = isFirstPage ? "hidden" : "visible"
   return (
     <StyledBox>
       <Separator />
       <FlexBox px={2} display="flex" justifyContent="space-between" alignItems="center">
-        <PreviousButton onClick={onPrevious}>Previous</PreviousButton>
+        <PreviousButton onClick={onPrevious} style={{ visibility: previousButtonVisiblity }}>
+          Previous
+        </PreviousButton>
         <SubmitButton type="submit">{isLastPage ? "Submit" : "Next"}</SubmitButton>
       </FlexBox>
     </StyledBox>

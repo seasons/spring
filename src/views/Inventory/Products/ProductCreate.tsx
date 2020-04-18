@@ -16,6 +16,20 @@ const REQUIRED = "*Required"
 
 export interface ProductCreateDetailsError {
   brand?: string
+  name?: string
+  description?: string
+  sizes?: string
+  status?: string
+  model?: string
+  modelSize?: string
+  productType?: string
+  season?: string
+  retailPrice?: string
+  architecture?: string
+  category?: string
+  subCategory?: string
+  color?: string
+  secondaryColor?: string
 }
 
 export const ProductCreate = props => {
@@ -45,11 +59,35 @@ export const ProductCreate = props => {
 
   const validateDetails = values => {
     console.log("VALIDATE DETAILS", values)
-    // TODO
     const errors: ProductCreateDetailsError = {}
     if (!values?.brand) {
       errors.brand = REQUIRED
     }
+    if (!values?.name) {
+      errors.name = REQUIRED
+    }
+    if (values?.name?.length > 50) {
+      errors.name = "Max 50 characters"
+    }
+    if (!values?.description) {
+      errors.description = REQUIRED
+    }
+    if (values?.description?.length > 140) {
+      errors.description = "Max 140 characters"
+    }
+    if (!values?.sizes || values?.sizes?.length === 0) {
+      errors.sizes = REQUIRED
+    }
+    if (!values?.status) {
+      errors.status = REQUIRED
+    }
+    if (!values?.model) {
+      errors.model = REQUIRED
+    }
+    if (!values?.modelSize) {
+      errors.modelSize = REQUIRED
+    }
+
     return errors
   }
 

@@ -49,7 +49,7 @@ export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, on
         return (
           <form onSubmit={handleSubmit}>
             <WizardContext.Provider value={wizardContextValues}>{activePage}</WizardContext.Provider>
-            <WizardBottomNavBar onPrevious={previous} isLastPage={isLastPage} />
+            <WizardBottomNavBar onPrevious={previous} isFirstPage={pageIndex === 0} isLastPage={isLastPage} />
           </form>
         )
       }}
