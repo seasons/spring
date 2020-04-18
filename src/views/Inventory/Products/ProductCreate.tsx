@@ -12,6 +12,12 @@ export interface ProductCreateProps {
   props?: any
 }
 
+const REQUIRED = "*Required"
+
+export interface ProductCreateDetailsError {
+  brand?: string
+}
+
 export const ProductCreate = props => {
   const { data, loading, error } = useQuery(productCreateQuery)
 
@@ -38,8 +44,12 @@ export const ProductCreate = props => {
   }
 
   const validateDetails = values => {
+    console.log("VALIDATE DETAILS", values)
     // TODO
-    const errors = {}
+    const errors: ProductCreateDetailsError = {}
+    if (!values?.brand) {
+      errors.brand = REQUIRED
+    }
     return errors
   }
 

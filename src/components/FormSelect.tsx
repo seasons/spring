@@ -1,4 +1,4 @@
-import { MenuItem, Select, styled } from "@material-ui/core"
+import { FormControl, FormHelperText, MenuItem, Select, styled } from "@material-ui/core"
 import React from "react"
 import { Field } from "react-final-form"
 
@@ -14,31 +14,34 @@ export const FormSelect: React.FC<FormSelectProps> = ({ choices, multiple = fals
     <Field
       multiple={multiple}
       name={name}
-      render={({ input }) => (
-        <FullWidthSelect
-          multiple={multiple}
-          name={input.name}
-          value={multiple ? input.value || [] : input.value}
-          variant="outlined"
-          onChange={event => {
-            if (onChange) {
-              onChange(event)
-            }
-            input.onChange(event)
-          }}
-        >
-          {choices.map(({ display, value }, index) => (
-            <MenuItem key={index} value={value}>
-              {display}
-            </MenuItem>
-          ))}
-        </FullWidthSelect>
+      render={({ input, meta }) => (
+        <FullWidthControl error={true} style={{ width: "100%" }}>
+          <Select
+            multiple={multiple}
+            name={input.name}
+            value={multiple ? input.value || [] : input.value}
+            variant="outlined"
+            onChange={event => {
+              if (onChange) {
+                onChange(event)
+              }
+              input.onChange(event)
+            }}
+          >
+            {choices.map(({ display, value }, index) => (
+              <MenuItem key={index} value={value}>
+                {display}
+              </MenuItem>
+            ))}
+          </Select>
+          {meta.error && <FormHelperText>{meta.error}</FormHelperText>}
+        </FullWidthControl>
       )}
       {...rest}
     />
   )
 }
 
-const FullWidthSelect = styled(Select)({
+const FullWidthControl = styled(FormControl)({
   width: "100%",
 })
