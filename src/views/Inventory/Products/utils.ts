@@ -1,3 +1,6 @@
+import { getTypeSpecificVariantFields } from "./ProductCreateComponents/ProductCreateVariantSizeSection"
+
+const INVALID_FLOAT = "Invalid float"
 const REQUIRED = "*Required"
 
 export const validateProductCreateDetails = values => {
@@ -37,9 +40,8 @@ export const validateProductCreateDetails = values => {
   }
   if (!values?.retailPrice) {
     errors.retailPrice = REQUIRED
-  }
-  if (isNaN(parseFloat(values?.retailPrice))) {
-    errors.retailPrice = "Invalid float"
+  } else if (isNaN(parseFloat(values?.retailPrice))) {
+    errors.retailPrice = INVALID_FLOAT
   }
   if (!values?.architecture) {
     errors.architecture = REQUIRED
@@ -68,5 +70,29 @@ export const validateProductCreateDetails = values => {
   if (!values?.tags || values?.tags?.length === 0) {
     errors.tags = REQUIRED
   }
+  return errors
+}
+
+export const validateProductCreateVariants = values => {
+  // TODO: Remove mock SKUs
+  const skus = ["STIS-PNK-SS-015", "STIS-PNK-SS-015", "STIS-PNK-SS-015"]
+  const productType = values?.productType
+  const generalFields = ["Weight", "Total count"]
+  const typeSpecificVariantFields = getTypeSpecificVariantFields(productType)
+  const fields = [...generalFields, ...typeSpecificVariantFields]
+  const errors = {}
+
+  skus.forEach(sku => {
+    fields.forEach(field => {
+      const fieldName = `${sku}_${field.toLowerCase().replace(" ", "")}`
+      console.log("FIELD NAME:")
+      if (!values?.[fieldName]) {
+        errors[fieldName] = REQUIRED
+      } else if (isNaN(parseFloat(values?.[fieldName]))) {
+        errors[fieldName] = INVALID_FLOAT
+      }
+    })
+  })
+
   return errors
 }

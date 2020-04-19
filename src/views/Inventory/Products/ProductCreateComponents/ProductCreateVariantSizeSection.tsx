@@ -4,24 +4,28 @@ import { Grid } from "@material-ui/core"
 
 import { FormTextField, Separator, Spacer, Text } from "components"
 
+export const getTypeSpecificVariantFields = productType => {
+  let fields: string[] = []
+  switch (productType) {
+    case "Top":
+      fields = ["Shoulder", "Chest", "Length", "Sleeve", "Neck"]
+      break
+    case "Bottom":
+      fields = ["Value", "Waist", "Rise", "Hem", "Inseam"]
+      break
+  }
+  return fields
+}
+
 export interface ProductCreateVariantSizeSectionProps {
   variant: any
 }
 
 export const ProductCreateVariantSizeSection: React.FC<ProductCreateVariantSizeSectionProps> = ({ variant }) => {
   const { size, sku, type } = variant
-  let typeSpecificFirstRowFields: string[] = []
-  let typeSpecificSecondRowFields: string[] = []
-  switch (type) {
-    case "Top":
-      typeSpecificFirstRowFields = ["Shoulder", "Chest"]
-      typeSpecificSecondRowFields = ["Length", "Sleeve", "Neck"]
-      break
-    case "Bottom":
-      typeSpecificFirstRowFields = ["Value", "Waist"]
-      typeSpecificSecondRowFields = ["Rise", "Hem", "Inseam"]
-      break
-  }
+  const typeSpecificFields = getTypeSpecificVariantFields(type)
+  const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 2) : []
+  const typeSpecificSecondRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(2) : []
   const firstRowFields = ["SKU", "Weight", ...typeSpecificFirstRowFields]
   const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
   return (

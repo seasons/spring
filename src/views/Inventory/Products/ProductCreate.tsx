@@ -5,7 +5,7 @@ import { useQuery } from "react-apollo"
 
 import { Spacer, Wizard } from "components"
 import { ProductCreateDetails, ProductCreateVariants, ProductCreatePhysicalProducts } from "./ProductCreateComponents"
-import { validateProductCreateDetails } from "./utils"
+import { validateProductCreateDetails, validateProductCreateVariants } from "./utils"
 
 export interface ProductCreateProps {
   history: any
@@ -38,12 +38,6 @@ export const ProductCreate = props => {
     console.log("SUBMITTED VALUES FINAL:", values)
   }
 
-  const validateVariants = values => {
-    // TODO
-    const errors = {}
-    return errors
-  }
-
   const validatePhysicalProducts = values => {
     // TODO
     const errors = {}
@@ -68,7 +62,7 @@ export const ProductCreate = props => {
     <Box>
       <Wizard initialValues={initialValues} onSubmit={onSubmit}>
         <ProductCreateDetails data={data} validate={validateProductCreateDetails} />
-        <ProductCreateVariants variants={variants} validate={validateVariants} />
+        <ProductCreateVariants variants={variants} validate={validateProductCreateVariants} />
         <ProductCreatePhysicalProducts data={data} skus={skus} validate={validatePhysicalProducts} />
       </Wizard>
       <Spacer mt={9} />
