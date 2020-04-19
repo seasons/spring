@@ -30,6 +30,10 @@ export interface ProductCreateDetailsError {
   subCategory?: string
   color?: string
   secondaryColor?: string
+  functions?: string
+  outerMaterials?: string
+  innerMaterials?: string
+  tags?: string
 }
 
 export const ProductCreate = props => {
@@ -86,6 +90,45 @@ export const ProductCreate = props => {
     }
     if (!values?.modelSize) {
       errors.modelSize = REQUIRED
+    }
+    if (!values?.productType) {
+      errors.productType = REQUIRED
+    }
+    if (!values?.season) {
+      errors.season = REQUIRED
+    }
+    if (!values?.retailPrice) {
+      errors.retailPrice = REQUIRED
+    }
+    if (isNaN(parseFloat(values?.retailPrice))) {
+      errors.retailPrice = "Invalid float"
+    }
+    if (!values?.architecture) {
+      errors.architecture = REQUIRED
+    }
+    if (!values?.category) {
+      errors.category = REQUIRED
+    }
+    if (!values?.subCategory) {
+      errors.subCategory = REQUIRED
+    }
+    if (!values?.color) {
+      errors.color = REQUIRED
+    }
+    if (!values?.secondaryColor) {
+      errors.secondaryColor = REQUIRED
+    }
+    if (!values?.functions || values?.functions?.length === 0) {
+      errors.functions = REQUIRED
+    }
+    if (!values?.outerMaterials || values?.outerMaterials?.length === 0) {
+      errors.outerMaterials = REQUIRED
+    }
+    if (!values?.innerMaterials || values?.innerMaterials?.length === 0) {
+      errors.innerMaterials = REQUIRED
+    }
+    if (!values?.tags || values?.tags?.length === 0) {
+      errors.tags = REQUIRED
     }
 
     return errors

@@ -73,7 +73,7 @@ export const ProductCreateMetadataSection: React.FC<ProductCreateMetadataSection
         <Grid item xs={6}>
           <Text variant="h6">Architecture</Text>
           <Spacer mt={1} />
-          <FormSelect name="productArchitecture" choices={architectureChoices} />
+          <FormSelect name="architecture" choices={architectureChoices} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Display category</Text>

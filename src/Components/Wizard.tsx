@@ -45,7 +45,7 @@ export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, on
   const isLastPage = pageIndex === React.Children.count(children) - 1
   return (
     <Form initialValues={values} validate={validate} onSubmit={handleSubmit}>
-      {({ handleSubmit, submitting, values: formValues }) => {
+      {({ handleSubmit, submitting, values: formValues, errors }) => {
         return (
           <form onSubmit={handleSubmit}>
             <WizardContext.Provider value={wizardContextValues}>{activePage}</WizardContext.Provider>
