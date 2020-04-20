@@ -3,16 +3,16 @@ import React from "react"
 import { Field } from "react-final-form"
 import Autocomplete, { createFilterOptions } from "@material-ui/lab/Autocomplete"
 
-import { FormControl } from "./FormControl"
+import { FormControl } from "../components/FormControl"
 
 const filter = createFilterOptions<string>()
 
-export interface FormAutocompleteProps {
+export interface AutocompleteFieldProps {
   name: string
   options: string[]
 }
 
-export const FormAutocomplete: React.FC<FormAutocompleteProps> = ({ name, options }) => {
+export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ name, options }) => {
   return (
     <Field
       multiple

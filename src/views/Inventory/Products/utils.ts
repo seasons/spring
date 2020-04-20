@@ -1,4 +1,4 @@
-import { getTypeSpecificVariantFields } from "./ProductCreateComponents/ProductCreateVariantSizeSection"
+import { getTypeSpecificVariantFields } from "./Components/VariantSizeSection"
 
 const INVALID_FLOAT = "Invalid float"
 const REQUIRED = "*Required"

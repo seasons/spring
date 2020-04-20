@@ -2,18 +2,18 @@ import React, { useState } from "react"
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { ProductCreateGeneralSection } from "./ProductCreateGeneralSection"
-import { ProductCreateMetadataSection } from "./ProductCreateMetadataSection"
-import { ProductCreatePhotographySection } from "./ProductCreatePhotographySection"
-import { ProductCreateTagsSection } from "./ProductCreateTagsSection"
+import { GeneralSection } from "./GeneralSection"
+import { MetadataSection } from "./MetadataSection"
+import { PhotographySection } from "./PhotographySection"
+import { TagsSection } from "./TagsSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 
-export interface ProductCreateDetailsProps {
+export interface OverviewProps {
   data: any
   validate: (values: any) => Object
 }
 
-export const ProductCreateDetails: React.FC<ProductCreateDetailsProps> = ({ data }) => {
+export const Overview: React.FC<OverviewProps> = ({ data }) => {
   const [productType, setProductType] = useState("Top")
 
   if (
@@ -80,12 +80,12 @@ export const ProductCreateDetails: React.FC<ProductCreateDetailsProps> = ({ data
           <Spacer mt={4} />
         </Grid>
         <Grid item xs={4}>
-          <ProductCreatePhotographySection numImages={4} onReceivedImageFile={onReceivedImageFile} />
+          <PhotographySection numImages={4} onReceivedImageFile={onReceivedImageFile} />
         </Grid>
         <Grid item xs={8}>
-          <ProductCreateGeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
+          <GeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
           <Spacer mt={6} />
-          <ProductCreateMetadataSection
+          <MetadataSection
             architectures={productArchitectures}
             categories={data.categories}
             colors={data.colors}
@@ -95,7 +95,7 @@ export const ProductCreateDetails: React.FC<ProductCreateDetailsProps> = ({ data
             types={productTypes}
           />
           <Spacer mt={6} />
-          <ProductCreateTagsSection functions={productFunctions} materials={materials} tags={tags} />
+          <TagsSection functions={productFunctions} materials={materials} tags={tags} />
         </Grid>
       </ContainerGrid>
     </Box>

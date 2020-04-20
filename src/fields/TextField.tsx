@@ -1,10 +1,10 @@
 import React from "react"
-import { TextField, TextFieldProps, styled } from "@material-ui/core"
+import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps, styled } from "@material-ui/core"
 import { Field } from "react-final-form"
 
-import { FormControl } from "./FormControl"
+import { FormControl } from "../components/FormControl"
 
-export type FormTextFieldProps = TextFieldProps & {
+export type TextFieldProps = MuiTextFieldProps & {
   disabled?: boolean
   multiline?: boolean
   name: string
@@ -13,7 +13,7 @@ export type FormTextFieldProps = TextFieldProps & {
   value?: string
 }
 
-export const FormTextField: React.FC<FormTextFieldProps> = ({
+export const TextField: React.FC<TextFieldProps> = ({
   disabled = false,
   multiline = false,
   label,
@@ -51,10 +51,6 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
   )
 }
 
-const StyledFormControl = styled(FormControl)({
-  width: "100%",
-})
-
-const StyledTextField = styled(TextField)({
+const StyledTextField = styled(MuiTextField)({
   borderRadius: 4,
 })

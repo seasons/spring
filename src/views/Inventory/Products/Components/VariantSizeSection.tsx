@@ -2,7 +2,8 @@ import React from "react"
 
 import { Grid } from "@material-ui/core"
 
-import { FormTextField, Separator, Spacer, Text } from "components"
+import { Separator, Spacer, Text } from "components"
+import { TextField } from "fields"
 
 export const getTypeSpecificVariantFields = productType => {
   let fields: string[] = []
@@ -17,11 +18,11 @@ export const getTypeSpecificVariantFields = productType => {
   return fields
 }
 
-export interface ProductCreateVariantSizeSectionProps {
+export interface VariantSizeSectionProps {
   variant: any
 }
 
-export const ProductCreateVariantSizeSection: React.FC<ProductCreateVariantSizeSectionProps> = ({ variant }) => {
+export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ variant }) => {
   const { size, sku, type } = variant
   const typeSpecificFields = getTypeSpecificVariantFields(type)
   const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 2) : []
@@ -43,7 +44,7 @@ export const ProductCreateVariantSizeSection: React.FC<ProductCreateVariantSizeS
           <Grid item key={index} xs={3}>
             <Text variant="h5">{field}</Text>
             <Spacer mt={1} />
-            <FormTextField
+            <TextField
               disabled={field === "SKU"}
               name={`${sku}_${field.toLowerCase()}`}
               value={field === "SKU" ? sku : undefined}
@@ -55,7 +56,7 @@ export const ProductCreateVariantSizeSection: React.FC<ProductCreateVariantSizeS
           <Grid item key={index} xs={3}>
             <Text variant="h5">{field}</Text>
             <Spacer mt={1} />
-            <FormTextField name={`${sku}_${field.toLowerCase().replace(" ", "")}`} />
+            <TextField name={`${sku}_${field.toLowerCase().replace(" ", "")}`} />
           </Grid>
         ))}
         <Spacer grid mt={3} />

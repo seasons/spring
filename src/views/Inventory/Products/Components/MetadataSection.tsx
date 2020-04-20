@@ -2,10 +2,11 @@ import React from "react"
 
 import { Grid } from "@material-ui/core"
 
-import { FormSelect, FormTextField, Separator, Spacer, Text } from "components"
+import { Separator, Spacer, Text } from "components"
+import { SelectField, TextField } from "fields"
 import { getFormSelectChoices } from "utils/form"
 
-export interface ProductCreateMetadataSectionProps {
+export interface MetadataSectionProps {
   architectures: string[]
   categories: any[]
   colors: any[]
@@ -15,7 +16,7 @@ export interface ProductCreateMetadataSectionProps {
   setProductType: (string) => void
 }
 
-export const ProductCreateMetadataSection: React.FC<ProductCreateMetadataSectionProps> = ({
+export const MetadataSection: React.FC<MetadataSectionProps> = ({
   architectures,
   categories,
   colors,
@@ -48,52 +49,56 @@ export const ProductCreateMetadataSection: React.FC<ProductCreateMetadataSection
         <Grid item xs={6}>
           <Text variant="h6">Model</Text>
           <Spacer mt={1} />
-          <FormSelect name="model" choices={modelChoices} />
+          <SelectField name="model" choices={modelChoices} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Model size</Text>
           <Spacer mt={1} />
-          <FormSelect name="modelSize" choices={sizes} />
+          <SelectField name="modelSize" choices={sizes} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Type</Text>
           <Spacer mt={1} />
-          <FormSelect name="productType" choices={typeChoices} onChange={event => setProductType(event.target.value)} />
+          <SelectField
+            name="productType"
+            choices={typeChoices}
+            onChange={event => setProductType(event.target.value)}
+          />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Season</Text>
           <Spacer mt={1} />
-          <FormTextField name="season" />
+          <TextField name="season" />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Retail price</Text>
           <Spacer mt={1} />
-          <FormTextField name="retailPrice" />
+          <TextField name="retailPrice" />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Architecture</Text>
           <Spacer mt={1} />
-          <FormSelect name="architecture" choices={architectureChoices} />
+          <SelectField name="architecture" choices={architectureChoices} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Display category</Text>
           <Spacer mt={1} />
-          <FormSelect name="category" choices={categoryChoices} />
+          <SelectField name="category" choices={categoryChoices} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Sub-category</Text>
           <Spacer mt={1} />
-          <FormSelect name="subCategory" choices={categoryChoices} />
+          <SelectField name="subCategory" choices={categoryChoices} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Color</Text>
           <Spacer mt={1} />
-          <FormSelect name="color" choices={colorChoices} />
+          <SelectField name="color" choices={colorChoices} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h6">Secondary color</Text>
           <Spacer mt={1} />
-          <FormSelect name="secondaryColor" choices={colorChoices} />
+          <SelectField name="secondaryColor" choices={colorChoices} />
         </Grid>
       </Grid>
     </>

@@ -3,17 +3,14 @@ import React from "react"
 import { Box, GridList, GridListTile } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { Dropzone } from "../Components"
+import { Dropzone } from "."
 
-export interface ProductCreatePhotographySectionProps {
+export interface PhotographySectionProps {
   numImages: number
   onReceivedImageFile: (any) => void
 }
 
-export const ProductCreatePhotographySection: React.FC<ProductCreatePhotographySectionProps> = ({
-  numImages,
-  onReceivedImageFile,
-}) => {
+export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImages, onReceivedImageFile }) => {
   return (
     <>
       <Text variant="h4">Photography</Text>

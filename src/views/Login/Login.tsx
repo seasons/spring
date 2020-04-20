@@ -2,7 +2,8 @@ import React from "react"
 import { useHistory } from "react-router"
 import { Box, Button, styled } from "@material-ui/core"
 import { Form } from "react-final-form"
-import { FormTextField, Spacer } from "components"
+import { Spacer } from "components"
+import { TextField } from "fields"
 import { useMutation } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -56,9 +57,9 @@ export const LoginView = props => {
           <Box mx={5}>
             <form {...props} onSubmit={handleSubmit}>
               <div>
-                <FormTextField label="Email address" name="email" />
+                <TextField label="Email address" name="email" />
                 <Spacer mt={1} />
-                <FormTextField label="Password" name="password" type="password" />
+                <TextField label="Password" name="password" type="password" />
               </div>
               <Spacer mt={2} />
               <SubmitButton size="large" type="submit" variant="contained">
