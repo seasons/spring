@@ -1,3 +1,4 @@
+import { Header } from "components/Header"
 import { ImagesField } from "fields"
 import React from "react"
 import {
@@ -13,8 +14,6 @@ import {
 } from "react-admin"
 
 import { Card } from "@material-ui/core"
-
-import { Header } from "../Header"
 
 export const ProductFilter = props => (
   <Filter {...props}>
@@ -32,7 +31,7 @@ export interface ProductListInterface {
 export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => (
   <>
     <Card>
-      <Header onNewProductBtnPressed={onNewProductBtnPressed} />
+      <Header title="Inventory" newEntityText="New Product" newEntityHandler={onNewProductBtnPressed} />
       <List
         filters={<ProductFilter />}
         {...rest}

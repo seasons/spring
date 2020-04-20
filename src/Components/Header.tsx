@@ -13,10 +13,12 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 export interface HeaderProps {
   className?: string
-  onNewProductBtnPressed: () => void
+  title: string
+  newEntityText: string
+  newEntityHandler: () => void
 }
 
-export const Header: React.FC<HeaderProps> = ({ className, onNewProductBtnPressed, ...rest }) => {
+export const Header: React.FC<HeaderProps> = ({ className, title, newEntityText, newEntityHandler, ...rest }) => {
   const classes = useStyles()
 
   return (
@@ -24,12 +26,12 @@ export const Header: React.FC<HeaderProps> = ({ className, onNewProductBtnPresse
       <Grid alignItems="flex-end" container justify="space-between" spacing={3}>
         <Grid item>
           <Typography component="h1" variant="h3">
-            Inventory
+            {title}
           </Typography>
         </Grid>
         <Grid item>
-          <Button color="primary" variant="contained" className={classes.addButton} onClick={onNewProductBtnPressed}>
-            New product
+          <Button color="primary" variant="contained" className={classes.addButton} onClick={newEntityHandler}>
+            {newEntityText}
           </Button>
         </Grid>
       </Grid>

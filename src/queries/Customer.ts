@@ -36,6 +36,9 @@ const CustomerFragment = gql`
       phoneOS
       insureShipment
     }
+    bagItems {
+      id
+    }
     plan
     status
   }
