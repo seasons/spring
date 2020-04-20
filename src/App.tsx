@@ -84,9 +84,9 @@ class App extends React.Component {
   componentDidMount() {
     const isAuthenticated = !!localStorage.getItem("userSession")
 
-    // if (!isAuthenticated && window.location?.pathname !== "/login") {
-    //   window.location.href = "/login"
-    // }
+    if (!isAuthenticated && window.location?.pathname !== "/login") {
+      window.location.href = "/login"
+    }
 
     buildOpenCrudProvider({
       client,
