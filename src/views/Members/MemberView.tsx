@@ -5,18 +5,21 @@ import { colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
 import { AccountView } from "./Account"
+import { Header } from "./Header"
 import { HistoryView } from "./History"
 import { PersonalView } from "./Personal"
 
 const useStyles = makeStyles<Theme>(theme => ({
   tabs: {
     marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(5),
   },
   tab: {
     textTransform: "none",
   },
   divider: {
     backgroundColor: colors.grey[300],
+    marginLeft: theme.spacing(5),
   },
   content: {
     marginTop: theme.spacing(3),
@@ -50,12 +53,9 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
     return <Redirect to={`/members/${memberId}/account`} />
   }
 
-  // if (!tabs.find((tab) => tab.value === currentTab)) {
-  //   return <Redirect to="/errors/error-404" />;
-  // }
-
   return (
     <Container maxWidth={false}>
+      <Header history={history} />
       <Tabs
         className={classes.tabs}
         indicatorColor={"primary"}
