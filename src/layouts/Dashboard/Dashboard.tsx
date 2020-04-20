@@ -1,9 +1,11 @@
 import React, { Suspense, useState } from "react"
 import { renderRoutes } from "react-router-config"
-import { LinearProgress } from "@material-ui/core"
-import NavBar from "./NavBar"
 import styled from "styled-components"
 import { colors } from "theme"
+
+import { LinearProgress } from "@material-ui/core"
+
+import { NavBar } from "./NavBar"
 
 const Container = styled.div`
   min-height: 100vh;

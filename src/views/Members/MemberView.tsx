@@ -45,10 +45,6 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
     history.push(value)
   }
 
-  const onNewProductBtnPressed = () => {
-    history.push("/product/new")
-  }
-
   if (!currentTab) {
     return <Redirect to={`/members/${memberId}/account`} />
   }
