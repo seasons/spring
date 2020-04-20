@@ -2,7 +2,7 @@ import React from "react"
 import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps, styled } from "@material-ui/core"
 import { Field } from "react-final-form"
 
-import { FormControl } from "../components/FormControl"
+import { FormControl } from "components/FormControl"
 
 export type TextFieldProps = MuiTextFieldProps & {
   disabled?: boolean

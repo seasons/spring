@@ -14,7 +14,9 @@ export const getFormSelectChoices = (choices: string[]) =>
     value: choice,
   }))
 
-// To be passed to React Final Form
+/**
+ * Returns any errors to React Final Form using Yup
+ */
 export const validate = async (validationSchema, values) => {
   try {
     await validationSchema.validate(values, { abortEarly: false })

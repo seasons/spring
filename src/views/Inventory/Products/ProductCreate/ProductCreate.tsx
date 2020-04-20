@@ -16,7 +16,7 @@ export interface ProductCreateProps {
 }
 
 export const ProductCreate = props => {
-  const { data, loading, error } = useQuery(productCreateQuery)
+  const { data, loading } = useQuery(productCreateQuery)
 
   if (
     loading ||
