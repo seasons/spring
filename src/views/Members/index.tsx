@@ -1,5 +1,5 @@
 import { Header } from "components/Header"
-import { FullNameField, ViewEntityField } from "fields"
+import { FullNameField, StatusField, ViewEntityField } from "fields"
 import React from "react"
 import { Datagrid, List, TextField } from "react-admin"
 
@@ -48,7 +48,9 @@ export const CustomerList: React.FunctionComponent<CustomerListProps> = ({ match
             <TextField source="detail.shippingAddress.city" label="City" />
             <TextField source="detail.shippingAddress.state" label="State" />
             <TextField source="plan" label="Membership" />
-            <TextField source="status" label="Status" />
+            {/* <TextField source="status" label="Status" /> */}
+
+            <StatusField label="Status" />
             <TextField source="bagItems.id" label="Money Spent" />
             <TextField source="bagItems.id" label="Current Items" />
             <ViewEntityField entityPath="members" source="user.id" label="Actions" />
