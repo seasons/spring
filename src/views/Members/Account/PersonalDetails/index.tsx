@@ -1,23 +1,15 @@
-import { EditButton } from "components"
+import { EditButton, IndicatorMap, Label } from "components"
 import React from "react"
 
 import { Card, CardContent, CardHeader, Divider, Table, TableBody, TableCell, TableRow, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
 const useStyles = makeStyles<Theme>(theme => ({
-  root: {},
   content: {
     padding: 0,
   },
-  actions: {
-    flexDirection: "column",
-    alignItems: "flex-start",
-    "& > * + *": {
-      marginLeft: 0,
-    },
-  },
-  buttonIcon: {
-    marginRight: theme.spacing(1),
+  status: {
+    borderRadius: "20px",
   },
 }))
 
@@ -32,8 +24,10 @@ export const PersonalDetails: React.FC = props => {
     console.log("editing membership")
   }
 
+  const status = "Active"
+
   return (
-    <Card className={classes.root}>
+    <Card>
       <CardHeader title="Personal details" />
       <Divider />
       <CardContent className={classes.content}>
@@ -41,7 +35,11 @@ export const PersonalDetails: React.FC = props => {
           <TableBody>
             <TableRow>
               <TableCell>Status</TableCell>
-              <TableCell>Active</TableCell>
+              <TableCell>
+                <Label className={classes.status} color={IndicatorMap[status]}>
+                  {status}
+                </Label>
+              </TableCell>
               <TableCell>
                 <EditButton onClick={handleEditStatus} />
               </TableCell>

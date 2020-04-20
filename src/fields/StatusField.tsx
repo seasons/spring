@@ -1,23 +1,13 @@
+import { IndicatorMap } from "components"
 import React from "react"
 import styled from "styled-components"
 
-const indicatorMap = {
-  Authorized: "#01b06c",
-  Active: "#01b06c",
-  Waitlisted: "#c4c4c4",
-  Invited: "#c4c4c4",
-  Created: "#eea30e",
-  Suspended: "#eea30e",
-  Paused: "#eea30e",
-  Deactivated: "#f85156",
-}
-
 export interface IndicatorProps {
-  color: string
+  status: string
 }
 
 const Indicator = styled.div`
-  background-color: ${(props: IndicatorProps) => indicatorMap[props.color]};
+  background-color: ${(props: IndicatorProps) => IndicatorMap[props.status]};
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -38,7 +28,7 @@ export const StatusField: React.FC<StatusFieldProps> = ({ record, label }) => {
   return (
     <div>
       {" "}
-      <Indicator color={status} />
+      <Indicator status={status} />
       {status}
     </div>
   )

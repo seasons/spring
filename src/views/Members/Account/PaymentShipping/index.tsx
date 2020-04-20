@@ -16,19 +16,8 @@ import {
 import { makeStyles } from "@material-ui/styles"
 
 const useStyles = makeStyles<Theme>(theme => ({
-  root: {},
   content: {
     padding: 0,
-  },
-  actions: {
-    flexDirection: "column",
-    alignItems: "flex-start",
-    "& > * + *": {
-      marginLeft: 0,
-    },
-  },
-  buttonIcon: {
-    marginRight: theme.spacing(1),
   },
 }))
 
