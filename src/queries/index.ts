@@ -66,7 +66,7 @@ export const productCreateQuery = gql`
       id
       name
     }
-  
+
     colors {
       id
       name
@@ -74,6 +74,12 @@ export const productCreateQuery = gql`
     }
 
     materials: __type(name: "Material") {
+      enumValues {
+        name
+      }
+    }
+
+    physicalProductStatuses: __type(name: "PhysicalProductStatus") {
       enumValues {
         name
       }
@@ -106,7 +112,7 @@ export const productCreateQuery = gql`
     }
 
     topSizes {
-  	  letter
+      letter
     }
   }
 `

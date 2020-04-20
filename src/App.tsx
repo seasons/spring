@@ -27,7 +27,7 @@ import { theme } from "./theme/theme"
 
 const link = new HttpLink({
   uri: "http://localhost:4000",
-  // uri: "https://monsoon-staging.herokuapp.com",
+  // uri: "https://monsoon-staging.seasons.nyc",
 })
 
 const authLink = setContext(async (_, { headers }) => {
@@ -83,7 +83,7 @@ class App extends React.Component {
   componentDidMount() {
     const isAuthenticated = !!localStorage.getItem("userSession")
 
-    if (!isAuthenticated && window.location?.pathname != "/login") {
+    if (!isAuthenticated && window.location?.pathname !== "/login") {
       window.location.href = "/login"
     }
 

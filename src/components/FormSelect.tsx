@@ -1,6 +1,8 @@
-import { MenuItem, Select, styled } from "@material-ui/core"
+import { MenuItem, Select } from "@material-ui/core"
 import React from "react"
 import { Field } from "react-final-form"
+
+import { FormControl } from "./FormControl"
 
 export interface FormSelectProps {
   choices: { display: any; value: any }[]
@@ -14,31 +16,29 @@ export const FormSelect: React.FC<FormSelectProps> = ({ choices, multiple = fals
     <Field
       multiple={multiple}
       name={name}
-      render={({ input }) => (
-        <FullWidthSelect
-          multiple={multiple}
-          name={input.name}
-          value={multiple ? input.value || [] : input.value}
-          variant="outlined"
-          onChange={event => {
-            if (onChange) {
-              onChange(event)
-            }
-            input.onChange(event)
-          }}
-        >
-          {choices.map(({ display, value }, index) => (
-            <MenuItem key={index} value={value}>
-              {display}
-            </MenuItem>
-          ))}
-        </FullWidthSelect>
+      render={({ input, meta }) => (
+        <FormControl error={meta.error}>
+          <Select
+            multiple={multiple}
+            name={input.name}
+            value={multiple ? input.value || [] : input.value}
+            variant="outlined"
+            onChange={event => {
+              if (onChange) {
+                onChange(event)
+              }
+              input.onChange(event)
+            }}
+          >
+            {choices.map(({ display, value }, index) => (
+              <MenuItem key={index} value={value}>
+                {display}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       )}
       {...rest}
     />
   )
 }
-
-const FullWidthSelect = styled(Select)({
-  width: "100%",
-})
