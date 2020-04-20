@@ -11,10 +11,6 @@ import { SizeList } from "./Sizes"
 import { TagList } from "./Tags"
 
 const useStyles = makeStyles<Theme>(theme => ({
-  root: {
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-  },
   tabs: {
     marginTop: theme.spacing(3),
   },
