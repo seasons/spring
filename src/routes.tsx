@@ -6,10 +6,11 @@ import {
   AnalyticsView,
   CustomerList,
   InventoryView,
-  ProductCreate,
-  OverviewView,
-  ReservationsList,
   LoginView,
+  MemberCreate,
+  OverviewView,
+  ProductCreate,
+  ReservationsList,
 } from "./views"
 
 export default [
@@ -51,6 +52,11 @@ export default [
         path: "/members",
         exact: true,
         component: props => <CustomerList {...props} basePath="/customers" resource="Customer" />,
+      },
+      {
+        path: "/member/new",
+        exact: true,
+        component: props => <MemberCreate {...props} basePath="/member/new" resource="Customer" />,
       },
       {
         path: "/reservations",

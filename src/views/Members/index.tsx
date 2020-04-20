@@ -14,13 +14,19 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-const createNewMember = () => {
-  // history.push("/product/new")
-  console.log("yep new member coming ip")
+export interface CustomerListProps {
+  history: any
+  match: any
+  props?: any
 }
 
-export const CustomerList = props => {
+export const CustomerList: React.FunctionComponent<CustomerListProps> = ({ match, history, props }) => {
   const classes = useStyles()
+
+  const createNewMember = () => {
+    history.push("/member/new")
+  }
+
   return (
     <>
       <Container maxWidth={false} className={classes.root}>
@@ -35,6 +41,7 @@ export const CustomerList = props => {
           hasShow={true}
           resource={"Customer"}
           title="Customers"
+          basePath="/members"
         >
           <Datagrid>
             <FullNameField label="Name" />
