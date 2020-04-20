@@ -1,7 +1,13 @@
+import * as yup from "yup"
 import { getTypeSpecificVariantFields } from "./Components/VariantSizeSection"
 
 const INVALID_FLOAT = "Invalid float"
 const REQUIRED = "*Required"
+
+export const overviewValidationSchema = yup.object({
+  brand: yup.string().required("Required"),
+  name: yup.string().required("Required"),
+})
 
 export const validateProductCreateDetails = values => {
   const errors: any = {}

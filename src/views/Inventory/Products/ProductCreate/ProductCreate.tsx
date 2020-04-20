@@ -1,13 +1,12 @@
 import { productCreateQuery } from "queries"
 import { Box } from "@material-ui/core"
 import React from "react"
-import { Form, Field } from "react-final-form"
 import { useQuery } from "react-apollo"
 
 import { Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
-import { validateProductCreateDetails, validateProductCreateVariants } from "../utils"
-import SelectInput from "@material-ui/core/Select/SelectInput"
+import { overviewValidationSchema, validateProductCreateDetails, validateProductCreateVariants } from "../utils"
+import { validate } from "utils/form"
 
 export interface ProductCreateProps {
   history: any
@@ -40,6 +39,10 @@ export const ProductCreate = props => {
     console.log("SUBMITTED VALUES FINAL:", values)
   }
 
+  const validateOverview = async values => {
+    return await validate(overviewValidationSchema, values)
+  }
+
   const validatePhysicalProducts = values => {
     // TODO
     const errors = {}
@@ -60,42 +63,13 @@ export const ProductCreate = props => {
   ]
   const skus = ["STIS-PNK-SS-015", "STIS-PNK-SS-015", "STIS-PNK-SS-015"]
 
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-  const test = async () => {
-    await sleep(100)
-    return { username: "ASYNC" }
-  }
-
   return (
     <Box>
-      <Form
-        onSubmit={() => {}}
-        validate={values => {
-          return test()
-          // return { username: "REQ" }
-        }}
-      >
-        {({ handleSubmit, submitting, values: formValues, errors }) => {
-          return (
-            <form onSubmit={handleSubmit}>
-              <Field name="username">
-                {({ input, meta }) => (
-                  <div>
-                    <label>Username</label>
-                    <input {...input} type="text" placeholder="Username" />
-                    {meta.error && <span>{meta.error}</span>}
-                  </div>
-                )}
-              </Field>
-            </form>
-          )
-        }}
-      </Form>
-      {/* <Wizard initialValues={initialValues} onSubmit={onSubmit}>
-        <Overview data={data} validate={validateProductCreateDetails} />
+      <Wizard initialValues={initialValues} onSubmit={onSubmit}>
+        <Overview data={data} validate={validateOverview} />
         <Variants variants={variants} validate={validateProductCreateVariants} />
         <PhysicalProducts data={data} skus={skus} validate={validatePhysicalProducts} />
-      </Wizard> */}
+      </Wizard>
       <Spacer mt={9} />
     </Box>
   )
