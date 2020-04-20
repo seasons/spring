@@ -24,7 +24,7 @@ export const CustomerList: React.FunctionComponent<CustomerListProps> = ({ match
   const classes = useStyles()
 
   const createNewMember = () => {
-    history.push("/member/new")
+    history.push("/members/new")
   }
 
   return (
@@ -48,12 +48,10 @@ export const CustomerList: React.FunctionComponent<CustomerListProps> = ({ match
             <TextField source="detail.shippingAddress.city" label="City" />
             <TextField source="detail.shippingAddress.state" label="State" />
             <TextField source="plan" label="Membership" />
-            {/* <TextField source="status" label="Status" /> */}
-
             <StatusField label="Status" />
             <TextField source="bagItems.id" label="Money Spent" />
             <TextField source="bagItems.id" label="Current Items" />
-            <ViewEntityField entityPath="members" source="user.id" label="Actions" />
+            <ViewEntityField entityPath="members" entityTab="account" source="user.id" label="Actions" />
           </Datagrid>
         </List>
       </Container>
