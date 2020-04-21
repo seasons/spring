@@ -2,8 +2,8 @@ import React from "react"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
-import { Spacer, Text } from "components"
 import { useWizardContext } from "components/Wizard"
+import { Header } from "./Header"
 import { VariantSizeSection } from "./VariantSizeSection"
 
 export interface VariantsProps {
@@ -16,15 +16,7 @@ export const Variants: React.FC<VariantsProps> = ({ variants }) => {
   return (
     <Box mx={5}>
       <ContainerGrid container spacing={2}>
-        <Grid item xs={12}>
-          <Spacer mt={3} />
-          <Text variant="h3">Product variants</Text>
-          <Spacer mt={0.5} />
-          <Text variant="h5" opacity={0.5}>
-            Confirm generated product variants
-          </Text>
-          <Spacer mt={4} />
-        </Grid>
+        <Header title="Product variants" subtitle="Confirm generated product variants" />
         {variants.map((variant, index) => (
           <VariantSizeSection variant={variant} key={index} />
         ))}

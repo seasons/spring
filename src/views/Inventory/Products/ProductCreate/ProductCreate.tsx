@@ -67,7 +67,7 @@ export const ProductCreate = props => {
   return (
     <Box>
       <Wizard initialValues={initialValues} onSubmit={onSubmit}>
-        <Overview data={data} validate={validateOverview} />
+        {/* <Overview data={data} validate={validateOverview} /> */}
         <Variants variants={variants} validate={validateProductCreateVariants} />
         <PhysicalProducts data={data} skus={skus} validate={validatePhysicalProducts} />
       </Wizard>

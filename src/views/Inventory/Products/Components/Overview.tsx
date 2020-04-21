@@ -4,6 +4,7 @@ import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import { GeneralSection } from "./GeneralSection"
+import { Header } from "./Header"
 import { MetadataSection } from "./MetadataSection"
 import { PhotographySection } from "./PhotographySection"
 import { TagsSection } from "./TagsSection"
@@ -114,15 +115,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
   return (
     <Box mx={5}>
       <ContainerGrid container spacing={5}>
-        <Grid item xs={12}>
-          <Spacer mt={3} />
-          <Text variant="h3">New product</Text>
-          <Spacer mt={0.5} />
-          <Text variant="h5" opacity={0.5}>
-            Please fill out all required fields
-          </Text>
-          <Spacer mt={4} />
-        </Grid>
+        <Header title="New product" subtitle="Please fill out all required fields" />
         <Grid item xs={4}>
           <PhotographySection numImages={4} onReceivedImageFile={onReceivedImageFile} />
         </Grid>

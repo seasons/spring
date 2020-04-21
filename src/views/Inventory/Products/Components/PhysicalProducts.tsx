@@ -2,7 +2,7 @@ import React from "react"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
-import { Spacer, Text } from "components"
+import { Header } from "./Header"
 import { PhysicalProductSection } from "./PhysicalProductSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 
@@ -20,15 +20,7 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data, skus }
   return (
     <Box mx={5}>
       <ContainerGrid container spacing={2}>
-        <Grid item xs={12}>
-          <Spacer mt={3} />
-          <Text variant="h3">Physical products</Text>
-          <Spacer mt={0.5} />
-          <Text variant="h5" opacity={0.5}>
-            Add metadata to physical products
-          </Text>
-          <Spacer mt={4} />
-        </Grid>
+        <Header title="Physical products" subtitle="Add metadata to physical products" />
         {skus.map((sku, index) => (
           <PhysicalProductSection sku={sku} statusChoices={statusChoices} key={index} />
         ))}
