@@ -1,4 +1,3 @@
-import { productCreateQuery } from "queries"
 import { Box } from "@material-ui/core"
 import React from "react"
 import { useQuery } from "react-apollo"
@@ -8,6 +7,7 @@ import { Overview, Variants, PhysicalProducts } from "../Components"
 import { overviewValidationSchema } from "../Components/Overview"
 import { getVariantsValidationSchema } from "../Components/Variants"
 import { getPhysicalProductsValidationSchema } from "../Components/PhysicalProducts"
+import { PRODUCT_CREATE_QUERY } from "../queries"
 import { validate } from "utils/form"
 
 export interface ProductCreateProps {
@@ -17,7 +17,7 @@ export interface ProductCreateProps {
 }
 
 export const ProductCreate = props => {
-  const { data, loading } = useQuery(productCreateQuery)
+  const { data, loading } = useQuery(PRODUCT_CREATE_QUERY)
 
   if (
     loading ||
