@@ -43,7 +43,6 @@ export const Variants: React.FC<VariantsProps> = ({ variants }) => {
   const colorID = values?.color || ""
   const sizeNames = values?.sizes || []
   const productType = values?.productType
-  console.log(values)
 
   const { data, loading, error } = useQuery(GET_GENERATED_VARIANT_SKUS, {
     variables: {
@@ -60,10 +59,8 @@ export const Variants: React.FC<VariantsProps> = ({ variants }) => {
   }
 
   const variantSKUs = data?.generatedVariantSKUs
-  console.log("DATA:", data)
 
   if (!variantSKUs || error || !productType) {
-    console.log(error)
     return null
   }
 

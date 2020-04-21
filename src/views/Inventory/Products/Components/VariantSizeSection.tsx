@@ -19,9 +19,9 @@ export const getTypeSpecificVariantFields = productType => {
 }
 
 export interface VariantSizeSectionProps {
+  productType: string
   size: string
   sku: string
-  productType: string
 }
 
 export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productType, size, sku }) => {
