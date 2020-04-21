@@ -25,6 +25,7 @@ export const getVariantsValidationSchema = values => {
 
   return yup.object(schemaObject)
 }
+
 export interface VariantsProps {
   variants: any
   validate: (values: any) => Object

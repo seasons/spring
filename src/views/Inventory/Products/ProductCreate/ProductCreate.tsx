@@ -7,6 +7,7 @@ import { Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { overviewValidationSchema } from "../Components/Overview"
 import { getVariantsValidationSchema } from "../Components/Variants"
+import { getPhysicalProductsValidationSchema } from "../Components/PhysicalProducts"
 import { validate } from "utils/form"
 
 export interface ProductCreateProps {
@@ -49,10 +50,9 @@ export const ProductCreate = props => {
     return await validate(validationSchema, values)
   }
 
-  const validatePhysicalProducts = values => {
-    // TODO
-    const errors = {}
-    return errors
+  const validatePhysicalProducts = async values => {
+    const validationSchema = getPhysicalProductsValidationSchema(values)
+    return await validate(validationSchema, values)
   }
 
   const initialValues = {
@@ -72,7 +72,7 @@ export const ProductCreate = props => {
   return (
     <Box>
       <Wizard initialValues={initialValues} onSubmit={onSubmit}>
-        {/* <Overview data={data} validate={validateOverview} /> */}
+        <Overview data={data} validate={validateOverview} />
         <Variants variants={variants} validate={validateVariants} />
         <PhysicalProducts data={data} skus={skus} validate={validatePhysicalProducts} />
       </Wizard>

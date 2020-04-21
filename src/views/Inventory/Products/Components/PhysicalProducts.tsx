@@ -1,10 +1,26 @@
 import React from "react"
+import * as yup from "yup"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Header } from "./Header"
 import { PhysicalProductSection } from "./PhysicalProductSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
+
+export const getPhysicalProductsValidationSchema = values => {
+  // TODO: Remove mock SKUs
+  const skus = ["STIS-PNK-SS-015", "STIS-PNK-SS-015", "STIS-PNK-SS-015"]
+
+  const schemaObject = {}
+  skus.forEach(sku => {
+    schemaObject[`${sku}_physicalProductStatus`] = yup.string().required("Required")
+    schemaObject[`${sku}_dateOrdered`] = yup.date().required("Required")
+    schemaObject[`${sku}_dateReceived`] = yup.date("Must be date").required("Required")
+    schemaObject[`${sku}_unitCost`] = yup.number().required("Required")
+  })
+
+  return yup.object(schemaObject)
+}
 
 export interface PhysicalProductsProps {
   data: any
