@@ -1,12 +1,12 @@
-import { FormControl as MuiFormControl, FormHelperText, MenuItem, Select, styled } from "@material-ui/core"
+import { FormControl as MuiFormControl, FormHelperText, styled } from "@material-ui/core"
 import React from "react"
 
-export interface FormSelectProps {
+export interface FormControlProps {
   children?: any
   error: string
 }
 
-export const FormControl: React.FC<FormSelectProps> = ({ children, error }) => {
+export const FormControl: React.FC<FormControlProps> = ({ children, error }) => {
   return (
     <FullWidthControl error={!!error}>
       {children}

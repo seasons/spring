@@ -4,8 +4,10 @@ import React from "react"
 import { useQuery } from "react-apollo"
 
 import { Spacer, Wizard } from "components"
-import { ProductCreateDetails, ProductCreateVariants, ProductCreatePhysicalProducts } from "./ProductCreateComponents"
-import { validateProductCreateDetails, validateProductCreateVariants } from "./utils"
+import { Overview, Variants, PhysicalProducts } from "../Components"
+import { overviewValidationSchema } from "../Components/Overview"
+import { validateProductCreateVariants } from "../utils"
+import { validate } from "utils/form"
 
 export interface ProductCreateProps {
   history: any
@@ -14,7 +16,7 @@ export interface ProductCreateProps {
 }
 
 export const ProductCreate = props => {
-  const { data, loading, error } = useQuery(productCreateQuery)
+  const { data, loading } = useQuery(productCreateQuery)
 
   if (
     loading ||
@@ -36,6 +38,10 @@ export const ProductCreate = props => {
 
   const onSubmit = values => {
     console.log("SUBMITTED VALUES FINAL:", values)
+  }
+
+  const validateOverview = async values => {
+    return await validate(overviewValidationSchema, values)
   }
 
   const validatePhysicalProducts = values => {
@@ -61,9 +67,9 @@ export const ProductCreate = props => {
   return (
     <Box>
       <Wizard initialValues={initialValues} onSubmit={onSubmit}>
-        <ProductCreateDetails data={data} validate={validateProductCreateDetails} />
-        <ProductCreateVariants variants={variants} validate={validateProductCreateVariants} />
-        <ProductCreatePhysicalProducts data={data} skus={skus} validate={validatePhysicalProducts} />
+        <Overview data={data} validate={validateOverview} />
+        <Variants variants={variants} validate={validateProductCreateVariants} />
+        <PhysicalProducts data={data} skus={skus} validate={validatePhysicalProducts} />
       </Wizard>
       <Spacer mt={9} />
     </Box>

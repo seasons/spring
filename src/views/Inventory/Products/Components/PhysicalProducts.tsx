@@ -3,16 +3,16 @@ import React from "react"
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { ProductCreatePhysicalProductSection } from "./ProductCreatePhysicalProductSection"
+import { PhysicalProductSection } from "./PhysicalProductSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 
-export interface ProductCreatePhysicalProductsProps {
+export interface PhysicalProductsProps {
   data: any
   skus: string[]
   validate: (values: any) => Object
 }
 
-export const ProductCreatePhysicalProducts: React.FC<ProductCreatePhysicalProductsProps> = ({ data, skus }) => {
+export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data, skus }) => {
   if (!data?.physicalProductStatuses) {
     return null
   }
@@ -30,7 +30,7 @@ export const ProductCreatePhysicalProducts: React.FC<ProductCreatePhysicalProduc
           <Spacer mt={4} />
         </Grid>
         {skus.map((sku, index) => (
-          <ProductCreatePhysicalProductSection sku={sku} statusChoices={statusChoices} key={index} />
+          <PhysicalProductSection sku={sku} statusChoices={statusChoices} key={index} />
         ))}
       </ContainerGrid>
     </Box>

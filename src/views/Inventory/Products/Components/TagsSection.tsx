@@ -2,15 +2,16 @@ import React from "react"
 
 import { Grid } from "@material-ui/core"
 
-import { FormAutocomplete, Separator, Spacer, Text } from "components"
+import { Separator, Spacer, Text } from "components"
+import { AutocompleteField } from "fields"
 
-export interface ProductCreateTagsSectionProps {
+export interface TagsSectionProps {
   functions: string[]
   materials: string[]
   tags: string[]
 }
 
-export const ProductCreateTagsSection: React.FC<ProductCreateTagsSectionProps> = ({ functions, materials, tags }) => {
+export const TagsSection: React.FC<TagsSectionProps> = ({ functions, materials, tags }) => {
   return (
     <>
       <Text variant="h4">Tags</Text>
@@ -20,25 +21,25 @@ export const ProductCreateTagsSection: React.FC<ProductCreateTagsSectionProps> =
       <Grid item xs={12}>
         <Text variant="h6">Functions</Text>
         <Spacer mt={1} />
-        <FormAutocomplete name="functions" options={functions} />
+        <AutocompleteField name="functions" options={functions} />
       </Grid>
       <Spacer mt={3} />
       <Grid item xs={12}>
         <Text variant="h6">Outer materials</Text>
         <Spacer mt={1} />
-        <FormAutocomplete name="outerMaterials" options={materials} />
+        <AutocompleteField name="outerMaterials" options={materials} />
       </Grid>
       <Spacer mt={3} />
       <Grid item xs={12}>
         <Text variant="h6">Inner materials</Text>
         <Spacer mt={1} />
-        <FormAutocomplete name="innerMaterials" options={materials} />
+        <AutocompleteField name="innerMaterials" options={materials} />
       </Grid>
       <Spacer mt={3} />
       <Grid item xs={12}>
         <Text variant="h6">Tags</Text>
         <Spacer mt={1} />
-        <FormAutocomplete name="tags" options={tags} />
+        <AutocompleteField name="tags" options={tags} />
       </Grid>
     </>
   )

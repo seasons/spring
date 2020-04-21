@@ -2,17 +2,15 @@ import React from "react"
 
 import { Grid } from "@material-ui/core"
 
-import { FormSelect, FormTextField, Separator, Spacer, Text } from "components"
+import { Separator, Spacer, Text } from "components"
+import { SelectField, TextField } from "fields"
 
-export interface ProductCreatePhysicalProductSectionProps {
+export interface PhysicalProductSectionProps {
   sku: string
   statusChoices: any[]
 }
 
-export const ProductCreatePhysicalProductSection: React.FC<ProductCreatePhysicalProductSectionProps> = ({
-  sku,
-  statusChoices,
-}) => {
+export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({ sku, statusChoices }) => {
   return (
     <>
       <Grid container>
@@ -27,23 +25,23 @@ export const ProductCreatePhysicalProductSection: React.FC<ProductCreatePhysical
         <Grid item xs={6}>
           <Text variant="h5">Status</Text>
           <Spacer mt={1} />
-          <FormSelect name={`${sku}_physicalProductStatus`} choices={statusChoices} />
+          <SelectField name={`${sku}_physicalProductStatus`} choices={statusChoices} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h5">Date ordered</Text>
           <Spacer mt={1} />
-          <FormTextField name={`${sku}_dateOrdered`} />
+          <TextField name={`${sku}_dateOrdered`} />
         </Grid>
         <Spacer grid mt={3} />
         <Grid item xs={6}>
           <Text variant="h5">Unit cost</Text>
           <Spacer mt={1} />
-          <FormTextField name={`${sku}_unitCost`} />
+          <TextField name={`${sku}_unitCost`} />
         </Grid>
         <Grid item xs={6}>
           <Text variant="h5">Date received</Text>
           <Spacer mt={1} />
-          <FormTextField name={`${sku}_dateReceived`} />
+          <TextField name={`${sku}_dateReceived`} />
         </Grid>
         <Spacer grid mt={5} />
       </Grid>
