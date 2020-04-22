@@ -42,10 +42,12 @@ export const ProductCreate = props => {
   }
 
   const validateOverview = async values => {
+    return {}
     return await validate(overviewValidationSchema, values)
   }
 
   const validateVariants = async values => {
+    return {}
     const validationSchema = getVariantsValidationSchema(values)
     return await validate(validationSchema, values)
   }
