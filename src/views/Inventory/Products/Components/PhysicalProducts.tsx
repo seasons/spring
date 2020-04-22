@@ -1,9 +1,9 @@
 import React from "react"
+import { useFormState } from "react-final-form"
 import * as yup from "yup"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
-import { useWizardContext } from "components/Wizard"
 import { Header } from "./Header"
 import { PhysicalProductSection } from "./PhysicalProductSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
@@ -29,7 +29,7 @@ export interface PhysicalProductsProps {
 }
 
 export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data }) => {
-  const { values } = useWizardContext()
+  const { values } = useFormState()
 
   if (!data?.physicalProductStatuses) {
     return null

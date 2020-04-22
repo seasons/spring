@@ -1,10 +1,10 @@
 import React from "react"
 import { useQuery } from "react-apollo"
+import { useFormState } from "react-final-form"
 import * as yup from "yup"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
-import { useWizardContext } from "components/Wizard"
 import { Header } from "./Header"
 import { GET_GENERATED_VARIANT_SKUS } from "../queries"
 import { getTypeSpecificVariantFields, VariantSizeSection } from "./VariantSizeSection"
@@ -37,7 +37,7 @@ export interface VariantsProps {
 }
 
 export const Variants: React.FC<VariantsProps> = props => {
-  const { values } = useWizardContext()
+  const { values } = useFormState()
   const brandID = values?.brand || ""
   const colorID = values?.color || ""
   const sizeNames = values?.sizes || []
