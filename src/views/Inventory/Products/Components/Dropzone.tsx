@@ -13,7 +13,6 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onReceivedFile }) => {
   const [imagePreview, setImagePreview] = useState("")
   const onDrop = useCallback(
     acceptedFiles => {
-      console.log("GOT FILES:", acceptedFiles)
       if (acceptedFiles.length > 0) {
         const file = acceptedFiles[0]
         onReceivedFile(file)
