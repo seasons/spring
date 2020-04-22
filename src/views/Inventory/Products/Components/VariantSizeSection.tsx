@@ -19,12 +19,13 @@ export const getTypeSpecificVariantFields = productType => {
 }
 
 export interface VariantSizeSectionProps {
-  variant: any
+  productType: string
+  size: string
+  sku: string
 }
 
-export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ variant }) => {
-  const { size, sku, type } = variant
-  const typeSpecificFields = getTypeSpecificVariantFields(type)
+export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productType, size, sku }) => {
+  const typeSpecificFields = getTypeSpecificVariantFields(productType)
   const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 2) : []
   const typeSpecificSecondRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(2) : []
   const firstRowFields = ["SKU", "Weight", ...typeSpecificFirstRowFields]
@@ -46,7 +47,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ variant 
             <Spacer mt={1} />
             <TextField
               disabled={field === "SKU"}
-              name={`${sku}_${field.toLowerCase()}`}
+              name={`${size}_${field.toLowerCase()}`}
               value={field === "SKU" ? sku : undefined}
             />
           </Grid>
@@ -56,7 +57,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ variant 
           <Grid item key={index} xs={3}>
             <Text variant="h5">{field}</Text>
             <Spacer mt={1} />
-            <TextField name={`${sku}_${field.toLowerCase().replace(" ", "")}`} />
+            <TextField name={`${size}_${field.toLowerCase().replace(" ", "")}`} />
           </Grid>
         ))}
         <Spacer grid mt={3} />
