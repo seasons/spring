@@ -3,6 +3,7 @@ import * as yup from "yup"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
+import { useWizardContext } from "components/Wizard"
 import { Header } from "./Header"
 import { PhysicalProductSection } from "./PhysicalProductSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
@@ -24,14 +25,24 @@ export const getPhysicalProductsValidationSchema = values => {
 
 export interface PhysicalProductsProps {
   data: any
-  skus: string[]
   validate: (values: any) => Object
 }
 
-export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data, skus }) => {
+export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data }) => {
+  const { values } = useWizardContext()
+
+  // Read SKU values
+  const skus: any[] = []
+  Object.entries(values).map(([key, value]) => {
+    if (key.includes("_sku")) {
+      skus.push(value)
+    }
+  })
+
   if (!data?.physicalProductStatuses) {
     return null
   }
+
   const statusChoices = getFormSelectChoices(getEnumValues(data.physicalProductStatuses))
   return (
     <Box mx={5}>

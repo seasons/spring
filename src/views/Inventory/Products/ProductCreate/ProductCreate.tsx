@@ -69,14 +69,13 @@ export const ProductCreate = props => {
     { size: "Medium", sku: "STIS-PNK-SS-015", type: "Bottom" },
     { size: "Large", sku: "STIS-PNK-SS-015", type: "Top" },
   ]
-  const skus = ["STIS-PNK-SS-015", "STIS-PNK-SS-015", "STIS-PNK-SS-015"]
 
   return (
     <Box>
       <Wizard initialValues={initialValues} onSubmit={onSubmit}>
         <Overview data={data} validate={validateOverview} />
-        <Variants variants={variants} validate={validateVariants} />
-        <PhysicalProducts data={data} skus={skus} validate={validatePhysicalProducts} />
+        <Variants validate={validateVariants} />
+        <PhysicalProducts data={data} validate={validatePhysicalProducts} />
       </Wizard>
       <Spacer mt={9} />
     </Box>

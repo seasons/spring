@@ -33,11 +33,10 @@ export const getVariantsValidationSchema = values => {
 }
 
 export interface VariantsProps {
-  variants: any
   validate: (values: any) => Object
 }
 
-export const Variants: React.FC<VariantsProps> = ({ variants }) => {
+export const Variants: React.FC<VariantsProps> = props => {
   const { values } = useWizardContext()
   const brandID = values?.brand || ""
   const colorID = values?.color || ""
