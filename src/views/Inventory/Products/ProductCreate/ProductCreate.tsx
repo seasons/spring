@@ -42,12 +42,10 @@ export const ProductCreate = props => {
   }
 
   const validateOverview = async values => {
-    return {}
     return await validate(overviewValidationSchema, values)
   }
 
   const validateVariants = async values => {
-    return {}
     const validationSchema = getVariantsValidationSchema(values)
     return await validate(validationSchema, values)
   }
@@ -62,13 +60,6 @@ export const ProductCreate = props => {
     retailPrice: 0,
     status: "NotAvailable",
   }
-
-  // TEMP: Mock data
-  const variants = [
-    { size: "Small", sku: "STIS-PNK-SS-015", type: "Top" },
-    { size: "Medium", sku: "STIS-PNK-SS-015", type: "Bottom" },
-    { size: "Large", sku: "STIS-PNK-SS-015", type: "Top" },
-  ]
 
   return (
     <Box>
