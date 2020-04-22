@@ -28,6 +28,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   return (
     <Field
       name={name}
+      initialValue={value}
       render={({ input, meta }) => (
         <FormControl error={meta.error}>
           <StyledTextField
@@ -37,7 +38,7 @@ export const TextField: React.FC<TextFieldProps> = ({
             rows={multiline ? rows : 0}
             name={input.name}
             placeholder={placeholder}
-            value={value || input.value}
+            value={input.value}
             variant="outlined"
             onChange={input.onChange}
             type={type}
