@@ -12,6 +12,8 @@ const ReservationFragment = gql`
       id
       user {
         id
+        firstName
+        lastName
         email
       }
     }
@@ -26,10 +28,18 @@ const ReservationFragment = gql`
     }
     products {
       id
+      productVariant {
+        product {
+          images
+        }
+      }
     }
     reservationNumber
     shipped
     status
+    sentPackage {
+      weight
+    }
     shippedAt
     receivedAt
     createdAt
