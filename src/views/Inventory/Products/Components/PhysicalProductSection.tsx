@@ -7,36 +7,36 @@ import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
 
 export interface PhysicalProductSectionProps {
-  sku: string
   statusChoices: any[]
+  uid: string
 }
 
-export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({ sku, statusChoices }) => {
+export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({ statusChoices, uid }) => {
   return (
     <ExpandableSection
-      title={sku}
+      title={uid}
       content={
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Text variant="h5">Status</Text>
             <Spacer mt={1} />
-            <SelectField name={`${sku}_physicalProductStatus`} choices={statusChoices} />
+            <SelectField name={`${uid}_physicalProductStatus`} choices={statusChoices} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h5">Date ordered</Text>
             <Spacer mt={1} />
-            <TextField name={`${sku}_dateOrdered`} />
+            <TextField name={`${uid}_dateOrdered`} />
           </Grid>
           <Spacer grid mt={3} />
           <Grid item xs={6}>
             <Text variant="h5">Unit cost</Text>
             <Spacer mt={1} />
-            <TextField name={`${sku}_unitCost`} />
+            <TextField name={`${uid}_unitCost`} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h5">Date received</Text>
             <Spacer mt={1} />
-            <TextField name={`${sku}_dateReceived`} />
+            <TextField name={`${uid}_dateReceived`} />
           </Grid>
           <Spacer grid mt={5} />
         </Grid>
