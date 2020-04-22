@@ -87,33 +87,16 @@ const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: any) => {
   )
 
   return (
-    <>
-      <Hidden lgUp>
-        <Drawer
-          anchor="left"
-          classes={{
-            paper: classes.mobileDrawer,
-          }}
-          onClose={onMobileClose}
-          open={openMobile}
-          variant="temporary"
-        >
-          {content}
-        </Drawer>
-      </Hidden>
-      <Hidden mdDown>
-        <Drawer
-          anchor="left"
-          classes={{
-            paper: classes.desktopDrawer,
-          }}
-          open
-          variant="persistent"
-        >
-          {content}
-        </Drawer>
-      </Hidden>
-    </>
+    <Drawer
+      anchor="left"
+      classes={{
+        paper: classes.desktopDrawer,
+      }}
+      open
+      variant="persistent"
+    >
+      {content}
+    </Drawer>
   )
 }
 

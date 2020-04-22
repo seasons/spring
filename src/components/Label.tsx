@@ -1,8 +1,9 @@
 import clsx from "clsx"
 import React, { ReactNode } from "react"
 
-import { colors, Theme, Typography } from "@material-ui/core"
+import { Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
+import { colors } from "theme"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -27,12 +28,13 @@ export type LabelVariant = "contained" | "outlined"
 export const IndicatorMap = {
   Authorized: "#01b06c",
   Active: "#01b06c",
-  Waitlisted: "#c4c4c4",
-  Invited: "#c4c4c4",
   Created: "#eea30e",
+  Completed: colors.lightGreen,
+  Deactivated: "#f85156",
+  Invited: "#c4c4c4",
   Suspended: "#eea30e",
   Paused: "#eea30e",
-  Deactivated: "#f85156",
+  Waitlisted: "#c4c4c4",
 }
 
 export interface LabelProps {

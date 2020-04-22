@@ -7,13 +7,14 @@ const ReservationFragment = gql`
     user {
       id
       email
+      firstName
+      lastName
     }
     customer {
       id
       user {
         id
-        firstName
-        lastName
+
         email
       }
     }

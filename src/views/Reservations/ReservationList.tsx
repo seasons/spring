@@ -8,13 +8,13 @@ import {
   SingleFieldList,
   TextField,
 } from "react-admin"
-import { useDataProvider, GET_LIST } from "react-admin"
-import { useQuery } from "react-apollo"
+import { GET_LIST } from "react-admin"
 import gql from "graphql-tag"
 import queries from "queries/Reservation"
 import TableCell from "@material-ui/core/TableCell"
 import TableRow from "@material-ui/core/TableRow"
 import Checkbox from "@material-ui/core/Checkbox"
+import { StatusField, SinceDateField, MemberField } from "fields"
 
 const GetReservations = gql`
   query GetReservations {
@@ -65,24 +65,9 @@ export const ReservationsList = props => {
     >
       <MyDatagrid>
         <TextField source="reservationNumber" label="Reservation Number" />
-        <ReferenceField source="user.id" reference="User" label="User Email">
-          <TextField source="email" />
-        </ReferenceField>
-        <ReferenceArrayField label="Product ID" reference="PhysicalProduct" source="products.id">
-          <SingleFieldList>
-            <TextField source="seasonsUID" />
-          </SingleFieldList>
-        </ReferenceArrayField>
-        <ReferenceField source="customer.id" reference="Customer" label="Customer Email">
-          {/* TODO: Get a link to customer working */}
-          <TextField source="user.email" />
-        </ReferenceField>
-        <ReferenceField source="sentPackage.id" reference="Package" label="Sent Package ID">
-          <TextField source="id" />
-        </ReferenceField>
-        <ReferenceField source="returnedPackage.id" reference="Package" label="Returned Package ID">
-          <TextField source="id" />
-        </ReferenceField>
+        <StatusField label="Status" />
+        <SinceDateField source="createdAt" label="Created" />
+        <MemberField label="Member" />
       </MyDatagrid>
     </List>
   )
