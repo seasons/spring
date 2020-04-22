@@ -2,8 +2,9 @@ import React from "react"
 
 import { Grid } from "@material-ui/core"
 
-import { Separator, Spacer, Text } from "components"
+import { Spacer, Text } from "components"
 import { SelectField, TextField } from "fields"
+import { SectionHeader } from "./SectionHeader"
 
 export interface PhysicalProductSectionProps {
   sku: string
@@ -15,10 +16,7 @@ export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({ 
     <>
       <Grid container>
         <Grid item xs={12}>
-          <Text variant="h4">{sku}</Text>
-          <Spacer mt={2} />
-          <Separator />
-          <Spacer mt={3} />
+          <SectionHeader title={sku} />
         </Grid>
       </Grid>
       <Grid container spacing={2}>

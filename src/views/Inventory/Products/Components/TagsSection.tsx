@@ -2,8 +2,9 @@ import React from "react"
 
 import { Grid } from "@material-ui/core"
 
-import { Separator, Spacer, Text } from "components"
+import { Spacer, Text } from "components"
 import { AutocompleteField } from "fields"
+import { SectionHeader } from "./SectionHeader"
 
 export interface TagsSectionProps {
   functions: string[]
@@ -14,10 +15,7 @@ export interface TagsSectionProps {
 export const TagsSection: React.FC<TagsSectionProps> = ({ functions, materials, tags }) => {
   return (
     <>
-      <Text variant="h4">Tags</Text>
-      <Spacer mt={2} />
-      <Separator />
-      <Spacer mt={3} />
+      <SectionHeader title="Tags" />
       <Grid item xs={12}>
         <Text variant="h6">Functions</Text>
         <Spacer mt={1} />

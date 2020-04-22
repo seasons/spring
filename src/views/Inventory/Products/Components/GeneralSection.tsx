@@ -2,8 +2,9 @@ import React from "react"
 
 import { Grid } from "@material-ui/core"
 
-import { Separator, Spacer, Text } from "components"
+import { Spacer, Text } from "components"
 import { SelectField, TextField } from "fields"
+import { SectionHeader } from "./SectionHeader"
 
 export interface GeneralSectionProps {
   brands: any[]
@@ -18,10 +19,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({ brands, sizes, s
   }))
   return (
     <>
-      <Text variant="h4">General</Text>
-      <Spacer mt={2} />
-      <Separator />
-      <Spacer mt={3} />
+      <SectionHeader title="General" />
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Text variant="h6">Brand</Text>

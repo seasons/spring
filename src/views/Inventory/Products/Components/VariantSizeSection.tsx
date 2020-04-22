@@ -2,8 +2,9 @@ import React from "react"
 
 import { Grid } from "@material-ui/core"
 
-import { Separator, Spacer, Text } from "components"
+import { Spacer, Text } from "components"
 import { TextField } from "fields"
+import { SectionHeader } from "./SectionHeader"
 
 export const getTypeSpecificVariantFields = productType => {
   let fields: string[] = []
@@ -34,10 +35,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productT
     <>
       <Grid container>
         <Grid item xs={12}>
-          <Text variant="h4">{size}</Text>
-          <Spacer mt={2} />
-          <Separator />
-          <Spacer mt={3} />
+          <SectionHeader title={size} />
         </Grid>
       </Grid>
       <Grid container spacing={2}>
