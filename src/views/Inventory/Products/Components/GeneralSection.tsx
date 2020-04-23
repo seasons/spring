@@ -12,6 +12,8 @@ export interface GeneralSectionProps {
   statuses: any[]
 }
 
+// const required = value => (value ? undefined : 'Required')
+
 export const GeneralSection: React.FC<GeneralSectionProps> = ({ brands, sizes, statuses }) => {
   const brandChoices = brands.map(brand => ({
     display: brand.name,
@@ -31,14 +33,14 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({ brands, sizes, s
             <Grid item xs={6}>
               <Text variant="h6">Product name</Text>
               <Spacer mt={1} />
-              <TextField name="name" placeholder="Max 50 characters" />
+              <TextField name="name" placeholder="Max 50 characters" maxLength={50} />
             </Grid>
           </Grid>
           <Spacer mt={3} />
           <Grid item xs={12}>
             <Text variant="h6">Description</Text>
             <Spacer mt={1} />
-            <TextField multiline name="description" placeholder="Max 140 characters" />
+            <TextField multiline name="description" placeholder="Max 140 characters" maxLength={140} />
             <Spacer mt={3} />
           </Grid>
           <Grid item xs={12}>

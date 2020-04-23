@@ -42,6 +42,7 @@ export const ProductCreate = props => {
   }
 
   const validateOverview = async values => {
+    // return {}
     return await validate(overviewValidationSchema, values)
   }
 

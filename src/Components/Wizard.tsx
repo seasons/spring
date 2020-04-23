@@ -23,10 +23,10 @@ export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, on
 
   const previous = () => setPageIndex(Math.max(pageIndex - 1, 0))
 
-  const validate = values => {
-    const activePage: any = React.Children.toArray(children)[pageIndex]
-    return activePage.props.validate ? activePage.props.validate(values) : {}
-  }
+  // const validate = values => {
+  //   const activePage: any = React.Children.toArray(children)[pageIndex]
+  //   return activePage.props.validate ? activePage.props.validate(values) : {}
+  // }
 
   const handleSubmit = values => {
     const isLastPage = pageIndex === React.Children.count(children) - 1
@@ -40,7 +40,7 @@ export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, on
   const activePage = React.Children.toArray(children)[pageIndex]
   const isLastPage = pageIndex === React.Children.count(children) - 1
   return (
-    <Form initialValues={values} validate={validate} onSubmit={handleSubmit}>
+    <Form initialValues={values} onSubmit={handleSubmit}>
       {({ handleSubmit, submitting, values: formValues, errors }) => {
         return (
           <form onSubmit={handleSubmit}>

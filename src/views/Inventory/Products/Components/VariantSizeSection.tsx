@@ -44,7 +44,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productT
                 <TextField
                   disabled={field === "SKU"}
                   name={`${size}_${field.toLowerCase()}`}
-                  value={field === "SKU" ? sku : undefined}
+                  initialValue={field === "SKU" ? sku : undefined}
                 />
               </Grid>
             ))}
