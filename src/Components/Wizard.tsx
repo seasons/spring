@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react"
+import React, { useState } from "react"
 import { Form } from "react-final-form"
 import { WizardBottomNavBar } from "./WizardBottomNavBar"
 
@@ -11,9 +11,6 @@ export interface WizardProps {
 export interface WizardContextProps {
   values: any
 }
-
-export const WizardContext = createContext<WizardContextProps>({ values: null })
-export const useWizardContext = () => useContext(WizardContext)
 
 export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, onSubmit }) => {
   const [pageIndex, setPageIndex] = useState(0)
@@ -40,7 +37,6 @@ export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, on
     }
   }
 
-  const wizardContextValues = { values }
   const activePage = React.Children.toArray(children)[pageIndex]
   const isLastPage = pageIndex === React.Children.count(children) - 1
   return (
@@ -48,7 +44,7 @@ export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, on
       {({ handleSubmit, submitting, values: formValues, errors }) => {
         return (
           <form onSubmit={handleSubmit}>
-            <WizardContext.Provider value={wizardContextValues}>{activePage}</WizardContext.Provider>
+            {activePage}
             <WizardBottomNavBar onPrevious={previous} isFirstPage={pageIndex === 0} isLastPage={isLastPage} />
           </form>
         )
