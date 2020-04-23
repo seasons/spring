@@ -4,11 +4,7 @@ import { useQuery } from "react-apollo"
 
 import { Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
-import { overviewValidationSchema } from "../Components/Overview"
-import { getVariantsValidationSchema } from "../Components/Variants"
-import { getPhysicalProductsValidationSchema } from "../Components/PhysicalProducts"
 import { PRODUCT_CREATE_QUERY } from "../queries"
-import { validate } from "utils/form"
 
 export interface ProductCreateProps {
   history: any
