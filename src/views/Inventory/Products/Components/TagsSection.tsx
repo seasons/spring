@@ -21,25 +21,25 @@ export const TagsSection: React.FC<TagsSectionProps> = ({ functions, materials, 
           <Grid item xs={12}>
             <Text variant="h6">Functions</Text>
             <Spacer mt={1} />
-            <AutocompleteField name="functions" options={functions} />
+            <AutocompleteField name="functions" options={functions} requiredStringArray />
           </Grid>
           <Spacer mt={3} />
           <Grid item xs={12}>
             <Text variant="h6">Outer materials</Text>
             <Spacer mt={1} />
-            <AutocompleteField name="outerMaterials" options={materials} />
+            <AutocompleteField name="outerMaterials" options={materials} requiredStringArray />
           </Grid>
           <Spacer mt={3} />
           <Grid item xs={12}>
             <Text variant="h6">Inner materials</Text>
             <Spacer mt={1} />
-            <AutocompleteField name="innerMaterials" options={materials} />
+            <AutocompleteField name="innerMaterials" options={materials} requiredStringArray />
           </Grid>
           <Spacer mt={3} />
           <Grid item xs={12}>
             <Text variant="h6">Tags</Text>
             <Spacer mt={1} />
-            <AutocompleteField name="tags" options={tags} />
+            <AutocompleteField name="tags" options={tags} requiredStringArray />
           </Grid>
         </>
       }

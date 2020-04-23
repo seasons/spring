@@ -1,22 +1,24 @@
 import React from "react"
 import * as yup from "yup"
 import { validate } from "utils/form"
-import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps, styled } from "@material-ui/core"
-import { Field as FinalFormField, FieldProps as FinalFormFieldProps } from "react-final-form"
-
-import { FormControl } from "components/FormControl"
+import { Field as FinalFormField } from "react-final-form"
 
 export interface ChildFieldProps {
   name: string
   initialValue?: string
+  multiple?: boolean
 
+  requiredStringArray?: boolean
   requiredString?: boolean
   maxLength?: number
   minLength?: number
 
+  requiredNumberArray?: boolean
   requiredNumber?: boolean
   maxValue?: number
   minValue?: number
+
+  requiredDate?: boolean
 }
 
 export type FieldProps = ChildFieldProps & {
@@ -27,16 +29,25 @@ export const Field: React.FC<FieldProps> = ({
   name,
   initialValue,
   render,
+  requiredStringArray,
   requiredString,
   maxLength,
   minLength,
+  requiredNumberArray,
   requiredNumber,
   maxValue,
   minValue,
+  requiredDate,
   ...rest
 }) => {
   const validateField = async value => {
     let schema
+    if (requiredStringArray) {
+      schema = yup
+        .array()
+        .of(yup.string().required("Required"))
+        .required("Required")
+    }
     if (requiredString) {
       schema = yup.string().required("Required")
     }
@@ -51,6 +62,12 @@ export const Field: React.FC<FieldProps> = ({
         .string()
         .required("Required")
         .min(minLength)
+    }
+    if (requiredNumberArray) {
+      schema = yup
+        .array()
+        .of(yup.number().required("Required"))
+        .required("Required")
     }
     if (requiredNumber) {
       schema = yup.number().required("Required")
@@ -67,9 +84,21 @@ export const Field: React.FC<FieldProps> = ({
         .required("Required")
         .min(minValue)
     }
+    if (requiredDate) {
+      schema = yup.date().required("Required")
+    }
     if (schema) {
       return await validate(schema, value)
     }
   }
-  return <FinalFormField name={name} initialValue={initialValue} validate={validateField} render={render} {...rest} />
+  return (
+    <FinalFormField
+      validateFields={[]}
+      name={name}
+      initialValue={initialValue}
+      validate={validateField}
+      render={render}
+      {...rest}
+    />
+  )
 }

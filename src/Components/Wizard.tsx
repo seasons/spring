@@ -23,11 +23,6 @@ export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, on
 
   const previous = () => setPageIndex(Math.max(pageIndex - 1, 0))
 
-  // const validate = values => {
-  //   const activePage: any = React.Children.toArray(children)[pageIndex]
-  //   return activePage.props.validate ? activePage.props.validate(values) : {}
-  // }
-
   const handleSubmit = values => {
     const isLastPage = pageIndex === React.Children.count(children) - 1
     if (isLastPage) {

@@ -19,7 +19,6 @@ export const validate = async (validationSchema, values) => {
   try {
     await validationSchema.validate(values, { abortEarly: false })
   } catch (err) {
-    console.log("ERR", err)
     return err?.errors?.[0]
   }
 }

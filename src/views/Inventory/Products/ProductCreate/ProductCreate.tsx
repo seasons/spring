@@ -41,21 +41,6 @@ export const ProductCreate = props => {
     console.log("SUBMITTED VALUES FINAL:", values)
   }
 
-  const validateOverview = async values => {
-    // return {}
-    return await validate(overviewValidationSchema, values)
-  }
-
-  const validateVariants = async values => {
-    const validationSchema = getVariantsValidationSchema(values)
-    return await validate(validationSchema, values)
-  }
-
-  const validatePhysicalProducts = async values => {
-    const validationSchema = getPhysicalProductsValidationSchema(values)
-    return await validate(validationSchema, values)
-  }
-
   const initialValues = {
     productType: "Top",
     retailPrice: 0,
@@ -65,9 +50,9 @@ export const ProductCreate = props => {
   return (
     <Box>
       <Wizard initialValues={initialValues} onSubmit={onSubmit}>
-        <Overview data={data} validate={validateOverview} />
-        <Variants validate={validateVariants} />
-        <PhysicalProducts data={data} validate={validatePhysicalProducts} />
+        <Overview data={data} />
+        <Variants />
+        <PhysicalProducts data={data} />
       </Wizard>
       <Spacer mt={9} />
     </Box>

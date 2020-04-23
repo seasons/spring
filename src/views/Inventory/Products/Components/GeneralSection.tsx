@@ -46,13 +46,13 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({ brands, sizes, s
           <Grid item xs={12}>
             <Text variant="h6">Available sizes</Text>
             <Spacer mt={1} />
-            <SelectField multiple name="sizes" choices={sizes} />
+            <SelectField multiple name="sizes" choices={sizes} requiredStringArray />
             <Spacer mt={3} />
           </Grid>
           <Grid item xs={12}>
             <Text variant="h6">Available status</Text>
             <Spacer mt={1} />
-            <SelectField name="status" choices={statuses} />
+            <SelectField name="status" choices={statuses} requiredString />
           </Grid>
         </>
       }
