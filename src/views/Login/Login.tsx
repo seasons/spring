@@ -1,5 +1,6 @@
 import { login as loginAction } from "actions/sessionActions"
-import { FormTextField, Spacer } from "components"
+import { Spacer } from "components"
+import { TextField } from "fields"
 import gql from "graphql-tag"
 import React from "react"
 import { useMutation } from "react-apollo"
@@ -69,9 +70,9 @@ export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
           <Box mx={5}>
             <form {...props} onSubmit={handleSubmit}>
               <div>
-                <FormTextField label="Email address" name="email" />
+                <TextField label="Email address" name="email" />
                 <Spacer mt={1} />
-                <FormTextField label="Password" name="password" type="password" />
+                <TextField label="Password" name="password" type="password" />
               </div>
               <Spacer mt={2} />
               <SubmitButton size="large" type="submit" variant="contained">

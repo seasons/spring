@@ -1,19 +1,64 @@
 import React, { useState } from "react"
+import * as yup from "yup"
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { ProductCreateGeneralSection } from "./ProductCreateGeneralSection"
-import { ProductCreateMetadataSection } from "./ProductCreateMetadataSection"
-import { ProductCreatePhotographySection } from "./ProductCreatePhotographySection"
-import { ProductCreateTagsSection } from "./ProductCreateTagsSection"
+import { GeneralSection } from "./GeneralSection"
+import { Header } from "./Header"
+import { MetadataSection } from "./MetadataSection"
+import { PhotographySection } from "./PhotographySection"
+import { TagsSection } from "./TagsSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 
-export interface ProductCreateDetailsProps {
+export const overviewValidationSchema = yup.object({
+  brand: yup.string().required("Required"),
+  name: yup
+    .string()
+    .required("Required")
+    .max(50),
+  description: yup
+    .string()
+    .required("Required")
+    .max(140),
+  sizes: yup
+    .array()
+    .of(yup.string().required("Required"))
+    .required("Required"),
+  status: yup.string().required("Required"),
+  model: yup.string().required("Required"),
+  modelSize: yup.string().required("Required"),
+  productType: yup.string().required("Required"),
+  season: yup.string().required("Required"),
+  retailPrice: yup.number().required("Required"),
+  architecture: yup.string().required("Required"),
+  category: yup.string().required("Required"),
+  subCategory: yup.string().required("Required"),
+  color: yup.string().required("Required"),
+  secondaryColor: yup.string().required("Required"),
+  functions: yup
+    .array()
+    .of(yup.string().required("Required"))
+    .required("Required"),
+  outerMaterials: yup
+    .array()
+    .of(yup.string().required("Required"))
+    .required("Required"),
+  innerMaterials: yup
+    .array()
+    .of(yup.string().required("Required"))
+    .required("Required"),
+  tags: yup
+    .array()
+    .of(yup.string().required("Required"))
+    .required("Required"),
+})
+
+export interface OverviewProps {
   data: any
   validate: (values: any) => Object
 }
 
-export const ProductCreateDetails: React.FC<ProductCreateDetailsProps> = ({ data }) => {
+export const Overview: React.FC<OverviewProps> = ({ data }) => {
   const [productType, setProductType] = useState("Top")
 
   if (
@@ -70,22 +115,14 @@ export const ProductCreateDetails: React.FC<ProductCreateDetailsProps> = ({ data
   return (
     <Box mx={5}>
       <ContainerGrid container spacing={5}>
-        <Grid item xs={12}>
-          <Spacer mt={3} />
-          <Text variant="h3">New product</Text>
-          <Spacer mt={0.5} />
-          <Text variant="h5" opacity={0.5}>
-            Please fill out all required fields
-          </Text>
-          <Spacer mt={4} />
-        </Grid>
+        <Header title="New product" subtitle="Please fill out all required fields" />
         <Grid item xs={4}>
-          <ProductCreatePhotographySection numImages={4} onReceivedImageFile={onReceivedImageFile} />
+          <PhotographySection numImages={4} onReceivedImageFile={onReceivedImageFile} />
         </Grid>
         <Grid item xs={8}>
-          <ProductCreateGeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
+          <GeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
           <Spacer mt={6} />
-          <ProductCreateMetadataSection
+          <MetadataSection
             architectures={productArchitectures}
             categories={data.categories}
             colors={data.colors}
@@ -95,7 +132,7 @@ export const ProductCreateDetails: React.FC<ProductCreateDetailsProps> = ({ data
             types={productTypes}
           />
           <Spacer mt={6} />
-          <ProductCreateTagsSection functions={productFunctions} materials={materials} tags={tags} />
+          <TagsSection functions={productFunctions} materials={materials} tags={tags} />
         </Grid>
       </ContainerGrid>
     </Box>
