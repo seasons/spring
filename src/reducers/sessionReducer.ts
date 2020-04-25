@@ -1,32 +1,24 @@
 import * as actionTypes from "../actions"
 
+const userSession = JSON.parse(localStorage.getItem("userSession") || "{}")
 const initialState = {
-  loggedIn: true,
-  user: {
-    first_name: "Shen",
-    last_name: "Zhi",
-    email: "demo@devias.io",
-    avatar: "/images/avatars/avatar_11.png",
-    bio: "Brain Director",
-    role: "ADMIN", // ['GUEST', 'USER', 'ADMIN']
-  },
+  ...userSession,
 }
 
 const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SESSION_LOGIN: {
       return {
-        ...initialState,
+        ...action.userSession,
+        ...state,
       }
     }
 
     case actionTypes.SESSION_LOGOUT: {
+      localStorage.removeItem("userSession")
       return {
         ...state,
-        loggedIn: false,
-        user: {
-          role: "GUEST",
-        },
+        session: {},
       }
     }
 

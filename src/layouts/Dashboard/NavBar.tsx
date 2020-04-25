@@ -1,6 +1,8 @@
+import { logout as logoutAction } from "actions/sessionActions"
 import { NavItem, Spacer } from "components"
 import { LogoMark } from "icons"
 import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useLocation } from "react-router"
 import styled from "styled-components"
 import { colors } from "theme"
@@ -46,11 +48,10 @@ const LogoText = styled(Typography)`
 `
 
 const UserInfo = styled(Typography)`
-  font-family: "Proxima Nova Medium", sans-serif;
   font-size: 16px;
+  font-weight: 500;
   line-height: 1.5;
   color: ${colors.white100};
-  font-weight: 500;
 `
 
 const UserLogOut = styled(UserInfo)`
@@ -64,7 +65,9 @@ const UserLogOut = styled(UserInfo)`
 export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: any) => {
   const classes = useStyles()
   const location = useLocation()
-  const { user } = JSON.parse(localStorage.getItem("userSession") || "{}")
+  const session = useSelector(state => state.session)
+  const { user } = session
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -73,7 +76,7 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
   }, [location.pathname])
 
   const signOut = () => {
-    localStorage.removeItem("userSession")
+    dispatch(logoutAction())
     window.location.href = "/login"
   }
 

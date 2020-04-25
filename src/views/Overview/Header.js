@@ -32,7 +32,7 @@ function Header({ className, ...rest }) {
             Home
           </Typography>
           <Typography component="h1" gutterBottom variant="h3">
-            Good Morning, {session.user.first_name}
+            Good Morning, {session.user.firstName}
           </Typography>
           <Typography gutterBottom variant="subtitle1">
             You done made a lot of money today. TIME TO RETIRE!
