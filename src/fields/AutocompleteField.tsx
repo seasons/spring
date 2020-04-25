@@ -1,14 +1,13 @@
 import { TextField } from "@material-ui/core"
 import React from "react"
-import { Field } from "react-final-form"
+import { Field, ChildFieldProps } from "./Field"
 import Autocomplete, { createFilterOptions } from "@material-ui/lab/Autocomplete"
 
 import { FormControl } from "../components/FormControl"
 
 const filter = createFilterOptions<string>()
 
-export interface AutocompleteFieldProps {
-  name: string
+export type AutocompleteFieldProps = ChildFieldProps & {
   options: string[]
 }
 

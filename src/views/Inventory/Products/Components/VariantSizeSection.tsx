@@ -44,7 +44,8 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productT
                 <TextField
                   disabled={field === "SKU"}
                   name={`${size}_${field.toLowerCase()}`}
-                  value={field === "SKU" ? sku : undefined}
+                  initialValue={field === "SKU" ? sku : undefined}
+                  requiredNumber={field !== "SKU"}
                 />
               </Grid>
             ))}
@@ -53,7 +54,11 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productT
               <Grid item key={index} xs={3}>
                 <Text variant="h5">{field}</Text>
                 <Spacer mt={1} />
-                <TextField name={`${size}_${field.toLowerCase().replace(" ", "")}`} />
+                <TextField
+                  name={`${size}_${field.toLowerCase().replace(" ", "")}`}
+                  requiredNumber
+                  maxValue={field === "Total count" ? 99 : undefined}
+                />
               </Grid>
             ))}
             <Spacer grid mt={3} />
