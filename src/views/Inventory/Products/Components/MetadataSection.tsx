@@ -48,12 +48,12 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Model</Text>
             <Spacer mt={1} />
-            <SelectField name="model" choices={modelChoices} />
+            <SelectField name="model" choices={modelChoices} requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Model size</Text>
             <Spacer mt={1} />
-            <SelectField name="modelSize" choices={sizes} />
+            <SelectField name="modelSize" choices={sizes} requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Type</Text>
@@ -62,42 +62,43 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
               name="productType"
               choices={typeChoices}
               onChange={event => setProductType(event.target.value)}
+              requiredString
             />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Season</Text>
             <Spacer mt={1} />
-            <TextField name="season" />
+            <TextField name="season" requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Retail price</Text>
             <Spacer mt={1} />
-            <TextField name="retailPrice" />
+            <TextField name="retailPrice" requiredNumber minValue={0} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Architecture</Text>
             <Spacer mt={1} />
-            <SelectField name="architecture" choices={architectureChoices} />
+            <SelectField name="architecture" choices={architectureChoices} requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Display category</Text>
             <Spacer mt={1} />
-            <SelectField name="category" choices={categoryChoices} />
+            <SelectField name="category" choices={categoryChoices} requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Sub-category</Text>
             <Spacer mt={1} />
-            <SelectField name="subCategory" choices={categoryChoices} />
+            <SelectField name="subCategory" choices={categoryChoices} requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Color</Text>
             <Spacer mt={1} />
-            <SelectField name="color" choices={colorChoices} />
+            <SelectField name="color" choices={colorChoices} requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Secondary color</Text>
             <Spacer mt={1} />
-            <SelectField name="secondaryColor" choices={colorChoices} />
+            <SelectField name="secondaryColor" choices={colorChoices} requiredString />
           </Grid>
         </Grid>
       }

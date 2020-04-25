@@ -1,12 +1,11 @@
 import { MenuItem, Select } from "@material-ui/core"
 import React from "react"
-import { Field } from "react-final-form"
+import { Field, ChildFieldProps } from "./Field"
 
 import { FormControl } from "../components/FormControl"
 
-export interface SelectFieldProps {
+export type SelectFieldProps = ChildFieldProps & {
   choices: { display: any; value: any }[]
-  multiple?: boolean
   name: string
   onChange?: (event: any) => void
 }

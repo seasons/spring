@@ -20,23 +20,23 @@ export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({ 
           <Grid item xs={6}>
             <Text variant="h5">Status</Text>
             <Spacer mt={1} />
-            <SelectField name={`${uid}_physicalProductStatus`} choices={statusChoices} />
+            <SelectField name={`${uid}_physicalProductStatus`} choices={statusChoices} requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h5">Date ordered</Text>
             <Spacer mt={1} />
-            <TextField name={`${uid}_dateOrdered`} />
+            <TextField name={`${uid}_dateOrdered`} requiredDate />
           </Grid>
           <Spacer grid mt={3} />
           <Grid item xs={6}>
             <Text variant="h5">Unit cost</Text>
             <Spacer mt={1} />
-            <TextField name={`${uid}_unitCost`} />
+            <TextField name={`${uid}_unitCost`} requiredNumber />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h5">Date received</Text>
             <Spacer mt={1} />
-            <TextField name={`${uid}_dateReceived`} />
+            <TextField name={`${uid}_dateReceived`} requiredDate />
           </Grid>
           <Spacer grid mt={5} />
         </Grid>
