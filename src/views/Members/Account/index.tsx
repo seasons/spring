@@ -5,6 +5,7 @@ import { Datagrid, List, TextField } from "react-admin"
 import { Grid, Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
+import { MemberSubViewIfc } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
 import { PersonalDetails } from "./PersonalDetails"
 
@@ -14,30 +15,23 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-export interface AccountViewProps {
-  history: any
-  match: any
-  props?: any
-}
-
-export const AccountView: React.FunctionComponent<AccountViewProps> = ({ match, history, props }) => {
+export const AccountView: React.FunctionComponent<MemberSubViewIfc> = ({ member }) => {
   const classes = useStyles()
 
   return (
     <>
       <Grid className={classes.root} container spacing={3}>
         <Grid item lg={6} md={6} xl={6} xs={12}>
-          <PersonalDetails />
+          <PersonalDetails member={member} />
         </Grid>
         <Grid item lg={6} md={6} xl={6} xs={12}>
-          <PaymentShipping />
+          <PaymentShipping member={member} />
         </Grid>
         <Grid item lg={12} md={12} xl={12} xs={12}>
           <Typography component="h1" variant="h3">
             Invoices
           </Typography>
           <List
-            {...props}
             perPage={10}
             hasCreate={false}
             hasEdit={false}

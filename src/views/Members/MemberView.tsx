@@ -1,5 +1,5 @@
 import React from "react"
-import { Error, Loading, useQuery } from "react-admin"
+import { Loading, useQuery } from "react-admin"
 import { Redirect } from "react-router-dom"
 
 import { colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"
@@ -40,12 +40,12 @@ export const MemberView: React.FunctionComponent<MemberViewIfc> = ({ match, hist
   const { data, loading, error } = useQuery({
     type: "getOne",
     resource: "Customer",
-    payload: { id: "ck2ge3c2c06cf07577w6h298c" },
+    payload: { id: memberId },
   })
 
   if (loading) return <Loading />
-  if (error) return <Error />
-  if (!data) return null
+  if (error || !data)
+    return <Container maxWidth={false}>Opps, error fetching data. Have you tried unplugging?</Container>
 
   console.log("\n\n data is ", data)
 

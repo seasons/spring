@@ -6,7 +6,7 @@ import { Link, Theme, Typography } from "@material-ui/core"
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft"
 import { makeStyles } from "@material-ui/styles"
 
-import { HeaderProps } from "./interfaces"
+import { MemberViewHeaderIfc } from "./interfaces"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-export const Header: React.FunctionComponent<HeaderProps> = ({ history, member }) => {
+export const Header: React.FunctionComponent<MemberViewHeaderIfc> = ({ history, member }) => {
   const classes = useStyles()
   const memberSince = moment(member.user.createdAt).format("MMMM D, YYYY")
 

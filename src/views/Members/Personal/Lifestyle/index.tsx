@@ -4,13 +4,15 @@ import React from "react"
 import { Card, CardContent, CardHeader, Divider, Table, TableBody, TableCell, TableRow, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
+import { MemberSubViewIfc } from "../../interfaces"
+
 const useStyles = makeStyles<Theme>(theme => ({
   content: {
     padding: 0,
   },
 }))
 
-export const Lifestyle: React.FC = props => {
+export const Lifestyle: React.FC<MemberSubViewIfc> = ({ member }) => {
   const classes = useStyles()
 
   const handleEditEntity = () => {
