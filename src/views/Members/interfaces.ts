@@ -40,6 +40,20 @@ export interface MemberSubViewIfc {
       shippingAddress: shippingAddress
       phoneNumber: string
       birthday: string
+      height: string
+      weight: string
+      bodyType: string
+      averageTopSize: string
+      averageWaistSize: string
+      averagePantLength: string
+      preferredPronouns: string
+      profession: string
+      partyFrequency: string
+      travelFrequency: string
+      shoppingFrequency: string
+      averageSpend: string
+      style: string
+      commuteStyle: string
     }
   }
 }

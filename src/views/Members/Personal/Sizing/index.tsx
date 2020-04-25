@@ -14,6 +14,7 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 export const Sizing: React.FC<MemberSubViewIfc> = ({ member }) => {
   const classes = useStyles()
+  const user = member.detail
 
   const handleEditEntity = () => {
     console.log("editing membership")
@@ -28,35 +29,35 @@ export const Sizing: React.FC<MemberSubViewIfc> = ({ member }) => {
           <TableBody>
             <TableRow>
               <TableCell>Height</TableCell>
-              <TableCell>68.0</TableCell>
+              <TableCell>{user.height}</TableCell>
               <TableCell>
                 <EditButton onClick={handleEditEntity} />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Body Type</TableCell>
-              <TableCell>Muscular</TableCell>
+              <TableCell>{user.bodyType}</TableCell>
               <TableCell>
                 <EditButton onClick={handleEditEntity} />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Avg. top size</TableCell>
-              <TableCell>Medium</TableCell>
+              <TableCell>{user.averageTopSize}</TableCell>
               <TableCell>
                 <EditButton onClick={handleEditEntity} />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Avg. waist size</TableCell>
-              <TableCell>30</TableCell>
+              <TableCell>{user.averageWaistSize}</TableCell>
               <TableCell>
                 <EditButton onClick={handleEditEntity} />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Avg. pant length</TableCell>
-              <TableCell>30</TableCell>
+              <TableCell>{user.averagePantLength}</TableCell>
               <TableCell>
                 <EditButton onClick={handleEditEntity} />
               </TableCell>
