@@ -52,8 +52,8 @@ export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
 
       localStorage.setItem("userSession", JSON.stringify(userSession))
       dispatch(loginAction(userSession))
+      history.push("/")
     }
-    history.push("/")
   }
 
   const initialValues = {

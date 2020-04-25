@@ -12,4 +12,9 @@ export const colors = {
   green: "#44524A",
   lightGreen: "#989F9B",
   blue: "#2B50DF",
+  status: {
+    green: "#01b06c",
+    orange: "#eea30e",
+    red: "#f85156",
+  },
 }
