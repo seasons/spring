@@ -1,20 +1,15 @@
 import React from "react"
-import {
-  Datagrid,
-  DatagridBody,
-  List,
-  ReferenceArrayField,
-  ReferenceField,
-  SingleFieldList,
-  TextField,
-} from "react-admin"
+import { Datagrid, DatagridBody, Filter, List, TextField } from "react-admin"
 import { GET_LIST } from "react-admin"
 import gql from "graphql-tag"
 import queries from "queries/Reservation"
 import TableCell from "@material-ui/core/TableCell"
 import TableRow from "@material-ui/core/TableRow"
 import Checkbox from "@material-ui/core/Checkbox"
-import { StatusField, SinceDateField, MemberField } from "fields"
+import { StatusField, SinceDateField, MemberField, ViewEntityField } from "fields"
+import { Box, Container, Chip } from "@material-ui/core"
+import { colors } from "theme"
+import { Header } from "components/Header"
 
 const GetReservations = gql`
   query GetReservations {
@@ -29,7 +24,7 @@ const MyDatagridRow: React.FC<any> = ({ record, resource, id, onToggleItem, chil
   <TableRow key={id}>
     {/* first column: selection checkbox */}
     <TableCell padding="none">
-      {record.selectable && <Checkbox checked={selected} onClick={() => onToggleItem(id)} />}
+      <Checkbox checked={selected} onClick={() => onToggleItem(id)} />
     </TableCell>
     {/* data columns based on children */}
     {React.Children.map(children, field => (
@@ -47,28 +42,62 @@ const MyDatagridRow: React.FC<any> = ({ record, resource, id, onToggleItem, chil
 const MyDatagridBody = props => <DatagridBody {...props} row={<MyDatagridRow />} />
 const MyDatagrid = props => <Datagrid {...props} body={<MyDatagridBody />} />
 
-export const ReservationsList = props => {
-  // const { data } = useQuery(GetReservations)
+const QuickFilter = ({ label, source, value }) => {
+  return <Chip label={label} />
+}
 
-  // console.log(data)
+const SourceFilter = props => (
+  <Filter {...props}>
+    <QuickFilter source="status" label="New" value="New" />
+  </Filter>
+)
 
+const ImagesField = ({ label, record = {}, source }) => {
+  const images = record[source] || []
   return (
-    <List
-      {...props}
-      perPage={10}
-      hasCreate={false}
-      hasEdit={false}
-      hasList={true}
-      hasShow={true}
-      resource="Reservation"
-      title="Reservations"
-    >
-      <MyDatagrid>
-        <TextField source="reservationNumber" label="Reservation Number" />
-        <StatusField label="Status" />
-        <SinceDateField source="createdAt" label="Created" />
-        <MemberField label="Member" />
-      </MyDatagrid>
-    </List>
+    <Box display="flex" flexDirection="row">
+      {images.map(image => {
+        const { url } = image
+        // const resizedImage =
+        return (
+          <Box width={80} height={100} mr={1} bgcolor={colors.black04}>
+            <img key={image.id} width={80} src={url} alt={image.url} />
+          </Box>
+        )
+      })}
+    </Box>
+  )
+}
+
+export const ReservationsList = props => {
+  return (
+    <Container maxWidth={false}>
+      <Header title="Reservations" />
+      <List
+        {...props}
+        perPage={10}
+        hasCreate={false}
+        hasEdit={false}
+        hasList={true}
+        hasShow={true}
+        filters={<SourceFilter />}
+        sort={{
+          field: "createdAt",
+          order: "DESC",
+        }}
+        resource="Reservation"
+        title="Reservations"
+      >
+        <MyDatagrid>
+          <SinceDateField source="createdAt" label="Created" />
+          <ImagesField source="images" label="Images" />
+          <StatusField label="Status" />
+          <MemberField label="Member" />
+          <TextField source="reservationNumber" label="Reservation Number" />
+          <SinceDateField source="returnAt" label="Return" />
+          <ViewEntityField entityPath="reservation" source="id" label="Actions" />
+        </MyDatagrid>
+      </List>
+    </Container>
   )
 }

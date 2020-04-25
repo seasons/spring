@@ -35,6 +35,9 @@ const ReservationFragment = gql`
         }
       }
     }
+    images(size: Small) {
+      url
+    }
     reservationNumber
     shipped
     status
@@ -43,6 +46,7 @@ const ReservationFragment = gql`
     }
     shippedAt
     receivedAt
+    returnAt
     createdAt
     updatedAt
   }

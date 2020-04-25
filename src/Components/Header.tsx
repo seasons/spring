@@ -14,8 +14,8 @@ const useStyles = makeStyles<Theme>(theme => ({
 export interface HeaderProps {
   className?: string
   title: string
-  newEntityText: string
-  newEntityHandler: () => void
+  newEntityText?: string
+  newEntityHandler?: () => void
 }
 
 export const Header: React.FC<HeaderProps> = ({ className, title, newEntityText, newEntityHandler, ...rest }) => {
@@ -29,11 +29,13 @@ export const Header: React.FC<HeaderProps> = ({ className, title, newEntityText,
             {title}
           </Typography>
         </Grid>
-        <Grid item>
-          <Button color="primary" variant="contained" className={classes.addButton} onClick={newEntityHandler}>
-            {newEntityText}
-          </Button>
-        </Grid>
+        {newEntityText && (
+          <Grid item>
+            <Button color="primary" variant="contained" className={classes.addButton} onClick={newEntityHandler}>
+              {newEntityText}
+            </Button>
+          </Grid>
+        )}
       </Grid>
     </div>
   )
