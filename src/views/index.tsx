@@ -1,7 +1,7 @@
 export { AnalyticsView } from "./Analytics"
 export { InventoryView } from "./Inventory"
 export { ProductCreate } from "./Inventory/Products"
-export { CustomerList } from "./Members"
+export { MemberList } from "./Members"
 export { MemberCreate } from "./Members/MemberCreate"
 export { MemberView } from "./Members/MemberView"
 export { OverviewView } from "./Overview"

@@ -12,7 +12,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   back: {
     verticalAlign: "bottom",
   },
-  customerName: {
+  memberName: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(1),
   },
@@ -24,9 +24,9 @@ export interface HeaderProps {
 
 export const Header: React.FunctionComponent<HeaderProps> = ({ history }) => {
   const classes = useStyles()
-  const customer = {
+  const member = {
     name: "Luc Succes",
-    memberSince: "November 16, 2019",
+    since: "November 16, 2019",
   }
 
   return (
@@ -36,10 +36,10 @@ export const Header: React.FunctionComponent<HeaderProps> = ({ history }) => {
           <KeyboardArrowLeftIcon className={classes.back} /> Members
         </Link>
       </Typography>
-      <Typography component="h1" variant="h3" className={classes.customerName}>
-        {customer.name}
+      <Typography component="h1" variant="h3" className={classes.memberName}>
+        {member.name}
       </Typography>
-      <Typography component="h3">Joined {customer.memberSince}</Typography>
+      <Typography component="h3">Joined {member.since}</Typography>
     </div>
   )
 }

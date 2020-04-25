@@ -44,7 +44,6 @@ export const AccountView: React.FunctionComponent<AccountViewProps> = ({ match, 
             hasList={true}
             hasShow={true}
             resource={"Customer"}
-            title="Customers"
             basePath="/members"
             exporter={false}
           >

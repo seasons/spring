@@ -6,7 +6,7 @@ import { Datagrid, List, TextField } from "react-admin"
 import { Container, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
-import { CustomerFilter } from "./CustomerFilter"
+import { MemberFilter } from "./MemberFilter"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -14,13 +14,13 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-export interface CustomerListProps {
+export interface MemberListProps {
   history: any
   match: any
   props?: any
 }
 
-export const CustomerList: React.FunctionComponent<CustomerListProps> = ({ match, history, props }) => {
+export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, history, props }) => {
   const classes = useStyles()
 
   const createNewMember = () => {
@@ -30,17 +30,16 @@ export const CustomerList: React.FunctionComponent<CustomerListProps> = ({ match
   return (
     <>
       <Container maxWidth={false} className={classes.root}>
-        <Header title="Members" newEntityText="New Customer" newEntityHandler={createNewMember} />
+        <Header title="Members" newEntityText="New Member" newEntityHandler={createNewMember} />
         <List
           {...props}
-          filters={<CustomerFilter />}
+          filters={<MemberFilter />}
           perPage={10}
           hasCreate={false}
           hasEdit={false}
           hasList={true}
           hasShow={true}
           resource={"Customer"}
-          title="Customers"
           basePath="/members"
         >
           <Datagrid>
