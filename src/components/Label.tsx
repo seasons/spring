@@ -1,6 +1,5 @@
 import clsx from "clsx"
 import React, { ReactNode } from "react"
-import { colors as themeColors } from "theme"
 
 import { colors, Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
@@ -24,26 +23,6 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 export type LabelShape = "square" | "rounded"
 export type LabelVariant = "contained" | "outlined"
-
-export const IndicatorMap = {
-  Waitlisted: themeColors.black15,
-  Invited: themeColors.black15,
-  New: themeColors.black15,
-  InQueue: themeColors.black15,
-  OnHold: themeColors.black15,
-  Authorized: themeColors.status.green,
-  Received: themeColors.status.green,
-  Completed: themeColors.status.green,
-  Active: themeColors.status.green,
-  Packed: themeColors.status.orange,
-  Shipped: themeColors.status.orange,
-  Created: themeColors.status.orange,
-  InTransit: themeColors.status.orange,
-  Suspended: themeColors.status.orange,
-  Paused: themeColors.status.orange,
-  Deactivated: themeColors.status.red,
-  Cancelled: themeColors.status.red,
-}
 
 export interface LabelProps {
   children: ReactNode
@@ -72,8 +51,7 @@ export const Label: React.FunctionComponent<LabelProps> = ({
   )
   const finalStyle = { ...style }
   if (shape === "rounded") {
-    finalStyle.borderRadius = 10
-    finalStyle.padding = 4
+    finalStyle.borderRadius = 20
   }
 
   switch (variant) {

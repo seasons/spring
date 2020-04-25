@@ -3,9 +3,9 @@ import { NavLink as RouterLink } from "react-router-dom"
 import styled from "styled-components"
 import { colors } from "theme"
 
-import { Button, ListItem } from "@material-ui/core"
+import { Button, ListItem as MuiListItem } from "@material-ui/core"
 
-const ListButton = styled(Button)`
+const NavLInk = styled(Button)`
   padding: 10px 8px;
   justify-content: flex-start;
   text-transform: none;
@@ -20,7 +20,7 @@ const ListButton = styled(Button)`
   }
 `
 
-const StyledListItem = styled(ListItem)`
+const ListItem = styled(MuiListItem)`
   ${({ theme }) => `
   display: "flex",
   padding-top: 0,
@@ -47,10 +47,10 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
   ...rest
 }) => {
   return (
-    <StyledListItem {...rest} disableGutters key={title}>
-      <ListButton component={RouterLink} to={href}>
+    <ListItem {...rest} disableGutters key={title}>
+      <NavLInk component={RouterLink} to={href}>
         {title}
-      </ListButton>
-    </StyledListItem>
+      </NavLInk>
+    </ListItem>
   )
 }

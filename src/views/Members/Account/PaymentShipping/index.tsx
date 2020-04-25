@@ -1,63 +1,39 @@
-import { EditButton } from "components"
+import { CardContent, EditButton, TableHeader } from "components"
 import { FullNameField } from "fields"
 import React from "react"
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Theme,
-  Typography,
-} from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
+import { Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 
 import { MemberSubViewIfc } from "../../interfaces"
 
-const useStyles = makeStyles<Theme>(theme => ({
-  content: {
-    padding: 0,
-  },
-}))
-
 export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ member }) => {
-  const classes = useStyles()
   const billing = member.billingInfo
   const shipping = member.detail.shippingAddress
 
-  const handleEditPayment = () => {
+  const handleEdit = () => {
     console.log("editing payment")
   }
 
-  const handleEditBillingAddress = () => {
-    console.log("editing billing address")
-  }
-
-  const handleEditShippingAddress = () => {
-    console.log("editing shipping address")
-  }
-
   return (
-    <Card className={classes.root}>
-      <CardHeader title="Payment & Shipping" />
-      <Divider />
-      <CardContent className={classes.content}>
+    <Card>
+      <CardContent>
         <Table>
           <TableBody>
+            <TableRow>
+              <TableHeader>Payment & Shipping</TableHeader>
+              <TableCell></TableCell>
+              <TableCell>
+                <EditButton onClick={handleEdit} />
+              </TableCell>
+            </TableRow>
             <TableRow>
               <TableCell>Payment</TableCell>
               <TableCell>
                 {billing.brand.toUpperCase()} ending {billing.last_digits}
               </TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditPayment} />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Billing address</TableCell>
               <TableCell>
                 <Typography component="p">{billing.name}</Typography>
@@ -67,9 +43,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ mem
                 </Typography>
                 <Typography component="p">{billing.postal_code}</Typography>
               </TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditBillingAddress} />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Shipping address</TableCell>
@@ -83,9 +57,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ mem
                 </Typography>
                 <Typography component="p">{shipping.zipCode}</Typography>
               </TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditShippingAddress} />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableBody>
         </Table>
