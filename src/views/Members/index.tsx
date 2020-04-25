@@ -50,7 +50,7 @@ export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, hi
             <StatusField label="Status" />
             <TextField source="bagItems.id" label="Money Spent" />
             <EntityCountField label="Current Items" entityName="bagItems" />
-            <ViewEntityField entityPath="members" entityTab="account" source="user.id" label="Actions" />
+            <ViewEntityField entityPath="members" entityTab="account" source="id" label="Actions" />
           </Datagrid>
         </List>
       </Container>
