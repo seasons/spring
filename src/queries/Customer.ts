@@ -52,6 +52,7 @@ const CustomerReservations = gql`
       email
       firstName
       lastName
+      createdAt
     }
     reservations {
       id

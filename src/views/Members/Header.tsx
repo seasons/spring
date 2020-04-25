@@ -1,8 +1,12 @@
+import { FullNameField } from "fields"
+import moment from "moment"
 import React from "react"
 
 import { Link, Theme, Typography } from "@material-ui/core"
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft"
 import { makeStyles } from "@material-ui/styles"
+
+import { HeaderProps } from "./interfaces"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -18,16 +22,9 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-export interface HeaderProps {
-  history: any
-}
-
-export const Header: React.FunctionComponent<HeaderProps> = ({ history }) => {
+export const Header: React.FunctionComponent<HeaderProps> = ({ history, member }) => {
   const classes = useStyles()
-  const member = {
-    name: "Luc Succes",
-    since: "November 16, 2019",
-  }
+  const memberSince = moment(member.user.createdAt).format("MMMM D, YYYY")
 
   return (
     <div className={classes.root}>
@@ -37,9 +34,9 @@ export const Header: React.FunctionComponent<HeaderProps> = ({ history }) => {
         </Link>
       </Typography>
       <Typography component="h1" variant="h3" className={classes.memberName}>
-        {member.name}
+        <FullNameField record={member} />
       </Typography>
-      <Typography component="h3">Joined {member.since}</Typography>
+      <Typography component="h3">Joined {memberSince}</Typography>
     </div>
   )
 }
