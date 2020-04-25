@@ -1,21 +1,28 @@
+import { StatusField, ViewEntityField } from "fields"
 import React from "react"
+import { Datagrid, TextField } from "react-admin"
 
-import { Container, Theme, Typography } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
+import { Container } from "@material-ui/core"
 
-const useStyles = makeStyles<Theme>(theme => ({
-  root: {
-    paddingTop: theme.spacing(20),
-    paddingLeft: theme.spacing(10),
-  },
-}))
+import { MemberSubViewIfc } from "../interfaces"
 
-export const HistoryView: React.FC = props => {
-  const classes = useStyles()
+export const HistoryView: React.FC<MemberSubViewIfc> = ({ member }) => {
+  let normalizedReservations = {}
+  member?.reservations?.forEach(res => (normalizedReservations[res.id] = res))
+  const defaultSort = { field: "reservationNumber", order: "ASC" }
 
   return (
-    <Container maxWidth="lg" className={classes.root}>
-      <Typography variant="h1">HistoryView</Typography>
-    </Container>
+    <>
+      <Container maxWidth={false}>
+        <Datagrid ids={member.reservationsIds} data={normalizedReservations} currentSort={defaultSort}>
+          <TextField source="reservationNumber" label="Order #" />
+          <StatusField label="Order Status" />
+          <TextField source="receivedAt" label="Date Placed" />
+          <TextField source="shippedAt" label="Date Returned" />
+          <TextField source="reservationNumber" label="Items" />
+          <ViewEntityField entityPath="members" entityTab="account" source="id" label="Actions" />
+        </Datagrid>
+      </Container>
+    </>
   )
 }

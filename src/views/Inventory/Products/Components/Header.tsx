@@ -1,8 +1,7 @@
+import { Spacer, Text } from "components"
 import React from "react"
 
-import { Grid, styled as muiStyled } from "@material-ui/core"
-
-import { Spacer, Text } from "components"
+import { Grid } from "@material-ui/core"
 
 export interface HeaderProps {
   title: string

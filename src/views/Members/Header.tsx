@@ -1,8 +1,12 @@
+import { FullNameField } from "fields"
+import moment from "moment"
 import React from "react"
 
 import { Link, Theme, Typography } from "@material-ui/core"
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft"
 import { makeStyles } from "@material-ui/styles"
+
+import { MemberViewHeaderIfc } from "./interfaces"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -12,22 +16,15 @@ const useStyles = makeStyles<Theme>(theme => ({
   back: {
     verticalAlign: "bottom",
   },
-  customerName: {
+  memberName: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(1),
   },
 }))
 
-export interface HeaderProps {
-  history: any
-}
-
-export const Header: React.FunctionComponent<HeaderProps> = ({ history }) => {
+export const Header: React.FunctionComponent<MemberViewHeaderIfc> = ({ history, member }) => {
   const classes = useStyles()
-  const customer = {
-    name: "Luc Succes",
-    memberSince: "November 16, 2019",
-  }
+  const memberSince = moment(member.user.createdAt).format("MMMM D, YYYY")
 
   return (
     <div className={classes.root}>
@@ -36,10 +33,10 @@ export const Header: React.FunctionComponent<HeaderProps> = ({ history }) => {
           <KeyboardArrowLeftIcon className={classes.back} /> Members
         </Link>
       </Typography>
-      <Typography component="h1" variant="h3" className={classes.customerName}>
-        {customer.name}
+      <Typography component="h1" variant="h3" className={classes.memberName}>
+        <FullNameField record={member} />
       </Typography>
-      <Typography component="h3">Joined {customer.memberSince}</Typography>
+      <Typography component="h3">Joined {memberSince}</Typography>
     </div>
   )
 }
