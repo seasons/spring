@@ -67,3 +67,8 @@ export interface MemberViewIfc {
 export interface MemberViewHeaderIfc extends MemberSubViewIfc {
   history: History
 }
+
+export interface EditModalIfc extends MemberSubViewIfc {
+  open: boolean
+  onClose: () => void
+}

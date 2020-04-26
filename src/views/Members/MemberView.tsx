@@ -47,8 +47,6 @@ export const MemberView: React.FunctionComponent<MemberViewIfc> = ({ match, hist
   if (error || !data)
     return <Container maxWidth={false}>Opps, error fetching data. Have you tried unplugging?</Container>
 
-  console.log("\n\n data is ", data)
-
   const handleTabsChange = (event, value) => {
     history.push(value)
   }

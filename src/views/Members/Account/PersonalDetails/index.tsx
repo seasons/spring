@@ -1,16 +1,22 @@
 import { CardContent, EditButton, IndicatorMap, Label, TableHeader } from "components"
 import moment from "moment"
-import React from "react"
+import React, { useState } from "react"
 
 import { Card, Table, TableBody, TableCell, TableRow } from "@material-ui/core"
 
 import { MemberSubViewIfc } from "../../interfaces"
+import { EditModal } from "./EditModal"
 
 export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ member }) => {
+  const [openEdit, setOpenEdit] = useState(false)
   const birthday = moment(member.detail.birthday).format("MM/DD/YYYY")
 
-  const handleEditStatus = () => {
-    console.log("editing status")
+  const handleEditOpen = () => {
+    setOpenEdit(true)
+  }
+
+  const handleEditClose = () => {
+    setOpenEdit(false)
   }
 
   return (
@@ -22,7 +28,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ mem
               <TableHeader>Personal details</TableHeader>
               <TableCell></TableCell>
               <TableCell>
-                <EditButton onClick={handleEditStatus} />
+                <EditButton onClick={handleEditOpen} />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -57,6 +63,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ mem
           </TableBody>
         </Table>
       </CardContent>
+      <EditModal member={member} onClose={handleEditClose} open={openEdit} />
     </Card>
   )
 }
