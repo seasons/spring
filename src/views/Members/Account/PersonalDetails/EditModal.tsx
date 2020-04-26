@@ -1,4 +1,4 @@
-import moment from "moment"
+import { capitalize } from "lodash"
 import React, { useState } from "react"
 import styled from "styled-components"
 
@@ -15,6 +15,8 @@ import {
 } from "@material-ui/core"
 
 import { EditModalIfc } from "../../interfaces"
+
+const PHONE_PATTERN = "[0-9]{3}-[0-9]{3}-[0-9]{4}"
 
 export const Card = styled(muiCard)`
   top: 50%;
@@ -33,9 +35,9 @@ export const CardActions = styled(muiCardActions)`
   justify-content: flex-end;
 `
 
-export const EditModal: React.FunctionComponent<EditModalIfc> = ({ open, onClose, member, ...rest }) => {
+export const EditModal: React.FunctionComponent<EditModalIfc> = ({ open, onSave, onClose, editEntity }) => {
   const [values, setValues] = useState({
-    ...member,
+    ...editEntity,
   })
 
   const handleFieldChange = event => {
@@ -46,76 +48,44 @@ export const EditModal: React.FunctionComponent<EditModalIfc> = ({ open, onClose
     }))
   }
 
+  const typeMap = {
+    email: "email",
+    birthday: "date",
+    phone: "tel",
+  }
+
   if (!open) {
     return null
   }
 
-  const birthday = moment(member.detail.birthday).format("MM/DD/YYYY")
-
   return (
     <Modal onClose={onClose} open={open}>
-      <Card {...rest}>
+      <Card>
         <form>
           <CardHeader title="Edit Account Info" />
           <Divider />
           <CardContent>
             <Grid container spacing={3}>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Status"
-                  name="status"
-                  onChange={handleFieldChange}
-                  value={values.status}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Membership"
-                  name="membership"
-                  onChange={handleFieldChange}
-                  value={values.plan}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Email address"
-                  name="email"
-                  onChange={handleFieldChange}
-                  value={values.user.email}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Phone number"
-                  name="phoneNumber"
-                  onChange={handleFieldChange}
-                  value={values.detail.phoneNumber}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Birthday"
-                  name="birthday"
-                  onChange={handleFieldChange}
-                  value={birthday}
-                  variant="outlined"
-                />
-              </Grid>
+              {Object.keys(editEntity).map(key => (
+                <Grid item md={6} xs={12} key={key}>
+                  <TextField
+                    fullWidth
+                    label={capitalize(key)}
+                    name={key}
+                    type={typeMap[key] || "text"}
+                    onChange={handleFieldChange}
+                    value={values[key]}
+                    variant="outlined"
+                    inputProps={key === "phone" ? { pattern: PHONE_PATTERN } : {}}
+                  />
+                </Grid>
+              ))}
             </Grid>
           </CardContent>
           <Divider />
           <CardActions>
             <Button onClick={onClose}>Close</Button>
-            <Button color="primary" onClick={onClose} variant="contained">
+            <Button color="primary" onClick={() => onSave(values)} variant="contained">
               Save
             </Button>
           </CardActions>

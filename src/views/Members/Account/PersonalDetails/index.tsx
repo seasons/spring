@@ -19,6 +19,19 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ mem
     setOpenEdit(false)
   }
 
+  const handleEditSave = values => {
+    setOpenEdit(false)
+    console.log("totally gonna save these values:", values)
+  }
+
+  const editEntity = {
+    status: member.status,
+    plan: member.plan,
+    email: member.user.email,
+    phone: member.detail.phoneNumber,
+    birthday: moment(member.detail.birthday).format("YYYY-MM-DD"),
+  }
+
   return (
     <Card>
       <CardContent>
@@ -63,7 +76,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ mem
           </TableBody>
         </Table>
       </CardContent>
-      <EditModal member={member} onClose={handleEditClose} open={openEdit} />
+      <EditModal editEntity={editEntity} onSave={handleEditSave} onClose={handleEditClose} open={openEdit} />
     </Card>
   )
 }
