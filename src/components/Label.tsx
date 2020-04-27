@@ -25,21 +25,6 @@ const useStyles = makeStyles<Theme>(theme => ({
 export type LabelShape = "square" | "rounded"
 export type LabelVariant = "contained" | "outlined"
 
-export const IndicatorMap = {
-  Authorized: "#01b06c",
-  Active: "#01b06c",
-  Created: "#eea30e",
-  Cancelled: colors.red[500],
-  Completed: colors.green[500],
-  Deactivated: "#f85156",
-  Invited: "#c4c4c4",
-  New: colors.green[100],
-  Received: colors.blue[500],
-  Suspended: "#eea30e",
-  Paused: "#eea30e",
-  Waitlisted: "#c4c4c4",
-}
-
 export interface LabelProps {
   children: ReactNode
   className?: string
@@ -67,8 +52,7 @@ export const Label: React.FunctionComponent<LabelProps> = ({
   )
   const finalStyle = { ...style }
   if (shape === "rounded") {
-    finalStyle.borderRadius = 10
-    finalStyle.padding = 4
+    finalStyle.borderRadius = 20
   }
 
   switch (variant) {

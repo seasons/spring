@@ -1,33 +1,35 @@
-import React from "react"
-import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps, styled } from "@material-ui/core"
-import { Field } from "react-final-form"
+import React, { ReactNode } from "react"
+import { TextField as MuiTextField, styled } from "@material-ui/core"
+import { Field, ChildFieldProps } from "./Field"
 
 import { FormControl } from "components/FormControl"
 
-export type TextFieldProps = MuiTextFieldProps & {
+export type TextFieldProps = ChildFieldProps & {
   disabled?: boolean
+  helperText?: ReactNode
+  label?: ReactNode
   multiline?: boolean
-  name: string
   placeholder?: string
   rows?: number
-  value?: string
+  type?: string
 }
 
 export const TextField: React.FC<TextFieldProps> = ({
   disabled = false,
-  multiline = false,
+  helperText,
+  initialValue,
   label,
+  multiline = false,
   name,
   placeholder,
-  helperText,
   rows = 5,
   type,
-  value,
   ...rest
 }) => {
   return (
     <Field
       name={name}
+      initialValue={initialValue}
       render={({ input, meta }) => (
         <FormControl error={meta.error}>
           <StyledTextField
@@ -37,7 +39,7 @@ export const TextField: React.FC<TextFieldProps> = ({
             rows={multiline ? rows : 0}
             name={input.name}
             placeholder={placeholder}
-            value={value || input.value}
+            value={input.value}
             variant="outlined"
             onChange={input.onChange}
             type={type}

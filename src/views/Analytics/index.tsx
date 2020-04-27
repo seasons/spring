@@ -1,21 +1,17 @@
 import React from "react"
+import styled from "styled-components"
 
-import { Container, Theme, Typography } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
+import { Container, Typography } from "@material-ui/core"
 
-const useStyles = makeStyles<Theme>(theme => ({
-  root: {
-    paddingTop: theme.spacing(20),
-    paddingLeft: theme.spacing(10),
-  },
-}))
+const ContainerStyled = styled(Container)`
+  margin-top: 30vh;
+  margin-left: 15vw;
+`
 
 export const AnalyticsView: React.FC = props => {
-  const classes = useStyles()
-
   return (
-    <Container maxWidth="lg" className={classes.root}>
+    <ContainerStyled maxWidth="lg">
       <Typography variant="h1">All them fancy charts will go here!</Typography>
-    </Container>
+    </ContainerStyled>
   )
 }

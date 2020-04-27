@@ -1,17 +1,16 @@
-import clsx from "clsx"
+import { logout as logoutAction } from "actions/sessionActions"
 import { NavItem, Spacer } from "components"
 import { LogoMark } from "icons"
 import React, { useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useLocation } from "react-router"
-import { Link as RouterLink } from "react-router-dom"
 import styled from "styled-components"
+import { colors } from "theme"
 
-import { Divider, Drawer, Hidden, Link, List, Theme, Typography, Box } from "@material-ui/core"
+import { Box, Drawer, Hidden, List, Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
 import navConfig from "./navConfig"
-import { colors } from "theme"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -36,7 +35,8 @@ const useStyles = makeStyles<Theme>(theme => ({
     flexGrow: 1,
   },
   details: {
-    marginLeft: theme.spacing(2),
+    marginLeft: theme.spacing(3),
+    marginBottom: theme.spacing(5),
   },
 }))
 
@@ -47,10 +47,27 @@ const LogoText = styled(Typography)`
   font-weight: 500;
 `
 
-const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: any) => {
+const UserInfo = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: ${colors.white100};
+`
+
+const UserLogOut = styled(UserInfo)`
+  margin-top: 10px;
+  cursor: pointer;
+  &:hover {
+    color: ${colors.black50};
+  }
+`
+
+export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: any) => {
   const classes = useStyles()
   const location = useLocation()
   const session = useSelector(state => state.session)
+  const { user } = session
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -58,8 +75,13 @@ const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: any) => {
     }
   }, [location.pathname])
 
+  const signOut = () => {
+    dispatch(logoutAction())
+    window.location.href = "/login"
+  }
+
   const content = (
-    <div {...rest} className={clsx(classes.root)}>
+    <div {...rest} className={classes.root}>
       <Box display="flex" m={2} mt={4} flexDirection="horizontal">
         <LogoMark />
         <Spacer ml={2} />
@@ -75,12 +97,13 @@ const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: any) => {
           ))}
         </List>
       </nav>
-      <Divider className={classes.divider} />
+
       <div className={classes.profile}>
         <div className={classes.details}>
-          <Link component={RouterLink} to="/profile/1/timeline" variant="h5" color="textPrimary" underline="none">
-            {`${session.user.first_name} ${session.user.last_name}`}
-          </Link>
+          <UserInfo variant="h6">{`${user.firstName} ${user.lastName}`}</UserInfo>
+          <UserLogOut variant="h6" onClick={signOut}>
+            Sign out
+          </UserLogOut>
         </div>
       </div>
     </div>
@@ -99,5 +122,3 @@ const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: any) => {
     </Drawer>
   )
 }
-
-export default NavBar
