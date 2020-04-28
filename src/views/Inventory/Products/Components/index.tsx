@@ -1,5 +1,4 @@
 export { BottomNavBar } from "./BottomNavBar"
-export { Dropzone } from "./Dropzone"
 export { GeneralSection } from "./GeneralSection"
 export { Header } from "./Header"
 export { ImageInputPlaceholder } from "./ImageInputPlaceholder"

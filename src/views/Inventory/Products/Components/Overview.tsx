@@ -33,10 +33,6 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
     return null
   }
 
-  const onReceivedImageFile = imageFile => {
-    console.log("RECEIVED IMAGE:", imageFile)
-  }
-
   let sizes: any[] = []
   switch (productType) {
     case "Top":
@@ -73,7 +69,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
       <ContainerGrid container spacing={5}>
         <Header title="New product" subtitle="Please fill out all required fields" />
         <Grid item xs={4}>
-          <PhotographySection numImages={4} onReceivedImageFile={onReceivedImageFile} />
+          <PhotographySection numImages={4} />
         </Grid>
         <Grid item xs={8}>
           <GeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
