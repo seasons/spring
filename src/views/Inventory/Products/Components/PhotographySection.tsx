@@ -3,14 +3,13 @@ import React from "react"
 import { Box, GridList, GridListTile } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { Dropzone } from "."
+import { DropzoneField } from "fields"
 
 export interface PhotographySectionProps {
   numImages: number
-  onReceivedImageFile: (any) => void
 }
 
-export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImages, onReceivedImageFile }) => {
+export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImages }) => {
   return (
     <>
       <Text variant="h4">Photography</Text>
@@ -19,7 +18,7 @@ export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImage
         <GridList cellHeight={516} cols={1}>
           {[...Array(numImages)].map((_, index) => (
             <GridListTile key={index}>
-              <Dropzone onReceivedFile={onReceivedImageFile} />
+              <DropzoneField name={`image_${index}`} required />
             </GridListTile>
           ))}
         </GridList>
