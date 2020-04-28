@@ -4,10 +4,10 @@ import { Redirect } from "react-router-dom"
 import { Dashboard } from "./layouts/Dashboard"
 import {
   AnalyticsView,
-  CustomerList,
   InventoryView,
   LoginView,
   MemberCreate,
+  MemberList,
   MemberView,
   OverviewView,
   ProductCreate,
@@ -52,7 +52,7 @@ export default [
       {
         path: "/members",
         exact: true,
-        component: props => <CustomerList {...props} basePath="/customers" resource="Customer" />,
+        component: props => <MemberList {...props} basePath="/members" resource="Customer" />,
       },
       {
         path: "/members/new",

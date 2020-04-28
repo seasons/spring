@@ -1,12 +1,11 @@
 import React from "react"
 import { useQuery } from "react-apollo"
 import { useFormState } from "react-final-form"
-import * as yup from "yup"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
-import { Header } from "./Header"
 import { GET_GENERATED_VARIANT_SKUS } from "../queries"
+import { Header } from "./Header"
 import { VariantSizeSection } from "./VariantSizeSection"
 
 export interface VariantsProps {}

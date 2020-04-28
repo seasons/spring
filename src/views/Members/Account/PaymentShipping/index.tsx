@@ -1,78 +1,63 @@
-import { EditButton } from "components"
+import { CardContent, EditButton, TableHeader } from "components"
+import { FullNameField } from "fields"
 import React from "react"
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Theme,
-  Typography,
-} from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
+import { Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 
-const useStyles = makeStyles<Theme>(theme => ({
-  content: {
-    padding: 0,
-  },
-}))
+import { MemberSubViewIfc } from "../../interfaces"
 
-export const PaymentShipping: React.FC = props => {
-  const classes = useStyles()
+export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ member }) => {
+  const billing = member.billingInfo
+  const shipping = member.detail.shippingAddress
 
-  const handleEditPayment = () => {
+  const handleEdit = () => {
     console.log("editing payment")
   }
 
-  const handleEditBillingAddress = () => {
-    console.log("editing billing address")
-  }
-
-  const handleEditShippingAddress = () => {
-    console.log("editing shipping address")
-  }
-
   return (
-    <Card className={classes.root}>
-      <CardHeader title="Payment & Shipping" />
-      <Divider />
-      <CardContent className={classes.content}>
+    <Card>
+      <CardContent>
         <Table>
           <TableBody>
             <TableRow>
-              <TableCell>Payment</TableCell>
-              <TableCell>VISA ending 0909</TableCell>
+              <TableHeader>Payment & Shipping</TableHeader>
+              <TableCell></TableCell>
               <TableCell>
-                <EditButton onClick={handleEditPayment} />
+                <EditButton onClick={handleEdit} />
               </TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
+              <TableCell>Payment</TableCell>
+              <TableCell>
+                {billing.brand.toUpperCase()} ending {billing.last_digits}
+              </TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+            <TableRow>
               <TableCell>Billing address</TableCell>
               <TableCell>
-                <Typography component="p">Luc Succes,</Typography>
-                <Typography component="p">1 John St, Apt G6</Typography>
-                <Typography component="p">Brooklyn, NY</Typography>
-                <Typography component="p">11217</Typography>
+                <Typography component="p">{billing.name}</Typography>
+                <Typography component="p">{billing.street1}</Typography>
+                <Typography component="p">
+                  {billing.city}, {billing.state}
+                </Typography>
+                <Typography component="p">{billing.postal_code}</Typography>
               </TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditBillingAddress} />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Shipping address</TableCell>
               <TableCell>
-                <Typography component="p">Luc Succes,</Typography>
-                <Typography component="p">138 Mulberry St,</Typography>
-                <Typography component="p">New York, NY</Typography>
-                <Typography component="p">10013</Typography>
+                <Typography component="div">
+                  <FullNameField record={member} />
+                </Typography>
+                <Typography component="p">{shipping.address1}</Typography>
+                <Typography component="p">
+                  {shipping.city}, {shipping.state}
+                </Typography>
+                <Typography component="p">{shipping.zipCode}</Typography>
               </TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditShippingAddress} />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -1,13 +1,14 @@
+import { Spacer } from "components"
 import React, { useState } from "react"
+import { getEnumValues, getFormSelectChoices } from "utils/form"
+
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
-import { Spacer } from "components"
 import { GeneralSection } from "./GeneralSection"
 import { Header } from "./Header"
 import { MetadataSection } from "./MetadataSection"
 import { PhotographySection } from "./PhotographySection"
 import { TagsSection } from "./TagsSection"
-import { getEnumValues, getFormSelectChoices } from "utils/form"
 
 export interface OverviewProps {
   data: any

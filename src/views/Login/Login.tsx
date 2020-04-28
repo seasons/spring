@@ -1,11 +1,14 @@
-import React from "react"
-import { useHistory } from "react-router"
-import { Box, Button, styled } from "@material-ui/core"
-import { Form } from "react-final-form"
+import { login as loginAction } from "actions/sessionActions"
 import { Spacer } from "components"
 import { TextField } from "fields"
-import { useMutation } from "react-apollo"
 import gql from "graphql-tag"
+import React from "react"
+import { useMutation } from "react-apollo"
+import { Form } from "react-final-form"
+import { useDispatch, useSelector } from "react-redux"
+import { useHistory } from "react-router"
+
+import { Box, Button, styled } from "@material-ui/core"
 
 const LOG_IN = gql`
   mutation LogIn($email: String!, $password: String!) {
@@ -22,9 +25,18 @@ const LOG_IN = gql`
   }
 `
 
-export const LoginView = props => {
+export interface LoginViewProps {
+  props?: any
+}
+export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
   const history = useHistory()
   const [login] = useMutation(LOG_IN)
+  const session = useSelector(state => state.session)
+  const dispatch = useDispatch()
+
+  if (session?.token) {
+    history.push("/")
+  }
 
   const handleSubmit = async ({ email, password }) => {
     const result = await login({
@@ -39,6 +51,7 @@ export const LoginView = props => {
       } = result
 
       localStorage.setItem("userSession", JSON.stringify(userSession))
+      dispatch(loginAction(userSession))
       history.push("/")
     }
   }

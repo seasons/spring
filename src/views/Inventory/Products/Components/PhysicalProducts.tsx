@@ -1,12 +1,11 @@
 import React from "react"
 import { useFormState } from "react-final-form"
-import * as yup from "yup"
+import { getEnumValues, getFormSelectChoices } from "utils/form"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Header } from "./Header"
 import { PhysicalProductSection } from "./PhysicalProductSection"
-import { getEnumValues, getFormSelectChoices } from "utils/form"
 
 export interface PhysicalProductsProps {
   data: any

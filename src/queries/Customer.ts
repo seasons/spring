@@ -12,6 +12,52 @@ const CustomerFragment = gql`
     }
     detail {
       id
+      shippingAddress {
+        id
+        city
+        state
+      }
+    }
+    bagItems {
+      id
+    }
+    plan
+    status
+  }
+`
+
+const CustomerReservations = gql`
+  fragment customer on Customer {
+    id
+    plan
+    status
+    user {
+      id
+      email
+      firstName
+      lastName
+      createdAt
+    }
+    reservations {
+      id
+      reservationNumber
+      shipped
+      status
+      shippedAt
+      receivedAt
+    }
+    billingInfo {
+      id
+      brand
+      last_digits
+      name
+      street1
+      city
+      state
+      postal_code
+    }
+    detail {
+      id
       phoneNumber
       birthday
       height
@@ -30,22 +76,17 @@ const CustomerFragment = gql`
       commuteStyle
       shippingAddress {
         id
+        address1
         city
         state
+        zipCode
       }
-      phoneOS
-      insureShipment
     }
-    bagItems {
-      id
-    }
-    plan
-    status
   }
 `
 
 export default {
   [GET_LIST]: CustomerFragment,
-  [GET_ONE]: CustomerFragment,
+  [GET_ONE]: CustomerReservations,
   [CREATE]: CustomerFragment,
 }
