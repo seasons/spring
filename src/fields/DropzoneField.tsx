@@ -38,7 +38,7 @@ export const DropzoneField: React.FC<DropzoneFieldProps> = ({ name, ...rest }) =
                   if (inputProps.onChange) {
                     inputProps.onChange(event)
                   }
-                  onChange(event.target.files)
+                  onChange(event.target.files?.[0])
                 }}
               />
               {imagePreview ? (
