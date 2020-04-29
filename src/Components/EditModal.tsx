@@ -80,7 +80,7 @@ export const EditModal: React.FunctionComponent<EditModalIfc> = ({ title, open, 
           <CardContent>
             <Grid container spacing={3}>
               {Object.keys(editEntity)
-                .filter(key => key != "id")
+                .filter(key => key !== "id")
                 .map(key => {
                   if (values[key].options) {
                     return (

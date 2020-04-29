@@ -55,8 +55,8 @@ const errorLink = onError(({ networkError, operation, forward }) => {
   if (networkError) {
     // User access token has expired
     console.log("networkError", networkError)
-    localStorage.removeItem("userSession")
-    window.location.href = "/login"
+    // localStorage.removeItem("userSession")
+    // window.location.href = "/login"
   }
 })
 

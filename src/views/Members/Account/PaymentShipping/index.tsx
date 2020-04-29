@@ -1,5 +1,4 @@
 import { CardContent, EditButton, EditModal, TableHeader } from "components"
-import { FullNameField } from "fields"
 import React, { useState } from "react"
 
 import { Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
