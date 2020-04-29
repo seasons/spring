@@ -1,13 +1,48 @@
 import get from "lodash/get"
 import React from "react"
+import styled from "styled-components"
 
-export const ImagesField = ({ record = {}, source }) => {
-  const images = record[source] || []
+interface imagesFieldIfc {
+  record?: object
+  source: string
+  label?: string
+}
+
+interface imageObject {
+  id: string
+  filename: string
+}
+
+const Image = styled.img`
+  margin-right: 5px;
+`
+
+export const ImagesField: React.FC<imagesFieldIfc> = ({ record, source, label }) => {
+  const images: Array<imageObject> = get(record, source, [{ id: "", filename: "" }])
   return (
     <div>
       {images.map(image => {
         const { url, width, height } = get(image, "thumbnails.small", { url: "", width: 0, height: 0 })
-        return <img key={image.id} src={url} width={width} height={height} alt={image.filename} />
+        return <Image key={image.id} src={url} width={width} height={height} alt={image.filename} />
+      })}
+    </div>
+  )
+}
+
+export const ProductItemsField: React.FC<imagesFieldIfc> = ({ record, source, label }) => {
+  let images: Array<imageObject> = []
+  let products: Array<Object> = get(record, "products", [])
+
+  products.map(product => {
+    const productImages: imageObject = get(product, source, [{ id: "", filename: "" }])[0]
+    images.push(productImages)
+  })
+
+  return (
+    <div>
+      {images.map(image => {
+        const { url } = get(image, "thumbnails.large", { url: "", width: 0, height: 0 })
+        return <Image key={image.id} src={url} width={85} height={107} alt={image.filename} />
       })}
     </div>
   )

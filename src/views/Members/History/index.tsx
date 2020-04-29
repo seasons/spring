@@ -1,4 +1,4 @@
-import { StatusField, ViewEntityField } from "fields"
+import { ProductItemsField, StatusField, ViewEntityField } from "fields"
 import React from "react"
 import { Datagrid, TextField } from "react-admin"
 
@@ -19,7 +19,7 @@ export const HistoryView: React.FC<MemberSubViewIfc> = ({ member }) => {
           <StatusField label="Order Status" />
           <TextField source="receivedAt" label="Date Placed" />
           <TextField source="shippedAt" label="Date Returned" />
-          <TextField source="reservationNumber" label="Items" />
+          <ProductItemsField source="productVariant.product.images" label="Items" />
           <ViewEntityField entityPath="members" entityTab="account" source="id" label="Actions" />
         </Datagrid>
       </Container>

@@ -45,6 +45,16 @@ const CustomerDetails = gql`
       status
       shippedAt
       receivedAt
+      products {
+        id
+        productVariant {
+          id
+          product {
+            id
+            images
+          }
+        }
+      }
     }
     billingInfo {
       id
