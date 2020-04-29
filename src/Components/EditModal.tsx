@@ -1,6 +1,7 @@
 import { capitalize } from "lodash"
 import React, { useState } from "react"
 import styled from "styled-components"
+import { EditModalIfc } from "views/Members/interfaces"
 
 import {
   Button,
@@ -16,9 +17,8 @@ import {
   Modal,
   Select as muiSelect,
   TextField,
+  Typography,
 } from "@material-ui/core"
-
-import { EditModalIfc } from "../../interfaces"
 
 const PHONE_PATTERN = "[0-9]{3}-[0-9]{3}-[0-9]{4}"
 
@@ -43,10 +43,12 @@ export const Select = styled(muiSelect)`
   margin-top: 5px;
 `
 
-export const EditModal: React.FunctionComponent<EditModalIfc> = ({ open, onSave, onClose, editEntity }) => {
+export const EditModal: React.FunctionComponent<EditModalIfc> = ({ title, open, onSave, onClose, editEntity }) => {
   const [values, setValues] = useState({
     ...editEntity,
   })
+
+  const editTitle = `Edit ${title}`
 
   const handleFieldChange = event => {
     const key = event.target.name
@@ -73,7 +75,7 @@ export const EditModal: React.FunctionComponent<EditModalIfc> = ({ open, onSave,
     <Modal onClose={onClose} open={open}>
       <Card>
         <form>
-          <CardHeader title="Edit Account Info" />
+          <CardHeader title={editTitle} />
           <Divider />
           <CardContent>
             <Grid container spacing={3}>
@@ -97,11 +99,19 @@ export const EditModal: React.FunctionComponent<EditModalIfc> = ({ open, onSave,
                     )
                   }
 
+                  if (key.includes("Divider")) {
+                    return (
+                      <Grid item md={12} xs={12} key={key}>
+                        <Typography variant="h5">{values[key].label}</Typography>
+                      </Grid>
+                    )
+                  }
+
                   return (
                     <Grid item md={6} xs={12} key={key}>
                       <TextField
                         fullWidth
-                        label={capitalize(key)}
+                        label={values[key].label || capitalize(key)}
                         name={key}
                         type={typeMap[key] || "text"}
                         onChange={handleFieldChange}

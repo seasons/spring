@@ -1,4 +1,4 @@
-import { CardContent, EditButton, IndicatorMap, Label, TableHeader } from "components"
+import { CardContent, EditButton, EditModal, IndicatorMap, Label, TableHeader } from "components"
 import moment from "moment"
 import React, { useState } from "react"
 
@@ -6,7 +6,6 @@ import { useMutation } from "@apollo/react-hooks"
 import { Card, Table, TableBody, TableCell, TableRow } from "@material-ui/core"
 
 import { MemberSubViewIfc } from "../../interfaces"
-import { EditModal } from "./EditModal"
 import { CUSTOMER_DETAIL_UPDATE } from "./mutations"
 
 export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ member }) => {
@@ -111,7 +110,13 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ mem
           </TableBody>
         </Table>
       </CardContent>
-      <EditModal editEntity={editEntity} onSave={handleEditSave} onClose={handleEditClose} open={openEdit} />
+      <EditModal
+        title="Personal Details"
+        editEntity={editEntity}
+        onSave={handleEditSave}
+        onClose={handleEditClose}
+        open={openEdit}
+      />
     </Card>
   )
 }

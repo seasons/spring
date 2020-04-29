@@ -50,6 +50,8 @@ const CustomerDetails = gql`
       id
       brand
       last_digits
+      expiration_month
+      expiration_year
       name
       street1
       city
@@ -76,6 +78,7 @@ const CustomerDetails = gql`
       commuteStyle
       shippingAddress {
         id
+        name
         address1
         city
         state

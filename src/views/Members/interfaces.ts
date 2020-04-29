@@ -4,6 +4,8 @@ interface billingInfo {
   id: string
   brand: string
   last_digits: string
+  expiration_month: string
+  expiration_year: string
   name: string
   street1: string
   city: string
@@ -13,6 +15,7 @@ interface billingInfo {
 
 interface shippingAddress {
   id: string
+  name: string
   address1: string
   city: string
   state: string
@@ -73,6 +76,7 @@ export interface MemberViewHeaderIfc extends MemberSubViewIfc {
 }
 
 export interface EditModalIfc {
+  title: string
   editEntity: editEntity
   open: boolean
   onClose: () => void
