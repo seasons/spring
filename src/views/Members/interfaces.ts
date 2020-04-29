@@ -69,7 +69,7 @@ export interface MemberViewHeaderIfc extends MemberSubViewIfc {
 }
 
 export interface EditModalIfc {
-  editEntity: object
+  editEntity: { id: string }
   open: boolean
   onClose: () => void
   onSave(values: {}): void

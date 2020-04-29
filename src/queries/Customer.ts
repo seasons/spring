@@ -1,5 +1,5 @@
 import gql from "graphql-tag"
-import { CREATE, GET_LIST, GET_ONE } from "react-admin"
+import { GET_LIST, GET_ONE } from "react-admin"
 
 const CustomerFragment = gql`
   fragment customer on Customer {
@@ -26,7 +26,7 @@ const CustomerFragment = gql`
   }
 `
 
-const CustomerReservations = gql`
+const CustomerDetails = gql`
   fragment customer on Customer {
     id
     plan
@@ -87,6 +87,5 @@ const CustomerReservations = gql`
 
 export default {
   [GET_LIST]: CustomerFragment,
-  [GET_ONE]: CustomerReservations,
-  [CREATE]: CustomerFragment,
+  [GET_ONE]: CustomerDetails,
 }
