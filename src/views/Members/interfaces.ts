@@ -27,6 +27,10 @@ interface user {
   createdAt: string
 }
 
+interface editEntity {
+  id: object
+}
+
 export interface MemberSubViewIfc {
   member: {
     id: string
@@ -69,7 +73,7 @@ export interface MemberViewHeaderIfc extends MemberSubViewIfc {
 }
 
 export interface EditModalIfc {
-  editEntity: { id: string }
+  editEntity: editEntity
   open: boolean
   onClose: () => void
   onSave(values: {}): void

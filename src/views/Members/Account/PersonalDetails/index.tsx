@@ -22,7 +22,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ mem
     setOpenEdit(false)
   }
 
-  const statusValues = [
+  const statusOptions = [
     "Invited",
     "Created",
     "Waitlisted",
@@ -33,6 +33,8 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ mem
     "Deactivated",
   ]
 
+  const planOptions = ["AllAccess", "Essential"]
+
   const handleEditSave = values => {
     setOpenEdit(false)
     console.log("totally gonna save these values:", values)
@@ -40,12 +42,29 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ mem
   }
 
   const editEntity = {
-    id: member.id,
-    status: member.status,
-    plan: member.plan,
-    email: member.user.email,
-    phone: member.detail.phoneNumber,
-    birthday: moment(member.detail.birthday).format("YYYY-MM-DD"),
+    id: {
+      value: member.id,
+    },
+    status: {
+      value: member.status,
+      options: statusOptions,
+    },
+    plan: {
+      value: member.plan,
+      options: planOptions,
+    },
+    email: {
+      value: member.user.email,
+      disabled: true,
+    },
+    phone: {
+      value: member.detail.phoneNumber,
+      disabled: true,
+    },
+    birthday: {
+      value: moment(member.detail.birthday).format("YYYY-MM-DD"),
+      disabled: true,
+    },
   }
 
   return (
