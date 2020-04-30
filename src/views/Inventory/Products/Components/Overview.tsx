@@ -73,7 +73,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           <PhotographySection numImages={4} />
         </Grid>
         <Grid item xs={8}>
-          <GeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
+          <GeneralSection brands={sortedBrands} productType={productType} sizes={sizes} statuses={statuses} />
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}
