@@ -8,8 +8,8 @@ interface MemberFieldProps {
 }
 
 export const MemberField: React.FC<MemberFieldProps> = ({ label, record }) => {
-  const firstName = record?.user?.firstName
-  const lastName = record?.user?.lastName
+  const firstName = record?.customer?.user?.firstName
+  const lastName = record?.customer?.user?.lastName
   const customerId = record?.customer?.id
 
   return (

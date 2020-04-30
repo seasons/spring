@@ -1,8 +1,5 @@
 import React from "react"
 import { Datagrid, DatagridBody, Filter, List, TextField } from "react-admin"
-import { GET_LIST } from "react-admin"
-import gql from "graphql-tag"
-import queries from "queries/Reservation"
 import TableCell from "@material-ui/core/TableCell"
 import TableRow from "@material-ui/core/TableRow"
 import Checkbox from "@material-ui/core/Checkbox"
@@ -10,15 +7,6 @@ import { StatusField, SinceDateField, MemberField, ViewEntityField } from "field
 import { Box, Container, Chip } from "@material-ui/core"
 import { colors } from "theme"
 import { Header } from "components/Header"
-
-const GetReservations = gql`
-  query GetReservations {
-    reservations(first: 10) {
-      ...reservation
-    }
-  }
-  ${queries[GET_LIST]}
-`
 
 const MyDatagridRow: React.FC<any> = ({ record, resource, id, onToggleItem, children, selected, basePath }) => (
   <TableRow key={id}>
@@ -58,7 +46,6 @@ const ImagesField = ({ label, record = {}, source }) => {
     <Box display="flex" flexDirection="row">
       {images.map(image => {
         const { url } = image
-        // const resizedImage =
         return (
           <Box width={80} height={100} mr={1} bgcolor={colors.black04}>
             <img key={image.id} width={80} src={url} alt={image.url} />
@@ -69,7 +56,7 @@ const ImagesField = ({ label, record = {}, source }) => {
   )
 }
 
-export const ReservationsList = props => {
+export const ReservationList = props => {
   return (
     <Container maxWidth={false}>
       <Header title="Reservations" />
