@@ -1,17 +1,24 @@
-import { CardContent, EditButton, EditModal, IndicatorMap, Label, TableHeader } from "components"
+import { updateCustomer as updateCustomerAction } from "actions/customerActions"
+import { CardContent, ComponentError, EditButton, EditModal, IndicatorMap, Label, TableHeader } from "components"
 import moment from "moment"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { MembershipPlanOptions, MemberStatusOptions } from "utils/constants"
 
 import { useMutation } from "@apollo/react-hooks"
 import { Card, Table, TableBody, TableCell, TableRow } from "@material-ui/core"
 
 import { MemberSubViewIfc } from "../../interfaces"
-import { CUSTOMER_DETAIL_UPDATE } from "./mutations"
+import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
 
-export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ member }) => {
+export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ adminKey }) => {
+  const adminStoreKey = adminKey || ""
+  const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
+
   const [openEdit, setOpenEdit] = useState(false)
-  const birthday = moment(member.detail.birthday).format("MM/DD/YYYY")
-  const [updateDetails, { data }] = useMutation(CUSTOMER_DETAIL_UPDATE)
+  const [member, updateMember] = useState(memberFromStore)
+  const [updateDetails] = useMutation(CUSTOMER_DETAIL_UPDATE)
+  const dispatch = useDispatch()
 
   const handleEditOpen = () => {
     setOpenEdit(true)
@@ -21,24 +28,41 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ mem
     setOpenEdit(false)
   }
 
-  const statusOptions = [
-    "Invited",
-    "Created",
-    "Waitlisted",
-    "Authorized",
-    "Active",
-    "Suspended",
-    "Paused",
-    "Deactivated",
-  ]
-
-  const planOptions = ["AllAccess", "Essential"]
-
   const handleEditSave = values => {
     setOpenEdit(false)
-    console.log("totally gonna save these values:", values)
-    // updateDetails({ variables: { details: { id: values.id }, status: "Suspended" } })
+
+    const customer = {
+      status: values.status.value,
+      plan: values.plan.value,
+    }
+
+    updateDetails({
+      variables: {
+        id: values.id.value,
+        data: customer,
+      },
+    })
+      .then(() => {
+        // (1) update state so card reflects latest data optimistically
+        updateMember({
+          ...member,
+          status: customer.status,
+          plan: customer.plan,
+        })
+      })
+      .catch(error => {
+        return <ComponentError />
+      })
   }
+
+  // (2) update Redux store optimistically to
+  // --- (a) avoid refetching from server and
+  // --- (b) ensure latest data shows up when navigating back to this tab
+  useEffect(() => {
+    dispatch(updateCustomerAction(member))
+  }, [member])
+
+  const birthday = moment(member.detail.birthday).format("MM/DD/YYYY")
 
   const editEntity = {
     id: {
@@ -46,11 +70,11 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ mem
     },
     status: {
       value: member.status,
-      options: statusOptions,
+      options: MemberStatusOptions,
     },
     plan: {
       value: member.plan,
-      options: planOptions,
+      options: MembershipPlanOptions,
     },
     email: {
       value: member.user.email,

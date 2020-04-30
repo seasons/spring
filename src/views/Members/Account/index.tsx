@@ -15,17 +15,17 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-export const AccountView: React.FunctionComponent<MemberSubViewIfc> = ({ member }) => {
+export const AccountView: React.FunctionComponent<MemberSubViewIfc> = ({ member, adminKey }) => {
   const classes = useStyles()
 
   return (
     <>
       <Grid className={classes.root} container spacing={3}>
         <Grid item lg={6} md={6} xl={6} xs={12}>
-          <PersonalDetails member={member} />
+          <PersonalDetails adminKey={adminKey} member={member} />
         </Grid>
         <Grid item lg={6} md={6} xl={6} xs={12}>
-          <PaymentShipping member={member} />
+          <PaymentShipping adminKey={adminKey} member={member} />
         </Grid>
         <Grid item lg={12} md={12} xl={12} xs={12}>
           <Typography component="h1" variant="h3">

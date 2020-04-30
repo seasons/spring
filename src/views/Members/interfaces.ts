@@ -35,6 +35,7 @@ interface editEntity {
 }
 
 export interface MemberSubViewIfc {
+  adminKey?: string
   member: {
     id: string
     status: string
