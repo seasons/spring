@@ -8,6 +8,8 @@ export interface ChildFieldProps {
   initialValue?: string
   multiple?: boolean
 
+  required?: boolean
+
   requiredStringArray?: boolean
   requiredString?: boolean
   maxLength?: number
@@ -29,6 +31,7 @@ export const Field: React.FC<FieldProps> = ({
   name,
   initialValue,
   render,
+  required,
   requiredStringArray,
   requiredString,
   maxLength,
@@ -42,6 +45,9 @@ export const Field: React.FC<FieldProps> = ({
 }) => {
   const validateField = async value => {
     let schema
+    if (required) {
+      schema = yup.mixed().required("Required")
+    }
     if (requiredStringArray) {
       schema = yup
         .array()

@@ -13,7 +13,7 @@ export const getTypeSpecificVariantFields = productType => {
       fields = ["Shoulder", "Chest", "Length", "Sleeve", "Neck"]
       break
     case "Bottom":
-      fields = ["Value", "Waist", "Rise", "Hem", "Inseam"]
+      fields = ["Waist", "Rise", "Hem", "Inseam"]
       break
   }
   return fields
