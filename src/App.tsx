@@ -4,6 +4,7 @@ import { ApolloLink } from "apollo-link"
 import { setContext } from "apollo-link-context"
 import { onError } from "apollo-link-error"
 import { HttpLink } from "apollo-link-http"
+import { createUploadLink } from "apollo-upload-client"
 import { AppLoader } from "components"
 import { createBrowserHistory } from "history"
 import get from "lodash/get"
@@ -26,10 +27,12 @@ import routes from "./routes"
 import configureStore from "./store/adminStore"
 import { theme } from "./theme/theme"
 
-const link = new HttpLink({
-  uri: "http://localhost:4000",
-  // uri: "https://monsoon-staging.seasons.nyc",
-})
+const URI = "http://localhost:4000"
+// const URI = "https://monsoon-staging.seasons.nyc"
+
+const link = new HttpLink({ uri: URI })
+
+const uploadLink = createUploadLink({ uri: URI })
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -62,7 +65,7 @@ const errorLink = onError(({ networkError, operation, forward }) => {
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: ApolloLink.from([authLink, errorLink, link]),
+  link: ApolloLink.from([authLink, errorLink, uploadLink, link]),
 })
 
 // Override some queries with our own queries

@@ -25,12 +25,6 @@ export const PRODUCT_CREATE_QUERY = gql`
       name
     }
 
-    materials: __type(name: "Material") {
-      enumValues {
-        name
-      }
-    }
-
     physicalProductStatuses: __type(name: "PhysicalProductStatus") {
       enumValues {
         name

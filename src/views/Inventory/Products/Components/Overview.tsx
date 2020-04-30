@@ -22,7 +22,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
     !data?.brands ||
     !data?.categories ||
     !data?.colors ||
-    !data?.materials ||
+    // !data?.materials ||
     !data?.products ||
     !data?.productArchitectures ||
     !data?.productFunctions ||
@@ -45,11 +45,12 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
       break
   }
 
-  const materials = getEnumValues(data.materials)
+  const materials = ["Cotton"]
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
   const productFunctions = data.productFunctions.map(productFunction => productFunction.name)
-  const tags: string[] = Array.from(new Set(data.products.map(product => product.tags.set).flat()))
+  // const tags: string[] = Array.from(new Set(data.products.map(product => product.tags.set).flat()))
+  const tags = []
   const statuses = [
     {
       value: "Available",

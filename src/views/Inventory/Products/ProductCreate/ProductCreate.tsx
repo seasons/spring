@@ -1,10 +1,11 @@
 import { Box } from "@material-ui/core"
 import React from "react"
-import { useQuery } from "react-apollo"
+import { useQuery, useMutation } from "react-apollo"
 
 import { Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { PRODUCT_CREATE_QUERY } from "../queries"
+import { UPLOAD_FILE } from "../mutations"
 
 export interface ProductCreateProps {
   history: any
@@ -14,6 +15,7 @@ export interface ProductCreateProps {
 
 export const ProductCreate = props => {
   const { data, loading } = useQuery(PRODUCT_CREATE_QUERY)
+  const [uploadFile] = useMutation(UPLOAD_FILE)
 
   if (
     loading ||
@@ -21,7 +23,7 @@ export const ProductCreate = props => {
     !data?.brands ||
     !data?.categories ||
     !data?.colors ||
-    !data?.materials ||
+    // !data?.materials ||
     !data?.physicalProductStatuses ||
     !data?.products ||
     !data?.productArchitectures ||
@@ -30,11 +32,18 @@ export const ProductCreate = props => {
     !data?.productTypes ||
     !data?.topSizes
   ) {
+    // console.log("DATA:", data)
     return <div>Loading</div>
   }
 
-  const onSubmit = values => {
+  const onSubmit = async values => {
     console.log("SUBMITTED VALUES FINAL:", values)
+    const imageFile = values["image_0"]
+    // await uploadFile({
+    //   variables: {
+    //     files: [imageFile]
+    //   }
+    // })
   }
 
   const initialValues = {
