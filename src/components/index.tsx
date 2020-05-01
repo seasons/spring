@@ -1,4 +1,3 @@
-export { AppLoader } from "./AppLoader"
 export { CardContent } from "./CardContent"
 export { EditButton } from "./EditButton"
 export { FormControl } from "./FormControl"

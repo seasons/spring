@@ -73,7 +73,7 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
     if (openMobile && onMobileClose) {
       onMobileClose()
     }
-  }, [location.pathname])
+  }, [location.pathname, openMobile, onMobileClose])
 
   const signOut = () => {
     dispatch(logoutAction())

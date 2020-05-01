@@ -1,4 +1,3 @@
-import { AppLoader } from "components"
 import { createBrowserHistory } from "history"
 import get from "lodash/get"
 import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"

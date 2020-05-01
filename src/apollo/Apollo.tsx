@@ -32,14 +32,14 @@ const authLink = setContext(async (_, { headers }) => {
 
 const errorLink = onError(err => {
   console.error(err)
-  //   if (networkError) {
-  //     console.log("networkError", networkError)
-  //     localStorage.removeItem("userSession")
-  //     window.location.href = "/login"
-  //     // User access token has expired
-  //     // if (networkError. === 401) {
-  //     // }
-  //   }
+  // TODO: we need to implement token refreshing here
+  // see https://github.com/seasons/harvest/blob/master/src/Apollo/index.ts#L47-L76
+  const { networkError } = err
+  if (networkError) {
+    console.log("networkError", networkError)
+    localStorage.removeItem("userSession")
+    window.location.href = "/login"
+  }
 })
 
 export const client = new ApolloClient({
