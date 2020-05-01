@@ -62,7 +62,6 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
         .sort()
     )
   )
-  // const tags = []
   const statuses = [
     {
       value: "Available",
@@ -73,9 +72,6 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
       display: "Not available",
     },
   ]
-  const sortedBrands = [...data.brands].sort((brandA, brandB) => {
-    return brandA.name < brandB.name ? -1 : brandA.name === brandB.name ? 0 : 1
-  })
 
   return (
     <Box mx={5}>
@@ -85,7 +81,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           <PhotographySection numImages={4} />
         </Grid>
         <Grid item xs={8}>
-          <GeneralSection brands={sortedBrands} productType={productType} sizes={sizes} statuses={statuses} />
+          <GeneralSection brands={data.brands} productType={productType} sizes={sizes} statuses={statuses} />
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}

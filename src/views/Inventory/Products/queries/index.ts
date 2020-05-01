@@ -6,7 +6,7 @@ export const PRODUCT_CREATE_QUERY = gql`
       value
     }
 
-    brands {
+    brands(orderBy: name_ASC) {
       id
       brandCode
       name
@@ -18,7 +18,7 @@ export const PRODUCT_CREATE_QUERY = gql`
       name
     }
 
-    colors {
+    colors(orderBy: name_ASC) {
       id
       colorCode
       hexCode
