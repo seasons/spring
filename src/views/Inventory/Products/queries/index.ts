@@ -32,6 +32,8 @@ export const PRODUCT_CREATE_QUERY = gql`
     }
 
     products {
+      innerMaterials
+      outerMaterials
       tags
     }
 

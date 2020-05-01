@@ -23,7 +23,6 @@ export const ProductCreate = props => {
     !data?.brands ||
     !data?.categories ||
     !data?.colors ||
-    // !data?.materials ||
     !data?.physicalProductStatuses ||
     !data?.products ||
     !data?.productArchitectures ||
