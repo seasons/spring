@@ -53,10 +53,6 @@ class App extends React.Component {
   render() {
     const { dataProvider } = this.state
 
-    if (!dataProvider) {
-      return <AppLoader />
-    }
-
     const store = configureStore({
       authProvider: () => Promise.resolve(),
       dataProvider,
