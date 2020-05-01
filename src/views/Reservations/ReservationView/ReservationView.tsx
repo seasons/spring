@@ -1,13 +1,12 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { Loading, useQuery } from "react-admin"
-import { Container, Box, Typography, Grid, Button } from "@material-ui/core"
-import { colors } from "theme"
+import { Container, Box, Typography, Grid } from "@material-ui/core"
 import { Header } from "./Header"
 import { ReservationInfo } from "./ReservationInfo"
 import { ProductCard } from "./ProductCard"
 import ViewModuleIcon from "@material-ui/icons/ViewModule"
 import ListIcon from "@material-ui/icons/List"
-import { ToggleButtonGroup, ToggleButton, Pagination } from "@material-ui/lab"
+import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab"
 
 export const ReservationView = ({ match, history, props }) => {
   const { id } = match.params
@@ -24,10 +23,11 @@ export const ReservationView = ({ match, history, props }) => {
   }
 
   if (loading) {
-    return null
+    return <Loading />
   }
 
   if (error) {
+    console.error("Loading: ", loading, error)
     return (
       <Box>
         <Typography>{error.message}</Typography>

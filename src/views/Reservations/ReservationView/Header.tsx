@@ -1,6 +1,6 @@
 import React from "react"
 import { Link as RouterLink } from "react-router-dom"
-import { Box, Breadcrumbs, Grid, Link, Typography } from "@material-ui/core"
+import { Box, Breadcrumbs, Link, Typography } from "@material-ui/core"
 import NavigateNextIcon from "@material-ui/icons/NavigateNext"
 
 export const Header = ({ reservation, ...rest }) => {
