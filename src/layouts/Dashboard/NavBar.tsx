@@ -7,7 +7,7 @@ import { useLocation } from "react-router"
 import styled from "styled-components"
 import { colors } from "theme"
 
-import { Box, Drawer, Hidden, List, Theme, Typography } from "@material-ui/core"
+import { Box, Drawer, List, Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
 import navConfig from "./navConfig"

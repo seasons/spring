@@ -3,7 +3,6 @@ import gql from "graphql-tag"
 
 import Brand from "./Brand"
 import Product from "./Product"
-import Order from "./Order"
 import Reservation from "./Reservation"
 import User from "./User"
 import Customer from "./Customer"
@@ -13,7 +12,6 @@ import Size from "./Size"
 
 export default {
   Product,
-  Order,
   Brand,
   Reservation,
   User,
