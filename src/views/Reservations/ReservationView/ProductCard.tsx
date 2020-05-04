@@ -9,10 +9,11 @@ import CardActions from "@material-ui/core/CardActions"
 import Collapse from "@material-ui/core/Collapse"
 import IconButton from "@material-ui/core/IconButton"
 import Typography from "@material-ui/core/Typography"
+import ColorIcon from "@material-ui/icons/Brightness1"
 import { red } from "@material-ui/core/colors"
-import ShareIcon from "@material-ui/icons/Share"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
+import { Table, TableCell, TableRow, Chip, Divider } from "@material-ui/core"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,6 +47,7 @@ export const ProductCard = props => {
   const { product } = physicalProduct?.productVariant
   const { name, brand } = product
   const image = product.resizedImages?.[0]
+  const color = product.color
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -63,15 +65,22 @@ export const ProductCard = props => {
         subheader={brand.name}
       />
       <CardMedia className={classes.media} image={image.url} title="Paella dish" />
-      <CardContent>
-        <Typography variant="subtitle1" color="textSecondary" component="p">
-          {physicalProduct.seasonsUID}
-        </Typography>
-      </CardContent>
+      <Divider />
+      <Table>
+        <TableRow>
+          <TableCell>Inventory Status</TableCell>
+          <TableCell align="right">
+            <Chip label={physicalProduct.inventoryStatus} />
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>Location Type</TableCell>
+          <TableCell align="right">
+            <Chip label="Slick Rail" color="secondary" />
+          </TableCell>
+        </TableRow>
+      </Table>
       <CardActions disableSpacing>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -84,10 +93,25 @@ export const ProductCard = props => {
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Product description:</Typography>
-          <Typography paragraph>{product.description}</Typography>
-        </CardContent>
+        <Divider />
+        <Table>
+          <TableRow>
+            <TableCell>SUID</TableCell>
+            <TableCell align="right">
+              <Typography variant="body1" color="textSecondary">
+                {physicalProduct.seasonsUID}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          {color && (
+            <TableRow>
+              <TableCell>Color</TableCell>
+              <TableCell align="right">
+                <Chip icon={<ColorIcon style={{ color: color.hexCode }} />} label={color.name} variant="outlined" />
+              </TableCell>
+            </TableRow>
+          )}
+        </Table>
       </Collapse>
     </Card>
   )

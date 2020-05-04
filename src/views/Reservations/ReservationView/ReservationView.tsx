@@ -38,13 +38,9 @@ export const ReservationView = ({ match, history, props }) => {
   return (
     <Container maxWidth={false}>
       <Header reservation={data} />
-      <Box mt={2}>
+      <Box mt={2} mb={2}>
         <Box my={2}>
-          <Grid container spacing={3}>
-            <Grid item md={6} xl={3} xs={12}>
-              <ReservationInfo reservation={data} />
-            </Grid>
-          </Grid>
+          <ReservationInfo reservation={data} />
         </Box>
         <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" mb={2}>
           <Typography variant="h3">Items</Typography>
@@ -59,7 +55,7 @@ export const ReservationView = ({ match, history, props }) => {
             </ToggleButtonGroup>
           </Box>
         </Box>
-        <Grid container>
+        <Grid container spacing={2}>
           {data.products.map(product => (
             <Grid item md={mode === "grid" ? 4 : 12} sm={mode === "grid" ? 4 : 12} xs={12}>
               <ProductCard product={product} />

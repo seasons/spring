@@ -40,15 +40,38 @@ const SourceFilter = props => (
   </Filter>
 )
 
-const ImagesField = ({ label, record = {}, source }) => {
+type ImageSize = "small" | "medium" | "large"
+
+interface ImagesFieldProps {
+  label?: String
+  record?: any
+  source: any
+  size?: ImageSize
+}
+
+const ImagesField = ({ label, record = {}, source, size = "medium" }: ImagesFieldProps) => {
+  const sizes = {
+    small: {
+      width: 30,
+      height: 37.5,
+    },
+    medium: {
+      width: 50,
+      height: 62.5,
+    },
+    large: {
+      width: 80,
+      height: 100,
+    },
+  }
   const images = record[source] || []
   return (
     <Box display="flex" flexDirection="row">
       {images.map(image => {
         const { url } = image
         return (
-          <Box width={80} height={100} mr={1} bgcolor={colors.black04}>
-            <img key={image.id} width={80} src={url} alt={image.url} />
+          <Box {...sizes[size]} mr={1} bgcolor={colors.black04}>
+            <img key={image.id} {...sizes[size]} src={url} alt={image.url} />
           </Box>
         )
       })}

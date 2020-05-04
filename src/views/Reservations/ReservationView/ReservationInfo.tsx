@@ -14,6 +14,7 @@ import {
   TableRow,
   TextField,
   Box,
+  Grid,
 } from "@material-ui/core"
 import ReceiptIcon from "@material-ui/icons/ReceiptOutlined"
 
@@ -47,67 +48,77 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
   const { address1, address2, city, state } = address
 
   return (
-    <Card {...rest}>
-      <CardHeader title="Reservation info" />
-      <Divider />
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TableCell>Customer</TableCell>
-            <TableCell>
-              <Link component={RouterLink} to="/app/management/customers/1">
-                {name}
-              </Link>
-              <div>{address1}</div>
-              <div>{address2}</div>
-              <div>{city}</div>
-              <div>{state}</div>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>#{reservationNumber}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Created At</TableCell>
-            <TableCell>{DateTime.fromISO(reservation.createdAt).toFormat("DD/MM/yyyy HH:MM")}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Ref</TableCell>
-            <TableCell>{reservation.ref}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Status</TableCell>
-            <TableCell>
-              <TextField
-                fullWidth
-                name="option"
-                onChange={handleChange}
-                select
-                SelectProps={{ native: true }}
-                value={status}
-                variant="outlined"
-              >
-                {statusOptions.map(option => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </TextField>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Amount</TableCell>
-            <TableCell>$12.00</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      <CardActions>
-        <Button>
-          <ReceiptIcon />
-          <Box ml={1}>Resend invoice</Box>
-        </Button>
-      </CardActions>
-    </Card>
+    <Grid container spacing={3}>
+      <Grid item md={6} xl={3} xs={12}>
+        <Card {...rest}>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>Customer</TableCell>
+                <TableCell>
+                  <Link component={RouterLink} to="/app/management/customers/1">
+                    {name}
+                  </Link>
+                  <div>{address1}</div>
+                  <div>{address2}</div>
+                  <div>{city}</div>
+                  <div>{state}</div>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>#{reservationNumber}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Created At</TableCell>
+                <TableCell>{DateTime.fromISO(reservation.createdAt).toFormat("DD/MM/yyyy HH:MM")}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Card>
+      </Grid>
+      <Grid item md={6} xl={3} xs={12}>
+        <Card {...rest}>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>Ref</TableCell>
+                <TableCell>{reservation.ref}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Status</TableCell>
+                <TableCell>
+                  <TextField
+                    fullWidth
+                    name="option"
+                    onChange={handleChange}
+                    select
+                    SelectProps={{ native: true }}
+                    value={status}
+                    variant="outlined"
+                  >
+                    {statusOptions.map(option => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </TextField>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Amount</TableCell>
+                <TableCell>$12.00</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <CardActions>
+            <Button>
+              <ReceiptIcon />
+              <Box ml={1}>Process Return</Box>
+            </Button>
+          </CardActions>
+        </Card>
+      </Grid>
+    </Grid>
   )
 }
