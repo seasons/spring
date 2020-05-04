@@ -1,13 +1,13 @@
 import { logout as logoutAction } from "actions/sessionActions"
-import { NavItem, Spacer } from "components"
-import { LogoMark } from "icons"
+import { NavItem, Logo } from "components"
+
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useLocation } from "react-router"
 import styled from "styled-components"
 import { colors } from "theme"
 
-import { Box, Drawer, List, Theme, Typography } from "@material-ui/core"
+import { Box, Drawer, List, Theme, Typography, Hidden } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
 import navConfig from "./navConfig"
@@ -40,13 +40,6 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-const LogoText = styled(Typography)`
-  font-family: "Apercu-Mono", sans-serif;
-  color: ${colors.white100};
-  letter-spacing: 1px;
-  font-weight: 500;
-`
-
 const UserInfo = styled(Typography)`
   font-size: 16px;
   font-weight: 500;
@@ -73,7 +66,7 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
     if (openMobile && onMobileClose) {
       onMobileClose()
     }
-  }, [location.pathname, openMobile, onMobileClose])
+  }, [location.pathname])
 
   const signOut = () => {
     dispatch(logoutAction())
@@ -82,13 +75,12 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
 
   const content = (
     <div {...rest} className={classes.root}>
-      <Box display="flex" m={2} mt={4} flexDirection="horizontal">
-        <LogoMark />
-        <Spacer ml={2} />
-        <LogoText variant="h4">SEASONS</LogoText>
-      </Box>
-
-      <Box mt={1} borderBottom={`1px solid ${colors.black85}`}></Box>
+      <Hidden mdDown>
+        <Box display="flex" m={2} mt={4} flexDirection="horizontal">
+          <Logo />
+        </Box>
+        <Box mt={1} borderBottom={`1px solid ${colors.black85}`}></Box>
+      </Hidden>
 
       <nav className={classes.navigation}>
         <List>
@@ -110,15 +102,23 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
   )
 
   return (
-    <Drawer
-      anchor="left"
-      classes={{
-        paper: classes.desktopDrawer,
-      }}
-      open
-      variant="persistent"
-    >
-      {content}
-    </Drawer>
+    <>
+      <Hidden lgUp>
+        <Drawer
+          anchor="left"
+          classes={{ paper: classes.mobileDrawer }}
+          onClose={onMobileClose}
+          open={openMobile}
+          variant="temporary"
+        >
+          {content}
+        </Drawer>
+      </Hidden>
+      <Hidden mdDown>
+        <Drawer anchor="left" classes={{ paper: classes.desktopDrawer }} open variant="persistent">
+          {content}
+        </Drawer>
+      </Hidden>
+    </>
   )
 }

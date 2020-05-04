@@ -6,6 +6,7 @@ import { colors } from "theme"
 import { LinearProgress } from "@material-ui/core"
 
 import { NavBar } from "./NavBar"
+import { TopBar } from "./TopBar"
 
 const Container = styled.div`
   min-height: 100vh;
@@ -35,6 +36,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ route }: any) => {
 
   return (
     <>
+      <TopBar onMobileNavOpen={() => setOpenNavBarMobile(true)} />
       <NavBar onMobileClose={() => setOpenNavBarMobile(false)} openMobile={openNavBarMobile} />
       <Container>
         <Content>
