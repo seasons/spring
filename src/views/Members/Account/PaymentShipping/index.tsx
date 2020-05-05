@@ -1,12 +1,21 @@
-import { CardContent, EditButton, EditModal, TableHeader } from "components"
-import React, { useState } from "react"
+import { updateCustomer as updateCustomerAction } from "actions/customerActions"
+import { CardContent, ComponentError, EditButton, EditModal, TableHeader } from "components"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 import { Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 
 import { MemberSubViewIfc } from "../../interfaces"
+import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
+import { useMutation } from "@apollo/react-hooks"
 
-export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ member }) => {
+export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ adminKey }) => {
+  const adminStoreKey = adminKey || ""
+  const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
   const [openEdit, setOpenEdit] = useState(false)
+  const [member, updateMember] = useState(memberFromStore)
+  const [updateDetails] = useMutation(CUSTOMER_DETAIL_UPDATE)
+  const dispatch = useDispatch()
   const billing = member.billingInfo
   const shipping = member.detail.shippingAddress
 
@@ -20,8 +29,62 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ mem
 
   const handleEditSave = values => {
     setOpenEdit(false)
-    console.log("totally gonna save these values:", values)
+    const customer = {
+      billingInfo: {
+        update: {
+          brand: billing.brand,
+          name: values.billingName.value,
+          last_digits: billing.last_digits,
+          expiration_month: billing.expiration_month,
+          expiration_year: billing.expiration_year,
+          street1: values.billingStreet1.value,
+          city: values.billingCity.value,
+          state: values.billingState.value,
+          postal_code: values.billingPostal.value,
+        },
+      },
+      detail: {
+        update: {
+          ...member.detail,
+          shippingAddress: {
+            update: {
+              name: values.shippingName.value,
+              address1: values.shippingStreet1.value,
+              city: values.shippingCity.value,
+              state: values.shippingState.value,
+              zipCode: values.shippingPostal.value,
+            },
+          },
+        },
+      },
+    }
+
+    // remove properties not expected by mutation input type
+    delete customer.detail.update.__typename
+    delete customer.detail.update.id
+
+    updateDetails({
+      variables: {
+        id: values.id.value,
+        data: customer,
+      },
+    })
+      .then(() => {
+        customer.detail.update.shippingAddress = customer.detail.update.shippingAddress.update
+        updateMember({
+          ...member,
+          billingInfo: customer.billingInfo.update,
+          detail: customer.detail.update,
+        })
+      })
+      .catch(error => {
+        return <ComponentError />
+      })
   }
+
+  useEffect(() => {
+    dispatch(updateCustomerAction(member))
+  }, [member, dispatch])
 
   const editEntity = {
     id: {
@@ -29,14 +92,17 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ mem
     },
     number: {
       value: billing.last_digits,
+      disabled: true,
     },
     expirationMonth: {
       value: billing.expiration_month,
       label: "Expiration Month",
+      disabled: true,
     },
     expirationYear: {
       value: billing.expiration_year,
       label: "Expiration Year",
+      disabled: true,
     },
     billingDivider: {
       label: "Billing address",
@@ -45,7 +111,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ mem
       value: billing.name,
       label: "Name",
     },
-    billingStree1: {
+    billingStreet1: {
       value: billing.street1,
       label: "Street",
     },
@@ -68,7 +134,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ mem
       value: shipping.name,
       label: "Name",
     },
-    shippingStree1: {
+    shippingStreet1: {
       value: shipping.address1,
       label: "Street",
     },

@@ -60,7 +60,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ adm
   // --- (b) ensure latest data shows up when navigating back to this tab
   useEffect(() => {
     dispatch(updateCustomerAction(member))
-  }, [member])
+  }, [member, dispatch])
 
   const birthday = moment(member.detail.birthday).format("MM/DD/YYYY")
 
