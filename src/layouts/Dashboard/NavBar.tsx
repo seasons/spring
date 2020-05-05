@@ -77,7 +77,7 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
     <div {...rest} className={classes.root}>
       <Hidden mdDown>
         <Box display="flex" m={2} mt={4} flexDirection="horizontal">
-          <Logo />
+          <Logo color="white" />
         </Box>
         <Box mt={1} borderBottom={`1px solid ${colors.black85}`}></Box>
       </Hidden>

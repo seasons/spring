@@ -19,7 +19,7 @@ export function TopBar({ onMobileNavOpen, ...rest }) {
             </SvgIcon>
           </IconButton>
           <Box ml={2} flex></Box>
-          <Logo />
+          <Logo color="white" />
           <Box ml={2} flexGrow={1}></Box>
         </Toolbar>
       </Bar>

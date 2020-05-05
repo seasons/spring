@@ -10,7 +10,6 @@ const ProductFragment = gql`
       url
     }
     retailPrice
-    tags
     createdAt
     updatedAt
     brand {

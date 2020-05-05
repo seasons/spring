@@ -3,16 +3,9 @@ import { EntityCountField, FullNameField, StatusField, ViewEntityField } from "f
 import React from "react"
 import { Datagrid, List, TextField } from "react-admin"
 
-import { Container, Theme } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
+import { Container } from "@material-ui/core"
 
 import { MemberFilter } from "./MemberFilter"
-
-const useStyles = makeStyles<Theme>(theme => ({
-  root: {
-    marginTop: theme.spacing(10),
-  },
-}))
 
 export interface MemberListProps {
   history: any
@@ -21,15 +14,13 @@ export interface MemberListProps {
 }
 
 export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, history, props }) => {
-  const classes = useStyles()
-
   const createNewMember = () => {
     history.push("/members/new")
   }
 
   return (
     <>
-      <Container maxWidth={false} className={classes.root}>
+      <Container maxWidth={false}>
         <Header title="Members" newEntityText="New Member" newEntityHandler={createNewMember} />
         <List
           {...props}

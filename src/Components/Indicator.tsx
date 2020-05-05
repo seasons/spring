@@ -1,4 +1,5 @@
 import { colors } from "theme"
+import styled from "styled-components"
 
 export const IndicatorMap = {
   Waitlisted: colors.black15,
@@ -18,4 +19,18 @@ export const IndicatorMap = {
   Paused: colors.orange[500],
   Deactivated: colors.red[500],
   Cancelled: colors.red[500],
+  Reserved: colors.blue[500],
+  Reservable: colors.green[500],
 }
+
+export interface IndicatorProps {
+  status: string
+}
+
+export const Indicator = styled.div`
+  background-color: ${(props: IndicatorProps) => IndicatorMap[props.status]};
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+`

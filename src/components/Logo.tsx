@@ -1,23 +1,44 @@
 import { LogoMark } from "icons"
-import { Spacer } from "components"
 import React from "react"
 import styled from "styled-components"
-import { Typography } from "@material-ui/core"
+import { Typography, Box, BoxProps } from "@material-ui/core"
 import { colors } from "theme"
+
+const Mark = styled(LogoMark)`
+  display: inline-block;
+  margin-right: 8px;
+`
 
 const LogoText = styled(Typography)`
   font-family: "Apercu-Mono", sans-serif;
-  color: ${colors.white100};
+  color: ${p => p.color};
   letter-spacing: 1px;
   font-weight: 500;
 `
 
-export const Logo: React.FunctionComponent = () => {
+const Container = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  align-content: flex-top;
+  align-items: center;
+  height: 45px;
+`
+
+interface LogoProps extends BoxProps {
+  color?: "black" | "white"
+}
+
+export const Logo: React.FC<LogoProps> = ({ color = "black", ...rest }) => {
   return (
-    <>
-      <LogoMark />
-      <Spacer ml={2} />
-      <LogoText variant="h4">SEASONS</LogoText>
-    </>
+    <Container {...rest}>
+      <Mark />
+      <LogoText
+        variant="h4"
+        color={color === "white" ? colors.white100 : colors.black100}
+        style={{ display: "inline-block" }}
+      >
+        SEASONS
+      </LogoText>
+    </Container>
   )
 }

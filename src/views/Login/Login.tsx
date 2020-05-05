@@ -1,5 +1,5 @@
 import { login as loginAction } from "actions/sessionActions"
-import { Spacer } from "components"
+import { Spacer, Logo } from "components"
 import { TextField } from "fields"
 import gql from "graphql-tag"
 import React from "react"
@@ -8,7 +8,7 @@ import { Form } from "react-final-form"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
 
-import { Box, Button, styled } from "@material-ui/core"
+import { Box, Button, styled, Grid } from "@material-ui/core"
 
 const LOG_IN = gql`
   mutation LogIn($email: String!, $password: String!) {
@@ -68,6 +68,9 @@ export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
         initialValues={initialValues}
         render={({ handleSubmit }) => (
           <Box mx={5}>
+            <Grid container item xs={4} justify="center">
+              <Logo color="black" mx="auto" my={2} />
+            </Grid>
             <form {...props} onSubmit={handleSubmit}>
               <div>
                 <TextField label="Email address" name="email" />

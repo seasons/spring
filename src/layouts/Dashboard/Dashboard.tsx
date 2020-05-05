@@ -26,6 +26,10 @@ const Content = styled.div`
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
   }
+
+  ${theme.breakpoints.down("md")} {
+    margin-top: 64px;
+  }
 `}
 `
 
