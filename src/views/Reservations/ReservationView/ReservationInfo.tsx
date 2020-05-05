@@ -5,17 +5,16 @@ import {
   Button,
   Card,
   CardActions,
-  CardHeader,
-  Divider,
   Link,
   Table,
   TableBody,
   TableCell,
   TableRow,
-  TextField,
   Box,
   Grid,
+  Chip,
 } from "@material-ui/core"
+import { Indicator } from "components/Indicator"
 import ReceiptIcon from "@material-ui/icons/ReceiptOutlined"
 
 const statusOptions = [
@@ -82,27 +81,16 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell>Ref</TableCell>
-                <TableCell>{reservation.ref}</TableCell>
-              </TableRow>
-              <TableRow>
                 <TableCell>Status</TableCell>
                 <TableCell>
-                  <TextField
-                    fullWidth
-                    name="option"
-                    onChange={handleChange}
-                    select
-                    SelectProps={{ native: true }}
-                    value={status}
-                    variant="outlined"
-                  >
-                    {statusOptions.map(option => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </TextField>
+                  <Chip
+                    label={reservation.status}
+                    icon={
+                      <Box pl={1}>
+                        <Indicator status={reservation.status} />
+                      </Box>
+                    }
+                  />
                 </TableCell>
               </TableRow>
               <TableRow>

@@ -64,6 +64,8 @@ export default {
       products {
         id
         seasonsUID
+        inventoryStatus
+        productStatus
         productVariant {
           product {
             id
@@ -72,6 +74,14 @@ export default {
               name
             }
             description
+            color {
+              hexCode
+              name
+            }
+            secondaryColor {
+              hexCode
+              name
+            }
             status
             type
             resizedImages(size: Large) {

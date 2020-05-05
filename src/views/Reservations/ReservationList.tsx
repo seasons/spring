@@ -82,32 +82,42 @@ const ImagesField = ({ label, record = {}, source, size = "medium" }: ImagesFiel
 export const ReservationList = props => {
   return (
     <Container maxWidth={false}>
-      <Header title="Reservations" />
-      <List
-        {...props}
-        perPage={10}
-        hasCreate={false}
-        hasEdit={false}
-        hasList={true}
-        hasShow={true}
-        filters={<SourceFilter />}
-        sort={{
-          field: "createdAt",
-          order: "DESC",
-        }}
-        resource="Reservation"
-        title="Reservations"
-      >
-        <MyDatagrid>
-          <SinceDateField source="createdAt" label="Created" />
-          <ImagesField source="images" label="Images" />
-          <StatusField label="Status" />
-          <MemberField label="Member" />
-          <TextField source="reservationNumber" label="Reservation Number" />
-          <SinceDateField source="returnAt" label="Return" />
-          <ViewEntityField entityPath="reservation" source="id" label="Actions" />
-        </MyDatagrid>
-      </List>
+      <Box py={2}>
+        <Header
+          title="Reservations"
+          breadcrumbs={[
+            {
+              title: "Reservations",
+              url: "/reservations",
+            },
+          ]}
+        />
+        <List
+          {...props}
+          perPage={10}
+          hasCreate={false}
+          hasEdit={false}
+          hasList={true}
+          hasShow={true}
+          filters={<SourceFilter />}
+          sort={{
+            field: "createdAt",
+            order: "DESC",
+          }}
+          resource="Reservation"
+          title="Reservations"
+        >
+          <MyDatagrid>
+            <SinceDateField source="createdAt" label="Created" />
+            <ImagesField source="images" label="Images" />
+            <StatusField label="Status" />
+            <MemberField label="Member" />
+            <TextField source="reservationNumber" label="Reservation Number" />
+            <SinceDateField source="returnAt" label="Return" />
+            <ViewEntityField entityPath="reservation" source="id" label="Actions" />
+          </MyDatagrid>
+        </List>
+      </Box>
     </Container>
   )
 }

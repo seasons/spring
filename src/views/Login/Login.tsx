@@ -68,7 +68,7 @@ export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
         initialValues={initialValues}
         render={({ handleSubmit }) => (
           <Box mx={5}>
-            <Grid container item xs={4} justify="center">
+            <Grid container item justify="center">
               <Logo color="black" mx="auto" my={2} />
             </Grid>
             <form {...props} onSubmit={handleSubmit}>

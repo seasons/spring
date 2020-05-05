@@ -13,7 +13,8 @@ import ColorIcon from "@material-ui/icons/Brightness1"
 import { red } from "@material-ui/core/colors"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
-import { Table, TableCell, TableRow, Chip, Divider } from "@material-ui/core"
+import { Box, Table, TableCell, TableRow, Chip, Divider } from "@material-ui/core"
+import { Indicator } from "components/Indicator"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -70,7 +71,14 @@ export const ProductCard = props => {
         <TableRow>
           <TableCell>Inventory Status</TableCell>
           <TableCell align="right">
-            <Chip label={physicalProduct.inventoryStatus} />
+            <Chip
+              label={physicalProduct.inventoryStatus}
+              icon={
+                <Box pl={1}>
+                  <Indicator status={physicalProduct.inventoryStatus} />
+                </Box>
+              }
+            />
           </TableCell>
         </TableRow>
         <TableRow>

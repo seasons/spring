@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Loading, useQuery } from "react-admin"
 import { Container, Box, Typography, Grid } from "@material-ui/core"
-import { Header } from "./Header"
+import { Header } from "components/Header"
 import { ReservationInfo } from "./ReservationInfo"
 import { ProductCard } from "./ProductCard"
 import ViewModuleIcon from "@material-ui/icons/ViewModule"
@@ -37,8 +37,17 @@ export const ReservationView = ({ match, history, props }) => {
 
   return (
     <Container maxWidth={false}>
-      <Header reservation={data} />
-      <Box mt={2} mb={2}>
+      <Box my={2}>
+        <Header
+          title="Reservation Details"
+          breadcrumbs={[
+            {
+              title: "Reservations",
+              url: "/reservations",
+            },
+            { title: `Reservation: ${data.reservationNumber}`, url: `/reservations/${data.reservationNumber}` },
+          ]}
+        />
         <Box my={2}>
           <ReservationInfo reservation={data} />
         </Box>
