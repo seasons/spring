@@ -1,13 +1,22 @@
-import { CardContent, EditButton, EditModal, TableHeader } from "components"
-import React, { useState } from "react"
+import { updateCustomer as updateCustomerAction } from "actions/customerActions"
+import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
+import { useMutation } from "@apollo/react-hooks"
+import { CardContent, ComponentError, EditButton, EditModal, TableHeader } from "components"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 import { Card, Table, TableBody, TableCell, TableRow } from "@material-ui/core"
 
 import { MemberSubViewIfc } from "../../interfaces"
 
-export const Sizing: React.FC<MemberSubViewIfc> = ({ member }) => {
-  const user = member.detail
+export const Sizing: React.FC<MemberSubViewIfc> = ({ adminKey }) => {
+  const adminStoreKey = adminKey || ""
+  const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
+  const [member, updateMember] = useState(memberFromStore)
+  const [updateDetails] = useMutation(CUSTOMER_DETAIL_UPDATE)
   const [openEdit, setOpenEdit] = useState(false)
+  const dispatch = useDispatch()
+  const user = member.detail
 
   const handleEditOpen = () => {
     setOpenEdit(true)
@@ -19,9 +28,44 @@ export const Sizing: React.FC<MemberSubViewIfc> = ({ member }) => {
 
   const handleEditSave = values => {
     setOpenEdit(false)
-    console.log("totally gonna save these values:", values)
-    // updateDetails({ variables: { details: { id: values.id }, status: "Suspended" } })
+
+    const customer = {
+      detail: {
+        update: {
+          height: parseInt(values.height.value, 10),
+          bodyType: values.bodyType.value,
+          averageTopSize: values.averageTopSize.value,
+          averageWaistSize: values.averageWaistSize.value,
+          averagePantLength: values.averagePantLength.value,
+        },
+      },
+    }
+
+    updateDetails({
+      variables: {
+        id: values.id.value,
+        data: customer,
+      },
+    })
+      .then(() => {
+        const reduxUpdatePayload = {
+          ...member.detail,
+          ...customer.detail.update,
+        }
+
+        updateMember({
+          ...member,
+          detail: reduxUpdatePayload,
+        })
+      })
+      .catch(error => {
+        return <ComponentError />
+      })
   }
+
+  useEffect(() => {
+    dispatch(updateCustomerAction(member))
+  }, [member, dispatch])
 
   const editEntity = {
     id: {
@@ -29,6 +73,7 @@ export const Sizing: React.FC<MemberSubViewIfc> = ({ member }) => {
     },
     height: {
       value: user.height,
+      type: "number",
     },
     bodyType: {
       value: user.bodyType,
@@ -41,10 +86,12 @@ export const Sizing: React.FC<MemberSubViewIfc> = ({ member }) => {
     averageWaistSize: {
       value: user.averageWaistSize,
       label: "Average Waist Size",
+      type: "number",
     },
     averagePantLength: {
       value: user.averagePantLength,
       label: "Average Pant Length",
+      type: "number",
     },
   }
 

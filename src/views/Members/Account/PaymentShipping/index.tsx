@@ -45,7 +45,6 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ adm
       },
       detail: {
         update: {
-          ...member.detail,
           shippingAddress: {
             update: {
               name: values.shippingName.value,
@@ -59,10 +58,6 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ adm
       },
     }
 
-    // remove properties not expected by mutation input type
-    delete customer.detail.update.__typename
-    delete customer.detail.update.id
-
     updateDetails({
       variables: {
         id: values.id.value,
@@ -70,11 +65,15 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ adm
       },
     })
       .then(() => {
-        customer.detail.update.shippingAddress = customer.detail.update.shippingAddress.update
+        const reduxUpdatePayload = {
+          ...member.detail,
+          shippingAddress: customer.detail.update.shippingAddress.update,
+        }
+
         updateMember({
           ...member,
           billingInfo: customer.billingInfo.update,
-          detail: customer.detail.update,
+          detail: reduxUpdatePayload,
         })
       })
       .catch(error => {

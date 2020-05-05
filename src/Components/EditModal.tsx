@@ -113,7 +113,7 @@ export const EditModal: React.FunctionComponent<EditModalIfc> = ({ title, open, 
                         fullWidth
                         label={values[key].label || capitalize(key)}
                         name={key}
-                        type={typeMap[key] || "text"}
+                        type={typeMap[key] || values[key].type || "text"}
                         onChange={handleFieldChange}
                         value={values[key].value}
                         disabled={values[key].disabled}
