@@ -72,8 +72,9 @@ export const ReservationView = ({ match, history, props }) => {
             </Grid>
           ))}
         </Grid>
-        <Fab color="primary" aria-label="add">
+        <Fab color="primary" variant="extended">
           <MoveToInboxIcon />
+          <Box ml={1}>Process Return</Box>
         </Fab>
       </Box>
     </Container>
