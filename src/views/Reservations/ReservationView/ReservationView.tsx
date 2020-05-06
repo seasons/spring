@@ -1,12 +1,13 @@
 import React, { useState } from "react"
 import { Loading, useQuery } from "react-admin"
-import { Container, Box, Typography, Grid } from "@material-ui/core"
+import { Container, Box, Typography, Grid, Fab } from "@material-ui/core"
 import { Header } from "components/Header"
 import { ReservationInfo } from "./ReservationInfo"
 import { ProductCard } from "./ProductCard"
 import ViewModuleIcon from "@material-ui/icons/ViewModule"
 import ListIcon from "@material-ui/icons/List"
 import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab"
+import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
 
 export const ReservationView = ({ match, history, props }) => {
   const { id } = match.params
@@ -71,6 +72,9 @@ export const ReservationView = ({ match, history, props }) => {
             </Grid>
           ))}
         </Grid>
+        <Fab color="primary" aria-label="add">
+          <MoveToInboxIcon />
+        </Fab>
       </Box>
     </Container>
   )

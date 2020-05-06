@@ -63,6 +63,12 @@
     "trailingComma": "es5",
     "bracketSpacing": true
   },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module",
+      "parser": "typescript"
+    }
+  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"

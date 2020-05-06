@@ -1,14 +1,42 @@
-import get from "lodash/get"
 import React from "react"
+import { Box } from "@material-ui/core"
+import { colors } from "theme"
 
-export const ImagesField = ({ record = {}, source }) => {
+type ImageSize = "small" | "medium" | "large"
+
+interface ImagesFieldProps {
+  label?: String
+  record?: any
+  source: any
+  size?: ImageSize
+}
+
+export const ImagesField: React.FC<ImagesFieldProps> = ({ label, record = {}, source, size = "medium" }) => {
+  const sizes = {
+    small: {
+      width: 30,
+      height: 37.5,
+    },
+    medium: {
+      width: 50,
+      height: 62.5,
+    },
+    large: {
+      width: 80,
+      height: 100,
+    },
+  }
   const images = record[source] || []
   return (
-    <div>
+    <Box display="flex" flexDirection="row">
       {images.map(image => {
-        const { url, width, height } = get(image, "thumbnails.small", { url: "", width: 0, height: 0 })
-        return <img key={image.id} src={url} width={width} height={height} alt={image.filename} />
+        const { url } = image
+        return (
+          <Box {...sizes[size]} mr={1} bgcolor={colors.black04}>
+            <img key={image.id} {...sizes[size]} src={url} alt={image.url} />
+          </Box>
+        )
       })}
-    </div>
+    </Box>
   )
 }

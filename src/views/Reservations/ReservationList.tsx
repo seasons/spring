@@ -3,9 +3,8 @@ import { Datagrid, DatagridBody, Filter, List, TextField } from "react-admin"
 import TableCell from "@material-ui/core/TableCell"
 import TableRow from "@material-ui/core/TableRow"
 import Checkbox from "@material-ui/core/Checkbox"
-import { StatusField, SinceDateField, MemberField, ViewEntityField } from "fields"
+import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
 import { Box, Container, Chip } from "@material-ui/core"
-import { colors } from "theme"
 import { Header } from "components/Header"
 
 const MyDatagridRow: React.FC<any> = ({ record, resource, id, onToggleItem, children, selected, basePath }) => (
@@ -40,45 +39,6 @@ const SourceFilter = props => (
   </Filter>
 )
 
-type ImageSize = "small" | "medium" | "large"
-
-interface ImagesFieldProps {
-  label?: String
-  record?: any
-  source: any
-  size?: ImageSize
-}
-
-const ImagesField = ({ label, record = {}, source, size = "medium" }: ImagesFieldProps) => {
-  const sizes = {
-    small: {
-      width: 30,
-      height: 37.5,
-    },
-    medium: {
-      width: 50,
-      height: 62.5,
-    },
-    large: {
-      width: 80,
-      height: 100,
-    },
-  }
-  const images = record[source] || []
-  return (
-    <Box display="flex" flexDirection="row">
-      {images.map(image => {
-        const { url } = image
-        return (
-          <Box {...sizes[size]} mr={1} bgcolor={colors.black04}>
-            <img key={image.id} {...sizes[size]} src={url} alt={image.url} />
-          </Box>
-        )
-      })}
-    </Box>
-  )
-}
-
 export const ReservationList = props => {
   return (
     <Container maxWidth={false}>
@@ -112,7 +72,7 @@ export const ReservationList = props => {
             <ImagesField source="images" label="Images" />
             <StatusField label="Status" />
             <MemberField label="Member" />
-            <TextField source="reservationNumber" label="Reservation Number" />
+            <TextField source="reservationNumber" label="ID" />
             <SinceDateField source="returnAt" label="Return" />
             <ViewEntityField entityPath="reservation" source="id" label="Actions" />
           </MyDatagrid>

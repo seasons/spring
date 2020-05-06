@@ -1,4 +1,5 @@
 import React from "react"
+import { Box } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { Spacer } from "components"
 
@@ -15,7 +16,9 @@ export const StatusField: React.FC<StatusFieldProps> = ({ record, label }) => {
   return (
     <div>
       <Indicator status={status} />
-      <Spacer mr={1} /> {status}
+      <Box ml={1} style={{ display: "inline-block" }}>
+        {status}
+      </Box>
     </div>
   )
 }

@@ -111,6 +111,22 @@ export const ProductCard = props => {
               </Typography>
             </TableCell>
           </TableRow>
+          <TableRow>
+            <TableCell>Reservation Count</TableCell>
+            <TableCell align="right">
+              <Typography variant="body1" color="textSecondary">
+                9
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Utilization Rate</TableCell>
+            <TableCell align="right">
+              <Typography variant="body1" color="textSecondary">
+                58%
+              </Typography>
+            </TableCell>
+          </TableRow>
           {color && (
             <TableRow>
               <TableCell>Color</TableCell>
