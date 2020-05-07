@@ -1,49 +1,42 @@
-import get from "lodash/get"
 import React from "react"
-import styled from "styled-components"
+import { Box } from "@material-ui/core"
+import { colors } from "theme"
 
-interface imagesFieldIfc {
-  record?: object
-  source: string
-  label?: string
+type ImageSize = "small" | "medium" | "large"
+
+interface ImagesFieldProps {
+  label?: String
+  record?: any
+  source: any
+  size?: ImageSize
 }
 
-interface imageObject {
-  id: string
-  filename: string
-}
-
-const Image = styled.img`
-  margin-right: 5px;
-`
-
-export const ImagesField: React.FC<imagesFieldIfc> = ({ record, source, label }) => {
-  const images: Array<imageObject> = get(record, source, [{ id: "", filename: "" }])
+export const ImagesField: React.FC<ImagesFieldProps> = ({ label, record = {}, source, size = "medium" }) => {
+  const sizes = {
+    small: {
+      width: 30,
+      height: 37.5,
+    },
+    medium: {
+      width: 50,
+      height: 62.5,
+    },
+    large: {
+      width: 80,
+      height: 100,
+    },
+  }
+  const images = record[source] || []
   return (
-    <div>
+    <Box display="flex" flexDirection="row">
       {images.map(image => {
-        const { url, width, height } = get(image, "thumbnails.small", { url: "", width: 0, height: 0 })
-        return <Image key={image.id} src={url} width={width} height={height} alt={image.filename} />
+        const { url } = image
+        return (
+          <Box {...sizes[size]} mr={1} bgcolor={colors.black04}>
+            <img key={image.id} {...sizes[size]} src={url} alt={image.url} />
+          </Box>
+        )
       })}
-    </div>
-  )
-}
-
-export const ProductItemsField: React.FC<imagesFieldIfc> = ({ record, source, label }) => {
-  let images: Array<imageObject> = []
-  let products: Array<Object> = get(record, "products", [])
-
-  products.map(product => {
-    const productImages: imageObject = get(product, source, [{ id: "", filename: "" }])[0]
-    images.push(productImages)
-  })
-
-  return (
-    <div>
-      {images.map(image => {
-        const { url } = get(image, "thumbnails.large", { url: "", width: 0, height: 0 })
-        return <Image key={image.id} src={url} width={85} height={107} alt={image.filename} />
-      })}
-    </div>
+    </Box>
   )
 }

@@ -1,10 +1,3 @@
-import { InMemoryCache } from "apollo-cache-inmemory"
-import { ApolloClient } from "apollo-client"
-import { ApolloLink } from "apollo-link"
-import { setContext } from "apollo-link-context"
-import { onError } from "apollo-link-error"
-import { HttpLink } from "apollo-link-http"
-import { AppLoader } from "components"
 import { createBrowserHistory } from "history"
 import get from "lodash/get"
 import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
@@ -25,45 +18,7 @@ import overridenQueries from "./queries"
 import routes from "./routes"
 import configureStore from "./store/adminStore"
 import { theme } from "./theme/theme"
-
-const link = new HttpLink({
-  uri: "http://localhost:4000",
-  // uri: "https://monsoon-staging.seasons.nyc",
-})
-
-const authLink = setContext(async (_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  try {
-    // return the headers to the context so httpLink can read them
-    const userSession = JSON.parse(localStorage.userSession)
-    const { token } = userSession
-    return {
-      headers: {
-        ...headers,
-        authorization: token ? `Bearer ${token}` : "",
-      },
-    }
-  } catch (e) {
-    console.error("no access token present!")
-    return {
-      headers,
-    }
-  }
-})
-
-const errorLink = onError(({ networkError, operation, forward }) => {
-  if (networkError) {
-    // User access token has expired
-    console.log("networkError", networkError)
-    // localStorage.removeItem("userSession")
-    // window.location.href = "/login"
-  }
-})
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: ApolloLink.from([authLink, errorLink, link]),
-})
+import { client } from "./apollo"
 
 // Override some queries with our own queries
 const enhanceBuildQuery = buildQuery => introspectionResults => (fetchType, resourceName, params) => {
@@ -96,10 +51,6 @@ class App extends React.Component {
 
   render() {
     const { dataProvider } = this.state
-
-    if (!dataProvider) {
-      return <AppLoader />
-    }
 
     const store = configureStore({
       authProvider: () => Promise.resolve(),

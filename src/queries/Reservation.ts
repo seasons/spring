@@ -1,44 +1,109 @@
 import { GET_ONE, GET_LIST } from "react-admin"
 import gql from "graphql-tag"
 
-const ReservationFragment = gql`
-  fragment reservation on Reservation {
-    id
-    user {
+export default {
+  [GET_LIST]: gql`
+    fragment GetReservationList on Reservation {
       id
-      email
+      customer {
+        id
+        user {
+          id
+          firstName
+          lastName
+          email
+        }
+      }
+      images(size: Small) {
+        url
+      }
+      reservationNumber
+      shipped
+      status
+      shippedAt
+      returnAt
+      createdAt
     }
-    customer {
+  `,
+  [GET_ONE]: gql`
+    fragment GetReservation on Reservation {
       id
       user {
         id
         email
+        firstName
+        lastName
       }
+      customer {
+        id
+        user {
+          id
+          firstName
+          lastName
+          email
+        }
+        detail {
+          shippingAddress {
+            name
+            address1
+            address2
+            city
+            state
+          }
+        }
+      }
+      sentPackage {
+        id
+      }
+      returnedPackage {
+        id
+      }
+      location {
+        id
+      }
+      products {
+        id
+        seasonsUID
+        inventoryStatus
+        productStatus
+        productVariant {
+          product {
+            id
+            name
+            brand {
+              name
+            }
+            description
+            color {
+              hexCode
+              name
+            }
+            secondaryColor {
+              hexCode
+              name
+            }
+            status
+            type
+            resizedImages(size: Large) {
+              url
+            }
+          }
+        }
+      }
+      images(size: Large) {
+        url
+      }
+      reservationNumber
+      shipped
+      status
+      sentPackage {
+        weight
+      }
+      shippedAt
+      receivedAt
+      returnAt
+      createdAt
+      updatedAt
     }
-    sentPackage {
-      id
-    }
-    returnedPackage {
-      id
-    }
-    location {
-      id
-    }
-    products {
-      id
-    }
-    reservationNumber
-    shipped
-    status
-    shippedAt
-    receivedAt
-    createdAt
-    updatedAt
-  }
-`
-
-export default {
-  [GET_LIST]: ReservationFragment,
-  [GET_ONE]: ReservationFragment,
-  //   [CREATE]: ReservationFragment,
+  `,
 }

@@ -1,19 +1,7 @@
-import { IndicatorMap } from "components"
 import React from "react"
-import styled from "styled-components"
-
-export interface IndicatorProps {
-  status: string
-}
-
-const Indicator = styled.div`
-  background-color: ${(props: IndicatorProps) => IndicatorMap[props.status]};
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 10px;
-`
+import { Box } from "@material-ui/core"
+import { Indicator } from "components/Indicator"
+import { Spacer } from "components"
 
 export interface StatusFieldProps {
   record?: { status: String }
@@ -27,9 +15,10 @@ export const StatusField: React.FC<StatusFieldProps> = ({ record, label }) => {
 
   return (
     <div>
-      {" "}
       <Indicator status={status} />
-      {status}
+      <Box ml={1} style={{ display: "inline-block" }}>
+        {status}
+      </Box>
     </div>
   )
 }
