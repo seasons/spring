@@ -107,27 +107,27 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
                 <EditButton onClick={handleEditOpen} />
               </TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Height</TableCell>
               <TableCell>{user.height}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Body Type</TableCell>
               <TableCell>{user.bodyType}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Avg. top size</TableCell>
               <TableCell>{user.averageTopSize}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Avg. waist size</TableCell>
               <TableCell>{user.averageWaistSize}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Avg. pant length</TableCell>
               <TableCell>{user.averagePantLength}</TableCell>
               <TableCell></TableCell>

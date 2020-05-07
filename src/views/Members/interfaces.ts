@@ -42,6 +42,8 @@ export interface MemberSubViewProps {
     plan: string
     user: user
     billingInfo: billingInfo
+    invoices: Array<any>
+    invoicesIds: Array<string>
     reservations: Array<any>
     reservationsIds: Array<string>
     detail: {

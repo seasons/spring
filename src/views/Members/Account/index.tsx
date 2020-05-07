@@ -21,6 +21,10 @@ const useStyles = makeStyles<Theme>(theme => ({
 export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ member, adminKey }) => {
   const classes = useStyles()
 
+  let normalizedInvoices = {}
+  member?.invoices?.forEach(inv => (normalizedInvoices[inv.id] = inv))
+  const defaultSort = { field: "subscriptionId", order: "ASC" }
+
   return (
     <>
       <Grid className={classes.root} container spacing={3}>
@@ -34,26 +38,14 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
           <Typography component="h1" variant="h3">
             Invoices
           </Typography>
-          <List
-            perPage={10}
-            hasCreate={false}
-            hasEdit={false}
-            hasList={true}
-            hasShow={true}
-            resource={"Customer"}
-            basePath="/members"
-            exporter={false}
-          >
-            <Datagrid>
-              <TextField source="detail.shippingAddress.city" label="Invoice #" />
-              <StatusField label="Status" />
-              <TextField source="detail.shippingAddress.city" label="Date" />
-              <TextField source="detail.shippingAddress.state" label="Amount" />
-              <TextField source="plan" label="Billing Period" />
-              <TextField source="plan" label="Next Billing Date" />
-              <ViewEntityField entityPath="members" entityTab="account" source="user.id" label="Actions" />
-            </Datagrid>
-          </List>
+          <Datagrid ids={member.invoicesIds} data={normalizedInvoices} currentSort={defaultSort}>
+            <TextField source="subscriptionId" label="Invoice #" />
+            <StatusField label="Status" />
+            <TextField source="closingDate" label="Closing Date" />
+            <TextField source="dueDate" label="Due date" />
+            <TextField source="amount" label="Amount" />
+            <ViewEntityField entityPath="members" entityTab="account" source="user.id" label="Actions" />
+          </Datagrid>
         </Grid>
       </Grid>
     </>

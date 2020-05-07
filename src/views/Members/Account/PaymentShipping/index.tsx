@@ -163,14 +163,14 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
                 <EditButton onClick={handleEditOpen} />
               </TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Payment</TableCell>
               <TableCell>
                 {billing.brand.toUpperCase()} ending {billing.last_digits}
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Billing address</TableCell>
               <TableCell>
                 <Typography component="p">{billing.name}</Typography>
@@ -182,7 +182,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Shipping address</TableCell>
               <TableCell>
                 <Typography component="div">

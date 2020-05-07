@@ -38,6 +38,15 @@ const CustomerDetails = gql`
       lastName
       createdAt
     }
+    invoices {
+      id
+      subscriptionId
+      recurring
+      status
+      closingDate
+      dueDate
+      amount
+    }
     reservations {
       id
       reservationNumber

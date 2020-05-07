@@ -102,7 +102,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
                 <EditButton onClick={handleEditOpen} />
               </TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Status</TableCell>
               <TableCell>
                 <Label shape="rounded" color={IndicatorMap[member.status]}>
@@ -116,7 +116,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
               <TableCell>{member.plan}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Email</TableCell>
               <TableCell>{member.user.email}</TableCell>
               <TableCell></TableCell>
@@ -126,7 +126,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
               <TableCell>{member.detail.phoneNumber}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Birthday</TableCell>
               <TableCell>{birthday}</TableCell>
               <TableCell></TableCell>

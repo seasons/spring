@@ -104,27 +104,27 @@ export const Lifestyle: React.FC<MemberSubViewProps> = ({ adminKey }) => {
                 <EditButton onClick={handleEditOpen} />
               </TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Preferred Pronouns</TableCell>
               <TableCell>{user.preferredPronouns}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Profession</TableCell>
               <TableCell>{user.profession}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Party Frequency</TableCell>
               <TableCell>{user.partyFrequency}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Average Spend</TableCell>
               <TableCell>{user.averageSpend}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Style Preferences</TableCell>
               <TableCell>{user.style}</TableCell>
               <TableCell></TableCell>
