@@ -8,7 +8,7 @@ import ViewModuleIcon from "@material-ui/icons/ViewModule"
 import ListIcon from "@material-ui/icons/List"
 import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
-import { PricingModal } from "components/PricingModal"
+import { ProcessReturnModal } from "./ProcessReturnModal"
 
 export const ReservationView = ({ match, history, props }) => {
   const { id } = match.params
@@ -87,7 +87,7 @@ export const ReservationView = ({ match, history, props }) => {
           </Fab>
         </Box>
       </Container>
-      <PricingModal open={showModal} onClose={() => openModal(false)} />
+      <ProcessReturnModal open={showModal} onClose={() => openModal(false)} reservation={data} />
     </>
   )
 }
