@@ -1,72 +1,31 @@
 # Spring
+
 ## Internal admin dashboard for managing customers and products
 
+## Setup
 
+1. `yarn start`
+2. Install Apollo DevTools. They help.
 
+## Overview
 
-## Available Scripts
+We are using
 
-In the project directory, you can run:
+- `react-admin` as the scaffolding
+- Devias Kit for the layout, components, and structure
+- `MaterialUI` for components
+- `styled-components` as css-in-jss processor of choice
+- `Apollo` as the data provider to interface with Monsoon, our backend API, and
+- `Redux` as the data store.
 
-### `yarn start`
+## State
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Isn't state the best?
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## State Gotchas
 
-### `yarn test`
+Most views use components provided by `react-admin` to make use of the `dataProvider` directly. This works well for straightforward tables where we need to fetch a list of resources, paginate, filter, etc.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Custom queries are executed using `react-admin`'s `useQueryWithStore`, which fetches the resource and stores it in the admin part of the `Redux` store.
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Mutations, on the other hand, are executed with `Apollo`, which means state will not be optimistically updated without some extra work. A component that executes a mutation and needs to reflect newly updated data will have an `adminKey` passed in as a prop, and will dispatch an action used by `react-admin` to update it with the new data. Alternatves are a hard reload or forcing a refetch. Both result in extraneous requests going to the server. The expectation is that components will not do this, and will optimistically update instead.

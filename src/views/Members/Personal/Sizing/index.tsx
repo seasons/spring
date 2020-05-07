@@ -1,70 +1,147 @@
-import { EditButton } from "components"
-import React from "react"
+import { updateCustomer as updateCustomerAction } from "actions/customerActions"
+import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
+import { useMutation } from "@apollo/react-hooks"
+import { CardContent, ComponentError, EditButton, EditModal, TableHeader } from "components"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
-import { Card, CardContent, CardHeader, Divider, Table, TableBody, TableCell, TableRow, Theme } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
+import { Card, Table, TableBody, TableCell, TableRow } from "@material-ui/core"
 
-import { MemberSubViewIfc } from "../../interfaces"
+import { MemberSubViewProps } from "../../interfaces"
 
-const useStyles = makeStyles<Theme>(theme => ({
-  content: {
-    padding: 0,
-  },
-}))
-
-export const Sizing: React.FC<MemberSubViewIfc> = ({ member }) => {
-  const classes = useStyles()
+export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
+  const adminStoreKey = adminKey || ""
+  const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
+  const [member, updateMember] = useState(memberFromStore)
+  const [updateDetails] = useMutation(CUSTOMER_DETAIL_UPDATE)
+  const [openEdit, setOpenEdit] = useState(false)
+  const dispatch = useDispatch()
   const user = member.detail
 
-  const handleEditEntity = () => {
-    console.log("editing membership")
+  const handleEditOpen = () => {
+    setOpenEdit(true)
+  }
+
+  const handleEditClose = () => {
+    setOpenEdit(false)
+  }
+
+  const handleEditSave = values => {
+    setOpenEdit(false)
+
+    const customer = {
+      detail: {
+        update: {
+          height: parseInt(values.height.value, 10),
+          bodyType: values.bodyType.value,
+          averageTopSize: values.averageTopSize.value,
+          averageWaistSize: values.averageWaistSize.value,
+          averagePantLength: values.averagePantLength.value,
+        },
+      },
+    }
+
+    updateDetails({
+      variables: {
+        id: values.id.value,
+        data: customer,
+      },
+    })
+      .then(() => {
+        const reduxUpdatePayload = {
+          ...member.detail,
+          ...customer.detail.update,
+        }
+
+        updateMember({
+          ...member,
+          detail: reduxUpdatePayload,
+        })
+      })
+      .catch(error => {
+        return <ComponentError />
+      })
+  }
+
+  useEffect(() => {
+    dispatch(updateCustomerAction(member))
+  }, [member, dispatch])
+
+  const editEntity = {
+    id: {
+      value: member.id,
+    },
+    height: {
+      value: user.height,
+      type: "number",
+    },
+    bodyType: {
+      value: user.bodyType,
+      label: "Body Type",
+    },
+    averageTopSize: {
+      value: user.averageTopSize,
+      label: "Average Top Size",
+    },
+    averageWaistSize: {
+      value: user.averageWaistSize,
+      label: "Average Waist Size",
+      type: "number",
+    },
+    averagePantLength: {
+      value: user.averagePantLength,
+      label: "Average Pant Length",
+      type: "number",
+    },
   }
 
   return (
     <Card>
-      <CardHeader title="Sizing" />
-      <Divider />
-      <CardContent className={classes.content}>
+      <CardContent>
         <Table>
           <TableBody>
             <TableRow>
+              <TableHeader>Sizing</TableHeader>
+              <TableCell></TableCell>
+              <TableCell>
+                <EditButton onClick={handleEditOpen} />
+              </TableCell>
+            </TableRow>
+            <TableRow selected>
               <TableCell>Height</TableCell>
               <TableCell>{user.height}</TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditEntity} />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Body Type</TableCell>
               <TableCell>{user.bodyType}</TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditEntity} />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Avg. top size</TableCell>
               <TableCell>{user.averageTopSize}</TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditEntity} />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Avg. waist size</TableCell>
               <TableCell>{user.averageWaistSize}</TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditEntity} />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow selected>
               <TableCell>Avg. pant length</TableCell>
               <TableCell>{user.averagePantLength}</TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditEntity} />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </CardContent>
+      <EditModal
+        title="Sizing"
+        editEntity={editEntity}
+        onSave={handleEditSave}
+        onClose={handleEditClose}
+        open={openEdit}
+      />
     </Card>
   )
 }

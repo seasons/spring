@@ -4,6 +4,8 @@ interface billingInfo {
   id: string
   brand: string
   last_digits: string
+  expiration_month: string
+  expiration_year: string
   name: string
   street1: string
   city: string
@@ -13,6 +15,7 @@ interface billingInfo {
 
 interface shippingAddress {
   id: string
+  name: string
   address1: string
   city: string
   state: string
@@ -27,13 +30,20 @@ interface user {
   createdAt: string
 }
 
-export interface MemberSubViewIfc {
+interface editEntity {
+  id: object
+}
+
+export interface MemberSubViewProps {
+  adminKey?: string
   member: {
     id: string
     status: string
     plan: string
     user: user
     billingInfo: billingInfo
+    invoices: Array<any>
+    invoicesIds: Array<string>
     reservations: Array<any>
     reservationsIds: Array<string>
     detail: {
@@ -58,12 +68,20 @@ export interface MemberSubViewIfc {
   }
 }
 
-export interface MemberViewIfc {
+export interface MemberViewProps {
   history: History
   match: any
   props?: any
 }
 
-export interface MemberViewHeaderIfc extends MemberSubViewIfc {
+export interface MemberViewHeaderProps extends MemberSubViewProps {
   history: History
+}
+
+export interface EditModalProps {
+  title: string
+  editEntity: editEntity
+  open: boolean
+  onClose: () => void
+  onSave(values: {}): void
 }
