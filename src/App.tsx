@@ -53,10 +53,10 @@ const authLink = setContext(async (_, { headers }) => {
 
 const errorLink = onError(({ networkError, operation, forward }) => {
   if (networkError) {
-    console.log("networkError", networkError)
     // User access token has expired
-    // if (networkError. === 401) {
-    // }
+    console.log("networkError", networkError)
+    // localStorage.removeItem("userSession")
+    // window.location.href = "/login"
   }
 })
 
