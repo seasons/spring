@@ -34,7 +34,7 @@ interface editEntity {
   id: object
 }
 
-export interface MemberSubViewIfc {
+export interface MemberSubViewProps {
   adminKey?: string
   member: {
     id: string
@@ -66,17 +66,17 @@ export interface MemberSubViewIfc {
   }
 }
 
-export interface MemberViewIfc {
+export interface MemberViewProps {
   history: History
   match: any
   props?: any
 }
 
-export interface MemberViewHeaderIfc extends MemberSubViewIfc {
+export interface MemberViewHeaderProps extends MemberSubViewProps {
   history: History
 }
 
-export interface EditModalIfc {
+export interface EditModalProps {
   title: string
   editEntity: editEntity
   open: boolean

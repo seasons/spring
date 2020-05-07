@@ -3,15 +3,15 @@ import { CardContent, ComponentError, EditButton, EditModal, IndicatorMap, Label
 import moment from "moment"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { MembershipPlanOptions, MemberStatusOptions } from "utils/constants"
+import { MembershipPlanOptions, MemberStatusOptions } from "../../Member.types"
 
 import { useMutation } from "@apollo/react-hooks"
 import { Card, Table, TableBody, TableCell, TableRow } from "@material-ui/core"
 
-import { MemberSubViewIfc } from "../../interfaces"
+import { MemberSubViewProps } from "../../interfaces"
 import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
 
-export const PersonalDetails: React.FunctionComponent<MemberSubViewIfc> = ({ adminKey }) => {
+export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
 

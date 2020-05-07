@@ -3,7 +3,7 @@ import React from "react"
 import { Grid, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
-import { MemberSubViewIfc } from "../interfaces"
+import { MemberSubViewProps } from "../interfaces"
 import { Lifestyle } from "./Lifestyle"
 import { Sizing } from "./Sizing"
 
@@ -13,7 +13,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-export const PersonalView: React.FC<MemberSubViewIfc> = ({ member, adminKey }) => {
+export const PersonalView: React.FC<MemberSubViewProps> = ({ member, adminKey }) => {
   const classes = useStyles()
 
   return (

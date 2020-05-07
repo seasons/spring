@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/styles"
 import { AccountView } from "./Account"
 import { Header } from "./Header"
 import { HistoryView } from "./History"
-import { MemberViewIfc } from "./interfaces"
+import { MemberViewProps } from "./interfaces"
 import { PersonalView } from "./Personal"
 
 const useStyles = makeStyles<Theme>(theme => ({
@@ -29,7 +29,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-export const MemberView: React.FunctionComponent<MemberViewIfc> = ({ match, history, props }) => {
+export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, history, props }) => {
   const classes = useStyles()
   const { tab: currentTab, id: memberId } = match.params
   const tabs = [

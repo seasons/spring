@@ -1,7 +1,7 @@
 import { capitalize } from "lodash"
 import React, { useState } from "react"
 import styled from "styled-components"
-import { EditModalIfc } from "views/Members/interfaces"
+import { EditModalProps } from "views/Members/interfaces"
 
 import {
   Button,
@@ -43,7 +43,7 @@ export const Select = styled(muiSelect)`
   margin-top: 5px;
 `
 
-export const EditModal: React.FunctionComponent<EditModalIfc> = ({ title, open, onSave, onClose, editEntity }) => {
+export const EditModal: React.FunctionComponent<EditModalProps> = ({ title, open, onSave, onClose, editEntity }) => {
   const [values, setValues] = useState({
     ...editEntity,
   })

@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 
-import { MemberSubViewIfc } from "../../interfaces"
+import { MemberSubViewProps } from "../../interfaces"
 import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
 import { useMutation } from "@apollo/react-hooks"
 
-export const PaymentShipping: React.FunctionComponent<MemberSubViewIfc> = ({ adminKey }) => {
+export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
   const [openEdit, setOpenEdit] = useState(false)

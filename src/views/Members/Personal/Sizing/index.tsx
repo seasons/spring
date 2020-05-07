@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { Card, Table, TableBody, TableCell, TableRow } from "@material-ui/core"
 
-import { MemberSubViewIfc } from "../../interfaces"
+import { MemberSubViewProps } from "../../interfaces"
 
-export const Sizing: React.FC<MemberSubViewIfc> = ({ adminKey }) => {
+export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
   const [member, updateMember] = useState(memberFromStore)

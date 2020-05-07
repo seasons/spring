@@ -5,7 +5,7 @@ import { Datagrid, List, TextField } from "react-admin"
 import { Grid, Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
-import { MemberSubViewIfc } from "../interfaces"
+import { MemberSubViewProps } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
 import { PersonalDetails } from "./PersonalDetails"
 
@@ -15,7 +15,10 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-export const AccountView: React.FunctionComponent<MemberSubViewIfc> = ({ member, adminKey }) => {
+// adminKey is the name of the property in Redux's admin store that holds the data we need to update.
+// it is defined dynamically MemberView.tsx and used by leaf components to optimistically update state
+// after executing a mutation.
+export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ member, adminKey }) => {
   const classes = useStyles()
 
   return (
