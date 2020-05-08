@@ -6,9 +6,10 @@ const ProductFragment = gql`
     id
     name
     description
-    images
+    resizedImages(size: Small) {
+      url
+    }
     retailPrice
-    tags
     createdAt
     updatedAt
     brand {

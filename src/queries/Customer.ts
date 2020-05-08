@@ -1,5 +1,5 @@
 import gql from "graphql-tag"
-import { CREATE, GET_LIST, GET_ONE } from "react-admin"
+import { GET_LIST, GET_ONE } from "react-admin"
 
 const CustomerFragment = gql`
   fragment customer on Customer {
@@ -26,7 +26,7 @@ const CustomerFragment = gql`
   }
 `
 
-const CustomerReservations = gql`
+const CustomerDetails = gql`
   fragment customer on Customer {
     id
     plan
@@ -38,6 +38,15 @@ const CustomerReservations = gql`
       lastName
       createdAt
     }
+    invoices {
+      id
+      subscriptionId
+      recurring
+      status
+      closingDate
+      dueDate
+      amount
+    }
     reservations {
       id
       reservationNumber
@@ -45,11 +54,23 @@ const CustomerReservations = gql`
       status
       shippedAt
       receivedAt
+      products {
+        id
+        productVariant {
+          id
+          product {
+            id
+            images
+          }
+        }
+      }
     }
     billingInfo {
       id
       brand
       last_digits
+      expiration_month
+      expiration_year
       name
       street1
       city
@@ -76,6 +97,7 @@ const CustomerReservations = gql`
       commuteStyle
       shippingAddress {
         id
+        name
         address1
         city
         state
@@ -87,6 +109,5 @@ const CustomerReservations = gql`
 
 export default {
   [GET_LIST]: CustomerFragment,
-  [GET_ONE]: CustomerReservations,
-  [CREATE]: CustomerFragment,
+  [GET_ONE]: CustomerDetails,
 }

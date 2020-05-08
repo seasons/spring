@@ -6,6 +6,7 @@ import { onError } from "apollo-link-error"
 import { HttpLink } from "apollo-link-http"
 import { createUploadLink } from "apollo-upload-client"
 import { AppLoader } from "components"
+
 import { createBrowserHistory } from "history"
 import get from "lodash/get"
 import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
@@ -99,10 +100,6 @@ class App extends React.Component {
 
   render() {
     const { dataProvider } = this.state
-
-    if (!dataProvider) {
-      return <AppLoader />
-    }
 
     const store = configureStore({
       authProvider: () => Promise.resolve(),

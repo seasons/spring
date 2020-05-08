@@ -1,8 +1,8 @@
-import clsx from "clsx"
 import React, { ReactNode } from "react"
 
-import { colors, Theme, Typography } from "@material-ui/core"
+import { Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
+import { colors } from "theme"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -26,7 +26,6 @@ export type LabelVariant = "contained" | "outlined"
 
 export interface LabelProps {
   children: ReactNode
-  className?: string
   color?: string
   shape?: LabelShape
   style?: any
@@ -35,7 +34,6 @@ export interface LabelProps {
 
 export const Label: React.FunctionComponent<LabelProps> = ({
   children,
-  className,
   color = colors.grey[600],
   shape = "square",
   style = {},
@@ -43,12 +41,7 @@ export const Label: React.FunctionComponent<LabelProps> = ({
   ...rest
 }) => {
   const classes = useStyles()
-  const rootClassName = clsx(
-    {
-      [classes.root]: true,
-    },
-    className
-  )
+
   const finalStyle = { ...style }
   if (shape === "rounded") {
     finalStyle.borderRadius = 20
@@ -66,7 +59,7 @@ export const Label: React.FunctionComponent<LabelProps> = ({
   }
 
   return (
-    <Typography {...rest} className={rootClassName} style={finalStyle} variant="overline">
+    <Typography {...rest} className={classes.root} style={finalStyle} variant="overline">
       {children}
     </Typography>
   )

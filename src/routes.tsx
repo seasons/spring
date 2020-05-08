@@ -11,7 +11,8 @@ import {
   MemberView,
   OverviewView,
   ProductCreate,
-  ReservationsList,
+  ReservationList,
+  ReservationView,
 } from "./views"
 
 export default [
@@ -67,7 +68,12 @@ export default [
       {
         path: "/reservations",
         exact: true,
-        component: props => <ReservationsList {...props} basePath="/reservations" resource="Reservation" />,
+        component: props => <ReservationList {...props} basePath="/reservations" resource="Reservation" />,
+      },
+      {
+        path: "/reservation/:id",
+        exact: true,
+        component: props => <ReservationView {...props} basePath="/reservation" resource="Reservation" />,
       },
     ],
   },

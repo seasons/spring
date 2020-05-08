@@ -45,8 +45,7 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data }) => {
   sizes.forEach(size => {
     const sku: string = sizesToSKUs[size]
     const totalCount: number = sizesToTotalCounts[size]
-    Array.from(Array(totalCount).keys()).map((_, index) => {
-      console.log(index)
+    Array.from(Array(totalCount).keys()).forEach((_, index) => {
       physicalProductUIDs.push(`${sku}-${(index + 1).toString().padStart(2, "0")}`)
     })
   })

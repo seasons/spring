@@ -21,7 +21,8 @@ export const ViewEntityField: React.FC<ViewEntityFieldProps> = ({
   entityTab,
 }) => {
   const id = record[source]
-  const entityLink = `/${entityPath}/${id}/${entityTab}`
+  const entityLink = `/${entityPath}/${id}${entityTab ? `/${entityTab}` : ""}`
+
   return (
     <Button color="primary" component={RouterLink} size="small" to={entityLink} variant="outlined">
       View

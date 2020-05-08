@@ -1,12 +1,12 @@
-import { StatusField, ViewEntityField } from "fields"
+import { ProductItemsField, StatusField, ViewEntityField } from "fields"
 import React from "react"
 import { Datagrid, TextField } from "react-admin"
 
 import { Container } from "@material-ui/core"
 
-import { MemberSubViewIfc } from "../interfaces"
+import { MemberSubViewProps } from "../interfaces"
 
-export const HistoryView: React.FC<MemberSubViewIfc> = ({ member }) => {
+export const HistoryView: React.FC<MemberSubViewProps> = ({ member }) => {
   let normalizedReservations = {}
   member?.reservations?.forEach(res => (normalizedReservations[res.id] = res))
   const defaultSort = { field: "reservationNumber", order: "ASC" }
@@ -19,7 +19,7 @@ export const HistoryView: React.FC<MemberSubViewIfc> = ({ member }) => {
           <StatusField label="Order Status" />
           <TextField source="receivedAt" label="Date Placed" />
           <TextField source="shippedAt" label="Date Returned" />
-          <TextField source="reservationNumber" label="Items" />
+          <ProductItemsField source="productVariant.product.images" label="Items" />
           <ViewEntityField entityPath="members" entityTab="account" source="id" label="Actions" />
         </Datagrid>
       </Container>
