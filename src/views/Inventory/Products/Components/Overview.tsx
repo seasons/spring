@@ -56,7 +56,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
   const tags: string[] = Array.from(
     new Set(
       data.products
-        .map(product => product.tags?.set)
+        .map(product => product.tags.map(tag => tag.name))
         .filter(Boolean)
         .flat()
         .sort()

@@ -34,7 +34,9 @@ export const PRODUCT_CREATE_QUERY = gql`
     products {
       innerMaterials
       outerMaterials
-      tags
+      tags {
+        name
+      }
     }
 
     productArchitectures: __type(name: "ProductArchitecture") {
