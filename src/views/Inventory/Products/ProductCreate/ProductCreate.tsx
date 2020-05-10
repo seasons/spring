@@ -39,25 +39,60 @@ export const ProductCreate = props => {
     console.log("SUBMITTED VALUES FINAL:", values)
     const {
       architecture,
-      brand,
-      category,
-      color,
+      bottomSizeType,
+      brand: brandID,
+      category: categoryID,
+      color: colorID,
       description,
       functions,
       innerMaterials,
-      model,
-      modelSize,
+      model: modelID,
+      modelSize: modelSizeName,
       name,
       outerMaterials,
       productType,
       retailPrice,
       season,
-      secondaryColor,
+      secondaryColor: secondaryColorID,
       sizes,
       status,
-      subCategory,
+      subCategory: subCategoryID,
       tags,
     } = values
+    const numImages = 4
+    const images = [...Array(numImages)].map(index => {
+      return values[`image_${index}`]
+    })
+    let modelSizeDisplay
+    switch (productType) {
+      case "Top":
+        modelSizeDisplay = modelSizeName
+        break
+      case "Bottom":
+        modelSizeDisplay = bottomSizeType === "Letter" ? modelSizeName : `${bottomSizeType} ${modelSizeName}`
+    }
+    const productCreateInput = {
+      name,
+      images,
+      brandID,
+      categoryID,
+      type: productType,
+      description,
+      modelID,
+      retailPrice: parseInt(retailPrice),
+      modelSizeName,
+      modelSizeDisplay,
+      bottomSizeType,
+      colorID,
+      secondaryColorID,
+      tags,
+      functions,
+      innerMaterials,
+      outerMaterials,
+      status,
+      season,
+      architecture,
+    }
     // const imageFile = values["image_0"]
     // console.log("UPLOADING:", imageFile)
     // const result = await uploadFile({
