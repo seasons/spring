@@ -22,6 +22,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
     !data?.brands ||
     !data?.categories ||
     !data?.colors ||
+    !data?.inventoryStatuses ||
     !data?.products ||
     !data?.productArchitectures ||
     !data?.productFunctions ||
