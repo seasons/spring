@@ -36,10 +36,12 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
   switch (productType) {
     case "Top":
       const topSizes: string[] = Array.from(new Set(data.topSizes.map(topSize => topSize.letter)))
+      topSizes.sort()
       sizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
       const bottomSizes: string[] = Array.from(new Set(data.bottomSizes.map(bottomSize => bottomSize.value)))
+      bottomSizes.sort()
       sizes = getFormSelectChoices(bottomSizes)
       break
   }
