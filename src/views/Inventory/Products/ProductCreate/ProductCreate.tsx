@@ -37,14 +37,35 @@ export const ProductCreate = props => {
 
   const onSubmit = async values => {
     console.log("SUBMITTED VALUES FINAL:", values)
-    const imageFile = values["image_0"]
-    console.log("UPLOADING:", imageFile)
-    const result = await uploadFile({
-      variables: {
-        image: imageFile,
-      },
-    })
-    console.log("RESULT:", result)
+    const {
+      architecture,
+      brand,
+      category,
+      color,
+      description,
+      functions,
+      innerMaterials,
+      model,
+      modelSize,
+      name,
+      outerMaterials,
+      productType,
+      retailPrice,
+      season,
+      secondaryColor,
+      sizes,
+      status,
+      subCategory,
+      tags,
+    } = values
+    // const imageFile = values["image_0"]
+    // console.log("UPLOADING:", imageFile)
+    // const result = await uploadFile({
+    //   variables: {
+    //     image: imageFile,
+    //   },
+    // })
+    // console.log("RESULT:", result)
   }
 
   const initialValues = {
