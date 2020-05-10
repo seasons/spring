@@ -60,7 +60,7 @@ export const ProductCreate = props => {
       tags,
     } = values
     const numImages = 4
-    const images = [...Array(numImages)].map(index => {
+    const images = [...Array(numImages).keys()].map(index => {
       return values[`image_${index}`]
     })
     let modelSizeDisplay
@@ -81,9 +81,22 @@ export const ProductCreate = props => {
         skusToSizes[sku] = size
       }
     })
-    const physicalProductsData = Object.keys(skusToSizes).map(sku => {
-      const physicalProductKeys = ["inventoryStatus"]
+
+    const physicalProductFieldKeys = ["inventoryStatus", "physicalProductStatus"]
+    const seasonsUIDToData = {}
+    Object.keys(values).forEach(key => {
+      const value = values[key]
+      if (physicalProductFieldKeys.some(fieldKey => key.includes(fieldKey))) {
+        // Key is of the form <seasonsUID>_<fieldKey>, i.e. ALMC-BLU-SS-001-01_dateOrdered
+        const [seasonsUID, fieldKey] = key.split("_")
+        if (seasonsUIDToData[seasonsUID]) {
+          seasonsUIDToData[seasonsUID][fieldKey] = value
+        } else {
+          seasonsUIDToData[seasonsUID] = { [fieldKey]: value }
+        }
+      }
     })
+
     const variantsData = Object.entries(skusToSizes).map(entry => {
       const sku = entry[0]
       const size = entry[1]
@@ -106,6 +119,21 @@ export const ProductCreate = props => {
         const key = measurementKey === "totalcount" ? "total" : measurementKey
         variantData[key] = parseFloat(values[`${size}_${measurementKey}`])
       })
+      const physicalProductsData = Object.keys(seasonsUIDToData)
+        .map(seasonsUID => {
+          if (seasonsUID.includes(sku)) {
+            const { inventoryStatus, physicalProductStatus } = seasonsUIDToData[seasonsUID]
+            return {
+              seasonsUID,
+              inventoryStatus,
+              physicalProductStatus,
+            }
+          } else {
+            return null
+          }
+        })
+        .filter(Boolean)
+      variantData["physicalProducts"] = physicalProductsData
       return variantData
     })
     const productsData = {
@@ -131,14 +159,7 @@ export const ProductCreate = props => {
       architecture,
       variants: variantsData,
     }
-    // const imageFile = values["image_0"]
-    // console.log("UPLOADING:", imageFile)
-    // const result = await uploadFile({
-    //   variables: {
-    //     image: imageFile,
-    //   },
-    // })
-    // console.log("RESULT:", result)
+    console.log("PRODUCTS DATA:", productsData)
   }
 
   const initialValues = {
