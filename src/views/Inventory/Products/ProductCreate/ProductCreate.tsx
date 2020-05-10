@@ -71,7 +71,44 @@ export const ProductCreate = props => {
       case "Bottom":
         modelSizeDisplay = bottomSizeType === "Letter" ? modelSizeName : `${bottomSizeType} ${modelSizeName}`
     }
-    const productCreateInput = {
+    const skusToSizes = {}
+    Object.entries(values).forEach(entry => {
+      const key = entry[0]
+      const value = entry[1] as string
+      if (key.includes("_sku")) {
+        const sku = value
+        const size = key.split("_")[0]
+        skusToSizes[sku] = size
+      }
+    })
+    const physicalProductsData = Object.keys(skusToSizes).map(sku => {
+      const physicalProductKeys = ["inventoryStatus"]
+    })
+    const variantsData = Object.entries(skusToSizes).map(entry => {
+      const sku = entry[0]
+      const size = entry[1]
+      const variantData = {
+        sku,
+        internalSizeName: size,
+        bottomSizeType,
+      }
+      const genericMeasurementKeys = ["weight", "totalcount"]
+      let measurementKeys
+      switch (productType) {
+        case "Top":
+          measurementKeys = ["sleeve", "shoulder", "chest", "neck", "length", ...genericMeasurementKeys]
+          break
+        case "Bottom":
+          measurementKeys = ["waist", "rise", "hem", "inseam", ...genericMeasurementKeys]
+          break
+      }
+      measurementKeys.forEach(measurementKey => {
+        const key = measurementKey === "totalcount" ? "total" : measurementKey
+        variantData[key] = parseFloat(values[`${size}_${measurementKey}`])
+      })
+      return variantData
+    })
+    const productsData = {
       name,
       images,
       brandID,
@@ -92,6 +129,7 @@ export const ProductCreate = props => {
       status,
       season,
       architecture,
+      variants: variantsData,
     }
     // const imageFile = values["image_0"]
     // console.log("UPLOADING:", imageFile)
