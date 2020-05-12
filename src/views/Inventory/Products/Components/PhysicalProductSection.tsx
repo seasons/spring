@@ -7,11 +7,16 @@ import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
 
 export interface PhysicalProductSectionProps {
+  inventoryStatusChoices: any[]
   statusChoices: any[]
   uid: string
 }
 
-export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({ statusChoices, uid }) => {
+export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({
+  inventoryStatusChoices,
+  statusChoices,
+  uid,
+}) => {
   return (
     <ExpandableSection
       title={uid}
@@ -37,6 +42,12 @@ export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({ 
             <Text variant="h5">Date received</Text>
             <Spacer mt={1} />
             <TextField name={`${uid}_dateReceived`} requiredDate />
+          </Grid>
+          <Spacer grid mt={3} />
+          <Grid item xs={6}>
+            <Text variant="h5">Inventory Status</Text>
+            <Spacer mt={1} />
+            <SelectField name={`${uid}_inventoryStatus`} choices={inventoryStatusChoices} requiredString />
           </Grid>
           <Spacer grid mt={5} />
         </Grid>

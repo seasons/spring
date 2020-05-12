@@ -19,10 +19,11 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
 
   if (
     !data?.bottomSizes ||
+    !data?.bottomSizeTypes ||
     !data?.brands ||
     !data?.categories ||
     !data?.colors ||
-    !data?.materials ||
+    !data?.inventoryStatuses ||
     !data?.products ||
     !data?.productArchitectures ||
     !data?.productFunctions ||
@@ -37,19 +38,35 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
   switch (productType) {
     case "Top":
       const topSizes: string[] = Array.from(new Set(data.topSizes.map(topSize => topSize.letter)))
+      topSizes.sort()
       sizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
       const bottomSizes: string[] = Array.from(new Set(data.bottomSizes.map(bottomSize => bottomSize.value)))
+      bottomSizes.sort()
       sizes = getFormSelectChoices(bottomSizes)
       break
   }
 
-  const materials = getEnumValues(data.materials)
+  const allMaterials = new Set<string>()
+  data.products.forEach(product => {
+    product.innerMaterials.forEach(material => allMaterials.add(material))
+    product.outerMaterials.forEach(material => allMaterials.add(material))
+  })
+  const bottomSizeTypeChoices = getFormSelectChoices(getEnumValues(data.bottomSizeTypes))
+  const materials = Array.from(allMaterials).sort()
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
   const productFunctions = data.productFunctions.map(productFunction => productFunction.name)
-  const tags: string[] = Array.from(new Set(data.products.map(product => product.tags.set).flat()))
+  const tags: string[] = Array.from(
+    new Set(
+      data.products
+        .map(product => product.tags.map(tag => tag.name))
+        .filter(Boolean)
+        .flat()
+        .sort()
+    )
+  )
   const statuses = [
     {
       value: "Available",
@@ -60,9 +77,6 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
       display: "Not available",
     },
   ]
-  const sortedBrands = [...data.brands].sort((brandA, brandB) => {
-    return brandA.name < brandB.name ? -1 : brandA.name === brandB.name ? 0 : 1
-  })
 
   return (
     <Box mx={5}>
@@ -72,7 +86,13 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           <PhotographySection numImages={4} />
         </Grid>
         <Grid item xs={8}>
-          <GeneralSection brands={sortedBrands} sizes={sizes} statuses={statuses} />
+          <GeneralSection
+            brands={data.brands}
+            bottomSizeTypeChoices={bottomSizeTypeChoices}
+            productType={productType}
+            sizes={sizes}
+            statuses={statuses}
+          />
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}

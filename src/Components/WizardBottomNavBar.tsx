@@ -1,7 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
 import { Box, Button, styled } from "@material-ui/core"
 
-import { Separator } from "components"
+import { Loader, Separator } from "components"
 
 export interface WizardBottomNavBarProps {
   isFirstPage: boolean
@@ -13,7 +13,11 @@ const BUTTON_HEIGHT = 40
 const BUTTON_WIDTH = 148
 
 export const WizardBottomNavBar: React.FC<WizardBottomNavBarProps> = ({ isFirstPage, isLastPage, onPrevious }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const previousButtonVisiblity = isFirstPage ? "hidden" : "visible"
+  const onSubmitBtnClick = () => {
+    setIsSubmitting(isLastPage)
+  }
   return (
     <StyledBox>
       <Separator />
@@ -21,7 +25,9 @@ export const WizardBottomNavBar: React.FC<WizardBottomNavBarProps> = ({ isFirstP
         <PreviousButton onClick={onPrevious} style={{ visibility: previousButtonVisiblity }}>
           Previous
         </PreviousButton>
-        <SubmitButton type="submit">{isLastPage ? "Submit" : "Next"}</SubmitButton>
+        <SubmitButton type="submit" onClick={onSubmitBtnClick}>
+          {isSubmitting ? <Loader size={20} /> : isLastPage ? "Submit" : "Next"}
+        </SubmitButton>
       </FlexBox>
     </StyledBox>
   )

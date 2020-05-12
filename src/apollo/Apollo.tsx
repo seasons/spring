@@ -5,6 +5,7 @@ import { setContext } from "apollo-link-context"
 import { onError } from "apollo-link-error"
 import { HttpLink } from "apollo-link-http"
 import { Auth0Client } from "@auth0/auth0-spa-js"
+import { createUploadLink } from "apollo-upload-client"
 
 const auth0 = new Auth0Client({
   domain: process.env.AUTH0_DOMAIN!,
@@ -13,10 +14,12 @@ const auth0 = new Auth0Client({
   useRefreshTokens: true,
 })
 
-const link = new HttpLink({
-  // uri: "http://localhost.charlesproxy.com:4000",
-  uri: "http://localhost:4000",
-})
+const URI = "http://localhost:4000"
+// const URI = "https://monsoon-staging.seasons.nyc"
+
+const link = new HttpLink({ uri: URI })
+
+const uploadLink = createUploadLink({ uri: URI })
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -31,7 +34,7 @@ const authLink = setContext(async (_, { headers }) => {
       },
     }
   } catch (e) {
-    console.error("no access token present!")
+    console.error(e, "no access token present!")
     return {
       headers,
     }
@@ -97,5 +100,5 @@ const getNewToken = async () => {
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: ApolloLink.from([authLink, errorLink, link]),
+  link: ApolloLink.from([authLink, errorLink, uploadLink, link]),
 })
