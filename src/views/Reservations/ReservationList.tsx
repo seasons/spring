@@ -1,45 +1,125 @@
-import React from "react"
+import React, { cloneElement, useMemo, useState } from "react"
 import { Datagrid, DatagridBody, Filter, List, TextField } from "react-admin"
 import TableCell from "@material-ui/core/TableCell"
 import TableRow from "@material-ui/core/TableRow"
 import Checkbox from "@material-ui/core/Checkbox"
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
-import { Box, Container, Chip } from "@material-ui/core"
+import { Box, Container, Chip, Tabs, Tab } from "@material-ui/core"
 import { Header } from "components/Header"
+import { TopToolbar, sanitizeListRestProps } from "react-admin"
+import IconEvent from "@material-ui/icons/Event"
+import { Spacer } from "components"
+import { Field } from "fields/Field"
 
-const MyDatagridRow: React.FC<any> = ({ record, resource, id, onToggleItem, children, selected, basePath }) => (
-  <TableRow key={id}>
-    {/* first column: selection checkbox */}
-    <TableCell padding="none">
-      <Checkbox checked={selected} onClick={() => onToggleItem(id)} />
-    </TableCell>
-    {/* data columns based on children */}
-    {React.Children.map(children, field => (
-      <TableCell key={`${id}-${field.props.source}`}>
-        {React.cloneElement(field, {
-          record,
-          basePath,
-          resource,
-        })}
-      </TableCell>
-    ))}
-  </TableRow>
-)
+// const ListActions: React.FC<any> = ({
+//   currentSort,
+//   className,
+//   resource,
+//   filters,
+//   displayedFilters,
+//   exporter, // you can hide ExportButton if exporter = (null || false)
+//   filterValues,
+//   permanentFilter,
+//   hasCreate, // you can hide CreateButton if hasCreate = false
+//   basePath,
+//   selectedIds,
+//   onUnselectItems,
+//   showFilter,
+//   maxResults,
+//   total,
+//   ...rest
+// }) => {
+//   return (
+//     <>
+//       <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
+//         <Spacer />
+//         {filters &&
+//           cloneElement(filters, {
+//             resource,
+//             showFilter,
+//             displayedFilters,
+//             filterValues,
+//             context: "button",
+//           })}
+//       </TopToolbar>
+//     </>
+//   )
+// }
 
-const MyDatagridBody = props => <DatagridBody {...props} row={<MyDatagridRow />} />
-const MyDatagrid = props => <Datagrid {...props} body={<MyDatagridBody />} />
+const StatusInput = ({
+  source,
+  value,
+  tabs,
+  onChange,
+}: {
+  source: any
+  value?: any
+  tabs: any
+  onChange?: (value: any) => void
+}) => {
+  const [currentTab, setCurrentTab] = useState("incoming")
 
-const QuickFilter = ({ label, source, value }) => {
-  return <Chip label={label} />
+  return (
+    <Field
+      name={source}
+      render={({ input, meta }) => (
+        <Tabs
+          onChange={(e, newValue) => {
+            setCurrentTab(newValue)
+            input.onChange(newValue)
+            onChange?.(newValue)
+          }}
+          scrollButtons="auto"
+          textColor="secondary"
+          value={currentTab}
+          variant="standard"
+        >
+          {tabs.map(tab => (
+            <Tab key={tab.value} value={tab.value} label={tab.label} />
+          ))}
+        </Tabs>
+      )}
+    />
+  )
 }
 
-const SourceFilter = props => (
+const Filters = props => (
   <Filter {...props}>
-    <QuickFilter source="status" label="New" value="New" />
+    <StatusInput
+      source="status_in"
+      tabs={[
+        { label: "All", value: [] },
+        {
+          label: "Inbound",
+          value: ["InTransit"],
+          // value: "inbound",
+        },
+        {
+          label: "Outbound",
+          value: ["New", "InQueue", "OnHold", "Packed", "Shipped", "InTransit"],
+          // value: "outbound",
+        },
+        {
+          label: "Completed",
+          // value: "completed",
+          value: ["Completed"],
+        },
+      ]}
+      // onChange={status => {
+      //   switch (status) {
+      //     case "inbound":
+      //       props.setFilter("status_in", ["InTransit"])
+      //       break
+      //     case "outbound":
+      //       props.setFilter("status_in", ["New", "InQueue", "OnHold", "Packed", "Shipped", "InTransit"])
+      //       break
+      //   }
+      // }}
+    />
   </Filter>
 )
 
-export const ReservationList = props => {
+export const ReservationList = ({ staticContext, ...props }) => {
   return (
     <Container maxWidth={false}>
       <Box py={2}>
@@ -59,7 +139,8 @@ export const ReservationList = props => {
           hasEdit={false}
           hasList={true}
           hasShow={true}
-          filters={<SourceFilter />}
+          filters={<Filters />}
+          // actions={<ListActions />}
           sort={{
             field: "createdAt",
             order: "DESC",
@@ -67,15 +148,14 @@ export const ReservationList = props => {
           resource="Reservation"
           title="Reservations"
         >
-          <MyDatagrid>
+          <Datagrid>
             <SinceDateField source="createdAt" label="Created" />
             <ImagesField source="images" label="Images" />
             <StatusField label="Status" />
             <MemberField label="Member" />
-            <TextField source="reservationNumber" label="ID" />
             <SinceDateField source="returnAt" label="Return" />
             <ViewEntityField entityPath="reservation" source="id" label="Actions" />
-          </MyDatagrid>
+          </Datagrid>
         </List>
       </Box>
     </Container>

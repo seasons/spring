@@ -4,7 +4,7 @@ import { Header } from "components/Header"
 
 export const CategoryList = props => (
   <>
-    <Header title="Categories" newEntityText="New Category" />
+    <Header title="Categories" primaryButton={{ text: "New Category" }} />
     <List
       {...props}
       perPage={10}

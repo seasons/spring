@@ -47,7 +47,7 @@ export const ProductCard = props => {
   const { product: physicalProduct } = props
   const { product } = physicalProduct?.productVariant
   const { name, brand } = product
-  const image = product.resizedImages?.[0]
+  const image = product.images?.[0]
   const color = product.color
 
   const handleExpandClick = () => {

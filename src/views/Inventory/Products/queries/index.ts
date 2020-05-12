@@ -38,7 +38,9 @@ export const PRODUCT_CREATE_QUERY = gql`
     }
 
     products {
-      tags
+      tags {
+        name
+      }
     }
 
     productArchitectures: __type(name: "ProductArchitecture") {

@@ -51,6 +51,11 @@ export const ReservationView = ({ match, history, props }) => {
               },
               { title: `Reservation: ${data.reservationNumber}`, url: `/reservations/${data.reservationNumber}` },
             ]}
+            primaryButton={{
+              text: "Process Returns",
+              action: () => openModal(true),
+              icon: <MoveToInboxIcon />,
+            }}
           />
           <Box my={2}>
             <ReservationInfo reservation={data} />

@@ -34,8 +34,7 @@ export const Logo: React.FC<LogoProps> = ({ color = "black", ...rest }) => {
       <Mark />
       <LogoText
         variant="h4"
-        color={color === "white" ? colors.white100 : colors.black100}
-        style={{ display: "inline-block" }}
+        style={{ display: "inline-block", color: color === "white" ? colors.white100 : colors.black100 }}
       >
         SEASONS
       </LogoText>

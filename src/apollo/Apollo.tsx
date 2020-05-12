@@ -1,20 +1,28 @@
 import { InMemoryCache } from "apollo-cache-inmemory"
 import { ApolloClient } from "apollo-client"
-import { ApolloLink } from "apollo-link"
+import { ApolloLink, Observable } from "apollo-link"
 import { setContext } from "apollo-link-context"
 import { onError } from "apollo-link-error"
 import { HttpLink } from "apollo-link-http"
+import { Auth0Client } from "@auth0/auth0-spa-js"
+
+const auth0 = new Auth0Client({
+  domain: process.env.AUTH0_DOMAIN!,
+  client_id: process.env.AUTH0_CLIENT_ID!,
+  redirect_uri: window.location.href,
+  useRefreshTokens: true,
+})
 
 const link = new HttpLink({
+  // uri: "http://localhost.charlesproxy.com:4000",
   uri: "http://localhost:4000",
-  // uri: "https://monsoon-staging.seasons.nyc",
 })
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
   try {
     // return the headers to the context so httpLink can read them
-    const userSession = JSON.parse(localStorage.userSession)
+    const userSession = getUserSession()
     const { token } = userSession
     return {
       headers: {
@@ -30,20 +38,62 @@ const authLink = setContext(async (_, { headers }) => {
   }
 })
 
-const errorLink = onError(err => {
-  console.error(err)
-  // TODO: we need to implement token refreshing here
-  // see https://github.com/seasons/harvest/blob/master/src/Apollo/index.ts#L47-L76
-  const { networkError } = err
+const errorLink = onError(({ networkError, operation, forward }) => {
   if (networkError) {
     console.log("networkError", networkError)
-    localStorage.removeItem("userSession")
 
-    if (window.location.pathname !== "/login") {
-      window.location.href = "/login"
+    const error = networkError as any
+
+    // User access token has expired
+    if (error.statusCode === 401) {
+      // We assume we have both tokens needed to run the async request
+      // Let's refresh token through async request
+      return new Observable(observer => {
+        getNewToken()
+          .then(userSession => {
+            operation.setContext(({ headers = {} }) => ({
+              headers: {
+                // Re-add old headers
+                ...headers,
+                // Switch out old access token for new one
+                authorization: `Bearer ${userSession.token}` || null,
+              },
+            }))
+          })
+          .then(() => {
+            const subscriber = {
+              next: observer.next.bind(observer),
+              error: observer.error.bind(observer),
+              complete: observer.complete.bind(observer),
+            }
+
+            // Retry last failed request
+            forward(operation).subscribe(subscriber)
+          })
+          .catch(error => {
+            // No refresh or client token available, we force user to login
+            observer.error(error)
+          })
+      })
     }
   }
 })
+
+const getUserSession = () => {
+  return JSON.parse(localStorage.userSession)
+}
+
+const getNewToken = async () => {
+  const session = await getUserSession()
+  const newToken = await auth0.getTokenSilently()
+
+  const newUserSession = {
+    ...session,
+    token: newToken.accessToken,
+  }
+  localStorage.setItem("userSession", newUserSession)
+  return newUserSession
+}
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),

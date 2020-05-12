@@ -5,7 +5,7 @@ import { colors } from "theme"
 
 import { Button, ListItem as MuiListItem } from "@material-ui/core"
 
-const NavLInk = styled(Button)`
+const NavLink = styled(Button)`
   padding: 10px 8px;
   justify-content: flex-start;
   text-transform: none;
@@ -48,9 +48,9 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
 }) => {
   return (
     <ListItem {...rest} disableGutters key={title}>
-      <NavLInk component={RouterLink} to={href}>
+      <NavLink component={RouterLink} to={href}>
         {title}
-      </NavLInk>
+      </NavLink>
     </ListItem>
   )
 }
