@@ -15,6 +15,7 @@ export const UPSERT_PRODUCT = gql`
         id
         sku
         physicalProducts {
+          id
           seasonsUID
         }
       }
