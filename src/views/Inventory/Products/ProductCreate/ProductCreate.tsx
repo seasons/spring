@@ -1,5 +1,5 @@
 import { Box } from "@material-ui/core"
-import React from "react"
+import React, { useState } from "react"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
 
@@ -18,6 +18,7 @@ export const ProductCreate = props => {
   const history = useHistory()
   const { data, loading } = useQuery(PRODUCT_CREATE_QUERY)
   const [upsertProduct] = useMutation(UPSERT_PRODUCT)
+  const [values, setValues] = useState({})
 
   if (
     loading ||
@@ -37,6 +38,10 @@ export const ProductCreate = props => {
     return <div>Loading</div>
   }
   console.log("DATA:", data)
+
+  const onNext = values => {
+    setValues(values)
+  }
 
   const onSubmit = async values => {
     console.log("SUBMITTED VALUES FINAL:", values)
@@ -181,9 +186,9 @@ export const ProductCreate = props => {
 
   return (
     <Box>
-      <Wizard initialValues={initialValues} onSubmit={onSubmit}>
+      <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
         <Overview data={data} />
-        <Variants />
+        <Variants values={values} />
         <PhysicalProducts data={data} />
       </Wizard>
       <Spacer mt={9} />

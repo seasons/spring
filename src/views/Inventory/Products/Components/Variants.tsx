@@ -1,6 +1,5 @@
 import React from "react"
 import { useQuery } from "react-apollo"
-import { useFormState } from "react-final-form"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
@@ -8,10 +7,11 @@ import { GET_GENERATED_VARIANT_SKUS } from "../queries"
 import { Header } from "./Header"
 import { VariantSizeSection } from "./VariantSizeSection"
 
-export interface VariantsProps {}
+export interface VariantsProps {
+  values: any
+}
 
-export const Variants: React.FC<VariantsProps> = props => {
-  const { values } = useFormState()
+export const Variants: React.FC<VariantsProps> = ({ values }) => {
   const brandID = values?.brand || ""
   const colorID = values?.color || ""
   const sizeNames = values?.sizes || []
