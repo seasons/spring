@@ -19,6 +19,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
 
   if (
     !data?.bottomSizes ||
+    !data?.bottomSizeTypes ||
     !data?.brands ||
     !data?.categories ||
     !data?.colors ||
@@ -52,6 +53,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
     product.innerMaterials.forEach(material => allMaterials.add(material))
     product.outerMaterials.forEach(material => allMaterials.add(material))
   })
+  const bottomSizeTypeChoices = getFormSelectChoices(getEnumValues(data.bottomSizeTypes))
   const materials = Array.from(allMaterials).sort()
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
@@ -84,7 +86,13 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           <PhotographySection numImages={4} />
         </Grid>
         <Grid item xs={8}>
-          <GeneralSection brands={data.brands} productType={productType} sizes={sizes} statuses={statuses} />
+          <GeneralSection
+            brands={data.brands}
+            bottomSizeTypeChoices={bottomSizeTypeChoices}
+            productType={productType}
+            sizes={sizes}
+            statuses={statuses}
+          />
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}

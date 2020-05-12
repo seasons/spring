@@ -6,6 +6,12 @@ export const PRODUCT_CREATE_QUERY = gql`
       value
     }
 
+    bottomSizeTypes: __type(name: "BottomSizeType") {
+      enumValues {
+        name
+      }
+    }
+
     brands(orderBy: name_ASC) {
       id
       brandCode

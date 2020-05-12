@@ -30,10 +30,10 @@ export const ImagesField: React.FC<ImagesFieldProps> = ({ label, record = {}, so
   return (
     <Box display="flex" flexDirection="row">
       {images.map(image => {
-        const { originalUrl } = image
+        const { url } = image
         return (
           <Box {...sizes[size]} mr={1} bgcolor={colors.black04}>
-            <img key={image.id} {...sizes[size]} src={originalUrl} alt={image.url} />
+            <img key={image.id} {...sizes[size]} src={url} alt={url} />
           </Box>
         )
       })}

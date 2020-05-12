@@ -7,6 +7,7 @@ import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
 
 export interface GeneralSectionProps {
+  bottomSizeTypeChoices: any[]
   brands: any[]
   productType: string
   sizes: any[]
@@ -15,13 +16,18 @@ export interface GeneralSectionProps {
 
 // const required = value => (value ? undefined : 'Required')
 
-export const GeneralSection: React.FC<GeneralSectionProps> = ({ brands, productType, sizes, statuses }) => {
+export const GeneralSection: React.FC<GeneralSectionProps> = ({
+  bottomSizeTypeChoices,
+  brands,
+  productType,
+  sizes,
+  statuses,
+}) => {
   const brandChoices = brands.map(brand => ({
     display: brand.name,
     value: brand.id,
   }))
 
-  const bottomSizeTypes = ["WxL", "US", "EU", "JP", "Letter"].map(value => ({ value, display: value }))
   return (
     <ExpandableSection
       title="General"
@@ -50,7 +56,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({ brands, productT
             <Grid item xs={12}>
               <Text variant="h6">Size Type</Text>
               <Spacer mt={1} />
-              <SelectField multiple name="bottomSizeType" choices={bottomSizeTypes} requiredStringArray />
+              <SelectField multiple name="bottomSizeType" choices={bottomSizeTypeChoices} requiredStringArray />
               <Spacer mt={3} />
             </Grid>
           )}

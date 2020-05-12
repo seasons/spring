@@ -13,8 +13,8 @@ export const TagList = props => (
     title="Tags"
   >
     <Datagrid>
-      <ReferenceField source="tags" reference="Product" label="Tags">
-        <TextField source="name" />
+      <ReferenceField source="product.tags" reference="Product" label="Tags">
+        <TextField source="tags" />
       </ReferenceField>
     </Datagrid>
   </List>

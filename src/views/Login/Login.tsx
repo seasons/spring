@@ -39,20 +39,17 @@ export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
   }
 
   const handleSubmit = async ({ email, password }) => {
-    console.log("GOT SUBMIT")
     const result = await login({
       variables: {
         email,
         password,
       },
     })
-    console.log("LOGIN RESULT", result)
     if (result?.data) {
       const {
         data: { login: userSession },
       } = result
 
-      console.log("LOGIN DATA:", userSession)
       localStorage.setItem("userSession", JSON.stringify(userSession))
       dispatch(loginAction(userSession))
       history.push("/")
