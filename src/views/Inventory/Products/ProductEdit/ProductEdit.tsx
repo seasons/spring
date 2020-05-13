@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { Loading, useGetOne } from "react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
+import { pick } from "lodash"
 
 import { BackButton, Spacer, Wizard } from "components"
 import { Overview } from "../Components"
@@ -51,11 +52,14 @@ export const ProductEdit = props => {
   const onSubmit = async values => {}
 
   const initialValues = {
+    architecture: data.architecture?.id,
     brand: data.brand.id,
-    name: data.name,
+    category: data.category.id,
+    color: data.color.id,
+    functions: data.functions.map(func => func.name),
     productType: data.type,
-    retailPrice: data.retailPrice,
-    status: data.status,
+    tags: data.tags.map(tag => tag.name),
+    ...pick(data, ["description", "name", "innerMaterials", "outerMaterials", "retailPrice", "season", "status"]),
   }
 
   return (

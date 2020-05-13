@@ -88,7 +88,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Sub-category</Text>
             <Spacer mt={1} />
-            <SelectField name="subCategory" choices={categoryChoices} requiredString />
+            <SelectField name="subCategory" choices={categoryChoices} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Color</Text>
@@ -98,7 +98,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Secondary color</Text>
             <Spacer mt={1} />
-            <SelectField name="secondaryColor" choices={colorChoices} requiredString />
+            <SelectField name="secondaryColor" choices={colorChoices} />
           </Grid>
         </Grid>
       }
