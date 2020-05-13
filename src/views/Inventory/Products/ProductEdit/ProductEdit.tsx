@@ -51,6 +51,15 @@ export const ProductEdit = props => {
 
   const onSubmit = async values => {}
 
+  const availableSizes = data.variants.map(variant => {
+    switch (data.type) {
+      case "Top":
+        return variant.internalSize.top.letter
+      case "Bottom":
+        return variant.internalSize.bottom.value
+    }
+  })
+
   const initialValues = {
     architecture: data.architecture?.id,
     brand: data.brand.id,
@@ -58,6 +67,7 @@ export const ProductEdit = props => {
     color: data.color.id,
     functions: data.functions.map(func => func.name),
     productType: data.type,
+    sizes: availableSizes,
     tags: data.tags.map(tag => tag.name),
     ...pick(data, ["description", "name", "innerMaterials", "outerMaterials", "retailPrice", "season", "status"]),
   }
