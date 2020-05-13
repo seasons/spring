@@ -46,9 +46,6 @@ export const PRODUCT_CREATE_QUERY = gql`
     products {
       innerMaterials
       outerMaterials
-      tags {
-        name
-      }
     }
 
     productArchitectures: __type(name: "ProductArchitecture") {
@@ -71,6 +68,10 @@ export const PRODUCT_CREATE_QUERY = gql`
       enumValues {
         name
       }
+    }
+
+    tags {
+      name
     }
 
     topSizes {

@@ -58,15 +58,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
   const productFunctions = data.productFunctions.map(productFunction => productFunction.name)
-  const tags: string[] = Array.from(
-    new Set(
-      data.products
-        .map(product => product.tags.map(tag => tag.name))
-        .filter(Boolean)
-        .flat()
-        .sort()
-    )
-  )
+  const tags = data.tags.map(tag => tag.name).sort()
   const statuses = [
     {
       value: "Available",
