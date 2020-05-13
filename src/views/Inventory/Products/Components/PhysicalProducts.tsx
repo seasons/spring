@@ -10,11 +10,10 @@ import { PhysicalProductSection } from "./PhysicalProductSection"
 
 export interface PhysicalProductsProps {
   data: any
+  values: any
 }
 
-export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data }) => {
-  const { values } = useFormState()
-
+export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data, values }) => {
   if (!data?.physicalProductStatuses || !data?.inventoryStatuses) {
     return null
   }

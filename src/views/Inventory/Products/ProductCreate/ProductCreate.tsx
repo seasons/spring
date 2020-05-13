@@ -189,7 +189,7 @@ export const ProductCreate = props => {
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
         <Overview data={data} />
         <Variants values={values} />
-        <PhysicalProducts data={data} />
+        <PhysicalProducts data={data} values={values} />
       </Wizard>
       <Spacer mt={9} />
     </Box>
