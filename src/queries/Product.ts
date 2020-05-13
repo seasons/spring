@@ -23,8 +23,76 @@ const ProductFragment = gql`
   }
 `
 
+const GetOneProductFragment = gql`
+  fragment GetOneProduct on Product {
+    id
+    architecture
+    createdAt
+    description
+    brand {
+      id
+      name
+    }
+    category {
+      id
+      name
+    }
+    color {
+      id
+      name
+    }
+    functions {
+      id
+      name
+    }
+    images(size: Small) {
+      url
+    }
+    innerMaterials
+    model {
+      id
+      name
+    }
+    modelSize {
+      id
+      display
+    }
+    name
+    outerMaterials
+    retailPrice
+    season
+    secondaryColor {
+      id
+      name
+    }
+    status
+    tags {
+      id
+      name
+    }
+    type
+    updatedAt
+    variants {
+      id
+      internalSize {
+        id
+        top {
+          id
+          letter
+        }
+        bottom {
+          id
+          value
+        }
+        productType
+      }
+    }
+  }
+`
+
+console.log("GET ONE", GetOneProductFragment)
 export default {
   [GET_LIST]: ProductFragment,
-  [GET_ONE]: ProductFragment,
+  [GET_ONE]: GetOneProductFragment,
   [CREATE]: ProductFragment,
 }

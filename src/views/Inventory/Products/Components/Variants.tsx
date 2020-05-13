@@ -38,7 +38,7 @@ export const Variants: React.FC<VariantsProps> = ({ values }) => {
   }
 
   return (
-    <Box mx={5}>
+    <Box>
       <ContainerGrid container spacing={2}>
         <Header title="Product variants" subtitle="Confirm generated product variants" />
         {variantSKUs.map((sku, index) => (

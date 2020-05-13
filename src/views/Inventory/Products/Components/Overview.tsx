@@ -66,7 +66,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
   ]
 
   return (
-    <Box mx={5}>
+    <Box>
       <ContainerGrid container spacing={5}>
         <Header title="New product" subtitle="Please fill out all required fields" />
         <Grid item xs={4}>

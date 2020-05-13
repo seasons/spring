@@ -1,6 +1,6 @@
 import gql from "graphql-tag"
 
-export const PRODUCT_CREATE_QUERY = gql`
+export const PRODUCT_UPSERT_QUERY = gql`
   query productCreateQuery {
     bottomSizes {
       value

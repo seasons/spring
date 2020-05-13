@@ -11,6 +11,7 @@ import {
   MemberView,
   OverviewView,
   ProductCreate,
+  ProductEdit,
   ReservationList,
   ReservationView,
 } from "./views"
@@ -44,6 +45,11 @@ export default [
         path: "/inventory/:tab",
         exact: true,
         component: props => <InventoryView {...props} basePath="/inventory" resource="Product" />,
+      },
+      {
+        path: "/inventory/products/:productID",
+        exact: true,
+        component: props => <ProductEdit {...props} basePath="/inventory/products" resource="Product" />,
       },
       {
         path: "/product/new",

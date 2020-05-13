@@ -1,11 +1,12 @@
 import { Box } from "@material-ui/core"
 import React, { useState } from "react"
+import { Loading } from "react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
 
 import { Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
-import { PRODUCT_CREATE_QUERY } from "../queries"
+import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
 
 export interface ProductCreateProps {
@@ -16,7 +17,7 @@ export interface ProductCreateProps {
 
 export const ProductCreate = props => {
   const history = useHistory()
-  const { data, loading } = useQuery(PRODUCT_CREATE_QUERY)
+  const { data, loading } = useQuery(PRODUCT_UPSERT_QUERY)
   const [upsertProduct] = useMutation(UPSERT_PRODUCT)
   const [values, setValues] = useState({})
 
@@ -34,7 +35,7 @@ export const ProductCreate = props => {
     !data?.productTypes ||
     !data?.topSizes
   ) {
-    return <div>Loading</div>
+    return <Loading />
   }
   console.log("DATA:", data)
 
@@ -198,7 +199,7 @@ export const ProductCreate = props => {
   }
 
   return (
-    <Box>
+    <Box mx={5}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
         <Overview data={data} />
         <Variants values={values} />
