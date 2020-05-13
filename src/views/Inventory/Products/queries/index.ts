@@ -43,11 +43,6 @@ export const PRODUCT_CREATE_QUERY = gql`
       }
     }
 
-    products {
-      innerMaterials
-      outerMaterials
-    }
-
     productArchitectures: __type(name: "ProductArchitecture") {
       enumValues {
         name
