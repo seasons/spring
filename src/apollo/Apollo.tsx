@@ -4,11 +4,14 @@ import { ApolloLink } from "apollo-link"
 import { setContext } from "apollo-link-context"
 import { onError } from "apollo-link-error"
 import { HttpLink } from "apollo-link-http"
+import { createUploadLink } from "apollo-upload-client"
 
-const link = new HttpLink({
-  uri: "http://localhost:4000",
-  // uri: "https://monsoon-staging.seasons.nyc",
-})
+const URI = "http://localhost:4000"
+// const URI = "https://monsoon-staging.seasons.nyc"
+
+const link = new HttpLink({ uri: URI })
+
+const uploadLink = createUploadLink({ uri: URI })
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -23,7 +26,7 @@ const authLink = setContext(async (_, { headers }) => {
       },
     }
   } catch (e) {
-    console.error("no access token present!")
+    console.error(e, "no access token present!")
     return {
       headers,
     }
@@ -36,7 +39,6 @@ const errorLink = onError(err => {
   // see https://github.com/seasons/harvest/blob/master/src/Apollo/index.ts#L47-L76
   const { networkError } = err
   if (networkError) {
-    console.log("networkError", networkError)
     localStorage.removeItem("userSession")
 
     if (window.location.pathname !== "/login") {
@@ -47,5 +49,5 @@ const errorLink = onError(err => {
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: ApolloLink.from([authLink, errorLink, link]),
+  link: ApolloLink.from([authLink, errorLink, uploadLink, link]),
 })

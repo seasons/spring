@@ -60,7 +60,9 @@ const CustomerDetails = gql`
           id
           product {
             id
-            images
+            images(size: Small) {
+              url
+            }
           }
         }
       }

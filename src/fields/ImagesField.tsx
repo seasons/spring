@@ -33,7 +33,7 @@ export const ImagesField: React.FC<ImagesFieldProps> = ({ label, record = {}, so
         const { url } = image
         return (
           <Box {...sizes[size]} mr={1} bgcolor={colors.black04}>
-            <img key={image.id} {...sizes[size]} src={url} alt={image.url} />
+            <img key={image.id} {...sizes[size]} src={url} alt={url} />
           </Box>
         )
       })}

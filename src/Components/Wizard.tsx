@@ -5,20 +5,22 @@ import { WizardBottomNavBar } from "./WizardBottomNavBar"
 export interface WizardProps {
   children: any
   initialValues?: Object
-  onSubmit: (any) => void
+  onNext: (values: any) => void
+  onSubmit: (values: any) => void
 }
 
 export interface WizardContextProps {
   values: any
 }
 
-export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, onSubmit }) => {
+export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, onNext, onSubmit }) => {
   const [pageIndex, setPageIndex] = useState(0)
   const [values, setValues] = useState(initialValues)
 
   const next = vals => {
     setPageIndex(Math.min(pageIndex + 1, children.length - 1))
     setValues(vals)
+    onNext(vals)
   }
 
   const previous = () => setPageIndex(Math.max(pageIndex - 1, 0))
@@ -35,7 +37,7 @@ export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, on
   const activePage = React.Children.toArray(children)[pageIndex]
   const isLastPage = pageIndex === React.Children.count(children) - 1
   return (
-    <Form initialValues={values} onSubmit={handleSubmit}>
+    <Form initialValues={values} onSubmit={handleSubmit} subscription={{ submitting: true, pristine: true }}>
       {({ handleSubmit, submitting, values: formValues, errors }) => {
         return (
           <form onSubmit={handleSubmit}>

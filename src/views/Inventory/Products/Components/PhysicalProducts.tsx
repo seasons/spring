@@ -4,17 +4,17 @@ import { getEnumValues, getFormSelectChoices } from "utils/form"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
+import { Spacer, Text } from "components"
 import { Header } from "./Header"
 import { PhysicalProductSection } from "./PhysicalProductSection"
 
 export interface PhysicalProductsProps {
   data: any
+  values: any
 }
 
-export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data }) => {
-  const { values } = useFormState()
-
-  if (!data?.physicalProductStatuses) {
+export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data, values }) => {
+  if (!data?.physicalProductStatuses || !data?.inventoryStatuses) {
     return null
   }
 
@@ -50,14 +50,24 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data }) => {
     })
   })
 
+  const inventoryStatusChoices = getFormSelectChoices(getEnumValues(data.inventoryStatuses))
   const statusChoices = getFormSelectChoices(getEnumValues(data.physicalProductStatuses))
   return (
     <Box mx={5}>
       <ContainerGrid container spacing={2}>
         <Header title="Physical products" subtitle="Add metadata to physical products" />
         {physicalProductUIDs.map((uid, index) => (
-          <PhysicalProductSection statusChoices={statusChoices} uid={uid} key={index} />
+          <PhysicalProductSection
+            inventoryStatusChoices={inventoryStatusChoices}
+            statusChoices={statusChoices}
+            uid={uid}
+            key={index}
+          />
         ))}
+        <Spacer mt={2} />
+        <Text variant="h5" opacity={0.5}>
+          Note: Submission may take a while so please be patient. You will be redirected upon completion.
+        </Text>
       </ContainerGrid>
     </Box>
   )

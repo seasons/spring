@@ -6,7 +6,13 @@ export const PRODUCT_CREATE_QUERY = gql`
       value
     }
 
-    brands {
+    bottomSizeTypes: __type(name: "BottomSizeType") {
+      enumValues {
+        name
+      }
+    }
+
+    brands(orderBy: name_ASC) {
       id
       brandCode
       name
@@ -18,14 +24,14 @@ export const PRODUCT_CREATE_QUERY = gql`
       name
     }
 
-    colors {
+    colors(orderBy: name_ASC) {
       id
       colorCode
       hexCode
       name
     }
 
-    materials: __type(name: "Material") {
+    inventoryStatuses: __type(name: "InventoryStatus") {
       enumValues {
         name
       }
@@ -35,10 +41,6 @@ export const PRODUCT_CREATE_QUERY = gql`
       enumValues {
         name
       }
-    }
-
-    products {
-      tags
     }
 
     productArchitectures: __type(name: "ProductArchitecture") {
@@ -61,6 +63,10 @@ export const PRODUCT_CREATE_QUERY = gql`
       enumValues {
         name
       }
+    }
+
+    tags {
+      name
     }
 
     topSizes {
