@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom"
 import { Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { PRODUCT_CREATE_QUERY } from "../queries"
-import { UPLOAD_FILE, UPSERT_PRODUCT } from "../mutations"
+import { UPSERT_PRODUCT } from "../mutations"
 
 export interface ProductCreateProps {
   history: any
@@ -45,7 +45,7 @@ export const ProductCreate = props => {
 
   const onSubmit = async values => {
     console.log("SUBMITTED VALUES FINAL:", values)
-    // Perform upsertProduct mutation
+    // Extract appropriate values from the WizardForm
     const {
       architecture,
       bottomSizeType,
@@ -68,10 +68,15 @@ export const ProductCreate = props => {
       subCategory: subCategoryID,
       tags,
     } = values
+
+    // Get the image files which are stored as image_0, image_1, etc.
     const numImages = 4
     const images = [...Array(numImages).keys()].map(index => {
       return values[`image_${index}`]
     })
+
+    // Get the modelSizeDisplay which is usually just the modelSizeName except
+    // for when it is a bottom whose type is not Letter.
     let modelSizeDisplay
     switch (productType) {
       case "Top":
@@ -80,6 +85,8 @@ export const ProductCreate = props => {
       case "Bottom":
         modelSizeDisplay = bottomSizeType === "Letter" ? modelSizeName : `${bottomSizeType} ${modelSizeName}`
     }
+
+    // Get dictionary of product variant SKUs to their sizes
     const skusToSizes = {}
     Object.entries(values).forEach(entry => {
       const key = entry[0]
@@ -91,6 +98,7 @@ export const ProductCreate = props => {
       }
     })
 
+    // Get physical products data by using their seasonsUID as the key
     const physicalProductFieldKeys = ["inventoryStatus", "physicalProductStatus"]
     const seasonsUIDToData = {}
     Object.keys(values).forEach(key => {
@@ -106,9 +114,9 @@ export const ProductCreate = props => {
       }
     })
 
-    const variantsData = Object.entries(skusToSizes).map(entry => {
-      const sku = entry[0]
-      const size = entry[1]
+    // Get variants data by looping through the SKUs
+    const variantsData = Object.keys(skusToSizes).map(sku => {
+      const size = skusToSizes[sku]
       const variantData = {
         sku,
         internalSizeName: size,
@@ -128,6 +136,10 @@ export const ProductCreate = props => {
         const key = measurementKey === "totalcount" ? "total" : measurementKey
         variantData[key] = parseFloat(values[`${size}_${measurementKey}`])
       })
+      // Loop through the seasonsUIDs and extract the data for the physical products
+      // that belong to this variant.
+      // The seasonsUID of the relevant appropriate physical product is in the format
+      // {Product Variant SKU}-{index}
       const physicalProductsData = Object.keys(seasonsUIDToData)
         .map(seasonsUID => {
           if (seasonsUID.includes(sku)) {
@@ -145,6 +157,8 @@ export const ProductCreate = props => {
       variantData["physicalProducts"] = physicalProductsData
       return variantData
     })
+
+    // Piece all the data together and perform mutation
     const productsData = {
       name,
       images,
