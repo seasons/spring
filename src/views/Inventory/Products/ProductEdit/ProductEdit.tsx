@@ -1,13 +1,13 @@
 import { Box } from "@material-ui/core"
-import React, { useState } from "react"
-import { Loading, useGetOne } from "react-admin"
-import { useQuery, useMutation } from "react-apollo"
+import React from "react"
+import { Loading } from "react-admin"
+import { useQuery } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { pick } from "lodash"
 
 import { BackButton, Spacer, Wizard } from "components"
 import { Overview } from "../Components"
-import { PRODUCT_UPSERT_QUERY } from "../queries"
+import { PRODUCT_EDIT_QUERY } from "../queries"
 
 export interface ProductEditProps {
   history: any
@@ -18,24 +18,26 @@ export interface ProductEditProps {
 export const ProductEdit = props => {
   const history = useHistory()
   const { productID } = useParams()
-  const { data, loading, error } = useGetOne("Product", productID)
-  const { data: productUpsertData, loading: productUpsertLoading } = useQuery(PRODUCT_UPSERT_QUERY)
+  const { data, loading, error } = useQuery(PRODUCT_EDIT_QUERY, {
+    variables: { input: { id: productID } },
+  })
+
+  console.log("DATA:", data)
 
   if (
     loading ||
-    !data ||
-    productUpsertLoading ||
-    !productUpsertData?.bottomSizes ||
-    !productUpsertData?.bottomSizeTypes ||
-    !productUpsertData?.brands ||
-    !productUpsertData?.categories ||
-    !productUpsertData?.colors ||
-    !productUpsertData?.physicalProductStatuses ||
-    !productUpsertData?.productArchitectures ||
-    !productUpsertData?.productFunctions ||
-    !productUpsertData?.productModels ||
-    !productUpsertData?.productTypes ||
-    !productUpsertData?.topSizes
+    !data?.product ||
+    !data?.bottomSizes ||
+    !data?.bottomSizeTypes ||
+    !data?.brands ||
+    !data?.categories ||
+    !data?.colors ||
+    !data?.physicalProductStatuses ||
+    !data?.productArchitectures ||
+    !data?.productFunctions ||
+    !data?.productModels ||
+    !data?.productTypes ||
+    !data?.topSizes
   ) {
     return <Loading />
   }
@@ -49,8 +51,9 @@ export const ProductEdit = props => {
     console.log("SUBMIT VALS", values)
   }
 
-  const availableSizes = data.variants.map(variant => {
-    switch (data.type) {
+  const { product } = data
+  const availableSizes = product.variants.map(variant => {
+    switch (product.type) {
       case "Top":
         return variant.internalSize.top.letter
       case "Bottom":
@@ -59,20 +62,20 @@ export const ProductEdit = props => {
   })
 
   const initialValues = {
-    architecture: data.architecture?.id,
-    brand: data.brand.id,
-    category: data.category.id,
-    color: data.color.id,
-    functions: data.functions.map(func => func.name),
-    model: data.model?.id,
-    modelSize: data.modelSize.display,
-    productType: data.type,
-    secondaryColor: data.secondaryColor?.id,
+    architecture: product.architecture?.id,
+    brand: product.brand.id,
+    category: product.category.id,
+    color: product.color.id,
+    functions: product.functions.map(func => func.name),
+    model: product.model?.id,
+    modelSize: product.modelSize.display,
+    productType: product.type,
+    secondaryColor: product.secondaryColor?.id,
     sizes: availableSizes,
-    tags: data.tags.map(tag => tag.name),
-    ...pick(data, ["description", "name", "innerMaterials", "outerMaterials", "retailPrice", "season", "status"]),
+    tags: product.tags.map(tag => tag.name),
+    ...pick(product, ["description", "name", "innerMaterials", "outerMaterials", "retailPrice", "season", "status"]),
   }
-  data.images.forEach((image, index) => {
+  product.images.forEach((image, index) => {
     initialValues[`image_${index}`] = image.url
   })
 
@@ -81,7 +84,7 @@ export const ProductEdit = props => {
       <Spacer mt={5} />
       <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
-        <Overview productUpsertData={productUpsertData} productData={data} />
+        <Overview data={data} />
       </Wizard>
       <Spacer mt={9} />
     </Box>

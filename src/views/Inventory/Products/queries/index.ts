@@ -1,7 +1,8 @@
 import gql from "graphql-tag"
+import { ProductFragment } from "queries/Product"
 
-export const PRODUCT_UPSERT_QUERY = gql`
-  query productCreateQuery {
+export const ProductUpsertFragment = gql`
+  fragment ProductUpsert on Query {
     bottomSizes {
       value
     }
@@ -73,6 +74,76 @@ export const PRODUCT_UPSERT_QUERY = gql`
       letter
     }
   }
+`
+
+export const PRODUCT_EDIT_QUERY = gql`
+  query ProductEditQuery($input: ProductWhereUniqueInput!) {
+    ...ProductUpsert
+    product(where: $input) {
+      ...product
+      architecture
+      color {
+        id
+        name
+      }
+      functions {
+        id
+        name
+      }
+      innerMaterials
+      model {
+        id
+        name
+      }
+      modelSize {
+        id
+        display
+      }
+      outerMaterials
+      season
+      secondaryColor {
+        id
+        name
+      }
+      status
+      tags {
+        id
+        name
+      }
+      type
+      variants {
+        id
+        sku
+        internalSize {
+          id
+          display
+          productType
+          top {
+            id
+            letter
+          }
+          bottom {
+            id
+            value
+          }
+        }
+        physicalProducts {
+          id
+          seasonsUID
+          productStatus
+        }
+      }
+    }
+  }
+  ${ProductUpsertFragment}
+  ${ProductFragment}
+`
+
+export const PRODUCT_UPSERT_QUERY = gql`
+  {
+    ...ProductUpsert
+  }
+  ${ProductUpsertFragment}
 `
 
 export const GET_GENERATED_VARIANT_SKUS = gql`

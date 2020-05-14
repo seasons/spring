@@ -32,7 +32,7 @@ export const WizardBottomNavBar: React.FC<WizardBottomNavBarProps> = ({
           Previous
         </PreviousButton>
         <SubmitButton type="submit" onClick={onSubmitBtnClick}>
-          {isSubmitting ? <Loader size={20} /> : isLastPage ? { submitButtonTitle } : "Next"}
+          {isSubmitting ? <Loader size={20} /> : isLastPage ? submitButtonTitle : "Next"}
         </SubmitButton>
       </FlexBox>
     </StyledBox>

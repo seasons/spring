@@ -201,7 +201,7 @@ export const ProductCreate = props => {
   return (
     <Box mx={5}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
-        <Overview productUpsertData={data} />
+        <Overview data={data} />
         <Variants values={values} />
         <PhysicalProducts data={data} values={values} />
       </Wizard>
