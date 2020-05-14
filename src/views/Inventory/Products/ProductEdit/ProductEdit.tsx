@@ -47,9 +47,13 @@ export const ProductEdit = props => {
   }
   console.log("DATA:", data)
 
-  const onNext = values => {}
+  const onNext = values => {
+    console.log("ON NEXT", values)
+  }
 
-  const onSubmit = async values => {}
+  const onSubmit = async values => {
+    console.log("SUBMIT VALS", values)
+  }
 
   const availableSizes = data.variants.map(variant => {
     switch (data.type) {
@@ -74,13 +78,16 @@ export const ProductEdit = props => {
     tags: data.tags.map(tag => tag.name),
     ...pick(data, ["description", "name", "innerMaterials", "outerMaterials", "retailPrice", "season", "status"]),
   }
+  data.images.forEach((image, index) => {
+    initialValues[`image_${index}`] = image.url
+  })
 
   return (
     <Box mx={5}>
       <Spacer mt={5} />
       <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
-        <Overview data={productUpsertData} />
+        <Overview productUpsertData={productUpsertData} productData={data} />
       </Wizard>
       <Spacer mt={9} />
     </Box>

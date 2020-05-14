@@ -6,10 +6,11 @@ import { Spacer, Text } from "components"
 import { DropzoneField } from "fields"
 
 export interface PhotographySectionProps {
+  imageURLs?: string[]
   numImages: number
 }
 
-export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImages }) => {
+export const PhotographySection: React.FC<PhotographySectionProps> = ({ imageURLs, numImages }) => {
   return (
     <>
       <Text variant="h4">Photography</Text>
@@ -18,7 +19,7 @@ export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImage
         <GridList cellHeight={516} cols={1}>
           {[...Array(numImages)].map((_, index) => (
             <GridListTile key={index}>
-              <DropzoneField name={`image_${index}`} required />
+              <DropzoneField imageURL={imageURLs?.[index]} name={`image_${index}`} required />
             </GridListTile>
           ))}
         </GridList>

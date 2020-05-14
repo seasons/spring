@@ -12,24 +12,25 @@ import { PhotographySection } from "./PhotographySection"
 import { TagsSection } from "./TagsSection"
 
 export interface OverviewProps {
-  data: any
+  productData?: any
+  productUpsertData: any
 }
 
-export const Overview: React.FC<OverviewProps> = ({ data }) => {
+export const Overview: React.FC<OverviewProps> = ({ productData, productUpsertData }) => {
   const [productType, setProductType] = useState("Top")
 
   if (
-    !data?.bottomSizes ||
-    !data?.bottomSizeTypes ||
-    !data?.brands ||
-    !data?.categories ||
-    !data?.colors ||
-    !data?.inventoryStatuses ||
-    !data?.productArchitectures ||
-    !data?.productFunctions ||
-    !data?.productModels ||
-    !data?.productTypes ||
-    !data?.topSizes
+    !productUpsertData?.bottomSizes ||
+    !productUpsertData?.bottomSizeTypes ||
+    !productUpsertData?.brands ||
+    !productUpsertData?.categories ||
+    !productUpsertData?.colors ||
+    !productUpsertData?.inventoryStatuses ||
+    !productUpsertData?.productArchitectures ||
+    !productUpsertData?.productFunctions ||
+    !productUpsertData?.productModels ||
+    !productUpsertData?.productTypes ||
+    !productUpsertData?.topSizes
   ) {
     return null
   }
@@ -37,23 +38,25 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
   let sizes: any[] = []
   switch (productType) {
     case "Top":
-      const topSizes: string[] = Array.from(new Set(data.topSizes.map(topSize => topSize.letter)))
+      const topSizes: string[] = Array.from(new Set(productUpsertData.topSizes.map(topSize => topSize.letter)))
       topSizes.sort()
       sizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
-      const bottomSizes: string[] = Array.from(new Set(data.bottomSizes.map(bottomSize => bottomSize.value)))
+      const bottomSizes: string[] = Array.from(
+        new Set(productUpsertData.bottomSizes.map(bottomSize => bottomSize.value))
+      )
       bottomSizes.sort()
       sizes = getFormSelectChoices(bottomSizes)
       break
   }
 
   const materials = materialsJSON.allMaterials
-  const bottomSizeTypeChoices = getFormSelectChoices(getEnumValues(data.bottomSizeTypes))
-  const productArchitectures = getEnumValues(data.productArchitectures)
-  const productTypes = getEnumValues(data.productTypes)
-  const productFunctions = data.productFunctions.map(productFunction => productFunction.name)
-  const tags = data.tags.map(tag => tag.name).sort()
+  const bottomSizeTypeChoices = getFormSelectChoices(getEnumValues(productUpsertData.bottomSizeTypes))
+  const productArchitectures = getEnumValues(productUpsertData.productArchitectures)
+  const productTypes = getEnumValues(productUpsertData.productTypes)
+  const productFunctions = productUpsertData.productFunctions.map(productFunction => productFunction.name)
+  const tags = productUpsertData.tags.map(tag => tag.name).sort()
   const statuses = [
     {
       value: "Available",
@@ -65,16 +68,20 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
     },
   ]
 
+  const headerTitle = productData?.name || "New product"
+  const headerSubtitle = productData?.brand?.name || "Please fill out all required fields"
+  const imageURLs = productData?.images?.map(image => image.url)
+
   return (
     <Box>
       <ContainerGrid container spacing={5}>
-        <Header title="New product" subtitle="Please fill out all required fields" />
+        <Header title={headerTitle} subtitle={headerSubtitle} />
         <Grid item xs={4}>
-          <PhotographySection numImages={4} />
+          <PhotographySection imageURLs={imageURLs} numImages={4} />
         </Grid>
         <Grid item xs={8}>
           <GeneralSection
-            brands={data.brands}
+            brands={productUpsertData.brands}
             bottomSizeTypeChoices={bottomSizeTypeChoices}
             productType={productType}
             sizes={sizes}
@@ -83,9 +90,9 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}
-            categories={data.categories}
-            colors={data.colors}
-            models={data.productModels}
+            categories={productUpsertData.categories}
+            colors={productUpsertData.colors}
+            models={productUpsertData.productModels}
             setProductType={setProductType}
             sizes={sizes}
             types={productTypes}
