@@ -12,7 +12,6 @@ import Typography from "@material-ui/core/Typography"
 import ColorIcon from "@material-ui/icons/Brightness1"
 import { red } from "@material-ui/core/colors"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import MoreVertIcon from "@material-ui/icons/MoreVert"
 import { Box, Table, TableCell, TableRow, Chip, Divider } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 
@@ -56,15 +55,7 @@ export const ProductCard = props => {
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={name}
-        subheader={brand.name}
-      />
+      <CardHeader title={name} subheader={brand.name} />
       <CardMedia className={classes.media} image={image.url} title="Paella dish" />
       <Divider />
       <Table>

@@ -85,6 +85,9 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
                   })
                   onStateChange(values)
                 }}
+                onBlur={e => {
+                  onStateChange(values)
+                }}
                 value={values.note}
                 rows={4}
                 fullWidth

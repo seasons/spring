@@ -14,13 +14,22 @@ import {
 import { GetReservation } from "generated/GetReservation"
 import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { Alert, Color } from "@material-ui/lab"
+import { PhysicalProductStatus } from "generated/globalTypes"
+
+interface ProductState {
+  returned: boolean
+  productStatus: PhysicalProductStatus
+  notes: string
+}
 
 interface ProcessReturnModalProps {
   open: boolean
   onClose?: () => void
-  onSave?(values: {}): void
+  onSave?(values: ProductStates): void
   reservation: GetReservation
 }
+
+type ProductStates = { [key: string]: ProductState }
 
 export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, onClose, reservation }) => {
   // TODO add status updates and notes for reservation return
@@ -47,7 +56,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
     }
   })
 
-  const [productStates, setProductStates] = useState({
+  const [productStates, setProductStates] = useState<ProductStates>({
     ...barcodeMaps,
   })
   console.log(productStates)
@@ -68,6 +77,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
 
   const handleSave = () => {
     console.log("Save: ", productStates)
+    onSave?.(productStates)
   }
 
   const hideSnackbar = () => {
@@ -154,7 +164,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleSave} color="primary">
-            Save changes
+            Save
           </Button>
         </DialogActions>
       </Dialog>
