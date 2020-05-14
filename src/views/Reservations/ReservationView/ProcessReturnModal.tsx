@@ -1,5 +1,4 @@
-import React from "react"
-import styled from "styled-components"
+import React, { useEffect, useRef, useState } from "react"
 
 import {
   Button,
@@ -8,27 +7,19 @@ import {
   DialogContent,
   DialogActions,
   Typography,
-  Grid,
-  Checkbox,
   Box,
-  Paper,
+  TextField,
+  Snackbar,
 } from "@material-ui/core"
-import { GetReservation, GetReservation_products } from "generated/GetReservation"
+import { GetReservation } from "generated/GetReservation"
+import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
+import { Alert, Color } from "@material-ui/lab"
 
 interface ProcessReturnModalProps {
   open: boolean
   onClose?: () => void
   onSave?(values: {}): void
   reservation: GetReservation
-}
-
-const Image = styled.img`
-  margin-right: 5px;
-`
-
-const ProductImage = ({ product }: { product: GetReservation_products }) => {
-  const image = product?.productVariant?.product.images?.[0]
-  return <Image src={image?.url} width={85} height={107} />
 }
 
 export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, onClose, reservation }) => {
@@ -47,42 +38,136 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
   // 3. set to ready to ship
   // 3. set reservation to shipped by scanning label
 
+  const barcodeMaps = {}
+  ;(reservation.products as any).map(product => {
+    barcodeMaps[product.barcode] = {
+      returned: false,
+      productStatus: "Dirty",
+      notes: "",
+    }
+  })
+
+  const [productStates, setProductStates] = useState({
+    ...barcodeMaps,
+  })
+  console.log(productStates)
+  const [barcode, setBarcode] = useState("")
+  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
+    show: false,
+    message: "",
+    status: "success",
+  })
+  const BARCODE_REGEX = /^SZNS[0-9]{5}$/
+
+  const inputRef = useRef()
+
+  const focusOnInput = () => {
+    const target: any = inputRef?.current
+    target?.focus()
+  }
+
+  const handleSave = () => {
+    console.log("Save: ", productStates)
+  }
+
+  const hideSnackbar = () => {
+    toggleSnackbar({
+      show: false,
+      message: "",
+      status: "success",
+    })
+  }
+
+  const handleBarcodeChange = e => {
+    const input = e.target.value
+    if (input.match(BARCODE_REGEX)) {
+      console.log("Found barcode: ", input)
+
+      const productState = productStates[input]
+      if (productState) {
+        setBarcode("")
+        toggleSnackbar({
+          show: true,
+          message: `Found barcode: ${input}`,
+          status: "success",
+        })
+        setProductStates({
+          ...productStates,
+          [input]: {
+            ...productState,
+            returned: true,
+          },
+        })
+      } else {
+        toggleSnackbar({
+          show: true,
+          message: `Barcode not found`,
+          status: "error",
+        })
+      }
+    } else {
+      setBarcode(input)
+    }
+  }
+
+  useEffect(() => {
+    const timeout = setTimeout(focusOnInput, 100)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [open])
+
   return (
-    <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
-      <DialogTitle id="customized-dialog-title">Process Return</DialogTitle>
-      <DialogContent dividers>
-        <Typography variant="subtitle1" color="textSecondary">
-          Mark as returned
-        </Typography>
-        <Box flex>
-          {reservation.products.map(product => (
-            <Box my={1}>
-              <Paper variant="outlined">
-                <Grid item container spacing={1}>
-                  <Grid item md={2}>
-                    <Box mx={1} alignItems="center" height="100%">
-                      <Checkbox />
-                    </Box>
-                  </Grid>
-                  <Grid item>
-                    <ProductImage product={product} />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="body1" color="textSecondary">
-                      {product.seasonsUID}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Box>
-          ))}
-        </Box>
-      </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={onSave} color="primary">
-          Save changes
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <>
+      <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle id="customized-dialog-title">Process Return</DialogTitle>
+        <DialogContent dividers>
+          <Box my={2} width={["550px"]}>
+            <TextField
+              label="Scan Barcode"
+              helperText="Click into box and scan the barcode to mark as returned"
+              name="barcode"
+              type="text"
+              variant="outlined"
+              onChange={handleBarcodeChange}
+              value={barcode}
+              inputRef={inputRef}
+              fullWidth
+            />
+          </Box>
+          <Box mt={1} mb={2}>
+            {reservation.products.map(product => (
+              <ProcessReturnProductCard
+                product={product}
+                productState={productStates[product.barcode]}
+                key={product.id}
+                onStateChange={state => {
+                  setProductStates({
+                    ...productStates,
+                    [product.barcode]: state,
+                  })
+                }}
+              />
+            ))}
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleSave} color="primary">
+            Save changes
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar
+        open={snackbar.show}
+        autoHideDuration={6000}
+        onClose={hideSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={hideSnackbar} severity={snackbar.status}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </>
   )
 }

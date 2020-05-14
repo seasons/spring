@@ -66,6 +66,7 @@ export default {
         seasonsUID
         inventoryStatus
         productStatus
+        barcode
         productVariant {
           product {
             id

@@ -86,10 +86,6 @@ export const ReservationView = ({ match, history, props }) => {
               </Grid>
             ))}
           </Grid>
-          <Fab color="primary" variant="extended" onClick={() => openModal(true)}>
-            <MoveToInboxIcon />
-            <Box ml={1}>Process Return</Box>
-          </Fab>
         </Box>
       </Container>
       <ProcessReturnModal open={showModal} onClose={() => openModal(false)} reservation={data} />
