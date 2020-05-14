@@ -21,12 +21,6 @@ export const ProductEdit = props => {
   const { data, loading, error } = useGetOne("Product", productID)
   const { data: productUpsertData, loading: productUpsertLoading } = useQuery(PRODUCT_UPSERT_QUERY)
 
-  console.log("PROD ID", productID)
-  console.log("PROD DATA:", data)
-  if (error) {
-    console.log("ERROR", error)
-  }
-
   if (
     loading ||
     !data ||
@@ -86,7 +80,7 @@ export const ProductEdit = props => {
     <Box mx={5}>
       <Spacer mt={5} />
       <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
-      <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
+      <Wizard submitButtonTitle="Save" initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
         <Overview productUpsertData={productUpsertData} productData={data} />
       </Wizard>
       <Spacer mt={9} />

@@ -5,6 +5,7 @@ import { WizardBottomNavBar } from "./WizardBottomNavBar"
 export interface WizardProps {
   children: any
   initialValues?: Object
+  submitButtonTitle?: string
   onNext: (values: any) => void
   onSubmit: (values: any) => void
 }
@@ -13,7 +14,13 @@ export interface WizardContextProps {
   values: any
 }
 
-export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, onNext, onSubmit }) => {
+export const Wizard: React.FC<WizardProps> = ({
+  children,
+  initialValues = {},
+  submitButtonTitle = "Submit",
+  onNext,
+  onSubmit,
+}) => {
   const [pageIndex, setPageIndex] = useState(0)
   const [values, setValues] = useState(initialValues)
 
@@ -43,7 +50,12 @@ export const Wizard: React.FC<WizardProps> = ({ children, initialValues = {}, on
         return (
           <form onSubmit={handleSubmit}>
             {activePage}
-            <WizardBottomNavBar onPrevious={previous} isFirstPage={pageIndex === 0} isLastPage={isLastPage} />
+            <WizardBottomNavBar
+              submitButtonTitle={submitButtonTitle}
+              onPrevious={previous}
+              isFirstPage={pageIndex === 0}
+              isLastPage={isLastPage}
+            />
           </form>
         )
       }}

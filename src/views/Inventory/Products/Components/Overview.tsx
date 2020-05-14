@@ -10,6 +10,7 @@ import { Header } from "./Header"
 import { MetadataSection } from "./MetadataSection"
 import { PhotographySection } from "./PhotographySection"
 import { TagsSection } from "./TagsSection"
+import { VariantsOverviewSection } from "./VariantsOverviewSection"
 
 export interface OverviewProps {
   productData?: any
@@ -99,6 +100,13 @@ export const Overview: React.FC<OverviewProps> = ({ productData, productUpsertDa
           />
           <Spacer mt={6} />
           <TagsSection functions={productFunctions} materials={materials} tags={tags} />
+          {productData?.variants && (
+            <>
+              <Spacer mt={6} />
+              <VariantsOverviewSection variants={productData?.variants} />
+              <Spacer mt={6} />
+            </>
+          )}
         </Grid>
       </ContainerGrid>
     </Box>

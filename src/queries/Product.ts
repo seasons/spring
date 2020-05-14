@@ -74,8 +74,11 @@ const GetOneProductFragment = gql`
     updatedAt
     variants {
       id
+      sku
       internalSize {
         id
+        display
+        productType
         top {
           id
           letter
@@ -84,7 +87,11 @@ const GetOneProductFragment = gql`
           id
           value
         }
-        productType
+      }
+      physicalProducts {
+        id
+        seasonsUID
+        productStatus
       }
     }
   }
