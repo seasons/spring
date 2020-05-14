@@ -36,7 +36,7 @@ export interface customer_reservations_products_productVariant_product_images {
 export interface customer_reservations_products_productVariant_product {
   __typename: "Product"
   id: string
-  images: customer_reservations_products_productVariant_product_images[] | null
+  images: customer_reservations_products_productVariant_product_images[]
 }
 
 export interface customer_reservations_products_productVariant {

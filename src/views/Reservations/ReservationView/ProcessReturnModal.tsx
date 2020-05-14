@@ -121,7 +121,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
   return (
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title">Process Return</DialogTitle>
+        <DialogTitle id="customized-dialog-title">Process Returns</DialogTitle>
         <DialogContent dividers>
           <Box my={2} width={["550px"]}>
             <TextField

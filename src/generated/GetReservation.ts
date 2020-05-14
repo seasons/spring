@@ -93,7 +93,7 @@ export interface GetReservation_products_productVariant_product {
   secondaryColor: GetReservation_products_productVariant_product_secondaryColor | null
   status: ProductStatus | null
   type: ProductType | null
-  images: GetReservation_products_productVariant_product_images[] | null
+  images: GetReservation_products_productVariant_product_images[]
 }
 
 export interface GetReservation_products_productVariant {
@@ -107,6 +107,7 @@ export interface GetReservation_products {
   seasonsUID: string
   inventoryStatus: InventoryStatus
   productStatus: PhysicalProductStatus
+  barcode: string
   productVariant: GetReservation_products_productVariant
 }
 

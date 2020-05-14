@@ -15,7 +15,7 @@ export interface user {
   email: string
   firstName: string
   lastName: string
-  role: UserRole
+  roles: UserRole[]
   createdAt: any
   updatedAt: any
 }

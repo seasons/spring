@@ -13,6 +13,16 @@ export interface productCreateQuery_bottomSizes {
   value: string | null
 }
 
+export interface productCreateQuery_bottomSizeTypes_enumValues {
+  __typename: "__EnumValue"
+  name: string
+}
+
+export interface productCreateQuery_bottomSizeTypes {
+  __typename: "__Type"
+  enumValues: productCreateQuery_bottomSizeTypes_enumValues[] | null
+}
+
 export interface productCreateQuery_brands {
   __typename: "Brand"
   id: string
@@ -35,14 +45,14 @@ export interface productCreateQuery_colors {
   name: string
 }
 
-export interface productCreateQuery_materials_enumValues {
+export interface productCreateQuery_inventoryStatuses_enumValues {
   __typename: "__EnumValue"
   name: string
 }
 
-export interface productCreateQuery_materials {
+export interface productCreateQuery_inventoryStatuses {
   __typename: "__Type"
-  enumValues: productCreateQuery_materials_enumValues[] | null
+  enumValues: productCreateQuery_inventoryStatuses_enumValues[] | null
 }
 
 export interface productCreateQuery_physicalProductStatuses_enumValues {
@@ -62,6 +72,8 @@ export interface productCreateQuery_products_tags {
 
 export interface productCreateQuery_products {
   __typename: "Product"
+  innerMaterials: string[]
+  outerMaterials: string[]
   tags: productCreateQuery_products_tags[]
 }
 
@@ -104,10 +116,11 @@ export interface productCreateQuery_topSizes {
 
 export interface productCreateQuery {
   bottomSizes: (productCreateQuery_bottomSizes | null)[]
+  bottomSizeTypes: productCreateQuery_bottomSizeTypes | null
   brands: (productCreateQuery_brands | null)[]
   categories: (productCreateQuery_categories | null)[]
   colors: (productCreateQuery_colors | null)[]
-  materials: productCreateQuery_materials | null
+  inventoryStatuses: productCreateQuery_inventoryStatuses | null
   physicalProductStatuses: productCreateQuery_physicalProductStatuses | null
   products: (productCreateQuery_products | null)[]
   productArchitectures: productCreateQuery_productArchitectures | null

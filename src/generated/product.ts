@@ -28,7 +28,7 @@ export interface product {
   id: string
   name: string
   description: string | null
-  images: product_images[] | null
+  images: product_images[]
   retailPrice: number | null
   createdAt: any
   updatedAt: any
