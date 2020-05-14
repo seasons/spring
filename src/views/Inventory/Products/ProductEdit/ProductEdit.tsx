@@ -69,6 +69,12 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
     } = values
 
     const modelSizeDisplay = modelSizeName ? getModelSizeDisplay(productType, modelSizeName, bottomSizeType) : null
+    const numImages = 4
+    const images = [...Array(numImages).keys()]
+      .map(index => {
+        return values[`image_${index}`]
+      })
+      .filter(Boolean)
 
     const updateProductData = {
       architecture,
@@ -87,12 +93,12 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
       type: productType,
     }
     const customUpdateProductData = {
+      images,
       modelSizeName,
       modelSizeDisplay,
       functions,
       tags,
     }
-    console.log("UPDATE:", updateProductData)
     const result = await updateProduct({
       variables: {
         where: { id: productID },
@@ -100,10 +106,9 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
         customData: customUpdateProductData,
       },
     })
-    console.log("RESULT:", result)
-    // if (result?.data) {
-    //   history.push("/inventory/products")
-    // }
+    if (result?.data) {
+      history.push("/inventory/products")
+    }
   }
 
   const { product } = data
