@@ -9,20 +9,14 @@ import { BackButton, Spacer, Wizard } from "components"
 import { Overview } from "../Components"
 import { PRODUCT_EDIT_QUERY } from "../queries"
 
-export interface ProductEditProps {
-  history: any
-  match: any
-  props?: any
-}
+export interface ProductEditProps {}
 
-export const ProductEdit = props => {
+export const ProductEdit: React.FC<ProductEditProps> = props => {
   const history = useHistory()
   const { productID } = useParams()
   const { data, loading, error } = useQuery(PRODUCT_EDIT_QUERY, {
     variables: { input: { id: productID } },
   })
-
-  console.log("DATA:", data)
 
   if (
     loading ||
@@ -61,6 +55,7 @@ export const ProductEdit = props => {
     }
   })
 
+  // Extract current values of the product to display
   const initialValues = {
     architecture: product.architecture?.id,
     brand: product.brand.id,

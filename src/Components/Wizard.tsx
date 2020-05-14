@@ -33,7 +33,6 @@ export const Wizard: React.FC<WizardProps> = ({
   const previous = () => setPageIndex(Math.max(pageIndex - 1, 0))
 
   const handleSubmit = values => {
-    console.log("WIZARD SUBMIT", values)
     const isLastPage = pageIndex === React.Children.count(children) - 1
     if (isLastPage) {
       return onSubmit(values)
