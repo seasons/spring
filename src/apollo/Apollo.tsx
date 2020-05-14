@@ -39,11 +39,10 @@ const errorLink = onError(err => {
   // see https://github.com/seasons/harvest/blob/master/src/Apollo/index.ts#L47-L76
   const { networkError } = err
   if (networkError) {
-    localStorage.removeItem("userSession")
-
-    if (window.location.pathname !== "/login") {
-      window.location.href = "/login"
-    }
+    // localStorage.removeItem("userSession")
+    // if (window.location.pathname !== "/login") {
+    //   window.location.href = "/login"
+    // }
   }
 })
 

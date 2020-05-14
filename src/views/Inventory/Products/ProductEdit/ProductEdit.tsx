@@ -1,13 +1,15 @@
 import { Box } from "@material-ui/core"
 import React from "react"
 import { Loading } from "react-admin"
-import { useQuery } from "react-apollo"
+import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { pick } from "lodash"
 
 import { BackButton, Spacer, Wizard } from "components"
 import { Overview } from "../Components"
 import { PRODUCT_EDIT_QUERY } from "../queries"
+import { UPDATE_PRODUCT } from "../mutations"
+import { getModelSizeDisplay } from "../utils"
 
 export interface ProductEditProps {}
 
@@ -17,6 +19,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   const { data, loading, error } = useQuery(PRODUCT_EDIT_QUERY, {
     variables: { input: { id: productID } },
   })
+  const [updateProduct] = useMutation(UPDATE_PRODUCT)
 
   if (
     loading ||
@@ -43,6 +46,64 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
 
   const onSubmit = async values => {
     console.log("SUBMIT VALS", values)
+    const {
+      architecture,
+      bottomSizeType,
+      brand: brandID,
+      category: categoryID,
+      color: colorID,
+      description,
+      functions,
+      innerMaterials,
+      model: modelID,
+      modelSize: modelSizeName,
+      name,
+      outerMaterials,
+      productType,
+      retailPrice,
+      season,
+      secondaryColor: secondaryColorID,
+      status,
+      subCategory: subCategoryID,
+      tags,
+    } = values
+
+    const modelSizeDisplay = modelSizeName ? getModelSizeDisplay(productType, modelSizeName, bottomSizeType) : null
+
+    const updateProductData = {
+      architecture,
+      brand: { connect: { id: brandID } },
+      category: { connect: { id: categoryID } },
+      color: { connect: { id: colorID } },
+      description,
+      innerMaterials: { set: innerMaterials },
+      model: modelID && { connect: { id: modelID } },
+      name,
+      outerMaterials: { set: outerMaterials },
+      retailPrice,
+      season,
+      secondaryColor: secondaryColorID && { connect: { id: secondaryColorID } },
+      status,
+      type: productType,
+    }
+    const customUpdateProductData = {
+      modelSizeName,
+      modelSizeDisplay,
+      functions,
+      tags,
+    }
+    console.log("UPDATE:", updateProductData)
+    const result = await updateProduct({
+      variables: {
+        where: { id: productID },
+        data: updateProductData,
+        customData: customUpdateProductData,
+      },
+    })
+    console.log("RESULT:", result)
+    // if (result?.data) {
+    //   history.push("/inventory/products")
+    // }
   }
 
   const { product } = data

@@ -8,6 +8,7 @@ import { Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
+import { getModelSizeDisplay } from "../utils"
 
 export interface ProductCreateProps {
   history: any
@@ -75,16 +76,7 @@ export const ProductCreate = props => {
       return values[`image_${index}`]
     })
 
-    // Get the modelSizeDisplay which is usually just the modelSizeName except
-    // for when it is a bottom whose type is not Letter.
-    let modelSizeDisplay
-    switch (productType) {
-      case "Top":
-        modelSizeDisplay = modelSizeName
-        break
-      case "Bottom":
-        modelSizeDisplay = bottomSizeType === "Letter" ? modelSizeName : `${bottomSizeType} ${modelSizeName}`
-    }
+    const modelSizeDisplay = getModelSizeDisplay(productType, modelSizeName, bottomSizeType)
 
     // Get dictionary of product variant SKUs to their sizes
     const skusToSizes = {}
