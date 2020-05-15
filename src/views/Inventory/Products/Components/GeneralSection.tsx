@@ -9,6 +9,7 @@ import { SelectField, TextField } from "fields"
 export interface GeneralSectionProps {
   bottomSizeTypeChoices: any[]
   brands: any[]
+  isEditing: boolean
   productType: string
   sizes: any[]
   statuses: any[]
@@ -19,6 +20,7 @@ export interface GeneralSectionProps {
 export const GeneralSection: React.FC<GeneralSectionProps> = ({
   bottomSizeTypeChoices,
   brands,
+  isEditing,
   productType,
   sizes,
   statuses,
@@ -63,7 +65,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
           <Grid item xs={12}>
             <Text variant="h6">Available sizes</Text>
             <Spacer mt={1} />
-            <SelectField multiple name="sizes" choices={sizes} requiredStringArray />
+            <SelectField disabled={isEditing} multiple name="sizes" choices={sizes} requiredStringArray />
             <Spacer mt={3} />
           </Grid>
           <Grid item xs={12}>

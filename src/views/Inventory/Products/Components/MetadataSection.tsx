@@ -11,6 +11,7 @@ export interface MetadataSectionProps {
   architectures: string[]
   categories: any[]
   colors: any[]
+  isEditing: boolean
   models: any[]
   sizes: any[]
   types: string[]
@@ -21,6 +22,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
   architectures,
   categories,
   colors,
+  isEditing,
   models,
   sizes,
   types,
@@ -59,6 +61,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <Text variant="h6">Type</Text>
             <Spacer mt={1} />
             <SelectField
+              disabled={isEditing}
               name="productType"
               choices={typeChoices}
               onChange={event => setProductType(event.target.value)}

@@ -71,6 +71,8 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
   const headerSubtitle = product?.brand?.name || "Please fill out all required fields"
   const imageURLs = product?.images?.map(image => image.url)
 
+  const isEditing = !!product?.variants
+
   return (
     <Box>
       <ContainerGrid container spacing={5}>
@@ -82,6 +84,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           <GeneralSection
             brands={data.brands}
             bottomSizeTypeChoices={bottomSizeTypeChoices}
+            isEditing={isEditing}
             productType={productType}
             sizes={sizes}
             statuses={statuses}
@@ -91,6 +94,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
             architectures={productArchitectures}
             categories={data.categories}
             colors={data.colors}
+            isEditing={isEditing}
             models={data.productModels}
             setProductType={setProductType}
             sizes={sizes}
@@ -98,7 +102,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           />
           <Spacer mt={6} />
           <TagsSection functions={productFunctions} materials={materials} tags={tags} />
-          {product?.variants && (
+          {isEditing && (
             <>
               <Spacer mt={6} />
               <VariantsOverviewSection variants={product?.variants} />
