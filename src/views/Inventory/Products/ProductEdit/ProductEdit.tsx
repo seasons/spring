@@ -78,32 +78,30 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
 
     const updateProductData = {
       architecture,
+      bottomSizeType,
       brand: { connect: { id: brandID } },
       category: { connect: { id: categoryID } },
       color: { connect: { id: colorID } },
       description,
+      functions,
+      images,
       innerMaterials: { set: innerMaterials },
       model: modelID && { connect: { id: modelID } },
+      modelSizeDisplay,
+      modelSizeName,
       name,
       outerMaterials: { set: outerMaterials },
       retailPrice,
       season,
       secondaryColor: secondaryColorID && { connect: { id: secondaryColorID } },
       status,
-      type: productType,
-    }
-    const customUpdateProductData = {
-      images,
-      modelSizeName,
-      modelSizeDisplay,
-      functions,
       tags,
+      type: productType,
     }
     const result = await updateProduct({
       variables: {
         where: { id: productID },
         data: updateProductData,
-        customData: customUpdateProductData,
       },
     })
     if (result?.data) {
