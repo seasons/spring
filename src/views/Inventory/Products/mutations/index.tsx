@@ -27,26 +27,26 @@ export const UPSERT_PRODUCT = gql`
 export const UPDATE_PRODUCT = gql`
   mutation($where: ProductWhereUniqueInput!, $data: CustomProductUpdateInput!) {
     updateProduct(where: $where, data: $data) {
-      ...UpdateVariant
+      id
+      name
+      description
+      functions {
+        id
+        name
+      }
+      tags {
+        id
+        name
+      }
     }
   }
-  ${UpdateVariantFragment}
 `
 
 export const UPDATE_VARIANT = gql`
   mutation UpdateVariant($input: UpdateVariantInput!) {
     updateProductVariant(input: $input) {
-      id
-      sku
-      internalSize {
-        id
-        top {
-          id
-        }
-        bottom {
-          id
-        }
-      }
+      ...UpdateVariant
     }
   }
+  ${UpdateVariantFragment}
 `
