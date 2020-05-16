@@ -1,4 +1,5 @@
 import React from "react"
+import { useHistory } from "react-router-dom"
 
 import { Box, Grid } from "@material-ui/core"
 import { styled as muiStyled } from "@material-ui/core/styles"
@@ -11,6 +12,12 @@ export interface VariantSummaryProps {
 }
 
 export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant }) => {
+  const history = useHistory()
+
+  const onClickView = () => {
+    history.push(`/inventory/product/variants/${variant.id}`)
+  }
+
   return (
     <Grid item xs={12}>
       <Spacer mt={3} />
@@ -32,7 +39,8 @@ export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant }) => {
             alignItems="center"
             bgcolor={colors.white95}
             borderRadius={20}
-            onClick={() => {}}
+            style={{ cursor: "pointer" }}
+            onClick={onClickView}
           >
             <Text variant="h6">View</Text>
           </Box>

@@ -14,6 +14,7 @@ import {
   ProductEdit,
   ReservationList,
   ReservationView,
+  VariantEdit,
 } from "./views"
 
 export default [
@@ -52,9 +53,14 @@ export default [
         component: props => <ProductEdit {...props} basePath="/inventory/products" resource="Product" />,
       },
       {
-        path: "/product/new",
+        path: "/inventory/product/variants/:variantID",
         exact: true,
-        component: props => <ProductCreate {...props} basePath="/product/new" resource="Product" />,
+        component: props => <VariantEdit {...props} basePath="/inventory/products" resource="Product" />,
+      },
+      {
+        path: "/inventory/product/new",
+        exact: true,
+        component: props => <ProductCreate {...props} basePath="/inventory/product/new" resource="Product" />,
       },
       {
         path: "/members",
