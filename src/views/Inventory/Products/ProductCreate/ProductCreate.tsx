@@ -8,7 +8,7 @@ import { Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
-import { getModelSizeDisplay } from "../utils"
+import { getModelSizeDisplay, extractVariantSizeFields } from "../utils"
 
 export interface ProductCreateProps {
   history: any
@@ -114,20 +114,6 @@ export const ProductCreate = props => {
         internalSizeName: size,
         bottomSizeType,
       }
-      const genericMeasurementKeys = ["weight", "totalcount"]
-      let measurementKeys
-      switch (productType) {
-        case "Top":
-          measurementKeys = ["sleeve", "shoulder", "chest", "neck", "length", ...genericMeasurementKeys]
-          break
-        case "Bottom":
-          measurementKeys = ["waist", "rise", "hem", "inseam", ...genericMeasurementKeys]
-          break
-      }
-      measurementKeys.forEach(measurementKey => {
-        const key = measurementKey === "totalcount" ? "total" : measurementKey
-        variantData[key] = parseFloat(values[`${size}_${measurementKey}`])
-      })
       // Loop through the seasonsUIDs and extract the data for the physical products
       // that belong to this variant.
       // The seasonsUID of the relevant appropriate physical product is in the format
@@ -146,8 +132,16 @@ export const ProductCreate = props => {
           }
         })
         .filter(Boolean)
+
       variantData["physicalProducts"] = physicalProductsData
-      return variantData
+
+      // Get the relevant size values for the productType, i.e. shoulder, chest, etc. for Top
+      const variantSizeData = extractVariantSizeFields({ values, productType, size, isEdit: false })
+
+      return {
+        ...variantSizeData,
+        ...variantData,
+      }
     })
 
     // Piece all the data together and perform mutation

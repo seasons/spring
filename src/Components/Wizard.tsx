@@ -6,7 +6,7 @@ export interface WizardProps {
   children: any
   initialValues?: Object
   submitButtonTitle?: string
-  onNext: (values: any) => void
+  onNext?: (values: any) => void
   onSubmit: (values: any) => void
 }
 
@@ -27,7 +27,7 @@ export const Wizard: React.FC<WizardProps> = ({
   const next = vals => {
     setPageIndex(Math.min(pageIndex + 1, children.length - 1))
     setValues(vals)
-    onNext(vals)
+    onNext?.(vals)
   }
 
   const previous = () => setPageIndex(Math.max(pageIndex - 1, 0))

@@ -11,3 +11,33 @@ export const getModelSizeDisplay = (productType: string, modelSizeName: string, 
   }
   return modelSizeDisplay
 }
+
+export const extractVariantSizeFields = ({
+  isEdit,
+  productType,
+  size,
+  values,
+}: {
+  isEdit: boolean
+  productType: string
+  size: string
+  values: any
+}) => {
+  const sizeData = {}
+  // We don't include the total count when editing a variant
+  const genericMeasurementKeys = isEdit ? ["weight"] : ["weight", "totalcount"]
+  let measurementKeys
+  switch (productType) {
+    case "Top":
+      measurementKeys = ["sleeve", "shoulder", "chest", "neck", "length", ...genericMeasurementKeys]
+      break
+    case "Bottom":
+      measurementKeys = ["waist", "rise", "hem", "inseam", ...genericMeasurementKeys]
+      break
+  }
+  measurementKeys.forEach(measurementKey => {
+    const key = measurementKey === "totalcount" ? "total" : measurementKey
+    sizeData[key] = parseFloat(values[`${size}_${measurementKey}`]) || undefined
+  })
+  return sizeData
+}

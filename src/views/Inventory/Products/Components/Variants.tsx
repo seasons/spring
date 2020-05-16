@@ -51,10 +51,14 @@ export const Variants: React.FC<VariantsProps> = ({ values, variants }) => {
     return null
   }
 
+  const isEditing = !!variants
+  const title = isEditing ? variantsData[0].sku : "Product variants"
+  const subtitle = isEditing ? "Edit measurement values" : "Confirm generated product variants"
+
   return (
     <Box>
       <ContainerGrid container spacing={2}>
-        <Header title="Product variants" subtitle="Confirm generated product variants" />
+        <Header title={title} subtitle={subtitle} />
         {variantsData.map((variant, index) => (
           <VariantSizeSection size={variant.size} sku={variant.sku} productType={productType} key={index} />
         ))}
