@@ -41,23 +41,33 @@ export const VariantEdit: React.FC<VariantEditProps> = props => {
 
   let initialValues = {}
   const { productVariant } = data
-  const { sku, internalSize } = productVariant
+  const { sku, internalSize, total, weight } = productVariant
   if (internalSize) {
     const size = internalSize?.display
     switch (internalSize.productType) {
       case "Top":
         const { top } = internalSize
         initialValues = {
-          [`${size}_shoulder`]: parseFloat(top?.shoulder) || undefined,
           [`${size}_chest`]: parseFloat(top?.chest) || undefined,
           [`${size}_length`]: parseFloat(top?.length) || undefined,
-          [`${size}_sleeve`]: parseFloat(top?.sleeve) || undefined,
           [`${size}_neck`]: parseFloat(top?.neck) || undefined,
+          [`${size}_shoulder`]: parseFloat(top?.shoulder) || undefined,
+          [`${size}_sleeve`]: parseFloat(top?.sleeve) || undefined,
+          [`${size}_totalcount`]: total,
+          [`${size}_weight`]: parseFloat(weight) || undefined,
         }
         console.log("TOP", top)
         break
       case "Bottom":
-        initialValues = {}
+        const { bottom } = internalSize
+        initialValues = {
+          [`${size}_waist`]: parseFloat(bottom?.waist) || undefined,
+          [`${size}_rise`]: parseFloat(bottom?.rise) || undefined,
+          [`${size}_hem`]: parseFloat(bottom?.hem) || undefined,
+          [`${size}_inseam`]: parseFloat(bottom?.inseam) || undefined,
+          [`${size}_totalcount`]: total,
+          [`${size}_weight`]: parseFloat(weight) || undefined,
+        }
         break
       default:
         break

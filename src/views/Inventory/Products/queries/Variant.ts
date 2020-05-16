@@ -6,6 +6,7 @@ export const VARIANT_EDIT_QUERY = gql`
     productVariant(where: $where) {
       id
       sku
+      total
       weight
       internalSize {
         id

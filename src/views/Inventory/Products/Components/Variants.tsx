@@ -8,8 +8,8 @@ import { Header } from "./Header"
 import { VariantSizeSection } from "./VariantSizeSection"
 
 export interface VariantsProps {
-  values?: any
-  variants?: any[]
+  values?: any // Passed in when creating new variants
+  variants?: any[] // Passed in when editing variants
 }
 
 export const Variants: React.FC<VariantsProps> = ({ values, variants }) => {
