@@ -61,6 +61,7 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
                     onStateChange(values)
                   }}
                   label="Product Status"
+                  disabled={!productState.returned}
                   fullWidth
                 >
                   <MenuItem value="">
@@ -89,6 +90,7 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
                   onStateChange(values)
                 }}
                 value={values.note}
+                disabled={!productState.returned}
                 rows={4}
                 fullWidth
                 multiline

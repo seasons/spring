@@ -1,22 +1,13 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography,
-  Box,
-  TextField,
-  Snackbar,
-} from "@material-ui/core"
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Box, TextField, Snackbar } from "@material-ui/core"
 import { GetReservation } from "generated/GetReservation"
 import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { Alert, Color } from "@material-ui/lab"
 import { PhysicalProductStatus } from "generated/globalTypes"
 
 interface ProductState {
+  productUID: string
   returned: boolean
   productStatus: PhysicalProductStatus
   notes: string
@@ -50,6 +41,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
   const barcodeMaps = {}
   ;(reservation.products as any).map(product => {
     barcodeMaps[product.barcode] = {
+      productUID: product.seasonsUID,
       returned: false,
       productStatus: "Dirty",
       notes: "",

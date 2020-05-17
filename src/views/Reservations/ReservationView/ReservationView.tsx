@@ -101,28 +101,7 @@ export const ReservationView = ({ match, history, props }) => {
           const mutationData: ProcessReservationMutationVariables = {
             data: {
               reservationNumber: data.reservationNumber,
-              productStates,
-              // receipt: {
-              //   reservation: {
-              //     connect: {
-              //       reservationNumber: data.reservationNumber,
-              //     },
-              //   },
-              //   items: {
-              //     create: data.products.map(product => {
-              //       const productState = productStates[product.barcode]
-              //       return {
-              //         product: {
-              //           connect: {
-              //             seasonsUID: product.seasonsUID,
-              //           },
-              //         },
-              //         productStatus: productState.productStatus,
-              //         notes: productState.notes,
-              //       }
-              //     }),
-              //   },
-              // },
+              productStates: Object.values(productStates),
             },
           }
 
