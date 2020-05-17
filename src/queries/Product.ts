@@ -1,7 +1,7 @@
 import { CREATE, GET_ONE, GET_LIST } from "react-admin"
 import gql from "graphql-tag"
 
-const ProductFragment = gql`
+export const ProductFragment = gql`
   fragment product on Product {
     id
     name

@@ -40,7 +40,6 @@ const errorLink = onError(err => {
   const { networkError } = err
   if (networkError) {
     localStorage.removeItem("userSession")
-
     if (window.location.pathname !== "/login") {
       window.location.href = "/login"
     }

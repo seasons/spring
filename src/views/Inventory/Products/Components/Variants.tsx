@@ -8,14 +8,15 @@ import { Header } from "./Header"
 import { VariantSizeSection } from "./VariantSizeSection"
 
 export interface VariantsProps {
-  values: any
+  values?: any // Passed in when creating new variants
+  variants?: any[] // Passed in when editing variants
 }
 
-export const Variants: React.FC<VariantsProps> = ({ values }) => {
+export const Variants: React.FC<VariantsProps> = ({ values, variants }) => {
   const brandID = values?.brand || ""
   const colorID = values?.color || ""
   const sizeNames = values?.sizes || []
-  const productType = values?.productType
+  const productType = values?.productType || variants?.[0]?.internalSize?.productType
 
   const { data, loading, error } = useQuery(GET_GENERATED_VARIANT_SKUS, {
     variables: {
@@ -27,22 +28,39 @@ export const Variants: React.FC<VariantsProps> = ({ values }) => {
     },
   })
 
-  if (loading) {
+  if (values && (loading || !data || error)) {
     return <div>Loading</div>
   }
 
-  const variantSKUs = data?.generatedVariantSKUs
-
-  if (!variantSKUs || error || !productType) {
+  let variantsData
+  if (values && data) {
+    variantsData = data.generatedVariantSKUs.map((sku, index) => ({
+      sku,
+      size: sizeNames[index],
+    }))
+  } else if (variants) {
+    variantsData = variants.map((variant, index) => ({
+      sku: variant.sku,
+      size: variant.internalSize.display,
+    }))
+  } else {
     return null
   }
 
+  if (!variantsData || !productType) {
+    return null
+  }
+
+  const isEditing = !!variants
+  const title = isEditing ? variantsData[0].sku : "Product variants"
+  const subtitle = isEditing ? "Edit measurement values" : "Confirm generated product variants"
+
   return (
-    <Box mx={5}>
+    <Box>
       <ContainerGrid container spacing={2}>
-        <Header title="Product variants" subtitle="Confirm generated product variants" />
-        {variantSKUs.map((sku, index) => (
-          <VariantSizeSection size={sizeNames[index]} sku={sku} productType={productType} key={index} />
+        <Header title={title} subtitle={subtitle} />
+        {variantsData.map((variant, index) => (
+          <VariantSizeSection size={variant.size} sku={variant.sku} productType={productType} key={index} />
         ))}
       </ContainerGrid>
     </Box>

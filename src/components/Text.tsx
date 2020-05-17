@@ -9,6 +9,7 @@ export interface TextProps {
   opacity?: number
   style?: any
   variant?: TypographyVariant
+  onClick?: () => void
 }
 
 export const Text: React.FunctionComponent<TextProps> = ({
@@ -17,13 +18,14 @@ export const Text: React.FunctionComponent<TextProps> = ({
   opacity = 1,
   variant,
   style = {},
+  onClick,
   ...rest
 }) => {
   const finalStyle = { ...style }
   finalStyle.color = color
   finalStyle.opacity = opacity
   return (
-    <Typography {...rest} variant={variant} style={finalStyle}>
+    <Typography {...rest} variant={variant} style={finalStyle} onClick={onClick}>
       {children}
     </Typography>
   )

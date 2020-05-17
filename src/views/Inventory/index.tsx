@@ -47,7 +47,7 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
   }
 
   const onNewProductBtnPressed = () => {
-    history.push("/product/new")
+    history.push("/inventory/product/new")
   }
 
   if (!currentTab) {

@@ -6,10 +6,12 @@ import { FormControl, Spacer, Text } from "components"
 import { Field, ChildFieldProps } from "./Field"
 import { UploadFileIcon } from "icons"
 
-export type DropzoneFieldProps = ChildFieldProps & {}
+export type DropzoneFieldProps = ChildFieldProps & {
+  imageURL?: string
+}
 
-export const DropzoneField: React.FC<DropzoneFieldProps> = ({ name, ...rest }) => {
-  const [imagePreview, setImagePreview] = useState("")
+export const DropzoneField: React.FC<DropzoneFieldProps> = ({ imageURL = "", name, ...rest }) => {
+  const [imagePreview, setImagePreview] = useState(imageURL)
   const onDrop = useCallback(acceptedFiles => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0]

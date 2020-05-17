@@ -1,12 +1,14 @@
 import { Box } from "@material-ui/core"
 import React, { useState } from "react"
+import { Loading } from "react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
 
 import { Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
-import { PRODUCT_CREATE_QUERY } from "../queries"
+import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
+import { getModelSizeDisplay, extractVariantSizeFields } from "../utils"
 
 export interface ProductCreateProps {
   history: any
@@ -16,7 +18,7 @@ export interface ProductCreateProps {
 
 export const ProductCreate = props => {
   const history = useHistory()
-  const { data, loading } = useQuery(PRODUCT_CREATE_QUERY)
+  const { data, loading } = useQuery(PRODUCT_UPSERT_QUERY)
   const [upsertProduct] = useMutation(UPSERT_PRODUCT)
   const [values, setValues] = useState({})
 
@@ -34,7 +36,7 @@ export const ProductCreate = props => {
     !data?.productTypes ||
     !data?.topSizes
   ) {
-    return <div>Loading</div>
+    return <Loading />
   }
   console.log("DATA:", data)
 
@@ -74,16 +76,7 @@ export const ProductCreate = props => {
       return values[`image_${index}`]
     })
 
-    // Get the modelSizeDisplay which is usually just the modelSizeName except
-    // for when it is a bottom whose type is not Letter.
-    let modelSizeDisplay
-    switch (productType) {
-      case "Top":
-        modelSizeDisplay = modelSizeName
-        break
-      case "Bottom":
-        modelSizeDisplay = bottomSizeType === "Letter" ? modelSizeName : `${bottomSizeType} ${modelSizeName}`
-    }
+    const modelSizeDisplay = getModelSizeDisplay(productType, modelSizeName, bottomSizeType)
 
     // Get dictionary of product variant SKUs to their sizes
     const skusToSizes = {}
@@ -121,20 +114,6 @@ export const ProductCreate = props => {
         internalSizeName: size,
         bottomSizeType,
       }
-      const genericMeasurementKeys = ["weight", "totalcount"]
-      let measurementKeys
-      switch (productType) {
-        case "Top":
-          measurementKeys = ["sleeve", "shoulder", "chest", "neck", "length", ...genericMeasurementKeys]
-          break
-        case "Bottom":
-          measurementKeys = ["waist", "rise", "hem", "inseam", ...genericMeasurementKeys]
-          break
-      }
-      measurementKeys.forEach(measurementKey => {
-        const key = measurementKey === "totalcount" ? "total" : measurementKey
-        variantData[key] = parseFloat(values[`${size}_${measurementKey}`])
-      })
       // Loop through the seasonsUIDs and extract the data for the physical products
       // that belong to this variant.
       // The seasonsUID of the relevant appropriate physical product is in the format
@@ -153,8 +132,16 @@ export const ProductCreate = props => {
           }
         })
         .filter(Boolean)
+
       variantData["physicalProducts"] = physicalProductsData
-      return variantData
+
+      // Get the relevant size values for the productType, i.e. shoulder, chest, etc. for Top
+      const variantSizeData = extractVariantSizeFields({ values, productType, size, isEdit: false })
+
+      return {
+        ...variantSizeData,
+        ...variantData,
+      }
     })
 
     // Piece all the data together and perform mutation
@@ -198,7 +185,7 @@ export const ProductCreate = props => {
   }
 
   return (
-    <Box>
+    <Box mx={5}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
         <Overview data={data} />
         <Variants values={values} />

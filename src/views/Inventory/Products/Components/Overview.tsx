@@ -10,6 +10,7 @@ import { Header } from "./Header"
 import { MetadataSection } from "./MetadataSection"
 import { PhotographySection } from "./PhotographySection"
 import { TagsSection } from "./TagsSection"
+import { VariantsOverviewSection } from "./VariantsOverviewSection"
 
 export interface OverviewProps {
   data: any
@@ -65,17 +66,25 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
     },
   ]
 
+  const product = data?.product
+  const headerTitle = product?.name || "New product"
+  const headerSubtitle = product?.brand?.name || "Please fill out all required fields"
+  const imageURLs = product?.images?.map(image => image.url)
+
+  const isEditing = !!product?.variants
+
   return (
-    <Box mx={5}>
+    <Box>
       <ContainerGrid container spacing={5}>
-        <Header title="New product" subtitle="Please fill out all required fields" />
+        <Header title={headerTitle} subtitle={headerSubtitle} />
         <Grid item xs={4}>
-          <PhotographySection numImages={4} />
+          <PhotographySection imageURLs={imageURLs} numImages={4} />
         </Grid>
         <Grid item xs={8}>
           <GeneralSection
             brands={data.brands}
             bottomSizeTypeChoices={bottomSizeTypeChoices}
+            isEditing={isEditing}
             productType={productType}
             sizes={sizes}
             statuses={statuses}
@@ -85,6 +94,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
             architectures={productArchitectures}
             categories={data.categories}
             colors={data.colors}
+            isEditing={isEditing}
             models={data.productModels}
             setProductType={setProductType}
             sizes={sizes}
@@ -92,6 +102,13 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           />
           <Spacer mt={6} />
           <TagsSection functions={productFunctions} materials={materials} tags={tags} />
+          {isEditing && (
+            <>
+              <Spacer mt={6} />
+              <VariantsOverviewSection variants={product?.variants} />
+              <Spacer mt={6} />
+            </>
+          )}
         </Grid>
       </ContainerGrid>
     </Box>
