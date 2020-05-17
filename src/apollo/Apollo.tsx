@@ -4,15 +4,7 @@ import { ApolloLink, Observable } from "apollo-link"
 import { setContext } from "apollo-link-context"
 import { onError } from "apollo-link-error"
 import { HttpLink } from "apollo-link-http"
-import { Auth0Client } from "@auth0/auth0-spa-js"
 import { createUploadLink } from "apollo-upload-client"
-
-const auth0 = new Auth0Client({
-  domain: process.env.AUTH0_DOMAIN!,
-  client_id: process.env.AUTH0_CLIENT_ID!,
-  redirect_uri: window.location.href,
-  useRefreshTokens: true,
-})
 
 const URI = "http://localhost:4000"
 // const URI = "https://monsoon-staging.seasons.nyc"
@@ -82,19 +74,38 @@ const errorLink = onError(({ networkError, operation, forward }) => {
   }
 })
 
-const getUserSession = () => {
-  return JSON.parse(localStorage.userSession)
+export const getUserSession = () => {
+  try {
+    return JSON.parse(localStorage.userSession)
+  } catch (e) {
+    console.error("Failed to parse session")
+  }
 }
 
 const getNewToken = async () => {
-  const session = await getUserSession()
-  const newToken = await auth0.getTokenSilently()
+  const session = getUserSession()
+
+  const mutation = `
+    mutation {
+      refreshToken(refreshToken: "${session.refreshToken}")
+    }
+  `
+
+  const response = await fetch(URI, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query: mutation }),
+  })
+
+  const { data } = await response.json()
+  const newToken = data.refreshToken
 
   const newUserSession = {
     ...session,
-    token: newToken.accessToken,
+    token: newToken,
   }
-  localStorage.setItem("userSession", newUserSession)
+
+  localStorage.setItem("userSession", JSON.stringify(newUserSession))
   return newUserSession
 }
 
