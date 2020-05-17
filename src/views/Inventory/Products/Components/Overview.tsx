@@ -4,11 +4,13 @@ import { getEnumValues, getFormSelectChoices } from "utils/form"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
+import materialsJSON from "data/materials.json"
 import { GeneralSection } from "./GeneralSection"
 import { Header } from "./Header"
 import { MetadataSection } from "./MetadataSection"
 import { PhotographySection } from "./PhotographySection"
 import { TagsSection } from "./TagsSection"
+import { VariantsOverviewSection } from "./VariantsOverviewSection"
 
 export interface OverviewProps {
   data: any
@@ -24,7 +26,6 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
     !data?.categories ||
     !data?.colors ||
     !data?.inventoryStatuses ||
-    !data?.products ||
     !data?.productArchitectures ||
     !data?.productFunctions ||
     !data?.productModels ||
@@ -48,25 +49,12 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
       break
   }
 
-  const allMaterials = new Set<string>()
-  data.products.forEach(product => {
-    product.innerMaterials.forEach(material => allMaterials.add(material))
-    product.outerMaterials.forEach(material => allMaterials.add(material))
-  })
+  const materials = materialsJSON.allMaterials
   const bottomSizeTypeChoices = getFormSelectChoices(getEnumValues(data.bottomSizeTypes))
-  const materials = Array.from(allMaterials).sort()
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
   const productFunctions = data.productFunctions.map(productFunction => productFunction.name)
-  const tags: string[] = Array.from(
-    new Set(
-      data.products
-        .map(product => product.tags.map(tag => tag.name))
-        .filter(Boolean)
-        .flat()
-        .sort()
-    )
-  )
+  const tags = data.tags.map(tag => tag.name).sort()
   const statuses = [
     {
       value: "Available",
@@ -78,17 +66,25 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
     },
   ]
 
+  const product = data?.product
+  const headerTitle = product?.name || "New product"
+  const headerSubtitle = product?.brand?.name || "Please fill out all required fields"
+  const imageURLs = product?.images?.map(image => image.url)
+
+  const isEditing = !!product?.variants
+
   return (
-    <Box mx={5}>
+    <Box>
       <ContainerGrid container spacing={5}>
-        <Header title="New product" subtitle="Please fill out all required fields" />
+        <Header title={headerTitle} subtitle={headerSubtitle} />
         <Grid item xs={4}>
-          <PhotographySection numImages={4} />
+          <PhotographySection imageURLs={imageURLs} numImages={4} />
         </Grid>
         <Grid item xs={8}>
           <GeneralSection
             brands={data.brands}
             bottomSizeTypeChoices={bottomSizeTypeChoices}
+            isEditing={isEditing}
             productType={productType}
             sizes={sizes}
             statuses={statuses}
@@ -98,6 +94,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
             architectures={productArchitectures}
             categories={data.categories}
             colors={data.colors}
+            isEditing={isEditing}
             models={data.productModels}
             setProductType={setProductType}
             sizes={sizes}
@@ -105,6 +102,13 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           />
           <Spacer mt={6} />
           <TagsSection functions={productFunctions} materials={materials} tags={tags} />
+          {isEditing && (
+            <>
+              <Spacer mt={6} />
+              <VariantsOverviewSection variants={product?.variants} />
+              <Spacer mt={6} />
+            </>
+          )}
         </Grid>
       </ContainerGrid>
     </Box>

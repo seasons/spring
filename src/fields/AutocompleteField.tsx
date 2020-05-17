@@ -21,15 +21,8 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ name, opti
           <FormControl error={meta.error}>
             <Autocomplete
               multiple
-              onChange={(event: any) => {
-                const targetValue = event.target.innerHTML
-                let newValue
-                if (!targetValue || event.target.tagName !== "LI") {
-                  newValue = []
-                } else {
-                  newValue = Array.from(new Set([...input.value, targetValue]))
-                }
-                input.onChange({ target: { name, value: newValue } })
+              onChange={(event: any, value) => {
+                input.onChange({ target: { name, value } })
               }}
               value={input.value || []}
               options={options}

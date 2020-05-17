@@ -10,11 +10,10 @@ import { PhysicalProductSection } from "./PhysicalProductSection"
 
 export interface PhysicalProductsProps {
   data: any
+  values: any
 }
 
-export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data }) => {
-  const { values } = useFormState()
-
+export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data, values }) => {
   if (!data?.physicalProductStatuses || !data?.inventoryStatuses) {
     return null
   }
@@ -54,7 +53,7 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({ data }) => {
   const inventoryStatusChoices = getFormSelectChoices(getEnumValues(data.inventoryStatuses))
   const statusChoices = getFormSelectChoices(getEnumValues(data.physicalProductStatuses))
   return (
-    <Box mx={5}>
+    <Box>
       <ContainerGrid container spacing={2}>
         <Header title="Physical products" subtitle="Add metadata to physical products" />
         {physicalProductUIDs.map((uid, index) => (

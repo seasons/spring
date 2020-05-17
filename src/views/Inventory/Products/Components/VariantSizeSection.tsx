@@ -31,6 +31,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productT
   const typeSpecificSecondRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(2) : []
   const firstRowFields = ["SKU", "Weight", ...typeSpecificFirstRowFields]
   const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
+  const optionalFields = ["SKU", "Neck"]
   return (
     <ExpandableSection
       title={size}
@@ -45,7 +46,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productT
                   disabled={field === "SKU"}
                   name={`${size}_${field.toLowerCase()}`}
                   initialValue={field === "SKU" ? sku : undefined}
-                  requiredNumber={field !== "SKU"}
+                  requiredNumber={!optionalFields.includes(field)}
                 />
               </Grid>
             ))}
@@ -56,7 +57,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productT
                 <Spacer mt={1} />
                 <TextField
                   name={`${size}_${field.toLowerCase().replace(" ", "")}`}
-                  requiredNumber
+                  requiredNumber={!optionalFields.includes(field)}
                   maxValue={field === "Total count" ? 99 : undefined}
                 />
               </Grid>

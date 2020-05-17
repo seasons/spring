@@ -6,6 +6,7 @@ import { Link, Theme, Typography } from "@material-ui/core"
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft"
 import { makeStyles } from "@material-ui/styles"
 
+import { BackButton } from "components"
 import { MemberViewHeaderProps } from "./interfaces"
 
 const useStyles = makeStyles<Theme>(theme => ({
@@ -28,11 +29,7 @@ export const Header: React.FunctionComponent<MemberViewHeaderProps> = ({ history
 
   return (
     <div className={classes.root}>
-      <Typography component="h2" gutterBottom variant="overline">
-        <Link component="button" variant="body2" onClick={() => history.push("/members")}>
-          <KeyboardArrowLeftIcon className={classes.back} /> Members
-        </Link>
-      </Typography>
+      <BackButton title="Members" onClick={() => history.push("/members")} />
       <Typography component="h1" variant="h3" className={classes.memberName}>
         <FullNameField record={member} />
       </Typography>

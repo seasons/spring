@@ -6,11 +6,19 @@ import { FormControl } from "../components/FormControl"
 
 export type SelectFieldProps = ChildFieldProps & {
   choices: { display: any; value: any }[]
+  disabled?: boolean
   name: string
   onChange?: (event: any) => void
 }
 
-export const SelectField: React.FC<SelectFieldProps> = ({ choices, multiple = false, name, onChange, ...rest }) => {
+export const SelectField: React.FC<SelectFieldProps> = ({
+  choices,
+  disabled,
+  multiple = false,
+  name,
+  onChange,
+  ...rest
+}) => {
   return (
     <Field
       multiple={multiple}
@@ -18,6 +26,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({ choices, multiple = fa
       render={({ input, meta }) => (
         <FormControl error={meta.error}>
           <Select
+            disabled={disabled}
             multiple={multiple}
             name={input.name}
             value={multiple ? input.value || [] : input.value}
