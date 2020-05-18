@@ -73,12 +73,12 @@ export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
             </Grid>
             <form {...props} onSubmit={handleSubmit}>
               <div>
-                <TextField label="Email address" name="email" />
+                <TextField label="Email address" name="email" autoFocus />
                 <Spacer mt={1} />
                 <TextField label="Password" name="password" type="password" />
               </div>
-              <Spacer mt={2} />
-              <SubmitButton size="large" type="submit" variant="contained">
+              <Spacer mt={4} />
+              <SubmitButton size="large" type="submit" variant="contained" fullWidth>
                 Sign in
               </SubmitButton>
             </form>
