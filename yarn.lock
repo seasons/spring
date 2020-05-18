@@ -9473,6 +9473,15 @@ ra-core@^3.5.0:
     recompose "~0.26.0"
     reselect "~3.0.0"
 
+ra-data-graphql-prisma@seasons/ra-data-graphql-prisma#mutations:
+  version "0.0.10"
+  resolved "https://codeload.github.com/seasons/ra-data-graphql-prisma/tar.gz/a3e238896cfb5fc22791795dd9acf685404a5c48"
+  dependencies:
+    graphql-tag "^2.6.1"
+    lodash "~4.17.5"
+    pluralize "^7.0.0"
+    ra-data-graphql "^2.3.0"
+
 ra-data-graphql@^2.3.0:
   version "2.9.8"
   resolved "https://registry.yarnpkg.com/ra-data-graphql/-/ra-data-graphql-2.9.8.tgz#34aa8d1fc5f2437c6af387993d050e6cb8c7645b"

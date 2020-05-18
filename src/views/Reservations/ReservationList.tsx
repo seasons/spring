@@ -1,81 +1,48 @@
-import React, { cloneElement, useMemo, useState } from "react"
-import { Datagrid, DatagridBody, Filter, List, TextField } from "react-admin"
-import TableCell from "@material-ui/core/TableCell"
-import TableRow from "@material-ui/core/TableRow"
-import Checkbox from "@material-ui/core/Checkbox"
+import React, { useState, useEffect } from "react"
+import { Datagrid, Filter, List } from "react-admin"
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
-import { Box, Container, Chip, Tabs, Tab } from "@material-ui/core"
+import { Box, Container, Tabs, Tab } from "@material-ui/core"
 import { Header } from "components/Header"
-import { TopToolbar, sanitizeListRestProps } from "react-admin"
-import IconEvent from "@material-ui/icons/Event"
-import { Spacer } from "components"
 import { Field } from "fields/Field"
-
-// const ListActions: React.FC<any> = ({
-//   currentSort,
-//   className,
-//   resource,
-//   filters,
-//   displayedFilters,
-//   exporter, // you can hide ExportButton if exporter = (null || false)
-//   filterValues,
-//   permanentFilter,
-//   hasCreate, // you can hide CreateButton if hasCreate = false
-//   basePath,
-//   selectedIds,
-//   onUnselectItems,
-//   showFilter,
-//   maxResults,
-//   total,
-//   ...rest
-// }) => {
-//   return (
-//     <>
-//       <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
-//         <Spacer />
-//         {filters &&
-//           cloneElement(filters, {
-//             resource,
-//             showFilter,
-//             displayedFilters,
-//             filterValues,
-//             context: "button",
-//           })}
-//       </TopToolbar>
-//     </>
-//   )
-// }
 
 const StatusInput = ({
   source,
   value,
   tabs,
   onChange,
+  alwaysOn,
 }: {
   source: any
   value?: any
   tabs: any
   onChange?: (value: any) => void
+  alwaysOn?: boolean
 }) => {
-  const [currentTab, setCurrentTab] = useState("incoming")
+  const [currentTab, setCurrentTab] = useState("all")
+
+  useEffect(() => {
+    onChange?.([])
+  })
 
   return (
     <Field
       name={source}
       render={({ input, meta }) => (
         <Tabs
-          onChange={(e, newValue) => {
-            setCurrentTab(newValue)
-            input.onChange(newValue)
-            onChange?.(newValue)
+          onChange={(e, key) => {
+            const tab = tabs.find(a => a.id === key)
+            setCurrentTab(tab.id)
+            const filters = tab.value
+            input.onChange(filters)
+            onChange?.(filters)
           }}
           scrollButtons="auto"
           textColor="secondary"
           value={currentTab}
           variant="standard"
         >
-          {tabs.map(tab => (
-            <Tab key={tab.value} value={tab.value} label={tab.label} />
+          {tabs.map((tab, i) => (
+            <Tab key={tab.id} value={tab.id} label={tab.label} />
           ))}
         </Tabs>
       )}
@@ -88,33 +55,24 @@ const Filters = props => (
     <StatusInput
       source="status_in"
       tabs={[
-        { label: "All", value: [] },
+        { label: "All", id: "all", value: [] },
         {
           label: "Inbound",
-          value: ["InTransit"],
-          // value: "inbound",
+          id: "inbound",
+          value: ["InTransit", "Received"],
         },
         {
           label: "Outbound",
+          id: "outbound",
           value: ["New", "InQueue", "OnHold", "Packed", "Shipped", "InTransit"],
-          // value: "outbound",
         },
         {
           label: "Completed",
-          // value: "completed",
+          id: "completed",
           value: ["Completed"],
         },
       ]}
-      // onChange={status => {
-      //   switch (status) {
-      //     case "inbound":
-      //       props.setFilter("status_in", ["InTransit"])
-      //       break
-      //     case "outbound":
-      //       props.setFilter("status_in", ["New", "InQueue", "OnHold", "Packed", "Shipped", "InTransit"])
-      //       break
-      //   }
-      // }}
+      alwaysOn
     />
   </Filter>
 )

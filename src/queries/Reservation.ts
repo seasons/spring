@@ -14,7 +14,7 @@ export default {
           email
         }
       }
-      images(size: Small) {
+      images(size: Thumb) {
         url
       }
       reservationNumber

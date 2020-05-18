@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Loading, useQuery } from "react-admin"
-import { Container, Box, Typography, Grid, Fab } from "@material-ui/core"
+import { Container, Box, Typography, Grid } from "@material-ui/core"
 import { Header } from "components/Header"
 import { ReservationInfo } from "./ReservationInfo"
 import { ProductCard } from "./ProductCard"

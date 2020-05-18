@@ -1,5 +1,5 @@
 import get from "lodash/get"
-import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
+import buildOpenCrudProvider, { buildQuery } from "ra-data-graphql-prisma"
 import overridenQueries from "./queries"
 import { client } from "./apollo"
 

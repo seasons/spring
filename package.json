@@ -24,6 +24,7 @@
     "lodash": "^4.17.15",
     "luxon": "^1.23.0",
     "moment": "^2.24.0",
+    "ra-data-graphql-prisma": "seasons/ra-data-graphql-prisma#mutations",
     "ra-data-opencrud": "^0.0.7",
     "react": "^16.13.1",
     "react-admin": "^3.5.0",
