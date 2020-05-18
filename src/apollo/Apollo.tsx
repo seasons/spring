@@ -6,8 +6,7 @@ import { onError } from "apollo-link-error"
 import { HttpLink } from "apollo-link-http"
 import { createUploadLink } from "apollo-upload-client"
 
-const URI = "http://localhost:4000"
-// const URI = "https://monsoon-staging.seasons.nyc"
+const URI = process.env.REACT_APP_MONSOON_ENDPOINT || "http://localhost:4000"
 
 const link = new HttpLink({ uri: URI })
 
