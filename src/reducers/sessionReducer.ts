@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions"
+import { getUserSession } from "apollo/Apollo"
 
-const userSession = JSON.parse(localStorage.getItem("userSession") || "{}")
+const userSession = getUserSession()
 const initialState = {
   ...userSession,
 }

@@ -30,13 +30,6 @@ const statusOptions = [
 ]
 
 export const ReservationInfo = ({ reservation, ...rest }) => {
-  const [status, setStatus] = useState(statusOptions[0])
-
-  const handleChange = event => {
-    event.persist()
-    setStatus(event.target.value)
-  }
-
   const { reservationNumber } = reservation
 
   const customer = reservation?.customer
@@ -68,10 +61,6 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <TableCell>ID</TableCell>
                 <TableCell>#{reservationNumber}</TableCell>
               </TableRow>
-              <TableRow>
-                <TableCell>Created At</TableCell>
-                <TableCell>{DateTime.fromISO(reservation.createdAt).toFormat("DD/MM/yyyy HH:MM")}</TableCell>
-              </TableRow>
             </TableBody>
           </Table>
         </Card>
@@ -97,14 +86,12 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <TableCell>Amount</TableCell>
                 <TableCell>$12.00</TableCell>
               </TableRow>
+              <TableRow>
+                <TableCell>Created At</TableCell>
+                <TableCell>{DateTime.fromISO(reservation.createdAt).toFormat("DD/MM/yyyy HH:MM")}</TableCell>
+              </TableRow>
             </TableBody>
           </Table>
-          <CardActions>
-            <Button>
-              <ReceiptIcon />
-              <Box ml={1}>Process Return</Box>
-            </Button>
-          </CardActions>
         </Card>
       </Grid>
     </Grid>

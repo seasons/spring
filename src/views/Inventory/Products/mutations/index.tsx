@@ -2,13 +2,13 @@ import gql from "graphql-tag"
 import { UpdateVariantFragment } from "../queries"
 
 export const UPLOAD_FILE = gql`
-  mutation($image: Upload!) {
+  mutation UploadImage($image: Upload!) {
     uploadImage(image: $image)
   }
 `
 
 export const UPSERT_PRODUCT = gql`
-  mutation($input: UpsertProductInput!) {
+  mutation UpsertProduct($input: UpsertProductInput!) {
     upsertProduct(input: $input) {
       id
       name

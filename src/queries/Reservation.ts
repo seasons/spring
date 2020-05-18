@@ -1,4 +1,4 @@
-import { GET_ONE, GET_LIST } from "react-admin"
+import { GET_ONE, GET_LIST, UPDATE } from "react-admin"
 import gql from "graphql-tag"
 
 export default {
@@ -14,7 +14,7 @@ export default {
           email
         }
       }
-      images(size: Small) {
+      images(size: Thumb) {
         url
       }
       reservationNumber
@@ -66,6 +66,7 @@ export default {
         seasonsUID
         inventoryStatus
         productStatus
+        barcode
         productVariant {
           product {
             id
@@ -84,7 +85,7 @@ export default {
             }
             status
             type
-            resizedImages(size: Large) {
+            images {
               url
             }
           }
@@ -104,6 +105,34 @@ export default {
       returnAt
       createdAt
       updatedAt
+    }
+  `,
+}
+
+export const query = {
+  [GET_LIST]: gql`
+    query GetReservationList {
+      reservations {
+        id
+        customer {
+          id
+          user {
+            id
+            firstName
+            lastName
+            email
+          }
+        }
+        images(size: Small) {
+          url
+        }
+        reservationNumber
+        shipped
+        status
+        shippedAt
+        returnAt
+        createdAt
+      }
     }
   `,
 }

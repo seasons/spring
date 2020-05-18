@@ -1,6 +1,4 @@
 import { createBrowserHistory } from "history"
-import get from "lodash/get"
-import buildOpenCrudProvider, { buildQuery } from "ra-data-opencrud"
 import polyglotI18nProvider from "ra-i18n-polyglot"
 import React from "react"
 import { convertLegacyDataProvider, DataProviderContext, Resource, TranslationProvider } from "react-admin"
@@ -14,18 +12,12 @@ import { ThemeProvider } from "@material-ui/core"
 import { StylesProvider } from "@material-ui/core/styles"
 
 import englishMessages from "./i18n/en"
-import overridenQueries from "./queries"
+
 import routes from "./routes"
 import configureStore from "./store/adminStore"
 import { theme } from "./theme/theme"
+import { buildProvider } from "dataProvider"
 import { client } from "./apollo"
-
-// Override some queries with our own queries
-const enhanceBuildQuery = buildQuery => introspectionResults => (fetchType, resourceName, params) => {
-  const fragment = get(overridenQueries, `${resourceName}.${fetchType}`)
-
-  return buildQuery(introspectionResults)(fetchType, resourceName, params, fragment)
-}
 
 const history = createBrowserHistory()
 
@@ -43,10 +35,9 @@ class App extends React.Component {
       window.location.href = "/login"
     }
 
-    buildOpenCrudProvider({
-      client,
-      buildQuery: enhanceBuildQuery(buildQuery),
-    } as any).then(dataProvider => this.setState({ dataProvider: convertLegacyDataProvider(dataProvider) }))
+    buildProvider()
+      .then(dataProvider => this.setState({ dataProvider: convertLegacyDataProvider(dataProvider) }))
+      .catch(err => console.error(err))
   }
 
   render() {

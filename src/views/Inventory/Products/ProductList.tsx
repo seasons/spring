@@ -28,7 +28,7 @@ export interface ProductListInterface {
 
 export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => (
   <>
-    <Header title="Products" newEntityText="New Product" newEntityHandler={onNewProductBtnPressed} />
+    <Header title="Products" primaryButton={{ text: "New Product", action: onNewProductBtnPressed }} />
     <List
       filters={<ProductFilter />}
       {...rest}

@@ -6,12 +6,15 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext"
 export interface HeaderProps {
   className?: string
   title: string
-  newEntityText?: string
-  newEntityHandler?: () => void
+  primaryButton?: {
+    text: String
+    icon?: JSX.Element
+    action?: () => void
+  }
   breadcrumbs?: Array<{ url: string; title: string }>
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, newEntityText, newEntityHandler, breadcrumbs }) => {
+export const Header: React.FC<HeaderProps> = ({ title, primaryButton, breadcrumbs }) => {
   return (
     <>
       <Box mt={4}>
@@ -22,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({ title, newEntityText, newEntityH
           {breadcrumbs?.map(({ title, url }, i) => {
             if (i === breadcrumbs.length - 1) {
               return (
-                <Typography variant="body1" color="textPrimary">
+                <Typography variant="body1" color="textPrimary" key={`nav-item-${i}`}>
                   {title}
                 </Typography>
               )
@@ -43,10 +46,10 @@ export const Header: React.FC<HeaderProps> = ({ title, newEntityText, newEntityH
               {title}
             </Typography>
           </Grid>
-          {newEntityText && (
+          {primaryButton && (
             <Grid item>
-              <Button color="primary" variant="contained" onClick={newEntityHandler}>
-                {newEntityText}
+              <Button color="primary" variant="contained" onClick={primaryButton.action} startIcon={primaryButton.icon}>
+                {primaryButton.text}
               </Button>
             </Grid>
           )}
