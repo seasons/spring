@@ -60,7 +60,13 @@ export const Variants: React.FC<VariantsProps> = ({ values, variants }) => {
       <ContainerGrid container spacing={2}>
         <Header title={title} subtitle={subtitle} />
         {variantsData.map((variant, index) => (
-          <VariantSizeSection size={variant.size} sku={variant.sku} productType={productType} key={index} />
+          <VariantSizeSection
+            isEditing={isEditing}
+            size={variant.size}
+            sku={variant.sku}
+            productType={productType}
+            key={index}
+          />
         ))}
       </ContainerGrid>
     </Box>
