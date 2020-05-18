@@ -1,0 +1,1 @@
+export { PhysicalProductEdit } from "./PhysicalProductEdit"

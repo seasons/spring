@@ -3,6 +3,7 @@ import { useQuery } from "react-apollo"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
+import { Spacer } from "components"
 import { GET_GENERATED_VARIANT_SKUS } from "../queries"
 import { Header } from "./Header"
 import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection"
@@ -69,8 +70,14 @@ export const Variants: React.FC<VariantsProps> = ({ values, variants }) => {
             key={index}
           />
         ))}
-        {isEditing &&
-          variants?.map(variant => <VariantPhysicalProductsSection physicalProducts={variant.physicalProducts} />)}
+        {isEditing && (
+          <>
+            {variants?.map(variant => (
+              <VariantPhysicalProductsSection physicalProducts={variant.physicalProducts} />
+            ))}
+            <Spacer grid mt={6} />
+          </>
+        )}
       </ContainerGrid>
     </Box>
   )
