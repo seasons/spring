@@ -23,23 +23,8 @@ interface ProcessReturnModalProps {
 type ProductStates = { [key: string]: ProductState }
 
 export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, onClose, reservation }) => {
-  // TODO add status updates and notes for reservation return
-  // Add Scanner to this view to process reservation
-  // Move checkbox ("Mark as returned") an a more options menu
-
-  // 1. After that set all products to the in cleaning
-  // (Guided Stow) Part of the return flow is tell where each item should go back to
-
-  // Picking flow, New to Pick
-  // Start Picking
-  // allow them to scan the barcode to set the status of an item as picked
-  // 1. scan all items
-  // 2. print label
-  // 3. set to ready to ship
-  // 3. set reservation to shipped by scanning label
-
   const barcodeMaps = {}
-  ;(reservation.products as any).map(product => {
+  reservation.products.forEach(product => {
     barcodeMaps[product.barcode] = {
       productUID: product.seasonsUID,
       returned: false,
@@ -52,6 +37,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
     ...barcodeMaps,
   })
   console.log(productStates)
+
   const [barcode, setBarcode] = useState("")
   const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
     show: false,
