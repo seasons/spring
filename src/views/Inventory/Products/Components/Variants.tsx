@@ -5,6 +5,7 @@ import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { GET_GENERATED_VARIANT_SKUS } from "../queries"
 import { Header } from "./Header"
+import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection"
 import { VariantSizeSection } from "./VariantSizeSection"
 
 export interface VariantsProps {
@@ -68,6 +69,8 @@ export const Variants: React.FC<VariantsProps> = ({ values, variants }) => {
             key={index}
           />
         ))}
+        {isEditing &&
+          variants?.map(variant => <VariantPhysicalProductsSection physicalProducts={variant.physicalProducts} />)}
       </ContainerGrid>
     </Box>
   )

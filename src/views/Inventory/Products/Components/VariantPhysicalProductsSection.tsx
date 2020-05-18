@@ -5,22 +5,23 @@ import { styled as muiStyled } from "@material-ui/core/styles"
 
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "./ExpandableSection"
+import { PhysicalProductSummary } from "./PhysicalProductSummary"
 import { VariantSummary } from "./VariantSummary"
 import { SelectField, TextField } from "fields"
 import { colors } from "theme/colors"
 
-export interface VariantsOverviewSectionProps {
-  variants: any[]
+export interface VariantPhysicalProductsSectionProps {
+  physicalProducts: any[]
 }
 
-export const VariantsOverviewSection: React.FC<VariantsOverviewSectionProps> = ({ variants }) => {
+export const VariantPhysicalProductsSection: React.FC<VariantPhysicalProductsSectionProps> = ({ physicalProducts }) => {
   return (
     <ExpandableSection
-      title="Product variants"
+      title="Physical products"
       content={
         <Grid container>
-          {variants.map((variant, index) => (
-            <VariantSummary variant={variant} key={index} />
+          {physicalProducts.map((physProd, index) => (
+            <PhysicalProductSummary physicalProduct={physProd} key={index} />
           ))}
         </Grid>
       }
