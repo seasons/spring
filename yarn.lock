@@ -1488,6 +1488,16 @@
   resolved "https://registry.yarnpkg.com/@redux-saga/types/-/types-1.1.0.tgz#0e81ce56b4883b4b2a3001ebe1ab298b84237204"
   integrity sha512-afmTuJrylUU/0OtqzaRkbyYFFNgCF73Bvel/sw90pvGrWIZ+vyoIJqA6eMSoA6+nb443kTmulmBtC9NerXboNg==
 
+"@seasons/ra-data-graphql-prisma@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@seasons/ra-data-graphql-prisma/-/ra-data-graphql-prisma-0.0.10.tgz#acd85b0d8301f5b92f75a8c5a73abac33fbc3b95"
+  integrity sha512-OE6Tm0NAG/MMwE9JDHA0ARyRd0gsfKbDZ1JedXnAPA7gU2gteONfqgrLXHqwn/9F+srOCNH8WtofnTMFOHRpIw==
+  dependencies:
+    graphql-tag "^2.6.1"
+    lodash "~4.17.5"
+    pluralize "^7.0.0"
+    ra-data-graphql "^2.3.0"
+
 "@sheerun/mutationobserver-shim@^0.3.2":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
@@ -9473,15 +9483,6 @@ ra-core@^3.5.0:
     recompose "~0.26.0"
     reselect "~3.0.0"
 
-ra-data-graphql-prisma@seasons/ra-data-graphql-prisma#mutations:
-  version "0.0.10"
-  resolved "https://codeload.github.com/seasons/ra-data-graphql-prisma/tar.gz/a3e238896cfb5fc22791795dd9acf685404a5c48"
-  dependencies:
-    graphql-tag "^2.6.1"
-    lodash "~4.17.5"
-    pluralize "^7.0.0"
-    ra-data-graphql "^2.3.0"
-
 ra-data-graphql@^2.3.0:
   version "2.9.8"
   resolved "https://registry.yarnpkg.com/ra-data-graphql/-/ra-data-graphql-2.9.8.tgz#34aa8d1fc5f2437c6af387993d050e6cb8c7645b"
@@ -9492,16 +9493,6 @@ ra-data-graphql@^2.3.0:
     graphql-tag "^2.10.1"
     lodash "~4.17.5"
     pluralize "~7.0.0"
-
-ra-data-opencrud@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/ra-data-opencrud/-/ra-data-opencrud-0.0.7.tgz#0e7ed2bc9eb8a3a87f84fa934171885f3c874c5a"
-  integrity sha512-+0sxomSqSTNDJvHwWt4OgOtH0W1WgzExjHF9Df6xaSfqFJhEDPQOGo3a0XcT4xRkHzBC9dfF4W3kuKjQyvhhDw==
-  dependencies:
-    graphql-tag "^2.6.1"
-    lodash "~4.17.5"
-    pluralize "^7.0.0"
-    ra-data-graphql "^2.3.0"
 
 ra-i18n-polyglot@^3.5.0:
   version "3.5.0"
