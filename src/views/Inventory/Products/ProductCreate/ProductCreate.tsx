@@ -22,7 +22,6 @@ export const ProductCreate = props => {
   const [upsertProduct] = useMutation(UPSERT_PRODUCT)
   const [values, setValues] = useState({})
 
-  console.log("DATA:", data)
   if (
     loading ||
     !data?.bottomSizes ||

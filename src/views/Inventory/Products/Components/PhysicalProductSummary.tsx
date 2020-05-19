@@ -18,8 +18,6 @@ export const PhysicalProductSummary: React.FC<PhysicalProductSummaryProps> = ({ 
     history.push(`/inventory/product/variant/physicalProducts/${physicalProduct.id}`)
   }
 
-  console.log("PHYSICAL PRODUCT", physicalProduct)
-
   return (
     <Grid item xs={6}>
       <Container px={2} py={3} display="flex" flexDirection="column">

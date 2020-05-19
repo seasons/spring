@@ -3,7 +3,6 @@ import React from "react"
 import { Loading } from "react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
-import { pick } from "lodash"
 
 import { BackButton, Spacer, Wizard } from "components"
 import { PhysicalProducts } from "../Components"
@@ -21,14 +20,9 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   })
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
 
-  if (error) {
-    console.log("ERROR", error)
-  }
-
   if (loading || !data) {
     return <Loading />
   }
-  console.log("DATA:", data)
 
   const { physicalProduct } = data
   const { dateOrdered, dateReceived, inventoryStatus, productStatus, seasonsUID, unitCost } = physicalProduct
@@ -41,7 +35,6 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   }
 
   const onSubmit = async values => {
-    console.log("VALUES:", values)
     const updatePhysicalProductData = {
       dateOrdered: getDateISOString(values[`${seasonsUID}_dateOrdered`]) || null,
       dateReceived: getDateISOString(values[`${seasonsUID}_dateReceived`]) || null,
@@ -56,7 +49,6 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
         data: updatePhysicalProductData,
       },
     })
-    console.log("RESULT:", result)
     if (result?.data) {
       history.push(`/inventory/product/variants/${physicalProduct.productVariant.id}`)
     }

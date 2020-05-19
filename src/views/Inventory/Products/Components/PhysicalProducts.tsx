@@ -1,5 +1,4 @@
 import React from "react"
-import { useFormState } from "react-final-form"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
@@ -61,10 +60,15 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
 
   const inventoryStatusChoices = getFormSelectChoices(getEnumValues(inventoryStatuses))
   const statusChoices = getFormSelectChoices(getEnumValues(physicalProductStatuses))
+
+  const isEditing = !!physicalProducts
+  const title = isEditing ? physicalProducts?.[0]?.seasonsUID : "Physical products"
+  const subtitle = isEditing ? "Edit physical product data" : "Add metadata to physical products"
+
   return (
     <Box>
       <ContainerGrid container spacing={2}>
-        <Header title="Physical products" subtitle="Add metacreateData to physical products" />
+        <Header title={title} subtitle={subtitle} />
         {physicalProductUIDs.map((uid, index) => (
           <PhysicalProductSection
             inventoryStatusChoices={inventoryStatusChoices}

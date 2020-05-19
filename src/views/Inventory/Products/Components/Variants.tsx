@@ -36,7 +36,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
 
   let variantsData
   if (createData && data) {
-    // Get variants data from createData and query
+    // Get variants data from createData and query response
     variantsData = data.generatedVariantSKUs.map((sku, index) => ({
       sku,
       size: sizeNames[index],
@@ -57,7 +57,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
 
   const isEditing = !!variants
   const title = isEditing ? variantsData[0].sku : "Product variants"
-  const subtitle = isEditing ? "Edit measurement createData" : "Confirm generated product variants"
+  const subtitle = isEditing ? "Edit measurement data" : "Confirm generated product variants"
 
   return (
     <Box>
