@@ -4,14 +4,19 @@ import { getEnumValues, getFormSelectChoices } from "utils/form"
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
+import {
+  PhysicalProductEditQuery_inventoryStatuses,
+  PhysicalProductEditQuery_physicalProductStatuses,
+  PhysicalProductEditQuery_physicalProduct,
+} from "generated/PhysicalProductEditQuery"
 import { Header } from "./Header"
 import { PhysicalProductSection } from "./PhysicalProductSection"
 
 export interface PhysicalProductsProps {
-  physicalProductStatuses: any[]
-  inventoryStatuses: any[]
+  physicalProductStatuses: PhysicalProductEditQuery_physicalProductStatuses[]
+  inventoryStatuses: PhysicalProductEditQuery_inventoryStatuses[]
   createData?: any // Passed in when creating new physical products
-  physicalProducts?: any[] // Passed in when editing physical products
+  physicalProducts?: PhysicalProductEditQuery_physicalProduct[] // Passed in when editing physical products
 }
 
 export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
@@ -62,7 +67,7 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
   const statusChoices = getFormSelectChoices(getEnumValues(physicalProductStatuses))
 
   const isEditing = !!physicalProducts
-  const title = isEditing ? physicalProducts?.[0]?.seasonsUID : "Physical products"
+  const title = isEditing ? physicalProducts?.[0]?.seasonsUID || "" : "Physical products"
   const subtitle = isEditing ? "Edit physical product data" : "Add metadata to physical products"
 
   return (

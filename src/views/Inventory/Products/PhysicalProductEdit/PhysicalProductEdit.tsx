@@ -6,8 +6,9 @@ import { useHistory, useParams } from "react-router-dom"
 
 import { BackButton, Spacer, Wizard } from "components"
 import { PhysicalProducts } from "../Components"
-import { PHYSICAL_PRODUCT_EDIT_QUERY } from "../queries"
+import { PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
+import { PHYSICAL_PRODUCT_EDIT_QUERY } from "../queries"
 import { getDateISOString, getLocaleDateString } from "../utils"
 
 export interface PhysicalProductEditProps {}
@@ -24,7 +25,7 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
     return <Loading />
   }
 
-  const { physicalProduct } = data
+  const { physicalProduct }: { physicalProduct: PhysicalProductEditQuery_physicalProduct } = data
   const { dateOrdered, dateReceived, inventoryStatus, productStatus, seasonsUID, unitCost } = physicalProduct
   const initialValues = {
     [`${seasonsUID}_dateOrdered`]: getLocaleDateString(dateOrdered) || undefined,
