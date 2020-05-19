@@ -12,6 +12,7 @@ export type TextFieldProps = ChildFieldProps & {
   placeholder?: string
   rows?: number
   type?: string
+  autoFocus?: boolean
 }
 
 export const TextField: React.FC<TextFieldProps> = ({
@@ -45,6 +46,7 @@ export const TextField: React.FC<TextFieldProps> = ({
             type={type}
             helperText={helperText}
             label={label}
+            {...rest}
           />
         </FormControl>
       )}

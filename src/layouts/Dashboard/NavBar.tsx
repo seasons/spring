@@ -22,6 +22,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
   mobileDrawer: {
     width: 256,
+    height: "100%",
     border: "none",
   },
   desktopDrawer: {
@@ -66,7 +67,7 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
     if (openMobile && onMobileClose) {
       onMobileClose()
     }
-  }, [location.pathname, openMobile, onMobileClose])
+  }, [location.pathname])
 
   const signOut = () => {
     dispatch(logoutAction())
@@ -92,7 +93,7 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
 
       <div className={classes.profile}>
         <div className={classes.details}>
-          <UserInfo variant="h6">{`${user.firstName} ${user.lastName}`}</UserInfo>
+          <UserInfo variant="h6">{`${user?.firstName} ${user?.lastName}`}</UserInfo>
           <UserLogOut variant="h6" onClick={signOut}>
             Sign out
           </UserLogOut>

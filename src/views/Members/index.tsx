@@ -21,7 +21,7 @@ export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, hi
   return (
     <>
       <Container maxWidth={false}>
-        <Header title="Members" newEntityText="New Member" newEntityHandler={createNewMember} />
+        <Header title="Members" primaryButton={{ text: "New Member", action: createNewMember }} />
         <List
           {...props}
           filters={<MemberFilter />}

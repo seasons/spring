@@ -4,7 +4,7 @@ import { Header } from "components/Header"
 
 export const BrandList = props => (
   <>
-    <Header title="Brands" newEntityText="New Brand" />
+    <Header title="Brands" primaryButton={{ text: "New Brand" }} />
     <List
       {...props}
       perPage={10}

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Loading, useQuery } from "react-admin"
-import { Container, Box, Typography, Grid, Fab } from "@material-ui/core"
+import { Container, Box, Typography, Grid } from "@material-ui/core"
 import { Header } from "components/Header"
 import { ReservationInfo } from "./ReservationInfo"
 import { ProductCard } from "./ProductCard"
@@ -8,7 +8,10 @@ import ViewModuleIcon from "@material-ui/icons/ViewModule"
 import ListIcon from "@material-ui/icons/List"
 import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
-import { PricingModal } from "components/PricingModal"
+import { ProcessReturnModal } from "./ProcessReturnModal"
+import { PROCESS_RESERVATION } from "../mutations"
+import { useMutation } from "react-apollo"
+import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 
 export const ReservationView = ({ match, history, props }) => {
   const { id } = match.params
@@ -20,6 +23,8 @@ export const ReservationView = ({ match, history, props }) => {
     resource: "Reservation",
     payload: { id },
   })
+
+  const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(PROCESS_RESERVATION)
 
   const handleModeChange = (event, value) => {
     setMode(value)
@@ -51,6 +56,11 @@ export const ReservationView = ({ match, history, props }) => {
               },
               { title: `Reservation: ${data.reservationNumber}`, url: `/reservations/${data.reservationNumber}` },
             ]}
+            primaryButton={{
+              text: "Process Returns",
+              action: () => openModal(true),
+              icon: <MoveToInboxIcon />,
+            }}
           />
           <Box my={2}>
             <ReservationInfo reservation={data} />
@@ -81,13 +91,24 @@ export const ReservationView = ({ match, history, props }) => {
               </Grid>
             ))}
           </Grid>
-          <Fab color="primary" variant="extended" onClick={() => openModal(true)}>
-            <MoveToInboxIcon />
-            <Box ml={1}>Process Return</Box>
-          </Fab>
         </Box>
       </Container>
-      <PricingModal open={showModal} onClose={() => openModal(false)} />
+      <ProcessReturnModal
+        open={showModal}
+        onClose={() => openModal(false)}
+        reservation={data}
+        onSave={productStates => {
+          const mutationData: ProcessReservationMutationVariables = {
+            data: {
+              reservationNumber: data.reservationNumber,
+              productStates: Object.values(productStates),
+            },
+          }
+
+          debugger
+          processReservation({ variables: mutationData })
+        }}
+      />
     </>
   )
 }
