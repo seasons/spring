@@ -41,3 +41,11 @@ export const extractVariantSizeFields = ({
   })
   return sizeData
 }
+
+export const getDateISOString = (date?: string) => {
+  return date && new Date(date).toISOString()
+}
+
+export const getLocaleDateString = (date?: string) => {
+  return date && new Date(date).toLocaleDateString("en-US")
+}

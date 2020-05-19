@@ -1,5 +1,5 @@
 import gql from "graphql-tag"
-import { UpdateVariantFragment } from "../queries"
+import { UpdatePhysicalProductFragment, UpdateVariantFragment } from "../queries"
 
 export const UPLOAD_FILE = gql`
   mutation($image: Upload!) {
@@ -49,4 +49,13 @@ export const UPDATE_VARIANT = gql`
     }
   }
   ${UpdateVariantFragment}
+`
+
+export const UPDATE_PHYSICAL_PRODUCT = gql`
+  mutation UpdatePhysicalProduct($where: PhysicalProductWhereUniqueInput!, $data: PhysicalProductUpdateInput!) {
+    updatePhysicalProduct(where: $where, data: $data) {
+      ...UpdatePhysicalProduct
+    }
+  }
+  ${UpdatePhysicalProductFragment}
 `

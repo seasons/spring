@@ -8,8 +8,8 @@ import { pick } from "lodash"
 import { BackButton, Spacer, Wizard } from "components"
 import { PhysicalProducts } from "../Components"
 import { PHYSICAL_PRODUCT_EDIT_QUERY } from "../queries"
-import { UPDATE_VARIANT } from "../mutations"
-import { extractVariantSizeFields } from "../utils"
+import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
+import { getDateISOString, getLocaleDateString } from "../utils"
 
 export interface PhysicalProductEditProps {}
 
@@ -19,6 +19,7 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_EDIT_QUERY, {
     variables: { where: { id: physicalProductID } },
   })
+  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
 
   if (error) {
     console.log("ERROR", error)
@@ -32,14 +33,34 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   const { physicalProduct } = data
   const { dateOrdered, dateReceived, inventoryStatus, productStatus, seasonsUID, unitCost } = physicalProduct
   const initialValues = {
-    [`${seasonsUID}_dateOrdered`]: dateOrdered || undefined,
-    [`${seasonsUID}_dateReceived`]: dateReceived || undefined,
+    [`${seasonsUID}_dateOrdered`]: getLocaleDateString(dateOrdered) || undefined,
+    [`${seasonsUID}_dateReceived`]: getLocaleDateString(dateReceived) || undefined,
     [`${seasonsUID}_inventoryStatus`]: inventoryStatus,
     [`${seasonsUID}_physicalProductStatus`]: productStatus,
     [`${seasonsUID}_unitCost`]: unitCost || undefined,
   }
 
-  const onSubmit = async values => {}
+  const onSubmit = async values => {
+    console.log("VALUES:", values)
+    const updatePhysicalProductData = {
+      dateOrdered: getDateISOString(values[`${seasonsUID}_dateOrdered`]) || null,
+      dateReceived: getDateISOString(values[`${seasonsUID}_dateReceived`]) || null,
+      inventoryStatus: values[`${seasonsUID}_inventoryStatus`],
+      productStatus: values[`${seasonsUID}_physicalProductStatus`],
+      unitCost: parseFloat(values[`${seasonsUID}_unitCost`]) || null,
+    }
+    console.log("UPDATE:", updatePhysicalProductData)
+    const result = await updatePhysicalProduct({
+      variables: {
+        where: { id: physicalProduct.id },
+        data: updatePhysicalProductData,
+      },
+    })
+    console.log("RESULT:", result)
+    if (result?.data) {
+      history.push(`/inventory/product/variants/${physicalProduct.productVariant.id}`)
+    }
+  }
 
   return (
     <Box mx={5}>
