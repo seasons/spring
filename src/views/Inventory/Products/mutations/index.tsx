@@ -25,7 +25,7 @@ export const UPSERT_PRODUCT = gql`
 `
 
 export const UPDATE_PRODUCT = gql`
-  mutation($where: ProductWhereUniqueInput!, $data: CustomProductUpdateInput!) {
+  mutation UpdateProduct($where: ProductWhereUniqueInput!, $data: CustomProductUpdateInput!) {
     updateProduct(where: $where, data: $data) {
       id
       name

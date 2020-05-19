@@ -140,7 +140,7 @@ export const PRODUCT_EDIT_QUERY = gql`
 `
 
 export const PRODUCT_UPSERT_QUERY = gql`
-  {
+  query ProductUpsertQuery {
     ...ProductUpsert
   }
   ${ProductUpsertFragment}
