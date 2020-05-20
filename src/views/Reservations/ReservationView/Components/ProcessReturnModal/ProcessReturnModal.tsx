@@ -5,6 +5,7 @@ import { GetReservation } from "generated/GetReservation"
 import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { Alert, Color } from "@material-ui/lab"
 import { PhysicalProductStatus } from "generated/globalTypes"
+import { trim } from "lodash"
 
 interface ProductState {
   productUID: string
@@ -47,6 +48,9 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
   const BARCODE_REGEX = /^SZNS[0-9]{5}$/
 
   const inputRef = useRef()
+  const shouldAllowSave =
+    (Object.values(productStates as any).reduce((a: any, b: any) => a.returned || b.returned) as any).length ===
+    reservation.products.length
 
   const focusOnInput = () => {
     const target: any = inputRef?.current
@@ -67,7 +71,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
   }
 
   const handleBarcodeChange = e => {
-    const input = e.target.value
+    const input = trim(e.target.value)
     if (input.match(BARCODE_REGEX)) {
       console.log("Found barcode: ", input)
 
@@ -141,7 +145,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleSave} color="primary">
+          <Button autoFocus onClick={handleSave} color="primary" disabled={!shouldAllowSave}>
             Save
           </Button>
         </DialogActions>

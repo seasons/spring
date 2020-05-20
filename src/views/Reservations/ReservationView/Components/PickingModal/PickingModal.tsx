@@ -4,15 +4,14 @@ import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Box, TextFie
 import { GetReservation } from "generated/GetReservation"
 import { PickingProductCard } from "./PickingProductCard"
 import { Alert, Color } from "@material-ui/lab"
-import { PhysicalProductStatus } from "generated/globalTypes"
+import { trim } from "lodash"
 
 interface ProductState {
   productUID: string
   picked: boolean
-  productStatus: PhysicalProductStatus
 }
 
-interface ProcessReturnModalProps {
+interface PickingModalProps {
   open: boolean
   onClose?: () => void
   onSave?(values: ProductStates): void
@@ -21,14 +20,12 @@ interface ProcessReturnModalProps {
 
 type ProductStates = { [key: string]: ProductState }
 
-export const PickingModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, onClose, reservation }) => {
+export const PickingModal: React.FC<PickingModalProps> = ({ open, onSave, onClose, reservation }) => {
   const barcodeMaps = {}
   reservation.products.forEach(product => {
     barcodeMaps[product.barcode] = {
       productUID: product.seasonsUID,
       picked: false,
-      productStatus: "Dirty",
-      notes: "",
     }
   })
 
@@ -43,6 +40,7 @@ export const PickingModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, 
     message: "",
     status: "success",
   })
+  const [shouldAllowSave, setShouldAllowSave] = useState(false)
   const BARCODE_REGEX = /^SZNS[0-9]{5}$/
 
   const inputRef = useRef()
@@ -66,7 +64,7 @@ export const PickingModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, 
   }
 
   const handleBarcodeChange = e => {
-    const input = e.target.value
+    const input = trim(e.target.value)
     if (input.match(BARCODE_REGEX)) {
       console.log("Found barcode: ", input)
 
@@ -78,13 +76,17 @@ export const PickingModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, 
           message: `Found barcode: ${input}`,
           status: "success",
         })
-        setProductStates({
+        const updatedProductStates = {
           ...productStates,
           [input]: {
             ...productState,
             picked: true,
           },
-        })
+        }
+        setProductStates(updatedProductStates)
+
+        const pickedCount = Object.values(updatedProductStates).filter((a: any) => !!a.picked).length
+        setShouldAllowSave(pickedCount === reservation.products.length)
       } else {
         toggleSnackbar({
           show: true,
@@ -110,7 +112,7 @@ export const PickingModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, 
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title">Pick Items</DialogTitle>
         <DialogContent dividers>
-          <Box my={2} width={["550px"]}>
+          <Box my={2} width={["400px"]}>
             <TextField
               label="Scan Barcode"
               helperText="Click into box and scan the barcode to mark as picked"
@@ -123,7 +125,7 @@ export const PickingModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, 
               fullWidth
             />
           </Box>
-          <Box mt={1} mb={2}>
+          <Box mt={2} mb={2}>
             {reservation.products.map(product => (
               <PickingProductCard
                 product={product}
@@ -140,8 +142,8 @@ export const PickingModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, 
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleSave} color="primary">
-            Save
+          <Button autoFocus onClick={handleSave} color="primary" disabled={!shouldAllowSave}>
+            Mark as picked
           </Button>
         </DialogActions>
       </Dialog>

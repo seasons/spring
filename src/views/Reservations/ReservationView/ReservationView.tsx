@@ -10,7 +10,7 @@ import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
 import ArchiveIcon from "@material-ui/icons/Archive"
 import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessReturnModal"
-import { PROCESS_RESERVATION } from "../mutations"
+import { PROCESS_RESERVATION, MARK_RESERVATION_PICKED } from "../mutations"
 import { useMutation } from "react-apollo"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 import { ProductGrid } from "./Components/ProductGrid"
@@ -28,6 +28,7 @@ export const ReservationView = ({ match, history, props }) => {
   })
 
   const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(PROCESS_RESERVATION)
+  const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED)
 
   const handleModeChange = (event, value) => {
     setMode(value)
@@ -118,15 +119,18 @@ export const ReservationView = ({ match, history, props }) => {
         onClose={() => openModal(false)}
         reservation={data}
         onSave={productStates => {
-          const mutationData: ProcessReservationMutationVariables = {
-            data: {
-              reservationNumber: data.reservationNumber,
-              productStates: Object.values(productStates),
-            },
-          }
+          if (isReservationUnfulfilled) {
+            markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
+          } else {
+            const mutationData: ProcessReservationMutationVariables = {
+              data: {
+                reservationNumber: data.reservationNumber,
+                productStates: Object.values(productStates),
+              },
+            }
 
-          debugger
-          processReservation({ variables: mutationData })
+            processReservation({ variables: mutationData })
+          }
         }}
       />
     </>

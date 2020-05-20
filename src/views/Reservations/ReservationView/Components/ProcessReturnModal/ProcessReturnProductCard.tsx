@@ -28,11 +28,11 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
   return (
     <Box my={1}>
       <Paper variant="outlined">
-        <Grid item container spacing={1}>
-          <Grid item>
+        <Box display="flex">
+          <Box>
             <ProductImage product={product} />
-          </Grid>
-          <Grid md={7} item>
+          </Box>
+          <Box flexGrow={1} px={2}>
             <Box my={2}>
               <Box display="flex" height="30px">
                 <Box flexGrow={1}>
@@ -97,8 +97,8 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
                 multiline
               />
             </Box>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Paper>
     </Box>
   )

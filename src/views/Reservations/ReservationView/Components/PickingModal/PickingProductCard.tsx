@@ -12,7 +12,7 @@ const Image = styled.img`
 
 const ProductImage = ({ product }: { product: GetReservation_products }) => {
   const image = product?.productVariant?.product.images?.[0]
-  return <Image src={image?.url} width={200} height={250} />
+  return <Image src={image?.url} width={100} height={125} />
 }
 
 export const PickingProductCard = ({ product, productState, onStateChange }) => {
@@ -29,19 +29,21 @@ export const PickingProductCard = ({ product, productState, onStateChange }) => 
   return (
     <Box my={1}>
       <Paper variant="outlined">
-        <Grid item container spacing={1}>
-          <Grid item>
+        <Box display="flex">
+          <Box>
             <ProductImage product={product} />
-          </Grid>
-          <Grid md={7} item>
+          </Box>
+          <Box flexGrow={1}>
             <Box my={2}>
               <Box display="flex" height="30px">
-                <Box flexGrow={1}>
-                  <Typography variant="body1" color="secondary" style={{ letterSpacing: 1, fontSize: 14 }}>
+                <Box flexGrow={1} p={1}>
+                  <Typography variant="body1" color="secondary" style={{ letterSpacing: 1, fontSize: 18 }}>
                     {product.seasonsUID}
                   </Typography>
                 </Box>
-                <Box>{productState.picked && <CheckCircleIcon />}</Box>
+                <Box py={"5px"} px={2}>
+                  {productState.picked && <CheckCircleIcon />}
+                </Box>
               </Box>
             </Box>
 
@@ -75,10 +77,8 @@ export const PickingProductCard = ({ product, productState, onStateChange }) => 
                 </Typography>
               </Box>
             </Box>
-
-            <Divider />
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Paper>
     </Box>
   )
