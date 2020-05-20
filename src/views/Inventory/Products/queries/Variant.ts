@@ -37,6 +37,8 @@ export const UpdateVariantFragment = gql`
     physicalProducts {
       id
       seasonsUID
+      productStatus
+      inventoryStatus
     }
   }
 `

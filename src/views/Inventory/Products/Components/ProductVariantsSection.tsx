@@ -9,11 +9,11 @@ import { VariantSummary } from "./VariantSummary"
 import { SelectField, TextField } from "fields"
 import { colors } from "theme/colors"
 
-export interface VariantsOverviewSectionProps {
+export interface ProductVariantsSectionProps {
   variants: any[]
 }
 
-export const VariantsOverviewSection: React.FC<VariantsOverviewSectionProps> = ({ variants }) => {
+export const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({ variants }) => {
   return (
     <ExpandableSection
       title="Product variants"

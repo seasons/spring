@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -90,7 +91,7 @@ export enum PhysicalProductStatus {
   Dirty = "Dirty",
   Lost = "Lost",
   New = "New",
-  PermenantlyDamaged = "PermenantlyDamaged",
+  PermanentlyDamaged = "PermanentlyDamaged",
   Used = "Used",
 }
 
@@ -641,6 +642,33 @@ export interface ColorWhereUniqueInput {
   colorCode?: string | null
 }
 
+export interface CustomProductUpdateInput {
+  architecture?: ProductArchitecture | null
+  brand?: BrandUpdateOneRequiredWithoutProductsInput | null
+  category?: CategoryUpdateOneRequiredWithoutProductsInput | null
+  color?: ColorUpdateOneRequiredInput | null
+  description?: string | null
+  externalURL?: string | null
+  innerMaterials?: ProductUpdateinnerMaterialsInput | null
+  model?: ProductModelUpdateOneWithoutProductsInput | null
+  modelHeight?: number | null
+  name?: string | null
+  outerMaterials?: ProductUpdateouterMaterialsInput | null
+  retailPrice?: number | null
+  season?: string | null
+  secondaryColor?: ColorUpdateOneInput | null
+  slug?: string | null
+  status?: ProductStatus | null
+  type?: ProductType | null
+  variants?: ProductVariantUpdateManyWithoutProductInput | null
+  bottomSizeType?: BottomSizeType | null
+  functions?: string[] | null
+  images?: any[] | null
+  modelSizeDisplay?: string | null
+  modelSizeName?: string | null
+  tags?: string[] | null
+}
+
 export interface CustomerDetailCreateInput {
   id?: string | null
   phoneNumber?: string | null
@@ -1073,6 +1101,9 @@ export interface PhysicalProductCreateInput {
   offloadMethod?: PhysicalProductOffloadMethod | null
   offloadNotes?: string | null
   sequenceNumber: number
+  dateOrdered?: any | null
+  dateReceived?: any | null
+  unitCost?: number | null
   location?: LocationCreateOneWithoutPhysicalProductsInput | null
   productVariant: ProductVariantCreateOneWithoutPhysicalProductsInput
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
@@ -1106,6 +1137,9 @@ export interface PhysicalProductCreateWithoutLocationInput {
   offloadMethod?: PhysicalProductOffloadMethod | null
   offloadNotes?: string | null
   sequenceNumber: number
+  dateOrdered?: any | null
+  dateReceived?: any | null
+  unitCost?: number | null
   productVariant: ProductVariantCreateOneWithoutPhysicalProductsInput
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
 }
@@ -1118,6 +1152,9 @@ export interface PhysicalProductCreateWithoutProductVariantInput {
   offloadMethod?: PhysicalProductOffloadMethod | null
   offloadNotes?: string | null
   sequenceNumber: number
+  dateOrdered?: any | null
+  dateReceived?: any | null
+  unitCost?: number | null
   location?: LocationCreateOneWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
 }
@@ -1188,6 +1225,30 @@ export interface PhysicalProductScalarWhereInput {
   sequenceNumber_lte?: number | null
   sequenceNumber_gt?: number | null
   sequenceNumber_gte?: number | null
+  dateOrdered?: any | null
+  dateOrdered_not?: any | null
+  dateOrdered_in?: any[] | null
+  dateOrdered_not_in?: any[] | null
+  dateOrdered_lt?: any | null
+  dateOrdered_lte?: any | null
+  dateOrdered_gt?: any | null
+  dateOrdered_gte?: any | null
+  dateReceived?: any | null
+  dateReceived_not?: any | null
+  dateReceived_in?: any[] | null
+  dateReceived_not_in?: any[] | null
+  dateReceived_lt?: any | null
+  dateReceived_lte?: any | null
+  dateReceived_gt?: any | null
+  dateReceived_gte?: any | null
+  unitCost?: number | null
+  unitCost_not?: number | null
+  unitCost_in?: number[] | null
+  unitCost_not_in?: number[] | null
+  unitCost_lt?: number | null
+  unitCost_lte?: number | null
+  unitCost_gt?: number | null
+  unitCost_gte?: number | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -1213,9 +1274,28 @@ export interface PhysicalProductUpdateDataInput {
   offloadMethod?: PhysicalProductOffloadMethod | null
   offloadNotes?: string | null
   sequenceNumber?: number | null
+  dateOrdered?: any | null
+  dateReceived?: any | null
+  unitCost?: number | null
   location?: LocationUpdateOneWithoutPhysicalProductsInput | null
   productVariant?: ProductVariantUpdateOneRequiredWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
+}
+
+export interface PhysicalProductUpdateInput {
+  seasonsUID?: string | null
+  location?: LocationUpdateOneWithoutPhysicalProductsInput | null
+  productVariant?: ProductVariantUpdateOneRequiredWithoutPhysicalProductsInput | null
+  inventoryStatus?: InventoryStatus | null
+  productStatus?: PhysicalProductStatus | null
+  offloadMethod?: PhysicalProductOffloadMethod | null
+  offloadNotes?: string | null
+  barcode?: string | null
+  sequenceNumber?: number | null
+  warehouseLocation?: WarehouseLocationConnectWhereUniqueInput | null
+  dateOrdered?: any | null
+  dateReceived?: any | null
+  unitCost?: number | null
 }
 
 export interface PhysicalProductUpdateManyDataInput {
@@ -1225,6 +1305,9 @@ export interface PhysicalProductUpdateManyDataInput {
   offloadMethod?: PhysicalProductOffloadMethod | null
   offloadNotes?: string | null
   sequenceNumber?: number | null
+  dateOrdered?: any | null
+  dateReceived?: any | null
+  unitCost?: number | null
 }
 
 export interface PhysicalProductUpdateManyInput {
@@ -1297,6 +1380,9 @@ export interface PhysicalProductUpdateWithoutLocationDataInput {
   offloadMethod?: PhysicalProductOffloadMethod | null
   offloadNotes?: string | null
   sequenceNumber?: number | null
+  dateOrdered?: any | null
+  dateReceived?: any | null
+  unitCost?: number | null
   productVariant?: ProductVariantUpdateOneRequiredWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
 }
@@ -1308,6 +1394,9 @@ export interface PhysicalProductUpdateWithoutProductVariantDataInput {
   offloadMethod?: PhysicalProductOffloadMethod | null
   offloadNotes?: string | null
   sequenceNumber?: number | null
+  dateOrdered?: any | null
+  dateReceived?: any | null
+  unitCost?: number | null
   location?: LocationUpdateOneWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
 }
@@ -2760,10 +2849,28 @@ export interface TopSizeWhereUniqueInput {
   id?: string | null
 }
 
+export interface UpdateVariantInput {
+  id: string
+  productType: ProductType
+  weight: number
+  sleeve?: number | null
+  shoulder?: number | null
+  chest?: number | null
+  neck?: number | null
+  length?: number | null
+  waist?: number | null
+  rise?: number | null
+  hem?: number | null
+  inseam?: number | null
+}
+
 export interface UpsertPhysicalProductInput {
-  seasonsUID: string
+  dateOrdered?: any | null
+  dateReceived?: any | null
   inventoryStatus: InventoryStatus
   productStatus: PhysicalProductStatus
+  seasonsUID: string
+  unitCost?: number | null
 }
 
 export interface UpsertProductInput {
@@ -2867,6 +2974,10 @@ export interface UserWhereUniqueInput {
   id?: string | null
   auth0Id?: string | null
   email?: string | null
+}
+
+export interface WarehouseLocationConnectWhereUniqueInput {
+  connect?: WarehouseLocationWhereUniqueInput | null
 }
 
 export interface WarehouseLocationConstraintCreateManyWithoutLocationsInput {

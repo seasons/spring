@@ -20,12 +20,13 @@ export const getTypeSpecificVariantFields = productType => {
 }
 
 export interface VariantSizeSectionProps {
+  isEditing?: boolean
   productType: string
   size: string
   sku: string
 }
 
-export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productType, size, sku }) => {
+export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ isEditing, productType, size, sku }) => {
   const typeSpecificFields = getTypeSpecificVariantFields(productType)
   const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 2) : []
   const typeSpecificSecondRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(2) : []
@@ -56,6 +57,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ productT
                 <Text variant="h5">{field}</Text>
                 <Spacer mt={1} />
                 <TextField
+                  disabled={isEditing && field === "Total count"}
                   name={`${size}_${field.toLowerCase().replace(" ", "")}`}
                   requiredNumber={!optionalFields.includes(field)}
                   maxValue={field === "Total count" ? 99 : undefined}
