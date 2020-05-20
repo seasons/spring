@@ -4,7 +4,7 @@ import { Loading } from "react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
 
-import { Spacer, Wizard } from "components"
+import { BackButton, Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
@@ -29,6 +29,7 @@ export const ProductCreate = props => {
     !data?.brands ||
     !data?.categories ||
     !data?.colors ||
+    !data?.inventoryStatuses ||
     !data?.physicalProductStatuses ||
     !data?.productArchitectures ||
     !data?.productFunctions ||
@@ -186,10 +187,16 @@ export const ProductCreate = props => {
 
   return (
     <Box mx={5}>
+      <Spacer mt={5} />
+      <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
         <Overview data={data} />
-        <Variants values={values} />
-        <PhysicalProducts data={data} values={values} />
+        <Variants createData={values} />
+        <PhysicalProducts
+          createData={values}
+          inventoryStatuses={data.inventoryStatuses}
+          physicalProductStatuses={data.productStatuses}
+        />
       </Wizard>
       <Spacer mt={9} />
     </Box>

@@ -30,18 +30,18 @@ export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h5">Date ordered</Text>
             <Spacer mt={1} />
-            <TextField name={`${uid}_dateOrdered`} requiredDate />
+            <TextField name={`${uid}_dateOrdered`} optionalDate />
           </Grid>
           <Spacer grid mt={3} />
           <Grid item xs={6}>
             <Text variant="h5">Unit cost</Text>
             <Spacer mt={1} />
-            <TextField name={`${uid}_unitCost`} requiredNumber />
+            <TextField name={`${uid}_unitCost`} optionalNumber />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h5">Date received</Text>
             <Spacer mt={1} />
-            <TextField name={`${uid}_dateReceived`} requiredDate />
+            <TextField name={`${uid}_dateReceived`} optionalDate />
           </Grid>
           <Spacer grid mt={3} />
           <Grid item xs={6}>

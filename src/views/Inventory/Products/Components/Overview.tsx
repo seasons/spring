@@ -10,7 +10,7 @@ import { Header } from "./Header"
 import { MetadataSection } from "./MetadataSection"
 import { PhotographySection } from "./PhotographySection"
 import { TagsSection } from "./TagsSection"
-import { VariantsOverviewSection } from "./VariantsOverviewSection"
+import { ProductVariantsSection } from "./ProductVariantsSection"
 
 export interface OverviewProps {
   data: any
@@ -105,7 +105,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           {isEditing && (
             <>
               <Spacer mt={6} />
-              <VariantsOverviewSection variants={product?.variants} />
+              <ProductVariantsSection variants={product?.variants} />
               <Spacer mt={6} />
             </>
           )}
