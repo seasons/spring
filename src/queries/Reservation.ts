@@ -54,9 +54,21 @@ export default {
       }
       sentPackage {
         id
+        shippingLabel {
+          image
+          trackingNumber
+          trackingURL
+        }
+        weight
       }
       returnedPackage {
         id
+        shippingLabel {
+          image
+          trackingNumber
+          trackingURL
+        }
+        weight
       }
       location {
         id
@@ -67,6 +79,12 @@ export default {
         inventoryStatus
         productStatus
         barcode
+        warehouseLocation {
+          barcode
+          locationCode
+          itemCode
+          type
+        }
         productVariant {
           product {
             id

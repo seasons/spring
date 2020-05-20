@@ -1,7 +1,6 @@
 import React from "react"
 import { Box } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
-import { Spacer } from "components"
 
 export interface StatusFieldProps {
   record?: { status: String }

@@ -30,8 +30,8 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
   <>
     <Header title="Products" primaryButton={{ text: "New Product", action: onNewProductBtnPressed }} />
     <List
-      filters={<ProductFilter />}
       {...rest}
+      filters={<ProductFilter />}
       perPage={10}
       hasCreate={false}
       hasEdit={false}

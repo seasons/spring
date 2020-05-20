@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import ReceiptIcon from "@material-ui/icons/ReceiptOutlined"
+import print from "print-js"
 
 const statusOptions = [
   "New",
@@ -39,6 +40,8 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
   const address = customer?.detail?.shippingAddress
   const { address1, address2, city, state } = address
 
+  const { shippingLabel } = reservation?.sentPackage
+
   return (
     <Grid container spacing={3}>
       <Grid item md={6} xl={3} xs={12}>
@@ -60,6 +63,22 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
               <TableRow>
                 <TableCell>ID</TableCell>
                 <TableCell>#{reservationNumber}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Shipping Label</TableCell>
+                <TableCell>
+                  <Box>
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        // print(shippingLabel.image)
+                        window.open(shippingLabel.image, "_blank")
+                      }}
+                    >
+                      Print
+                    </Button>
+                  </Box>
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -88,7 +107,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
               </TableRow>
               <TableRow>
                 <TableCell>Created At</TableCell>
-                <TableCell>{DateTime.fromISO(reservation.createdAt).toFormat("DD/MM/yyyy HH:MM")}</TableCell>
+                <TableCell>{DateTime.fromISO(reservation.createdAt).toLocaleString(DateTime.DATETIME_MED)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

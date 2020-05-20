@@ -57,19 +57,14 @@ const Filters = props => (
       tabs={[
         { label: "All", id: "all", value: [] },
         {
-          label: "Inbound",
-          id: "inbound",
-          value: ["InTransit", "Received"],
+          label: "Unfulfilled",
+          id: "unfulfilled",
+          value: ["New", "InQueue", "OnHold", "Packed"],
         },
         {
-          label: "Outbound",
-          id: "outbound",
-          value: ["New", "InQueue", "OnHold", "Packed", "Shipped", "InTransit"],
-        },
-        {
-          label: "Completed",
-          id: "completed",
-          value: ["Completed"],
+          label: "Fulfilled",
+          id: "fulfilled",
+          value: ["Shipped", "InTransit", "Received", "Completed"],
         },
       ]}
       alwaysOn
@@ -98,7 +93,6 @@ export const ReservationList = ({ staticContext, ...props }) => {
           hasList={true}
           hasShow={true}
           filters={<Filters />}
-          // actions={<ListActions />}
           sort={{
             field: "createdAt",
             order: "DESC",
@@ -108,7 +102,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
         >
           <Datagrid>
             <SinceDateField source="createdAt" label="Created" />
-            <ImagesField source="images" label="Images" />
+            <ImagesField source="images" label="Images" size="medium" />
             <StatusField label="Status" />
             <MemberField label="Member" />
             <SinceDateField source="returnAt" label="Return" />

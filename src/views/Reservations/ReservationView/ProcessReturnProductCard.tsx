@@ -7,6 +7,7 @@ import { GetReservation_products } from "generated/GetReservation"
 
 const Image = styled.img`
   margin-right: 5px;
+  height: 100%;
 `
 
 const ProductImage = ({ product }: { product: GetReservation_products }) => {

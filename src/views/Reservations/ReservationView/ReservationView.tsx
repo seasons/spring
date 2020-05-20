@@ -8,10 +8,13 @@ import ViewModuleIcon from "@material-ui/icons/ViewModule"
 import ListIcon from "@material-ui/icons/List"
 import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
+import ArchiveIcon from "@material-ui/icons/Archive"
 import { ProcessReturnModal } from "./ProcessReturnModal"
 import { PROCESS_RESERVATION } from "../mutations"
 import { useMutation } from "react-apollo"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
+import { ProductGrid } from "./ProductGrid"
+import { PickingModal } from "./PickingModal"
 
 export const ReservationView = ({ match, history, props }) => {
   const { id } = match.params
@@ -43,6 +46,23 @@ export const ReservationView = ({ match, history, props }) => {
     )
   }
 
+  const isReservationUnfulfilled = ["New", "InQueue", "OnHold"].includes(data.status)
+  const isReservationFulfilled = ["Shipped", "InTransit", "Received", "Completed"].includes(data.status)
+
+  const primaryButton = isReservationUnfulfilled
+    ? {
+        text: "Start Picking",
+        action: () => openModal(true),
+        icon: <ArchiveIcon />,
+      }
+    : {
+        text: "Process Returns",
+        action: () => openModal(true),
+        icon: <MoveToInboxIcon />,
+      }
+
+  const Modal = isReservationUnfulfilled ? PickingModal : ProcessReturnModal
+
   return (
     <>
       <Container maxWidth="lg">
@@ -56,11 +76,7 @@ export const ReservationView = ({ match, history, props }) => {
               },
               { title: `Reservation: ${data.reservationNumber}`, url: `/reservations/${data.reservationNumber}` },
             ]}
-            primaryButton={{
-              text: "Process Returns",
-              action: () => openModal(true),
-              icon: <MoveToInboxIcon />,
-            }}
+            primaryButton={primaryButton}
           />
           <Box my={2}>
             <ReservationInfo reservation={data} />
@@ -79,21 +95,25 @@ export const ReservationView = ({ match, history, props }) => {
             </Box>
           </Box>
           <Grid container spacing={2}>
-            {data.products.map(product => (
-              <Grid
-                item
-                lg={mode === "grid" ? 3 : 12}
-                md={mode === "grid" ? 4 : 12}
-                sm={mode === "grid" ? 4 : 12}
-                xs={12}
-              >
-                <ProductCard product={product} />
-              </Grid>
-            ))}
+            {mode === "list" ? (
+              <ProductGrid products={data.products} />
+            ) : (
+              data.products.map(product => (
+                <Grid
+                  item
+                  lg={mode === "grid" ? 3 : 12}
+                  md={mode === "grid" ? 4 : 12}
+                  sm={mode === "grid" ? 4 : 12}
+                  xs={12}
+                >
+                  <ProductCard product={product} />
+                </Grid>
+              ))
+            )}
           </Grid>
         </Box>
       </Container>
-      <ProcessReturnModal
+      <Modal
         open={showModal}
         onClose={() => openModal(false)}
         reservation={data}
