@@ -60,7 +60,7 @@ export const ProductCreate = props => {
         history.push("/inventory/products")
       }
     } catch (e) {
-      console.log("ERRORRR:", e)
+      console.log("error:", e)
     }
   }
 

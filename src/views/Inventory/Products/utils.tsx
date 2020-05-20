@@ -93,11 +93,16 @@ export const getProductUpsertData = (values: any) => {
     const physicalProductsData = Object.keys(seasonsUIDToData)
       .map(seasonsUID => {
         if (seasonsUID.includes(sku)) {
-          const { inventoryStatus, physicalProductStatus } = seasonsUIDToData[seasonsUID]
+          const { inventoryStatus, physicalProductStatus, dateOrdered, dateReceived, unitCost } = seasonsUIDToData[
+            seasonsUID
+          ]
           return {
-            seasonsUID,
+            dateOrdered,
+            dateReceived,
             inventoryStatus,
             productStatus: physicalProductStatus,
+            seasonsUID,
+            unitCost,
           }
         } else {
           return null
