@@ -4,6 +4,7 @@ import { useQuery } from "react-apollo"
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer } from "components"
+import { VariantEditQuery_productVariant } from "generated/VariantEditQuery"
 import { GET_GENERATED_VARIANT_SKUS } from "../queries"
 import { Header } from "./Header"
 import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection"
@@ -11,7 +12,7 @@ import { VariantSizeSection } from "./VariantSizeSection"
 
 export interface VariantsProps {
   createData?: any // Passed in when creating new variants
-  variants?: any[] // Passed in when editing variants
+  variants?: VariantEditQuery_productVariant[] // Passed in when editing variants
 }
 
 export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
@@ -45,7 +46,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
     // Get variants data from the already existing variants
     variantsData = variants.map((variant, index) => ({
       sku: variant.sku,
-      size: variant.internalSize.display,
+      size: variant.internalSize?.display,
     }))
   } else {
     return null
@@ -75,7 +76,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
         {isEditing && (
           <>
             {variants?.map(variant => (
-              <VariantPhysicalProductsSection physicalProducts={variant.physicalProducts} />
+              <VariantPhysicalProductsSection physicalProducts={variant.physicalProducts || []} />
             ))}
             <Spacer grid mt={6} />
           </>
