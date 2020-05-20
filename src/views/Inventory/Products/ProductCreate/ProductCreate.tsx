@@ -10,11 +10,7 @@ import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
 import { getModelSizeDisplay, extractVariantSizeFields } from "../utils"
 
-export interface ProductCreateProps {
-  history: any
-  match: any
-  props?: any
-}
+export interface ProductCreateProps {}
 
 export const ProductCreate = props => {
   const history = useHistory()
@@ -22,21 +18,7 @@ export const ProductCreate = props => {
   const [upsertProduct] = useMutation(UPSERT_PRODUCT)
   const [values, setValues] = useState({})
 
-  if (
-    loading ||
-    !data?.bottomSizes ||
-    !data?.bottomSizeTypes ||
-    !data?.brands ||
-    !data?.categories ||
-    !data?.colors ||
-    !data?.inventoryStatuses ||
-    !data?.physicalProductStatuses ||
-    !data?.productArchitectures ||
-    !data?.productFunctions ||
-    !data?.productModels ||
-    !data?.productTypes ||
-    !data?.topSizes
-  ) {
+  if (loading || !data) {
     return <Loading />
   }
   console.log("DATA:", data)

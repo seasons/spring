@@ -7,6 +7,7 @@ import { pick } from "lodash"
 
 import { BackButton, Spacer, Wizard } from "components"
 import { Overview } from "../Components"
+import { ProductEditQuery } from "generated/ProductEditQuery"
 import { PRODUCT_EDIT_QUERY } from "../queries"
 import { UPDATE_PRODUCT } from "../mutations"
 import { getModelSizeDisplay } from "../utils"
@@ -21,28 +22,10 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   })
   const [updateProduct] = useMutation(UPDATE_PRODUCT)
 
-  if (
-    loading ||
-    !data?.product ||
-    !data?.bottomSizes ||
-    !data?.bottomSizeTypes ||
-    !data?.brands ||
-    !data?.categories ||
-    !data?.colors ||
-    !data?.physicalProductStatuses ||
-    !data?.productArchitectures ||
-    !data?.productFunctions ||
-    !data?.productModels ||
-    !data?.productTypes ||
-    !data?.topSizes
-  ) {
+  if (loading || !data) {
     return <Loading />
   }
   console.log("DATA:", data)
-
-  const onNext = values => {
-    console.log("ON NEXT", values)
-  }
 
   const onSubmit = async values => {
     console.log("SUBMIT VALS", values)
@@ -109,41 +92,46 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
     }
   }
 
-  const { product } = data
-  const availableSizes = product.variants.map(variant => {
-    switch (product.type) {
-      case "Top":
-        return variant.internalSize.top.letter
-      case "Bottom":
-        return variant.internalSize.bottom.value
-    }
-  })
+  const productEditData: ProductEditQuery = data
+  const { product } = productEditData
+  let initialValues = {}
 
-  // Extract current values of the product to display
-  const initialValues = {
-    architecture: product.architecture?.id,
-    brand: product.brand.id,
-    category: product.category.id,
-    color: product.color.id,
-    functions: product.functions.map(func => func.name),
-    model: product.model?.id,
-    modelSize: product.modelSize.display,
-    productType: product.type,
-    secondaryColor: product.secondaryColor?.id,
-    sizes: availableSizes,
-    tags: product.tags.map(tag => tag.name),
-    ...pick(product, ["description", "name", "innerMaterials", "outerMaterials", "retailPrice", "season", "status"]),
+  if (product) {
+    const availableSizes = product.variants?.map(variant => {
+      switch (product.type) {
+        case "Top":
+          return variant?.internalSize?.top?.letter
+        case "Bottom":
+          return variant?.internalSize?.bottom?.value
+      }
+    })
+
+    // Extract current values of the product to display
+    initialValues = {
+      architecture: product.architecture,
+      brand: product.brand.id,
+      category: product.category.id,
+      color: product.color.id,
+      functions: product.functions?.map(func => func.name),
+      model: product.model?.id,
+      modelSize: product.modelSize?.display,
+      productType: product.type,
+      secondaryColor: product.secondaryColor?.id,
+      sizes: availableSizes,
+      tags: product.tags.map(tag => tag.name),
+      ...pick(product, ["description", "name", "innerMaterials", "outerMaterials", "retailPrice", "season", "status"]),
+    }
+    product.images.forEach((image, index) => {
+      initialValues[`image_${index}`] = image.url
+    })
   }
-  product.images.forEach((image, index) => {
-    initialValues[`image_${index}`] = image.url
-  })
 
   return (
     <Box mx={5}>
       <Spacer mt={5} />
       <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
-      <Wizard submitButtonTitle="Save" initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
-        <Overview data={data} />
+      <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
+        <Overview data={data} product={data.product} />
       </Wizard>
       <Spacer mt={9} />
     </Box>
