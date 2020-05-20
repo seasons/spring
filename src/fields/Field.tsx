@@ -48,6 +48,7 @@ export const Field: React.FC<FieldProps> = ({
   ...rest
 }) => {
   const validateField = async value => {
+    return
     let schema
     if (required) {
       schema = yup.mixed().required("Required")

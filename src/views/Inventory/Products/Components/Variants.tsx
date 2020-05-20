@@ -3,7 +3,8 @@ import { useQuery } from "react-apollo"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
-import { Spacer } from "components"
+import { Loader, Spacer } from "components"
+import { GetGeneratedVariantSkus } from "generated/GetGeneratedVariantSkus"
 import { VariantEditQuery_productVariant } from "generated/VariantEditQuery"
 import { GET_GENERATED_VARIANT_SKUS } from "../queries"
 import { Header } from "./Header"
@@ -32,13 +33,14 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
   })
 
   if (createData && (loading || !data || error)) {
-    return <div>Loading</div>
+    return <Loader />
   }
 
+  const generatedSKUsData: GetGeneratedVariantSkus = data
   let variantsData
-  if (createData && data) {
+  if (createData && generatedSKUsData.generatedVariantSKUs) {
     // Get variants data from createData and query response
-    variantsData = data.generatedVariantSKUs.map((sku, index) => ({
+    variantsData = generatedSKUsData.generatedVariantSKUs.map((sku, index) => ({
       sku,
       size: sizeNames[index],
     }))
