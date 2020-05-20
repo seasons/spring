@@ -21,7 +21,6 @@ export const getProductUpsertData = (values: any) => {
     retailPrice,
     season,
     secondaryColor: secondaryColorID,
-    sizes,
     status,
     subCategory: subCategoryID,
     tags,
@@ -48,17 +47,33 @@ export const getProductUpsertData = (values: any) => {
   })
 
   // Get physical products data by using their seasonsUID as the key
-  const physicalProductFieldKeys = ["inventoryStatus", "physicalProductStatus"]
+  const physicalProductFieldKeys = [
+    "dateOrdered",
+    "dateReceived",
+    "inventoryStatus",
+    "physicalProductStatus",
+    "unitCost",
+  ]
   const seasonsUIDToData = {}
   Object.keys(values).forEach(key => {
     const value = values[key]
     if (physicalProductFieldKeys.some(fieldKey => key.includes(fieldKey))) {
       // Key is of the form <seasonsUID>_<fieldKey>, i.e. ALMC-BLU-SS-001-01_dateOrdered
       const [seasonsUID, fieldKey] = key.split("_")
-      if (seasonsUIDToData[seasonsUID]) {
-        seasonsUIDToData[seasonsUID][fieldKey] = value
+      let fieldValue
+      if (["dateOrdered", "dateReceived"].includes(fieldKey)) {
+        // Convert date to ISO string format
+        fieldValue = getDateISOString(value)
+      } else if (fieldKey === "unitCost") {
+        // Convert to float
+        fieldValue = parseFloat(value) || null
       } else {
-        seasonsUIDToData[seasonsUID] = { [fieldKey]: value }
+        fieldValue = value
+      }
+      if (seasonsUIDToData[seasonsUID]) {
+        seasonsUIDToData[seasonsUID][fieldKey] = fieldValue
+      } else {
+        seasonsUIDToData[seasonsUID] = { [fieldKey]: fieldValue }
       }
     }
   })
@@ -101,28 +116,28 @@ export const getProductUpsertData = (values: any) => {
     }
   })
 
-  // Piece all the data together and perform mutation
+  // Piece all the data together
   const productsData = {
-    name,
-    images,
+    architecture: architecture || null,
+    bottomSizeType,
     brandID,
     categoryID,
-    type: productType,
-    description,
-    modelID,
-    retailPrice: parseInt(retailPrice),
-    modelSizeName,
-    modelSizeDisplay,
-    bottomSizeType,
     colorID,
-    secondaryColorID,
-    tags,
-    functions,
-    innerMaterials,
-    outerMaterials,
-    status,
+    description,
+    functions: functions || [],
+    images,
+    innerMaterials: innerMaterials || [],
+    modelID,
+    modelSizeDisplay,
+    modelSizeName,
+    name,
+    outerMaterials: outerMaterials || [],
+    retailPrice: parseInt(retailPrice),
     season,
-    architecture,
+    secondaryColorID: secondaryColorID || null,
+    status,
+    tags: tags || [],
+    type: productType,
     variants: variantsData,
   }
   return productsData

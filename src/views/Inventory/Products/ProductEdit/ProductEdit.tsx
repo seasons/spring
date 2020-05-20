@@ -94,7 +94,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
 
   const productEditData: ProductEditQuery = data
   const { product } = productEditData
-  let initialValues = {}
+  let initialValues
 
   if (product) {
     const availableSizes = product.variants?.map(variant => {
@@ -124,6 +124,8 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
     product.images.forEach((image, index) => {
       initialValues[`image_${index}`] = image.url
     })
+  } else {
+    initialValues = {}
   }
 
   return (

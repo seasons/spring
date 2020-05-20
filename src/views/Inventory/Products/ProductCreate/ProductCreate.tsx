@@ -45,18 +45,22 @@ export const ProductCreate = props => {
     if (!agreed) {
       return
     }
-    setIsSubmitting(true)
+    // setIsSubmitting(true)
     console.log("UPSERTING")
     // Extract appropriate values from the WizardForm
-    // const productUpsertData = getProductUpsertData(values)
-    // const result = await upsertProduct({
-    //   variables: {
-    //     input: productUpsertData,
-    //   },
-    // })
-    // if (result?.data) {
-    //   history.push("/inventory/products")
-    // }
+    const productUpsertData = getProductUpsertData(values)
+    try {
+      const result = await upsertProduct({
+        variables: {
+          input: productUpsertData,
+        },
+      })
+      if (result?.data) {
+        history.push("/inventory/products")
+      }
+    } catch (e) {
+      console.log("ERRORRR:", e)
+    }
   }
 
   const initialValues = {
