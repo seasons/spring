@@ -3,17 +3,22 @@ import React from "react"
 import { Grid } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
+import {
+  ProductUpsertQuery_categories,
+  ProductUpsertQuery_colors,
+  ProductUpsertQuery_productModels,
+} from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
-import { getFormSelectChoices } from "utils/form"
+import { getFormSelectChoices, FormSelectChoice } from "utils/form"
 
 export interface MetadataSectionProps {
   architectures: string[]
-  categories: any[]
-  colors: any[]
+  categories: ProductUpsertQuery_categories[]
+  colors: ProductUpsertQuery_colors[]
   isEditing: boolean
-  models: any[]
-  sizes: any[]
+  models: ProductUpsertQuery_productModels[]
+  sizes: FormSelectChoice[]
   types: string[]
   setProductType: (string) => void
 }

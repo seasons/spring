@@ -1,3 +1,8 @@
+export interface FormSelectChoice {
+  display: string
+  value: string
+}
+
 /**
  * Extract enum values from a query to monsoon fetching all cases of an enum
  */

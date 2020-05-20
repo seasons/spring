@@ -1,16 +1,13 @@
 import React from "react"
 
-import { Box, Grid } from "@material-ui/core"
-import { styled as muiStyled } from "@material-ui/core/styles"
+import { Grid } from "@material-ui/core"
 
-import { Spacer, Text } from "components"
 import { ExpandableSection } from "./ExpandableSection"
+import { ProductEditQuery_product_variants } from "generated/ProductEditQuery"
 import { VariantSummary } from "./VariantSummary"
-import { SelectField, TextField } from "fields"
-import { colors } from "theme/colors"
 
 export interface ProductVariantsSectionProps {
-  variants: any[]
+  variants: ProductEditQuery_product_variants[]
 }
 
 export const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({ variants }) => {

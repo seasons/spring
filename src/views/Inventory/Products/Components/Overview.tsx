@@ -6,7 +6,13 @@ import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import materialsJSON from "data/materials.json"
 import { GeneralSection } from "./GeneralSection"
-import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
+import {
+  ProductUpsertQuery,
+  ProductUpsertQuery_brands,
+  ProductUpsertQuery_categories,
+  ProductUpsertQuery_colors,
+  ProductUpsertQuery_productModels,
+} from "generated/ProductUpsertQuery"
 import { ProductEditQuery_product } from "generated/ProductEditQuery"
 import { Header } from "./Header"
 import { MetadataSection } from "./MetadataSection"
@@ -70,7 +76,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
         </Grid>
         <Grid item xs={8}>
           <GeneralSection
-            brands={data.brands}
+            brands={data.brands.filter(Boolean) as ProductUpsertQuery_brands[]}
             bottomSizeTypeChoices={bottomSizeTypeChoices}
             isEditing={isEditing}
             productType={productType}
@@ -80,10 +86,10 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}
-            categories={data.categories}
-            colors={data.colors}
+            categories={data.categories.filter(Boolean) as ProductUpsertQuery_categories[]}
+            colors={data.colors.filter(Boolean) as ProductUpsertQuery_colors[]}
             isEditing={isEditing}
-            models={data.productModels}
+            models={data.productModels as ProductUpsertQuery_productModels[]}
             setProductType={setProductType}
             sizes={sizes}
             types={productTypes}
