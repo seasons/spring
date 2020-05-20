@@ -118,7 +118,7 @@ export const getProductUpsertData = (values: any) => {
 
   // Piece all the data together
   const productsData = {
-    architecture: architecture || null,
+    architecture: architecture,
     bottomSizeType,
     brandID,
     categoryID,
@@ -134,7 +134,7 @@ export const getProductUpsertData = (values: any) => {
     outerMaterials: outerMaterials || [],
     retailPrice: parseInt(retailPrice),
     season,
-    secondaryColorID: secondaryColorID || null,
+    secondaryColorID: secondaryColorID,
     status,
     tags: tags || [],
     type: productType,

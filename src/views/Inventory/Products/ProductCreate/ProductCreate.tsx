@@ -45,8 +45,9 @@ export const ProductCreate = props => {
     if (!agreed) {
       return
     }
-    // setIsSubmitting(true)
-    console.log("UPSERTING")
+    // Show loading spinner
+    setIsSubmitting(true)
+
     // Extract appropriate values from the WizardForm
     const productUpsertData = getProductUpsertData(values)
     try {
