@@ -5,10 +5,11 @@ import { Grid } from "@material-ui/core"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
+import { FormSelectChoice } from "utils/form"
 
 export interface PhysicalProductSectionProps {
-  inventoryStatusChoices: any[]
-  statusChoices: any[]
+  inventoryStatusChoices: FormSelectChoice[]
+  statusChoices: FormSelectChoice[]
   uid: string
 }
 
