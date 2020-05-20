@@ -9,9 +9,10 @@ export interface ConfirmationDialogProps {
   onClose: (agreed: boolean) => void
 }
 
-export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ title, body, open, setOpen }) => {
-  const handleClose = () => {
+export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ title, body, open, setOpen, onClose }) => {
+  const handleClose = (agreed: boolean) => {
     setOpen(false)
+    onClose(agreed)
   }
 
   return (
@@ -26,10 +27,10 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ title, b
         <DialogContentText id="alert-dialog-description">{body}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={() => handleClose(false)} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleClose} color="primary" autoFocus>
+        <Button onClick={() => handleClose(true)} color="primary" autoFocus>
           Ok
         </Button>
       </DialogActions>

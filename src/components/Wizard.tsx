@@ -4,6 +4,7 @@ import { WizardBottomNavBar } from "./WizardBottomNavBar"
 
 export interface WizardProps {
   children: any
+  isSubmitting?: boolean
   initialValues?: Object
   submitButtonTitle?: string
   onNext?: (values: any) => void
@@ -16,6 +17,7 @@ export interface WizardContextProps {
 
 export const Wizard: React.FC<WizardProps> = ({
   children,
+  isSubmitting = false,
   initialValues = {},
   submitButtonTitle = "Submit",
   onNext,
@@ -45,7 +47,7 @@ export const Wizard: React.FC<WizardProps> = ({
   const isLastPage = pageIndex === React.Children.count(children) - 1
   return (
     <Form initialValues={values} onSubmit={handleSubmit} subscription={{ submitting: true, pristine: true }}>
-      {({ handleSubmit, submitting, values: formValues, errors }) => {
+      {({ handleSubmit, values: formValues, errors }) => {
         return (
           <form onSubmit={handleSubmit}>
             {activePage}
@@ -54,6 +56,7 @@ export const Wizard: React.FC<WizardProps> = ({
               onPrevious={previous}
               isFirstPage={pageIndex === 0}
               isLastPage={isLastPage}
+              isSubmitting={isSubmitting}
             />
           </form>
         )

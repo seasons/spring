@@ -19,6 +19,7 @@ export const ProductCreate = props => {
   const [upsertProduct] = useMutation(UPSERT_PRODUCT)
   const [values, setValues] = useState({})
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   if (loading || !data) {
     return <Loading />
@@ -31,7 +32,11 @@ export const ProductCreate = props => {
 
   const onSubmit = async values => {
     setValues(values)
-    setIsConfirmationDialogOpen(true)
+
+    // Prevent user from submitting multiple times
+    if (!isSubmitting) {
+      setIsConfirmationDialogOpen(true)
+    }
   }
 
   const onCloseConfirmationDialog = async (agreed: boolean) => {
@@ -40,16 +45,18 @@ export const ProductCreate = props => {
     if (!agreed) {
       return
     }
+    setIsSubmitting(true)
+    console.log("UPSERTING")
     // Extract appropriate values from the WizardForm
-    const productUpsertData = getProductUpsertData(values)
-    const result = await upsertProduct({
-      variables: {
-        input: productUpsertData,
-      },
-    })
-    if (result?.data) {
-      history.push("/inventory/products")
-    }
+    // const productUpsertData = getProductUpsertData(values)
+    // const result = await upsertProduct({
+    //   variables: {
+    //     input: productUpsertData,
+    //   },
+    // })
+    // if (result?.data) {
+    //   history.push("/inventory/products")
+    // }
   }
 
   const initialValues = {
@@ -64,7 +71,7 @@ export const ProductCreate = props => {
     <Box mx={5}>
       <Spacer mt={5} />
       <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
-      <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
+      <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} isSubmitting={isSubmitting}>
         <Overview data={productUpsertQueryData} />
         <Variants createData={values} />
         <PhysicalProducts

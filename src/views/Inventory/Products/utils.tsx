@@ -1,3 +1,8 @@
+/**
+ * Uses [values] to form the data used in the productUpsert mutation
+ * inside the New product flow.
+ * @param values: set of values retrieved from the Product Create form
+ */
 export const getProductUpsertData = (values: any) => {
   const {
     architecture,
