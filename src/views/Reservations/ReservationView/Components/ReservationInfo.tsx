@@ -15,8 +15,6 @@ import {
   Chip,
 } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
-import ReceiptIcon from "@material-ui/icons/ReceiptOutlined"
-import print from "print-js"
 
 const statusOptions = [
   "New",
@@ -71,7 +69,6 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                     <Button
                       variant="outlined"
                       onClick={() => {
-                        // print(shippingLabel.image)
                         window.open(shippingLabel.image, "_blank")
                       }}
                     >
