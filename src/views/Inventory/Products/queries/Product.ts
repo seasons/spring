@@ -57,10 +57,6 @@ export const ProductUpsertFragment = gql`
     tags {
       name
     }
-
-    topSizes {
-      letter
-    }
   }
 `
 

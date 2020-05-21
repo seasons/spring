@@ -28,17 +28,19 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
   const [productType, setProductType] = useState("Top")
 
   let sizes: any[] = []
+  const baseSizes = ["XS", "S", "M", "L", "XL", "XXL"]
   switch (productType) {
     case "Top":
-      const topSizes: string[] = Array.from(
-        new Set(data.topSizes.filter(Boolean).map(topSize => topSize?.letter || ""))
-      )
-      topSizes.sort()
+      const topSizes: string[] = baseSizes
       sizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
-      const bottomSizes: string[] = Array.from(new Set(data.bottomSizes.map(bottomSize => bottomSize?.value || "")))
-      bottomSizes.sort()
+      // Ensure the baseSizes are included and sorted correctly
+      const baseBottomSizes: string[] = Array.from(
+        new Set(data.bottomSizes.map(bottomSize => bottomSize?.value || ""))
+      ).filter(size => !baseSizes.includes(size))
+      baseBottomSizes.sort()
+      const bottomSizes = [...baseSizes, ...baseBottomSizes]
       sizes = getFormSelectChoices(bottomSizes)
       break
   }
