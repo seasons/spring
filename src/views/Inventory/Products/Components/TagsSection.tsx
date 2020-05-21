@@ -3,16 +3,17 @@ import React from "react"
 import { Grid } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
+import productFunctionsJSON from "data/productFunctions.json"
 import { ExpandableSection } from "./ExpandableSection"
 import { AutocompleteField } from "fields"
 
 export interface TagsSectionProps {
-  functions: string[]
   materials: string[]
   tags: string[]
 }
 
-export const TagsSection: React.FC<TagsSectionProps> = ({ functions, materials, tags }) => {
+export const TagsSection: React.FC<TagsSectionProps> = ({ materials, tags }) => {
+  const { functions } = productFunctionsJSON
   return (
     <ExpandableSection
       title="Tags"

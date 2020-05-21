@@ -47,7 +47,6 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
   const bottomSizeTypeChoices = getFormSelectChoices(getEnumValues(data.bottomSizeTypes))
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
-  const productFunctions = data.productFunctions.map(productFunction => productFunction?.name || "")
   const tags = data.tags.map(tag => tag?.name || "").sort()
   const statuses = [
     {
@@ -93,7 +92,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
             types={productTypes}
           />
           <Spacer mt={6} />
-          <TagsSection functions={productFunctions} materials={materials} tags={tags} />
+          <TagsSection materials={materials} tags={tags} />
           {isEditing && (
             <>
               <Spacer mt={6} />

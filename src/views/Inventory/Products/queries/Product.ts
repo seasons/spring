@@ -43,11 +43,6 @@ export const ProductUpsertFragment = gql`
       }
     }
 
-    productFunctions {
-      id
-      name
-    }
-
     productModels {
       id
       name
