@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Grid } from "@material-ui/core"
+import { Box, Grid } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import {
@@ -44,7 +44,13 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
     value: category.id,
   }))
   const colorChoices = colors.map(color => ({
-    display: <Text style={{ backgroundColor: color.hexCode }}>{color.name}</Text>,
+    display: (
+      <Box display="flex" alignItems="center">
+        <Text>{color.name}</Text>
+        <Spacer ml={1} />
+        <Box bgcolor={color.hexCode} width={16} height={16} borderRadius={4} />
+      </Box>
+    ),
     value: color.id,
   }))
   return (
