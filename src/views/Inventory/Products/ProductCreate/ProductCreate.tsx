@@ -8,7 +8,7 @@ import { BackButton, ConfirmationDialog, Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
-import { getModelSizeDisplay, extractVariantSizeFields, getProductUpsertData } from "../utils"
+import { getProductUpsertData } from "../utils"
 import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
 
 export interface ProductCreateProps {}
