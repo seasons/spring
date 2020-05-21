@@ -39,8 +39,11 @@ export const Wizard: React.FC<WizardProps> = ({
   const handleSubmit = values => {
     setValues(values)
     const isLastPage = pageIndex === React.Children.count(children) - 1
-    if (isLastPage && !isSubmitting) {
-      setIsConfirmationDialogOpen(true)
+    if (isLastPage) {
+      if (!isSubmitting) {
+        // Prevent user from submitting multiple times
+        setIsConfirmationDialogOpen(true)
+      }
     } else {
       next(values)
     }
