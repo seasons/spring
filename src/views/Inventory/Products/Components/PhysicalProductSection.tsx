@@ -37,7 +37,7 @@ export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h5">Unit cost</Text>
             <Spacer mt={1} />
-            <TextField name={`${uid}_unitCost`} optionalNumber />
+            <TextField name={`${uid}_unitCost`} type="number" optionalNumber />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h5">Date received</Text>
