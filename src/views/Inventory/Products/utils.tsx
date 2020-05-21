@@ -79,9 +79,7 @@ export const getProductUpsertData = (values: any) => {
 
   // Get the image files which are stored as image_0, image_1, etc.
   const numImages = 4
-  const images = [...Array(numImages).keys()].map(index => {
-    return values[`image_${index}`]
-  })
+  const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
 
   const modelSizeDisplay = getModelSizeDisplay(productType, modelSizeName, bottomSizeType)
 

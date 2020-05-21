@@ -19,7 +19,7 @@ export const PhotographySection: React.FC<PhotographySectionProps> = ({ imageURL
         <GridList cellHeight={516} cols={1}>
           {[...Array(numImages)].map((_, index) => (
             <GridListTile key={index}>
-              <DropzoneField imageURL={imageURLs?.[index]} name={`image_${index}`} required />
+              <DropzoneField imageURL={imageURLs?.[index]} name={`image_${index}`} />
             </GridListTile>
           ))}
         </GridList>
