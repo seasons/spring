@@ -21,7 +21,7 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   })
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
 
-  if (loading || !data) {
+  if (loading || error || !data) {
     return <Loading />
   }
 

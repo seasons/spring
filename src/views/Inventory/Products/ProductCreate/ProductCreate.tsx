@@ -15,11 +15,11 @@ export interface ProductCreateProps {}
 
 export const ProductCreate = props => {
   const history = useHistory()
-  const { data, loading } = useQuery(PRODUCT_UPSERT_QUERY)
+  const { data, loading, error } = useQuery(PRODUCT_UPSERT_QUERY)
   const [upsertProduct] = useMutation(UPSERT_PRODUCT)
   const [values, setValues] = useState({})
 
-  if (loading || !data) {
+  if (loading || error || !data) {
     return <Loading />
   }
   console.log("DATA:", data)

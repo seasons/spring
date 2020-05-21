@@ -20,7 +20,7 @@ export const VariantEdit: React.FC<VariantEditProps> = props => {
   })
   const [updateVariant] = useMutation(UPDATE_VARIANT)
 
-  if (loading || !data) {
+  if (loading || error || !data) {
     return <Loading />
   }
   console.log("DATA:", data)

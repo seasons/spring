@@ -22,7 +22,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   })
   const [updateProduct] = useMutation(UPDATE_PRODUCT)
 
-  if (loading || !data) {
+  if (loading || error || !data) {
     return <Loading />
   }
 
