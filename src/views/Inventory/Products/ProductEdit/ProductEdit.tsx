@@ -1,11 +1,11 @@
 import { Box } from "@material-ui/core"
-import React, { useState } from "react"
+import React from "react"
 import { Loading } from "react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { pick } from "lodash"
 
-import { BackButton, ConfirmationDialog, Spacer, Wizard } from "components"
+import { BackButton, Spacer, Wizard } from "components"
 import { Overview } from "../Components"
 import { ProductEditQuery } from "generated/ProductEditQuery"
 import { PRODUCT_EDIT_QUERY } from "../queries"
@@ -21,31 +21,12 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
     variables: { input: { id: productID } },
   })
   const [updateProduct] = useMutation(UPDATE_PRODUCT)
-  const [values, setValues] = useState({})
-  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   if (loading || !data) {
     return <Loading />
   }
 
   const onSubmit = async values => {
-    setValues(values)
-
-    // Prevent user from submitting multiple times
-    if (!isSubmitting) {
-      setIsConfirmationDialogOpen(true)
-    }
-  }
-
-  const onCloseConfirmationDialog = async (agreed: boolean) => {
-    // Make sure user has confirmed submission
-    if (!agreed) {
-      return
-    }
-    // Show loading spinner
-    setIsSubmitting(true)
-
     const updateProductData = getProductUpdateData(values)
     const result = await updateProduct({
       variables: {
@@ -102,13 +83,6 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
         <Overview data={data} product={data.product} />
       </Wizard>
       <Spacer mt={9} />
-      <ConfirmationDialog
-        title="Are you sure you want to submit?"
-        body="Make sure all the values provided are correct before submitting."
-        open={isConfirmationDialogOpen}
-        setOpen={setIsConfirmationDialogOpen}
-        onClose={onCloseConfirmationDialog}
-      />
     </Box>
   )
 }

@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 import { Form } from "react-final-form"
+
+import { ConfirmationDialog } from "components"
 import { WizardBottomNavBar } from "./WizardBottomNavBar"
 
 export interface WizardProps {
   children: any
-  isSubmitting?: boolean
   initialValues?: Object
   submitButtonTitle?: string
   onNext?: (values: any) => void
@@ -17,7 +18,6 @@ export interface WizardContextProps {
 
 export const Wizard: React.FC<WizardProps> = ({
   children,
-  isSubmitting = false,
   initialValues = {},
   submitButtonTitle = "Submit",
   onNext,
@@ -25,6 +25,8 @@ export const Wizard: React.FC<WizardProps> = ({
 }) => {
   const [pageIndex, setPageIndex] = useState(0)
   const [values, setValues] = useState(initialValues)
+  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const next = vals => {
     setPageIndex(Math.min(pageIndex + 1, children.length - 1))
@@ -35,12 +37,24 @@ export const Wizard: React.FC<WizardProps> = ({
   const previous = () => setPageIndex(Math.max(pageIndex - 1, 0))
 
   const handleSubmit = values => {
+    setValues(values)
     const isLastPage = pageIndex === React.Children.count(children) - 1
-    if (isLastPage) {
-      return onSubmit(values)
+    if (isLastPage && !isSubmitting) {
+      setIsConfirmationDialogOpen(true)
     } else {
       next(values)
     }
+  }
+
+  const onCloseConfirmationDialog = async (agreed: boolean) => {
+    // Make sure user has confirmed submission
+    if (!agreed) {
+      return
+    }
+    // Show loading spinner
+    setIsSubmitting(true)
+
+    onSubmit(values)
   }
 
   const activePage = React.Children.toArray(children)[pageIndex]
@@ -49,16 +63,25 @@ export const Wizard: React.FC<WizardProps> = ({
     <Form initialValues={values} onSubmit={handleSubmit} subscription={{ submitting: true, pristine: true }}>
       {({ handleSubmit, values: formValues, errors }) => {
         return (
-          <form onSubmit={handleSubmit}>
-            {activePage}
-            <WizardBottomNavBar
-              submitButtonTitle={submitButtonTitle}
-              onPrevious={previous}
-              isFirstPage={pageIndex === 0}
-              isLastPage={isLastPage}
-              isSubmitting={isSubmitting}
+          <>
+            <form onSubmit={handleSubmit}>
+              {activePage}
+              <WizardBottomNavBar
+                submitButtonTitle={submitButtonTitle}
+                onPrevious={previous}
+                isFirstPage={pageIndex === 0}
+                isLastPage={isLastPage}
+                isSubmitting={isSubmitting}
+              />
+            </form>
+            <ConfirmationDialog
+              title="Are you sure you want to submit?"
+              body="Make sure all the values provided are correct before submitting."
+              open={isConfirmationDialogOpen}
+              setOpen={setIsConfirmationDialogOpen}
+              onClose={onCloseConfirmationDialog}
             />
-          </form>
+          </>
         )
       }}
     </Form>

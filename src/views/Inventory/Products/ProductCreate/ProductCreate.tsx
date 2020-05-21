@@ -4,7 +4,7 @@ import { Loading } from "react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
 
-import { BackButton, ConfirmationDialog, Spacer, Wizard } from "components"
+import { BackButton, Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
@@ -18,8 +18,6 @@ export const ProductCreate = props => {
   const { data, loading } = useQuery(PRODUCT_UPSERT_QUERY)
   const [upsertProduct] = useMutation(UPSERT_PRODUCT)
   const [values, setValues] = useState({})
-  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   if (loading || !data) {
     return <Loading />
@@ -31,23 +29,6 @@ export const ProductCreate = props => {
   }
 
   const onSubmit = async values => {
-    setValues(values)
-
-    // Prevent user from submitting multiple times
-    if (!isSubmitting) {
-      setIsConfirmationDialogOpen(true)
-    }
-  }
-
-  const onCloseConfirmationDialog = async (agreed: boolean) => {
-    console.log("SUBMITTED VALUES FINAL:", values)
-    // Make sure user has confirmed submission
-    if (!agreed) {
-      return
-    }
-    // Show loading spinner
-    setIsSubmitting(true)
-
     // Extract appropriate values from the WizardForm
     const productUpsertData = getProductUpsertData(values)
     try {
@@ -76,7 +57,7 @@ export const ProductCreate = props => {
     <Box mx={5}>
       <Spacer mt={5} />
       <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
-      <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} isSubmitting={isSubmitting}>
+      <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
         <Overview data={productUpsertQueryData} />
         <Variants createData={values} />
         <PhysicalProducts
@@ -86,13 +67,6 @@ export const ProductCreate = props => {
         />
       </Wizard>
       <Spacer mt={9} />
-      <ConfirmationDialog
-        title="Are you sure you want to submit?"
-        body="Make sure all the values provided are correct before submitting."
-        open={isConfirmationDialogOpen}
-        setOpen={setIsConfirmationDialogOpen}
-        onClose={onCloseConfirmationDialog}
-      />
     </Box>
   )
 }

@@ -43,7 +43,6 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
       productStatus: values[`${seasonsUID}_physicalProductStatus`],
       unitCost: parseFloat(values[`${seasonsUID}_unitCost`]) || null,
     }
-    console.log("UPDATE:", updatePhysicalProductData)
     const result = await updatePhysicalProduct({
       variables: {
         where: { id: physicalProduct.id },
