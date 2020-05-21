@@ -74,7 +74,6 @@ export const getProductUpsertData = (values: any) => {
     season,
     secondaryColor: secondaryColorID,
     status,
-    subCategory: subCategoryID,
     tags,
   } = values
 
@@ -224,7 +223,6 @@ export const getProductUpdateData = (values: any) => {
     season,
     secondaryColor: secondaryColorID,
     status,
-    subCategory: subCategoryID,
     tags,
   } = values
 

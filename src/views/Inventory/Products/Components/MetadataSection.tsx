@@ -88,15 +88,10 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <Spacer mt={1} />
             <SelectField name="architecture" choices={architectureChoices} />
           </Grid>
-          <Grid item xs={6}>
-            <Text variant="h6">Display category</Text>
+          <Grid item xs={12}>
+            <Text variant="h6">Category</Text>
             <Spacer mt={1} />
             <SelectField name="category" choices={categoryChoices} requiredString />
-          </Grid>
-          <Grid item xs={6}>
-            <Text variant="h6">Sub-category</Text>
-            <Spacer mt={1} />
-            <SelectField name="subCategory" choices={categoryChoices} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Color</Text>
