@@ -3,6 +3,7 @@ import React from "react"
 import { Box, Grid } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
+import colorsJSON from "data/colors.json"
 import {
   ProductUpsertQuery_categories,
   ProductUpsertQuery_colors,
@@ -15,7 +16,6 @@ import { getFormSelectChoices, FormSelectChoice } from "utils/form"
 export interface MetadataSectionProps {
   architectures: string[]
   categories: ProductUpsertQuery_categories[]
-  colors: ProductUpsertQuery_colors[]
   isEditing: boolean
   models: ProductUpsertQuery_productModels[]
   sizes: FormSelectChoice[]
@@ -26,7 +26,6 @@ export interface MetadataSectionProps {
 export const MetadataSection: React.FC<MetadataSectionProps> = ({
   architectures,
   categories,
-  colors,
   isEditing,
   models,
   sizes,
@@ -43,7 +42,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
     display: category.name,
     value: category.id,
   }))
-  const colorChoices = colors.map(color => ({
+  const colorChoices = colorsJSON.colors.map(color => ({
     display: (
       <Box display="flex" alignItems="center">
         <Text>{color.name}</Text>
@@ -51,7 +50,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
         <Box bgcolor={color.hexCode} width={16} height={16} borderRadius={4} />
       </Box>
     ),
-    value: color.id,
+    value: color.colorCode,
   }))
   return (
     <ExpandableSection

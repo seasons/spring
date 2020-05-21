@@ -25,13 +25,6 @@ export const ProductUpsertFragment = gql`
       name
     }
 
-    colors(orderBy: name_ASC) {
-      id
-      colorCode
-      hexCode
-      name
-    }
-
     inventoryStatuses: __type(name: "InventoryStatus") {
       enumValues {
         name
