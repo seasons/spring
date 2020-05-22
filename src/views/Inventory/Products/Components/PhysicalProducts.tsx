@@ -13,8 +13,8 @@ import { Header } from "./Header"
 import { PhysicalProductSection } from "./PhysicalProductSection"
 
 export interface PhysicalProductsProps {
-  physicalProductStatuses: PhysicalProductEditQuery_physicalProductStatuses[]
-  inventoryStatuses: PhysicalProductEditQuery_inventoryStatuses[]
+  physicalProductStatuses: { name: string }[]
+  inventoryStatuses: { name: string }[]
   createData?: any // Passed in when creating new physical products
   physicalProducts?: PhysicalProductEditQuery_physicalProduct[] // Passed in when editing physical products
 }
@@ -63,8 +63,8 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
     physicalProducts.forEach(physicalProduct => physicalProductUIDs.push(physicalProduct.seasonsUID))
   }
 
-  const inventoryStatusChoices = getFormSelectChoices(getEnumValues(inventoryStatuses))
-  const statusChoices = getFormSelectChoices(getEnumValues(physicalProductStatuses))
+  const inventoryStatusChoices = getFormSelectChoices(inventoryStatuses.map(status => status.name))
+  const statusChoices = getFormSelectChoices(physicalProductStatuses.map(status => status.name))
 
   const isEditing = !!physicalProducts
   const title = isEditing ? physicalProducts?.[0]?.seasonsUID || "" : "Physical products"

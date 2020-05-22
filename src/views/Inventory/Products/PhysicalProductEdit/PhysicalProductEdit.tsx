@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router-dom"
 
 import { BackButton, Spacer, Wizard } from "components"
 import { PhysicalProducts } from "../Components"
-import { PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"
+import { PhysicalProductEditQuery, PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { PHYSICAL_PRODUCT_EDIT_QUERY } from "../queries"
 import { getDateISOString, getLocaleDateString } from "../utils"
@@ -21,7 +21,7 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   })
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
 
-  if (loading || !data) {
+  if (loading || error || !data) {
     return <Loading />
   }
 
@@ -43,7 +43,6 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
       productStatus: values[`${seasonsUID}_physicalProductStatus`],
       unitCost: parseFloat(values[`${seasonsUID}_unitCost`]) || null,
     }
-    console.log("UPDATE:", updatePhysicalProductData)
     const result = await updatePhysicalProduct({
       variables: {
         where: { id: physicalProduct.id },
@@ -55,6 +54,8 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
     }
   }
 
+  const physicalProductEditQueryData: PhysicalProductEditQuery = data
+
   return (
     <Box mx={5}>
       <Spacer mt={5} />
@@ -64,8 +65,8 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
       />
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
         <PhysicalProducts
-          inventoryStatuses={data.inventoryStatuses}
-          physicalProductStatuses={data.physicalProductStatuses}
+          inventoryStatuses={physicalProductEditQueryData.inventoryStatuses?.enumValues || []}
+          physicalProductStatuses={physicalProductEditQueryData.physicalProductStatuses?.enumValues || []}
           physicalProducts={[physicalProduct]}
         />
       </Wizard>

@@ -5,11 +5,11 @@ import { Box, Grid } from "@material-ui/core"
 import { styled as muiStyled } from "@material-ui/core/styles"
 
 import { Separator, Spacer, Text } from "components"
-import { PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"
+import { VariantEditQuery_productVariant_physicalProducts } from "generated/VariantEditQuery"
 import { colors } from "theme/colors"
 
 export interface PhysicalProductSummaryProps {
-  physicalProduct: PhysicalProductEditQuery_physicalProduct
+  physicalProduct: VariantEditQuery_productVariant_physicalProducts
 }
 
 export const PhysicalProductSummary: React.FC<PhysicalProductSummaryProps> = ({ physicalProduct }) => {
