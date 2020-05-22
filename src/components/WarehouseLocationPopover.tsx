@@ -1,5 +1,5 @@
 import React from "react"
-import { Typography, Popover, Table, TableRow, TableCell, Chip } from "@material-ui/core"
+import { Typography, Popover, Chip, Box } from "@material-ui/core"
 
 export const WarehouseLocationPopover = props => {
   const { warehouseLocation } = props
@@ -44,30 +44,28 @@ export const WarehouseLocationPopover = props => {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Table>
-          <TableRow>
-            <TableCell>Location Type</TableCell>
-            <TableCell align="right">
-              <Chip label={type} color="secondary" />
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Location Code</TableCell>
-            <TableCell align="right">
-              <Typography color="secondary" style={{ letterSpacing: 1 }}>
-                {locationCode}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Item Code</TableCell>
-            <TableCell align="right">
-              <Typography color="secondary" style={{ letterSpacing: 1 }}>
-                {itemCode}
-              </Typography>
-            </TableCell>
-          </TableRow>
-        </Table>
+        <Box display="flex">
+          <Box width="50%">Location Type</Box>
+          <Box>
+            <Chip label={type} color="secondary" />
+          </Box>
+        </Box>
+        <Box display="flex">
+          <Box width="50%">Location Code</Box>
+          <Box>
+            <Typography color="secondary" style={{ letterSpacing: 1 }}>
+              {locationCode}
+            </Typography>
+          </Box>
+        </Box>
+        <Box display="flex">
+          <Box width="50%">Location Code</Box>
+          <Box>
+            <Typography color="secondary" style={{ letterSpacing: 1 }}>
+              {itemCode}
+            </Typography>
+          </Box>
+        </Box>
       </Popover>
     </div>
   )

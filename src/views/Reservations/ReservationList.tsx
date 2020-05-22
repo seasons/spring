@@ -1,54 +1,9 @@
-import React, { useState, useEffect } from "react"
-import { Datagrid, Filter, List } from "react-admin"
+import React, { useContext } from "react"
+import { Datagrid, Filter, Loading, List, DataProviderContext } from "react-admin"
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
-import { Box, Container, Tabs, Tab } from "@material-ui/core"
+import { Box, Container } from "@material-ui/core"
 import { Header } from "components/Header"
-import { Field } from "fields/Field"
-
-const StatusInput = ({
-  source,
-  value,
-  tabs,
-  onChange,
-  alwaysOn,
-}: {
-  source: any
-  value?: any
-  tabs: any
-  onChange?: (value: any) => void
-  alwaysOn?: boolean
-}) => {
-  const [currentTab, setCurrentTab] = useState("all")
-
-  useEffect(() => {
-    onChange?.([])
-  })
-
-  return (
-    <Field
-      name={source}
-      render={({ input, meta }) => (
-        <Tabs
-          onChange={(e, key) => {
-            const tab = tabs.find(a => a.id === key)
-            setCurrentTab(tab.id)
-            const filters = tab.value
-            input.onChange(filters)
-            onChange?.(filters)
-          }}
-          scrollButtons="auto"
-          textColor="secondary"
-          value={currentTab}
-          variant="standard"
-        >
-          {tabs.map((tab, i) => (
-            <Tab key={tab.id} value={tab.id} label={tab.label} />
-          ))}
-        </Tabs>
-      )}
-    />
-  )
-}
+import { StatusInput } from "./Components/StatusInput"
 
 const Filters = props => (
   <Filter {...props}>
@@ -73,6 +28,12 @@ const Filters = props => (
 )
 
 export const ReservationList = ({ staticContext, ...props }) => {
+  const dataProvider = useContext(DataProviderContext)
+
+  if (!dataProvider) {
+    return <Loading />
+  }
+
   return (
     <Container maxWidth={false}>
       <Box py={2}>

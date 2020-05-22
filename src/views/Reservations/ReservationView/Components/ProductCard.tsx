@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography"
 import ColorIcon from "@material-ui/icons/Brightness1"
 import { red } from "@material-ui/core/colors"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import { Box, Table, TableCell, TableRow, Chip, Divider } from "@material-ui/core"
+import { Box, Table, TableBody, TableCell, TableRow, Chip, Divider } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { WarehouseLocationPopover } from "components/WarehouseLocationPopover"
 
@@ -59,31 +59,35 @@ export const ProductCard = props => {
       <CardMedia className={classes.media} image={image.url} title="Paella dish" />
       <Divider />
       <Table>
-        <TableRow>
-          <TableCell>Product Status</TableCell>
-          <TableCell align="right">
-            <Chip
-              label={physicalProduct.productStatus}
-              icon={
-                <Box pl={1}>
-                  <Indicator status={physicalProduct.productStatus} />
-                </Box>
-              }
-            />
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Location Type</TableCell>
-          <TableCell align="right">
-            <Chip label={physicalProduct?.warehouseLocation.type} color="secondary" />
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Location ID</TableCell>
-          <TableCell align="right">
-            <WarehouseLocationPopover warehouseLocation={physicalProduct.warehouseLocation}></WarehouseLocationPopover>
-          </TableCell>
-        </TableRow>
+        <TableBody>
+          <TableRow>
+            <TableCell>Product Status</TableCell>
+            <TableCell align="right">
+              <Chip
+                label={physicalProduct.productStatus}
+                icon={
+                  <Box pl={1}>
+                    <Indicator status={physicalProduct.productStatus} />
+                  </Box>
+                }
+              />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Location Type</TableCell>
+            <TableCell align="right">
+              <Chip label={physicalProduct?.warehouseLocation.type} color="secondary" />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Location ID</TableCell>
+            <TableCell align="right">
+              <WarehouseLocationPopover
+                warehouseLocation={physicalProduct.warehouseLocation}
+              ></WarehouseLocationPopover>
+            </TableCell>
+          </TableRow>
+        </TableBody>
       </Table>
       <CardActions disableSpacing>
         <IconButton

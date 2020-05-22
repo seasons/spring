@@ -1,21 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
 import { Link as RouterLink } from "react-router-dom"
 import { DateTime } from "luxon"
-import {
-  Button,
-  Card,
-  CardActions,
-  Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Box,
-  Grid,
-  Chip,
-} from "@material-ui/core"
+import { Button, Card, Link, Table, TableBody, TableCell, TableRow, Box, Grid, Chip } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
-import { startCase } from "lodash"
 
 export const ReservationInfo = ({ reservation, ...rest }) => {
   const { reservationNumber } = reservation

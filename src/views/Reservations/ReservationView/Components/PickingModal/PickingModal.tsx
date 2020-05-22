@@ -1,6 +1,16 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Box, TextField, Snackbar } from "@material-ui/core"
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Box,
+  TextField,
+  Snackbar,
+  Typography,
+} from "@material-ui/core"
 import { GetReservation } from "generated/GetReservation"
 import { PickingProductCard } from "./PickingProductCard"
 import { Alert, Color } from "@material-ui/lab"
@@ -43,6 +53,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ open, onSave, onClos
   const [shouldAllowSave, setShouldAllowSave] = useState(false)
   const BARCODE_REGEX = /^SZNS[0-9]{5}$/
 
+  const alreadyPicked = reservation.status === "Packed"
   const inputRef = useRef()
 
   const focusOnInput = () => {
@@ -122,16 +133,17 @@ export const PickingModal: React.FC<PickingModalProps> = ({ open, onSave, onClos
               onChange={handleBarcodeChange}
               value={barcode}
               inputRef={inputRef}
+              disabled={alreadyPicked}
               fullWidth
             />
           </Box>
           <Box mt={2} mb={2}>
             {reservation.products.map(product => (
-              <Box mb={2}>
+              <Box mb={2} key={`product-card-${product.id}`}>
                 <PickingProductCard
                   product={product}
                   productState={productStates[product.barcode]}
-                  key={product.id}
+                  donePicking={alreadyPicked}
                   onStateChange={state => {
                     setProductStates({
                       ...productStates,

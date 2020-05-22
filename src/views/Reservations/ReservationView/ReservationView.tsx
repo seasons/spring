@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Loading, useQuery } from "react-admin"
+import React, { useState, useEffect } from "react"
+import { useQueryWithStore, Loading } from "react-admin"
 import { Container, Box, Typography, Grid, Snackbar } from "@material-ui/core"
 import { Header } from "components/Header"
 import { ReservationInfo } from "./Components/ReservationInfo"
@@ -15,13 +15,14 @@ import { useMutation, ExecutionResult } from "react-apollo"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 import { ProductGrid } from "./Components/ProductGrid"
 import { PickingModal } from "./Components/PickingModal/PickingModal"
+import { GetReservation } from "generated/GetReservation"
 
-export const ReservationView = ({ match, history, props }) => {
+export const ReservationView = ({ match, history }) => {
   const { id } = match.params
   const [mode, setMode] = useState("grid")
   const [showModal, toggleModal] = useState(false)
 
-  const { data, loading, error } = useQuery({
+  const { data, loading, error } = useQueryWithStore({
     type: "getOne",
     resource: "Reservation",
     payload: { id },
@@ -45,15 +46,15 @@ export const ReservationView = ({ match, history, props }) => {
   }
 
   if (error) {
-    console.error("Loading: ", loading, error)
-    return (
-      <Box>
-        <Typography>{error.message}</Typography>
-      </Box>
-    )
+    console.error("Error: ", loading, error)
+    toggleSnackbar({
+      show: true,
+      message: error?.message,
+      status: "error",
+    })
   }
 
-  const isReservationUnfulfilled = ["New", "InQueue", "OnHold"].includes(data.status)
+  const isReservationUnfulfilled = ["New", "InQueue", "OnHold", "Packed"].includes(data.status)
   const isReservationFulfilled = ["Shipped", "InTransit", "Received", "Completed"].includes(data.status)
 
   const primaryButton = isReservationUnfulfilled
@@ -120,6 +121,7 @@ export const ReservationView = ({ match, history, props }) => {
                   md={mode === "grid" ? 4 : 12}
                   sm={mode === "grid" ? 4 : 12}
                   xs={12}
+                  key={`product-card-${product.id}`}
                 >
                   <ProductCard product={product} />
                 </Grid>

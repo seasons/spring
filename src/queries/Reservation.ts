@@ -1,4 +1,4 @@
-import { GET_ONE, GET_LIST, UPDATE } from "react-admin"
+import { GET_ONE, GET_LIST } from "react-admin"
 import gql from "graphql-tag"
 
 export default {

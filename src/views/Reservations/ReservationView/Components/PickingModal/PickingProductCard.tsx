@@ -15,7 +15,7 @@ const ProductImage = ({ product }: { product: GetReservation_products }) => {
   return <Image src={image?.url} width={100} height={125} />
 }
 
-export const PickingProductCard = ({ product, productState, onStateChange }) => {
+export const PickingProductCard = ({ product, productState, onStateChange, donePicking }) => {
   const [values, setValues] = useState(productState ?? { productStatus: "Dirty", picked: false, notes: "" })
   const { warehouseLocation } = product
 
@@ -42,7 +42,7 @@ export const PickingProductCard = ({ product, productState, onStateChange }) => 
                   </Typography>
                 </Box>
                 <Box py={"5px"} px={2}>
-                  {productState.picked && <CheckCircleIcon />}
+                  {(donePicking || productState.picked) && <CheckCircleIcon />}
                 </Box>
               </Box>
             </Box>
