@@ -1,10 +1,12 @@
-import { Avatar as MUIAvatar, Box, Card as MUICard, styled, Typography } from "@material-ui/core"
+import { Avatar as MuiAvatar, Box, Card as MuiCard, styled as muiStyled, Typography } from "@material-ui/core"
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney"
 import React from "react"
 import { colors } from "theme"
 import { theme } from "theme/theme"
 
-export const RoiPerCustomer: React.FunctionComponent = () => {
+export interface RoiPerCustomerProps {}
+
+export const RoiPerCustomer: React.FC<RoiPerCustomerProps> = () => {
   const data = {
     value: "25.50",
     currency: "$",
@@ -30,22 +32,20 @@ export const RoiPerCustomer: React.FunctionComponent = () => {
   )
 }
 
-const Avatar = styled(MUIAvatar)({
+const Avatar = muiStyled(MuiAvatar)({
   backgroundColor: theme.palette.secondary.main,
   color: theme.palette.secondary.contrastText,
   height: 48,
   width: 48,
 })
 
-const Card = styled(MUICard)({
+const Card = muiStyled(MuiCard)({
   borderRadius: 4,
   height: 40,
-  color: theme.palette.secondary.contrastText,
-  backgroundColor: theme.palette.secondary.main,
+  color: "white",
+  backgroundColor: "black",
   padding: theme.spacing(3),
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
 })
-
-export default RoiPerCustomer

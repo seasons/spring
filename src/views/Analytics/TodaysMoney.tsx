@@ -1,14 +1,17 @@
-import { Avatar as MUIAvatar, Box, Card as MUICard, styled, Typography } from "@material-ui/core"
+import { Avatar as MuiAvatar, Box, Card as MuiCard, fade, styled as muiStyled, Typography } from "@material-ui/core"
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney"
+import { Label } from "components"
 import React from "react"
 import { colors } from "theme"
 import { theme } from "theme/theme"
 
-export const TodaysMoney: React.FunctionComponent = () => {
+export interface TodaysMoneyProps {}
+
+export const TodaysMoney: React.FC<TodaysMoneyProps> = () => {
   const data = {
     value: "24,000",
     currency: "$",
-    difference: 4,
+    difference: -4,
   }
 
   return (
@@ -22,10 +25,13 @@ export const TodaysMoney: React.FunctionComponent = () => {
             {data.currency}
             {data.value}
           </Typography>
-          <Typography variant="h3" style={{ color: colors.white100, marginLeft: theme.spacing(1) }}>
+          <Label
+            color={data.difference > 0 ? theme.palette.primary.main : theme.palette.error.main}
+            style={{ height: 10, backgroundColor: fade(theme.palette.error.main, 0.8), marginLeft: theme.spacing(1) }}
+          >
             {data.difference > 0 ? "+" : ""}
             {data.difference}%
-          </Typography>
+          </Label>
         </Box>
       </Box>
       <Avatar>
@@ -35,14 +41,14 @@ export const TodaysMoney: React.FunctionComponent = () => {
   )
 }
 
-const Avatar = styled(MUIAvatar)({
+const Avatar = muiStyled(MuiAvatar)({
   backgroundColor: theme.palette.secondary.main,
   color: theme.palette.secondary.contrastText,
   height: 48,
   width: 48,
 })
 
-const Card = styled(MUICard)({
+const Card = muiStyled(MuiCard)({
   backgroundColor: "black",
   borderRadius: 4,
   color: "white",
@@ -52,5 +58,3 @@ const Card = styled(MUICard)({
   alignItems: "center",
   justifyContent: "space-between",
 })
-
-export default TodaysMoney

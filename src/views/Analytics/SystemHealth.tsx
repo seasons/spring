@@ -1,9 +1,17 @@
-import { Box, Card as MUICard, LinearProgress as MUILinearProgress, styled, Typography } from "@material-ui/core"
+import {
+  Box,
+  Card as MuiCard,
+  LinearProgress as MuiLinearProgress,
+  styled as muiStyled,
+  Typography,
+} from "@material-ui/core"
 import React from "react"
 import { colors } from "theme"
 import { theme } from "theme/theme"
 
-export const SystemHealth: React.FunctionComponent = () => {
+export interface SystemHealthProps {}
+
+export const SystemHealth: React.FC<SystemHealthProps> = () => {
   const data = {
     value: 97,
   }
@@ -23,17 +31,15 @@ export const SystemHealth: React.FunctionComponent = () => {
   )
 }
 
-const LinearProgress = styled(MUILinearProgress)({
+const LinearProgress = muiStyled(MuiLinearProgress)({
   margin: theme.spacing(0, 1),
   flexGrow: 1,
 })
 
-const Card = styled(MUICard)({
+const Card = muiStyled(MuiCard)({
   backgroundColor: "black",
   borderRadius: 4,
   color: "white",
   height: 40,
   padding: theme.spacing(3),
 })
-
-export default SystemHealth
