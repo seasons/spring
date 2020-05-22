@@ -1,14 +1,13 @@
 import React from "react"
 import { Box } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
+import { startCase } from "lodash"
 
 export interface StatusFieldProps {
-  record?: { status: String }
+  record?: { status: string }
   label?: string
 }
 
-// NOTE: label isn't used but needs to be listed as a parameter in order to
-// properly display label for column.
 export const StatusField: React.FC<StatusFieldProps> = ({ record, label }) => {
   const status = record?.status
 
@@ -16,7 +15,7 @@ export const StatusField: React.FC<StatusFieldProps> = ({ record, label }) => {
     <div>
       <Indicator status={status} />
       <Box ml={1} style={{ display: "inline-block" }}>
-        {status}
+        {startCase(status)}
       </Box>
     </div>
   )
