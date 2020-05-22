@@ -15,18 +15,7 @@ import {
   Chip,
 } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
-
-const statusOptions = [
-  "New",
-  "In Queue",
-  "On Hold",
-  "Packed",
-  "Shipped",
-  "In Transit",
-  "Received",
-  "Cancelled",
-  "Completed",
-]
+import { startCase } from "lodash"
 
 export const ReservationInfo = ({ reservation, ...rest }) => {
   const { reservationNumber } = reservation
@@ -39,6 +28,19 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
   const { address1, address2, city, state } = address
 
   const { shippingLabel } = reservation?.sentPackage
+
+  const statusToDisplay = status => {
+    switch (status) {
+      case "InQueue":
+        return "In Queue"
+      case "OnHold":
+        return "On Hold"
+      case "InTransit":
+        return "In Transit"
+      default:
+        return status
+    }
+  }
 
   return (
     <Grid container spacing={3}>
@@ -89,7 +91,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <TableCell>Status</TableCell>
                 <TableCell>
                   <Chip
-                    label={reservation.status}
+                    label={statusToDisplay(reservation.status)}
                     icon={
                       <Box pl={1}>
                         <Indicator status={reservation.status} />

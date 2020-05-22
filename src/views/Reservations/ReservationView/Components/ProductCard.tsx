@@ -60,13 +60,13 @@ export const ProductCard = props => {
       <Divider />
       <Table>
         <TableRow>
-          <TableCell>Inventory Status</TableCell>
+          <TableCell>Product Status</TableCell>
           <TableCell align="right">
             <Chip
-              label={physicalProduct.inventoryStatus}
+              label={physicalProduct.productStatus}
               icon={
                 <Box pl={1}>
-                  <Indicator status={physicalProduct.inventoryStatus} />
+                  <Indicator status={physicalProduct.productStatus} />
                 </Box>
               }
             />

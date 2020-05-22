@@ -1,17 +1,17 @@
 import React, { useState } from "react"
 import { Loading, useQuery } from "react-admin"
-import { Container, Box, Typography, Grid } from "@material-ui/core"
+import { Container, Box, Typography, Grid, Snackbar } from "@material-ui/core"
 import { Header } from "components/Header"
 import { ReservationInfo } from "./Components/ReservationInfo"
 import { ProductCard } from "./Components/ProductCard"
 import ViewModuleIcon from "@material-ui/icons/ViewModule"
 import ListIcon from "@material-ui/icons/List"
-import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab"
+import { ToggleButtonGroup, ToggleButton, Alert, Color } from "@material-ui/lab"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
 import ArchiveIcon from "@material-ui/icons/Archive"
 import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessReturnModal"
 import { PROCESS_RESERVATION, MARK_RESERVATION_PICKED } from "../mutations"
-import { useMutation } from "react-apollo"
+import { useMutation, ExecutionResult } from "react-apollo"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 import { ProductGrid } from "./Components/ProductGrid"
 import { PickingModal } from "./Components/PickingModal/PickingModal"
@@ -19,7 +19,7 @@ import { PickingModal } from "./Components/PickingModal/PickingModal"
 export const ReservationView = ({ match, history, props }) => {
   const { id } = match.params
   const [mode, setMode] = useState("grid")
-  const [showModal, openModal] = useState(false)
+  const [showModal, toggleModal] = useState(false)
 
   const { data, loading, error } = useQuery({
     type: "getOne",
@@ -29,6 +29,12 @@ export const ReservationView = ({ match, history, props }) => {
 
   const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(PROCESS_RESERVATION)
   const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED)
+
+  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
+    show: false,
+    message: "",
+    status: "success",
+  })
 
   const handleModeChange = (event, value) => {
     setMode(value)
@@ -53,16 +59,24 @@ export const ReservationView = ({ match, history, props }) => {
   const primaryButton = isReservationUnfulfilled
     ? {
         text: "Start Picking",
-        action: () => openModal(true),
+        action: () => toggleModal(true),
         icon: <ArchiveIcon />,
       }
     : {
         text: "Process Returns",
-        action: () => openModal(true),
+        action: () => toggleModal(true),
         icon: <MoveToInboxIcon />,
       }
 
   const Modal = isReservationUnfulfilled ? PickingModal : ProcessReturnModal
+
+  const hideSnackbar = () => {
+    toggleSnackbar({
+      show: false,
+      message: "",
+      status: "success",
+    })
+  }
 
   return (
     <>
@@ -116,23 +130,56 @@ export const ReservationView = ({ match, history, props }) => {
       </Container>
       <Modal
         open={showModal}
-        onClose={() => openModal(false)}
+        onClose={() => toggleModal(false)}
         reservation={data}
-        onSave={productStates => {
-          if (isReservationUnfulfilled) {
-            markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
-          } else {
-            const mutationData: ProcessReservationMutationVariables = {
-              data: {
-                reservationNumber: data.reservationNumber,
-                productStates: Object.values(productStates),
-              },
+        onSave={async productStates => {
+          try {
+            let result: ExecutionResult<any> | null = null
+            let message = ``
+            if (isReservationUnfulfilled) {
+              result = await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
+              message = "Reservation status successfully set to Picked"
+            } else {
+              const mutationData: ProcessReservationMutationVariables = {
+                data: {
+                  reservationNumber: data.reservationNumber,
+                  productStates: Object.values(productStates),
+                },
+              }
+
+              result = await processReservation({ variables: mutationData })
+              message = "Returned items successfully processed"
             }
 
-            processReservation({ variables: mutationData })
+            // TODO: check result to see if there are any backend errors
+            console.log("Result: ", result)
+
+            toggleModal(false)
+            toggleSnackbar({
+              show: true,
+              message,
+              status: "success",
+            })
+          } catch (e) {
+            console.error(e)
+            toggleSnackbar({
+              show: true,
+              message: `Error: ${e.message}`,
+              status: "error",
+            })
           }
         }}
       />
+      <Snackbar
+        open={snackbar.show}
+        autoHideDuration={6000}
+        onClose={hideSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={hideSnackbar} severity={snackbar.status}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   )
 }

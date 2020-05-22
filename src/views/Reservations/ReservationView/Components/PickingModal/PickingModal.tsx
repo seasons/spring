@@ -127,17 +127,19 @@ export const PickingModal: React.FC<PickingModalProps> = ({ open, onSave, onClos
           </Box>
           <Box mt={2} mb={2}>
             {reservation.products.map(product => (
-              <PickingProductCard
-                product={product}
-                productState={productStates[product.barcode]}
-                key={product.id}
-                onStateChange={state => {
-                  setProductStates({
-                    ...productStates,
-                    [product.barcode]: state,
-                  })
-                }}
-              />
+              <Box mb={2}>
+                <PickingProductCard
+                  product={product}
+                  productState={productStates[product.barcode]}
+                  key={product.id}
+                  onStateChange={state => {
+                    setProductStates({
+                      ...productStates,
+                      [product.barcode]: state,
+                    })
+                  }}
+                />
+              </Box>
             ))}
           </Box>
         </DialogContent>
