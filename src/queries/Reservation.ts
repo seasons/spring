@@ -86,10 +86,12 @@ export default {
           type
         }
         productVariant {
+          id
           product {
             id
             name
             brand {
+              id
               name
             }
             description
@@ -146,7 +148,7 @@ export const query = {
         }
         reservationNumber
         shipped
-        status
+        status(display: true)
         shippedAt
         returnAt
         createdAt
