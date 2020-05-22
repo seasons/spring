@@ -1,7 +1,6 @@
-import { useTheme } from "@material-ui/core"
+import { styled, useTheme } from "@material-ui/core"
 import React from "react"
 import { Bar } from "react-chartjs-2"
-import styled from "styled-components"
 
 export interface ChartProps {
   data: number[]
@@ -95,6 +94,6 @@ export const Chart: React.FC<ChartProps> = ({ data: dataProp, labels }) => {
   )
 }
 
-const Graph = styled.div`
-  // position: "relative";
-`
+const Graph = styled("div")({
+  position: "relative",
+})
