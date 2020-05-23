@@ -10,14 +10,9 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  FormControl,
   Grid,
-  InputLabel,
-  MenuItem,
-  Modal,
   Select as muiSelect,
   TextField,
-  Typography,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
@@ -27,20 +22,17 @@ const useStyles = makeStyles<Theme>(theme => ({
     paddingLeft: theme.spacing(10),
   },
 }))
+
 const PHONE_PATTERN = "[0-9]{3}-[0-9]{3}-[0-9]{4}"
-export const Card = styled(muiCard)`
-  top: 50%;
-  left: 50%;
+
+const Card = styled(muiCard)`
   width: 700px;
+  margin: 0 auto;
   outline: none;
-  position: absolute;
-  max-width: 100%;
-  transform: translate(-50%, -50%);
   box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14),
     0px 8px 38px 7px rgba(0, 0, 0, 0.12);
-  max-height: 100%;
-  overflow-y: auto;
 `
+
 export const CardActions = styled(muiCardActions)`
   justify-content: flex-end;
 `
@@ -51,15 +43,41 @@ export const Select = styled(muiSelect)`
 
 export const MemberCreate: React.FC = props => {
   const classes = useStyles()
-  const defaultMemmber = {
-    firstName: "",
-    email: "",
-    lastName: "",
-    password: "",
-    confirmPassword: "",
-    phone: "",
+
+  const memberValues = {
+    firstName: {
+      label: "First Name",
+      type: "phone",
+      value: "",
+    },
+    lastName: {
+      label: "Last Name",
+      type: "phone",
+      value: "",
+    },
+    email: {
+      label: "Email Address",
+      type: "email",
+      value: "",
+    },
+    password: {
+      label: "Password",
+      type: "password",
+      value: "",
+    },
+    confirmPassword: {
+      label: "Confirm Password",
+      type: "password",
+      value: "",
+    },
+    phone: {
+      label: "Phone",
+      type: "phone",
+      value: "",
+    },
   }
-  const [values, setValues] = useState<NewMemberProps>(defaultMemmber)
+
+  const [values, setValues] = useState<NewMemberProps>(memberValues)
 
   const createMember = values => {
     console.log("creating member with values", values)
@@ -67,7 +85,8 @@ export const MemberCreate: React.FC = props => {
 
   const handleFieldChange = event => {
     const key = event.target.name
-    values[key] = event.target.value
+    const value = event.target.value
+    values[key].value = value
 
     setValues(currentValues => ({
       ...currentValues,
@@ -89,23 +108,26 @@ export const MemberCreate: React.FC = props => {
           <Divider />
           <CardContent>
             <Grid container spacing={3}>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="First Name"
-                  // name={key}
-                  type="text"
-                  onChange={handleFieldChange}
-                  value={values.firstName}
-                  variant="outlined"
-                  // inputProps={key === "phone" ? { pattern: PHONE_PATTERN } : {}}
-                />
-              </Grid>
+              {Object.keys(memberValues).map(key => {
+                return (
+                  <Grid item md={6} xs={12} key={key}>
+                    <TextField
+                      fullWidth
+                      label={values[key].label}
+                      name={key}
+                      type={typeMap[key] || values[key].type || "text"}
+                      onChange={handleFieldChange}
+                      value={values[key].value}
+                      variant="outlined"
+                      inputProps={key === "phone" ? { pattern: PHONE_PATTERN } : {}}
+                    />
+                  </Grid>
+                )
+              })}
             </Grid>
           </CardContent>
           <Divider />
           <CardActions>
-            {/* <Button onClick={onClose}>Close</Button> */}
             <Button color="primary" onClick={() => createMember(values)} variant="contained">
               Save
             </Button>

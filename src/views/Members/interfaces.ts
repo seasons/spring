@@ -34,13 +34,19 @@ interface editEntity {
   id: object
 }
 
+interface memberEntryValue {
+  label: string
+  type: string
+  value: string
+}
+
 export interface NewMemberProps {
-  firstName?: string
-  email?: string
-  lastName?: string
-  password?: string
-  confirmPassword?: string
-  phone?: string
+  firstName: memberEntryValue
+  email: memberEntryValue
+  lastName: memberEntryValue
+  password: memberEntryValue
+  confirmPassword: memberEntryValue
+  phone: memberEntryValue
 }
 
 export interface MemberProps {
