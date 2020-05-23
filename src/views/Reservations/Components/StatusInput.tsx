@@ -39,7 +39,7 @@ export const StatusInput = ({
           variant="standard"
         >
           {tabs.map((tab, i) => (
-            <Tab key={tab.id} value={tab.id} label={tab.label} />
+            <Tab key={tab.id} value={tab.id} label={tab.label} style={{ textTransform: "none" }} />
           ))}
         </Tabs>
       )}

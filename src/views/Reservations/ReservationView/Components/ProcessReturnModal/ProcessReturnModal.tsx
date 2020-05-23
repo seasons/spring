@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Box, TextField, Snackbar } from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Snackbar } from "@material-ui/core"
+import { DialogTitle } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { Alert, Color } from "@material-ui/lab"
@@ -113,7 +114,9 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
   return (
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title">Process Returns</DialogTitle>
+        <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
+          Process Returns
+        </DialogTitle>
         <DialogContent dividers>
           <Box my={2} width={["550px"]}>
             <TextField

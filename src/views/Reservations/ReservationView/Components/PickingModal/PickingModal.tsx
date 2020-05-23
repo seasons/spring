@@ -1,16 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Box,
-  TextField,
-  Snackbar,
-  Typography,
-} from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Snackbar, Typography } from "@material-ui/core"
+import { DialogTitle } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { PickingProductCard } from "./PickingProductCard"
 import { Alert, Color } from "@material-ui/lab"
@@ -121,7 +112,9 @@ export const PickingModal: React.FC<PickingModalProps> = ({ open, onSave, onClos
   return (
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title">Pick Items</DialogTitle>
+        <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
+          Pick Items
+        </DialogTitle>
         <DialogContent dividers>
           {alreadyPicked ? (
             <Box mb={1}>
