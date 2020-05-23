@@ -6,4 +6,7 @@ export default {
     ...typography.body1,
     borderBottom: `1px solid ${palette.divider}`,
   },
+  head: {
+    fontWeight: "bold",
+  },
 }
