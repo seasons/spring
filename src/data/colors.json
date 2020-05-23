@@ -1,0 +1,159 @@
+{
+  "colors": [
+    {
+      "colorCode": "AQU",
+      "hexCode": "#00FFFF",
+      "name": "Aqua"
+    },
+    {
+      "colorCode": "BGE",
+      "hexCode": "#F5F5DC",
+      "name": "Beige"
+    },
+    {
+      "colorCode": "BLK",
+      "hexCode": "#000000",
+      "name": "Black"
+    },
+    {
+      "colorCode": "BLU",
+      "hexCode": "#0000FF",
+      "name": "Blue"
+    },
+    {
+      "colorCode": "BWN",
+      "hexCode": "#A52A2A",
+      "name": "Brown"
+    },
+    {
+      "colorCode": "DGR",
+      "hexCode": "#A9A9A9",
+      "name": "Dark Gray"
+    },
+    {
+      "colorCode": "GLD",
+      "hexCode": "#FFD700",
+      "name": "Gold"
+    },
+    {
+      "colorCode": "GRY",
+      "hexCode": "#808080",
+      "name": "Gray"
+    },
+    {
+      "colorCode": "GRN",
+      "hexCode": "#008000",
+      "name": "Green"
+    },
+    {
+      "colorCode": "HPK",
+      "hexCode": "#FF69B4",
+      "name": "Hot Pink"
+    },
+    {
+      "colorCode": "IVY",
+      "hexCode": "#FFFFF0",
+      "name": "Ivory"
+    },
+    {
+      "colorCode": "LAV",
+      "hexCode": "#E6E6FA",
+      "name": "Lavender"
+    },
+    {
+      "colorCode": "LBL",
+      "hexCode": "#ADD8E6",
+      "name": "Light Blue"
+    },
+    {
+      "colorCode": "LIM",
+      "hexCode": "#00FF00",
+      "name": "Lime"
+    },
+    {
+      "colorCode": "MAG",
+      "hexCode": "#FF00FF",
+      "name": "Magenta"
+    },
+    {
+      "colorCode": "MAR",
+      "hexCode": "#800000",
+      "name": "Maroon"
+    },
+    {
+      "colorCode": "MNT",
+      "hexCode": "#F5FFFA",
+      "name": "Mint Cream"
+    },
+    {
+      "colorCode": "NVY",
+      "hexCode": "#000080",
+      "name": "Navy"
+    },
+    {
+      "colorCode": "OLI",
+      "hexCode": "#808000",
+      "name": "Olive"
+    },
+    {
+      "colorCode": "ORG",
+      "hexCode": "#FFA500",
+      "name": "Orange"
+    },
+    {
+      "colorCode": "PNK",
+      "hexCode": "#FFC0CB",
+      "name": "Pink"
+    },
+    {
+      "colorCode": "PRP",
+      "hexCode": "#800080",
+      "name": "Purple"
+    },
+    {
+      "colorCode": "RED",
+      "hexCode": "#FF3333",
+      "name": "Red"
+    },
+    {
+      "colorCode": "RYL",
+      "hexCode": "#4169E1",
+      "name": "Royal Blue"
+    },
+    {
+      "colorCode": "SLM",
+      "hexCode": "#FA8072",
+      "name": "Salmon"
+    },
+    {
+      "colorCode": "SLV",
+      "hexCode": "#C0C0C0",
+      "name": "Silver"
+    },
+    {
+      "colorCode": "TAN",
+      "hexCode": "#D2B48C",
+      "name": "Tan"
+    },
+    {
+      "colorCode": "TEA",
+      "hexCode": "#008080",
+      "name": "Teal"
+    },
+    {
+      "colorCode": "TRQ",
+      "hexCode": "#40E0D0",
+      "name": "Turquoise"
+    },
+    {
+      "colorCode": "WTE",
+      "hexCode": "#FFFFFF",
+      "name": "White"
+    },
+    {
+      "colorCode": "YLW",
+      "hexCode": "#FFFF00",
+      "name": "Yellow"
+    }
+  ]
+}

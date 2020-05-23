@@ -25,13 +25,6 @@ export const ProductUpsertFragment = gql`
       name
     }
 
-    colors(orderBy: name_ASC) {
-      id
-      colorCode
-      hexCode
-      name
-    }
-
     inventoryStatuses: __type(name: "InventoryStatus") {
       enumValues {
         name
@@ -50,11 +43,6 @@ export const ProductUpsertFragment = gql`
       }
     }
 
-    productFunctions {
-      id
-      name
-    }
-
     productModels {
       id
       name
@@ -68,10 +56,6 @@ export const ProductUpsertFragment = gql`
 
     tags {
       name
-    }
-
-    topSizes {
-      letter
     }
   }
 `

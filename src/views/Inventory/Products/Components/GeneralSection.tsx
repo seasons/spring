@@ -3,16 +3,18 @@ import React from "react"
 import { Grid } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
+import { ProductUpsertQuery_brands } from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
+import { FormSelectChoice } from "utils/form"
 
 export interface GeneralSectionProps {
   bottomSizeTypeChoices: any[]
-  brands: any[]
+  brands: ProductUpsertQuery_brands[]
   isEditing: boolean
   productType: string
-  sizes: any[]
-  statuses: any[]
+  sizes: FormSelectChoice[]
+  statuses: FormSelectChoice[]
 }
 
 // const required = value => (value ? undefined : 'Required')

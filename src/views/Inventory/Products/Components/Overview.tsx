@@ -6,6 +6,13 @@ import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import materialsJSON from "data/materials.json"
 import { GeneralSection } from "./GeneralSection"
+import {
+  ProductUpsertQuery,
+  ProductUpsertQuery_brands,
+  ProductUpsertQuery_categories,
+  ProductUpsertQuery_productModels,
+} from "generated/ProductUpsertQuery"
+import { ProductEditQuery_product } from "generated/ProductEditQuery"
 import { Header } from "./Header"
 import { MetadataSection } from "./MetadataSection"
 import { PhotographySection } from "./PhotographySection"
@@ -13,38 +20,27 @@ import { TagsSection } from "./TagsSection"
 import { ProductVariantsSection } from "./ProductVariantsSection"
 
 export interface OverviewProps {
-  data: any
+  data: ProductUpsertQuery
+  product?: ProductEditQuery_product
 }
 
-export const Overview: React.FC<OverviewProps> = ({ data }) => {
+export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
   const [productType, setProductType] = useState("Top")
 
-  if (
-    !data?.bottomSizes ||
-    !data?.bottomSizeTypes ||
-    !data?.brands ||
-    !data?.categories ||
-    !data?.colors ||
-    !data?.inventoryStatuses ||
-    !data?.productArchitectures ||
-    !data?.productFunctions ||
-    !data?.productModels ||
-    !data?.productTypes ||
-    !data?.topSizes
-  ) {
-    return null
-  }
-
   let sizes: any[] = []
+  const baseSizes = ["XS", "S", "M", "L", "XL", "XXL"]
   switch (productType) {
     case "Top":
-      const topSizes: string[] = Array.from(new Set(data.topSizes.map(topSize => topSize.letter)))
-      topSizes.sort()
+      const topSizes: string[] = baseSizes
       sizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
-      const bottomSizes: string[] = Array.from(new Set(data.bottomSizes.map(bottomSize => bottomSize.value)))
-      bottomSizes.sort()
+      // Ensure the baseSizes are included and sorted correctly
+      const baseBottomSizes: string[] = Array.from(
+        new Set(data.bottomSizes.map(bottomSize => bottomSize?.value || ""))
+      ).filter(size => !baseSizes.includes(size))
+      baseBottomSizes.sort()
+      const bottomSizes = [...baseSizes, ...baseBottomSizes]
       sizes = getFormSelectChoices(bottomSizes)
       break
   }
@@ -53,8 +49,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
   const bottomSizeTypeChoices = getFormSelectChoices(getEnumValues(data.bottomSizeTypes))
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
-  const productFunctions = data.productFunctions.map(productFunction => productFunction.name)
-  const tags = data.tags.map(tag => tag.name).sort()
+  const tags = data.tags.map(tag => tag?.name || "").sort()
   const statuses = [
     {
       value: "Available",
@@ -66,10 +61,9 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
     },
   ]
 
-  const product = data?.product
   const headerTitle = product?.name || "New product"
   const headerSubtitle = product?.brand?.name || "Please fill out all required fields"
-  const imageURLs = product?.images?.map(image => image.url)
+  const imageURLs = product?.images?.map(image => image?.url || "")
 
   const isEditing = !!product?.variants
 
@@ -82,7 +76,7 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
         </Grid>
         <Grid item xs={8}>
           <GeneralSection
-            brands={data.brands}
+            brands={data.brands.filter(Boolean) as ProductUpsertQuery_brands[]}
             bottomSizeTypeChoices={bottomSizeTypeChoices}
             isEditing={isEditing}
             productType={productType}
@@ -92,20 +86,19 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}
-            categories={data.categories}
-            colors={data.colors}
+            categories={data.categories.filter(Boolean) as ProductUpsertQuery_categories[]}
             isEditing={isEditing}
-            models={data.productModels}
+            models={data.productModels as ProductUpsertQuery_productModels[]}
             setProductType={setProductType}
             sizes={sizes}
             types={productTypes}
           />
           <Spacer mt={6} />
-          <TagsSection functions={productFunctions} materials={materials} tags={tags} />
+          <TagsSection materials={materials} tags={tags} />
           {isEditing && (
             <>
               <Spacer mt={6} />
-              <ProductVariantsSection variants={product?.variants} />
+              <ProductVariantsSection variants={product?.variants || []} />
               <Spacer mt={6} />
             </>
           )}
