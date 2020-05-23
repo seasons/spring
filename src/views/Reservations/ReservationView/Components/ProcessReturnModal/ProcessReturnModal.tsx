@@ -145,7 +145,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleSave} color="primary" disabled={!shouldAllowSave}>
+          <Button autoFocus onClick={handleSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
             Save
           </Button>
         </DialogActions>

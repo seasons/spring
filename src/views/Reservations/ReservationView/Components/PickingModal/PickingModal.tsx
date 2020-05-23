@@ -123,20 +123,26 @@ export const PickingModal: React.FC<PickingModalProps> = ({ open, onSave, onClos
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title">Pick Items</DialogTitle>
         <DialogContent dividers>
-          <Box my={2} width={["400px"]}>
-            <TextField
-              label="Scan Barcode"
-              helperText="Click into box and scan the barcode to mark as picked"
-              name="barcode"
-              type="text"
-              variant="outlined"
-              onChange={handleBarcodeChange}
-              value={barcode}
-              inputRef={inputRef}
-              disabled={alreadyPicked}
-              fullWidth
-            />
-          </Box>
+          {alreadyPicked ? (
+            <Box mb={1}>
+              <Alert severity="info">Items were already picked. You can proceed to packing.</Alert>
+            </Box>
+          ) : (
+            <Box my={2} width={["400px"]}>
+              <TextField
+                label="Scan Barcode"
+                helperText="Click into box and scan the barcode to mark as picked"
+                name="barcode"
+                type="text"
+                variant="outlined"
+                onChange={handleBarcodeChange}
+                value={barcode}
+                inputRef={inputRef}
+                disabled={alreadyPicked}
+                fullWidth
+              />
+            </Box>
+          )}
           <Box mt={2} mb={2}>
             {reservation.products.map(product => (
               <Box mb={2} key={`product-card-${product.id}`}>
@@ -156,7 +162,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ open, onSave, onClos
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleSave} color="primary" disabled={!shouldAllowSave}>
+          <Button autoFocus onClick={handleSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
             Mark as picked
           </Button>
         </DialogActions>
