@@ -81,8 +81,8 @@ export const ReservationView = ({ match, history }) => {
 
   return (
     <>
-      <Container maxWidth="lg">
-        <Box my={2}>
+      <Container maxWidth={false}>
+        <Box py={2}>
           <Header
             title="Reservation Details"
             breadcrumbs={[
