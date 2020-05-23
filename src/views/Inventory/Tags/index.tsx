@@ -1,5 +1,5 @@
 import React from "react"
-import { Datagrid, List, ReferenceField, TextField } from "react-admin"
+import { Datagrid, List, ReferenceField, TextField } from "@seasons/react-admin"
 
 export const TagList = props => (
   <List

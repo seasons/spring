@@ -11,7 +11,7 @@ import {
   SelectArrayInput,
   TextField,
   TextInput,
-} from "react-admin"
+} from "@seasons/react-admin"
 
 export const ProductFilter = props => (
   <Filter {...props}>

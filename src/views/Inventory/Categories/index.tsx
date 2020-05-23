@@ -1,5 +1,5 @@
 import React from "react"
-import { Datagrid, List, TextField } from "react-admin"
+import { Datagrid, List, TextField } from "@seasons/react-admin"
 import { Header } from "components/Header"
 
 export const CategoryList = props => (

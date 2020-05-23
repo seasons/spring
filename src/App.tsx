@@ -1,7 +1,7 @@
 import { createBrowserHistory } from "history"
 import polyglotI18nProvider from "ra-i18n-polyglot"
 import React from "react"
-import { convertLegacyDataProvider, DataProviderContext, Resource, TranslationProvider } from "react-admin"
+import { convertLegacyDataProvider, DataProviderContext, Resource, TranslationProvider } from "@seasons/react-admin"
 import { ApolloProvider } from "react-apollo"
 import { Provider as StoreProvider } from "react-redux"
 import { renderRoutes } from "react-router-config"

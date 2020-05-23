@@ -1,6 +1,6 @@
 import React, { Suspense, useState, useContext } from "react"
 import { renderRoutes } from "react-router-config"
-import { DataProviderContext, Loading } from "react-admin"
+import { DataProviderContext, Loading } from "@seasons/react-admin"
 import styled from "styled-components"
 import { colors } from "theme"
 

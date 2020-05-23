@@ -1,7 +1,7 @@
 import { Header } from "components/Header"
 import { EntityCountField, FullNameField, StatusField, ViewEntityField } from "fields"
 import React from "react"
-import { Datagrid, List, TextField } from "react-admin"
+import { Datagrid, List, TextField } from "@seasons/react-admin"
 
 import { Container } from "@material-ui/core"
 
