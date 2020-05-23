@@ -17,10 +17,12 @@ export interface ChildFieldProps {
 
   requiredNumberArray?: boolean
   requiredNumber?: boolean
+  optionalNumber?: boolean
   maxValue?: number
   minValue?: number
 
   requiredDate?: boolean
+  optionalDate?: boolean
 }
 
 export type FieldProps = ChildFieldProps & {
@@ -38,9 +40,11 @@ export const Field: React.FC<FieldProps> = ({
   minLength,
   requiredNumberArray,
   requiredNumber,
+  optionalNumber,
   maxValue,
   minValue,
   requiredDate,
+  optionalDate,
   ...rest
 }) => {
   const validateField = async value => {
@@ -78,6 +82,9 @@ export const Field: React.FC<FieldProps> = ({
     if (requiredNumber) {
       schema = yup.number().required("Required")
     }
+    if (optionalNumber) {
+      schema = yup.number()
+    }
     if (maxValue !== undefined) {
       schema = yup
         .number()
@@ -92,6 +99,9 @@ export const Field: React.FC<FieldProps> = ({
     }
     if (requiredDate) {
       schema = yup.date().required("Required")
+    }
+    if (optionalDate) {
+      schema = yup.date()
     }
     if (schema) {
       return await validate(schema, value)

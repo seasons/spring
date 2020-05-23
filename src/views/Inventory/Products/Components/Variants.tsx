@@ -3,20 +3,24 @@ import { useQuery } from "react-apollo"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
+import { Loader, Spacer } from "components"
+import { GetGeneratedVariantSkus } from "generated/GetGeneratedVariantSkus"
+import { VariantEditQuery_productVariant } from "generated/VariantEditQuery"
 import { GET_GENERATED_VARIANT_SKUS } from "../queries"
 import { Header } from "./Header"
+import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection"
 import { VariantSizeSection } from "./VariantSizeSection"
 
 export interface VariantsProps {
-  values?: any // Passed in when creating new variants
-  variants?: any[] // Passed in when editing variants
+  createData?: any // Passed in when creating new variants
+  variants?: VariantEditQuery_productVariant[] // Passed in when editing variants
 }
 
-export const Variants: React.FC<VariantsProps> = ({ values, variants }) => {
-  const brandID = values?.brand || ""
-  const colorID = values?.color || ""
-  const sizeNames = values?.sizes || []
-  const productType = values?.productType || variants?.[0]?.internalSize?.productType
+export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
+  const brandID = createData?.brand || ""
+  const colorID = createData?.color || ""
+  const sizeNames = createData?.sizes || []
+  const productType = createData?.productType || variants?.[0]?.internalSize?.productType
 
   const { data, loading, error } = useQuery(GET_GENERATED_VARIANT_SKUS, {
     variables: {
@@ -28,20 +32,23 @@ export const Variants: React.FC<VariantsProps> = ({ values, variants }) => {
     },
   })
 
-  if (values && (loading || !data || error)) {
-    return <div>Loading</div>
+  if (createData && (loading || !data || error)) {
+    return <Loader />
   }
 
+  const generatedSKUsData: GetGeneratedVariantSkus = data
   let variantsData
-  if (values && data) {
-    variantsData = data.generatedVariantSKUs.map((sku, index) => ({
+  if (createData && generatedSKUsData.generatedVariantSKUs) {
+    // Get variants data from createData and query response
+    variantsData = generatedSKUsData.generatedVariantSKUs.map((sku, index) => ({
       sku,
       size: sizeNames[index],
     }))
   } else if (variants) {
+    // Get variants data from the already existing variants
     variantsData = variants.map((variant, index) => ({
       sku: variant.sku,
-      size: variant.internalSize.display,
+      size: variant.internalSize?.display,
     }))
   } else {
     return null
@@ -53,15 +60,29 @@ export const Variants: React.FC<VariantsProps> = ({ values, variants }) => {
 
   const isEditing = !!variants
   const title = isEditing ? variantsData[0].sku : "Product variants"
-  const subtitle = isEditing ? "Edit measurement values" : "Confirm generated product variants"
+  const subtitle = isEditing ? "Edit measurement data" : "Confirm generated product variants"
 
   return (
     <Box>
       <ContainerGrid container spacing={2}>
         <Header title={title} subtitle={subtitle} />
         {variantsData.map((variant, index) => (
-          <VariantSizeSection size={variant.size} sku={variant.sku} productType={productType} key={index} />
+          <VariantSizeSection
+            isEditing={isEditing}
+            size={variant.size}
+            sku={variant.sku}
+            productType={productType}
+            key={index}
+          />
         ))}
+        {isEditing && (
+          <>
+            {variants?.map(variant => (
+              <VariantPhysicalProductsSection physicalProducts={variant.physicalProducts || []} />
+            ))}
+            <Spacer grid mt={6} />
+          </>
+        )}
       </ContainerGrid>
     </Box>
   )

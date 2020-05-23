@@ -10,6 +10,7 @@ import {
   MemberList,
   MemberView,
   OverviewView,
+  PhysicalProductEdit,
   ProductCreate,
   ProductEdit,
   ReservationList,
@@ -55,7 +56,14 @@ export default [
       {
         path: "/inventory/product/variants/:variantID",
         exact: true,
-        component: props => <VariantEdit {...props} basePath="/inventory/products" resource="Product" />,
+        component: props => <VariantEdit {...props} basePath="/inventory/product/variants" resource="Product" />,
+      },
+      {
+        path: "/inventory/product/variant/physicalProducts/:physicalProductID",
+        exact: true,
+        component: props => (
+          <PhysicalProductEdit {...props} basePath="/inventory/product/variant/physicalProducts" resource="Product" />
+        ),
       },
       {
         path: "/inventory/product/new",

@@ -5,10 +5,11 @@ import { Grid } from "@material-ui/core"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
+import { FormSelectChoice } from "utils/form"
 
 export interface PhysicalProductSectionProps {
-  inventoryStatusChoices: any[]
-  statusChoices: any[]
+  inventoryStatusChoices: FormSelectChoice[]
+  statusChoices: FormSelectChoice[]
   uid: string
 }
 
@@ -30,18 +31,18 @@ export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h5">Date ordered</Text>
             <Spacer mt={1} />
-            <TextField name={`${uid}_dateOrdered`} requiredDate />
+            <TextField name={`${uid}_dateOrdered`} optionalDate />
           </Grid>
           <Spacer grid mt={3} />
           <Grid item xs={6}>
             <Text variant="h5">Unit cost</Text>
             <Spacer mt={1} />
-            <TextField name={`${uid}_unitCost`} requiredNumber />
+            <TextField name={`${uid}_unitCost`} type="number" optionalNumber />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h5">Date received</Text>
             <Spacer mt={1} />
-            <TextField name={`${uid}_dateReceived`} requiredDate />
+            <TextField name={`${uid}_dateReceived`} optionalDate />
           </Grid>
           <Spacer grid mt={3} />
           <Grid item xs={6}>

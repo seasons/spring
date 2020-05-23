@@ -1,19 +1,24 @@
 import React from "react"
 
-import { Grid } from "@material-ui/core"
+import { Box, Grid } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
+import colorsJSON from "data/colors.json"
+import {
+  ProductUpsertQuery_categories,
+  ProductUpsertQuery_colors,
+  ProductUpsertQuery_productModels,
+} from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
-import { getFormSelectChoices } from "utils/form"
+import { getFormSelectChoices, FormSelectChoice } from "utils/form"
 
 export interface MetadataSectionProps {
   architectures: string[]
-  categories: any[]
-  colors: any[]
+  categories: ProductUpsertQuery_categories[]
   isEditing: boolean
-  models: any[]
-  sizes: any[]
+  models: ProductUpsertQuery_productModels[]
+  sizes: FormSelectChoice[]
   types: string[]
   setProductType: (string) => void
 }
@@ -21,7 +26,6 @@ export interface MetadataSectionProps {
 export const MetadataSection: React.FC<MetadataSectionProps> = ({
   architectures,
   categories,
-  colors,
   isEditing,
   models,
   sizes,
@@ -38,9 +42,15 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
     display: category.name,
     value: category.id,
   }))
-  const colorChoices = colors.map(color => ({
-    display: <Text style={{ backgroundColor: color.hexCode }}>{color.name}</Text>,
-    value: color.id,
+  const colorChoices = colorsJSON.colors.map(color => ({
+    display: (
+      <Box display="flex" alignItems="center">
+        <Text>{color.name}</Text>
+        <Spacer ml={1} />
+        <Box bgcolor={color.hexCode} width={16} height={16} borderRadius={4} />
+      </Box>
+    ),
+    value: color.colorCode,
   }))
   return (
     <ExpandableSection
@@ -71,27 +81,22 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Season</Text>
             <Spacer mt={1} />
-            <TextField name="season" requiredString />
+            <TextField name="season" />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Retail price</Text>
             <Spacer mt={1} />
-            <TextField name="retailPrice" minValue={0} />
+            <TextField name="retailPrice" type="number" minValue={0} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Architecture</Text>
             <Spacer mt={1} />
             <SelectField name="architecture" choices={architectureChoices} />
           </Grid>
-          <Grid item xs={6}>
-            <Text variant="h6">Display category</Text>
+          <Grid item xs={12}>
+            <Text variant="h6">Category</Text>
             <Spacer mt={1} />
             <SelectField name="category" choices={categoryChoices} requiredString />
-          </Grid>
-          <Grid item xs={6}>
-            <Text variant="h6">Sub-category</Text>
-            <Spacer mt={1} />
-            <SelectField name="subCategory" choices={categoryChoices} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Color</Text>

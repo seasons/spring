@@ -3,10 +3,9 @@ import React from "react"
 import { Loading } from "react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
-import { pick } from "lodash"
 
 import { BackButton, Spacer, Wizard } from "components"
-import { Overview, Variants } from "../Components"
+import { Variants } from "../Components"
 import { VARIANT_EDIT_QUERY } from "../queries"
 import { UPDATE_VARIANT } from "../mutations"
 import { extractVariantSizeFields } from "../utils"
@@ -21,7 +20,7 @@ export const VariantEdit: React.FC<VariantEditProps> = props => {
   })
   const [updateVariant] = useMutation(UPDATE_VARIANT)
 
-  if (loading || !data) {
+  if (loading || error || !data) {
     return <Loading />
   }
   console.log("DATA:", data)

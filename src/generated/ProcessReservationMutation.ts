@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { ReservationProcessReturnInput } from "./globalTypes"
@@ -9,7 +10,7 @@ import { ReservationProcessReturnInput } from "./globalTypes"
 // ====================================================
 
 export interface ProcessReservationMutation_processReservation {
-  __typename: "Reservation"
+  __typename: "ReservationReceipt"
   id: string
 }
 

@@ -1,5 +1,6 @@
 export { BackButton } from "./BackButton"
 export { CardContent } from "./CardContent"
+export { ConfirmationDialog } from "./ConfirmationDialog"
 export { EditButton } from "./EditButton"
 export { FormControl } from "./FormControl"
 export { IndicatorMap } from "./Indicator"
