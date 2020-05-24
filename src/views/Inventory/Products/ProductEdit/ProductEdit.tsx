@@ -1,5 +1,5 @@
-import { Box } from "@material-ui/core"
 import React from "react"
+import { Container } from "@material-ui/core"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
@@ -76,13 +76,13 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   }
 
   return (
-    <Box mx={5}>
+    <Container maxWidth={false}>
       <Spacer mt={5} />
       <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
         <Overview data={data} product={data.product} />
       </Wizard>
       <Spacer mt={9} />
-    </Box>
+    </Container>
   )
 }

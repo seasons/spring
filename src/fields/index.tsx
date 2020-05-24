@@ -1,4 +1,5 @@
 export { AutocompleteField } from "./AutocompleteField"
+export { BrandField } from "./BrandField"
 export { DropzoneField } from "./DropzoneField"
 export { EntityCountField } from "./EntityCountField"
 export { FullNameField } from "./FullNameField"

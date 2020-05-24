@@ -24,7 +24,7 @@ export const ViewEntityField: React.FC<ViewEntityFieldProps> = ({
   const entityLink = `/${entityPath}/${id}${entityTab ? `/${entityTab}` : ""}`
 
   return (
-    <Button color="primary" component={RouterLink} size="small" to={entityLink} variant="outlined">
+    <Button component={RouterLink} size="small" to={entityLink} variant="contained" color="secondary">
       View
     </Button>
   )

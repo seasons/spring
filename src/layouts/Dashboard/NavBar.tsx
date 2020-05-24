@@ -8,7 +8,8 @@ import { useLocation, matchPath } from "react-router"
 import styled from "styled-components"
 import { colors } from "theme"
 
-import { Box, Drawer, List, Theme, Typography, Hidden, Divider } from "@material-ui/core"
+import { Box, Drawer, List, Theme, Typography, Hidden, Divider, Button } from "@material-ui/core"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import { makeStyles } from "@material-ui/styles"
 
 import navConfig from "./navConfig"
@@ -43,14 +44,15 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 const UserInfo = styled(Typography)`
   font-size: 16px;
-  font-weight: 500;
+  font-weight: bold;
   line-height: 1.5;
-  color: ${colors.white100};
+  color: ${colors.white90};
 `
 
-const UserLogOut = styled(UserInfo)`
+const UserLogOut = styled(Button)`
   margin-top: 10px;
   cursor: pointer;
+  color: ${colors.white90};
   &:hover {
     color: ${colors.black50};
   }
@@ -123,7 +125,7 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
         <Divider className={classes.divider} />
         <Box m={2}>
           <UserInfo variant="h6">{`${user?.firstName} ${user?.lastName}`}</UserInfo>
-          <UserLogOut variant="h6" onClick={signOut}>
+          <UserLogOut startIcon={<ExitToAppIcon />} onClick={signOut}>
             Sign out
           </UserLogOut>
         </Box>
