@@ -1,7 +1,7 @@
 import React from "react"
 import { DateTime } from "luxon"
 import get from "lodash/get"
-import { Typography } from "@material-ui/core"
+import { Typography, Tooltip } from "@material-ui/core"
 
 type DateFieldProps = {
   label?: string
@@ -11,12 +11,13 @@ type DateFieldProps = {
 
 export const SinceDateField: React.FC<DateFieldProps> = ({ label, record, source }) => {
   const value = get(record, source)
-  const formattedDate = DateTime.fromISO(value)
-    .toUTC()
-    .toRelativeCalendar()
+  const date = DateTime.fromISO(value)
+  const formattedDate = date.toUTC().toRelativeCalendar()
   return (
-    <Typography component="span" variant="body2">
-      {formattedDate}
-    </Typography>
+    <Tooltip title={date.toLocaleString(DateTime.DATETIME_MED)} aria-label="add" style={{ fontSize: 13 }}>
+      <Typography component="span" variant="body2">
+        {formattedDate}
+      </Typography>
+    </Tooltip>
   )
 }

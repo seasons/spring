@@ -56,7 +56,7 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
     return <Redirect to={`/members/${memberId}/account`} />
   }
 
-  const adminStoreKey = `{"type":"GET_ONE","resource":"Customer","payload":{"id":"${data.id}"}}`
+  const adminStoreKey = JSON.stringify({ type: "GET_ONE", resource: "Customer", payload: { id: data.id } })
 
   return (
     <Container maxWidth={false}>

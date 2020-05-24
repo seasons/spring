@@ -1,33 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
 import { Link as RouterLink } from "react-router-dom"
 import { DateTime } from "luxon"
-import {
-  Button,
-  Card,
-  CardActions,
-  Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Box,
-  Grid,
-  Chip,
-} from "@material-ui/core"
+import { Button, Card, Link, Table, TableBody, TableCell, TableRow, Box, Grid, Chip } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
-import ReceiptIcon from "@material-ui/icons/ReceiptOutlined"
-
-const statusOptions = [
-  "New",
-  "In Queue",
-  "On Hold",
-  "Packed",
-  "Shipped",
-  "In Transit",
-  "Received",
-  "Cancelled",
-  "Completed",
-]
 
 export const ReservationInfo = ({ reservation, ...rest }) => {
   const { reservationNumber } = reservation
@@ -38,6 +13,21 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
 
   const address = customer?.detail?.shippingAddress
   const { address1, address2, city, state } = address
+
+  const { shippingLabel } = reservation?.sentPackage
+
+  const statusToDisplay = status => {
+    switch (status) {
+      case "InQueue":
+        return "In Queue"
+      case "OnHold":
+        return "On Hold"
+      case "InTransit":
+        return "In Transit"
+      default:
+        return status
+    }
+  }
 
   return (
     <Grid container spacing={3}>
@@ -61,6 +51,21 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <TableCell>ID</TableCell>
                 <TableCell>#{reservationNumber}</TableCell>
               </TableRow>
+              <TableRow>
+                <TableCell>Shipping Label</TableCell>
+                <TableCell>
+                  <Box>
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        window.open(shippingLabel.image, "_blank")
+                      }}
+                    >
+                      Print
+                    </Button>
+                  </Box>
+                </TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </Card>
@@ -73,7 +78,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <TableCell>Status</TableCell>
                 <TableCell>
                   <Chip
-                    label={reservation.status}
+                    label={statusToDisplay(reservation.status)}
                     icon={
                       <Box pl={1}>
                         <Indicator status={reservation.status} />
@@ -88,7 +93,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
               </TableRow>
               <TableRow>
                 <TableCell>Created At</TableCell>
-                <TableCell>{DateTime.fromISO(reservation.createdAt).toFormat("DD/MM/yyyy HH:MM")}</TableCell>
+                <TableCell>{DateTime.fromISO(reservation.createdAt).toLocaleString(DateTime.DATETIME_MED)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

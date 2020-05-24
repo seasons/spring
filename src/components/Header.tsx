@@ -19,7 +19,7 @@ export const Header: React.FC<HeaderProps> = ({ title, primaryButton, breadcrumb
     <>
       <Box mt={4}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-          <Link variant="body1" color="inherit" to="/app" component={RouterLink}>
+          <Link variant="body1" color="inherit" to="/app" component={RouterLink} key={"/app"}>
             Dashboard
           </Link>
           {breadcrumbs?.map(({ title, url }, i) => {
@@ -32,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({ title, primaryButton, breadcrumb
             }
 
             return (
-              <Link variant="body1" color="inherit" to={url} component={RouterLink}>
+              <Link variant="body1" color="inherit" to={url} component={RouterLink} key={url}>
                 {title}
               </Link>
             )

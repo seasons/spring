@@ -1,4 +1,4 @@
-import { GET_ONE, GET_LIST, UPDATE } from "react-admin"
+import { GET_ONE, GET_LIST } from "react-admin"
 import gql from "graphql-tag"
 
 export default {
@@ -54,9 +54,21 @@ export default {
       }
       sentPackage {
         id
+        shippingLabel {
+          image
+          trackingNumber
+          trackingURL
+        }
+        weight
       }
       returnedPackage {
         id
+        shippingLabel {
+          image
+          trackingNumber
+          trackingURL
+        }
+        weight
       }
       location {
         id
@@ -67,11 +79,19 @@ export default {
         inventoryStatus
         productStatus
         barcode
+        warehouseLocation {
+          barcode
+          locationCode
+          itemCode
+          type
+        }
         productVariant {
+          id
           product {
             id
             name
             brand {
+              id
               name
             }
             description
@@ -128,7 +148,7 @@ export const query = {
         }
         reservationNumber
         shipped
-        status
+        status(display: true)
         shippedAt
         returnAt
         createdAt

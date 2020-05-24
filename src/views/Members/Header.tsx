@@ -1,9 +1,8 @@
-import { FullNameField } from "fields"
-import moment from "moment"
 import React from "react"
+import { FullNameField } from "fields"
 
-import { Link, Theme, Typography } from "@material-ui/core"
-import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft"
+import { DateTime } from "luxon"
+import { Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
 import { BackButton } from "components"
@@ -25,7 +24,7 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 export const Header: React.FunctionComponent<MemberViewHeaderProps> = ({ history, member }) => {
   const classes = useStyles()
-  const memberSince = moment(member.user.createdAt).format("MMMM D, YYYY")
+  const memberSince = DateTime.fromISO(member.user.createdAt).toLocaleString(DateTime.DATETIME_MED)
 
   return (
     <div className={classes.root}>

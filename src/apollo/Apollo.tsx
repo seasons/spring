@@ -3,14 +3,11 @@ import { ApolloClient } from "apollo-client"
 import { ApolloLink, Observable } from "apollo-link"
 import { setContext } from "apollo-link-context"
 import { onError } from "apollo-link-error"
-import { HttpLink } from "apollo-link-http"
 import { createUploadLink } from "apollo-upload-client"
 
 const URI = process.env.REACT_APP_MONSOON_ENDPOINT || "http://localhost:4000"
 
-const link = new HttpLink({ uri: URI })
-
-const uploadLink = createUploadLink({ uri: URI })
+const link = createUploadLink({ uri: URI })
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -62,7 +59,7 @@ const errorLink = onError(({ networkError, operation, forward }) => {
             }
 
             // Retry last failed request
-            forward(operation).subscribe(subscriber)
+            return forward(operation).subscribe(subscriber)
           })
           .catch(error => {
             // No refresh or client token available, we force user to login
@@ -70,6 +67,8 @@ const errorLink = onError(({ networkError, operation, forward }) => {
           })
       })
     }
+  } else {
+    return forward(operation)
   }
 })
 
@@ -110,5 +109,5 @@ const getNewToken = async () => {
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: ApolloLink.from([authLink, errorLink, uploadLink, link]),
+  link: ApolloLink.from([authLink, errorLink, link]),
 })

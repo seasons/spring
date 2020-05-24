@@ -2,7 +2,7 @@ import { login as loginAction } from "actions/sessionActions"
 import { Spacer, Logo } from "components"
 import { TextField } from "fields"
 import gql from "graphql-tag"
-import React from "react"
+import React, { useState } from "react"
 import { useMutation } from "react-apollo"
 import { Form } from "react-final-form"
 import { useDispatch, useSelector } from "react-redux"
@@ -30,7 +30,11 @@ export interface LoginViewProps {
 }
 export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
   const history = useHistory()
-  const [login] = useMutation(LOG_IN)
+  const [login] = useMutation(LOG_IN, {
+    onError: err => {
+      console.error(err)
+    },
+  })
   const session = useSelector(state => state.session)
   const dispatch = useDispatch()
 

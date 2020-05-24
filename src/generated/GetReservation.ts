@@ -3,7 +3,13 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { InventoryStatus, PhysicalProductStatus, ProductStatus, ProductType } from "./globalTypes"
+import {
+  InventoryStatus,
+  PhysicalProductStatus,
+  WarehouseLocationType,
+  ProductStatus,
+  ProductType,
+} from "./globalTypes"
 
 // ====================================================
 // GraphQL fragment: GetReservation
@@ -46,20 +52,45 @@ export interface GetReservation_customer {
   detail: GetReservation_customer_detail | null
 }
 
+export interface GetReservation_sentPackage_shippingLabel {
+  __typename: "Label"
+  image: string | null
+  trackingNumber: string | null
+  trackingURL: string | null
+}
+
 export interface GetReservation_sentPackage {
   __typename: "Package"
   id: string
+  shippingLabel: GetReservation_sentPackage_shippingLabel
   weight: number | null
+}
+
+export interface GetReservation_returnedPackage_shippingLabel {
+  __typename: "Label"
+  image: string | null
+  trackingNumber: string | null
+  trackingURL: string | null
 }
 
 export interface GetReservation_returnedPackage {
   __typename: "Package"
   id: string
+  shippingLabel: GetReservation_returnedPackage_shippingLabel
+  weight: number | null
 }
 
 export interface GetReservation_location {
   __typename: "Location"
   id: string
+}
+
+export interface GetReservation_products_warehouseLocation {
+  __typename: "WarehouseLocation"
+  barcode: string
+  locationCode: string
+  itemCode: string
+  type: WarehouseLocationType
 }
 
 export interface GetReservation_products_productVariant_product_brand {
@@ -109,6 +140,7 @@ export interface GetReservation_products {
   inventoryStatus: InventoryStatus
   productStatus: PhysicalProductStatus
   barcode: string
+  warehouseLocation: GetReservation_products_warehouseLocation | null
   productVariant: GetReservation_products_productVariant
 }
 

@@ -1,54 +1,9 @@
-import React, { useState, useEffect } from "react"
-import { Datagrid, Filter, List } from "react-admin"
+import React, { useContext } from "react"
+import { Datagrid, Filter, Loading, List, DataProviderContext } from "react-admin"
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
-import { Box, Container, Tabs, Tab } from "@material-ui/core"
+import { Box, Container } from "@material-ui/core"
 import { Header } from "components/Header"
-import { Field } from "fields/Field"
-
-const StatusInput = ({
-  source,
-  value,
-  tabs,
-  onChange,
-  alwaysOn,
-}: {
-  source: any
-  value?: any
-  tabs: any
-  onChange?: (value: any) => void
-  alwaysOn?: boolean
-}) => {
-  const [currentTab, setCurrentTab] = useState("all")
-
-  useEffect(() => {
-    onChange?.([])
-  })
-
-  return (
-    <Field
-      name={source}
-      render={({ input, meta }) => (
-        <Tabs
-          onChange={(e, key) => {
-            const tab = tabs.find(a => a.id === key)
-            setCurrentTab(tab.id)
-            const filters = tab.value
-            input.onChange(filters)
-            onChange?.(filters)
-          }}
-          scrollButtons="auto"
-          textColor="secondary"
-          value={currentTab}
-          variant="standard"
-        >
-          {tabs.map((tab, i) => (
-            <Tab key={tab.id} value={tab.id} label={tab.label} />
-          ))}
-        </Tabs>
-      )}
-    />
-  )
-}
+import { StatusInput } from "./Components/StatusInput"
 
 const Filters = props => (
   <Filter {...props}>
@@ -57,19 +12,14 @@ const Filters = props => (
       tabs={[
         { label: "All", id: "all", value: [] },
         {
-          label: "Inbound",
-          id: "inbound",
-          value: ["InTransit", "Received"],
+          label: "Unfulfilled",
+          id: "unfulfilled",
+          value: ["New", "InQueue", "OnHold", "Packed"],
         },
         {
-          label: "Outbound",
-          id: "outbound",
-          value: ["New", "InQueue", "OnHold", "Packed", "Shipped", "InTransit"],
-        },
-        {
-          label: "Completed",
-          id: "completed",
-          value: ["Completed"],
+          label: "Fulfilled",
+          id: "fulfilled",
+          value: ["Shipped", "InTransit", "Received", "Completed"],
         },
       ]}
       alwaysOn
@@ -78,6 +28,12 @@ const Filters = props => (
 )
 
 export const ReservationList = ({ staticContext, ...props }) => {
+  const dataProvider = useContext(DataProviderContext)
+
+  if (!dataProvider) {
+    return <Loading />
+  }
+
   return (
     <Container maxWidth={false}>
       <Box py={2}>
@@ -98,7 +54,6 @@ export const ReservationList = ({ staticContext, ...props }) => {
           hasList={true}
           hasShow={true}
           filters={<Filters />}
-          // actions={<ListActions />}
           sort={{
             field: "createdAt",
             order: "DESC",
@@ -108,7 +63,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
         >
           <Datagrid>
             <SinceDateField source="createdAt" label="Created" />
-            <ImagesField source="images" label="Images" />
+            <ImagesField source="images" label="Images" size="medium" />
             <StatusField label="Status" />
             <MemberField label="Member" />
             <SinceDateField source="returnAt" label="Return" />

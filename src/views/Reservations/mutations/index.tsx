@@ -7,3 +7,12 @@ export const PROCESS_RESERVATION = gql`
     }
   }
 `
+
+export const MARK_RESERVATION_PICKED = gql`
+  mutation UpdateReservationMutation($reservationNumber: Int!) {
+    updateReservation(data: { status: Packed }, where: { reservationNumber: $reservationNumber }) {
+      id
+      status
+    }
+  }
+`

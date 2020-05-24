@@ -7,5 +7,7 @@ export default {
     "&:hover": {
       backgroundColor: colors.grey[300],
     },
+    textTransform: "none",
+    // borderRadius: "20px",
   },
 }
