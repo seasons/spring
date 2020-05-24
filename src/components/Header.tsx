@@ -5,7 +5,8 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext"
 
 export interface HeaderProps {
   className?: string
-  title: string
+  title: string | JSX.Element
+  subtitle?: string | JSX.Element
   primaryButton?: {
     text: String
     icon?: JSX.Element
@@ -14,12 +15,12 @@ export interface HeaderProps {
   breadcrumbs?: Array<{ url: string; title: string }>
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, primaryButton, breadcrumbs }) => {
+export const Header: React.FC<HeaderProps> = ({ title, subtitle, primaryButton, breadcrumbs }) => {
   return (
     <>
       <Box mt={4}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-          <Link variant="body1" color="inherit" to="/app" component={RouterLink} key={"/app"}>
+          <Link variant="body1" color="inherit" to="/" component={RouterLink} key={"/"}>
             Dashboard
           </Link>
           {breadcrumbs?.map(({ title, url }, i) => {
@@ -54,6 +55,7 @@ export const Header: React.FC<HeaderProps> = ({ title, primaryButton, breadcrumb
             </Grid>
           )}
         </Grid>
+        {subtitle && <Typography component="h3">{subtitle}</Typography>}
       </Box>
     </>
   )

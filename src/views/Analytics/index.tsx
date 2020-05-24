@@ -9,19 +9,22 @@ import { RoiPerCustomer } from "./RoiPerCustomer"
 import { SystemHealth } from "./SystemHealth"
 import { TeamTasks } from "./TeamTasks"
 import { TodaysMoney } from "./TodaysMoney"
-
-const ContainerStyled = styled(Container)`
-  margin-top: 10vh;
-  margin-bottom: 10vh;
-  padding-left: 64;
-  padding-right: 64;
-`
+import { Header } from "components"
 
 export interface AnalyticsViewProps {}
 
 export const AnalyticsView: React.FC<AnalyticsViewProps> = () => {
   return (
-    <ContainerStyled maxWidth={false}>
+    <Container maxWidth={false}>
+      <Header
+        title="Analytics"
+        breadcrumbs={[
+          {
+            title: "Analytics",
+            url: "/analytics",
+          },
+        ]}
+      />
       <Grid container spacing={3}>
         <Grid item lg={3} sm={6} xs={12}>
           <TodaysMoney />
@@ -48,6 +51,6 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = () => {
           <LatestProjects />
         </Grid>
       </Grid>
-    </ContainerStyled>
+    </Container>
   )
 }
