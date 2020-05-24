@@ -3,7 +3,7 @@ import { EntityCountField, FullNameField, StatusField, ViewEntityField } from "f
 import React from "react"
 import { Datagrid, List, TextField } from "@seasons/react-admin"
 
-import { Container } from "@material-ui/core"
+import { Box, Container } from "@material-ui/core"
 
 import { MemberFilter } from "./MemberFilter"
 
@@ -19,9 +19,18 @@ export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, hi
   }
 
   return (
-    <>
-      <Container maxWidth={false}>
-        <Header title="Members" primaryButton={{ text: "New Member", action: createNewMember }} />
+    <Container maxWidth={false}>
+      <Box py={2}>
+        <Header
+          title="Members"
+          primaryButton={{ text: "New Member", action: createNewMember }}
+          breadcrumbs={[
+            {
+              title: "Members",
+              url: "/members",
+            },
+          ]}
+        />
         <List
           {...props}
           filters={<MemberFilter />}
@@ -44,7 +53,7 @@ export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, hi
             <ViewEntityField entityPath="members" entityTab="account" source="id" label="Actions" />
           </Datagrid>
         </List>
-      </Container>
-    </>
+      </Box>
+    </Container>
   )
 }

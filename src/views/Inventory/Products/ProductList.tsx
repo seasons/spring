@@ -28,7 +28,16 @@ export interface ProductListInterface {
 
 export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => (
   <>
-    <Header title="Products" primaryButton={{ text: "New Product", action: onNewProductBtnPressed }} />
+    <Header
+      title="Products"
+      primaryButton={{ text: "New Product", action: onNewProductBtnPressed }}
+      breadcrumbs={[
+        {
+          title: "Products",
+          url: "/products",
+        },
+      ]}
+    />
     <List
       {...rest}
       filters={<ProductFilter />}
