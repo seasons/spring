@@ -1,6 +1,6 @@
 import { StatusField, ViewEntityField } from "fields"
 import React from "react"
-import { Datagrid, List, TextField } from "react-admin"
+import { Datagrid, List, TextField } from "@seasons/react-admin"
 
 import { Grid, Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"

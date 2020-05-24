@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { useQueryWithStore, Loading } from "react-admin"
+import { useQueryWithStore, Loading } from "@seasons/react-admin"
 import { Container, Box, Typography, Grid, Snackbar } from "@material-ui/core"
 import { Header } from "components/Header"
 import { ReservationInfo } from "./Components/ReservationInfo"

@@ -1,5 +1,5 @@
 import { connectRouter, routerMiddleware } from "connected-react-router"
-import { adminReducer, adminSaga } from "react-admin"
+import { adminReducer, adminSaga } from "@seasons/react-admin"
 import { applyMiddleware, combineReducers, createStore } from "redux"
 import { composeWithDevTools } from "redux-devtools-extension"
 import createSagaMiddleware from "redux-saga"

@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Datagrid, Filter, Loading, List, DataProviderContext } from "react-admin"
+import { Datagrid, Filter, Loading, List, DataProviderContext } from "@seasons/react-admin"
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
 import { Box, Container } from "@material-ui/core"
 import { Header } from "components/Header"

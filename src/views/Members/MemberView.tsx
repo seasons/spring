@@ -1,6 +1,6 @@
 import { ComponentError } from "components"
 import React from "react"
-import { Loading, useQueryWithStore } from "react-admin"
+import { Loading, useQueryWithStore } from "@seasons/react-admin"
 import { Redirect } from "react-router-dom"
 
 import { colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"

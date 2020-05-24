@@ -1,4 +1,4 @@
-import { CREATE, GET_ONE, GET_LIST } from "react-admin"
+import { CREATE, GET_ONE, GET_LIST } from "@seasons/react-admin"
 import gql from "graphql-tag"
 
 export const ProductFragment = gql`

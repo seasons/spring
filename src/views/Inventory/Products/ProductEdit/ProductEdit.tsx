@@ -1,6 +1,6 @@
 import { Box } from "@material-ui/core"
 import React from "react"
-import { Loading } from "react-admin"
+import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { pick } from "lodash"
