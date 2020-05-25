@@ -23,6 +23,11 @@ export default [
         icon: PersonIcon,
       },
       {
+        title: "Reservations",
+        href: "/reservations",
+        icon: ArchiveIcon,
+      },
+      {
         title: "Inventory",
         href: "/inventory/products",
         icon: ListIcon,
@@ -41,10 +46,13 @@ export default [
           },
         ],
       },
+    ],
+  },
+  {
+    items: [
       {
-        title: "Reservations",
-        href: "/reservations",
-        icon: ArchiveIcon,
+        title: "Notifications",
+        href: "/notifications",
       },
     ],
   },
