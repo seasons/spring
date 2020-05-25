@@ -20,6 +20,8 @@ export const ProductFragment = gql`
       id
       name
     }
+    createdAt
+    updatedAt
   }
 `
 

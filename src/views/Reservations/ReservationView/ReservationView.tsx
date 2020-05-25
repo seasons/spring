@@ -55,7 +55,6 @@ export const ReservationView = ({ match, history }) => {
   }
 
   const isReservationUnfulfilled = ["New", "InQueue", "OnHold", "Packed"].includes(data.status)
-  const isReservationFulfilled = ["Shipped", "InTransit", "Received", "Completed"].includes(data.status)
 
   const primaryButton = isReservationUnfulfilled
     ? {
@@ -84,7 +83,7 @@ export const ReservationView = ({ match, history }) => {
       <Container maxWidth={false}>
         <Box py={2}>
           <Header
-            title="Reservation Details"
+            title={`Reservation: ${data.reservationNumber}`}
             breadcrumbs={[
               {
                 title: "Reservations",
