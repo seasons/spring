@@ -60,19 +60,6 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
 
   return (
     <Container maxWidth={false}>
-      <Tabs
-        className={classes.tabs}
-        indicatorColor={"primary"}
-        onChange={handleTabsChange}
-        scrollButtons="auto"
-        value={currentTab}
-        variant="scrollable"
-      >
-        {tabs.map(tab => (
-          <Tab key={tab.value} label={tab.label} value={tab.value} className={classes.tab} />
-        ))}
-      </Tabs>
-      <Divider className={classes.divider} />
       <div className={classes.content}>
         {currentTab === "products" && (
           <ProductList

@@ -1,6 +1,7 @@
-# Spring
+<h1>Spring</h1>
+<h2>Admin dashboard</h2>
 
-## Internal admin dashboard for managing customers and products
+Spring is our CMS for managing our inventory and customers, processing reservations, but also visualizing our business data and metrics.
 
 ## Setup
 
@@ -11,7 +12,7 @@
 
 We are using
 
-- `react-admin` as the scaffolding
+- [`react-admin`](https://github.com/marmelab/react-admin) as the scaffolding library
 - Devias Kit for the layout, components, and structure
 - `MaterialUI` for components
 - `styled-components` as css-in-jss processor of choice

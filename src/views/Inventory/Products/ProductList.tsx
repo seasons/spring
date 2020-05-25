@@ -1,21 +1,19 @@
 import { Header } from "components/Header"
-import { ImagesField } from "fields"
+import { BrandField, ImagesField, ViewEntityField } from "fields"
 import React from "react"
 import {
   Datagrid,
-  EditButton,
   Filter,
   List,
   ReferenceArrayInput,
-  ReferenceField,
   SelectArrayInput,
   TextField,
   TextInput,
-} from "react-admin"
+} from "@seasons/react-admin"
 
 export const ProductFilter = props => (
   <Filter {...props}>
-    <TextInput label="Search by name" source="name_contains" options={{ variant: "outlined" }} />
+    <TextInput label="Search by name" source="name_contains" options={{ variant: "outlined" }} alwaysOn />
     <ReferenceArrayInput label="Brands" source="brand" reference="Brand">
       <SelectArrayInput optionText="name" />
     </ReferenceArrayInput>
@@ -28,10 +26,19 @@ export interface ProductListInterface {
 
 export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => (
   <>
-    <Header title="Products" primaryButton={{ text: "New Product", action: onNewProductBtnPressed }} />
+    <Header
+      title="Products"
+      primaryButton={{ text: "New Product", action: onNewProductBtnPressed }}
+      breadcrumbs={[
+        {
+          title: "Products",
+          url: "/products",
+        },
+      ]}
+    />
     <List
-      filters={<ProductFilter />}
       {...rest}
+      filters={<ProductFilter />}
       perPage={10}
       hasCreate={false}
       hasEdit={false}
@@ -42,12 +49,9 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
       <Datagrid>
         <ImagesField source="images" />
         <TextField source="name" />
-        <ReferenceField source="brand.id" reference="Brand" label="Brand Name">
-          <TextField source="name" />
-        </ReferenceField>
+        <BrandField label="Brand Name" />
         <TextField source="category.name" label="Category Name" />
-
-        <EditButton />
+        <ViewEntityField source="id" entityPath="products" label="Actions" />
       </Datagrid>
     </List>
   </>

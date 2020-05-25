@@ -1,9 +1,9 @@
 import { ComponentError } from "components"
 import React from "react"
-import { Loading, useQueryWithStore } from "react-admin"
+import { Loading, useQueryWithStore } from "@seasons/react-admin"
 import { Redirect } from "react-router-dom"
 
-import { colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"
+import { Box, colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
 import { AccountView } from "./Account"
@@ -17,15 +17,11 @@ const useStyles = makeStyles<Theme>(theme => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(5),
   },
-  tab: {
-    textTransform: "none",
-  },
   divider: {
     backgroundColor: colors.grey[300],
-    marginLeft: theme.spacing(5),
   },
   content: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
   },
 }))
 
@@ -56,33 +52,41 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
     return <Redirect to={`/members/${memberId}/account`} />
   }
 
-  const adminStoreKey = `{"type":"GET_ONE","resource":"Customer","payload":{"id":"${data.id}"}}`
+  const adminStoreKey = JSON.stringify({ type: "GET_ONE", resource: "Customer", payload: { id: data.id } })
 
   return (
     <Container maxWidth={false}>
-      <Header history={history} member={data} />
-      <Tabs
-        className={classes.tabs}
-        indicatorColor={"primary"}
-        onChange={handleTabsChange}
-        scrollButtons="auto"
-        value={currentTab}
-        variant="scrollable"
-      >
-        {tabs.map(tab => (
-          <Tab key={tab.value} label={tab.label} value={tab.value} className={classes.tab} />
-        ))}
-      </Tabs>
-      <Divider className={classes.divider} />
-      <div className={classes.content}>
-        {currentTab === "account" && (
-          <AccountView {...props} basePath={`/members/${memberId}/account`} member={data} adminKey={adminStoreKey} />
-        )}
-        {currentTab === "personal" && (
-          <PersonalView {...props} basePath={`/members/${memberId}/personal`} member={data} adminKey={adminStoreKey} />
-        )}
-        {currentTab === "history" && <HistoryView {...props} basePath={`/members/${memberId}/history`} member={data} />}
-      </div>
+      <Box py={2}>
+        <Header history={history} member={data} />
+        <Tabs
+          indicatorColor={"primary"}
+          onChange={handleTabsChange}
+          scrollButtons="auto"
+          value={currentTab}
+          variant="scrollable"
+        >
+          {tabs.map(tab => (
+            <Tab key={tab.value} label={tab.label} value={tab.value} className={classes.tab} />
+          ))}
+        </Tabs>
+        <Divider className={classes.divider} />
+        <Box mt={2}>
+          {currentTab === "account" && (
+            <AccountView {...props} basePath={`/members/${memberId}/account`} member={data} adminKey={adminStoreKey} />
+          )}
+          {currentTab === "personal" && (
+            <PersonalView
+              {...props}
+              basePath={`/members/${memberId}/personal`}
+              member={data}
+              adminKey={adminStoreKey}
+            />
+          )}
+          {currentTab === "history" && (
+            <HistoryView {...props} basePath={`/members/${memberId}/history`} member={data} />
+          )}
+        </Box>
+      </Box>
     </Container>
   )
 }

@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Box, TextField, Snackbar } from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Snackbar } from "@material-ui/core"
+import { DialogTitle } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { Alert, Color } from "@material-ui/lab"
 import { PhysicalProductStatus } from "generated/globalTypes"
+import { trim } from "lodash"
 
 interface ProductState {
   productUID: string
@@ -47,6 +49,9 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
   const BARCODE_REGEX = /^SZNS[0-9]{5}$/
 
   const inputRef = useRef()
+  const shouldAllowSave =
+    (Object.values(productStates as any).reduce((a: any, b: any) => a.returned || b.returned) as any).length ===
+    reservation.products.length
 
   const focusOnInput = () => {
     const target: any = inputRef?.current
@@ -67,7 +72,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
   }
 
   const handleBarcodeChange = e => {
-    const input = e.target.value
+    const input = trim(e.target.value)
     if (input.match(BARCODE_REGEX)) {
       console.log("Found barcode: ", input)
 
@@ -109,7 +114,9 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
   return (
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title">Process Returns</DialogTitle>
+        <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
+          Process Returns
+        </DialogTitle>
         <DialogContent dividers>
           <Box my={2} width={["550px"]}>
             <TextField
@@ -141,7 +148,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleSave} color="primary">
+          <Button autoFocus onClick={handleSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
             Save
           </Button>
         </DialogActions>

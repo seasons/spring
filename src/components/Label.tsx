@@ -1,7 +1,6 @@
-import React, { ReactNode } from "react"
-
 import { Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
+import React, { ReactNode } from "react"
 import { colors } from "theme"
 
 const useStyles = makeStyles<Theme>(theme => ({

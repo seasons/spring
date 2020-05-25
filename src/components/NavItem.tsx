@@ -1,11 +1,13 @@
-import React, { ReactNode } from "react"
+import React, { ReactNode, useState } from "react"
 import { NavLink as RouterLink } from "react-router-dom"
 import styled from "styled-components"
 import { colors } from "theme"
 
-import { Button, ListItem as MuiListItem } from "@material-ui/core"
+import { Box, Button as MuiButton, ListItem as MuiListItem, Collapse, makeStyles } from "@material-ui/core"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import ExpandLessIcon from "@material-ui/icons/ExpandLess"
 
-const NavLink = styled(Button)`
+const Button = styled(MuiButton)`
   padding: 10px 8px;
   justify-content: flex-start;
   text-transform: none;
@@ -20,14 +22,27 @@ const NavLink = styled(Button)`
   }
 `
 
-const ListItem = styled(MuiListItem)`
-  ${({ theme }) => `
-  display: "flex",
-  padding-top: 0,
-  padding-bottom: 0,
-  margin-bottom: ${theme.spacing(2)},
-`}
+const LeafButton = styled(Button)`
+  font-size: 16px;
 `
+
+const ListItem = styled(MuiListItem)`
+  display: flex;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: ${({ theme }) => theme.spacing(2)};
+`
+
+const useStyles = makeStyles(theme => ({
+  icon: {
+    display: "flex",
+    alignItems: "center",
+    marginRight: theme.spacing(1),
+  },
+  title: {
+    marginRight: "auto",
+  },
+}))
 
 export interface NavItemProps {
   children?: ReactNode
@@ -36,6 +51,8 @@ export interface NavItemProps {
   icon: any
   open?: boolean
   title: string
+  info?: any
+  depth: number
 }
 
 export const NavItem: React.FunctionComponent<NavItemProps> = ({
@@ -44,13 +61,56 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
   icon: Icon,
   open: openProp = false,
   title,
+  depth,
+  info: Info,
   ...rest
 }) => {
+  const classes = useStyles()
+  const [open, setOpen] = useState(openProp)
+
+  const handleToggle = () => {
+    setOpen(prevOpen => !prevOpen)
+  }
+
+  let paddingLeft = 8
+
+  if (depth > 0) {
+    paddingLeft = 32 + 8 * depth
+  }
+
+  const style = { paddingLeft }
+
+  const Btn = depth > 0 ? LeafButton : Button
+
+  if (children) {
+    return (
+      <>
+        <ListItem disableGutters key={title} {...rest} parent>
+          <Btn onClick={handleToggle} style={style}>
+            {Icon && <Icon className={classes.icon} size="20" />}
+            <span className={classes.title}>{title}</span>
+            {open ? (
+              <ExpandLessIcon fontSize="small" color="inherit" />
+            ) : (
+              <ExpandMoreIcon fontSize="small" color="inherit" />
+            )}
+          </Btn>
+        </ListItem>
+
+        <Collapse in={open}>
+          <Box ml={3}>{children}</Box>
+        </Collapse>
+      </>
+    )
+  }
+
   return (
     <ListItem {...rest} disableGutters key={title}>
-      <NavLink component={RouterLink} to={href}>
+      <Btn component={RouterLink} to={href}>
+        {Icon && <Icon className={classes.icon} size="20" />}
         {title}
-      </NavLink>
+      </Btn>
+      {Info && <Info />}
     </ListItem>
   )
 }

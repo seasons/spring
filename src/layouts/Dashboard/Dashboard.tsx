@@ -1,5 +1,6 @@
-import React, { Suspense, useState } from "react"
+import React, { Suspense, useState, useContext } from "react"
 import { renderRoutes } from "react-router-config"
+import { DataProviderContext, Loading } from "@seasons/react-admin"
 import styled from "styled-components"
 import { colors } from "theme"
 
@@ -36,6 +37,7 @@ const Content = styled.div`
 interface DashboardProps {}
 
 export const Dashboard: React.FC<DashboardProps> = ({ route }: any) => {
+  const dataProvider = useContext(DataProviderContext)
   const [openNavBarMobile, setOpenNavBarMobile] = useState(false)
 
   return (
@@ -44,7 +46,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ route }: any) => {
       <NavBar onMobileClose={() => setOpenNavBarMobile(false)} openMobile={openNavBarMobile} />
       <Container>
         <Content>
-          <Suspense fallback={<LinearProgress />}>{renderRoutes(route.routes)}</Suspense>
+          <Suspense fallback={<LinearProgress />}>{dataProvider ? renderRoutes(route.routes) : <Loading />}</Suspense>
         </Content>
       </Container>
     </>
