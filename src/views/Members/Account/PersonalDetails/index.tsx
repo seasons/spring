@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { MembershipPlanOptions, MemberStatusOptions } from "../../Member.types"
 
 import { useMutation } from "@apollo/react-hooks"
-import { Card, Table, TableBody, TableCell, TableRow } from "@material-ui/core"
+import { Card, Table, TableBody, TableCell, TableRow, Box } from "@material-ui/core"
 
 import { MemberSubViewProps } from "../../interfaces"
 import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
@@ -99,7 +99,9 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
               <TableHeader>Personal details</TableHeader>
               <TableCell></TableCell>
               <TableCell>
-                <EditButton onClick={handleEditOpen} />
+                <Box display="flex" alignItems="flex-end">
+                  <EditButton onClick={handleEditOpen} />
+                </Box>
               </TableCell>
             </TableRow>
             <TableRow selected>
