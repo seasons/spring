@@ -85,7 +85,7 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
   if (children) {
     return (
       <>
-        <ListItem disableGutters key={title} {...rest} px={2} parent>
+        <ListItem disableGutters key={title} {...rest} px={2}>
           <Btn onClick={handleToggle} style={style} disableRipple>
             <span className={classes.title}>{title}</span>
             {open ? (
