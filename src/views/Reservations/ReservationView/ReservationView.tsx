@@ -81,53 +81,51 @@ export const ReservationView = ({ match, history }) => {
   return (
     <>
       <Container maxWidth={false}>
-        <Box py={2}>
-          <Header
-            title={`Reservation: ${data.reservationNumber}`}
-            breadcrumbs={[
-              {
-                title: "Reservations",
-                url: "/reservations",
-              },
-              { title: `Reservation: ${data.reservationNumber}`, url: `/reservations/${data.reservationNumber}` },
-            ]}
-            primaryButton={primaryButton}
-          />
-          <Box my={2}>
-            <ReservationInfo reservation={data} />
-          </Box>
-          <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" mb={2}>
-            <Typography variant="h3">Items</Typography>
-            <Box display="flex" alignItems="center">
-              <ToggleButtonGroup exclusive onChange={handleModeChange} size="small" value={mode}>
-                <ToggleButton value="grid">
-                  <ViewModuleIcon />
-                </ToggleButton>
-                <ToggleButton value="list">
-                  <ListIcon />
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </Box>
-          </Box>
-          <Grid container spacing={2}>
-            {mode === "list" ? (
-              <ProductGrid products={data.products} />
-            ) : (
-              data.products.map(product => (
-                <Grid
-                  item
-                  lg={mode === "grid" ? 3 : 12}
-                  md={mode === "grid" ? 4 : 12}
-                  sm={mode === "grid" ? 4 : 12}
-                  xs={12}
-                  key={`product-card-${product.id}`}
-                >
-                  <ProductCard product={product} />
-                </Grid>
-              ))
-            )}
-          </Grid>
+        <Header
+          title={`Reservation: ${data.reservationNumber}`}
+          breadcrumbs={[
+            {
+              title: "Reservations",
+              url: "/reservations",
+            },
+            { title: `Reservation: ${data.reservationNumber}`, url: `/reservations/${data.reservationNumber}` },
+          ]}
+          primaryButton={primaryButton}
+        />
+        <Box my={2}>
+          <ReservationInfo reservation={data} />
         </Box>
+        <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" mb={2}>
+          <Typography variant="h3">Items</Typography>
+          <Box display="flex" alignItems="center">
+            <ToggleButtonGroup exclusive onChange={handleModeChange} size="small" value={mode}>
+              <ToggleButton value="grid">
+                <ViewModuleIcon />
+              </ToggleButton>
+              <ToggleButton value="list">
+                <ListIcon />
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+        </Box>
+        <Grid container spacing={2}>
+          {mode === "list" ? (
+            <ProductGrid products={data.products} />
+          ) : (
+            data.products.map(product => (
+              <Grid
+                item
+                lg={mode === "grid" ? 3 : 12}
+                md={mode === "grid" ? 4 : 12}
+                sm={mode === "grid" ? 4 : 12}
+                xs={12}
+                key={`product-card-${product.id}`}
+              >
+                <ProductCard product={product} />
+              </Grid>
+            ))
+          )}
+        </Grid>
       </Container>
       <Modal
         open={showModal}
