@@ -264,7 +264,12 @@ export const MemberCreate: React.FC = props => {
           </CardContent>
           <Divider />
           <CardActions>
-            <Button color="primary" onClick={() => createMember(values)} variant="contained">
+            <Button
+              disabled={Object.keys(values).filter(key => values[key].error).length > 0}
+              color="primary"
+              onClick={() => createMember(values)}
+              variant="contained"
+            >
               Save
             </Button>
           </CardActions>

@@ -38,6 +38,7 @@ interface memberEntryValue {
   label: string
   type: string
   value: string
+  error: boolean
 }
 
 export interface NewMemberProps {
