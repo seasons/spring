@@ -91,6 +91,14 @@ export const ReservationView = ({ match, history }) => {
             { title: `Reservation: ${data.reservationNumber}`, url: `/reservations/${data.reservationNumber}` },
           ]}
           primaryButton={primaryButton}
+          menuItems={[
+            {
+              text: "Update status",
+              action: () => {
+                console.log("Update status")
+              },
+            },
+          ]}
         />
         <Box my={2}>
           <ReservationInfo reservation={data} />

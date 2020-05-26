@@ -1,8 +1,8 @@
 import { login as loginAction } from "actions/sessionActions"
-import { Spacer, Logo } from "components"
+import { Spacer, Logo, Text } from "components"
 import { TextField } from "fields"
 import gql from "graphql-tag"
-import React from "react"
+import React, { useState } from "react"
 import { useMutation } from "react-apollo"
 import { Form } from "react-final-form"
 import { useDispatch, useSelector } from "react-redux"
@@ -31,9 +31,11 @@ export interface LoginViewProps {
 }
 export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
   const history = useHistory()
+  const [error, setError] = useState<string | null>(null)
   const [login] = useMutation(LOG_IN, {
     onError: err => {
       console.error(err)
+      setError(err.message)
     },
   })
   const session = useSelector(state => state.session)
@@ -88,6 +90,11 @@ export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
                   <SubmitButton size="large" type="submit" variant="contained" fullWidth>
                     Sign in
                   </SubmitButton>
+                  {error && (
+                    <Box my={1}>
+                      <Text color={colors.red[500]}>{error}</Text>
+                    </Box>
+                  )}
                 </form>
               </Box>
             )}
