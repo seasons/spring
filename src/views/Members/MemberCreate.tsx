@@ -1,7 +1,10 @@
 import React, { useState } from "react"
 import { NewMemberProps } from "views/Members/interfaces"
 import styled from "styled-components"
+import { ComponentError } from "components/"
 import { Header } from "components/Header"
+import { makeStyles } from "@material-ui/styles"
+import * as Yup from "yup"
 import {
   Container,
   Button,
@@ -14,7 +17,8 @@ import {
   Select as muiSelect,
   TextField,
 } from "@material-ui/core"
-
+import { MEMBER_CREATE } from "./queries"
+import { useMutation } from "@apollo/react-hooks"
 const PHONE_PATTERN = "[0-9]{3}-[0-9]{3}-[0-9]{4}"
 
 const Card = styled(muiCard)`
@@ -39,56 +43,182 @@ export const MemberCreate: React.FC = props => {
       label: "First Name",
       type: "phone",
       value: "",
+      error: false,
+      helperText: "This field is required",
     },
     lastName: {
       label: "Last Name",
       type: "phone",
       value: "",
+      error: false,
+      helperText: "This field is required",
     },
     email: {
       label: "Email Address",
       type: "email",
       value: "",
+      error: false,
+      helperText: "This field is required",
     },
     password: {
       label: "Password",
       type: "password",
       value: "",
+      error: false,
+      helperText: "At least 8 characters, include uppercase letter and number",
     },
     confirmPassword: {
       label: "Confirm Password",
       type: "password",
       value: "",
+      error: false,
+      helperText: "Passwords must match",
     },
     phone: {
       label: "Phone",
-      type: "phone",
+      type: "tel",
       value: "",
+      error: false,
+      helperText: "This field is required, e.g 123-456-7890",
     },
   }
 
   const [values, setValues] = useState<NewMemberProps>(memberValues)
+  const [saveMember] = useMutation(MEMBER_CREATE)
 
   const createMember = values => {
     console.log("creating member with values", values)
+
+    saveMember({
+      variables: {
+        email: values.email.value,
+        password: values.password.value,
+        firstName: values.firstName.value,
+        lastName: values.lastName.value,
+        details: {
+          phoneNumber: values.phone.value,
+        },
+      },
+    })
+      .then(() => {
+        console.log(" member created!", values)
+      })
+      .catch(error => {
+        return <ComponentError />
+      })
   }
 
   const handleFieldChange = event => {
     const key = event.target.name
     const value = event.target.value
+    const validationResult = !isFieldValid(key, value)
+
     values[key].value = value
+    values[key].error = validationResult
 
     setValues(currentValues => ({
       ...currentValues,
-      key: currentValues[key],
+      key: values[key],
     }))
   }
 
-  const typeMap = {
-    email: "email",
-    birthday: "date",
-    phone: "tel",
+  const useStyles = makeStyles(theme => ({
+    customError: {
+      "& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline": {
+        borderColor: "#f44336",
+      },
+      "& .MuiFormLabel-root.Mui-error": {
+        color: "#f44336",
+      },
+      "& .MuiFormHelperText-root.Mui-error": {
+        color: "#f44336",
+      },
+    },
+  }))
+
+  const isFieldValid = (type, value) => {
+    const objectToValidate = { [type]: value }
+
+    switch (type) {
+      case "firstName":
+        try {
+          Yup.object()
+            .shape({
+              firstName: Yup.string().required("Required"),
+            })
+            .validateSync(objectToValidate)
+          return true
+        } catch (error) {
+          return false
+        }
+      case "lastName":
+        try {
+          Yup.object()
+            .shape({
+              lastName: Yup.string().required("Required"),
+            })
+            .validateSync(objectToValidate)
+          return true
+        } catch (error) {
+          return false
+        }
+
+      case "phone":
+        try {
+          Yup.object()
+            .shape({
+              phone: Yup.string()
+                .required("Required")
+                .min(8, "Must be at least 8 characters")
+                .matches(/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/, "e.g 123-456-7890"),
+            })
+            .validateSync(objectToValidate)
+          return true
+        } catch (error) {
+          return false
+        }
+
+      case "password":
+        try {
+          Yup.object()
+            .shape({
+              password: Yup.string()
+                .required("Required")
+                .min(8, "Must be at least 8 characters")
+                .max(20, "Must be no more than 20 characters")
+                .matches(/[A-Z]/, "Must include at least one uppercase letter")
+                .matches(/[a-z]/, "Must include at least one lowercase letter")
+                .matches(/1|2|3|4|5|6|7|8|9|0/, "Must include at least one number"),
+            })
+            .validateSync(objectToValidate)
+          return true
+        } catch (error) {
+          return false
+        }
+
+      case "confirmPassword":
+        return value === values.password.value
+
+      case "email":
+        try {
+          Yup.object()
+            .shape({
+              email: Yup.string()
+                .required("Required")
+                .email("Invalid email"),
+            })
+            .validateSync(objectToValidate)
+          return true
+        } catch (error) {
+          return false
+        }
+
+      default:
+        return true
+    }
   }
+
+  const classes = useStyles()
 
   return (
     <Container maxWidth={false}>
@@ -115,14 +245,17 @@ export const MemberCreate: React.FC = props => {
                 return (
                   <Grid item md={6} xs={12} key={key}>
                     <TextField
+                      className={values[key].error ? classes.customError : ""}
                       fullWidth
                       label={values[key].label}
                       name={key}
-                      type={typeMap[key] || values[key].type || "text"}
+                      type={values[key].type}
                       onChange={handleFieldChange}
                       value={values[key].value}
                       variant="outlined"
                       inputProps={key === "phone" ? { pattern: PHONE_PATTERN } : {}}
+                      error={values[key].error}
+                      helperText={values[key].error ? values[key].helperText : ""}
                     />
                   </Grid>
                 )

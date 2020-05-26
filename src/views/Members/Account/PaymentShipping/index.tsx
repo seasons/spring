@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 
 import { MemberSubViewProps } from "../../interfaces"
-import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
+import { MEMBER_DETAIL_UPDATE } from "../../queries"
 import { useMutation } from "@apollo/react-hooks"
 
 export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
@@ -14,7 +14,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
   const [openEdit, setOpenEdit] = useState(false)
   const [member, updateMember] = useState(memberFromStore)
-  const [updateDetails] = useMutation(CUSTOMER_DETAIL_UPDATE)
+  const [updateDetails] = useMutation(MEMBER_DETAIL_UPDATE)
   const dispatch = useDispatch()
   const billing = member.billingInfo
   const shipping = member.detail.shippingAddress
