@@ -63,7 +63,7 @@ function renderNavItems({ items, ...rest }) {
 }
 
 function reduceChildRoutes({ acc, pathname, item, depth = 0 }) {
-  const key = item.title + depth
+  const key = Math.floor(Math.random() * Math.floor(10000))
 
   if (item.items) {
     const open = matchPath(pathname, {
@@ -72,7 +72,7 @@ function reduceChildRoutes({ acc, pathname, item, depth = 0 }) {
     })
 
     acc.push(
-      <NavItem depth={depth} icon={item.icon} key={key} info={item.info} open={Boolean(open)} title={item.title}>
+      <NavItem key={key} depth={depth} icon={item.icon} info={item.info} open={Boolean(open)} title={item.title}>
         {renderNavItems({
           depth: depth + 1,
           pathname,
@@ -81,7 +81,7 @@ function reduceChildRoutes({ acc, pathname, item, depth = 0 }) {
       </NavItem>
     )
   } else {
-    acc.push(<NavItem depth={depth} href={item.href} icon={item.icon} key={key} info={item.info} title={item.title} />)
+    acc.push(<NavItem key={key} depth={depth} href={item.href} icon={item.icon} info={item.info} title={item.title} />)
   }
 
   return acc
@@ -98,7 +98,7 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
     if (openMobile && onMobileClose) {
       onMobileClose()
     }
-  }, [location.pathname])
+  }, [location.pathname, openMobile, onMobileClose])
 
   const signOut = () => {
     dispatch(logoutAction())

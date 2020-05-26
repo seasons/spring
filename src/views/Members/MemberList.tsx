@@ -3,7 +3,7 @@ import { EntityCountField, FullNameField, StatusField, ViewEntityField } from "f
 import React from "react"
 import { Datagrid, List, TextField } from "@seasons/react-admin"
 
-import { Box, Container } from "@material-ui/core"
+import { Container } from "@material-ui/core"
 
 import { MemberFilter } from "./MemberFilter"
 

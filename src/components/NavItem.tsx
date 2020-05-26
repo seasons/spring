@@ -79,13 +79,13 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
   }
 
   const style = { paddingLeft }
-
   const Btn = depth > 0 ? LeafButton : Button
+  const key = Math.floor(Math.random() * Math.floor(10000))
 
   if (children) {
     return (
       <>
-        <ListItem disableGutters key={title} {...rest} parent>
+        <ListItem key={key} disableGutters {...rest}>
           <Btn onClick={handleToggle} style={style}>
             {Icon && <Icon className={classes.icon} size="20" />}
             <span className={classes.title}>{title}</span>
@@ -105,7 +105,7 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
   }
 
   return (
-    <ListItem {...rest} disableGutters key={title}>
+    <ListItem key={key} {...rest} disableGutters>
       <Btn component={RouterLink} to={href}>
         {Icon && <Icon className={classes.icon} size="20" />}
         {title}

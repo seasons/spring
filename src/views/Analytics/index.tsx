@@ -1,6 +1,5 @@
 import { Container, Grid } from "@material-ui/core"
 import React from "react"
-import styled from "styled-components"
 import { HistogramChart } from "./HistogramChart"
 import { LatestProjects } from "./LatestProjects"
 import { NewProjects } from "./NewProjects"

@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { NewMemberProps } from "views/Members/interfaces"
 import styled from "styled-components"
+import { Header } from "components/Header"
 import {
   Container,
-  Theme,
   Button,
   Card as muiCard,
   CardActions as muiCardActions,
@@ -14,20 +14,12 @@ import {
   Select as muiSelect,
   TextField,
 } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
-
-const useStyles = makeStyles<Theme>(theme => ({
-  root: {
-    paddingTop: theme.spacing(20),
-    paddingLeft: theme.spacing(10),
-  },
-}))
 
 const PHONE_PATTERN = "[0-9]{3}-[0-9]{3}-[0-9]{4}"
 
 const Card = styled(muiCard)`
   width: 700px;
-  margin: 0 auto;
+  margin: 100px auto;
   outline: none;
   box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14),
     0px 8px 38px 7px rgba(0, 0, 0, 0.12);
@@ -42,8 +34,6 @@ export const Select = styled(muiSelect)`
 `
 
 export const MemberCreate: React.FC = props => {
-  const classes = useStyles()
-
   const memberValues = {
     firstName: {
       label: "First Name",
@@ -101,7 +91,20 @@ export const MemberCreate: React.FC = props => {
   }
 
   return (
-    <Container maxWidth="lg" className={classes.root}>
+    <Container maxWidth={false}>
+      <Header
+        title=""
+        breadcrumbs={[
+          {
+            title: "Members",
+            url: "/members",
+          },
+          {
+            title: `New`,
+            url: `/members/new`,
+          },
+        ]}
+      />
       <Card>
         <form>
           <CardHeader title="New Member" />

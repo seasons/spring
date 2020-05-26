@@ -1,6 +1,6 @@
 import { StatusField } from "fields"
 import React from "react"
-import { Datagrid, TextField } from "react-admin"
+import { Datagrid, TextField } from "@seasons/react-admin"
 import moment from "moment"
 import { Button as muiButton, Grid, Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
@@ -37,7 +37,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label }) => 
 
   return (
     <>
-      <a href={invoiceURL} target="_blank">
+      <a href={invoiceURL} target="_blank" rel="noopener noreferrer">
         <Button color="primary" size="small" variant="outlined">
           View <BtnIcon />
         </Button>
@@ -70,6 +70,8 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
     normalizedInvoices[inv.id] = inv
     invoicesIds.push(inv.id)
   })
+
+  console.log("member is ", member)
 
   return (
     <>

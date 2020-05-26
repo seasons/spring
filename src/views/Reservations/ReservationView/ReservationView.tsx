@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
 import { Container, Box, Typography, Grid, Snackbar } from "@material-ui/core"
 import { Header } from "components/Header"
@@ -15,7 +15,6 @@ import { useMutation, ExecutionResult } from "react-apollo"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 import { ProductGrid } from "./Components/ProductGrid"
 import { PickingModal } from "./Components/PickingModal/PickingModal"
-import { GetReservation } from "generated/GetReservation"
 
 export const ReservationView = ({ match, history }) => {
   const { id } = match.params
@@ -55,7 +54,7 @@ export const ReservationView = ({ match, history }) => {
   }
 
   const isReservationUnfulfilled = ["New", "InQueue", "OnHold", "Packed"].includes(data.status)
-  const isReservationFulfilled = ["Shipped", "InTransit", "Received", "Completed"].includes(data.status)
+  // const isReservationFulfilled = ["Shipped", "InTransit", "Received", "Completed"].includes(data.status)
 
   const primaryButton = isReservationUnfulfilled
     ? {
