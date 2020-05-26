@@ -116,6 +116,7 @@ export interface ProductEditQuery_product_category {
 export interface ProductEditQuery_product_color {
   __typename: "Color"
   id: string
+  colorCode: string
   name: string
 }
 
@@ -140,6 +141,7 @@ export interface ProductEditQuery_product_modelSize {
 export interface ProductEditQuery_product_secondaryColor {
   __typename: "Color"
   id: string
+  colorCode: string
   name: string
 }
 

@@ -68,6 +68,7 @@ export const PRODUCT_EDIT_QUERY = gql`
       architecture
       color {
         id
+        colorCode
         name
       }
       functions {
@@ -87,6 +88,7 @@ export const PRODUCT_EDIT_QUERY = gql`
       season
       secondaryColor {
         id
+        colorCode
         name
       }
       status
