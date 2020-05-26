@@ -1,5 +1,4 @@
-import { capitalize } from "lodash"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { RefundInvoiceModalProps } from "views/Members/interfaces"
 import { CreditNoteReasonCode } from "../Member.types"
@@ -18,7 +17,6 @@ import {
   Modal,
   Select as muiSelect,
   TextField,
-  Typography,
 } from "@material-ui/core"
 
 export const Card = styled(muiCard)`
@@ -52,9 +50,18 @@ export const RefundInvoiceModal: React.FunctionComponent<RefundInvoiceModalProps
   const [values, setValues] = useState({
     ...invoice,
     reasonCode: CreditNoteReasonCode[0],
-    comment: "Refunded via admin by @Regy",
-    customerNotes: "Customer was very angry",
+    comment: "",
+    customerNotes: "",
   })
+
+  useEffect(() => {
+    setValues({
+      ...invoice,
+      reasonCode: CreditNoteReasonCode[0],
+      comment: "",
+      customerNotes: "",
+    })
+  }, [invoice, open])
 
   const handleFieldChange = event => {
     const key = event.target.name
@@ -118,13 +125,15 @@ export const RefundInvoiceModal: React.FunctionComponent<RefundInvoiceModalProps
                 </FormControl>
               </Grid>
 
+              <Grid item md={6} xs={12}></Grid>
+
               <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
                   label="Customer Notes"
                   name="customerNotes"
                   multiline
-                  rowsMax={4}
+                  rows={4}
                   onChange={handleFieldChange}
                   value={values.customerNotes}
                   variant="outlined"
@@ -137,7 +146,7 @@ export const RefundInvoiceModal: React.FunctionComponent<RefundInvoiceModalProps
                   label="Comment"
                   name="comment"
                   multiline
-                  rowsMax={4}
+                  rows={4}
                   onChange={handleFieldChange}
                   value={values.comment}
                   variant="outlined"

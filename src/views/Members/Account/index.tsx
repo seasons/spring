@@ -2,7 +2,7 @@ import { StatusField } from "fields"
 import React, { useState } from "react"
 import { Datagrid, TextField } from "@seasons/react-admin"
 import moment from "moment"
-import { Button as muiButton, Grid, Theme, Typography } from "@material-ui/core"
+import { Button as muiButton, Grid, Theme, Typography, Snackbar } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 import { MemberSubViewProps, ActionButtonsProps } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
@@ -12,8 +12,8 @@ import OpenInNewIcon from "@material-ui/icons/OpenInNew"
 import styled from "styled-components"
 import { MEMBER_INVOICE_REFUND } from "../queries"
 import { useMutation } from "@apollo/react-hooks"
-import { CreditNoteReasonCode } from "../Member.types"
 import { RefundInvoiceModal } from "./RefundInvoice"
+import { Alert, Color } from "@material-ui/lab"
 
 const STATUS_REFUNDED = "Refunded"
 
@@ -61,35 +61,40 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handl
 // it is defined dynamically in MemberView.tsx and used by leaf components to optimistically update state
 // after executing a mutation.
 export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ member, adminKey }) => {
+  const classes = useStyles()
   const [issueRefund] = useMutation(MEMBER_INVOICE_REFUND)
   const [refundModalIsOpen, setRefundModalOpen] = useState(false)
-  const [invoiceToRefund, setInvoiceToRefund] = useState({ id: "" })
-  const classes = useStyles()
+
+  const [invoiceToRefund, setInvoiceToRefund] = useState({
+    id: "",
+    amount: 0,
+    amountNormalized: "",
+  })
+
+  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
+    show: false,
+    message: "",
+    status: "success",
+  })
 
   const defaultSort = { field: "id", order: "ASC" }
   let normalizedInvoices = {}
   let invoicesIds: string[] = []
 
-  const testINV = {
-    id: "1077",
-    amount: 100,
-    amountNormalized: "$ 199.00",
-  }
-
   member?.invoices?.forEach(inv => {
-    // console.log("invoice is", inv)
     inv.status = inv.creditNotes[0]?.status === STATUS_REFUNDED ? STATUS_REFUNDED : inv.status
     inv.tooltipText = inv.creditNotes[0]?.reasonCode
-    inv.closingDate = moment(inv.closingDate).format("MM/DD/YYYY")
-    inv.dueDate = moment(inv.dueDate).format("MM/DD/YYYY")
+    inv.closingDateNormalized = moment(inv.closingDate).format("MM/DD/YYYY")
+    inv.dueDateNormalized = moment(inv.dueDate).format("MM/DD/YYYY")
     inv.amountNormalized = centsToAmount(inv.amount)
     normalizedInvoices[inv.id] = inv
     invoicesIds.push(inv.id)
   })
 
+  const [stateInvoices, setStateInvoices] = useState(normalizedInvoices)
+
   const handleRefundModalOpen = record => {
-    // setInvoiceToRefund(record)
-    // setInvoiceToRefund({ id: "test" })
+    setInvoiceToRefund(record)
     setRefundModalOpen(true)
   }
 
@@ -97,18 +102,14 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
     setRefundModalOpen(false)
   }
 
-  const processRefund = record => {
-    console.log("Processing, record is ", record)
-
+  const processRefund = input => {
     const inputValues = {
-      invoiceId: record.id,
-      refundAmount: record.amount,
-      comment: "testing admin",
-      customerNotes: "well playa damn",
-      reasonCode: CreditNoteReasonCode[3],
+      invoiceId: input.id,
+      refundAmount: input.amount,
+      comment: input.comment,
+      customerNotes: input.customerNotes,
+      reasonCode: input.reasonCode,
     }
-
-    console.log("input is ", inputValues)
 
     issueRefund({
       variables: {
@@ -116,11 +117,39 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
       },
     })
       .then(() => {
-        console.log(" member created!", inputValues)
+        input.status = STATUS_REFUNDED
+        input.tooltipText = input.reasonCode
+
+        // update state optimistically to reflect refund in UI
+        setStateInvoices(currentValues => ({
+          ...currentValues,
+          [input.id]: input,
+        }))
+
+        // display success notification
+        toggleSnackbar({
+          show: true,
+          message: "Refund Processed",
+          status: "success",
+        })
       })
       .catch(error => {
-        console.log("error refunding invoice:", error)
+        console.error("error refunding invoice:", error)
+        toggleSnackbar({
+          show: true,
+          message: "Error processing refund",
+          status: "error",
+        })
       })
+      .finally(() => setRefundModalOpen(false))
+  }
+
+  const hideSnackbar = () => {
+    toggleSnackbar({
+      show: false,
+      message: "",
+      status: "success",
+    })
   }
 
   return (
@@ -136,26 +165,34 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
           <Typography component="h1" variant="h3">
             Invoices
           </Typography>
-          <Datagrid ids={invoicesIds} data={normalizedInvoices} currentSort={defaultSort}>
+          <Datagrid ids={invoicesIds} data={stateInvoices} currentSort={defaultSort}>
             <TextField source="id" label="Invoice ID" />
             <TextField source="subscriptionId" label="Subscription ID" />
             <StatusField label="Status" />
-            <TextField source="closingDate" label="Closing Date" />
-            <TextField source="dueDate" label="Due date" />
+            <TextField source="closingDateNormalized" label="Closing Date" />
+            <TextField source="dueDateNormalized" label="Due date" />
             <TextField source="amountNormalized" label="Amount" />
-            <ActionButtons label="Actions" handleAction={handleRefundModalOpen} />
+            <ActionButtons label="Actions" handleAction={record => handleRefundModalOpen(record)} />
           </Datagrid>
         </Grid>
       </Grid>
       <RefundInvoiceModal
         title="Refund Invoice"
-        // editEntity={invoiceToRefund}
-        invoice={testINV}
-        // onSave={processRefund}
-        onSave={handleRefundModalClose}
+        invoice={invoiceToRefund}
+        onSave={refundInput => processRefund(refundInput)}
         onClose={handleRefundModalClose}
         open={refundModalIsOpen}
       />
+      <Snackbar
+        open={snackbar.show}
+        autoHideDuration={6000}
+        onClose={hideSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={hideSnackbar} severity={snackbar.status}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   )
 }
