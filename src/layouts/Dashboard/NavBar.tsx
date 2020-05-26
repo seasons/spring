@@ -9,9 +9,11 @@ import styled from "styled-components"
 import { colors } from "theme"
 
 import { Box, Drawer, List, Theme, Typography, Hidden, Divider, Button } from "@material-ui/core"
-import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import { makeStyles } from "@material-ui/styles"
 
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+
+import "react-perfect-scrollbar/dist/css/styles.css"
 import navConfig from "./navConfig"
 
 const useStyles = makeStyles<Theme>(theme => ({
@@ -26,11 +28,13 @@ const useStyles = makeStyles<Theme>(theme => ({
     width: 256,
     height: "100%",
     border: "none",
+    overflow: "hidden",
   },
   desktopDrawer: {
     width: 256,
     height: "100%",
     border: "none",
+    overflow: "hidden",
   },
   navigation: {
     overflow: "auto",
@@ -159,7 +163,9 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
       </Hidden>
       <Hidden mdDown>
         <Drawer anchor="left" classes={{ paper: classes.desktopDrawer }} open variant="persistent">
+          <Divider className={classes.divider} />
           {content}
+          <Divider className={classes.divider} />
         </Drawer>
       </Hidden>
     </>
