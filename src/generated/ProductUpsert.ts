@@ -3,8 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { LetterSize } from "./globalTypes"
-
 // ====================================================
 // GraphQL fragment: ProductUpsert
 // ====================================================
@@ -38,14 +36,6 @@ export interface ProductUpsert_categories {
   name: string
 }
 
-export interface ProductUpsert_colors {
-  __typename: "Color"
-  id: string
-  colorCode: string
-  hexCode: string
-  name: string
-}
-
 export interface ProductUpsert_inventoryStatuses_enumValues {
   __typename: "__EnumValue"
   name: string
@@ -76,12 +66,6 @@ export interface ProductUpsert_productArchitectures {
   enumValues: ProductUpsert_productArchitectures_enumValues[] | null
 }
 
-export interface ProductUpsert_productFunctions {
-  __typename: "ProductFunction"
-  id: string
-  name: string | null
-}
-
 export interface ProductUpsert_productModels {
   __typename: "ProductModel"
   id: string
@@ -103,24 +87,16 @@ export interface ProductUpsert_tags {
   name: string
 }
 
-export interface ProductUpsert_topSizes {
-  __typename: "TopSize"
-  letter: LetterSize | null
-}
-
 export interface ProductUpsert {
   __typename: "Query"
   bottomSizes: (ProductUpsert_bottomSizes | null)[]
   bottomSizeTypes: ProductUpsert_bottomSizeTypes | null
   brands: (ProductUpsert_brands | null)[]
   categories: (ProductUpsert_categories | null)[]
-  colors: (ProductUpsert_colors | null)[]
   inventoryStatuses: ProductUpsert_inventoryStatuses | null
   physicalProductStatuses: ProductUpsert_physicalProductStatuses | null
   productArchitectures: ProductUpsert_productArchitectures | null
-  productFunctions: (ProductUpsert_productFunctions | null)[]
   productModels: (ProductUpsert_productModels | null)[]
   productTypes: ProductUpsert_productTypes | null
   tags: (ProductUpsert_tags | null)[]
-  topSizes: (ProductUpsert_topSizes | null)[]
 }

@@ -18,7 +18,7 @@ export interface VariantsProps {
 
 export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
   const brandID = createData?.brand || ""
-  const colorID = createData?.color || ""
+  const colorCode = createData?.color || ""
   const sizeNames = createData?.sizes || []
   const productType = createData?.productType || variants?.[0]?.internalSize?.productType
 
@@ -26,7 +26,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
     variables: {
       input: {
         brandID,
-        colorID,
+        colorCode,
         sizeNames,
       },
     },

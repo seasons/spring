@@ -3,8 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { LetterSize } from "./globalTypes"
-
 // ====================================================
 // GraphQL query operation: ProductUpsertQuery
 // ====================================================
@@ -38,14 +36,6 @@ export interface ProductUpsertQuery_categories {
   name: string
 }
 
-export interface ProductUpsertQuery_colors {
-  __typename: "Color"
-  id: string
-  colorCode: string
-  hexCode: string
-  name: string
-}
-
 export interface ProductUpsertQuery_inventoryStatuses_enumValues {
   __typename: "__EnumValue"
   name: string
@@ -76,12 +66,6 @@ export interface ProductUpsertQuery_productArchitectures {
   enumValues: ProductUpsertQuery_productArchitectures_enumValues[] | null
 }
 
-export interface ProductUpsertQuery_productFunctions {
-  __typename: "ProductFunction"
-  id: string
-  name: string | null
-}
-
 export interface ProductUpsertQuery_productModels {
   __typename: "ProductModel"
   id: string
@@ -103,24 +87,16 @@ export interface ProductUpsertQuery_tags {
   name: string
 }
 
-export interface ProductUpsertQuery_topSizes {
-  __typename: "TopSize"
-  letter: LetterSize | null
-}
-
 export interface ProductUpsertQuery {
   __typename: "Query"
   bottomSizes: (ProductUpsertQuery_bottomSizes | null)[]
   bottomSizeTypes: ProductUpsertQuery_bottomSizeTypes | null
   brands: (ProductUpsertQuery_brands | null)[]
   categories: (ProductUpsertQuery_categories | null)[]
-  colors: (ProductUpsertQuery_colors | null)[]
   inventoryStatuses: ProductUpsertQuery_inventoryStatuses | null
   physicalProductStatuses: ProductUpsertQuery_physicalProductStatuses | null
   productArchitectures: ProductUpsertQuery_productArchitectures | null
-  productFunctions: (ProductUpsertQuery_productFunctions | null)[]
   productModels: (ProductUpsertQuery_productModels | null)[]
   productTypes: ProductUpsertQuery_productTypes | null
   tags: (ProductUpsertQuery_tags | null)[]
-  topSizes: (ProductUpsertQuery_topSizes | null)[]
 }

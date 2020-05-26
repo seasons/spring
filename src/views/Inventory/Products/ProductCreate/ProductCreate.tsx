@@ -42,6 +42,7 @@ export const ProductCreate = props => {
       }
     } catch (e) {
       console.log("error:", e)
+      alert(e)
     }
   }
 
