@@ -63,6 +63,8 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
       display: "Not available",
     },
   ]
+
+  // Only show Offload status if editing product
   if (isEditing) {
     statuses.push({
       value: "Offloaded",
