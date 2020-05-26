@@ -21,7 +21,7 @@ const useStyles = makeStyles<Theme>(theme => ({
 }))
 
 interface ActionButtonsProps {
-  record?: { id: string }
+  record?: { id: string; status: string }
   label?: string
   processRefund: (record: {}) => void
 }
@@ -47,7 +47,13 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, proce
         </Button>
       </a>
 
-      <Button color="primary" size="small" variant="outlined" onClick={() => processRefund(record)}>
+      <Button
+        disabled={record.status === "Refunded"}
+        color="primary"
+        size="small"
+        variant="outlined"
+        onClick={() => processRefund(record)}
+      >
         Refund
       </Button>
     </>
@@ -64,8 +70,11 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
   const defaultSort = { field: "id", order: "ASC" }
   let normalizedInvoices = {}
   let invoicesIds: string[] = []
+
   member?.invoices?.forEach(inv => {
     console.log("invoice is", inv)
+    inv.status = inv.creditNotes[0]?.status === "Refunded" ? "Refunded" : inv.status
+    inv.tooltipText = inv.creditNotes[0]?.reasonCode
     inv.closingDate = moment(inv.closingDate).format("MM/DD/YYYY")
     inv.dueDate = moment(inv.dueDate).format("MM/DD/YYYY")
     inv.amountNormalized = centsToAmount(inv.amount)
