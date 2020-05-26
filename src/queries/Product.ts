@@ -6,7 +6,7 @@ export const ProductFragment = gql`
     id
     name
     description
-    images(size: Small, options: { retina: false }) {
+    images(size: Small, options: { retina: true }) {
       url
     }
     retailPrice
@@ -26,7 +26,30 @@ export const ProductFragment = gql`
 `
 
 export default {
-  [GET_LIST]: ProductFragment,
+  [GET_LIST]: gql`
+    fragment product on Product {
+      id
+      name
+      description
+      images(size: Small, options: { retina: false }) {
+        url
+      }
+      retailPrice
+      createdAt
+      updatedAt
+      brand {
+        id
+        name
+      }
+      category {
+        id
+        name
+      }
+      status
+      createdAt
+      updatedAt
+    }
+  `,
   [GET_ONE]: ProductFragment,
   [CREATE]: ProductFragment,
 }

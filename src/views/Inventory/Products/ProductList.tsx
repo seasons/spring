@@ -1,5 +1,5 @@
 import { Header } from "components/Header"
-import { BrandField, ImagesField, SinceDateField, ViewEntityField } from "fields"
+import { BrandField, CheckField, ImagesField, SinceDateField, ViewEntityField } from "fields"
 import React from "react"
 import { Datagrid, Filter, List, TextField, TextInput } from "@seasons/react-admin"
 
@@ -43,6 +43,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         <BrandField label="Brand Name" />
         <TextField source="category.name" label="Category Name" />
         <SinceDateField source="createdAt" label="Created" />
+        <CheckField source="status" value="Available" label="Published" />
         <ViewEntityField source="id" entityPath="inventory/products" label="Actions" />
       </Datagrid>
     </List>

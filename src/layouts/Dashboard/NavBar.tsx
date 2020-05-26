@@ -163,9 +163,7 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
       </Hidden>
       <Hidden mdDown>
         <Drawer anchor="left" classes={{ paper: classes.desktopDrawer }} open variant="persistent">
-          <Divider className={classes.divider} />
           {content}
-          <Divider className={classes.divider} />
         </Drawer>
       </Hidden>
     </>
