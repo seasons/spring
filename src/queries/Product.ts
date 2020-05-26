@@ -6,7 +6,7 @@ export const ProductFragment = gql`
     id
     name
     description
-    images(size: Small) {
+    images(size: Small, options: { retina: false }) {
       url
     }
     retailPrice

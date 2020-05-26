@@ -13,6 +13,11 @@ type DateFieldProps = {
 export const SinceDateField: React.FC<DateFieldProps> = ({ label, record, source, since = false }) => {
   const value = get(record, source)
   const date = DateTime.fromISO(value)
+
+  if (!value) {
+    return <></>
+  }
+
   const formattedDate = since ? (
     <Typography component="span" variant="body2">
       {date.toUTC().toRelativeCalendar()}
