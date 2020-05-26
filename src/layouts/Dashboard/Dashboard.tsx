@@ -20,7 +20,7 @@ const Content = styled.div`
   flex-grow: 1;
   max-width: 100%;
   overflow: hidden;
-  background: ${colors.white100};
+  background-color: rgb(252, 252, 252);
 
   ${theme.breakpoints.up("lg")} {
     margin-left: 256px;
