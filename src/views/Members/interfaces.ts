@@ -103,3 +103,23 @@ export interface EditModalProps {
   onClose: () => void
   onSave(values: {}): void
 }
+
+export interface RefundInvoiceModalProps {
+  title: string
+  invoice: invoice
+  open: boolean
+  onClose: () => void
+  onSave(values: {}): void
+}
+
+interface invoice {
+  id: string
+  amount: number
+  amountNormalized: string
+}
+
+export interface ActionButtonsProps {
+  record?: { id: string; status: string }
+  label?: string
+  handleAction: (record: {}) => void
+}

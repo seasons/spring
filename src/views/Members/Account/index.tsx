@@ -1,10 +1,10 @@
 import { StatusField } from "fields"
-import React from "react"
+import React, { useState } from "react"
 import { Datagrid, TextField } from "@seasons/react-admin"
 import moment from "moment"
 import { Button as muiButton, Grid, Theme, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
-import { MemberSubViewProps } from "../interfaces"
+import { MemberSubViewProps, ActionButtonsProps } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
 import { PersonalDetails } from "./PersonalDetails"
 import { centsToAmount } from "utils/strings"
@@ -13,18 +13,15 @@ import styled from "styled-components"
 import { MEMBER_INVOICE_REFUND } from "../queries"
 import { useMutation } from "@apollo/react-hooks"
 import { CreditNoteReasonCode } from "../Member.types"
+import { RefundInvoiceModal } from "./RefundInvoice"
+
+const STATUS_REFUNDED = "Refunded"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
     padding: theme.spacing(5),
   },
 }))
-
-interface ActionButtonsProps {
-  record?: { id: string; status: string }
-  label?: string
-  processRefund: (record: {}) => void
-}
 
 const BtnIcon = styled(OpenInNewIcon)`
   font-size: 18px;
@@ -35,7 +32,7 @@ const Button = styled(muiButton)`
   margin-right: 10px;
 `
 
-const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, processRefund }) => {
+const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handleAction }) => {
   const domain = process.env.NODE_ENV === "production" ? "seasons" : "seasons-test"
   const invoiceURL = `https://${domain}.chargebee.com/d/invoices/${record.id}`
 
@@ -48,11 +45,11 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, proce
       </a>
 
       <Button
-        disabled={record.status === "Refunded"}
+        disabled={record.status === STATUS_REFUNDED}
         color="primary"
         size="small"
         variant="outlined"
-        onClick={() => processRefund(record)}
+        onClick={() => handleAction(record)}
       >
         Refund
       </Button>
@@ -61,19 +58,27 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, proce
 }
 
 // adminKey is the name of the property in Redux's admin store that holds the data we need to update.
-// it is defined dynamically MemberView.tsx and used by leaf components to optimistically update state
+// it is defined dynamically in MemberView.tsx and used by leaf components to optimistically update state
 // after executing a mutation.
 export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ member, adminKey }) => {
   const [issueRefund] = useMutation(MEMBER_INVOICE_REFUND)
+  const [refundModalIsOpen, setRefundModalOpen] = useState(false)
+  const [invoiceToRefund, setInvoiceToRefund] = useState({ id: "" })
   const classes = useStyles()
 
   const defaultSort = { field: "id", order: "ASC" }
   let normalizedInvoices = {}
   let invoicesIds: string[] = []
 
+  const testINV = {
+    id: "1077",
+    amount: 100,
+    amountNormalized: "$ 199.00",
+  }
+
   member?.invoices?.forEach(inv => {
-    console.log("invoice is", inv)
-    inv.status = inv.creditNotes[0]?.status === "Refunded" ? "Refunded" : inv.status
+    // console.log("invoice is", inv)
+    inv.status = inv.creditNotes[0]?.status === STATUS_REFUNDED ? STATUS_REFUNDED : inv.status
     inv.tooltipText = inv.creditNotes[0]?.reasonCode
     inv.closingDate = moment(inv.closingDate).format("MM/DD/YYYY")
     inv.dueDate = moment(inv.dueDate).format("MM/DD/YYYY")
@@ -81,6 +86,16 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
     normalizedInvoices[inv.id] = inv
     invoicesIds.push(inv.id)
   })
+
+  const handleRefundModalOpen = record => {
+    // setInvoiceToRefund(record)
+    // setInvoiceToRefund({ id: "test" })
+    setRefundModalOpen(true)
+  }
+
+  const handleRefundModalClose = () => {
+    setRefundModalOpen(false)
+  }
 
   const processRefund = record => {
     console.log("Processing, record is ", record)
@@ -128,10 +143,19 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
             <TextField source="closingDate" label="Closing Date" />
             <TextField source="dueDate" label="Due date" />
             <TextField source="amountNormalized" label="Amount" />
-            <ActionButtons label="Actions" processRefund={processRefund} />
+            <ActionButtons label="Actions" handleAction={handleRefundModalOpen} />
           </Datagrid>
         </Grid>
       </Grid>
+      <RefundInvoiceModal
+        title="Refund Invoice"
+        // editEntity={invoiceToRefund}
+        invoice={testINV}
+        // onSave={processRefund}
+        onSave={handleRefundModalClose}
+        onClose={handleRefundModalClose}
+        open={refundModalIsOpen}
+      />
     </>
   )
 }

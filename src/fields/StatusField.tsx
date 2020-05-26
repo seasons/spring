@@ -22,7 +22,6 @@ const DarkTooltip = withStyles(theme => ({
 export const StatusField: React.FC<StatusFieldProps> = ({ record, label }) => {
   const ref = useRef(null)
   const status = record?.status
-  console.log("record is", record)
 
   return (
     <DarkTooltip title={record?.tooltipText || ""} placement="top-start" TransitionComponent={Zoom}>

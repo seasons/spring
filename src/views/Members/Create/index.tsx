@@ -17,7 +17,7 @@ import {
   Select as muiSelect,
   TextField,
 } from "@material-ui/core"
-import { MEMBER_CREATE } from "./queries"
+import { MEMBER_CREATE } from "../queries"
 import { useMutation } from "@apollo/react-hooks"
 const PHONE_PATTERN = "[0-9]{3}-[0-9]{3}-[0-9]{4}"
 
