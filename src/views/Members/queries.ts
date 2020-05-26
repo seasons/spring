@@ -23,3 +23,9 @@ export const MEMBER_CREATE = gql`
     }
   }
 `
+
+export const MEMBER_INVOICE_REFUND = gql`
+  mutation refundInvoice($input: RefundInvoiceInput) {
+    refundInvoice(input: $input)
+  }
+`

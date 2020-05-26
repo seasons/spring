@@ -104,11 +104,24 @@ export const MemberCreate: React.FC = props => {
         console.log(" member created!", values)
       })
       .catch(error => {
+        console.log("error saving member: , error")
         return <ComponentError />
       })
   }
 
   const handleFieldChange = event => {
+    const key = event.target.name
+    const value = event.target.value
+
+    values[key].value = value
+
+    setValues(currentValues => ({
+      ...currentValues,
+      key: values[key],
+    }))
+  }
+
+  const handleFieldBlur = event => {
     const key = event.target.name
     const value = event.target.value
     const validationResult = !isFieldValid(key, value)
@@ -251,6 +264,7 @@ export const MemberCreate: React.FC = props => {
                       name={key}
                       type={values[key].type}
                       onChange={handleFieldChange}
+                      onBlur={handleFieldBlur}
                       value={values[key].value}
                       variant="outlined"
                       inputProps={key === "phone" ? { pattern: PHONE_PATTERN } : {}}

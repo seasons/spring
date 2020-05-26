@@ -46,6 +46,13 @@ const CustomerDetails = gql`
       closingDate
       dueDate
       amount
+      creditNotes {
+        id
+        reasonCode
+        date
+        total
+        status
+      }
     }
     reservations {
       id

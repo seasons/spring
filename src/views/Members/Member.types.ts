@@ -10,3 +10,12 @@ export const MemberStatusOptions = [
   "Paused",
   "Deactivated",
 ]
+
+export const CreditNoteReasonCode = [
+  "ProductUnsatisfactory",
+  "ServiceUnsatisfactory",
+  "OrderChange",
+  "OrderCancellation",
+  "Waiver",
+  "Other",
+]

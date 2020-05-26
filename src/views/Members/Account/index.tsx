@@ -10,6 +10,9 @@ import { PersonalDetails } from "./PersonalDetails"
 import { centsToAmount } from "utils/strings"
 import OpenInNewIcon from "@material-ui/icons/OpenInNew"
 import styled from "styled-components"
+import { MEMBER_INVOICE_REFUND } from "../queries"
+import { useMutation } from "@apollo/react-hooks"
+import { CreditNoteReasonCode } from "../Member.types"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -20,6 +23,7 @@ const useStyles = makeStyles<Theme>(theme => ({
 interface ActionButtonsProps {
   record?: { id: string }
   label?: string
+  processRefund: (record: {}) => void
 }
 
 const BtnIcon = styled(OpenInNewIcon)`
@@ -31,7 +35,7 @@ const Button = styled(muiButton)`
   margin-right: 10px;
 `
 
-const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label }) => {
+const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, processRefund }) => {
   const domain = process.env.NODE_ENV === "production" ? "seasons" : "seasons-test"
   const invoiceURL = `https://${domain}.chargebee.com/d/invoices/${record.id}`
 
@@ -43,35 +47,57 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label }) => 
         </Button>
       </a>
 
-      <Button color="primary" size="small" variant="outlined" onClick={processRefund}>
+      <Button color="primary" size="small" variant="outlined" onClick={() => processRefund(record)}>
         Refund
       </Button>
     </>
   )
 }
 
-const processRefund = () => {
-  console.log("Processed")
-}
-
 // adminKey is the name of the property in Redux's admin store that holds the data we need to update.
 // it is defined dynamically MemberView.tsx and used by leaf components to optimistically update state
 // after executing a mutation.
 export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ member, adminKey }) => {
+  const [issueRefund] = useMutation(MEMBER_INVOICE_REFUND)
   const classes = useStyles()
 
   const defaultSort = { field: "id", order: "ASC" }
   let normalizedInvoices = {}
   let invoicesIds: string[] = []
   member?.invoices?.forEach(inv => {
+    console.log("invoice is", inv)
     inv.closingDate = moment(inv.closingDate).format("MM/DD/YYYY")
     inv.dueDate = moment(inv.dueDate).format("MM/DD/YYYY")
-    inv.amount = centsToAmount(inv.amount)
+    inv.amountNormalized = centsToAmount(inv.amount)
     normalizedInvoices[inv.id] = inv
     invoicesIds.push(inv.id)
   })
 
-  console.log("member is ", member)
+  const processRefund = record => {
+    console.log("Processing, record is ", record)
+
+    const inputValues = {
+      invoiceId: record.id,
+      refundAmount: record.amount,
+      comment: "testing admin",
+      customerNotes: "well playa damn",
+      reasonCode: CreditNoteReasonCode[3],
+    }
+
+    console.log("input is ", inputValues)
+
+    issueRefund({
+      variables: {
+        input: inputValues,
+      },
+    })
+      .then(() => {
+        console.log(" member created!", inputValues)
+      })
+      .catch(error => {
+        console.log("error refunding invoice:", error)
+      })
+  }
 
   return (
     <>
@@ -92,8 +118,8 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
             <StatusField label="Status" />
             <TextField source="closingDate" label="Closing Date" />
             <TextField source="dueDate" label="Due date" />
-            <TextField source="amount" label="Amount" />
-            <ActionButtons label="Actions" />
+            <TextField source="amountNormalized" label="Amount" />
+            <ActionButtons label="Actions" processRefund={processRefund} />
           </Datagrid>
         </Grid>
       </Grid>
