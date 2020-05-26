@@ -77,8 +77,6 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
 
   return (
     <Container maxWidth={false}>
-      <Spacer mt={5} />
-      <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
         <Overview data={data} product={data.product} />
       </Wizard>

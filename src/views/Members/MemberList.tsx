@@ -3,7 +3,7 @@ import { EntityCountField, FullNameField, StatusField, ViewEntityField } from "f
 import React from "react"
 import { Datagrid, List, TextField } from "@seasons/react-admin"
 
-import { Box, Container } from "@material-ui/core"
+import { Card, Container } from "@material-ui/core"
 
 import { MemberFilter } from "./MemberFilter"
 
@@ -30,28 +30,31 @@ export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, hi
           },
         ]}
       />
-      <List
-        {...props}
-        filters={<MemberFilter />}
-        perPage={10}
-        hasCreate={false}
-        hasEdit={false}
-        hasList={true}
-        hasShow={true}
-        resource={"Customer"}
-        basePath="/members"
-      >
-        <Datagrid>
-          <FullNameField label="Name" />
-          <TextField source="detail.shippingAddress.city" label="City" />
-          <TextField source="detail.shippingAddress.state" label="State" />
-          <TextField source="plan" label="Membership" />
-          <StatusField label="Status" />
-          <TextField source="bagItems.id" label="Money Spent" />
-          <EntityCountField label="Current Items" entityName="bagItems" />
-          <ViewEntityField entityPath="members" entityTab="account" source="id" label="Actions" />
-        </Datagrid>
-      </List>
+      <Card>
+        <List
+          {...props}
+          filters={<MemberFilter />}
+          perPage={10}
+          hasCreate={false}
+          hasEdit={false}
+          hasList={true}
+          hasShow={true}
+          component="div"
+          resource="Customer"
+          basePath="/members"
+        >
+          <Datagrid>
+            <FullNameField label="Name" />
+            <TextField source="detail.shippingAddress.city" label="City" />
+            <TextField source="detail.shippingAddress.state" label="State" />
+            <TextField source="plan" label="Membership" />
+            <StatusField label="Status" />
+            <TextField source="bagItems.id" label="Money Spent" />
+            <EntityCountField label="Current Items" entityName="bagItems" />
+            <ViewEntityField entityPath="members" entityTab="account" source="id" label="Actions" />
+          </Datagrid>
+        </List>
+      </Card>
     </Container>
   )
 }

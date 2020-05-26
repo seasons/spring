@@ -3,7 +3,7 @@ import { CardContent, ComponentError, EditButton, EditModal, TableHeader } from 
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
+import { Box, Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 
 import { MemberSubViewProps } from "../../interfaces"
 import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
@@ -160,7 +160,9 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
               <TableHeader>Payment & Shipping</TableHeader>
               <TableCell></TableCell>
               <TableCell>
-                <EditButton onClick={handleEditOpen} />
+                <Box display="flex" alignItems="flex-end">
+                  <EditButton onClick={handleEditOpen} />
+                </Box>
               </TableCell>
             </TableRow>
             <TableRow selected>

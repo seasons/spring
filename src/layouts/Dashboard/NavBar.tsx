@@ -9,9 +9,11 @@ import styled from "styled-components"
 import { colors } from "theme"
 
 import { Box, Drawer, List, Theme, Typography, Hidden, Divider, Button } from "@material-ui/core"
-import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import { makeStyles } from "@material-ui/styles"
 
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+
+import "react-perfect-scrollbar/dist/css/styles.css"
 import navConfig from "./navConfig"
 
 const useStyles = makeStyles<Theme>(theme => ({
@@ -26,15 +28,17 @@ const useStyles = makeStyles<Theme>(theme => ({
     width: 256,
     height: "100%",
     border: "none",
+    overflow: "hidden",
   },
   desktopDrawer: {
     width: 256,
     height: "100%",
     border: "none",
+    overflow: "hidden",
   },
   navigation: {
     overflow: "auto",
-    padding: theme.spacing(2, 2, 2, 2),
+    padding: theme.spacing(2, 0, 2, 0),
     flexGrow: 1,
   },
   divider: {
@@ -59,7 +63,11 @@ const UserLogOut = styled(Button)`
 `
 
 function renderNavItems({ items, ...rest }) {
-  return <List disablePadding>{items.reduce((acc, item) => reduceChildRoutes({ acc, item, ...rest } as any), [])}</List>
+  return (
+    <>
+      <List disablePadding>{items.reduce((acc, item) => reduceChildRoutes({ acc, item, ...rest } as any), [])}</List>
+    </>
+  )
 }
 
 function reduceChildRoutes({ acc, pathname, item, depth = 0 }) {
@@ -91,8 +99,9 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
   const classes = useStyles()
   const location = useLocation()
   const session = useSelector(state => state.session)
-  const { user } = session
   const dispatch = useDispatch()
+
+  const { user } = session
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -111,13 +120,19 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
         <Box display="flex" m={2} mt={4} flexDirection="horizontal">
           <Logo color="white" />
         </Box>
-
         <Divider className={classes.divider} />
       </Hidden>
 
       <nav className={classes.navigation}>
         <PerfectScrollbar options={{ suppressScrollX: true }}>
-          <List>{navConfig.map(config => renderNavItems({ items: config.items, pathname: location.pathname }))}</List>
+          {navConfig.map(config => (
+            <>
+              {renderNavItems({ items: config.items, pathname: location.pathname })}
+              <Box my={2}>
+                <Divider style={{ backgroundColor: colors.black85 }} />
+              </Box>
+            </>
+          ))}
         </PerfectScrollbar>
       </nav>
 

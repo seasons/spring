@@ -1,4 +1,4 @@
-import { ProductItemsField, StatusField, ViewEntityField } from "fields"
+import { ProductItemsField, SinceDateField, StatusField, ViewEntityField } from "fields"
 import React from "react"
 import { Datagrid, TextField } from "@seasons/react-admin"
 
@@ -17,10 +17,10 @@ export const HistoryView: React.FC<MemberSubViewProps> = ({ member }) => {
         <Datagrid ids={member.reservationsIds} data={normalizedReservations} currentSort={defaultSort}>
           <TextField source="reservationNumber" label="Order #" />
           <StatusField label="Order Status" />
-          <TextField source="receivedAt" label="Date Placed" />
-          <TextField source="shippedAt" label="Date Returned" />
+          <SinceDateField source="receivedAt" label="Date Placed" />
+          <SinceDateField source="shippedAt" label="Date Returned" />
           <ProductItemsField source="productVariant.product.images" label="Items" />
-          <ViewEntityField entityPath="members" entityTab="account" source="id" label="Actions" />
+          <ViewEntityField entityPath="reservation" source="id" label="Actions" />
         </Datagrid>
       </Container>
     </>

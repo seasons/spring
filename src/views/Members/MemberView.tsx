@@ -1,4 +1,4 @@
-import { ComponentError } from "components"
+import { ComponentError, Spacer } from "components"
 import React from "react"
 import { Loading, useQueryWithStore } from "@seasons/react-admin"
 import { Redirect } from "react-router-dom"
@@ -56,36 +56,28 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
 
   return (
     <Container maxWidth={false}>
-      <Box py={2}>
-        <Header history={history} member={data} />
-        <Tabs
-          indicatorColor={"primary"}
-          onChange={handleTabsChange}
-          scrollButtons="auto"
-          value={currentTab}
-          variant="scrollable"
-        >
-          {tabs.map(tab => (
-            <Tab key={tab.value} label={tab.label} value={tab.value} className={classes.tab} />
-          ))}
-        </Tabs>
-        <Divider className={classes.divider} />
-        <Box mt={2}>
-          {currentTab === "account" && (
-            <AccountView {...props} basePath={`/members/${memberId}/account`} member={data} adminKey={adminStoreKey} />
-          )}
-          {currentTab === "personal" && (
-            <PersonalView
-              {...props}
-              basePath={`/members/${memberId}/personal`}
-              member={data}
-              adminKey={adminStoreKey}
-            />
-          )}
-          {currentTab === "history" && (
-            <HistoryView {...props} basePath={`/members/${memberId}/history`} member={data} />
-          )}
-        </Box>
+      <Header history={history} member={data} />
+      <Spacer mt={2} />
+      <Tabs
+        indicatorColor={"primary"}
+        onChange={handleTabsChange}
+        scrollButtons="auto"
+        value={currentTab}
+        variant="scrollable"
+      >
+        {tabs.map(tab => (
+          <Tab key={tab.value} label={tab.label} value={tab.value} className={classes.tab} />
+        ))}
+      </Tabs>
+      <Divider className={classes.divider} />
+      <Box mt={2}>
+        {currentTab === "account" && (
+          <AccountView {...props} basePath={`/members/${memberId}/account`} member={data} adminKey={adminStoreKey} />
+        )}
+        {currentTab === "personal" && (
+          <PersonalView {...props} basePath={`/members/${memberId}/personal`} member={data} adminKey={adminStoreKey} />
+        )}
+        {currentTab === "history" && <HistoryView {...props} basePath={`/members/${memberId}/history`} member={data} />}
       </Box>
     </Container>
   )

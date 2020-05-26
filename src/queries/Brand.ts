@@ -6,6 +6,7 @@ export default {
     fragment brand on Brand {
       id
       name
+      tier
       brandCode
       createdAt
       updatedAt
