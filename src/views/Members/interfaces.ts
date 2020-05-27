@@ -45,9 +45,8 @@ export interface NewMemberProps {
   firstName: memberEntryValue
   email: memberEntryValue
   lastName: memberEntryValue
-  password: memberEntryValue
-  confirmPassword: memberEntryValue
   phone: memberEntryValue
+  birthday: memberEntryValue
 }
 
 export interface MemberProps {

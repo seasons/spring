@@ -9,7 +9,7 @@ export const MEMBER_DETAIL_UPDATE = gql`
 `
 
 export const MEMBER_CREATE = gql`
-  mutation signupUser(
+  mutation signup(
     $email: String!
     $password: String!
     $firstName: String!

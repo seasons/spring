@@ -40,6 +40,7 @@ export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, hi
         hasShow={true}
         resource={"Customer"}
         basePath="/members"
+        sort={{ field: "id", order: "DESC" }}
       >
         <Datagrid>
           <FullNameField label="Name" />

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import { NewMemberProps } from "views/Members/interfaces"
+import { times, random } from "lodash"
+import { NewMemberProps, MemberViewProps } from "views/Members/interfaces"
 import styled from "styled-components"
-import { ComponentError } from "components/"
 import { Header } from "components/Header"
 import { makeStyles } from "@material-ui/styles"
 import * as Yup from "yup"
@@ -16,9 +16,14 @@ import {
   Grid,
   Select as muiSelect,
   TextField,
+  Snackbar,
+  Theme,
 } from "@material-ui/core"
 import { MEMBER_CREATE } from "../queries"
 import { useMutation } from "@apollo/react-hooks"
+import { Alert, Color } from "@material-ui/lab"
+import { Loader } from "components"
+
 const PHONE_PATTERN = "[0-9]{3}-[0-9]{3}-[0-9]{4}"
 
 const Card = styled(muiCard)`
@@ -37,7 +42,7 @@ export const Select = styled(muiSelect)`
   margin-top: 5px;
 `
 
-export const MemberCreate: React.FC = props => {
+export const MemberCreate: React.FC<MemberViewProps> = props => {
   const memberValues = {
     firstName: {
       label: "First Name",
@@ -60,20 +65,6 @@ export const MemberCreate: React.FC = props => {
       error: false,
       helperText: "This field is required",
     },
-    password: {
-      label: "Password",
-      type: "password",
-      value: "",
-      error: false,
-      helperText: "At least 8 characters, include uppercase letter and number",
-    },
-    confirmPassword: {
-      label: "Confirm Password",
-      type: "password",
-      value: "",
-      error: false,
-      helperText: "Passwords must match",
-    },
     phone: {
       label: "Phone",
       type: "tel",
@@ -81,31 +72,52 @@ export const MemberCreate: React.FC = props => {
       error: false,
       helperText: "This field is required, e.g 123-456-7890",
     },
+    birthday: {
+      label: "Birthday",
+      type: "date",
+      value: "1990-01-01",
+      error: false,
+      helperText: "This field is required",
+    },
   }
 
   const [values, setValues] = useState<NewMemberProps>(memberValues)
+
+  const [isSubmitting, setSubmitting] = useState(false)
   const [saveMember] = useMutation(MEMBER_CREATE)
 
-  const createMember = values => {
-    console.log("creating member with values", values)
+  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
+    show: false,
+    message: "",
+    status: "success",
+  })
 
+  const createMember = values => {
+    setSubmitting(true)
     saveMember({
       variables: {
-        email: values.email.value,
-        password: values.password.value,
         firstName: values.firstName.value,
         lastName: values.lastName.value,
+        email: values.email.value,
+        // generate random password with length of 16 characters, alphanumeric lowercase
+        password: times(16, () => random(35).toString(36)).join(""),
         details: {
           phoneNumber: values.phone.value,
+          birthday: values.birthday.value,
         },
       },
     })
-      .then(() => {
-        console.log(" member created!", values)
+      .then(resp => {
+        props.history.push(`/members`)
       })
       .catch(error => {
-        console.log("error saving member: , error")
-        return <ComponentError />
+        setSubmitting(false)
+        console.log("error saving member:", error)
+        toggleSnackbar({
+          show: true,
+          message: "Error creating member",
+          status: "error",
+        })
       })
   }
 
@@ -135,7 +147,7 @@ export const MemberCreate: React.FC = props => {
     }))
   }
 
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles<Theme>(theme => ({
     customError: {
       "& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline": {
         borderColor: "#f44336",
@@ -145,6 +157,12 @@ export const MemberCreate: React.FC = props => {
       },
       "& .MuiFormHelperText-root.Mui-error": {
         color: "#f44336",
+      },
+    },
+    cardHeader: {
+      backgroundColor: theme.palette.primary.dark,
+      "& .MuiTypography-h5": {
+        color: theme.palette.primary.contrastText,
       },
     },
   }))
@@ -191,27 +209,6 @@ export const MemberCreate: React.FC = props => {
           return false
         }
 
-      case "password":
-        try {
-          Yup.object()
-            .shape({
-              password: Yup.string()
-                .required("Required")
-                .min(8, "Must be at least 8 characters")
-                .max(20, "Must be no more than 20 characters")
-                .matches(/[A-Z]/, "Must include at least one uppercase letter")
-                .matches(/[a-z]/, "Must include at least one lowercase letter")
-                .matches(/1|2|3|4|5|6|7|8|9|0/, "Must include at least one number"),
-            })
-            .validateSync(objectToValidate)
-          return true
-        } catch (error) {
-          return false
-        }
-
-      case "confirmPassword":
-        return value === values.password.value
-
       case "email":
         try {
           Yup.object()
@@ -229,6 +226,14 @@ export const MemberCreate: React.FC = props => {
       default:
         return true
     }
+  }
+
+  const hideSnackbar = () => {
+    toggleSnackbar({
+      show: false,
+      message: "",
+      status: "success",
+    })
   }
 
   const classes = useStyles()
@@ -250,7 +255,7 @@ export const MemberCreate: React.FC = props => {
       />
       <Card>
         <form>
-          <CardHeader title="New Member" />
+          <CardHeader className={classes.cardHeader} title="New Member" />
           <Divider />
           <CardContent>
             <Grid container spacing={3}>
@@ -284,11 +289,21 @@ export const MemberCreate: React.FC = props => {
               onClick={() => createMember(values)}
               variant="contained"
             >
-              Save
+              {isSubmitting ? <Loader size={20} /> : "Create"}
             </Button>
           </CardActions>
         </form>
       </Card>
+      <Snackbar
+        open={snackbar.show}
+        autoHideDuration={6000}
+        onClose={hideSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={hideSnackbar} severity={snackbar.status}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Container>
   )
 }
