@@ -1,9 +1,17 @@
 import React from "react"
 
-export const LogoMark: React.FC = props => {
+interface LogoMarkProps {
+  width?: number
+  height?: number
+}
+
+export const LogoMark: React.FC<LogoMarkProps> = props => {
+  const width = props.width || "24"
+  const height = props.height || "24"
+
   return (
     <div {...props}>
-      <svg width="24" height="24" viewBox="0 0 24 24">
+      <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
         <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
           <g transform="translate(-568 -59)">
             <g transform="translate(568 59)">

@@ -54,14 +54,12 @@ const FlexBox = styled(Box)({
 const PreviousButton = styled(Button)({
   backgroundColor: "white",
   border: "1px solid #dddddd",
-  borderRadius: 4,
   height: BUTTON_HEIGHT,
   width: BUTTON_WIDTH,
 })
 
 const SubmitButton = styled(Button)({
   backgroundColor: "black",
-  borderRadius: 4,
   color: "white",
   height: BUTTON_HEIGHT,
   width: BUTTON_WIDTH,

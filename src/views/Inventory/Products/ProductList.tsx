@@ -1,22 +1,11 @@
 import { Header } from "components/Header"
-import { BrandField, ImagesField, ViewEntityField } from "fields"
+import { BrandField, CheckField, ImagesField, SinceDateField, ViewEntityField } from "fields"
 import React from "react"
-import {
-  Datagrid,
-  Filter,
-  List,
-  ReferenceArrayInput,
-  SelectArrayInput,
-  TextField,
-  TextInput,
-} from "@seasons/react-admin"
+import { Datagrid, Filter, List, TextField, TextInput } from "@seasons/react-admin"
 
 export const ProductFilter = props => (
   <Filter {...props}>
     <TextInput label="Search by name" source="name_contains" options={{ variant: "outlined" }} alwaysOn />
-    <ReferenceArrayInput label="Brands" source="brand" reference="Brand">
-      <SelectArrayInput optionText="name" />
-    </ReferenceArrayInput>
   </Filter>
 )
 
@@ -39,9 +28,11 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
     <List
       {...rest}
       filters={<ProductFilter />}
+      currentSort={{ field: "createdAt", order: "ASC" }}
       perPage={10}
       hasCreate={false}
       hasEdit={false}
+      exporter={false}
       hasList
       hasShow
       resource="Product"
@@ -51,7 +42,9 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         <TextField source="name" />
         <BrandField label="Brand Name" />
         <TextField source="category.name" label="Category Name" />
-        <ViewEntityField source="id" entityPath="products" label="Actions" />
+        <SinceDateField source="createdAt" label="Created" />
+        <CheckField source="status" value="Available" label="Published" />
+        <ViewEntityField source="id" entityPath="inventory/products" label="Actions" />
       </Datagrid>
     </List>
   </>

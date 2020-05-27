@@ -1,10 +1,10 @@
-import { Box } from "@material-ui/core"
+import { Container } from "@material-ui/core"
 import React, { useState } from "react"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
 
-import { BackButton, Spacer, Wizard } from "components"
+import { Spacer, Wizard } from "components"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
@@ -54,9 +54,7 @@ export const ProductCreate = props => {
   const productUpsertQueryData: ProductUpsertQuery = data
 
   return (
-    <Box mx={5}>
-      <Spacer mt={5} />
-      <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
+    <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit}>
         <Overview data={productUpsertQueryData} />
         <Variants createData={values} />
@@ -67,6 +65,6 @@ export const ProductCreate = props => {
         />
       </Wizard>
       <Spacer mt={9} />
-    </Box>
+    </Container>
   )
 }

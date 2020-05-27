@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { pick } from "lodash"
 
-import { BackButton, Spacer, Wizard } from "components"
+import { Spacer, Wizard } from "components"
 import { Overview } from "../Components"
 import { ProductEditQuery } from "generated/ProductEditQuery"
 import { PRODUCT_EDIT_QUERY } from "../queries"
@@ -77,8 +77,6 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
 
   return (
     <Container maxWidth={false}>
-      <Spacer mt={5} />
-      <BackButton title="Inventory" onClick={() => history.push("/inventory/products")} />
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
         <Overview data={data} product={data.product} />
       </Wizard>

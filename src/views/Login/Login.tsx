@@ -8,7 +8,8 @@ import { Form } from "react-final-form"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
 
-import { Box, Button, styled, Grid } from "@material-ui/core"
+import { Box, Button, Paper, styled, Grid } from "@material-ui/core"
+import { colors } from "theme"
 
 const LOG_IN = gql`
   mutation LogIn($email: String!, $password: String!) {
@@ -66,32 +67,44 @@ export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
   }
 
   return (
-    <Box maxWidth="400px" margin="100px auto">
-      <Form
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-        render={({ handleSubmit }) => (
-          <Box mx={5}>
-            <Grid container item justify="center">
-              <Logo color="black" mx="auto" my={2} />
-            </Grid>
-            <form {...props} onSubmit={handleSubmit}>
-              <div>
-                <TextField label="Email address" name="email" autoFocus />
-                <Spacer mt={1} />
-                <TextField label="Password" name="password" type="password" />
-              </div>
-              <Spacer mt={4} />
-              <SubmitButton size="large" type="submit" variant="contained" fullWidth>
-                Sign in
-              </SubmitButton>
-            </form>
-          </Box>
-        )}
-      />
-    </Box>
+    <Container>
+      <Box maxWidth="400px" margin="0 auto">
+        <Paper>
+          <Form
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+            render={({ handleSubmit }) => (
+              <Box mx={5} pb={3}>
+                <Grid container item justify="center">
+                  <Logo color="black" mx="auto" my={2} />
+                </Grid>
+                <form {...props} onSubmit={handleSubmit}>
+                  <div>
+                    <TextField label="Email address" name="email" autoFocus />
+                    <Spacer mt={1} />
+                    <TextField label="Password" name="password" type="password" />
+                  </div>
+                  <Spacer mt={4} />
+                  <SubmitButton size="large" type="submit" variant="contained" fullWidth>
+                    Sign in
+                  </SubmitButton>
+                </form>
+              </Box>
+            )}
+          />
+        </Paper>
+      </Box>
+    </Container>
   )
 }
+
+const Container = styled(Box)({
+  width: "100%",
+  height: "100%",
+  paddingTop: "100px",
+  backgroundColor: colors.black04,
+  position: "absolute",
+})
 
 const SubmitButton = styled(Button)({
   backgroundColor: "black",

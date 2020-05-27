@@ -6,7 +6,7 @@ import { Header as BaseHeader } from "components"
 import { MemberViewHeaderProps } from "./interfaces"
 
 export const Header: React.FunctionComponent<MemberViewHeaderProps> = ({ history, member }) => {
-  const memberSince = DateTime.fromISO(member.user.createdAt).toLocaleString(DateTime.DATETIME_MED)
+  const memberSince = DateTime.fromISO(member.user.createdAt).toLocaleString(DateTime.DATE_MED)
   const user = member.user
   const fullName = `${user.firstName} ${user.lastName}`
   return (

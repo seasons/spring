@@ -24,12 +24,12 @@ const Button = styled(MuiButton)`
 
 const LeafButton = styled(Button)`
   font-size: 16px;
+  padding-left: 0px;
 `
 
 const ListItem = styled(MuiListItem)`
   display: flex;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0 12px;
   margin-bottom: ${({ theme }) => theme.spacing(2)};
 `
 
@@ -75,19 +75,17 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
   let paddingLeft = 8
 
   if (depth > 0) {
-    paddingLeft = 32 + 8 * depth
+    paddingLeft = 8 * depth
   }
 
   const style = { paddingLeft }
   const Btn = depth > 0 ? LeafButton : Button
-  const key = Math.floor(Math.random() * Math.floor(10000))
 
   if (children) {
     return (
       <>
-        <ListItem key={key} disableGutters {...rest}>
-          <Btn onClick={handleToggle} style={style}>
-            {Icon && <Icon className={classes.icon} size="20" />}
+        <ListItem disableGutters key={title} {...rest} px={2}>
+          <Btn onClick={handleToggle} style={style} disableRipple>
             <span className={classes.title}>{title}</span>
             {open ? (
               <ExpandLessIcon fontSize="small" color="inherit" />
@@ -105,10 +103,9 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
   }
 
   return (
-    <ListItem key={key} {...rest} disableGutters>
-      <Btn component={RouterLink} to={href}>
-        {Icon && <Icon className={classes.icon} size="20" />}
-        {title}
+    <ListItem {...rest} disableGutters key={title} px={2}>
+      <Btn component={RouterLink} to={href} style={style} disableRipple>
+        <span className={classes.title}>{title}</span>
       </Btn>
       {Info && <Info />}
     </ListItem>

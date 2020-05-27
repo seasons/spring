@@ -1,5 +1,5 @@
-import { Box } from "@material-ui/core"
 import React from "react"
+import { Container } from "@material-ui/core"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
@@ -84,13 +84,13 @@ export const VariantEdit: React.FC<VariantEditProps> = props => {
   }
 
   return (
-    <Box mx={5}>
+    <Container maxWidth={false}>
       <Spacer mt={5} />
       <BackButton title={product.name} onClick={() => history.push(`/inventory/products/${product.id}`)} />
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
         <Variants variants={[productVariant]} />
       </Wizard>
       <Spacer mt={9} />
-    </Box>
+    </Container>
   )
 }

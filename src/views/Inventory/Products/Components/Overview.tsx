@@ -1,8 +1,8 @@
-import { Spacer } from "components"
+import { Header, Spacer } from "components"
 import React, { useState } from "react"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 
-import { Box, Grid, styled as muiStyled } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
 
 import materialsJSON from "data/materials.json"
 import { GeneralSection } from "./GeneralSection"
@@ -13,11 +13,11 @@ import {
   ProductUpsertQuery_productModels,
 } from "generated/ProductUpsertQuery"
 import { ProductEditQuery_product } from "generated/ProductEditQuery"
-import { Header } from "./Header"
 import { MetadataSection } from "./MetadataSection"
 import { PhotographySection } from "./PhotographySection"
 import { TagsSection } from "./TagsSection"
 import { ProductVariantsSection } from "./ProductVariantsSection"
+import { useLocation } from "react-router-dom"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -26,7 +26,7 @@ export interface OverviewProps {
 
 export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
   const [productType, setProductType] = useState("Top")
-
+  const location = useLocation()
   let sizes: any[] = []
   const baseSizes = ["XS", "S", "M", "L", "XL", "XXL"]
   switch (productType) {
@@ -68,9 +68,22 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
   const isEditing = !!product?.variants
 
   return (
-    <Box>
-      <ContainerGrid container spacing={5}>
-        <Header title={headerTitle} subtitle={headerSubtitle} />
+    <>
+      <Header
+        title={headerTitle}
+        subtitle={headerSubtitle}
+        breadcrumbs={[
+          {
+            title: "Products",
+            url: "/inventory/products",
+          },
+          {
+            title: headerTitle,
+            url: location.pathname,
+          },
+        ]}
+      />
+      <Grid container spacing={5}>
         <Grid item xs={4}>
           <PhotographySection imageURLs={imageURLs} numImages={4} />
         </Grid>
@@ -103,11 +116,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
             </>
           )}
         </Grid>
-      </ContainerGrid>
-    </Box>
+      </Grid>
+    </>
   )
 }
-
-const ContainerGrid = muiStyled(Grid)({
-  width: "100%",
-})
