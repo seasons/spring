@@ -10,6 +10,7 @@ import {
   ProductType,
   LetterSize,
   PhysicalProductStatus,
+  InventoryStatus,
 } from "./globalTypes"
 
 // ====================================================
@@ -177,6 +178,7 @@ export interface ProductEditQuery_product_variants_physicalProducts {
   id: string
   seasonsUID: string
   productStatus: PhysicalProductStatus
+  inventoryStatus: InventoryStatus
 }
 
 export interface ProductEditQuery_product_variants {

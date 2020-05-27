@@ -117,6 +117,7 @@ export const PRODUCT_EDIT_QUERY = gql`
           id
           seasonsUID
           productStatus
+          inventoryStatus
         }
       }
     }
