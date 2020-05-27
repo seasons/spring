@@ -14,7 +14,8 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core"
-import { DialogTitle, Spacer } from "components"
+import { DialogTitle, Loader, Spacer } from "components"
+import { PRODUCT_EDIT_QUERY } from "../../queries"
 import { UPDATE_PHYSICAL_PRODUCT } from "../../mutations"
 import { ProductEditQuery_product_variants_physicalProducts } from "generated/ProductEditQuery"
 
@@ -29,16 +30,28 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
   onClose,
   physicalProduct,
 }) => {
-  const [offloadMethod, setOffloadMethod] = useState("")
-  const [offloadNotes, setOffloadNotes] = useState("")
+  const [offloadMethod, setOffloadMethod] = useState(physicalProduct.offloadMethod || "")
+  const [offloadNotes, setOffloadNotes] = useState(physicalProduct.offloadNotes || "")
+  const [isMutating, setIsMutating] = useState(false)
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
   const onSave = async () => {
+    setIsMutating(true)
     const result = await updatePhysicalProduct({
       variables: {
         where: { id: physicalProduct.id },
-        data: { offloadMethod, offloadNotes },
+        data: {
+          inventoryStatus: "Offloaded",
+          offloadMethod,
+          offloadNotes,
+        },
       },
+      // refetchQueries: [{
+      //   query: PRODUCT_EDIT_QUERY
+      // }]
     })
+    console.log("RESULT:", result)
+    setIsMutating(false)
+    onClose?.()
   }
 
   const offloadMethods = [
@@ -49,7 +62,7 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
     { value: "Unknown", display: "Unknown" },
   ]
 
-  const shouldAllowSave = offloadMethod !== ""
+  const shouldAllowSave = !!offloadMethod
 
   return (
     <>
@@ -105,7 +118,7 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={onSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
-            Offload
+            {isMutating ? <Loader size={20} /> : "Offload"}
           </Button>
         </DialogActions>
       </Dialog>

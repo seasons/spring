@@ -13,6 +13,10 @@ export const UpdatePhysicalProductFragment = gql`
     offloadNotes
     productVariant {
       id
+      product {
+        id
+        status
+      }
     }
   }
 `

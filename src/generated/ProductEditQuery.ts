@@ -11,6 +11,7 @@ import {
   LetterSize,
   PhysicalProductStatus,
   InventoryStatus,
+  PhysicalProductOffloadMethod,
 } from "./globalTypes"
 
 // ====================================================
@@ -179,6 +180,8 @@ export interface ProductEditQuery_product_variants_physicalProducts {
   seasonsUID: string
   productStatus: PhysicalProductStatus
   inventoryStatus: InventoryStatus
+  offloadMethod: PhysicalProductOffloadMethod | null
+  offloadNotes: string | null
 }
 
 export interface ProductEditQuery_product_variants {

@@ -118,6 +118,8 @@ export const PRODUCT_EDIT_QUERY = gql`
           seasonsUID
           productStatus
           inventoryStatus
+          offloadMethod
+          offloadNotes
         }
       }
     }
