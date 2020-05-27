@@ -1,5 +1,4 @@
 import gql from "graphql-tag"
-import { ProductFragment } from "queries/Product"
 
 export const UpdateVariantFragment = gql`
   fragment UpdateVariant on ProductVariant {
