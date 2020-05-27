@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useQuery, useMutation } from "react-apollo"
 
 import {
   Button,
@@ -14,6 +15,7 @@ import {
   Typography,
 } from "@material-ui/core"
 import { DialogTitle, Spacer } from "components"
+import { UPDATE_PHYSICAL_PRODUCT } from "../../mutations"
 import { ProductEditQuery_product_variants_physicalProducts } from "generated/ProductEditQuery"
 
 interface OffloadPhysicalProductModalProps {
@@ -29,7 +31,15 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
 }) => {
   const [offloadMethod, setOffloadMethod] = useState("")
   const [offloadNotes, setOffloadNotes] = useState("")
-  const onSave = () => {}
+  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
+  const onSave = async () => {
+    const result = await updatePhysicalProduct({
+      variables: {
+        where: { id: physicalProduct.id },
+        data: { offloadMethod, offloadNotes },
+      },
+    })
+  }
 
   const offloadMethods = [
     { value: "SoldToUser", display: "Sold to user" },

@@ -58,16 +58,15 @@ export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant }) => {
         <Spacer mt={3} />
         <Box display="flex" flexDirection="column">
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Box display="flex">
-                <Text variant="h5" style={{ flexGrow: 1 }}>
-                  SUID
-                </Text>
-                <Spacer ml={2} />
-                <Text variant="h5" style={{ flexGrow: 1 }}>
-                  Inventory status
-                </Text>
-              </Box>
+            <Grid item xs={6}>
+              <Text variant="h5" style={{ flexGrow: 1 }}>
+                SUID
+              </Text>
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h5" style={{ flexGrow: 1 }}>
+                Inventory status
+              </Text>
             </Grid>
             {variant.physicalProducts?.map(
               (physicalProduct: ProductEditQuery_product_variants_physicalProducts, index) => (

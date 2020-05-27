@@ -9,6 +9,8 @@ export const UpdatePhysicalProductFragment = gql`
     productStatus
     seasonsUID
     unitCost
+    offloadMethod
+    offloadNotes
     productVariant {
       id
     }
