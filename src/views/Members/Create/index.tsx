@@ -4,6 +4,7 @@ import { NewMemberProps, MemberViewProps } from "views/Members/interfaces"
 import styled from "styled-components"
 import { Header } from "components/Header"
 import { makeStyles } from "@material-ui/styles"
+import InputMask from "react-input-mask"
 import * as Yup from "yup"
 import {
   Container,
@@ -260,6 +261,32 @@ export const MemberCreate: React.FC<MemberViewProps> = props => {
           <CardContent>
             <Grid container spacing={3}>
               {Object.keys(memberValues).map(key => {
+                if (key === "phone") {
+                  return (
+                    <Grid item md={6} xs={12} key={key}>
+                      <InputMask
+                        mask="999-999-9999"
+                        value={values[key].value}
+                        onChange={handleFieldChange}
+                        onBlur={handleFieldBlur}
+                      >
+                        {inputProps => (
+                          <TextField
+                            {...inputProps}
+                            type="tel"
+                            className={values[key].error ? classes.customError : ""}
+                            fullWidth
+                            label={values[key].label}
+                            variant="outlined"
+                            error={values[key].error}
+                            helperText={values[key].error ? values[key].helperText : ""}
+                            name={key}
+                          />
+                        )}
+                      </InputMask>
+                    </Grid>
+                  )
+                }
                 return (
                   <Grid item md={6} xs={12} key={key}>
                     <TextField
@@ -272,7 +299,6 @@ export const MemberCreate: React.FC<MemberViewProps> = props => {
                       onBlur={handleFieldBlur}
                       value={values[key].value}
                       variant="outlined"
-                      inputProps={key === "phone" ? { pattern: PHONE_PATTERN } : {}}
                       error={values[key].error}
                       helperText={values[key].error ? values[key].helperText : ""}
                     />
