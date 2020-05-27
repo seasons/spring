@@ -15,7 +15,6 @@ import {
   Typography,
 } from "@material-ui/core"
 import { DialogTitle, Loader, Spacer } from "components"
-import { PRODUCT_EDIT_QUERY } from "../../queries"
 import { UPDATE_PHYSICAL_PRODUCT } from "../../mutations"
 import { ProductEditQuery_product_variants_physicalProducts } from "generated/ProductEditQuery"
 
@@ -45,13 +44,12 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
           offloadNotes,
         },
       },
-      // refetchQueries: [{
-      //   query: PRODUCT_EDIT_QUERY
-      // }]
     })
     console.log("RESULT:", result)
     setIsMutating(false)
-    onClose?.()
+    if (result?.data) {
+      onClose?.()
+    }
   }
 
   const offloadMethods = [

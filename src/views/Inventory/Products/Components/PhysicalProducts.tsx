@@ -83,10 +83,14 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
           />
         ))}
         <Spacer mt={2} />
-        <Text variant="h5" opacity={0.5}>
-          Note: Submission may take a while so please be patient. You will be redirected upon completion.
-        </Text>
-        <Spacer mt={8} />
+        {!isEditing && (
+          <>
+            <Text variant="h5" opacity={0.5}>
+              Note: Submission may take a while so please be patient. You will be redirected upon completion.
+            </Text>
+            <Spacer mt={8} />
+          </>
+        )}
       </ContainerGrid>
     </Box>
   )

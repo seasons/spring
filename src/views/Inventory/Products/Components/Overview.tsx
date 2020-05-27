@@ -117,10 +117,10 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
           />
           <Spacer mt={6} />
           <TagsSection materials={materials} tags={tags} />
-          {isEditing && (
+          {isEditing && product && (
             <>
               <Spacer mt={6} />
-              <ProductVariantsSection variants={product?.variants || []} />
+              <ProductVariantsSection productID={product.id} variants={product?.variants || []} />
               <Spacer mt={6} />
             </>
           )}

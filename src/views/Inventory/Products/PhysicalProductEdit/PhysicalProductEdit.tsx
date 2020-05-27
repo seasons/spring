@@ -1,15 +1,18 @@
 import { Box } from "@material-ui/core"
-import React from "react"
+import { styled as muiStyled } from "@material-ui/core/styles"
+import React, { useState } from "react"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 
-import { BackButton, Spacer, Wizard } from "components"
+import { BackButton, Spacer, Text, Wizard } from "components"
 import { PhysicalProducts } from "../Components"
+import { OffloadPhysicalProductModal } from "./Components"
 import { PhysicalProductEditQuery, PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { PHYSICAL_PRODUCT_EDIT_QUERY } from "../queries"
 import { getDateISOString, getLocaleDateString } from "../utils"
+import { colors } from "theme/colors"
 
 export interface PhysicalProductEditProps {}
 
@@ -20,9 +23,19 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
     variables: { where: { id: physicalProductID } },
   })
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
+  const [openOffloadPhysicalProductModal, setOpenOffloadPhysicalProductModal] = useState(false)
 
   if (loading || error || !data) {
     return <Loading />
+  }
+
+  const onCloseOffloadPhysicalProductModal = () => {
+    setOpenOffloadPhysicalProductModal(false)
+    history.push(`/inventory/product/variants/${physicalProduct.productVariant.id}`)
+  }
+
+  const onClickOffloadPhysicalProduct = () => {
+    setOpenOffloadPhysicalProductModal(true)
   }
 
   const { physicalProduct }: { physicalProduct: PhysicalProductEditQuery_physicalProduct } = data
@@ -57,7 +70,7 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   const physicalProductEditQueryData: PhysicalProductEditQuery = data
 
   return (
-    <Box mx={5}>
+    <Box mx={5} display="flex" flexDirection="column">
       <Spacer mt={5} />
       <BackButton
         title={physicalProduct.seasonsUID}
@@ -70,7 +83,43 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
           physicalProducts={[physicalProduct]}
         />
       </Wizard>
+      {physicalProduct.inventoryStatus !== "Offloaded" && (
+        <>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            borderRadius={10}
+            px={2}
+            py={1}
+            width={50}
+            bgcolor={colors.black100}
+            style={{ cursor: "pointer" }}
+            onClick={onClickOffloadPhysicalProduct}
+          >
+            <Text variant="h6" color={colors.white100}>
+              Offload
+            </Text>
+          </Box>
+          <Spacer mt={5} />
+        </>
+      )}
       <Spacer mt={9} />
+      {openOffloadPhysicalProductModal && physicalProduct && (
+        <OffloadPhysicalProductModal
+          open={openOffloadPhysicalProductModal}
+          onClose={onCloseOffloadPhysicalProductModal}
+          physicalProduct={physicalProduct}
+        />
+      )}
     </Box>
   )
 }
+
+export const ActionBox = muiStyled(Box)({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: 20,
+  cursor: "pointer",
+})
