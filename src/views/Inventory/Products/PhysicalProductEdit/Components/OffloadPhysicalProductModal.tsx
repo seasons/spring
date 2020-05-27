@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useQuery, useMutation } from "react-apollo"
+import { useMutation } from "react-apollo"
 
 import {
   Button,
@@ -45,7 +45,6 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
         },
       },
     })
-    console.log("RESULT:", result)
     setIsMutating(false)
     if (result?.data) {
       onClose?.()
@@ -63,63 +62,61 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
   const shouldAllowSave = !!offloadMethod
 
   return (
-    <>
-      <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
-          Offload physical product
-        </DialogTitle>
-        <DialogContent dividers>
-          <Box display="flex" flexDirection="column" width={550}>
-            <Box display="flex" height="30px">
-              <Box flexGrow={1}>
-                <Typography variant="body1" color="textSecondary">
-                  {physicalProduct.seasonsUID}
-                </Typography>
-              </Box>
+    <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
+      <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
+        Offload physical product
+      </DialogTitle>
+      <DialogContent dividers>
+        <Box display="flex" flexDirection="column" width={550}>
+          <Box display="flex" height="30px">
+            <Box flexGrow={1}>
+              <Typography variant="body1" color="textSecondary">
+                {physicalProduct.seasonsUID}
+              </Typography>
             </Box>
-            <Spacer mt={1} />
-
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel id="demo-simple-select-outlined-label">Offload method</InputLabel>
-              <Select
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
-                value={offloadMethod}
-                onChange={e => {
-                  setOffloadMethod(e.target.value as string)
-                }}
-                label="Offload method"
-                fullWidth
-              >
-                {offloadMethods.map((method, index) => (
-                  <MenuItem value={method.value} key={index}>
-                    {method.display}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Spacer mt={2} />
-            <TextField
-              label="Notes"
-              name="notes"
-              type="text"
-              variant="outlined"
-              onChange={e => {
-                setOffloadNotes(e.target.value as string)
-              }}
-              value={offloadNotes}
-              rows={4}
-              fullWidth
-              multiline
-            />
           </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={onSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
-            {isMutating ? <Loader size={20} /> : "Offload"}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+          <Spacer mt={1} />
+
+          <FormControl variant="outlined" fullWidth>
+            <InputLabel id="demo-simple-select-outlined-label">Offload method</InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              value={offloadMethod}
+              onChange={e => {
+                setOffloadMethod(e.target.value as string)
+              }}
+              label="Offload method"
+              fullWidth
+            >
+              {offloadMethods.map((method, index) => (
+                <MenuItem value={method.value} key={index}>
+                  {method.display}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Spacer mt={2} />
+          <TextField
+            label="Notes"
+            name="notes"
+            type="text"
+            variant="outlined"
+            onChange={e => {
+              setOffloadNotes(e.target.value as string)
+            }}
+            value={offloadNotes}
+            rows={4}
+            fullWidth
+            multiline
+          />
+        </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button autoFocus onClick={onSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
+          {isMutating ? <Loader size={20} /> : "Offload"}
+        </Button>
+      </DialogActions>
+    </Dialog>
   )
 }

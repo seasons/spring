@@ -25,7 +25,6 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   if (loading || error || !data) {
     return <Loading />
   }
-  console.log("DATA:", data)
 
   const onSubmit = async values => {
     const updateProductData = getProductUpdateData(values)

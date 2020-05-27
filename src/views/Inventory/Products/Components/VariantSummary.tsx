@@ -13,11 +13,10 @@ import { OffloadPhysicalProductModal } from "../PhysicalProductEdit/Components"
 import { colors } from "theme/colors"
 
 export interface VariantSummaryProps {
-  productID: string
   variant: ProductEditQuery_product_variants
 }
 
-export const VariantSummary: React.FC<VariantSummaryProps> = ({ productID, variant }) => {
+export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant }) => {
   const history = useHistory()
   const [openOffloadPhysicalProductModal, setOpenOffloadPhysicalProductModal] = useState(false)
   const [offloadPhysicalProduct, setOffloadPhysicalProduct] = useState<
@@ -26,6 +25,7 @@ export const VariantSummary: React.FC<VariantSummaryProps> = ({ productID, varia
 
   const onCloseOffloadPhysicalProductModal = () => {
     setOpenOffloadPhysicalProductModal(false)
+    setOffloadPhysicalProduct(undefined)
   }
 
   const onClickView = () => {
