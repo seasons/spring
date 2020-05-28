@@ -2,8 +2,7 @@ import { StatusField } from "fields"
 import React, { useState } from "react"
 import { Datagrid, TextField } from "@seasons/react-admin"
 import moment from "moment"
-import { Button as muiButton, Grid, Theme, Typography, Snackbar } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
+import { Box, Card, Button as muiButton, Grid, Typography, Snackbar } from "@material-ui/core"
 import { MemberSubViewProps, ActionButtonsProps } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
 import { PersonalDetails } from "./PersonalDetails"
@@ -16,12 +15,6 @@ import { RefundInvoiceModal } from "./RefundInvoice"
 import { Alert, Color } from "@material-ui/lab"
 
 const STATUS_REFUNDED = "Refunded"
-
-const useStyles = makeStyles<Theme>(theme => ({
-  root: {
-    padding: theme.spacing(5),
-  },
-}))
 
 const BtnIcon = styled(OpenInNewIcon)`
   font-size: 18px;
@@ -61,7 +54,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handl
 // it is defined dynamically in MemberView.tsx and used by leaf components to optimistically update state
 // after executing a mutation.
 export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ member, adminKey, match }) => {
-  const classes = useStyles()
   const [issueRefund] = useMutation(MEMBER_INVOICE_REFUND)
   const [refundModalIsOpen, setRefundModalOpen] = useState(false)
 
@@ -152,9 +144,13 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
     })
   }
 
+  const rowStyle = () => ({
+    height: "50px",
+  })
+
   return (
     <>
-      <Grid className={classes.root} container spacing={3}>
+      <Grid container spacing={3}>
         <Grid item lg={6} md={6} xl={6} xs={12}>
           <PersonalDetails adminKey={adminKey} member={member} />
         </Grid>
@@ -165,15 +161,18 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
           <Typography component="h1" variant="h3">
             Invoices
           </Typography>
-          <Datagrid ids={invoicesIds} data={stateInvoices} currentSort={defaultSort}>
-            <TextField source="id" label="Invoice ID" />
-            <TextField source="subscriptionId" label="Subscription ID" />
-            <StatusField label="Status" />
-            <TextField source="closingDateNormalized" label="Closing Date" />
-            <TextField source="dueDateNormalized" label="Due date" />
-            <TextField source="amountNormalized" label="Amount" />
-            <ActionButtons label="Actions" handleAction={record => handleRefundModalOpen(record)} />
-          </Datagrid>
+          <Box m={3}></Box>
+          <Card style={{ width: "100%" }}>
+            <Datagrid rowStyle={rowStyle} ids={invoicesIds} data={stateInvoices} currentSort={defaultSort}>
+              <TextField source="id" label="Invoice ID" />
+              <TextField source="subscriptionId" label="Subscription ID" />
+              <StatusField label="Status" />
+              <TextField source="closingDateNormalized" label="Closing Date" />
+              <TextField source="dueDateNormalized" label="Due date" />
+              <TextField source="amountNormalized" label="Amount" />
+              <ActionButtons label="Actions" handleAction={record => handleRefundModalOpen(record)} />
+            </Datagrid>
+          </Card>
         </Grid>
       </Grid>
       <RefundInvoiceModal
