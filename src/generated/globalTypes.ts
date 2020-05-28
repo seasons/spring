@@ -1968,7 +1968,7 @@ export interface ProductVariantCreateWithoutProductInput {
 
 export interface ProductVariantSKUsInput {
   brandID: string
-  colorID: string
+  colorCode: string
   sizeNames: string[]
 }
 
@@ -2874,26 +2874,26 @@ export interface UpsertPhysicalProductInput {
 }
 
 export interface UpsertProductInput {
-  name: string
-  images: any[]
+  architecture?: string | null
+  bottomSizeType?: BottomSizeType | null
   brandID: string
   categoryID: string
-  type: ProductType
+  colorCode: string
   description: string
-  modelID: string
-  retailPrice: number
-  modelSizeName: string
-  modelSizeDisplay: string
-  bottomSizeType?: BottomSizeType | null
-  colorID: string
-  secondaryColorID?: string | null
-  tags: string[]
   functions: string[]
+  images: any[]
   innerMaterials: string[]
+  modelID: string
+  modelSizeDisplay: string
+  modelSizeName: string
+  name: string
   outerMaterials: string[]
+  retailPrice: number
+  season?: string | null
+  secondaryColorCode?: string | null
   status: ProductStatus
-  season: string
-  architecture: string
+  tags: string[]
+  type: ProductType
   variants: UpsertVariantInput[]
 }
 

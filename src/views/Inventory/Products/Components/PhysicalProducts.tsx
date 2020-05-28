@@ -1,14 +1,10 @@
 import React from "react"
-import { getEnumValues, getFormSelectChoices } from "utils/form"
+import { getFormSelectChoices } from "utils/form"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import {
-  PhysicalProductEditQuery_inventoryStatuses,
-  PhysicalProductEditQuery_physicalProductStatuses,
-  PhysicalProductEditQuery_physicalProduct,
-} from "generated/PhysicalProductEditQuery"
+import { PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"
 import { Header } from "./Header"
 import { PhysicalProductSection } from "./PhysicalProductSection"
 
@@ -83,10 +79,14 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
           />
         ))}
         <Spacer mt={2} />
-        <Text variant="h5" opacity={0.5}>
-          Note: Submission may take a while so please be patient. You will be redirected upon completion.
-        </Text>
-        <Spacer mt={8} />
+        {!isEditing && (
+          <>
+            <Text variant="h5" opacity={0.5}>
+              Note: Submission may take a while so please be patient. You will be redirected upon completion.
+            </Text>
+            <Spacer mt={8} />
+          </>
+        )}
       </ContainerGrid>
     </Box>
   )

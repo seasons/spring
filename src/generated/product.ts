@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { ProductStatus } from "./globalTypes"
+
 // ====================================================
 // GraphQL fragment: product
 // ====================================================
@@ -35,4 +37,5 @@ export interface product {
   updatedAt: any
   brand: product_brand
   category: product_category
+  status: ProductStatus | null
 }
