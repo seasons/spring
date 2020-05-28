@@ -84,6 +84,8 @@ export interface MemberProps {
 export interface MemberSubViewProps {
   adminKey?: string
   member: MemberProps
+
+  match?: { params: { id: string } }
 }
 
 export interface MemberViewProps {
@@ -93,6 +95,7 @@ export interface MemberViewProps {
 }
 
 export interface CreateMemberProps {
+  history: History
   open: boolean
   onClose: () => void
 }

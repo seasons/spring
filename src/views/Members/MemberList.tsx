@@ -4,18 +4,12 @@ import React, { useState } from "react"
 import { Datagrid, List, TextField } from "@seasons/react-admin"
 
 import { Card, Container } from "@material-ui/core"
-
+import { MemberViewProps } from "views/Members/interfaces"
 import { MemberFilter } from "./MemberFilter"
 
 import { MemberCreateModal } from "./MemberCreate"
 
-export interface MemberListProps {
-  history: any
-  match: any
-  props?: any
-}
-
-export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, history, props }) => {
+export const MemberList: React.FC<MemberViewProps> = ({ match, history, props }) => {
   const [openEdit, setOpenEdit] = useState(false)
   const createNewMember = () => {
     setOpenEdit(true)
@@ -64,7 +58,7 @@ export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, hi
         </List>
       </Card>
 
-      <MemberCreateModal onClose={handleEditClose} open={openEdit} />
+      <MemberCreateModal onClose={handleEditClose} open={openEdit} history={history} />
     </Container>
   )
 }

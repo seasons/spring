@@ -60,7 +60,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handl
 // adminKey is the name of the property in Redux's admin store that holds the data we need to update.
 // it is defined dynamically in MemberView.tsx and used by leaf components to optimistically update state
 // after executing a mutation.
-export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ member, adminKey }) => {
+export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ member, adminKey, match }) => {
   const classes = useStyles()
   const [issueRefund] = useMutation(MEMBER_INVOICE_REFUND)
   const [refundModalIsOpen, setRefundModalOpen] = useState(false)

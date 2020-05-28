@@ -17,7 +17,7 @@ export const MEMBER_CREATE = gql`
     $details: CustomerDetailCreateInput!
   ) {
     signup(email: $email, password: $password, firstName: $firstName, lastName: $lastName, details: $details) {
-      user {
+      customer {
         id
       }
     }

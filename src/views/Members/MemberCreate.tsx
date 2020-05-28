@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { times, random } from "lodash"
 import { NewMemberProps, CreateMemberProps } from "views/Members/interfaces"
 import styled from "styled-components"
@@ -40,7 +40,7 @@ export const Select = styled(muiSelect)`
   margin-top: 5px;
 `
 
-export const MemberCreateModal: React.FC<CreateMemberProps> = ({ open, onClose }) => {
+export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, onClose }) => {
   const memberValues = {
     firstName: {
       label: "First Name",
@@ -105,7 +105,7 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ open, onClose }
       },
     })
       .then(resp => {
-        onClose()
+        history.push(`/members/${resp.data.signup.customer.id}/account`)
       })
       .catch(error => {
         setSubmitting(false)
