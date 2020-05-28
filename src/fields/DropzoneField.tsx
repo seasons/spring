@@ -45,7 +45,7 @@ export const DropzoneField: React.FC<DropzoneFieldProps> = ({ imageURL = "", nam
               />
               {imagePreview ? (
                 <Box justifyContent="center" alignItems="center">
-                  <img src={imagePreview} alt="Preview" style={{ minWidth: "100%", minHeight: "100%" }} />
+                  <img src={imagePreview} alt="Preview" style={{ height: 500, objectFit: "cover" }} />
                 </Box>
               ) : (
                 <>
