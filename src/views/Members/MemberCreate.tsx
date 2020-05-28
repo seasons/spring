@@ -1,13 +1,11 @@
 import React, { useState } from "react"
 import { times, random } from "lodash"
-import { NewMemberProps, MemberViewProps } from "views/Members/interfaces"
+import { NewMemberProps, CreateMemberProps } from "views/Members/interfaces"
 import styled from "styled-components"
-import { Header } from "components/Header"
 import { makeStyles } from "@material-ui/styles"
 import InputMask from "react-input-mask"
 import * as Yup from "yup"
 import {
-  Container,
   Button,
   Card as muiCard,
   CardActions as muiCardActions,
@@ -19,17 +17,16 @@ import {
   TextField,
   Snackbar,
   Theme,
+  Modal,
 } from "@material-ui/core"
-import { MEMBER_CREATE } from "../queries"
+import { MEMBER_CREATE } from "./queries"
 import { useMutation } from "@apollo/react-hooks"
 import { Alert, Color } from "@material-ui/lab"
 import { Loader } from "components"
 
-const PHONE_PATTERN = "[0-9]{3}-[0-9]{3}-[0-9]{4}"
-
 const Card = styled(muiCard)`
   width: 700px;
-  margin: 100px auto;
+  margin: 200px auto;
   outline: none;
   box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14),
     0px 8px 38px 7px rgba(0, 0, 0, 0.12);
@@ -43,7 +40,7 @@ export const Select = styled(muiSelect)`
   margin-top: 5px;
 `
 
-export const MemberCreate: React.FC<MemberViewProps> = props => {
+export const MemberCreateModal: React.FC<CreateMemberProps> = ({ open, onClose }) => {
   const memberValues = {
     firstName: {
       label: "First Name",
@@ -83,7 +80,6 @@ export const MemberCreate: React.FC<MemberViewProps> = props => {
   }
 
   const [values, setValues] = useState<NewMemberProps>(memberValues)
-
   const [isSubmitting, setSubmitting] = useState(false)
   const [saveMember] = useMutation(MEMBER_CREATE)
 
@@ -109,7 +105,7 @@ export const MemberCreate: React.FC<MemberViewProps> = props => {
       },
     })
       .then(resp => {
-        props.history.push(`/members`)
+        onClose()
       })
       .catch(error => {
         setSubmitting(false)
@@ -239,21 +235,12 @@ export const MemberCreate: React.FC<MemberViewProps> = props => {
 
   const classes = useStyles()
 
+  if (!open) {
+    return null
+  }
+
   return (
-    <Container maxWidth={false}>
-      <Header
-        title=""
-        breadcrumbs={[
-          {
-            title: "Members",
-            url: "/members",
-          },
-          {
-            title: `New`,
-            url: `/members/new`,
-          },
-        ]}
-      />
+    <Modal onClose={onClose} open={open}>
       <Card>
         <form>
           <CardHeader className={classes.cardHeader} title="New Member" />
@@ -319,17 +306,17 @@ export const MemberCreate: React.FC<MemberViewProps> = props => {
             </Button>
           </CardActions>
         </form>
+        <Snackbar
+          open={snackbar.show}
+          autoHideDuration={6000}
+          onClose={hideSnackbar}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert onClose={hideSnackbar} severity={snackbar.status}>
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
       </Card>
-      <Snackbar
-        open={snackbar.show}
-        autoHideDuration={6000}
-        onClose={hideSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={hideSnackbar} severity={snackbar.status}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </Container>
+    </Modal>
   )
 }

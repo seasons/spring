@@ -92,6 +92,11 @@ export interface MemberViewProps {
   props?: any
 }
 
+export interface CreateMemberProps {
+  open: boolean
+  onClose: () => void
+}
+
 export interface MemberViewHeaderProps extends MemberSubViewProps {
   history: History
 }
