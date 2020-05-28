@@ -8,10 +8,8 @@ export const splitTitleCase = str => {
   let sanitized = ""
   for (const c in str) {
     const letter = str[c]
-    if (letter.codePointAt() < 91) {
-      if (c !== "0") {
-        sanitized += " "
-      }
+    if (letter.codePointAt() < 91 && c !== "0") {
+      sanitized += " "
     }
     sanitized += letter
   }

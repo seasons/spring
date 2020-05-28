@@ -247,7 +247,7 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
           <Divider />
           <CardContent>
             <Grid container spacing={3}>
-              {Object.keys(memberValues).map(key => {
+              {Object.keys(memberValues).map((key, index) => {
                 if (key === "phone") {
                   return (
                     <Grid item md={6} xs={12} key={key}>
@@ -277,6 +277,7 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
                 return (
                   <Grid item md={6} xs={12} key={key}>
                     <TextField
+                      autoFocus={index === 0}
                       className={values[key].error ? classes.customError : ""}
                       fullWidth
                       label={values[key].label}
