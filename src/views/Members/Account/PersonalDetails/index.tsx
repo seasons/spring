@@ -4,7 +4,7 @@ import moment from "moment"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { MembershipPlanOptions, MemberStatusOptions } from "../../Member.types"
-
+import { splitTitleCase } from "utils/strings"
 import { useMutation } from "@apollo/react-hooks"
 import { Card, Table, TableBody, TableCell, TableRow, Box } from "@material-ui/core"
 
@@ -33,7 +33,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
 
     const customer = {
       status: values.status.value,
-      plan: values.plan.value,
+      plan: values.plan.value.replace(/\s/g, ""),
     }
 
     updateDetails({
@@ -73,7 +73,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
       options: MemberStatusOptions,
     },
     plan: {
-      value: member.plan,
+      value: splitTitleCase(member.plan),
       options: MembershipPlanOptions,
     },
     email: {
@@ -115,7 +115,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
             </TableRow>
             <TableRow selected>
               <TableCell>Membership</TableCell>
-              <TableCell>{member.plan}</TableCell>
+              <TableCell>{splitTitleCase(member.plan)}</TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow selected>

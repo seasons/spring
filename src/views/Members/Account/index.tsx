@@ -1,12 +1,13 @@
 import { StatusField } from "fields"
+import { makeStyles } from "@material-ui/styles"
 import React, { useState } from "react"
 import { Datagrid, TextField } from "@seasons/react-admin"
 import moment from "moment"
-import { Box, Card, Button as muiButton, Grid, Typography, Snackbar } from "@material-ui/core"
+import { Card, Button as muiButton, Grid, CardHeader, Divider, Snackbar, Theme } from "@material-ui/core"
 import { MemberSubViewProps, ActionButtonsProps } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
 import { PersonalDetails } from "./PersonalDetails"
-import { centsToAmount } from "utils/strings"
+import { centsToAmount, splitTitleCase } from "utils/strings"
 import OpenInNewIcon from "@material-ui/icons/OpenInNew"
 import styled from "styled-components"
 import { MEMBER_INVOICE_REFUND } from "../queries"
@@ -24,6 +25,14 @@ const BtnIcon = styled(OpenInNewIcon)`
 const Button = styled(muiButton)`
   margin-right: 10px;
 `
+
+const useStyles = makeStyles<Theme>(theme => ({
+  cardHeader: {
+    "& .MuiTypography-h5": {
+      fontSize: "20px",
+    },
+  },
+}))
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handleAction }) => {
   const domain = process.env.NODE_ENV === "production" ? "seasons" : "seasons-test"
@@ -56,6 +65,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handl
 export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ member, adminKey, match }) => {
   const [issueRefund] = useMutation(MEMBER_INVOICE_REFUND)
   const [refundModalIsOpen, setRefundModalOpen] = useState(false)
+  const classes = useStyles()
 
   const [invoiceToRefund, setInvoiceToRefund] = useState({
     id: "",
@@ -75,7 +85,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
 
   member?.invoices?.forEach(inv => {
     inv.status = inv.creditNotes[0]?.status === STATUS_REFUNDED ? STATUS_REFUNDED : inv.status
-    inv.tooltipText = inv.creditNotes[0]?.reasonCode
+    inv.tooltipText = splitTitleCase(inv.creditNotes[0]?.reasonCode)
     inv.closingDateNormalized = moment(inv.closingDate).format("MM/DD/YYYY")
     inv.dueDateNormalized = moment(inv.dueDate).format("MM/DD/YYYY")
     inv.amountNormalized = centsToAmount(inv.amount)
@@ -100,7 +110,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
       refundAmount: input.amount,
       comment: input.comment,
       customerNotes: input.customerNotes,
-      reasonCode: input.reasonCode,
+      reasonCode: input.reasonCode.replace(/\s/g, ""),
     }
 
     issueRefund({
@@ -158,11 +168,9 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
           <PaymentShipping adminKey={adminKey} member={member} />
         </Grid>
         <Grid item lg={12} md={12} xl={12} xs={12}>
-          <Typography component="h1" variant="h3">
-            Invoices
-          </Typography>
-          <Box m={3}></Box>
           <Card style={{ width: "100%" }}>
+            <CardHeader className={classes.cardHeader} title="Invoices" />
+            <Divider />
             <Datagrid rowStyle={rowStyle} ids={invoicesIds} data={stateInvoices} currentSort={defaultSort}>
               <TextField source="id" label="Invoice ID" />
               <TextField source="subscriptionId" label="Subscription ID" />

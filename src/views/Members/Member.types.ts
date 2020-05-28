@@ -1,4 +1,4 @@
-export const MembershipPlanOptions = ["AllAccess", "Essential"]
+export const MembershipPlanOptions = ["All Access", "Essential"]
 
 export const MemberStatusOptions = [
   "Invited",
@@ -12,10 +12,10 @@ export const MemberStatusOptions = [
 ]
 
 export const CreditNoteReasonCode = [
-  "ProductUnsatisfactory",
-  "ServiceUnsatisfactory",
-  "OrderChange",
-  "OrderCancellation",
+  "Product Unsatisfactory",
+  "Service Unsatisfactory",
+  "Order Change",
+  "Order Cancellation",
   "Waiver",
   "Other",
 ]
