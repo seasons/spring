@@ -1,11 +1,22 @@
 import { Header } from "components/Header"
 import { BrandField, CheckField, ImagesField, SinceDateField, ViewEntityField } from "fields"
 import React from "react"
-import { Datagrid, Filter, List, TextField, TextInput } from "@seasons/react-admin"
+import { Datagrid, Filter, List, SelectInput, TextField, TextInput } from "@seasons/react-admin"
 
 export const ProductFilter = props => (
   <Filter {...props}>
     <TextInput label="Search by name" source="name_contains" options={{ variant: "outlined" }} alwaysOn />
+    <SelectInput
+      label="Publish status"
+      source="status"
+      choices={[
+        { id: "Available", name: "Published" },
+        { id: "NotAvailable", name: "Not Published" },
+        { id: "Stored", name: "Stored" },
+        { id: "Offloaded", name: "Offloaded" },
+      ]}
+      alwaysOn
+    />
   </Filter>
 )
 
