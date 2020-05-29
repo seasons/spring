@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import Carousel from "react-images"
-import { useForm, useFormState } from "react-final-form"
+import { useForm } from "react-final-form"
 
 import { Box, Grid } from "@material-ui/core"
 
@@ -17,7 +17,6 @@ export const PhotographySection: React.FC<PhotographySectionProps> = ({ imageURL
   const {
     mutators: { setValue },
   } = useForm()
-  const { values } = useFormState()
   const [imagePreviews, setImagePreviews] = useState<any[]>([...Array(numImages)].map((_, index) => imageURLs?.[index]))
 
   const onReceivedImages = (images: File[], offset: number) => {
@@ -30,7 +29,6 @@ export const PhotographySection: React.FC<PhotographySectionProps> = ({ imageURL
     setImagePreviews(newImagePreviews)
   }
 
-  console.log("VALUES:", values)
   const filteredImagePreviews = imagePreviews.filter(Boolean)
 
   return (
