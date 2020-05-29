@@ -5,19 +5,32 @@ import { useDropzone } from "react-dropzone"
 import { FormControl, Spacer, Text } from "components"
 import { Field, ChildFieldProps } from "./Field"
 import { UploadFileIcon } from "icons"
+import { colors } from "theme/colors"
 
 export type DropzoneFieldProps = ChildFieldProps & {
-  imageURL?: string
+  index: number
+  imagePreview?: string
+  onReceivedImages: (images: File[], offset: number) => void
 }
 
-export const DropzoneField: React.FC<DropzoneFieldProps> = ({ imageURL = "", name, ...rest }) => {
-  const [imagePreview, setImagePreview] = useState(imageURL)
-  const onDrop = useCallback(acceptedFiles => {
-    if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0]
-      setImagePreview(URL.createObjectURL(file))
-    }
-  }, [])
+const CONTAINER_HEIGHT = 80
+
+export const DropzoneField: React.FC<DropzoneFieldProps> = ({
+  index,
+  imagePreview,
+  name,
+  onReceivedImages,
+  ...rest
+}) => {
+  const onDrop = useCallback(
+    acceptedFiles => {
+      // If multiple files were uploaded, update images starting
+      // at index 0, otherwise just update the current index
+      const offset = acceptedFiles.length > 1 ? 0 : index
+      onReceivedImages(acceptedFiles, offset)
+    },
+    [index, onReceivedImages]
+  )
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
   const inputProps = getInputProps()
 
@@ -32,6 +45,7 @@ export const DropzoneField: React.FC<DropzoneFieldProps> = ({ imageURL = "", nam
               flexDirection="column"
               justifyContent="center"
               alignItems="center"
+              mx={1}
               {...getRootProps()}
             >
               <input
@@ -40,22 +54,15 @@ export const DropzoneField: React.FC<DropzoneFieldProps> = ({ imageURL = "", nam
                   if (inputProps.onChange) {
                     inputProps.onChange(event)
                   }
-                  onChange(event.target.files?.[0])
                 }}
               />
               {imagePreview ? (
                 <Box justifyContent="center" alignItems="center">
-                  <img src={imagePreview} alt="Preview" style={{ minWidth: "100%", minHeight: "100%" }} />
+                  <img src={imagePreview} alt="Preview" style={{ height: CONTAINER_HEIGHT, objectFit: "contain" }} />
                 </Box>
               ) : (
                 <>
-                  <UploadFileIcon />
-                  <Spacer mt={2} />
-                  <Text variant="h6">Select files to upload</Text>
-                  <Spacer mt={0.5} />
-                  <Text variant="h6" opacity={0.5}>
-                    or drag and drop, copy and paste files
-                  </Text>
+                  <UploadFileIcon height={33} width={33} />
                 </>
               )}
             </Wrapper>
@@ -68,7 +75,7 @@ export const DropzoneField: React.FC<DropzoneFieldProps> = ({ imageURL = "", nam
 }
 
 const Wrapper = styled(Box)({
-  background: "#f6f6f6",
+  background: colors.white95,
   borderRadius: 4,
-  height: 500,
+  height: CONTAINER_HEIGHT,
 })
