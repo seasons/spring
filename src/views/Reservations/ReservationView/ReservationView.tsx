@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { useQueryWithStore, Loading } from "@seasons/react-admin"
+import React, { useState } from "react"
+import { useQueryWithStore, Loading, useRefresh } from "@seasons/react-admin"
 import { Container, Box, Typography, Grid, Snackbar } from "@material-ui/core"
 import { Header } from "components/Header"
 import { ReservationInfo } from "./Components/ReservationInfo"
@@ -15,20 +15,30 @@ import { useMutation, ExecutionResult } from "react-apollo"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 import { ProductGrid } from "./Components/ProductGrid"
 import { PickingModal } from "./Components/PickingModal/PickingModal"
-import { GetReservation } from "generated/GetReservation"
 
 export const ReservationView = ({ match, history }) => {
   const { id } = match.params
   const [mode, setMode] = useState("grid")
   const [showModal, toggleModal] = useState(false)
 
+  const refresh = useRefresh()
   const { data, loading, error } = useQueryWithStore({
     type: "getOne",
     resource: "Reservation",
     payload: { id },
   })
 
-  const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(PROCESS_RESERVATION)
+  const [isMutating, setIsMutating] = useState(false)
+  const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(PROCESS_RESERVATION, {
+    onCompleted: () => {
+      setIsMutating(false)
+      refresh()
+    },
+    onError: () => {
+      setIsMutating(false)
+      refresh()
+    },
+  })
   const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED)
 
   const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
@@ -139,12 +149,15 @@ export const ReservationView = ({ match, history }) => {
         open={showModal}
         onClose={() => toggleModal(false)}
         reservation={data}
+        disableButton={isMutating}
         onSave={async productStates => {
+          setIsMutating(true)
           try {
             let result: ExecutionResult<any> | null = null
             let message = ``
             if (isReservationUnfulfilled) {
               result = await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
+              setIsMutating(false)
               message = "Reservation status successfully set to Picked"
             } else {
               const mutationData: ProcessReservationMutationVariables = {
@@ -155,6 +168,7 @@ export const ReservationView = ({ match, history }) => {
               }
 
               result = await processReservation({ variables: mutationData })
+              setIsMutating(false)
               message = "Returned items successfully processed"
             }
 
