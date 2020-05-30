@@ -27,7 +27,7 @@ export const ProductItemsField: React.FC<imagesFieldIfc> = ({ record, source, la
     <Box>
       {images.map(image => {
         const { url } = image
-        return <Image key={image.id} src={url} width={85} height={107} alt={image.filename} />
+        return <Image key={image.url} src={url} width={85} height={107} alt={image.filename} />
       })}
     </Box>
   )

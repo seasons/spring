@@ -1,4 +1,5 @@
 import { History } from "history"
+import { customer } from "generated/customer"
 
 interface billingInfo {
   id: string
@@ -84,6 +85,7 @@ export interface MemberProps {
 export interface MemberSubViewProps {
   adminKey?: string
   member: MemberProps
+  // member: customer
 
   match?: { params: { id: string } }
 }
