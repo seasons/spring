@@ -8,7 +8,7 @@ export const splitTitleCase = str => {
   let sanitized = ""
   for (const c in str) {
     const letter = str[c]
-    if (letter.codePointAt() < 91 && c !== "0") {
+    if (letter === letter.toUpperCase() && c !== "0") {
       sanitized += " "
     }
     sanitized += letter

@@ -125,9 +125,3 @@ interface invoice {
   amount: number
   amountNormalized: string
 }
-
-export interface ActionButtonsProps {
-  record?: { id: string; status: string }
-  label?: string
-  handleAction: (record: {}) => void
-}

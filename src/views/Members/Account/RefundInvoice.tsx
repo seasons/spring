@@ -4,37 +4,19 @@ import { RefundInvoiceModalProps } from "views/Members/interfaces"
 import { CreditNoteReasonCode } from "../Member.types"
 
 import {
+  Box,
   Button,
-  Card as muiCard,
-  CardActions as muiCardActions,
-  CardContent,
-  CardHeader,
-  Divider,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
-  Modal,
   Select as muiSelect,
+  Dialog,
+  DialogContent,
+  DialogActions,
   TextField,
 } from "@material-ui/core"
-
-export const Card = styled(muiCard)`
-  top: 50%;
-  left: 50%;
-  width: 700px;
-  outline: none;
-  position: absolute;
-  max-width: 100%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14),
-    0px 8px 38px 7px rgba(0, 0, 0, 0.12);
-  max-height: 100%;
-  overflow-y: auto;
-`
-export const CardActions = styled(muiCardActions)`
-  justify-content: flex-end;
-`
+import { DialogTitle } from "components"
 
 export const Select = styled(muiSelect)`
   margin-top: 5px;
@@ -79,90 +61,87 @@ export const RefundInvoiceModal: React.FunctionComponent<RefundInvoiceModalProps
   }
 
   return (
-    <Modal onClose={onClose} open={open}>
-      <Card>
-        <form>
-          <CardHeader title={title} />
-          <Divider />
-          <CardContent>
-            <Grid container spacing={3}>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="ID"
-                  name="ID"
-                  type="text"
-                  onChange={handleFieldChange}
-                  value={values.id}
-                  disabled={true}
-                  variant="outlined"
-                />
-              </Grid>
+    <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
+      <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
+        {title}
+      </DialogTitle>
+      <DialogContent dividers>
+        <Grid container spacing={3}>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              label="ID"
+              name="ID"
+              type="text"
+              onChange={handleFieldChange}
+              value={values.id}
+              disabled={true}
+              variant="outlined"
+            />
+          </Grid>
 
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Amount"
-                  name="Amount"
-                  type="text"
-                  onChange={handleFieldChange}
-                  value={values.amountNormalized}
-                  disabled={true}
-                  variant="outlined"
-                />
-              </Grid>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              label="Amount"
+              name="Amount"
+              type="text"
+              onChange={handleFieldChange}
+              value={values.amountNormalized}
+              disabled={true}
+              variant="outlined"
+            />
+          </Grid>
 
-              <Grid item md={6} xs={12}>
-                <FormControl variant="outlined" fullWidth>
-                  <InputLabel id="reasonCode">Reason Code</InputLabel>
-                  <Select id="reasonCode" name="reasonCode" value={values.reasonCode} onChange={handleFieldChange}>
-                    {CreditNoteReasonCode.map(option => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
+          <Grid item md={6} xs={12}>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel id="reasonCode">Reason Code</InputLabel>
+              <Select id="reasonCode" name="reasonCode" value={values.reasonCode} onChange={handleFieldChange}>
+                {CreditNoteReasonCode.map(option => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
 
-              <Grid item md={6} xs={12}></Grid>
+          <Grid item md={6} xs={12}></Grid>
 
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Customer Notes"
-                  name="customerNotes"
-                  multiline
-                  rows={4}
-                  onChange={handleFieldChange}
-                  value={values.customerNotes}
-                  variant="outlined"
-                />
-              </Grid>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              label="Customer Notes"
+              name="customerNotes"
+              multiline
+              rows={4}
+              onChange={handleFieldChange}
+              value={values.customerNotes}
+              variant="outlined"
+            />
+          </Grid>
 
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Comment"
-                  name="comment"
-                  multiline
-                  rows={4}
-                  onChange={handleFieldChange}
-                  value={values.comment}
-                  variant="outlined"
-                />
-              </Grid>
-            </Grid>
-          </CardContent>
-          <Divider />
-          <CardActions>
-            <Button onClick={onClose}>Close</Button>
-            <Button color="primary" onClick={() => onSave(values)} variant="contained">
-              Save
-            </Button>
-          </CardActions>
-        </form>
-      </Card>
-    </Modal>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              label="Comment"
+              name="comment"
+              multiline
+              rows={4}
+              onChange={handleFieldChange}
+              value={values.comment}
+              variant="outlined"
+            />
+          </Grid>
+        </Grid>
+      </DialogContent>
+      <DialogActions>
+        <Box mr={3} my={1}>
+          <Button autoFocus onClick={() => onSave(values)} color="primary" variant="contained">
+            Issue Refund
+          </Button>
+        </Box>
+      </DialogActions>
+    </Dialog>
   )
 }

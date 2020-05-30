@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/styles"
 import React, { useState } from "react"
 import { Datagrid, TextField } from "@seasons/react-admin"
 import moment from "moment"
-import { Card, Button as muiButton, Grid, CardHeader, Divider, Snackbar, Theme } from "@material-ui/core"
-import { MemberSubViewProps, ActionButtonsProps } from "../interfaces"
+import { Box, Card, Button, Grid, CardHeader, Divider, Snackbar, Theme } from "@material-ui/core"
+import { MemberSubViewProps } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
 import { PersonalDetails } from "./PersonalDetails"
 import { centsToAmount, splitTitleCase } from "utils/strings"
@@ -22,17 +22,19 @@ const BtnIcon = styled(OpenInNewIcon)`
   padding-left: 5px;
 `
 
-const Button = styled(muiButton)`
-  margin-right: 10px;
-`
-
-const useStyles = makeStyles<Theme>(theme => ({
+const useStyles = makeStyles<Theme>(() => ({
   cardHeader: {
     "& .MuiTypography-h5": {
       fontSize: "20px",
     },
   },
 }))
+
+interface ActionButtonsProps {
+  record?: { id: string; status: string }
+  label?: string
+  handleAction: (record: {}) => void
+}
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handleAction }) => {
   const domain = process.env.NODE_ENV === "production" ? "seasons" : "seasons-test"
@@ -41,9 +43,11 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handl
   return (
     <>
       <a href={invoiceURL} target="_blank" rel="noopener noreferrer">
-        <Button color="primary" size="small" variant="outlined">
-          View <BtnIcon />
-        </Button>
+        <Box component="span" mr={2}>
+          <Button color="primary" size="small" variant="outlined">
+            View <BtnIcon />
+          </Button>
+        </Box>
       </a>
 
       <Button
