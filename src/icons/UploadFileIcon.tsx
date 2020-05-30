@@ -1,8 +1,15 @@
 import React from "react"
 
-export const UploadFileIcon: React.FC = props => {
+export interface UploadFileIconProps {
+  height?: number
+  width?: number
+}
+
+export const UploadFileIcon: React.FC<UploadFileIconProps> = ({ height, width }) => {
+  const finalWidth = width || 66
+  const finalHeight = height || 66
   return (
-    <svg width={66} height={66} viewBox="0 0 66 66" {...props}>
+    <svg width={finalWidth} height={finalHeight} viewBox="0 0 66 66">
       <title>{"Group"}</title>
       <g transform="translate(1 1)" fill="none" fillRule="evenodd">
         <circle stroke="#D4D4D4" fill="#F6F6F6" cx={32} cy={32} r={32} />

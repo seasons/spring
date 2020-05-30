@@ -1,11 +1,12 @@
-import React from "react"
+import React, { useState } from "react"
 import { Container } from "@material-ui/core"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { pick } from "lodash"
 
-import { Spacer, Wizard } from "components"
+import { Snackbar, Spacer, Wizard } from "components"
+import { SnackbarState } from "components/Snackbar"
 import { Overview } from "../Components"
 import { ProductEditQuery } from "generated/ProductEditQuery"
 import { PRODUCT_EDIT_QUERY } from "../queries"
@@ -16,11 +17,24 @@ export interface ProductEditProps {}
 
 export const ProductEdit: React.FC<ProductEditProps> = props => {
   const history = useHistory()
+  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
+    show: false,
+    message: "",
+    status: "success",
+  })
   const { productID } = useParams()
   const { data, loading, error } = useQuery(PRODUCT_EDIT_QUERY, {
     variables: { input: { id: productID } },
   })
-  const [updateProduct] = useMutation(UPDATE_PRODUCT)
+  const [updateProduct] = useMutation(UPDATE_PRODUCT, {
+    onError: error => {
+      toggleSnackbar({
+        show: true,
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
 
   if (loading || error || !data) {
     return <Loading />
@@ -58,12 +72,12 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
       architecture: product.architecture,
       brand: product.brand.id,
       category: product.category.id,
-      color: product.color.id,
+      color: product.color.colorCode,
       functions: product.functions?.map(func => func.name),
       model: product.model?.id,
       modelSize: product.modelSize?.display,
       productType: product.type,
-      secondaryColor: product.secondaryColor?.id,
+      secondaryColor: product.secondaryColor?.colorCode,
       sizes: availableSizes,
       tags: product.tags.map(tag => tag.name),
       ...pick(product, ["description", "name", "innerMaterials", "outerMaterials", "retailPrice", "season", "status"]),
@@ -81,6 +95,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
         <Overview data={data} product={data.product} />
       </Wizard>
       <Spacer mt={9} />
+      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

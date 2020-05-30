@@ -45,7 +45,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ isEditin
                 <Spacer mt={1} />
                 <TextField
                   disabled={field === "SKU"}
-                  type="number"
+                  type={field === "SKU" ? "text" : "number"}
                   name={`${size}_${field.toLowerCase()}`}
                   initialValue={field === "SKU" ? sku : undefined}
                   requiredNumber={!optionalFields.includes(field)}

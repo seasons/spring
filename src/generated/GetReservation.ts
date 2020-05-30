@@ -95,6 +95,7 @@ export interface GetReservation_products_warehouseLocation {
 
 export interface GetReservation_products_productVariant_product_brand {
   __typename: "Brand"
+  id: string
   name: string
 }
 
@@ -130,6 +131,7 @@ export interface GetReservation_products_productVariant_product {
 
 export interface GetReservation_products_productVariant {
   __typename: "ProductVariant"
+  id: string
   product: GetReservation_products_productVariant_product
 }
 
