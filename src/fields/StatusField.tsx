@@ -12,8 +12,8 @@ export interface StatusFieldProps {
 
 const DarkTooltip = withStyles(theme => ({
   tooltip: {
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.primary.contrastText,
+    // backgroundColor: theme.palette.primary.dark,
+    // color: theme.palette.primary.contrastText,
     boxShadow: theme.shadows[1],
     fontSize: 11,
   },

@@ -8,6 +8,7 @@ import { MemberSubViewProps } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
 import { PersonalDetails } from "./PersonalDetails"
 import { centsToAmount, splitTitleCase } from "utils/strings"
+import { formatChargebeeInvoiceURL } from "utils/url"
 import OpenInNewIcon from "@material-ui/icons/OpenInNew"
 import styled from "styled-components"
 import { MEMBER_INVOICE_REFUND } from "../queries"
@@ -37,12 +38,9 @@ interface ActionButtonsProps {
 }
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handleAction }) => {
-  const domain = process.env.NODE_ENV === "production" ? "seasons" : "seasons-test"
-  const invoiceURL = `https://${domain}.chargebee.com/d/invoices/${record.id}`
-
   return (
     <>
-      <a href={invoiceURL} target="_blank" rel="noopener noreferrer">
+      <a href={formatChargebeeInvoiceURL(record.id)} target="_blank" rel="noopener noreferrer">
         <Box component="span" mr={2}>
           <Button color="primary" size="small" variant="outlined">
             View <BtnIcon />

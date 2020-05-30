@@ -1,44 +1,16 @@
 import React, { useState } from "react"
 import { times, random } from "lodash"
 import { NewMemberProps, CreateMemberProps } from "views/Members/interfaces"
-import styled from "styled-components"
 import { makeStyles } from "@material-ui/styles"
 import InputMask from "react-input-mask"
 import * as Yup from "yup"
-import {
-  Button,
-  Card as muiCard,
-  CardActions as muiCardActions,
-  CardContent,
-  CardHeader,
-  Divider,
-  Grid,
-  Select as muiSelect,
-  TextField,
-  Snackbar,
-  Theme,
-  Modal,
-} from "@material-ui/core"
+import { DialogTitle } from "components"
+import { Button, Box, Dialog, DialogContent, DialogActions, Grid, TextField, Snackbar, Theme } from "@material-ui/core"
 import { MEMBER_CREATE } from "./queries"
 import { useMutation } from "@apollo/react-hooks"
 import { Alert, Color } from "@material-ui/lab"
 import { Loader } from "components"
-
-const Card = styled(muiCard)`
-  width: 700px;
-  margin: 200px auto;
-  outline: none;
-  box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14),
-    0px 8px 38px 7px rgba(0, 0, 0, 0.12);
-`
-
-export const CardActions = styled(muiCardActions)`
-  justify-content: flex-end;
-`
-
-export const Select = styled(muiSelect)`
-  margin-top: 5px;
-`
+import { colors } from "theme"
 
 export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, onClose }) => {
   const memberValues = {
@@ -147,13 +119,13 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
   const useStyles = makeStyles<Theme>(theme => ({
     customError: {
       "& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline": {
-        borderColor: "#f44336",
+        borderColor: colors.red500,
       },
       "& .MuiFormLabel-root.Mui-error": {
-        color: "#f44336",
+        color: colors.red500,
       },
       "& .MuiFormHelperText-root.Mui-error": {
-        color: "#f44336",
+        color: colors.red500,
       },
     },
     cardHeader: {
@@ -240,63 +212,63 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
   }
 
   return (
-    <Modal onClose={onClose} open={open}>
-      <Card>
-        <form>
-          <CardHeader className={classes.cardHeader} title="New Member" />
-          <Divider />
-          <CardContent>
-            <Grid container spacing={3}>
-              {Object.keys(memberValues).map((key, index) => {
-                if (key === "phone") {
-                  return (
-                    <Grid item md={6} xs={12} key={key}>
-                      <InputMask
-                        mask="999-999-9999"
-                        value={values[key].value}
-                        onChange={handleFieldChange}
-                        onBlur={handleFieldBlur}
-                      >
-                        {inputProps => (
-                          <TextField
-                            {...inputProps}
-                            type="tel"
-                            className={values[key].error ? classes.customError : ""}
-                            fullWidth
-                            label={values[key].label}
-                            variant="outlined"
-                            error={values[key].error}
-                            helperText={values[key].error ? values[key].helperText : ""}
-                            name={key}
-                          />
-                        )}
-                      </InputMask>
-                    </Grid>
-                  )
-                }
+    <>
+      <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
+          New Member
+        </DialogTitle>
+        <DialogContent dividers>
+          <Grid container spacing={3}>
+            {Object.keys(memberValues).map((key, index) => {
+              if (key === "phone") {
                 return (
                   <Grid item md={6} xs={12} key={key}>
-                    <TextField
-                      autoFocus={index === 0}
-                      className={values[key].error ? classes.customError : ""}
-                      fullWidth
-                      label={values[key].label}
-                      name={key}
-                      type={values[key].type}
+                    <InputMask
+                      mask="999-999-9999"
+                      value={values[key].value}
                       onChange={handleFieldChange}
                       onBlur={handleFieldBlur}
-                      value={values[key].value}
-                      variant="outlined"
-                      error={values[key].error}
-                      helperText={values[key].error ? values[key].helperText : ""}
-                    />
+                    >
+                      {inputProps => (
+                        <TextField
+                          {...inputProps}
+                          type="tel"
+                          className={values[key].error ? classes.customError : ""}
+                          fullWidth
+                          label={values[key].label}
+                          variant="outlined"
+                          error={values[key].error}
+                          helperText={values[key].error ? values[key].helperText : ""}
+                          name={key}
+                        />
+                      )}
+                    </InputMask>
                   </Grid>
                 )
-              })}
-            </Grid>
-          </CardContent>
-          <Divider />
-          <CardActions>
+              }
+              return (
+                <Grid item md={6} xs={12} key={key}>
+                  <TextField
+                    autoFocus={index === 0}
+                    className={values[key].error ? classes.customError : ""}
+                    fullWidth
+                    label={values[key].label}
+                    name={key}
+                    type={values[key].type}
+                    onChange={handleFieldChange}
+                    onBlur={handleFieldBlur}
+                    value={values[key].value}
+                    variant="outlined"
+                    error={values[key].error}
+                    helperText={values[key].error ? values[key].helperText : ""}
+                  />
+                </Grid>
+              )
+            })}
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Box mr={3} my={1}>
             <Button
               disabled={Object.keys(values).filter(key => values[key].error).length > 0}
               color="primary"
@@ -305,19 +277,19 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
             >
               {isSubmitting ? <Loader size={20} /> : "Create"}
             </Button>
-          </CardActions>
-        </form>
-        <Snackbar
-          open={snackbar.show}
-          autoHideDuration={6000}
-          onClose={hideSnackbar}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <Alert onClose={hideSnackbar} severity={snackbar.status}>
-            {snackbar.message}
-          </Alert>
-        </Snackbar>
-      </Card>
-    </Modal>
+          </Box>
+        </DialogActions>
+      </Dialog>
+      <Snackbar
+        open={snackbar.show}
+        autoHideDuration={6000}
+        onClose={hideSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={hideSnackbar} severity={snackbar.status}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </>
   )
 }

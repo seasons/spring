@@ -107,6 +107,7 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
     if (openMobile && onMobileClose) {
       onMobileClose()
     }
+    // eslint-disable-next-line
   }, [location.pathname])
 
   const signOut = () => {
