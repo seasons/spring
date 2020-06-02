@@ -55,6 +55,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         <TextField source="category.name" label="Category Name" />
         <SinceDateField source="createdAt" label="Created" />
         <CheckField source="status" value="Available" label="Published" />
+        <TextField source="photographyStatus" />
         <ViewEntityField source="id" entityPath="inventory/products" label="Actions" />
       </Datagrid>
     </List>
