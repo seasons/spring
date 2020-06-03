@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Form } from "react-final-form"
+import { Mutator, MutableState } from "final-form"
 
 import { ConfirmationDialog } from "components"
 import { WizardBottomNavBar } from "./WizardBottomNavBar"
@@ -60,11 +61,27 @@ export const Wizard: React.FC<WizardProps> = ({
     onSubmit(values)
   }
 
+  const setValue: Mutator = ([name, newValue], state, { changeValue }) => {
+    changeValue(state, name, value => newValue)
+  }
+
   const activePage = React.Children.toArray(children)[pageIndex]
   const isLastPage = pageIndex === React.Children.count(children) - 1
   return (
-    <Form initialValues={values} onSubmit={handleSubmit} subscription={{ submitting: true, pristine: true }}>
-      {({ handleSubmit, values: formValues, errors }) => {
+    <Form
+      initialValues={values}
+      onSubmit={handleSubmit}
+      subscription={{ submitting: true, pristine: true }}
+      mutators={{ setValue }}
+    >
+      {({
+        handleSubmit,
+        form: {
+          mutators: { setValue },
+        },
+        values: formValues,
+        errors,
+      }) => {
         return (
           <>
             <form onSubmit={handleSubmit}>

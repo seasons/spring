@@ -1981,7 +1981,7 @@ export interface ProductVariantCreateWithoutProductInput {
 
 export interface ProductVariantSKUsInput {
   brandID: string
-  colorID: string
+  colorCode: string
   sizeNames: string[]
 }
 

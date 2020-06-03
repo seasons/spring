@@ -50,6 +50,9 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
   const tags = data.tags.map(tag => tag?.name || "").sort()
+
+  const isEditing = !!product?.variants
+
   const statuses = [
     {
       value: "Available",
@@ -61,11 +64,17 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
     },
   ]
 
+  // Only show Offload status if editing product
+  if (isEditing) {
+    statuses.push({
+      value: "Offloaded",
+      display: "Offloaded",
+    })
+  }
+
   const headerTitle = product?.name || "New product"
   const headerSubtitle = product?.brand?.name || "Please fill out all required fields"
   const imageURLs = product?.images?.map(image => image?.url || "")
-
-  const isEditing = !!product?.variants
 
   return (
     <>
@@ -108,7 +117,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
           />
           <Spacer mt={6} />
           <TagsSection materials={materials} tags={tags} />
-          {isEditing && (
+          {isEditing && product && (
             <>
               <Spacer mt={6} />
               <ProductVariantsSection variants={product?.variants || []} />

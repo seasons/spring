@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { Error, useQueryWithStore, Loading, useRefresh } from "@seasons/react-admin"
-import { Container, Box, Typography, Grid, Snackbar } from "@material-ui/core"
-import { Header } from "components/Header"
+import { Container, Box, Typography, Grid } from "@material-ui/core"
+import { Header, Snackbar } from "components"
+import { SnackbarState } from "components/Snackbar"
 import { ReservationInfo } from "./Components/ReservationInfo"
 import { ProductCard } from "./Components/ProductCard"
 import ViewModuleIcon from "@material-ui/icons/ViewModule"
@@ -41,7 +42,7 @@ export const ReservationView = ({ match, history }) => {
   })
   const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED)
 
-  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
+  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
     status: "success",
@@ -62,7 +63,7 @@ export const ReservationView = ({ match, history }) => {
       message: error?.message,
       status: "error",
     })
-    return <div>{error?.message}</div>
+    return <Error />
   }
 
   const isReservationUnfulfilled = ["New", "InQueue", "OnHold", "Packed"].includes(data?.status)
@@ -196,16 +197,7 @@ export const ReservationView = ({ match, history }) => {
           }
         }}
       />
-      <Snackbar
-        open={snackbar.show}
-        autoHideDuration={6000}
-        onClose={hideSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={hideSnackbar} severity={snackbar.status}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )
 }

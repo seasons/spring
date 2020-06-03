@@ -4,7 +4,8 @@ import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
 
-import { Spacer, Wizard } from "components"
+import { Snackbar, Spacer, Wizard } from "components"
+import { SnackbarState } from "components/Snackbar"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
@@ -16,8 +17,21 @@ export interface ProductCreateProps {}
 export const ProductCreate = props => {
   const history = useHistory()
   const { data, loading, error } = useQuery(PRODUCT_UPSERT_QUERY)
-  const [upsertProduct] = useMutation(UPSERT_PRODUCT)
+  const [upsertProduct] = useMutation(UPSERT_PRODUCT, {
+    onError: error => {
+      toggleSnackbar({
+        show: true,
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
   const [values, setValues] = useState({})
+  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
+    show: false,
+    message: "",
+    status: "success",
+  })
 
   if (loading || error || !data) {
     return <Loading />
@@ -31,17 +45,13 @@ export const ProductCreate = props => {
   const onSubmit = async values => {
     // Extract appropriate values from the WizardForm
     const productUpsertData = getProductUpsertData(values)
-    try {
-      const result = await upsertProduct({
-        variables: {
-          input: productUpsertData,
-        },
-      })
-      if (result?.data) {
-        history.push("/inventory/products")
-      }
-    } catch (e) {
-      console.log("error:", e)
+    const result = await upsertProduct({
+      variables: {
+        input: productUpsertData,
+      },
+    })
+    if (result?.data) {
+      history.push("/inventory/products")
     }
   }
 
@@ -65,6 +75,7 @@ export const ProductCreate = props => {
         />
       </Wizard>
       <Spacer mt={9} />
+      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

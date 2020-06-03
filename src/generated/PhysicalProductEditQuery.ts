@@ -3,7 +3,13 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PhysicalProductWhereUniqueInput, InventoryStatus, PhysicalProductStatus } from "./globalTypes"
+import {
+  PhysicalProductWhereUniqueInput,
+  InventoryStatus,
+  PhysicalProductStatus,
+  PhysicalProductOffloadMethod,
+  ProductStatus,
+} from "./globalTypes"
 
 // ====================================================
 // GraphQL query operation: PhysicalProductEditQuery
@@ -29,9 +35,16 @@ export interface PhysicalProductEditQuery_physicalProductStatuses {
   enumValues: PhysicalProductEditQuery_physicalProductStatuses_enumValues[] | null
 }
 
+export interface PhysicalProductEditQuery_physicalProduct_productVariant_product {
+  __typename: "Product"
+  id: string
+  status: ProductStatus | null
+}
+
 export interface PhysicalProductEditQuery_physicalProduct_productVariant {
   __typename: "ProductVariant"
   id: string
+  product: PhysicalProductEditQuery_physicalProduct_productVariant_product
 }
 
 export interface PhysicalProductEditQuery_physicalProduct {
@@ -43,6 +56,8 @@ export interface PhysicalProductEditQuery_physicalProduct {
   productStatus: PhysicalProductStatus
   seasonsUID: string
   unitCost: number | null
+  offloadMethod: PhysicalProductOffloadMethod | null
+  offloadNotes: string | null
   productVariant: PhysicalProductEditQuery_physicalProduct_productVariant
 }
 

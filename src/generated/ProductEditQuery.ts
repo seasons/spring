@@ -10,6 +10,8 @@ import {
   ProductType,
   LetterSize,
   PhysicalProductStatus,
+  InventoryStatus,
+  PhysicalProductOffloadMethod,
 } from "./globalTypes"
 
 // ====================================================
@@ -116,6 +118,7 @@ export interface ProductEditQuery_product_category {
 export interface ProductEditQuery_product_color {
   __typename: "Color"
   id: string
+  colorCode: string
   name: string
 }
 
@@ -140,6 +143,7 @@ export interface ProductEditQuery_product_modelSize {
 export interface ProductEditQuery_product_secondaryColor {
   __typename: "Color"
   id: string
+  colorCode: string
   name: string
 }
 
@@ -175,6 +179,9 @@ export interface ProductEditQuery_product_variants_physicalProducts {
   id: string
   seasonsUID: string
   productStatus: PhysicalProductStatus
+  inventoryStatus: InventoryStatus
+  offloadMethod: PhysicalProductOffloadMethod | null
+  offloadNotes: string | null
 }
 
 export interface ProductEditQuery_product_variants {

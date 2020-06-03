@@ -3,15 +3,22 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { InventoryStatus, PhysicalProductStatus } from "./globalTypes"
+import { InventoryStatus, PhysicalProductStatus, PhysicalProductOffloadMethod, ProductStatus } from "./globalTypes"
 
 // ====================================================
 // GraphQL fragment: UpdatePhysicalProduct
 // ====================================================
 
+export interface UpdatePhysicalProduct_productVariant_product {
+  __typename: "Product"
+  id: string
+  status: ProductStatus | null
+}
+
 export interface UpdatePhysicalProduct_productVariant {
   __typename: "ProductVariant"
   id: string
+  product: UpdatePhysicalProduct_productVariant_product
 }
 
 export interface UpdatePhysicalProduct {
@@ -23,5 +30,7 @@ export interface UpdatePhysicalProduct {
   productStatus: PhysicalProductStatus
   seasonsUID: string
   unitCost: number | null
+  offloadMethod: PhysicalProductOffloadMethod | null
+  offloadNotes: string | null
   productVariant: UpdatePhysicalProduct_productVariant
 }
