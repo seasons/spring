@@ -85,8 +85,6 @@ export const VariantEdit: React.FC<VariantEditProps> = props => {
 
   return (
     <Container maxWidth={false}>
-      <Spacer mt={5} />
-      <BackButton title={product.name} onClick={() => history.push(`/inventory/products/${product.id}`)} />
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
         <Variants variants={[productVariant]} />
       </Wizard>

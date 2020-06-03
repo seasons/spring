@@ -74,7 +74,7 @@ export const ProductCreate = props => {
           physicalProductStatuses={productUpsertQueryData.physicalProductStatuses?.enumValues || []}
         />
       </Wizard>
-      <Spacer mt={9} />
+      <Spacer mt={18} />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
