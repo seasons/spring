@@ -17,6 +17,18 @@ export const ProductFilter = props => (
       ]}
       alwaysOn
     />
+    <SelectInput
+      label="Photography"
+      source="photographyStatus"
+      choices={[
+        { id: "Done", name: "Done" },
+        { id: "InProgress", name: "In progress" },
+        { id: "ReadyForEditing", name: "Ready for editing" },
+        { id: "ReadyToShoot", name: "Ready to shoot" },
+        { id: "Steam", name: "Steam" },
+      ]}
+      alwaysOn
+    />
   </Filter>
 )
 
@@ -55,7 +67,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         <TextField source="category.name" label="Category Name" />
         <SinceDateField source="createdAt" label="Created" />
         <CheckField source="status" value="Available" label="Published" />
-        <TextField source="photographyStatus" />
+        <TextField source="photographyStatus" label="Photography" />
         <ViewEntityField source="id" entityPath="inventory/products" label="Actions" />
       </Datagrid>
     </List>
