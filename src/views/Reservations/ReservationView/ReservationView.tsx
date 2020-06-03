@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useQueryWithStore, Loading, useRefresh } from "@seasons/react-admin"
+import { Error, useQueryWithStore, Loading, useRefresh } from "@seasons/react-admin"
 import { Container, Box, Typography, Grid, Snackbar } from "@material-ui/core"
 import { Header } from "components/Header"
 import { ReservationInfo } from "./Components/ReservationInfo"
@@ -55,16 +55,17 @@ export const ReservationView = ({ match, history }) => {
     return <Loading />
   }
 
-  if (error) {
+  if (error && !data) {
     console.error("Error: ", loading, error)
     toggleSnackbar({
       show: true,
       message: error?.message,
       status: "error",
     })
+    return <div>{error?.message}</div>
   }
 
-  const isReservationUnfulfilled = ["New", "InQueue", "OnHold", "Packed"].includes(data.status)
+  const isReservationUnfulfilled = ["New", "InQueue", "OnHold", "Packed"].includes(data?.status)
 
   const primaryButton = isReservationUnfulfilled
     ? {
@@ -86,6 +87,10 @@ export const ReservationView = ({ match, history }) => {
       message: "",
       status: "success",
     })
+  }
+
+  if (!data) {
+    return <></>
   }
 
   return (
