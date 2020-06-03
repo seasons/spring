@@ -1451,6 +1451,7 @@ export interface ProductCreateWithoutCategoryInput {
   status?: ProductStatus | null
   season?: string | null
   architecture?: ProductArchitecture | null
+  publishedAt?: any | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
   brand: BrandCreateOneWithoutProductsInput
@@ -1476,6 +1477,7 @@ export interface ProductCreateWithoutVariantsInput {
   status?: ProductStatus | null
   season?: string | null
   architecture?: ProductArchitecture | null
+  publishedAt?: any | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
   brand: BrandCreateOneWithoutProductsInput
@@ -1733,6 +1735,14 @@ export interface ProductScalarWhereInput {
   architecture_not?: ProductArchitecture | null
   architecture_in?: ProductArchitecture[] | null
   architecture_not_in?: ProductArchitecture[] | null
+  publishedAt?: any | null
+  publishedAt_not?: any | null
+  publishedAt_in?: any[] | null
+  publishedAt_not_in?: any[] | null
+  publishedAt_lt?: any | null
+  publishedAt_lte?: any | null
+  publishedAt_gt?: any | null
+  publishedAt_gte?: any | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -1769,6 +1779,7 @@ export interface ProductUpdateManyDataInput {
   status?: ProductStatus | null
   season?: string | null
   architecture?: ProductArchitecture | null
+  publishedAt?: any | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
 }
@@ -1813,6 +1824,7 @@ export interface ProductUpdateWithoutCategoryDataInput {
   status?: ProductStatus | null
   season?: string | null
   architecture?: ProductArchitecture | null
+  publishedAt?: any | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
   brand?: BrandUpdateOneRequiredWithoutProductsInput | null
@@ -1837,6 +1849,7 @@ export interface ProductUpdateWithoutVariantsDataInput {
   status?: ProductStatus | null
   season?: string | null
   architecture?: ProductArchitecture | null
+  publishedAt?: any | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
   brand?: BrandUpdateOneRequiredWithoutProductsInput | null
@@ -2874,26 +2887,26 @@ export interface UpsertPhysicalProductInput {
 }
 
 export interface UpsertProductInput {
-  name: string
-  images: any[]
+  architecture?: string | null
+  bottomSizeType?: BottomSizeType | null
   brandID: string
   categoryID: string
-  type: ProductType
+  colorCode: string
   description: string
-  modelID: string
-  retailPrice: number
-  modelSizeName: string
-  modelSizeDisplay: string
-  bottomSizeType?: BottomSizeType | null
-  colorID: string
-  secondaryColorID?: string | null
-  tags: string[]
   functions: string[]
+  images: any[]
   innerMaterials: string[]
+  modelID: string
+  modelSizeDisplay: string
+  modelSizeName: string
+  name: string
   outerMaterials: string[]
+  retailPrice: number
+  season?: string | null
+  secondaryColorCode?: string | null
   status: ProductStatus
-  season: string
-  architecture: string
+  tags: string[]
+  type: ProductType
   variants: UpsertVariantInput[]
 }
 

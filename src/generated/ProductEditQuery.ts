@@ -5,10 +5,10 @@
 
 import {
   ProductWhereUniqueInput,
-  LetterSize,
-  ProductArchitecture,
   ProductStatus,
+  ProductArchitecture,
   ProductType,
+  LetterSize,
   PhysicalProductStatus,
 } from "./globalTypes"
 
@@ -45,14 +45,6 @@ export interface ProductEditQuery_categories {
   name: string
 }
 
-export interface ProductEditQuery_colors {
-  __typename: "Color"
-  id: string
-  colorCode: string
-  hexCode: string
-  name: string
-}
-
 export interface ProductEditQuery_inventoryStatuses_enumValues {
   __typename: "__EnumValue"
   name: string
@@ -83,12 +75,6 @@ export interface ProductEditQuery_productArchitectures {
   enumValues: ProductEditQuery_productArchitectures_enumValues[] | null
 }
 
-export interface ProductEditQuery_productFunctions {
-  __typename: "ProductFunction"
-  id: string
-  name: string | null
-}
-
 export interface ProductEditQuery_productModels {
   __typename: "ProductModel"
   id: string
@@ -108,11 +94,6 @@ export interface ProductEditQuery_productTypes {
 export interface ProductEditQuery_tags {
   __typename: "Tag"
   name: string
-}
-
-export interface ProductEditQuery_topSizes {
-  __typename: "TopSize"
-  letter: LetterSize | null
 }
 
 export interface ProductEditQuery_product_images {
@@ -215,6 +196,7 @@ export interface ProductEditQuery_product {
   updatedAt: any
   brand: ProductEditQuery_product_brand
   category: ProductEditQuery_product_category
+  status: ProductStatus | null
   architecture: ProductArchitecture | null
   color: ProductEditQuery_product_color
   functions: ProductEditQuery_product_functions[] | null
@@ -224,7 +206,6 @@ export interface ProductEditQuery_product {
   outerMaterials: string[]
   season: string | null
   secondaryColor: ProductEditQuery_product_secondaryColor | null
-  status: ProductStatus | null
   tags: ProductEditQuery_product_tags[]
   type: ProductType | null
   variants: ProductEditQuery_product_variants[] | null
@@ -236,15 +217,12 @@ export interface ProductEditQuery {
   bottomSizeTypes: ProductEditQuery_bottomSizeTypes | null
   brands: (ProductEditQuery_brands | null)[]
   categories: (ProductEditQuery_categories | null)[]
-  colors: (ProductEditQuery_colors | null)[]
   inventoryStatuses: ProductEditQuery_inventoryStatuses | null
   physicalProductStatuses: ProductEditQuery_physicalProductStatuses | null
   productArchitectures: ProductEditQuery_productArchitectures | null
-  productFunctions: (ProductEditQuery_productFunctions | null)[]
   productModels: (ProductEditQuery_productModels | null)[]
   productTypes: ProductEditQuery_productTypes | null
   tags: (ProductEditQuery_tags | null)[]
-  topSizes: (ProductEditQuery_topSizes | null)[]
   product: ProductEditQuery_product | null
 }
 
