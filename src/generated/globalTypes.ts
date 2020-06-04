@@ -33,6 +33,32 @@ export enum BrandTier {
   Upcoming = "Upcoming",
 }
 
+export enum CreditNoteReasonCode {
+  OrderCancellation = "OrderCancellation",
+  OrderChange = "OrderChange",
+  Other = "Other",
+  ProductUnsatisfactory = "ProductUnsatisfactory",
+  ServiceUnsatisfactory = "ServiceUnsatisfactory",
+  SubscriptionChange = "SubscriptionChange",
+  Waiver = "Waiver",
+}
+
+export enum CreditNoteReasonCodeInput {
+  OrderCancellation = "OrderCancellation",
+  OrderChange = "OrderChange",
+  Other = "Other",
+  ProductUnsatisfactory = "ProductUnsatisfactory",
+  ServiceUnsatisfactory = "ServiceUnsatisfactory",
+  Waiver = "Waiver",
+}
+
+export enum CreditNoteStatus {
+  Adjusted = "Adjusted",
+  RefundDue = "RefundDue",
+  Refunded = "Refunded",
+  Voided = "Voided",
+}
+
 export enum CustomerStatus {
   Active = "Active",
   Authorized = "Authorized",
@@ -2308,6 +2334,14 @@ export interface ProductVariantWhereUniqueInput {
 export interface ProductWhereUniqueInput {
   id?: string | null
   slug?: string | null
+}
+
+export interface RefundInvoiceInput {
+  invoiceId: string
+  refundAmount?: number | null
+  comment?: string | null
+  customerNotes?: string | null
+  reasonCode?: CreditNoteReasonCodeInput | null
 }
 
 export interface ReservationCreateWithoutCustomerInput {

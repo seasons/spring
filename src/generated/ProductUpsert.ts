@@ -30,12 +30,6 @@ export interface ProductUpsert_brands {
   slug: string
 }
 
-export interface ProductUpsert_categories {
-  __typename: "Category"
-  id: string
-  name: string
-}
-
 export interface ProductUpsert_inventoryStatuses_enumValues {
   __typename: "__EnumValue"
   name: string
@@ -92,7 +86,6 @@ export interface ProductUpsert {
   bottomSizes: (ProductUpsert_bottomSizes | null)[]
   bottomSizeTypes: ProductUpsert_bottomSizeTypes | null
   brands: (ProductUpsert_brands | null)[]
-  categories: (ProductUpsert_categories | null)[]
   inventoryStatuses: ProductUpsert_inventoryStatuses | null
   physicalProductStatuses: ProductUpsert_physicalProductStatuses | null
   productArchitectures: ProductUpsert_productArchitectures | null
