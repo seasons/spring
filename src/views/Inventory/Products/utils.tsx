@@ -81,7 +81,10 @@ export const getProductUpsertData = (values: any) => {
   const numImages = 4
   const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
 
-  const modelSizeDisplay = getModelSizeDisplay(productType, modelSizeName, bottomSizeType)
+  let modelSizeDisplay
+  if (modelSizeName) {
+    modelSizeDisplay = getModelSizeDisplay(productType, modelSizeName, bottomSizeType)
+  }
 
   // Get dictionary of product variant SKUs to their sizes
   const skusToSizes = {}
