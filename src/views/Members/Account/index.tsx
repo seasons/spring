@@ -96,22 +96,19 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
       return
     }
 
-    // Types for invoice are dynamically generated from Monsoon schema. Thus we create a superset
-    // of the invoice object to hold our custom properties, used for rendering the invoice.
-    const normalizedInvoice: any = {
-      ...inv,
-    }
-
     // If there has been a refund, it would be in the first item of the creditNotes array.
     const firstCreditNote = inv.creditNotes[0]
 
-    normalizedInvoice.status = firstCreditNote?.status === STATUS_REFUNDED ? STATUS_REFUNDED : inv.status
-    normalizedInvoice.tooltipText = splitTitleCase(firstCreditNote?.reasonCode)
-    normalizedInvoice.closingDateNormalized = moment(inv.closingDate).format("MM/DD/YYYY")
-    normalizedInvoice.dueDateNormalized = moment(inv.dueDate).format("MM/DD/YYYY")
-    normalizedInvoice.amountNormalized = centsToAmount(inv.amount)
-
-    normalizedInvoices[inv.id] = normalizedInvoice
+    // Types for invoice are dynamically generated from Monsoon schema. Thus we create a superset
+    // of the invoice object to hold our custom properties, used for rendering the invoice.
+    normalizedInvoices[inv.id] = {
+      ...inv,
+      status: firstCreditNote?.status === STATUS_REFUNDED ? STATUS_REFUNDED : inv.status,
+      tooltipText: splitTitleCase(firstCreditNote?.reasonCode),
+      closingDateNormalized: moment(inv.closingDate).format("MM/DD/YYYY"),
+      dueDateNormalized: moment(inv.dueDate).format("MM/DD/YYYY"),
+      amountNormalized: centsToAmount(inv.amount),
+    }
 
     invoicesIds.push(inv.id)
   })
