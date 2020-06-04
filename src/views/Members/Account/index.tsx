@@ -169,14 +169,6 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
       .finally(() => setRefundModalOpen(false))
   }
 
-  const hideSnackbar = () => {
-    toggleSnackbar({
-      show: false,
-      message: "",
-      status: "success",
-    })
-  }
-
   const rowStyle = () => ({
     height: "50px",
   })
