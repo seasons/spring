@@ -9,7 +9,6 @@ import { GeneralSection } from "./GeneralSection"
 import {
   ProductUpsertQuery,
   ProductUpsertQuery_brands,
-  ProductUpsertQuery_categories,
   ProductUpsertQuery_productModels,
 } from "generated/ProductUpsertQuery"
 import { ProductEditQuery_product } from "generated/ProductEditQuery"

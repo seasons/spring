@@ -1,19 +1,7 @@
 {
   "categories": {
     "Suits": ["Jumpsuits"],
-    "Tops": [
-      "Hoodies & Sweatshirts",
-      "Hoodies",
-      "Knits",
-      "Knits",
-      "Long Sleeves",
-      "Polos",
-      "Shirts",
-      "Shirts",
-      "Sweatshirts",
-      "Tees",
-      "Tees"
-    ],
+    "Tops": ["Hoodies & Sweatshirts", "Hoodies", "Knits", "Long Sleeves", "Polos", "Shirts", "Sweatshirts", "Tees"],
     "Outerwear": [
       "Blazer",
       "Bomber",
@@ -30,7 +18,6 @@
       "Overcoat",
       "Padded",
       "Padded",
-      "Parka",
       "Parka",
       "Peacoat",
       "Puffer",
