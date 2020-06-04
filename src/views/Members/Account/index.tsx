@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/styles"
 import React, { useState } from "react"
 import { Datagrid, TextField } from "@seasons/react-admin"
 import moment from "moment"
-import { Box, Card, Button, Grid, CardHeader, Divider, Snackbar, Theme } from "@material-ui/core"
+import { Box, Card, Button, Grid, CardHeader, Divider, Theme } from "@material-ui/core"
 import { MemberSubViewProps } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
 import { PersonalDetails } from "./PersonalDetails"
@@ -14,7 +14,8 @@ import styled from "styled-components"
 import { MEMBER_INVOICE_REFUND } from "../queries"
 import { useMutation } from "@apollo/react-hooks"
 import { RefundInvoiceModal } from "./RefundInvoice"
-import { Alert, Color } from "@material-ui/lab"
+import { Snackbar } from "components"
+import { SnackbarState } from "components/Snackbar"
 
 const STATUS_REFUNDED = "Refunded"
 
@@ -40,7 +41,12 @@ interface ActionButtonsProps {
 const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handleAction }) => {
   return (
     <>
-      <a href={formatChargebeeInvoiceURL(record.id)} target="_blank" rel="noopener noreferrer">
+      <a
+        style={{ textDecoration: "none" }}
+        href={formatChargebeeInvoiceURL(record.id)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Box component="span" mr={2}>
           <Button color="primary" size="small" variant="outlined">
             View <BtnIcon />
@@ -75,7 +81,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
     amountNormalized: "",
   })
 
-  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
+  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
     status: "success",
@@ -86,12 +92,24 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
   let invoicesIds: string[] = []
 
   member?.invoices?.forEach(inv => {
-    inv.status = inv.creditNotes[0]?.status === STATUS_REFUNDED ? STATUS_REFUNDED : inv.status
-    inv.tooltipText = splitTitleCase(inv.creditNotes[0]?.reasonCode)
-    inv.closingDateNormalized = moment(inv.closingDate).format("MM/DD/YYYY")
-    inv.dueDateNormalized = moment(inv.dueDate).format("MM/DD/YYYY")
-    inv.amountNormalized = centsToAmount(inv.amount)
-    normalizedInvoices[inv.id] = inv
+    if (!inv || !inv.id || !inv.creditNotes) {
+      return
+    }
+
+    // If there has been a refund, it would be in the first item of the creditNotes array.
+    const firstCreditNote = inv.creditNotes[0]
+
+    // Types for invoice are dynamically generated from Monsoon schema. Thus we create a superset
+    // of the invoice object to hold our custom properties, used for rendering the invoice.
+    normalizedInvoices[inv.id] = {
+      ...inv,
+      status: firstCreditNote?.status === STATUS_REFUNDED ? STATUS_REFUNDED : inv.status,
+      tooltipText: splitTitleCase(firstCreditNote?.reasonCode),
+      closingDateNormalized: moment(inv.closingDate).format("MM/DD/YYYY"),
+      dueDateNormalized: moment(inv.dueDate).format("MM/DD/YYYY"),
+      amountNormalized: centsToAmount(inv.amount),
+    }
+
     invoicesIds.push(inv.id)
   })
 
@@ -148,14 +166,6 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
       .finally(() => setRefundModalOpen(false))
   }
 
-  const hideSnackbar = () => {
-    toggleSnackbar({
-      show: false,
-      message: "",
-      status: "success",
-    })
-  }
-
   const rowStyle = () => ({
     height: "50px",
   })
@@ -192,16 +202,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
         onClose={handleRefundModalClose}
         open={refundModalIsOpen}
       />
-      <Snackbar
-        open={snackbar.show}
-        autoHideDuration={6000}
-        onClose={hideSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={hideSnackbar} severity={snackbar.status}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )
 }

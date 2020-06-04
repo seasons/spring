@@ -14,7 +14,7 @@ export const HistoryView: React.FC<MemberSubViewProps> = ({ member }) => {
   return (
     <>
       <Container maxWidth={false}>
-        <Datagrid ids={member.reservationsIds} data={normalizedReservations} currentSort={defaultSort}>
+        <Datagrid ids={member?.reservations?.map(r => r.id)} data={normalizedReservations} currentSort={defaultSort}>
           <TextField source="reservationNumber" label="Order #" />
           <StatusField label="Order Status" />
           <SinceDateField source="receivedAt" label="Date Placed" />

@@ -4,7 +4,7 @@ import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 
-import { BackButton, Spacer, Wizard } from "components"
+import { Spacer, Wizard } from "components"
 import { Variants } from "../Components"
 import { VARIANT_EDIT_QUERY } from "../queries"
 import { UPDATE_VARIANT } from "../mutations"
@@ -23,7 +23,6 @@ export const VariantEdit: React.FC<VariantEditProps> = props => {
   if (loading || error || !data) {
     return <Loading />
   }
-  console.log("DATA:", data)
 
   let initialValues = {}
   const { productVariant } = data

@@ -80,7 +80,7 @@ export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
                 <Grid container item justify="center">
                   <Logo color="black" mx="auto" my={2} />
                 </Grid>
-                <form {...props} onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                   <div>
                     <TextField label="Email address" name="email" autoFocus />
                     <Spacer mt={1} />
