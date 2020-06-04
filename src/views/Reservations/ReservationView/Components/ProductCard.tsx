@@ -15,6 +15,8 @@ import { Box, Table, TableBody, TableCell, TableRow, Chip, Divider } from "@mate
 import { Indicator } from "components/Indicator"
 import { WarehouseLocationPopover } from "components/WarehouseLocationPopover"
 
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: 345,
@@ -55,7 +57,15 @@ export const ProductCard = props => {
 
   return (
     <Card className={classes.root}>
-      <CardHeader title={name} subheader={brand.name} />
+      <CardHeader
+        title={name}
+        subheader={brand.name}
+        action={
+          <IconButton aria-label="settings">
+            <MoreHorizIcon />
+          </IconButton>
+        }
+      />
       <CardMedia className={classes.media} image={image.url} title="Paella dish" />
       <Divider />
       <Table>

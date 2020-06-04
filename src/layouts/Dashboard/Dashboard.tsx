@@ -1,6 +1,6 @@
 import React, { Suspense, useState, useContext } from "react"
 import { renderRoutes } from "react-router-config"
-import { DataProviderContext, Loading } from "@seasons/react-admin"
+import { Error, DataProviderContext, Loading } from "@seasons/react-admin"
 import styled from "styled-components"
 import { colors } from "theme"
 
@@ -34,21 +34,57 @@ const Content = styled.div`
 `}
 `
 
-interface DashboardProps {}
+interface DashboardProps {
+  route: any
+}
 
-export const Dashboard: React.FC<DashboardProps> = ({ route }: any) => {
-  const dataProvider = useContext(DataProviderContext)
-  const [openNavBarMobile, setOpenNavBarMobile] = useState(false)
+export class Dashboard extends React.Component<DashboardProps> {
+  state = { hasError: false, errorMessage: null, errorInfo: null, openMenu: false }
 
-  return (
-    <>
-      <TopBar onMobileNavOpen={() => setOpenNavBarMobile(true)} />
-      <NavBar onMobileClose={() => setOpenNavBarMobile(false)} openMobile={openNavBarMobile} />
-      <Container>
-        <Content>
-          <Suspense fallback={<LinearProgress />}>{dataProvider ? renderRoutes(route.routes) : <Loading />}</Suspense>
-        </Content>
-      </Container>
-    </>
-  )
+  constructor(props) {
+    super(props)
+    /**
+     * Reset the error state upon navigation
+     *
+     * @see https://stackoverflow.com/questions/48121750/browser-navigation-broken-by-use-of-react-error-boundaries
+     */
+    props.history.listen(() => {
+      if (this.state.hasError) {
+        this.setState({ hasError: false })
+      }
+    })
+  }
+
+  componentDidCatch(errorMessage, errorInfo) {
+    this.setState({ hasError: true, errorMessage, errorInfo })
+  }
+
+  render() {
+    const { route } = this.props
+    const { hasError, errorMessage, errorInfo, openMenu } = this.state
+
+    return (
+      <DataProviderContext>
+        {dataProvider => (
+          <>
+            <TopBar onMobileNavOpen={() => this.setState({ openMenu: true })} />
+            <NavBar onMobileClose={() => this.setState({ openMenu: false })} openMobile={openMenu} />
+            <Container>
+              <Content>
+                <Suspense fallback={<LinearProgress />}>
+                  {hasError ? (
+                    <Error title="Seasons" error={errorMessage} errorInfo={errorInfo} />
+                  ) : dataProvider ? (
+                    renderRoutes(route.routes)
+                  ) : (
+                    <Loading />
+                  )}
+                </Suspense>
+              </Content>
+            </Container>
+          </>
+        )}
+      </DataProviderContext>
+    )
+  }
 }

@@ -126,13 +126,13 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
 
       <nav className={classes.navigation}>
         <PerfectScrollbar options={{ suppressScrollX: true }}>
-          {navConfig.map(config => (
-            <>
+          {navConfig.map((config, i) => (
+            <Box key={`globalnav-${i}`}>
               {renderNavItems({ items: config.items, pathname: location.pathname })}
               <Box my={2}>
                 <Divider style={{ backgroundColor: colors.black85 }} />
               </Box>
-            </>
+            </Box>
           ))}
         </PerfectScrollbar>
       </nav>

@@ -16,12 +16,13 @@ interface PickingModalProps {
   open: boolean
   onClose?: () => void
   onSave?(values: ProductStates): void
+  disableButton?: boolean
   reservation: GetReservation
 }
 
 type ProductStates = { [key: string]: ProductState }
 
-export const PickingModal: React.FC<PickingModalProps> = ({ open, onSave, onClose, reservation }) => {
+export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open, onSave, onClose, reservation }) => {
   const barcodeMaps = {}
   reservation.products.forEach(product => {
     barcodeMaps[product.barcode] = {
@@ -155,7 +156,13 @@ export const PickingModal: React.FC<PickingModalProps> = ({ open, onSave, onClos
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
+          <Button
+            autoFocus
+            onClick={handleSave}
+            color="primary"
+            variant="contained"
+            disabled={!shouldAllowSave || disableButton}
+          >
             Mark as picked
           </Button>
         </DialogActions>

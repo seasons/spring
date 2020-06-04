@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useQueryWithStore, Loading } from "@seasons/react-admin"
+import { Error, useQueryWithStore, Loading, useRefresh } from "@seasons/react-admin"
 import { Container, Box, Typography, Grid } from "@material-ui/core"
 import { Header, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
@@ -22,13 +22,24 @@ export const ReservationView = ({ match, history }) => {
   const [mode, setMode] = useState("grid")
   const [showModal, toggleModal] = useState(false)
 
+  const refresh = useRefresh()
   const { data, loading, error } = useQueryWithStore({
     type: "getOne",
     resource: "Reservation",
     payload: { id },
   })
 
-  const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(PROCESS_RESERVATION)
+  const [isMutating, setIsMutating] = useState(false)
+  const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(PROCESS_RESERVATION, {
+    onCompleted: () => {
+      setIsMutating(false)
+      refresh()
+    },
+    onError: () => {
+      setIsMutating(false)
+      refresh()
+    },
+  })
   const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED)
 
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
@@ -45,16 +56,17 @@ export const ReservationView = ({ match, history }) => {
     return <Loading />
   }
 
-  if (error) {
+  if (error && !data) {
     console.error("Error: ", loading, error)
     toggleSnackbar({
       show: true,
       message: error?.message,
       status: "error",
     })
+    return <Error />
   }
 
-  const isReservationUnfulfilled = ["New", "InQueue", "OnHold", "Packed"].includes(data.status)
+  const isReservationUnfulfilled = ["New", "InQueue", "OnHold", "Packed"].includes(data?.status)
 
   const primaryButton = isReservationUnfulfilled
     ? {
@@ -70,6 +82,18 @@ export const ReservationView = ({ match, history }) => {
 
   const Modal = isReservationUnfulfilled ? PickingModal : ProcessReturnModal
 
+  const hideSnackbar = () => {
+    toggleSnackbar({
+      show: false,
+      message: "",
+      status: "success",
+    })
+  }
+
+  if (!data) {
+    return <></>
+  }
+
   return (
     <>
       <Container maxWidth={false}>
@@ -83,6 +107,14 @@ export const ReservationView = ({ match, history }) => {
             { title: `Reservation: ${data.reservationNumber}`, url: `/reservations/${data.reservationNumber}` },
           ]}
           primaryButton={primaryButton}
+          menuItems={[
+            {
+              text: "Update status",
+              action: () => {
+                console.log("Update status")
+              },
+            },
+          ]}
         />
         <Box my={2}>
           <ReservationInfo reservation={data} />
@@ -123,12 +155,15 @@ export const ReservationView = ({ match, history }) => {
         open={showModal}
         onClose={() => toggleModal(false)}
         reservation={data}
+        disableButton={isMutating}
         onSave={async productStates => {
+          setIsMutating(true)
           try {
             let result: ExecutionResult<any> | null = null
             let message = ``
             if (isReservationUnfulfilled) {
               result = await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
+              setIsMutating(false)
               message = "Reservation status successfully set to Picked"
             } else {
               const mutationData: ProcessReservationMutationVariables = {
@@ -139,6 +174,7 @@ export const ReservationView = ({ match, history }) => {
               }
 
               result = await processReservation({ variables: mutationData })
+              setIsMutating(false)
               message = "Returned items successfully processed"
             }
 

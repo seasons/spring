@@ -6,7 +6,7 @@ import { GetReservation } from "generated/GetReservation"
 import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { Alert, Color } from "@material-ui/lab"
 import { PhysicalProductStatus } from "generated/globalTypes"
-import { trim } from "lodash"
+import { filter, values, trim } from "lodash"
 
 interface ProductState {
   productUID: string
@@ -19,12 +19,19 @@ interface ProcessReturnModalProps {
   open: boolean
   onClose?: () => void
   onSave?(values: ProductStates): void
+  disableButton?: boolean
   reservation: GetReservation
 }
 
 type ProductStates = { [key: string]: ProductState }
 
-export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, onSave, onClose, reservation }) => {
+export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
+  disableButton,
+  open,
+  onSave,
+  onClose,
+  reservation,
+}) => {
   const barcodeMaps = {}
   reservation.products.forEach(product => {
     barcodeMaps[product.barcode] = {
@@ -49,9 +56,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
   const BARCODE_REGEX = /^SZNS[0-9]{5}$/
 
   const inputRef = useRef()
-  const shouldAllowSave =
-    (Object.values(productStates as any).reduce((a: any, b: any) => a.returned || b.returned) as any).length ===
-    reservation.products.length
+  const shouldAllowSave = filter(values(productStates), a => a.returned).length > 0
 
   const focusOnInput = () => {
     const target: any = inputRef?.current
@@ -148,7 +153,13 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({ open, on
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
+          <Button
+            autoFocus
+            onClick={handleSave}
+            color="primary"
+            variant="contained"
+            disabled={!shouldAllowSave || disableButton}
+          >
             Save
           </Button>
         </DialogActions>
