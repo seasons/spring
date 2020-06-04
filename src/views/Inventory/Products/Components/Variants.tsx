@@ -1,13 +1,13 @@
 import React from "react"
 import { useQuery } from "react-apollo"
+import { useLocation } from "react-router-dom"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
-import { Loader, Spacer } from "components"
+import { Header, Loader, Spacer } from "components"
 import { GetGeneratedVariantSkus } from "generated/GetGeneratedVariantSkus"
 import { VariantEditQuery_productVariant } from "generated/VariantEditQuery"
 import { GET_GENERATED_VARIANT_SKUS } from "../queries"
-import { Header } from "./Header"
 import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection"
 import { VariantSizeSection } from "./VariantSizeSection"
 
@@ -17,6 +17,7 @@ export interface VariantsProps {
 }
 
 export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
+  const location = useLocation()
   const brandID = createData?.brand || ""
   const colorCode = createData?.color || ""
   const sizeNames = createData?.sizes || []
@@ -61,11 +62,30 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants }) => {
   const isEditing = !!variants
   const title = isEditing ? variantsData[0].sku : "Product variants"
   const subtitle = isEditing ? "Edit measurement data" : "Confirm generated product variants"
+  const breadcrumbs = [
+    {
+      title: "Products",
+      url: "/inventory/products",
+    },
+  ]
+
+  if (isEditing && variants && variants.length > 0) {
+    const { product } = variants[0]
+    breadcrumbs.push({
+      title: product.name,
+      url: `/inventory/products/${product.id}`,
+    })
+  }
+
+  breadcrumbs.push({
+    title: title,
+    url: location.pathname,
+  })
 
   return (
     <Box>
       <ContainerGrid container spacing={2}>
-        <Header title={title} subtitle={subtitle} />
+        <Header title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} />
         {variantsData.map((variant, index) => (
           <VariantSizeSection
             isEditing={isEditing}

@@ -39,11 +39,13 @@ export interface PhysicalProductEditQuery_physicalProduct_productVariant_product
   __typename: "Product"
   id: string
   status: ProductStatus | null
+  name: string
 }
 
 export interface PhysicalProductEditQuery_physicalProduct_productVariant {
   __typename: "ProductVariant"
   id: string
+  sku: string | null
   product: PhysicalProductEditQuery_physicalProduct_productVariant_product
 }
 
