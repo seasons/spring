@@ -1,28 +1,29 @@
 import { Header } from "components/Header"
 import { EntityCountField, FullNameField, StatusField, ViewEntityField } from "fields"
-import React from "react"
+import React, { useState } from "react"
 import { Datagrid, List, TextField } from "@seasons/react-admin"
 
 import { Card, Container } from "@material-ui/core"
-
+import { MemberViewProps } from "views/Members/interfaces"
 import { MemberFilter } from "./MemberFilter"
 
-export interface MemberListProps {
-  history: any
-  match: any
-  props?: any
-}
+import { MemberCreateModal } from "./MemberCreate"
 
-export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, history, props }) => {
+export const MemberList: React.FC<MemberViewProps> = ({ match, history, props }) => {
+  const [openEdit, setOpenEdit] = useState(false)
   const createNewMember = () => {
-    history.push("/members/new")
+    setOpenEdit(true)
+  }
+
+  const handleEditClose = () => {
+    setOpenEdit(false)
   }
 
   return (
     <Container maxWidth={false}>
       <Header
         title="Members"
-        primaryButton={{ text: "New Member", action: createNewMember }}
+        primaryButton={{ text: "Create Member", action: createNewMember }}
         breadcrumbs={[
           {
             title: "Members",
@@ -42,6 +43,7 @@ export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, hi
           component="div"
           resource="Customer"
           basePath="/members"
+          sort={{ field: "id", order: "DESC" }}
         >
           <Datagrid>
             <FullNameField label="Name" />
@@ -55,6 +57,8 @@ export const MemberList: React.FunctionComponent<MemberListProps> = ({ match, hi
           </Datagrid>
         </List>
       </Card>
+
+      <MemberCreateModal onClose={handleEditClose} open={openEdit} history={history} />
     </Container>
   )
 }

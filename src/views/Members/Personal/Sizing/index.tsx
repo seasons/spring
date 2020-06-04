@@ -1,5 +1,5 @@
 import { updateCustomer as updateCustomerAction } from "actions/customerActions"
-import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
+import { MEMBER_DETAIL_UPDATE } from "../../queries"
 import { useMutation } from "@apollo/react-hooks"
 import { CardContent, ComponentError, EditButton, EditModal, TableHeader } from "components"
 import React, { useEffect, useState } from "react"
@@ -13,7 +13,7 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
   const [member, updateMember] = useState(memberFromStore)
-  const [updateDetails] = useMutation(CUSTOMER_DETAIL_UPDATE)
+  const [updateDetails] = useMutation(MEMBER_DETAIL_UPDATE)
   const [openEdit, setOpenEdit] = useState(false)
   const dispatch = useDispatch()
   const user = member.detail

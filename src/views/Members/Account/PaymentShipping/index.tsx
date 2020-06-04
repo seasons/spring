@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Box, Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 
 import { MemberSubViewProps } from "../../interfaces"
-import { CUSTOMER_DETAIL_UPDATE } from "../../queries"
+import { MEMBER_DETAIL_UPDATE } from "../../queries"
 import { useMutation } from "@apollo/react-hooks"
 
 export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
@@ -14,7 +14,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
   const [openEdit, setOpenEdit] = useState(false)
   const [member, updateMember] = useState(memberFromStore)
-  const [updateDetails] = useMutation(CUSTOMER_DETAIL_UPDATE)
+  const [updateDetails] = useMutation(MEMBER_DETAIL_UPDATE)
   const dispatch = useDispatch()
   const billing = member.billingInfo
   const shipping = member.detail.shippingAddress
@@ -32,11 +32,11 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
     const customer = {
       billingInfo: {
         update: {
-          brand: billing.brand,
+          brand: billing?.brand,
           name: values.billingName.value,
-          last_digits: billing.last_digits,
-          expiration_month: billing.expiration_month,
-          expiration_year: billing.expiration_year,
+          last_digits: billing?.last_digits,
+          expiration_month: billing?.expiration_month,
+          expiration_year: billing?.expiration_year,
           street1: values.billingStreet1.value,
           city: values.billingCity.value,
           state: values.billingState.value,
@@ -90,16 +90,16 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
       value: member.id,
     },
     number: {
-      value: billing.last_digits,
+      value: billing?.last_digits,
       disabled: true,
     },
     expirationMonth: {
-      value: billing.expiration_month,
+      value: billing?.expiration_month,
       label: "Expiration Month",
       disabled: true,
     },
     expirationYear: {
-      value: billing.expiration_year,
+      value: billing?.expiration_year,
       label: "Expiration Year",
       disabled: true,
     },
@@ -107,46 +107,46 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
       label: "Billing address",
     },
     billingName: {
-      value: billing.name,
+      value: billing?.name,
       label: "Name",
     },
     billingStreet1: {
-      value: billing.street1,
+      value: billing?.street1,
       label: "Street",
     },
     billingCity: {
-      value: billing.city,
+      value: billing?.city,
       label: "City",
     },
     billingState: {
-      value: billing.state,
+      value: billing?.state,
       label: "State",
     },
     billingPostal: {
-      value: billing.postal_code,
+      value: billing?.postal_code,
       label: "Zip code",
     },
     shippingDivider: {
       label: "Shipping address",
     },
     shippingName: {
-      value: shipping.name,
+      value: shipping?.name,
       label: "Name",
     },
     shippingStreet1: {
-      value: shipping.address1,
+      value: shipping?.address1,
       label: "Street",
     },
     shippingCity: {
-      value: shipping.city,
+      value: shipping?.city,
       label: "City",
     },
     shippingState: {
-      value: shipping.state,
+      value: shipping?.state,
       label: "State",
     },
     shippingPostal: {
-      value: shipping.zipCode,
+      value: shipping?.zipCode,
       label: "Zip code",
     },
   }
@@ -168,19 +168,23 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
             <TableRow selected>
               <TableCell>Payment</TableCell>
               <TableCell>
-                {billing.brand.toUpperCase()} ending {billing.last_digits}
+                {billing?.brand.toUpperCase()}
+                {billing ? "ending " : ""}
+                {billing?.last_digits}
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow selected>
               <TableCell>Billing address</TableCell>
               <TableCell>
-                <Typography component="p">{billing.name}</Typography>
-                <Typography component="p">{billing.street1}</Typography>
+                <Typography component="p">{billing?.name}</Typography>
+                <Typography component="p">{billing?.street1}</Typography>
                 <Typography component="p">
-                  {billing.city}, {billing.state}
+                  {billing?.city}
+                  {billing ? ", " : ""}
+                  {billing?.state}
                 </Typography>
-                <Typography component="p">{billing.postal_code}</Typography>
+                <Typography component="p">{billing?.postal_code}</Typography>
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
@@ -188,13 +192,15 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
               <TableCell>Shipping address</TableCell>
               <TableCell>
                 <Typography component="div">
-                  <Typography component="p">{shipping.name}</Typography>
+                  <Typography component="p">{shipping?.name}</Typography>
                 </Typography>
-                <Typography component="p">{shipping.address1}</Typography>
+                <Typography component="p">{shipping?.address1}</Typography>
                 <Typography component="p">
-                  {shipping.city}, {shipping.state}
+                  {shipping?.city}
+                  {shipping ? ", " : ""}
+                  {shipping?.state}
                 </Typography>
-                <Typography component="p">{shipping.zipCode}</Typography>
+                <Typography component="p">{shipping?.zipCode}</Typography>
               </TableCell>
               <TableCell></TableCell>
             </TableRow>

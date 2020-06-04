@@ -72,7 +72,13 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
       <Divider className={classes.divider} />
       <Box mt={2}>
         {currentTab === "account" && (
-          <AccountView {...props} basePath={`/members/${memberId}/account`} member={data} adminKey={adminStoreKey} />
+          <AccountView
+            {...props}
+            match={match}
+            basePath={`/members/${memberId}/account`}
+            member={data}
+            adminKey={adminStoreKey}
+          />
         )}
         {currentTab === "personal" && (
           <PersonalView {...props} basePath={`/members/${memberId}/personal`} member={data} adminKey={adminStoreKey} />

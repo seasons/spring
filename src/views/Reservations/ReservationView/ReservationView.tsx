@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
 import { Container, Box, Typography, Grid } from "@material-ui/core"
 import { Header, Snackbar } from "components"
@@ -16,7 +16,6 @@ import { useMutation, ExecutionResult } from "react-apollo"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 import { ProductGrid } from "./Components/ProductGrid"
 import { PickingModal } from "./Components/PickingModal/PickingModal"
-import { GetReservation } from "generated/GetReservation"
 
 export const ReservationView = ({ match, history }) => {
   const { id } = match.params
