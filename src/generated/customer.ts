@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { Plan, CustomerStatus, InvoiceStatus } from "./globalTypes"
+import { Plan, CustomerStatus, InvoiceStatus, CreditNoteReasonCode, CreditNoteStatus } from "./globalTypes"
 
 // ====================================================
 // GraphQL fragment: customer
@@ -18,6 +18,15 @@ export interface customer_user {
   createdAt: any
 }
 
+export interface customer_invoices_creditNotes {
+  __typename: "CreditNote"
+  id: string
+  reasonCode: CreditNoteReasonCode | null
+  date: any | null
+  total: number | null
+  status: CreditNoteStatus | null
+}
+
 export interface customer_invoices {
   __typename: "Invoice"
   id: string
@@ -27,6 +36,7 @@ export interface customer_invoices {
   closingDate: any | null
   dueDate: any | null
   amount: number | null
+  creditNotes: customer_invoices_creditNotes[] | null
 }
 
 export interface customer_reservations_products_productVariant_product_images {

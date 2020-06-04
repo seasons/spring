@@ -7,7 +7,7 @@ import { ReservationInfo } from "./Components/ReservationInfo"
 import { ProductCard } from "./Components/ProductCard"
 import ViewModuleIcon from "@material-ui/icons/ViewModule"
 import ListIcon from "@material-ui/icons/List"
-import { ToggleButtonGroup, ToggleButton, Alert, Color } from "@material-ui/lab"
+import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
 import ArchiveIcon from "@material-ui/icons/Archive"
 import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessReturnModal"
@@ -81,14 +81,6 @@ export const ReservationView = ({ match, history }) => {
       }
 
   const Modal = isReservationUnfulfilled ? PickingModal : ProcessReturnModal
-
-  const hideSnackbar = () => {
-    toggleSnackbar({
-      show: false,
-      message: "",
-      status: "success",
-    })
-  }
 
   if (!data) {
     return <></>

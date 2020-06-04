@@ -1,36 +1,6 @@
 import { History } from "history"
 import { customer } from "generated/customer"
 
-interface billingInfo {
-  id: string
-  brand: string
-  last_digits: string
-  expiration_month: string
-  expiration_year: string
-  name: string
-  street1: string
-  city: string
-  state: string
-  postal_code: string
-}
-
-interface shippingAddress {
-  id: string
-  name: string
-  address1: string
-  city: string
-  state: string
-  zipCode: string
-}
-
-interface user {
-  id: string
-  firstName: string
-  email: string
-  lastName: string
-  createdAt: string
-}
-
 interface editEntity {
   id: object
 }

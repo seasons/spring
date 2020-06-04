@@ -86,12 +86,23 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
   let invoicesIds: string[] = []
 
   member?.invoices?.forEach(inv => {
-    inv.status = inv.creditNotes[0]?.status === STATUS_REFUNDED ? STATUS_REFUNDED : inv.status
-    inv.tooltipText = splitTitleCase(inv.creditNotes[0]?.reasonCode)
-    inv.closingDateNormalized = moment(inv.closingDate).format("MM/DD/YYYY")
-    inv.dueDateNormalized = moment(inv.dueDate).format("MM/DD/YYYY")
-    inv.amountNormalized = centsToAmount(inv.amount)
+    if (!inv || !inv.id || !inv.creditNotes) {
+      return
+    }
+
+    const normalizedInvoice: any = {
+      ...inv,
+    }
+
+    const firstCreditNote = inv.creditNotes[0]
+    normalizedInvoice.status = firstCreditNote?.status === STATUS_REFUNDED ? STATUS_REFUNDED : inv.status
+    normalizedInvoice.tooltipText = splitTitleCase(firstCreditNote?.reasonCode)
+    normalizedInvoice.closingDateNormalized = moment(inv.closingDate).format("MM/DD/YYYY")
+    normalizedInvoice.dueDateNormalized = moment(inv.dueDate).format("MM/DD/YYYY")
+    normalizedInvoice.amountNormalized = centsToAmount(inv.amount)
+
     normalizedInvoices[inv.id] = inv
+
     invoicesIds.push(inv.id)
   })
 

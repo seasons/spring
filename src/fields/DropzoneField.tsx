@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback } from "react"
 import { Box, styled } from "@material-ui/core"
 import { useDropzone } from "react-dropzone"
 
-import { FormControl, Spacer, Text } from "components"
+import { FormControl } from "components"
 import { Field, ChildFieldProps } from "./Field"
 import { UploadFileIcon } from "icons"
 import { colors } from "theme/colors"
