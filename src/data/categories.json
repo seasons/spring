@@ -1,0 +1,48 @@
+{
+  "categories": {
+    "Suits": ["Jumpsuits"],
+    "Tops": [
+      "Hoodies & Sweatshirts",
+      "Hoodies",
+      "Knits",
+      "Knits",
+      "Long Sleeves",
+      "Polos",
+      "Shirts",
+      "Shirts",
+      "Sweatshirts",
+      "Tees",
+      "Tees"
+    ],
+    "Outerwear": [
+      "Blazer",
+      "Bomber",
+      "Coats",
+      "Corduroy",
+      "Denim Jackets",
+      "Down",
+      "Duffel",
+      "Faux Fur",
+      "Fleece",
+      "Jackets",
+      "Light",
+      "Moto",
+      "Overcoat",
+      "Padded",
+      "Padded",
+      "Parka",
+      "Parka",
+      "Peacoat",
+      "Puffer",
+      "Quilted",
+      "Rain",
+      "Raincoat",
+      "Robe",
+      "Trench",
+      "Twill",
+      "Vests",
+      "Wool"
+    ],
+    "Bottoms": ["Cargo", "Denim", "Jeans", "Joggers", "Pants", "Shorts", "Sweatpants", "Track Pants", "Trousers"]
+  }
+}

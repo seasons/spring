@@ -4,14 +4,14 @@ import { Box, Grid } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import colorsJSON from "data/colors.json"
-import { ProductUpsertQuery_categories, ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
+import categoriesJSON from "data/categories.json"
+import { ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
 import { getFormSelectChoices, FormSelectChoice } from "utils/form"
 
 export interface MetadataSectionProps {
   architectures: string[]
-  categories: ProductUpsertQuery_categories[]
   isEditing: boolean
   models: ProductUpsertQuery_productModels[]
   sizes: FormSelectChoice[]
@@ -21,7 +21,6 @@ export interface MetadataSectionProps {
 
 export const MetadataSection: React.FC<MetadataSectionProps> = ({
   architectures,
-  categories,
   isEditing,
   models,
   sizes,
@@ -34,9 +33,13 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
   }))
   const typeChoices = getFormSelectChoices(types)
   const architectureChoices = getFormSelectChoices(architectures)
-  const categoryChoices = categories.map(category => ({
-    display: category.name,
-    value: category.id,
+  const { categories } = categoriesJSON
+  const groupedCategoryChoices = Object.keys(categories).map(categoryName => ({
+    name: categoryName,
+    children: categories[categoryName].map(child => ({
+      display: child,
+      value: child,
+    })),
   }))
   const colorChoices = colorsJSON.colors.map(color => ({
     display: (
@@ -92,7 +95,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={12}>
             <Text variant="h6">Category</Text>
             <Spacer mt={1} />
-            <SelectField name="category" choices={categoryChoices} requiredString />
+            <SelectField name="category" groupedChoices={groupedCategoryChoices} requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Color</Text>

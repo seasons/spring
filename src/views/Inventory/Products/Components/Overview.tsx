@@ -108,7 +108,6 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}
-            categories={data.categories.filter(Boolean) as ProductUpsertQuery_categories[]}
             isEditing={isEditing}
             models={data.productModels as ProductUpsertQuery_productModels[]}
             setProductType={setProductType}
