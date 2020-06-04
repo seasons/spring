@@ -14,6 +14,11 @@ const authLink = setContext(async (_, { headers }) => {
   try {
     // return the headers to the context so httpLink can read them
     const userSession = getUserSession()
+
+    if (!userSession) {
+      return { headers }
+    }
+
     const { token } = userSession
     return {
       headers: {
