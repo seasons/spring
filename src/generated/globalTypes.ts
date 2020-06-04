@@ -77,6 +77,14 @@ export enum LocationType {
   Warehouse = "Warehouse",
 }
 
+export enum PhotographyStatus {
+  Done = "Done",
+  InProgress = "InProgress",
+  ReadyForEditing = "ReadyForEditing",
+  ReadyToShoot = "ReadyToShoot",
+  Steam = "Steam",
+}
+
 export enum PhysicalProductOffloadMethod {
   Recycled = "Recycled",
   ReturnedToVendor = "ReturnedToVendor",
@@ -1451,6 +1459,7 @@ export interface ProductCreateWithoutCategoryInput {
   status?: ProductStatus | null
   season?: string | null
   architecture?: ProductArchitecture | null
+  photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
@@ -1477,6 +1486,7 @@ export interface ProductCreateWithoutVariantsInput {
   status?: ProductStatus | null
   season?: string | null
   architecture?: ProductArchitecture | null
+  photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
@@ -1735,6 +1745,10 @@ export interface ProductScalarWhereInput {
   architecture_not?: ProductArchitecture | null
   architecture_in?: ProductArchitecture[] | null
   architecture_not_in?: ProductArchitecture[] | null
+  photographyStatus?: PhotographyStatus | null
+  photographyStatus_not?: PhotographyStatus | null
+  photographyStatus_in?: PhotographyStatus[] | null
+  photographyStatus_not_in?: PhotographyStatus[] | null
   publishedAt?: any | null
   publishedAt_not?: any | null
   publishedAt_in?: any[] | null
@@ -1779,6 +1793,7 @@ export interface ProductUpdateManyDataInput {
   status?: ProductStatus | null
   season?: string | null
   architecture?: ProductArchitecture | null
+  photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
@@ -1824,6 +1839,7 @@ export interface ProductUpdateWithoutCategoryDataInput {
   status?: ProductStatus | null
   season?: string | null
   architecture?: ProductArchitecture | null
+  photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
@@ -1849,6 +1865,7 @@ export interface ProductUpdateWithoutVariantsDataInput {
   status?: ProductStatus | null
   season?: string | null
   architecture?: ProductArchitecture | null
+  photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
@@ -2897,8 +2914,8 @@ export interface UpsertProductInput {
   images: any[]
   innerMaterials: string[]
   modelID: string
-  modelSizeDisplay: string
-  modelSizeName: string
+  modelSizeDisplay?: string | null
+  modelSizeName?: string | null
   name: string
   outerMaterials: string[]
   retailPrice: number

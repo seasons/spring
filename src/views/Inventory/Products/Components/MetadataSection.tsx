@@ -61,7 +61,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Model size</Text>
             <Spacer mt={1} />
-            <SelectField name="modelSize" choices={sizes} requiredString />
+            <SelectField name="modelSize" choices={sizes} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Type</Text>

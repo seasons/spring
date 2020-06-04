@@ -17,6 +17,7 @@ export const ProductItemsField: React.FC<imagesFieldIfc> = ({ record, source, la
   let images: Array<any> = []
   let products: Array<Object> = get(record, "products", [])
 
+  // eslint-disable-next-line
   products.map(product => {
     const productImages = get(product, source, [{ id: "", filename: "" }])[0]
     images.push(productImages)
@@ -26,7 +27,7 @@ export const ProductItemsField: React.FC<imagesFieldIfc> = ({ record, source, la
     <Box>
       {images.map(image => {
         const { url } = image
-        return <Image key={image.id} src={url} width={85} height={107} alt={image.filename} />
+        return <Image key={image.url} src={url} width={85} height={107} alt={image.filename} />
       })}
     </Box>
   )

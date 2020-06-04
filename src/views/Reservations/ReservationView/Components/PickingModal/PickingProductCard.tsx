@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
-import { Typography, Grid, Box, Paper, Divider } from "@material-ui/core"
+import { Typography, Box, Paper, Divider } from "@material-ui/core"
 import CheckCircleIcon from "@material-ui/icons/CheckCircle"
 import { GetReservation_products } from "generated/GetReservation"
 
@@ -24,7 +24,7 @@ export const PickingProductCard = ({ product, productState, onStateChange, doneP
       ...values,
       picked: productState.picked,
     })
-  }, [productState.picked])
+  }, [productState.picked, values])
 
   return (
     <Box my={1}>

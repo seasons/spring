@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Snackbar, Typography } from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Snackbar } from "@material-ui/core"
 import { DialogTitle } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { PickingProductCard } from "./PickingProductCard"

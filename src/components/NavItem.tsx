@@ -3,7 +3,7 @@ import { NavLink as RouterLink } from "react-router-dom"
 import styled from "styled-components"
 import { colors } from "theme"
 
-import { Box, Button as MuiButton, ListItem as MuiListItem, Collapse, makeStyles, Divider } from "@material-ui/core"
+import { Box, Button as MuiButton, ListItem as MuiListItem, Collapse, makeStyles } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import ExpandLessIcon from "@material-ui/icons/ExpandLess"
 
@@ -79,7 +79,6 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
   }
 
   const style = { paddingLeft }
-
   const Btn = depth > 0 ? LeafButton : Button
 
   if (children) {

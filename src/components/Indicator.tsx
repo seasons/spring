@@ -13,8 +13,14 @@ const ReservationStatusMap = {
   Completed: colors.black100,
 }
 
+const InvoiceStatusMap = {
+  Paid: colors.green[500],
+  Refunded: colors.orange[500],
+}
+
 export const IndicatorMap = {
   ...ReservationStatusMap,
+  ...InvoiceStatusMap,
   Used: colors.green[200],
   Waitlisted: colors.black15,
   Invited: colors.black15,

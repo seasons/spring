@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
-import { Typography, Grid, Box, Paper, TextField, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core"
+import { Typography, Box, Paper, TextField, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core"
 import CheckCircleIcon from "@material-ui/icons/CheckCircle"
 import { GetReservation_products } from "generated/GetReservation"
 
@@ -23,7 +23,7 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
       ...values,
       returned: productState.returned,
     })
-  }, [productState.returned])
+  }, [productState.returned, values])
 
   return (
     <Box my={1}>

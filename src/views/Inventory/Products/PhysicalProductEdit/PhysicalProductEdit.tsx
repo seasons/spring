@@ -71,11 +71,6 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
 
   return (
     <Box mx={5} display="flex" flexDirection="column">
-      <Spacer mt={5} />
-      <BackButton
-        title={physicalProduct.seasonsUID}
-        onClick={() => history.push(`/inventory/product/variants/${physicalProduct.productVariant.id}`)}
-      />
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
         <PhysicalProducts
           inventoryStatuses={physicalProductEditQueryData.inventoryStatuses?.enumValues || []}

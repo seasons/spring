@@ -1,11 +1,11 @@
 import React from "react"
 import { getFormSelectChoices } from "utils/form"
+import { useLocation } from "react-router-dom"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
-import { Spacer, Text } from "components"
+import { Header, Spacer, Text } from "components"
 import { PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"
-import { Header } from "./Header"
 import { PhysicalProductSection } from "./PhysicalProductSection"
 
 export interface PhysicalProductsProps {
@@ -21,6 +21,7 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
   physicalProducts,
   physicalProductStatuses,
 }) => {
+  const location = useLocation()
   const physicalProductUIDs: string[] = []
 
   if (createData) {
@@ -65,11 +66,35 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
   const isEditing = !!physicalProducts
   const title = isEditing ? physicalProducts?.[0]?.seasonsUID || "" : "Physical products"
   const subtitle = isEditing ? "Edit physical product data" : "Add metadata to physical products"
+  const breadcrumbs = [
+    {
+      title: "Products",
+      url: "/inventory/products",
+    },
+  ]
+
+  if (isEditing && physicalProducts && physicalProducts.length > 0) {
+    const { productVariant } = physicalProducts[0]
+    const { product } = productVariant
+    breadcrumbs.push({
+      title: product.name,
+      url: `/inventory/products/${product.id}`,
+    })
+    breadcrumbs.push({
+      title: productVariant.sku || "",
+      url: `/inventory/product/variants/${productVariant.id}`,
+    })
+  }
+
+  breadcrumbs.push({
+    title: title,
+    url: location.pathname,
+  })
 
   return (
     <Box>
       <ContainerGrid container spacing={2}>
-        <Header title={title} subtitle={subtitle} />
+        <Header title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} />
         {physicalProductUIDs.map((uid, index) => (
           <PhysicalProductSection
             inventoryStatusChoices={inventoryStatusChoices}

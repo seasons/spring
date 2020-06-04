@@ -6,6 +6,7 @@ export const ProductFragment = gql`
     id
     name
     description
+    photographyStatus
     images(size: Small, options: { retina: true }) {
       url
     }
@@ -31,6 +32,7 @@ export default {
       id
       name
       description
+      photographyStatus
       images(size: Small, options: { retina: false }) {
         url
       }

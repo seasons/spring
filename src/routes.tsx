@@ -6,7 +6,6 @@ import {
   AnalyticsView,
   InventoryView,
   LoginView,
-  MemberCreate,
   MemberList,
   MemberView,
   OverviewView,
@@ -74,11 +73,6 @@ export default [
         path: "/members",
         exact: true,
         component: props => <MemberList {...props} basePath="/members" resource="Customer" />,
-      },
-      {
-        path: "/members/new",
-        exact: true,
-        component: props => <MemberCreate {...props} basePath="/members/new" resource="Customer" />,
       },
       {
         path: "/members/:id/:tab",

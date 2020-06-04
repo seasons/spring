@@ -5,6 +5,7 @@
 
 import {
   ProductWhereUniqueInput,
+  PhotographyStatus,
   ProductStatus,
   ProductArchitecture,
   ProductType,
@@ -197,6 +198,7 @@ export interface ProductEditQuery_product {
   id: string
   name: string
   description: string | null
+  photographyStatus: PhotographyStatus | null
   images: ProductEditQuery_product_images[]
   retailPrice: number | null
   createdAt: any
