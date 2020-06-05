@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Form } from "react-final-form"
-import { Mutator, MutableState } from "final-form"
+import { Mutator } from "final-form"
 
 import { ConfirmationDialog } from "components"
 import { WizardBottomNavBar } from "./WizardBottomNavBar"

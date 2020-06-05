@@ -5,7 +5,7 @@ import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 
-import { BackButton, Spacer, Text, Wizard } from "components"
+import { Spacer, Text, Wizard } from "components"
 import { PhysicalProducts } from "../Components"
 import { OffloadPhysicalProductModal } from "./Components"
 import { PhysicalProductEditQuery, PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"

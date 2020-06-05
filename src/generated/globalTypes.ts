@@ -2941,7 +2941,7 @@ export interface UpsertProductInput {
   architecture?: string | null
   bottomSizeType?: BottomSizeType | null
   brandID: string
-  categoryID: string
+  categoryName: string
   colorCode: string
   description: string
   functions: string[]
