@@ -53,7 +53,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
           <Grid item xs={12}>
             <Text variant="h6">Description</Text>
             <Spacer mt={1} />
-            <TextField multiline name="description" placeholder="Max 250 characters" maxLength={250} />
+            <TextField multiline name="description" placeholder="Enter a description" requiredString />
             <Spacer mt={3} />
           </Grid>
           {productType === "Bottom" && (
