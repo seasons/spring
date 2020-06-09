@@ -9,7 +9,6 @@ import { GeneralSection } from "./GeneralSection"
 import {
   ProductUpsertQuery,
   ProductUpsertQuery_brands,
-  ProductUpsertQuery_categories,
   ProductUpsertQuery_productModels,
 } from "generated/ProductUpsertQuery"
 import { ProductEditQuery_product } from "generated/ProductEditQuery"
@@ -108,7 +107,6 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}
-            categories={data.categories.filter(Boolean) as ProductUpsertQuery_categories[]}
             isEditing={isEditing}
             models={data.productModels as ProductUpsertQuery_productModels[]}
             setProductType={setProductType}

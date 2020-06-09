@@ -42,12 +42,6 @@ export interface ProductEditQuery_brands {
   slug: string
 }
 
-export interface ProductEditQuery_categories {
-  __typename: "Category"
-  id: string
-  name: string
-}
-
 export interface ProductEditQuery_inventoryStatuses_enumValues {
   __typename: "__EnumValue"
   name: string
@@ -225,7 +219,6 @@ export interface ProductEditQuery {
   bottomSizes: (ProductEditQuery_bottomSizes | null)[]
   bottomSizeTypes: ProductEditQuery_bottomSizeTypes | null
   brands: (ProductEditQuery_brands | null)[]
-  categories: (ProductEditQuery_categories | null)[]
   inventoryStatuses: ProductEditQuery_inventoryStatuses | null
   physicalProductStatuses: ProductEditQuery_physicalProductStatuses | null
   productArchitectures: ProductEditQuery_productArchitectures | null

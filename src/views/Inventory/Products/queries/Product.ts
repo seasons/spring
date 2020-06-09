@@ -20,11 +20,6 @@ export const ProductUpsertFragment = gql`
       slug
     }
 
-    categories {
-      id
-      name
-    }
-
     inventoryStatuses: __type(name: "InventoryStatus") {
       enumValues {
         name
