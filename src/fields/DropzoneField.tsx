@@ -6,6 +6,7 @@ import { FormControl } from "components"
 import { Field, ChildFieldProps } from "./Field"
 import { UploadFileIcon } from "icons"
 import { colors } from "theme/colors"
+import styledC from "styled-components"
 
 export type DropzoneFieldProps = ChildFieldProps & {
   index: number
@@ -58,7 +59,9 @@ export const DropzoneField: React.FC<DropzoneFieldProps> = ({
               />
               {imagePreview ? (
                 <Box justifyContent="center" alignItems="center">
-                  <img src={imagePreview} alt="Preview" style={{ height: CONTAINER_HEIGHT, objectFit: "contain" }} />
+                  <ImageWrapper aspectRatio={0.66}>
+                    <img src={imagePreview} alt="Preview" style={{ height: CONTAINER_HEIGHT, objectFit: "contain" }} />
+                  </ImageWrapper>
                 </Box>
               ) : (
                 <>
@@ -79,3 +82,12 @@ const Wrapper = styled(Box)({
   borderRadius: 4,
   height: CONTAINER_HEIGHT,
 })
+
+const ImageWrapper = styledC(Box)<{ aspectRatio: number; hideBackground: boolean }>`
+  height: 0;
+  padding-bottom: calc(100% * ${p => p.aspectRatio});
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: ${p => (p.hideBackground ? "transparent" : colors.black04)};
+`
