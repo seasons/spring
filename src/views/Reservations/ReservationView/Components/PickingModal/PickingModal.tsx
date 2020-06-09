@@ -90,7 +90,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
         setProductStates(updatedProductStates)
 
         const pickedCount = Object.values(updatedProductStates).filter((a: any) => !!a.picked).length
-        setShouldAllowSave(pickedCount === reservation.products.length)
+        setShouldAllowSave(pickedCount === availableProducts.length)
       } else {
         toggleSnackbar({
           show: true,
