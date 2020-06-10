@@ -92,7 +92,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   return (
     <Container maxWidth={false}>
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
-        <Overview data={data} product={data.product} />
+        <Overview data={data} product={data.product} toggleSnackbar={toggleSnackbar} />
       </Wizard>
       <Spacer mt={9} />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
