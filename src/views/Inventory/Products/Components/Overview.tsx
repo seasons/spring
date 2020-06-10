@@ -51,6 +51,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
       return
     }
 
+    // Update product status to be [Stored]
     const result = await updateProduct({
       variables: {
         where: { id: product?.id },
@@ -99,7 +100,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
     },
   ]
 
-  // Only show Offload status if editing product
+  // Only show Offload and Stored status if editing product and neither should be selectable
   if (isEditing) {
     statuses.push({
       value: "Offloaded",
