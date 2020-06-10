@@ -11,7 +11,7 @@ import { Header } from "./Header"
 import { HistoryView } from "./History"
 import { MemberViewProps } from "./interfaces"
 import { PersonalView } from "./Personal"
-import { PushNotificationsView } from "./PushNotifications"
+import { PushNotificationsView } from "./Notifications"
 
 const useStyles = makeStyles<Theme>(theme => ({
   tabs: {

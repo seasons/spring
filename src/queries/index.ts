@@ -9,6 +9,7 @@ import Customer from "./Customer"
 import Package from "./Package"
 import PhysicalProduct from "./PhysicalProduct"
 import Size from "./Size"
+import PushNotificationReceipt from "./PushNotificationReceipt"
 
 export default {
   Product,
@@ -19,6 +20,7 @@ export default {
   Package,
   PhysicalProduct,
   Size,
+  PushNotificationReceipt,
   Category: {
     [GET_LIST]: gql`
       fragment category on Category {
