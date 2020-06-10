@@ -1,4 +1,4 @@
-import { ListSubheader, MenuList, MenuItem, Select } from "@material-ui/core"
+import { ListSubheader, MenuItem, Select } from "@material-ui/core"
 import React from "react"
 import { Field, ChildFieldProps } from "./Field"
 

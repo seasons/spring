@@ -766,12 +766,42 @@ export interface CustomerDetailWhereUniqueInput {
   id?: string | null
 }
 
+export interface CustomerMembershipCreateWithoutCustomerInput {
+  id?: string | null
+  subscriptionId: string
+  pauseRequests?: PauseRequestCreateManyWithoutMembershipInput | null
+}
+
+export interface CustomerMembershipUpdateOneWithoutCustomerInput {
+  create?: CustomerMembershipCreateWithoutCustomerInput | null
+  connect?: CustomerMembershipWhereUniqueInput | null
+  disconnect?: boolean | null
+  delete?: boolean | null
+  update?: CustomerMembershipUpdateWithoutCustomerDataInput | null
+  upsert?: CustomerMembershipUpsertWithoutCustomerInput | null
+}
+
+export interface CustomerMembershipUpdateWithoutCustomerDataInput {
+  subscriptionId?: string | null
+  pauseRequests?: PauseRequestUpdateManyWithoutMembershipInput | null
+}
+
+export interface CustomerMembershipUpsertWithoutCustomerInput {
+  update: CustomerMembershipUpdateWithoutCustomerDataInput
+  create: CustomerMembershipCreateWithoutCustomerInput
+}
+
+export interface CustomerMembershipWhereUniqueInput {
+  id?: string | null
+}
+
 export interface CustomerUpdateInput {
   status?: CustomerStatus | null
   plan?: Plan | null
   user?: UserUpdateOneRequiredInput | null
   detail?: CustomerDetailUpdateOneInput | null
   billingInfo?: BillingInfoUpdateOneInput | null
+  membership?: CustomerMembershipUpdateOneWithoutCustomerInput | null
   bagItems?: BagItemUpdateManyWithoutCustomerInput | null
   reservations?: ReservationUpdateManyWithoutCustomerInput | null
 }
@@ -1124,6 +1154,116 @@ export interface PackageUpsertNestedInput {
 }
 
 export interface PackageWhereUniqueInput {
+  id?: string | null
+}
+
+export interface PauseRequestCreateManyWithoutMembershipInput {
+  create?: PauseRequestCreateWithoutMembershipInput[] | null
+  connect?: PauseRequestWhereUniqueInput[] | null
+}
+
+export interface PauseRequestCreateWithoutMembershipInput {
+  id?: string | null
+  pausePending: boolean
+  pauseDate?: any | null
+  resumeDate?: any | null
+}
+
+export interface PauseRequestScalarWhereInput {
+  AND?: PauseRequestScalarWhereInput[] | null
+  OR?: PauseRequestScalarWhereInput[] | null
+  NOT?: PauseRequestScalarWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  pausePending?: boolean | null
+  pausePending_not?: boolean | null
+  pauseDate?: any | null
+  pauseDate_not?: any | null
+  pauseDate_in?: any[] | null
+  pauseDate_not_in?: any[] | null
+  pauseDate_lt?: any | null
+  pauseDate_lte?: any | null
+  pauseDate_gt?: any | null
+  pauseDate_gte?: any | null
+  resumeDate?: any | null
+  resumeDate_not?: any | null
+  resumeDate_in?: any[] | null
+  resumeDate_not_in?: any[] | null
+  resumeDate_lt?: any | null
+  resumeDate_lte?: any | null
+  resumeDate_gt?: any | null
+  resumeDate_gte?: any | null
+}
+
+export interface PauseRequestUpdateManyDataInput {
+  pausePending?: boolean | null
+  pauseDate?: any | null
+  resumeDate?: any | null
+}
+
+export interface PauseRequestUpdateManyWithWhereNestedInput {
+  where: PauseRequestScalarWhereInput
+  data: PauseRequestUpdateManyDataInput
+}
+
+export interface PauseRequestUpdateManyWithoutMembershipInput {
+  create?: PauseRequestCreateWithoutMembershipInput[] | null
+  connect?: PauseRequestWhereUniqueInput[] | null
+  set?: PauseRequestWhereUniqueInput[] | null
+  disconnect?: PauseRequestWhereUniqueInput[] | null
+  delete?: PauseRequestWhereUniqueInput[] | null
+  update?: PauseRequestUpdateWithWhereUniqueWithoutMembershipInput[] | null
+  updateMany?: PauseRequestUpdateManyWithWhereNestedInput[] | null
+  deleteMany?: PauseRequestScalarWhereInput[] | null
+  upsert?: PauseRequestUpsertWithWhereUniqueWithoutMembershipInput[] | null
+}
+
+export interface PauseRequestUpdateWithWhereUniqueWithoutMembershipInput {
+  where: PauseRequestWhereUniqueInput
+  data: PauseRequestUpdateWithoutMembershipDataInput
+}
+
+export interface PauseRequestUpdateWithoutMembershipDataInput {
+  pausePending?: boolean | null
+  pauseDate?: any | null
+  resumeDate?: any | null
+}
+
+export interface PauseRequestUpsertWithWhereUniqueWithoutMembershipInput {
+  where: PauseRequestWhereUniqueInput
+  update: PauseRequestUpdateWithoutMembershipDataInput
+  create: PauseRequestCreateWithoutMembershipInput
+}
+
+export interface PauseRequestWhereUniqueInput {
   id?: string | null
 }
 
@@ -2336,6 +2476,202 @@ export interface ProductWhereUniqueInput {
   slug?: string | null
 }
 
+export interface PushNotificationReceiptCreateManyWithoutUsersInput {
+  create?: PushNotificationReceiptCreateWithoutUsersInput[] | null
+  connect?: PushNotificationReceiptWhereUniqueInput[] | null
+}
+
+export interface PushNotificationReceiptCreateWithoutUsersInput {
+  id?: string | null
+  route?: string | null
+  screen?: string | null
+  uri?: string | null
+  interest?: string | null
+  body: string
+  title?: string | null
+  sentAt: any
+}
+
+export interface PushNotificationReceiptScalarWhereInput {
+  AND?: PushNotificationReceiptScalarWhereInput[] | null
+  OR?: PushNotificationReceiptScalarWhereInput[] | null
+  NOT?: PushNotificationReceiptScalarWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  route?: string | null
+  route_not?: string | null
+  route_in?: string[] | null
+  route_not_in?: string[] | null
+  route_lt?: string | null
+  route_lte?: string | null
+  route_gt?: string | null
+  route_gte?: string | null
+  route_contains?: string | null
+  route_not_contains?: string | null
+  route_starts_with?: string | null
+  route_not_starts_with?: string | null
+  route_ends_with?: string | null
+  route_not_ends_with?: string | null
+  screen?: string | null
+  screen_not?: string | null
+  screen_in?: string[] | null
+  screen_not_in?: string[] | null
+  screen_lt?: string | null
+  screen_lte?: string | null
+  screen_gt?: string | null
+  screen_gte?: string | null
+  screen_contains?: string | null
+  screen_not_contains?: string | null
+  screen_starts_with?: string | null
+  screen_not_starts_with?: string | null
+  screen_ends_with?: string | null
+  screen_not_ends_with?: string | null
+  uri?: string | null
+  uri_not?: string | null
+  uri_in?: string[] | null
+  uri_not_in?: string[] | null
+  uri_lt?: string | null
+  uri_lte?: string | null
+  uri_gt?: string | null
+  uri_gte?: string | null
+  uri_contains?: string | null
+  uri_not_contains?: string | null
+  uri_starts_with?: string | null
+  uri_not_starts_with?: string | null
+  uri_ends_with?: string | null
+  uri_not_ends_with?: string | null
+  interest?: string | null
+  interest_not?: string | null
+  interest_in?: string[] | null
+  interest_not_in?: string[] | null
+  interest_lt?: string | null
+  interest_lte?: string | null
+  interest_gt?: string | null
+  interest_gte?: string | null
+  interest_contains?: string | null
+  interest_not_contains?: string | null
+  interest_starts_with?: string | null
+  interest_not_starts_with?: string | null
+  interest_ends_with?: string | null
+  interest_not_ends_with?: string | null
+  body?: string | null
+  body_not?: string | null
+  body_in?: string[] | null
+  body_not_in?: string[] | null
+  body_lt?: string | null
+  body_lte?: string | null
+  body_gt?: string | null
+  body_gte?: string | null
+  body_contains?: string | null
+  body_not_contains?: string | null
+  body_starts_with?: string | null
+  body_not_starts_with?: string | null
+  body_ends_with?: string | null
+  body_not_ends_with?: string | null
+  title?: string | null
+  title_not?: string | null
+  title_in?: string[] | null
+  title_not_in?: string[] | null
+  title_lt?: string | null
+  title_lte?: string | null
+  title_gt?: string | null
+  title_gte?: string | null
+  title_contains?: string | null
+  title_not_contains?: string | null
+  title_starts_with?: string | null
+  title_not_starts_with?: string | null
+  title_ends_with?: string | null
+  title_not_ends_with?: string | null
+  sentAt?: any | null
+  sentAt_not?: any | null
+  sentAt_in?: any[] | null
+  sentAt_not_in?: any[] | null
+  sentAt_lt?: any | null
+  sentAt_lte?: any | null
+  sentAt_gt?: any | null
+  sentAt_gte?: any | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+}
+
+export interface PushNotificationReceiptUpdateManyDataInput {
+  route?: string | null
+  screen?: string | null
+  uri?: string | null
+  interest?: string | null
+  body?: string | null
+  title?: string | null
+  sentAt?: any | null
+}
+
+export interface PushNotificationReceiptUpdateManyWithWhereNestedInput {
+  where: PushNotificationReceiptScalarWhereInput
+  data: PushNotificationReceiptUpdateManyDataInput
+}
+
+export interface PushNotificationReceiptUpdateManyWithoutUsersInput {
+  create?: PushNotificationReceiptCreateWithoutUsersInput[] | null
+  connect?: PushNotificationReceiptWhereUniqueInput[] | null
+  set?: PushNotificationReceiptWhereUniqueInput[] | null
+  disconnect?: PushNotificationReceiptWhereUniqueInput[] | null
+  delete?: PushNotificationReceiptWhereUniqueInput[] | null
+  update?: PushNotificationReceiptUpdateWithWhereUniqueWithoutUsersInput[] | null
+  updateMany?: PushNotificationReceiptUpdateManyWithWhereNestedInput[] | null
+  deleteMany?: PushNotificationReceiptScalarWhereInput[] | null
+  upsert?: PushNotificationReceiptUpsertWithWhereUniqueWithoutUsersInput[] | null
+}
+
+export interface PushNotificationReceiptUpdateWithWhereUniqueWithoutUsersInput {
+  where: PushNotificationReceiptWhereUniqueInput
+  data: PushNotificationReceiptUpdateWithoutUsersDataInput
+}
+
+export interface PushNotificationReceiptUpdateWithoutUsersDataInput {
+  route?: string | null
+  screen?: string | null
+  uri?: string | null
+  interest?: string | null
+  body?: string | null
+  title?: string | null
+  sentAt?: any | null
+}
+
+export interface PushNotificationReceiptUpsertWithWhereUniqueWithoutUsersInput {
+  where: PushNotificationReceiptWhereUniqueInput
+  update: PushNotificationReceiptUpdateWithoutUsersDataInput
+  create: PushNotificationReceiptCreateWithoutUsersInput
+}
+
+export interface PushNotificationReceiptWhereUniqueInput {
+  id?: string | null
+}
+
 export interface RefundInvoiceInput {
   invoiceId: string
   refundAmount?: number | null
@@ -2986,8 +3322,9 @@ export interface UserCreateInput {
   firstName: string
   lastName: string
   role?: UserRole | null
-  pushNotifications?: PushNotificationStatus | null
+  pushNotificationStatus?: PushNotificationStatus | null
   roles?: UserCreaterolesInput | null
+  pushNotifications?: PushNotificationReceiptCreateManyWithoutUsersInput | null
 }
 
 export interface UserCreateOneInput {
@@ -3005,8 +3342,9 @@ export interface UserUpdateDataInput {
   firstName?: string | null
   lastName?: string | null
   role?: UserRole | null
-  pushNotifications?: PushNotificationStatus | null
+  pushNotificationStatus?: PushNotificationStatus | null
   roles?: UserUpdaterolesInput | null
+  pushNotifications?: PushNotificationReceiptUpdateManyWithoutUsersInput | null
 }
 
 export interface UserUpdateOneInput {

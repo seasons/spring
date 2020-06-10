@@ -9,6 +9,18 @@ import { Plan, CustomerStatus, InvoiceStatus, CreditNoteReasonCode, CreditNoteSt
 // GraphQL fragment: customer
 // ====================================================
 
+export interface customer_user_pushNotifications {
+  __typename: "PushNotificationReceipt"
+  id: string
+  route: string | null
+  screen: string | null
+  uri: string | null
+  interest: string | null
+  body: string
+  title: string | null
+  sentAt: any
+}
+
 export interface customer_user {
   __typename: "User"
   id: string
@@ -16,6 +28,7 @@ export interface customer_user {
   firstName: string
   lastName: string
   createdAt: any
+  pushNotifications: customer_user_pushNotifications[] | null
 }
 
 export interface customer_invoices_creditNotes {
