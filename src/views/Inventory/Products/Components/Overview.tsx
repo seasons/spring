@@ -5,6 +5,7 @@ import { getEnumValues, getFormSelectChoices } from "utils/form"
 import { Grid } from "@material-ui/core"
 
 import materialsJSON from "data/materials.json"
+import { SelectChoice } from "fields/SelectField"
 import { GeneralSection } from "./GeneralSection"
 import {
   ProductUpsertQuery,
@@ -52,7 +53,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
 
   const isEditing = !!product?.variants
 
-  const statuses = [
+  const statuses: SelectChoice[] = [
     {
       value: "Available",
       display: "Available",
@@ -68,6 +69,12 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
     statuses.push({
       value: "Offloaded",
       display: "Offloaded",
+      disabled: true,
+    })
+    statuses.push({
+      value: "Stored",
+      display: "Stored",
+      disabled: true,
     })
   }
 

@@ -1,10 +1,11 @@
-import { ListSubheader, MenuList, MenuItem, Select } from "@material-ui/core"
+import { ListSubheader, MenuItem, Select } from "@material-ui/core"
 import React from "react"
 import { Field, ChildFieldProps } from "./Field"
 
 import { FormControl } from "../components/FormControl"
 
 export type SelectChoice = {
+  disabled?: boolean
   display: any
   value: any
 }
@@ -48,8 +49,8 @@ export const SelectField: React.FC<SelectFieldProps> = ({
             }}
           >
             {choices &&
-              choices.map(({ display, value }, index) => (
-                <MenuItem key={index} value={value}>
+              choices.map(({ disabled, display, value }, index) => (
+                <MenuItem key={index} value={value} disabled={disabled}>
                   {display}
                 </MenuItem>
               ))}
