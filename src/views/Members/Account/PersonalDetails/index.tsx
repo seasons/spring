@@ -24,6 +24,7 @@ import { MEMBER_DETAIL_UPDATE } from "../../queries"
 import { MemberInviteModal } from "../../MemberInviteModal"
 
 const STATUS_CREATED = "Created"
+const STATUS_INVITED = "Invited"
 
 const InviteButton = (props: ActionButtonProps) => {
   return (
@@ -89,7 +90,11 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
         })
       })
       .catch(error => {
-        return <ComponentError />
+        toggleSnackbar({
+          show: true,
+          message: "Error updating member",
+          status: "error",
+        })
       })
   }
   const openConfirmInviteModal = id => {
@@ -102,15 +107,34 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
   }
 
   const inviteMember = member => {
-    console.log("inviting member", member)
-
-    setMemberToInvite({ id: "" })
-    setConfirmInviteModal(false)
-    toggleSnackbar({
-      show: true,
-      message: "Member Invited",
-      status: "success",
+    updateDetails({
+      variables: {
+        id: member.id,
+        data: { status: STATUS_INVITED },
+      },
     })
+      .then(() => {
+        // (1) update state so card reflects latest data optimistically
+        updateMember({
+          ...member,
+          status: STATUS_INVITED,
+        })
+
+        setMemberToInvite({ id: "" })
+        setConfirmInviteModal(false)
+        toggleSnackbar({
+          show: true,
+          message: "Member Invited",
+          status: "success",
+        })
+      })
+      .catch(error => {
+        toggleSnackbar({
+          show: true,
+          message: "Error inviting member",
+          status: "error",
+        })
+      })
   }
 
   // (2) update Redux store optimistically to
