@@ -1,17 +1,19 @@
-import { Header } from "components/Header"
-import { EntityCountField, FullNameField, StatusField, ActionButtons } from "fields"
 import React, { useState } from "react"
-import { Datagrid, List, TextField } from "@seasons/react-admin"
+import { Datagrid, List, TextField, useRefresh } from "@seasons/react-admin"
 import { Link as RouterLink } from "react-router-dom"
 import { Box, Button, Card, Container } from "@material-ui/core"
-import { MemberViewProps, ActionButtonProps } from "./interfaces"
+import { useMutation } from "@apollo/react-hooks"
+import { Snackbar } from "components"
+import { SnackbarState } from "components/Snackbar"
+import { Header } from "components/Header"
+import { EntityCountField, FullNameField, StatusField, ActionButtons } from "fields"
 import { MemberFilter } from "./MemberFilter"
 import { MemberCreateModal } from "./MemberCreate"
 import { MemberInviteModal } from "./MemberInviteModal"
-import { Snackbar } from "components"
-import { SnackbarState } from "components/Snackbar"
-
-const STATUS_WAITLISTED = "Waitlisted"
+import { MemberViewProps, ActionButtonProps } from "./interfaces"
+import { MEMBER_DETAIL_UPDATE } from "./queries"
+import { updateCustomerVariables } from "generated/updateCustomer"
+import { CustomerStatus } from "generated/globalTypes"
 
 const ViewButton = (props: ActionButtonProps) => {
   const id = props.record?.id
@@ -26,7 +28,7 @@ const ViewButton = (props: ActionButtonProps) => {
 const InviteButton = (props: ActionButtonProps) => {
   return (
     <Box component="span" ml={2}>
-      {props.record?.status === STATUS_WAITLISTED && (
+      {props.record?.status === CustomerStatus.Waitlisted && (
         <Button size="small" variant="contained" color="secondary" onClick={() => props.actionHandler(props.record)}>
           Invite
         </Button>
@@ -39,6 +41,28 @@ const inviteModalBody = "This will send the member an email and update their sta
 
 export const MemberList: React.FC<MemberViewProps> = ({ match, history, props }) => {
   const [openEdit, setOpenEdit] = useState(false)
+  const refresh = useRefresh()
+
+  const [updateDetails] = useMutation<any, updateCustomerVariables>(MEMBER_DETAIL_UPDATE, {
+    onCompleted: () => {
+      setMemberToInvite({ id: "" })
+      setConfirmInviteModal(false)
+      toggleSnackbar({
+        show: true,
+        message: "Member Invited",
+        status: "success",
+      })
+      refresh()
+    },
+    onError: () => {
+      toggleSnackbar({
+        show: true,
+        message: "Error inviting member",
+        status: "error",
+      })
+    },
+  })
+
   const [confirmInviteModalIsOpen, setConfirmInviteModal] = useState(false)
   const [memberToInvite, setMemberToInvite] = useState({
     id: "",
@@ -68,14 +92,11 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
   }
 
   const inviteMember = member => {
-    console.log("inviting member", member)
-
-    setMemberToInvite({ id: "" })
-    setConfirmInviteModal(false)
-    toggleSnackbar({
-      show: true,
-      message: "Member Invited",
-      status: "success",
+    updateDetails({
+      variables: {
+        id: member.id,
+        data: { status: CustomerStatus.Invited },
+      },
     })
   }
 

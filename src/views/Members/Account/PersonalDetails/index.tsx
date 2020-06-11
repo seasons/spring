@@ -1,15 +1,6 @@
 import { updateCustomer as updateCustomerAction } from "actions/customerActions"
 import { ActionButtons } from "fields"
-import {
-  CardContent,
-  ComponentError,
-  EditButton,
-  EditModal,
-  IndicatorMap,
-  Label,
-  TableHeader,
-  Snackbar,
-} from "components"
+import { CardContent, EditButton, EditModal, IndicatorMap, Label, TableHeader, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import moment from "moment"
 import React, { useEffect, useState } from "react"
@@ -18,18 +9,15 @@ import { MembershipPlanOptions, MemberStatusOptions } from "../../Member.types"
 import { splitTitleCase } from "utils/strings"
 import { useMutation } from "@apollo/react-hooks"
 import { Button, Card, Table, TableBody, TableCell, TableRow, Box } from "@material-ui/core"
-
+import { CustomerStatus } from "generated/globalTypes"
 import { MemberSubViewProps, ActionButtonProps } from "../../interfaces"
 import { MEMBER_DETAIL_UPDATE } from "../../queries"
 import { MemberInviteModal } from "../../MemberInviteModal"
 
-const STATUS_CREATED = "Created"
-const STATUS_INVITED = "Invited"
-
 const InviteButton = (props: ActionButtonProps) => {
   return (
     <Box component="span" ml={2}>
-      {props.record?.status === STATUS_CREATED && (
+      {props.record?.status === CustomerStatus.Created && (
         <Button size="small" variant="outlined" color="primary" onClick={() => props.actionHandler(props.record)}>
           Invite
         </Button>
@@ -110,14 +98,14 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
     updateDetails({
       variables: {
         id: member.id,
-        data: { status: STATUS_INVITED },
+        data: { status: CustomerStatus.Invited },
       },
     })
       .then(() => {
         // (1) update state so card reflects latest data optimistically
         updateMember({
           ...member,
-          status: STATUS_INVITED,
+          status: CustomerStatus.Invited,
         })
 
         setMemberToInvite({ id: "" })
