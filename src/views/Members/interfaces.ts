@@ -13,6 +13,13 @@ interface memberEntryValue {
   helperText: string
 }
 
+interface invoice {
+  id: string
+  amount: number
+  amountNormalized: string
+}
+
+// public interfaces
 export interface NewMemberProps {
   firstName: memberEntryValue
   email: memberEntryValue
@@ -24,7 +31,6 @@ export interface NewMemberProps {
 export interface MemberSubViewProps {
   adminKey?: string
   member: customer
-
   match?: { params: { id: string } }
 }
 
@@ -60,8 +66,7 @@ export interface RefundInvoiceModalProps {
   onSave(values: {}): void
 }
 
-interface invoice {
-  id: string
-  amount: number
-  amountNormalized: string
+export interface ActionButtonProps {
+  record?: { id: string; status: string }
+  actionHandler: (record?: {}) => void
 }

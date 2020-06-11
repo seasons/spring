@@ -1,10 +1,10 @@
-import { StatusField } from "fields"
+import { StatusField, ActionButtons } from "fields"
 import { makeStyles } from "@material-ui/styles"
 import React, { useState } from "react"
 import { Datagrid, TextField } from "@seasons/react-admin"
 import moment from "moment"
 import { Box, Card, Button, Grid, CardHeader, Divider, Theme } from "@material-ui/core"
-import { MemberSubViewProps } from "../interfaces"
+import { MemberSubViewProps, ActionButtonProps } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
 import { PersonalDetails } from "./PersonalDetails"
 import { centsToAmount, splitTitleCase } from "utils/strings"
@@ -24,6 +24,37 @@ const BtnIcon = styled(OpenInNewIcon)`
   padding-left: 5px;
 `
 
+const ViewButton = (props: ActionButtonProps) => {
+  return (
+    <a
+      style={{ textDecoration: "none" }}
+      href={formatChargebeeInvoiceURL(props.record?.id)}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Box component="span" mr={2}>
+        <Button color="primary" size="small" variant="outlined">
+          View <BtnIcon />
+        </Button>
+      </Box>
+    </a>
+  )
+}
+
+const RefundButton = (props: ActionButtonProps) => {
+  return (
+    <Button
+      disabled={props.record?.status === STATUS_REFUNDED}
+      color="primary"
+      size="small"
+      variant="outlined"
+      onClick={() => props.actionHandler(props.record)}
+    >
+      Refund
+    </Button>
+  )
+}
+
 const useStyles = makeStyles<Theme>(() => ({
   cardHeader: {
     "& .MuiTypography-h5": {
@@ -31,41 +62,6 @@ const useStyles = makeStyles<Theme>(() => ({
     },
   },
 }))
-
-interface ActionButtonsProps {
-  record?: { id: string; status: string }
-  label?: string
-  handleAction: (record: {}) => void
-}
-
-const ActionButtons: React.FC<ActionButtonsProps> = ({ record = {}, label, handleAction }) => {
-  return (
-    <>
-      <a
-        style={{ textDecoration: "none" }}
-        href={formatChargebeeInvoiceURL(record.id)}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Box component="span" mr={2}>
-          <Button color="primary" size="small" variant="outlined">
-            View <BtnIcon />
-          </Button>
-        </Box>
-      </a>
-
-      <Button
-        disabled={record.status === STATUS_REFUNDED}
-        color="primary"
-        size="small"
-        variant="outlined"
-        onClick={() => handleAction(record)}
-      >
-        Refund
-      </Button>
-    </>
-  )
-}
 
 // adminKey is the name of the property in Redux's admin store that holds the data we need to update.
 // it is defined dynamically in MemberView.tsx and used by leaf components to optimistically update state
@@ -190,7 +186,10 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
               <TextField source="closingDateNormalized" label="Closing Date" />
               <TextField source="dueDateNormalized" label="Due date" />
               <TextField source="amountNormalized" label="Amount" />
-              <ActionButtons label="Actions" handleAction={record => handleRefundModalOpen(record)} />
+              <ActionButtons label="Actions">
+                <ViewButton actionHandler={handleRefundModalOpen} />
+                <RefundButton actionHandler={handleRefundModalOpen} />
+              </ActionButtons>
             </Datagrid>
           </Card>
         </Grid>
