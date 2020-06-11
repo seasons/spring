@@ -24,7 +24,6 @@ export const ProductCreate = props => {
         message: error?.message,
         status: "error",
       })
-      console.log("ERROR:", error)
     },
   })
   const [values, setValues] = useState({})
@@ -44,10 +43,8 @@ export const ProductCreate = props => {
   }
 
   const onSubmit = async values => {
-    console.log("VALUES:", values)
     // Extract appropriate values from the WizardForm
     const productUpsertData = getProductUpsertData(values)
-    console.log("PRODUCT UPSERT DATA:", productUpsertData)
     const result = await upsertProduct({
       variables: {
         input: productUpsertData,

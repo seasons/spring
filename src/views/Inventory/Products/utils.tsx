@@ -116,7 +116,6 @@ export const getProductUpsertData = (values: any) => {
       if (["dateOrdered", "dateReceived"].includes(fieldKey)) {
         // Convert date to ISO string format
         fieldValue = getDateISOString(value)
-        console.log("DATE VALUE:", fieldValue)
       } else if (fieldKey === "unitCost") {
         // Convert to float
         fieldValue = parseFloat(value) || null
