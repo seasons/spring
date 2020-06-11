@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { Datagrid, TextField } from "@seasons/react-admin"
 import moment from "moment"
 import { Box, Card, Button, Grid, CardHeader, Divider, Theme } from "@material-ui/core"
-import { MemberSubViewProps } from "../interfaces"
+import { MemberSubViewProps, ActionButtonProps } from "../interfaces"
 import { PaymentShipping } from "./PaymentShipping"
 import { PersonalDetails } from "./PersonalDetails"
 import { centsToAmount, splitTitleCase } from "utils/strings"
@@ -23,11 +23,6 @@ const BtnIcon = styled(OpenInNewIcon)`
   font-size: 18px;
   padding-left: 5px;
 `
-
-interface ActionButtonProps {
-  record?: { id: string; status: string }
-  actionHandler: (record?: {}) => void
-}
 
 const ViewButton = (props: ActionButtonProps) => {
   return (
