@@ -67,6 +67,6 @@ export interface RefundInvoiceModalProps {
 }
 
 export interface ActionButtonProps {
-  record?: { id: string; status: string; user?: { id: string } }
+  record?: { id: string; status: string }
   actionHandler: (record?: {}) => void
 }

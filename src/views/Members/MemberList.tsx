@@ -14,8 +14,8 @@ import { SnackbarState } from "components/Snackbar"
 const STATUS_WAITLISTED = "Waitlisted"
 
 const ViewButton = (props: ActionButtonProps) => {
-  const id = props.record?.user?.id
-  const entityLink = `/members/${id}`
+  const id = props.record?.id
+  const entityLink = `/members/${id}/account`
   return (
     <Button component={RouterLink} size="small" to={entityLink} variant="contained" color="secondary">
       View
@@ -34,6 +34,8 @@ const InviteButton = (props: ActionButtonProps) => {
     </Box>
   )
 }
+
+const inviteModalBody = "This will send the member an email and update their status."
 
 export const MemberList: React.FC<MemberViewProps> = ({ match, history, props }) => {
   const [openEdit, setOpenEdit] = useState(false)
@@ -118,9 +120,10 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
           </Datagrid>
         </List>
       </Card>
-
       <MemberCreateModal onClose={handleEditClose} open={openEdit} history={history} />
       <MemberInviteModal
+        title="Confirm Invite"
+        body={inviteModalBody}
         onSave={() => inviteMember(memberToInvite)}
         onClose={closeConfirmInviteModal}
         open={confirmInviteModalIsOpen}
