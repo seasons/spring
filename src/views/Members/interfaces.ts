@@ -24,7 +24,6 @@ export interface NewMemberProps {
 export interface MemberSubViewProps {
   adminKey?: string
   member: customer
-
   match?: { params: { id: string } }
 }
 
