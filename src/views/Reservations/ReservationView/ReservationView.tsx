@@ -70,7 +70,7 @@ export const ReservationView = ({ match, history }) => {
     return <Box>{error.message}</Box>
   }
 
-  const isReservationUnfulfilled = ["New", "InQueue", "OnHold", "Packed"].includes(data?.status)
+  const isReservationUnfulfilled = ["Queued", "Packed"].includes(data?.status)
 
   const primaryButton = isReservationUnfulfilled
     ? {

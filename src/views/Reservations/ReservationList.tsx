@@ -13,15 +13,14 @@ const Filters = props => (
         label="Status"
         source="status"
         choices={[
-          { id: "New", name: "New" },
-          { id: "InQueue", name: "In Queue" },
-          { id: "OnHold", name: "On Hold" },
+          {},
+          { id: "Queued", name: "Queued" },
           { id: "Packed", name: "Packed" },
           { id: "Shipped", name: "Shipped" },
-          { id: "InTransit", name: "In Transit" },
-          { id: "Received", name: "Received" },
-          { id: "Cancelled", name: "Cancelled" },
+          { id: "Delivered", name: "Delivered" },
           { id: "Completed", name: "Completed" },
+          { id: "Cancelled", name: "Cancelled" },
+          { id: "Blocked", name: "Blocked" },
         ]}
         alwaysOn
       />
@@ -32,7 +31,7 @@ const Filters = props => (
           {
             label: "Outgoing",
             id: "outgoing",
-            value: ["Queued", "InQueue", "Packed", "Shipped"],
+            value: ["Queued", "Packed", "Shipped"],
           },
           {
             label: "Incoming",
