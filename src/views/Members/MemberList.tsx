@@ -26,6 +26,7 @@ const ViewButton = (props: ActionButtonProps) => {
 }
 
 const InviteButton = (props: ActionButtonProps) => {
+  console.log("props.record", props.record)
   return (
     <Box component="span" ml={2}>
       {props.record?.status === CustomerStatus.Waitlisted && (
