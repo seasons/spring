@@ -116,7 +116,6 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
 
   const headerTitle = product?.name || "New product"
   const headerSubtitle = product?.brand?.name || "Please fill out all required fields"
-  const imageURLs = product?.images?.map(image => image?.url || "")
   const headerPrimaryBtn =
     isEditing && product?.status !== "Stored"
       ? {
@@ -145,7 +144,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
       />
       <Grid container spacing={5}>
         <Grid item xs={4}>
-          <PhotographySection imageURLs={imageURLs} numImages={4} />
+          <PhotographySection numImages={4} />
         </Grid>
         <Grid item xs={8}>
           <GeneralSection
