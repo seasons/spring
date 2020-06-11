@@ -85,7 +85,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
 
   const defaultSort = { field: "id", order: "ASC" }
   let normalizedInvoices = {}
-  let invoicesIds: string[] = []
+  let invoicesIDs: string[] = []
 
   member?.invoices?.forEach(inv => {
     if (!inv || !inv.id || !inv.creditNotes) {
@@ -106,7 +106,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
       amountNormalized: centsToAmount(inv.amount),
     }
 
-    invoicesIds.push(inv.id)
+    invoicesIDs.push(inv.id)
   })
 
   const [stateInvoices, setStateInvoices] = useState(normalizedInvoices)
@@ -179,7 +179,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
           <Card style={{ width: "100%" }}>
             <CardHeader className={classes.cardHeader} title="Invoices" />
             <Divider />
-            <Datagrid rowStyle={rowStyle} ids={invoicesIds} data={stateInvoices} currentSort={defaultSort}>
+            <Datagrid rowStyle={rowStyle} ids={invoicesIDs} data={stateInvoices} currentSort={defaultSort}>
               <TextField source="id" label="Invoice ID" />
               <TextField source="subscriptionId" label="Subscription ID" />
               <StatusField label="Status" />
