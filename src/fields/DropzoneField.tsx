@@ -14,7 +14,7 @@ export type DropzoneFieldProps = ChildFieldProps & {
   onReceivedImages: (images: File[], offset: number) => void
 }
 
-const CONTAINER_HEIGHT = 80
+const CONTAINER_HEIGHT = 85
 
 export const DropzoneField: React.FC<DropzoneFieldProps> = ({
   index,
@@ -58,7 +58,7 @@ export const DropzoneField: React.FC<DropzoneFieldProps> = ({
                 }}
               />
               {imagePreview ? (
-                <Box justifyContent="center" alignItems="center">
+                <Box display="flex" justifyContent="center" alignItems="center">
                   <ImageWrapper aspectRatio={0.66}>
                     <img src={imagePreview} alt="Preview" style={{ height: CONTAINER_HEIGHT, objectFit: "contain" }} />
                   </ImageWrapper>

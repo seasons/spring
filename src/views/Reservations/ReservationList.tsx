@@ -2,8 +2,7 @@ import React, { useContext } from "react"
 import { Datagrid, Filter, Loading, List, DataProviderContext, SelectInput, TextInput } from "@seasons/react-admin"
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
 import { Box, Container, Card } from "@material-ui/core"
-import { Header } from "components/Header"
-import { StatusInput } from "./Components/StatusInput"
+import { Header, StatusInput } from "components"
 
 const Filters = props => (
   <Box px={2}>

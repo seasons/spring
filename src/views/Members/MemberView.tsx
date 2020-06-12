@@ -27,7 +27,7 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, history, props }) => {
   const classes = useStyles()
-  const { tab: currentTab, id: memberId } = match.params
+  const { tab: currentTab, id: memberID } = match.params
   const tabs = [
     { value: "account", label: "Account" },
     { value: "personal", label: "Personal" },
@@ -37,7 +37,7 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
   const { data, loading, error } = useQueryWithStore({
     type: "getOne",
     resource: "Customer",
-    payload: { id: memberId },
+    payload: { id: memberID },
   })
 
   if (loading) return <Loading />
@@ -49,7 +49,7 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
   }
 
   if (!currentTab) {
-    return <Redirect to={`/members/${memberId}/account`} />
+    return <Redirect to={`/members/${memberID}/account`} />
   }
 
   const adminStoreKey = JSON.stringify({ type: "GET_ONE", resource: "Customer", payload: { id: data.id } })
@@ -75,15 +75,15 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
           <AccountView
             {...props}
             match={match}
-            basePath={`/members/${memberId}/account`}
+            basePath={`/members/${memberID}/account`}
             member={data}
             adminKey={adminStoreKey}
           />
         )}
         {currentTab === "personal" && (
-          <PersonalView {...props} basePath={`/members/${memberId}/personal`} member={data} adminKey={adminStoreKey} />
+          <PersonalView {...props} basePath={`/members/${memberID}/personal`} member={data} adminKey={adminStoreKey} />
         )}
-        {currentTab === "history" && <HistoryView {...props} basePath={`/members/${memberId}/history`} member={data} />}
+        {currentTab === "history" && <HistoryView {...props} basePath={`/members/${memberID}/history`} member={data} />}
       </Box>
     </Container>
   )

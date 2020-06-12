@@ -36,7 +36,7 @@ export interface customer_invoices {
   closingDate: any | null
   dueDate: any | null
   amount: number | null
-  creditNotes: customer_invoices_creditNotes[] | null
+  creditNotes: (customer_invoices_creditNotes | null)[] | null
 }
 
 export interface customer_reservations_products_productVariant_product_images {

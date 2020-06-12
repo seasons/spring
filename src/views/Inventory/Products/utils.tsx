@@ -60,7 +60,7 @@ export const getProductUpsertData = (values: any) => {
     architecture,
     bottomSizeType,
     brand: brandID,
-    category: categoryID,
+    category: categoryName,
     color: colorCode,
     description,
     functions,
@@ -81,7 +81,10 @@ export const getProductUpsertData = (values: any) => {
   const numImages = 4
   const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
 
-  const modelSizeDisplay = getModelSizeDisplay(productType, modelSizeName, bottomSizeType)
+  let modelSizeDisplay
+  if (modelSizeName) {
+    modelSizeDisplay = getModelSizeDisplay(productType, modelSizeName, bottomSizeType)
+  }
 
   // Get dictionary of product variant SKUs to their sizes
   const skusToSizes = {}
@@ -175,7 +178,7 @@ export const getProductUpsertData = (values: any) => {
     architecture: architecture,
     bottomSizeType,
     brandID,
-    categoryID,
+    categoryName,
     colorCode,
     description,
     functions: functions || [],
@@ -207,7 +210,7 @@ export const getProductUpdateData = (values: any) => {
     architecture,
     bottomSizeType,
     brand: brandID,
-    category: categoryID,
+    category: categoryName,
     color: colorCode,
     description,
     functions,
@@ -236,7 +239,7 @@ export const getProductUpdateData = (values: any) => {
     architecture,
     bottomSizeType,
     brand: { connect: { id: brandID } },
-    category: { connect: { id: categoryID } },
+    category: { connect: { name: categoryName } },
     color: { connect: { colorCode } },
     description,
     functions,
