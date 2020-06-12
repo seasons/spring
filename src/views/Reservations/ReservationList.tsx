@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Datagrid, Filter, Loading, List, DataProviderContext, TextInput } from "@seasons/react-admin"
+import { Datagrid, Filter, Loading, List, DataProviderContext, SelectInput, TextInput } from "@seasons/react-admin"
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
 import { Box, Container, Card } from "@material-ui/core"
 import { Header, StatusInput } from "components"
@@ -8,19 +8,34 @@ const Filters = props => (
   <Box px={2}>
     <Filter {...props}>
       <TextInput label="Search name" source="customer.user.firstName_contains" alwaysOn />
+      <SelectInput
+        label="Status"
+        source="status"
+        choices={[
+          {},
+          { id: "Queued", name: "Queued" },
+          { id: "Packed", name: "Packed" },
+          { id: "Shipped", name: "Shipped" },
+          { id: "Delivered", name: "Delivered" },
+          { id: "Completed", name: "Completed" },
+          { id: "Cancelled", name: "Cancelled" },
+          { id: "Blocked", name: "Blocked" },
+        ]}
+        alwaysOn
+      />
       <StatusInput
         source="status_in"
         tabs={[
           { label: "All", id: "all", value: [] },
           {
-            label: "Unfulfilled",
-            id: "unfulfilled",
-            value: ["New", "InQueue", "OnHold", "Packed"],
+            label: "Outgoing",
+            id: "outgoing",
+            value: ["Queued", "Packed", "Shipped"],
           },
           {
-            label: "Fulfilled",
-            id: "fulfilled",
-            value: ["Shipped", "InTransit", "Received", "Completed"],
+            label: "Incoming",
+            id: "incoming",
+            value: ["Shipped", "Delivered", "Completed"],
           },
         ]}
         alwaysOn
@@ -47,7 +62,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
           },
         ]}
       />
-      <Card>
+      <Box mb={2}>
         <List
           {...props}
           filters={<Filters />}
@@ -61,7 +76,6 @@ export const ReservationList = ({ staticContext, ...props }) => {
             field: "createdAt",
             order: "DESC",
           }}
-          component="div"
           resource="Reservation"
           title="Reservations"
         >
@@ -74,7 +88,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
             <ViewEntityField entityPath="reservation" source="id" label="Actions" />
           </Datagrid>
         </List>
-      </Card>
+      </Box>
     </Container>
   )
 }

@@ -64,7 +64,7 @@ export class Dashboard extends React.Component<DashboardProps> {
     const { hasError, errorMessage, errorInfo, openMenu } = this.state
 
     return (
-      <DataProviderContext>
+      <DataProviderContext.Consumer>
         {dataProvider => (
           <>
             <TopBar onMobileNavOpen={() => this.setState({ openMenu: true })} />
@@ -84,7 +84,7 @@ export class Dashboard extends React.Component<DashboardProps> {
             </Container>
           </>
         )}
-      </DataProviderContext>
+      </DataProviderContext.Consumer>
     )
   }
 }
