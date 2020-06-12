@@ -1,3 +1,4 @@
+import DateFnsUtils from "@date-io/date-fns"
 import { createBrowserHistory } from "history"
 import polyglotI18nProvider from "ra-i18n-polyglot"
 import React from "react"
@@ -10,6 +11,7 @@ import { ThemeProvider as SCThemeProvider } from "styled-components"
 
 import { ThemeProvider } from "@material-ui/core"
 import { StylesProvider } from "@material-ui/core/styles"
+import { MuiPickersUtilsProvider } from "@material-ui/pickers"
 
 import englishMessages from "./i18n/en"
 
@@ -54,21 +56,23 @@ class App extends React.Component {
         <StoreProvider store={store}>
           <DataProviderContext.Provider value={dataProvider}>
             <ApolloProvider client={client}>
-              <StylesProvider injectFirst>
-                <SCThemeProvider theme={theme}>
-                  <ThemeProvider theme={theme}>
-                    <Resource name="Product" intent="registration" />
-                    <Resource name="Customer" intent="registration" />
-                    <Resource name="Category" intent="registration" />
-                    <Resource name="Brand" intent="registration" />
-                    <Resource name="User" intent="registration" />
-                    <Resource name="Reservation" intent="registration" />
-                    <Resource name="Size" intent="registration" />
-                    <Resource name="Tag" intent="registration" />
-                    <Router history={history}>{renderRoutes(routes)}</Router>
-                  </ThemeProvider>
-                </SCThemeProvider>
-              </StylesProvider>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <StylesProvider injectFirst>
+                  <SCThemeProvider theme={theme}>
+                    <ThemeProvider theme={theme}>
+                      <Resource name="Product" intent="registration" />
+                      <Resource name="Customer" intent="registration" />
+                      <Resource name="Category" intent="registration" />
+                      <Resource name="Brand" intent="registration" />
+                      <Resource name="User" intent="registration" />
+                      <Resource name="Reservation" intent="registration" />
+                      <Resource name="Size" intent="registration" />
+                      <Resource name="Tag" intent="registration" />
+                      <Router history={history}>{renderRoutes(routes)}</Router>
+                    </ThemeProvider>
+                  </SCThemeProvider>
+                </StylesProvider>
+              </MuiPickersUtilsProvider>
             </ApolloProvider>
           </DataProviderContext.Provider>
         </StoreProvider>

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import Carousel from "react-images"
-import { useForm } from "react-final-form"
+import { useForm, useFormState } from "react-final-form"
 
 import { Box, Grid } from "@material-ui/core"
 
@@ -9,15 +9,19 @@ import { DropzoneField } from "fields"
 import { colors } from "theme/colors"
 
 export interface PhotographySectionProps {
-  imageURLs?: string[]
   numImages: number
 }
 
-export const PhotographySection: React.FC<PhotographySectionProps> = ({ imageURLs, numImages }) => {
+export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImages }) => {
   const {
     mutators: { setValue },
   } = useForm()
-  const [imagePreviews, setImagePreviews] = useState<any[]>([...Array(numImages)].map((_, index) => imageURLs?.[index]))
+  const { values } = useFormState()
+  const [imagePreviews, setImagePreviews] = useState<any[]>(
+    // Read the image files stored inside the form state by checking the keys
+    // image_0, image_1, etc and if file exists, convert it to a URL
+    [...Array(numImages)].map((_, index) => values[`image_${index}`] && URL.createObjectURL(values[`image_${index}`]))
+  )
 
   const onReceivedImages = (images: File[], offset: number) => {
     const newImagePreviews = [...imagePreviews]
