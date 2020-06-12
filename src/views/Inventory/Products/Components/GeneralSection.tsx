@@ -41,7 +41,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <Grid item xs={6}>
               <Text variant="h6">Brand</Text>
               <Spacer mt={1} />
-              <SelectField name="brand" choices={brandChoices} />
+              <SelectField name="brand" choices={brandChoices} requiredString />
             </Grid>
             <Grid item xs={6}>
               <Text variant="h6">Product name</Text>

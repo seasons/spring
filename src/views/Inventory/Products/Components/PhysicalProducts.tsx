@@ -60,10 +60,13 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
     physicalProducts.forEach(physicalProduct => physicalProductUIDs.push(physicalProduct.seasonsUID))
   }
 
-  const inventoryStatusChoices = getFormSelectChoices(inventoryStatuses.map(status => status.name))
-  const statusChoices = getFormSelectChoices(physicalProductStatuses.map(status => status.name))
-
   const isEditing = !!physicalProducts
+
+  const inventoryStatusChoices = getFormSelectChoices(inventoryStatuses.map(status => status.name))
+  // Only allow [New] and [Used] when creating a new product
+  const statuses = isEditing ? physicalProductStatuses : [{ name: "New" }, { name: "Used" }]
+  const statusChoices = getFormSelectChoices(statuses.map(status => status.name))
+
   const title = isEditing ? physicalProducts?.[0]?.seasonsUID || "" : "Physical products"
   const subtitle = isEditing ? "Edit physical product data" : "Add metadata to physical products"
   const breadcrumbs = [
