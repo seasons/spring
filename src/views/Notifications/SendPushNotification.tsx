@@ -48,7 +48,7 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
           initialValues={initialValues}
           render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              <TextField label="Title" name="title" autoFocus />
+              <TextField label="Title" name="title" autoFocus maxLength={50} />
               <DialogActions>
                 <SubmitButton size="large" type="submit" variant="contained" fullWidth>
                   {isSubmitting ? <Loader size={20} /> : "Create"}
