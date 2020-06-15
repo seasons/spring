@@ -25,7 +25,7 @@ export interface ChildFieldProps {
   optionalDate?: boolean
 }
 
-export type FieldProps = ChildFieldProps & {
+export interface FieldProps extends ChildFieldProps {
   render: ({ input, meta }) => any
 }
 
@@ -47,6 +47,7 @@ export const Field: React.FC<FieldProps> = ({
   optionalDate,
   ...rest
 }) => {
+  // Builds a yup schema for the specific field and validates it accordingly
   const validateField = async value => {
     let schema
     if (required) {
@@ -109,7 +110,7 @@ export const Field: React.FC<FieldProps> = ({
   }
   return (
     <FinalFormField
-      validateFields={[]}
+      validateFields={[]} // ONLY validate *this* field when this field's value changes
       name={name}
       initialValue={initialValue}
       validate={validateField}

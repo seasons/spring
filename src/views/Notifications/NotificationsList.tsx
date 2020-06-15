@@ -6,10 +6,14 @@ import { Datagrid, List, TextField } from "@seasons/react-admin"
 import { Card, Container } from "@material-ui/core"
 import { MemberViewProps } from "views/Members/interfaces"
 import { UsersField } from "fields/UsersField"
+import { SendPushNotificationModal } from "./SendPushNotification"
 
-export const NotificationsList: React.FC<MemberViewProps> = ({ match, history, props }) => {
+export const NotificationsList: React.FC<MemberViewProps> = ({ match, props }) => {
   const [openEdit, setOpenEdit] = useState(false)
 
+  const sendPushNotif = () => {
+    setOpenEdit(true)
+  }
   const handleEditClose = () => {
     setOpenEdit(false)
   }
@@ -18,7 +22,7 @@ export const NotificationsList: React.FC<MemberViewProps> = ({ match, history, p
     <Container maxWidth={false}>
       <Header
         title="Notifications"
-        // primaryButton={{ text: "Create Member", action: createNewMember }}
+        primaryButton={{ text: "Send Push Notif", action: sendPushNotif }}
         breadcrumbs={[
           {
             title: "Notifications",
@@ -29,7 +33,6 @@ export const NotificationsList: React.FC<MemberViewProps> = ({ match, history, p
       <Card>
         <List
           {...props}
-          //   filters={<MemberFilter />}
           perPage={10}
           hasCreate={false}
           hasEdit={false}
@@ -38,7 +41,7 @@ export const NotificationsList: React.FC<MemberViewProps> = ({ match, history, p
           component="div"
           resource="PushNotificationReceipt"
           basePath="/notifications"
-          sort={{ field: "sentAt", order: "ASC" }}
+          sort={{ field: "sentAt", order: "DESC" }}
         >
           <Datagrid>
             <SinceDateField source="sentAt" label="Sent At" />
@@ -53,7 +56,7 @@ export const NotificationsList: React.FC<MemberViewProps> = ({ match, history, p
         </List>
       </Card>
 
-      {/* <MemberCreateModal onClose={handleEditClose} open={openEdit} history={history} /> */}
+      <SendPushNotificationModal onClose={handleEditClose} open={openEdit} />
     </Container>
   )
 }
