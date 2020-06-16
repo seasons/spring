@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { DialogTitle, Loader, Spacer, Text } from "components"
+import { DialogTitle, Loader, Spacer } from "components"
 import { Dialog, DialogContent, DialogActions, styled, Button } from "@material-ui/core"
 import { Form } from "react-final-form"
 import { TextField } from "fields"
@@ -11,6 +11,7 @@ import { useQuery } from "react-apollo"
 import gql from "graphql-tag"
 import { assign } from "lodash"
 import { SnackbarState, Snackbar } from "components/Snackbar"
+import { useRefresh } from "@seasons/react-admin"
 
 const SubmitButton = styled(Button)({
   backgroundColor: "black",
@@ -52,6 +53,7 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
   // Set up submission handler
   const [notifyUser] = useMutation(NOTIFY_USER)
   const [notifyInterest] = useMutation(NOTIFY_INTEREST)
+  const refresh = useRefresh()
   const handleSubmit = async ({ title, body, users, interest, route, uri }) => {
     try {
       setSubmitting(true)
@@ -68,12 +70,12 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
         })
       }
       toggleSnackbar({ show: true, message: "Push Notifs sent!", status: "success" })
+      refresh()
     } catch (err) {
       setSubmitting(false)
       toggleSnackbar({ show: true, message: err?.message, status: "error" })
     }
     onClose()
-    // window.location.reload()
   }
 
   const initialValues = {
