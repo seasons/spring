@@ -16,6 +16,10 @@ const PushNotificationReceipt = gql`
       email
       firstName
       lastName
+      fullName
+      customer {
+        id
+      }
     }
   }
 `
