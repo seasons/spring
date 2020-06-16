@@ -107,7 +107,7 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
                 <form onSubmit={handleSubmit}>
                   <TextField label="Title" name="title" autoFocus maxLength={50} />
                   <Spacer mt={1} />
-                  <TextField label="Body" name="body" maxLength={110} />
+                  <TextField label="Body" name="body" maxLength={110} multiline rows={3} />
                   <Spacer mt={1} />
                   <AutocompleteField label="User(s)" name="users" options={userOptions} />
                   <Spacer mt={1} />
