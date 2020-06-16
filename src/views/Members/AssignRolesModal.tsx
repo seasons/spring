@@ -11,13 +11,17 @@ import {
   FormControlLabel,
 } from "@material-ui/core"
 import { DialogTitle } from "components"
+import { CustomerStatus, UserRole } from "generated/globalTypes"
 
-export const AssignRolesModal = ({ open, onSave, onClose, title }) => {
-  const [values, setValues] = useState({
-    Admin: false,
-    Customer: false,
-    Blah: false,
-  })
+export const AssignRolesModal = ({ open, onSave, onClose, title, member }) => {
+  let initialState = {}
+  for (const role in UserRole) {
+    initialState[role] = member.user.roles.includes(role)
+  }
+
+  console.log("member is ", member)
+  const [values, setValues] = useState(initialState)
+  const userIsAuthorized = member.status === CustomerStatus.Authorized
 
   if (!open) {
     return null
@@ -27,8 +31,8 @@ export const AssignRolesModal = ({ open, onSave, onClose, title }) => {
   }
 
   return (
-    <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
-      <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
+    <Dialog onClose={onClose} aria-labelledby="assign-roles" open={open}>
+      <DialogTitle id="assign-roles" onClose={() => onClose?.()}>
         {title}
       </DialogTitle>
       <DialogContent dividers>
@@ -39,7 +43,14 @@ export const AssignRolesModal = ({ open, onSave, onClose, title }) => {
                 <FormControlLabel
                   key={key}
                   control={
-                    <Checkbox key={key} checked={values[key]} onChange={handleFieldChange} name={key} color="primary" />
+                    <Checkbox
+                      key={key}
+                      disabled={key === UserRole.Admin && !userIsAuthorized}
+                      checked={values[key]}
+                      onChange={handleFieldChange}
+                      name={key}
+                      color="primary"
+                    />
                   }
                   label={key}
                 />

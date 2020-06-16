@@ -56,6 +56,7 @@ export const Header: React.FunctionComponent<MemberViewHeaderProps> = ({ history
       />
       <AssignRolesModal
         title="Assign roles to member"
+        member={member}
         onSave={() => assignRolesToMember(member)}
         onClose={closeAssignRolesModal}
         open={assignRolesModalIsOpen}

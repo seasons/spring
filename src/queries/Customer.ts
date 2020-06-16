@@ -36,6 +36,7 @@ const CustomerDetails = gql`
       email
       firstName
       lastName
+      roles
       createdAt
     }
     invoices {
