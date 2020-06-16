@@ -62,11 +62,7 @@ export const ReservationView = ({ match, history }) => {
 
   if (error && !data) {
     console.error("Error: ", loading, error)
-    toggleSnackbar({
-      show: true,
-      message: error?.message,
-      status: "error",
-    })
+
     return <Box>{error.message}</Box>
   }
 
