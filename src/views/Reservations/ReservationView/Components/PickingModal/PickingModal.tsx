@@ -24,7 +24,8 @@ type ProductStates = { [key: string]: ProductState }
 
 export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open, onSave, onClose, reservation }) => {
   const barcodeMaps = {}
-  reservation.products.forEach(product => {
+  const availableProducts = reservation.products.filter(a => a.inventoryStatus === "Reservable")
+  availableProducts.forEach(product => {
     barcodeMaps[product.barcode] = {
       productUID: product.seasonsUID,
       picked: false,
@@ -89,7 +90,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
         setProductStates(updatedProductStates)
 
         const pickedCount = Object.values(updatedProductStates).filter((a: any) => !!a.picked).length
-        setShouldAllowSave(pickedCount === reservation.products.length)
+        setShouldAllowSave(pickedCount === availableProducts.length)
       } else {
         toggleSnackbar({
           show: true,
@@ -138,7 +139,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
             </Box>
           )}
           <Box mt={2} mb={2}>
-            {reservation.products.map(product => (
+            {availableProducts.map(product => (
               <Box mb={2} key={`product-card-${product.id}`}>
                 <PickingProductCard
                   product={product}

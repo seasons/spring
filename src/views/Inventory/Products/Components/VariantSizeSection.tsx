@@ -32,7 +32,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ isEditin
   const typeSpecificSecondRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(2) : []
   const firstRowFields = ["SKU", "Weight", ...typeSpecificFirstRowFields]
   const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
-  const optionalFields = ["SKU", "Neck"]
+  const requiredFields = ["Total count"]
   return (
     <ExpandableSection
       title={size}
@@ -48,7 +48,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ isEditin
                   type={field === "SKU" ? "text" : "number"}
                   name={`${size}_${field.toLowerCase()}`}
                   initialValue={field === "SKU" ? sku : undefined}
-                  requiredNumber={!optionalFields.includes(field)}
+                  requiredNumber={requiredFields.includes(field)}
                 />
               </Grid>
             ))}
@@ -61,7 +61,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ isEditin
                   disabled={isEditing && field === "Total count"}
                   type="number"
                   name={`${size}_${field.toLowerCase().replace(" ", "")}`}
-                  requiredNumber={!optionalFields.includes(field)}
+                  requiredNumber={requiredFields.includes(field)}
                   maxValue={field === "Total count" ? 99 : undefined}
                 />
               </Grid>

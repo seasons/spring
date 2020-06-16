@@ -30,7 +30,7 @@ export const ReservationView = ({ match, history }) => {
   })
 
   const [isMutating, setIsMutating] = useState(false)
-  const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(PROCESS_RESERVATION, {
+  const mutationConfig = {
     onCompleted: () => {
       setIsMutating(false)
       refresh()
@@ -39,8 +39,12 @@ export const ReservationView = ({ match, history }) => {
       setIsMutating(false)
       refresh()
     },
-  })
-  const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED)
+  }
+  const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(
+    PROCESS_RESERVATION,
+    mutationConfig
+  )
+  const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED, mutationConfig)
 
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -63,10 +67,10 @@ export const ReservationView = ({ match, history }) => {
       message: error?.message,
       status: "error",
     })
-    return <Error />
+    return <Box>{error.message}</Box>
   }
 
-  const isReservationUnfulfilled = ["New", "InQueue", "OnHold", "Packed"].includes(data?.status)
+  const isReservationUnfulfilled = ["Queued", "Packed"].includes(data?.status)
 
   const primaryButton = isReservationUnfulfilled
     ? {
@@ -124,24 +128,26 @@ export const ReservationView = ({ match, history }) => {
             </ToggleButtonGroup>
           </Box>
         </Box>
-        <Grid container spacing={2}>
-          {mode === "list" ? (
-            <ProductGrid products={data.products} />
-          ) : (
-            data.products.map(product => (
-              <Grid
-                item
-                lg={mode === "grid" ? 3 : 12}
-                md={mode === "grid" ? 4 : 12}
-                sm={mode === "grid" ? 4 : 12}
-                xs={12}
-                key={`product-card-${product.id}`}
-              >
-                <ProductCard product={product} />
-              </Grid>
-            ))
-          )}
-        </Grid>
+        <Box mb={4}>
+          <Grid container spacing={2}>
+            {mode === "list" ? (
+              <ProductGrid products={data.products} />
+            ) : (
+              data.products.map(product => (
+                <Grid
+                  item
+                  lg={mode === "grid" ? 3 : 12}
+                  md={mode === "grid" ? 4 : 12}
+                  sm={mode === "grid" ? 4 : 12}
+                  xs={12}
+                  key={`product-card-${product.id}`}
+                >
+                  <ProductCard product={product} />
+                </Grid>
+              ))
+            )}
+          </Grid>
+        </Box>
       </Container>
       <Modal
         open={showModal}
@@ -172,7 +178,7 @@ export const ReservationView = ({ match, history }) => {
 
             // TODO: check result to see if there are any backend errors
             console.log("Result: ", result)
-
+            refresh()
             toggleModal(false)
             toggleSnackbar({
               show: true,

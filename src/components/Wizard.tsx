@@ -10,7 +10,7 @@ export interface WizardProps {
   initialValues?: Object
   submitButtonTitle?: string
   onNext?: (values: any) => void
-  onSubmit: (values: any) => void
+  onSubmit: (values: any) => Promise<void>
 }
 
 export interface WizardContextProps {
@@ -55,10 +55,10 @@ export const Wizard: React.FC<WizardProps> = ({
     if (!agreed) {
       return
     }
-    // Show loading spinner
+    // Show loading spinner, submit, and then stop loading spinner
     setIsSubmitting(true)
-
-    onSubmit(values)
+    await onSubmit(values)
+    setIsSubmitting(false)
   }
 
   const setValue: Mutator = ([name, newValue], state, { changeValue }) => {

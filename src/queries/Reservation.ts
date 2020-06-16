@@ -143,7 +143,7 @@ export const query = {
             email
           }
         }
-        images(size: Small) {
+        images(width: 50) {
           url
         }
         reservationNumber
