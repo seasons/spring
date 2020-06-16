@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { DialogTitle, Loader, Spacer } from "components"
-import { Dialog, DialogContent, DialogActions, styled, Button } from "@material-ui/core"
+import { Dialog, DialogContent, DialogActions, styled, Button, makeStyles } from "@material-ui/core"
 import { Form } from "react-final-form"
 import { TextField } from "fields"
 import { NOTIFY_INTEREST, NOTIFY_USER } from "./queries"
@@ -72,9 +72,9 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
       toggleSnackbar({ show: true, message: "Push Notifs sent!", status: "success" })
       refresh()
     } catch (err) {
-      setSubmitting(false)
       toggleSnackbar({ show: true, message: err?.message, status: "error" })
     }
+    setSubmitting(false)
     onClose()
   }
 
@@ -88,7 +88,13 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
 
   return (
     <>
-      <Dialog onClose={onClose} open={open}>
+      <Dialog
+        onClose={onClose}
+        open={open}
+        classes={makeStyles(() => ({
+          paper: { minWidth: "400px" },
+        }))()}
+      >
         <DialogTitle id="send-push-notif-modal" onClose={onClose}>
           Send Push Notification
         </DialogTitle>
