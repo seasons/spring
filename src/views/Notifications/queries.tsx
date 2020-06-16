@@ -1,8 +1,8 @@
 import gql from "graphql-tag"
 
 export const NOTIFY_USER = gql`
-  mutation pushNotifyUser($id: ID!, $data: PushNotifDataInput!) {
-    pushNotifyUser(where: { id: $id }, data: $data) {
+  mutation pushNotifyUser($email: String!, $data: PushNotifDataInput!) {
+    pushNotifyUser(where: { email: $email }, data: $data) {
       id
     }
   }
@@ -10,7 +10,8 @@ export const NOTIFY_USER = gql`
 
 export const NOTIFY_INTEREST = gql`
   mutation pushNotifyInterest($interest: PushNotificationInterest, $data: PushNotifDataInput!) {
-    pushNotifyInterest(interest: $interest, data: $data, debug: false) {
+    # TODO: Turn off debug
+    pushNotifyInterest(interest: $interest, data: $data, debug: true) {
       id
     }
   }

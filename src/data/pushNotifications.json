@@ -1,0 +1,18 @@
+{
+  "interests": ["SeasonsGeneralNotifications"],
+  "routes": [
+    "BagStack",
+    "Faq",
+    "Webview",
+    "CurrentRotation",
+    "Reservation",
+    "Browse",
+    "Home",
+    "Brand",
+    "Account",
+    "PaymentAndShipping",
+    "PersonalPreferences",
+    "ProductRequest",
+    "Product"
+  ]
+}

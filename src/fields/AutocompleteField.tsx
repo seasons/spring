@@ -9,9 +9,11 @@ const filter = createFilterOptions<string>()
 
 export type AutocompleteFieldProps = ChildFieldProps & {
   options: string[]
+  label?: string
+  multiple?: boolean
 }
 
-export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ name, options }) => {
+export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ label, name, options, multiple = true }) => {
   return (
     <Field
       multiple
@@ -20,13 +22,13 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ name, opti
         return (
           <FormControl error={meta.error}>
             <Autocomplete
-              multiple
+              multiple={multiple}
               onChange={(event: any, value) => {
                 input.onChange({ target: { name, value } })
               }}
               value={input.value || []}
               options={options}
-              renderInput={params => <TextField {...params} variant="outlined" />}
+              renderInput={params => <TextField label={label || ""} {...params} variant="outlined" />}
               filterOptions={(options, params) => {
                 const filtered: string[] = filter(options, params)
                 if (params.inputValue) {
