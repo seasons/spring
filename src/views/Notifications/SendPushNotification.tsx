@@ -10,6 +10,7 @@ import { AutocompleteField } from "fields"
 import { useQuery } from "react-apollo"
 import gql from "graphql-tag"
 import { assign } from "lodash"
+import { SnackbarState, Snackbar } from "components/Snackbar"
 
 const SubmitButton = styled(Button)({
   backgroundColor: "black",
@@ -41,6 +42,13 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
   // State used to render loading icon
   const [isSubmitting, setSubmitting] = useState(false)
 
+  // Set up snackbar
+  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
+    show: false,
+    message: "",
+    status: "success",
+  })
+
   // Set up submission handler
   const [notifyUser] = useMutation(NOTIFY_USER)
   const [notifyInterest] = useMutation(NOTIFY_INTEREST)
@@ -59,12 +67,13 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
           },
         })
       }
+      toggleSnackbar({ show: true, message: "Push Notifs sent!", status: "success" })
     } catch (err) {
       setSubmitting(false)
-      alert(err)
+      toggleSnackbar({ show: true, message: err?.message, status: "error" })
     }
     onClose()
-    window.location.reload()
+    // window.location.reload()
   }
 
   const initialValues = {
@@ -76,57 +85,60 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
   }
 
   return (
-    <Dialog onClose={onClose} open={open}>
-      <DialogTitle id="send-push-notif-modal" onClose={onClose}>
-        Send Push Notification
-      </DialogTitle>
-      <DialogContent>
-        <Form
-          onSubmit={handleSubmit}
-          initialValues={initialValues}
-          render={({ handleSubmit, values: { route } }) => {
-            return (
-              <form onSubmit={handleSubmit}>
-                <TextField label="Title" name="title" autoFocus maxLength={50} />
-                <Spacer mt={1} />
-                <TextField label="Body" name="body" maxLength={110} />
-                <Spacer mt={1} />
-                <AutocompleteField label="User(s)" name="users" options={userOptions} />
-                <Spacer mt={1} />
-                <AutocompleteField label="Interest" name="interest" multiple={false} options={interests} />
-                <Spacer mt={1} />
-                <AutocompleteField label="Route" name="route" multiple={false} options={routes} />
+    <>
+      <Dialog onClose={onClose} open={open}>
+        <DialogTitle id="send-push-notif-modal" onClose={onClose}>
+          Send Push Notification
+        </DialogTitle>
+        <DialogContent>
+          <Form
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+            render={({ handleSubmit, values: { route } }) => {
+              return (
+                <form onSubmit={handleSubmit}>
+                  <TextField label="Title" name="title" autoFocus maxLength={50} />
+                  <Spacer mt={1} />
+                  <TextField label="Body" name="body" maxLength={110} />
+                  <Spacer mt={1} />
+                  <AutocompleteField label="User(s)" name="users" options={userOptions} />
+                  <Spacer mt={1} />
+                  <AutocompleteField label="Interest" name="interest" multiple={false} options={interests} />
+                  <Spacer mt={1} />
+                  <AutocompleteField label="Route" name="route" multiple={false} options={routes} />
 
-                {route === "Webview" && (
-                  <>
-                    <Spacer mt={1} />
-                    <TextField label="URI" name="uri" />
-                  </>
-                )}
-                {/* TODO */}
-                {/* {route === "Brand" && (
+                  {route === "Webview" && (
+                    <>
+                      <Spacer mt={1} />
+                      <TextField label="URI" name="uri" />
+                    </>
+                  )}
+                  {/* TODO */}
+                  {/* {route === "Brand" && (
                   <>
                     <Spacer mt={1} />
                     <BrandSelect />
                   </>
                 )} */}
-                {/* TODO */}
-                {/* {route === "Product" && (
+                  {/* TODO */}
+                  {/* {route === "Product" && (
                   <>
                     <Spacer mt={1} />
                     <ProductSelect />
                   </>
                 )} */}
-                <DialogActions>
-                  <SubmitButton size="large" type="submit" variant="contained" fullWidth>
-                    {isSubmitting ? <Loader size={20} /> : "Send"}
-                  </SubmitButton>
-                </DialogActions>
-              </form>
-            )
-          }}
-        />
-      </DialogContent>
-    </Dialog>
+                  <DialogActions>
+                    <SubmitButton size="large" type="submit" variant="contained" fullWidth>
+                      {isSubmitting ? <Loader size={20} /> : "Send"}
+                    </SubmitButton>
+                  </DialogActions>
+                </form>
+              )
+            }}
+          />
+        </DialogContent>
+      </Dialog>
+      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
+    </>
   )
 }
