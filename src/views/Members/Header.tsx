@@ -6,8 +6,28 @@ import { AssignRolesModal } from "./AssignRolesModal"
 import { useMutation } from "@apollo/react-hooks"
 import { Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
+import { MEMBER_ASSIGN_ROLE } from "./queries"
 
 export const Header: React.FunctionComponent<MemberViewHeaderProps> = ({ history, member }) => {
+  const [assignMemberRoles] = useMutation<any, any>(MEMBER_ASSIGN_ROLE, {
+    onCompleted: () => {
+      closeAssignRolesModal()
+      toggleSnackbar({
+        show: true,
+        message: "Member roles updated",
+        status: "success",
+      })
+    },
+    onError: () => {
+      closeAssignRolesModal()
+      toggleSnackbar({
+        show: true,
+        message: "Error updating member roles",
+        status: "error",
+      })
+    },
+  })
+
   const [assignRolesModalIsOpen, setAssignRolesModal] = useState(false)
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -23,9 +43,14 @@ export const Header: React.FunctionComponent<MemberViewHeaderProps> = ({ history
     setAssignRolesModal(false)
   }
 
-  const assignRolesToMember = member => {
-    console.log("assigning to ", member)
-    closeAssignRolesModal()
+  const assignRolesToMember = (email, newRoles) => {
+    console.log("assigning to ", email, newRoles)
+    assignMemberRoles({
+      variables: {
+        email: email,
+        data: { roles: { set: newRoles } },
+      },
+    })
   }
 
   const memberSince = DateTime.fromISO(member.user.createdAt).toLocaleString(DateTime.DATE_MED)
@@ -57,7 +82,7 @@ export const Header: React.FunctionComponent<MemberViewHeaderProps> = ({ history
       <AssignRolesModal
         title="Assign roles to member"
         member={member}
-        onSave={() => assignRolesToMember(member)}
+        onSave={assignRolesToMember}
         onClose={closeAssignRolesModal}
         open={assignRolesModalIsOpen}
       />

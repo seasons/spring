@@ -26,8 +26,15 @@ export const AssignRolesModal = ({ open, onSave, onClose, title, member }) => {
   if (!open) {
     return null
   }
+
   const handleFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [event.target.name]: event.target.checked })
+  }
+
+  const updateMemberRoles = () => {
+    const roles: string[] = []
+    Object.keys(values).map(key => values[key] === true && roles.push(key))
+    onSave(member.user.email, roles)
   }
 
   return (
@@ -61,7 +68,7 @@ export const AssignRolesModal = ({ open, onSave, onClose, title, member }) => {
       </DialogContent>
       <DialogActions>
         <Box mr={1} my={1}>
-          <Button autoFocus onClick={onSave} color="primary" variant="contained">
+          <Button autoFocus onClick={updateMemberRoles} color="primary" variant="contained">
             Assign
           </Button>
         </Box>
