@@ -10,7 +10,7 @@ export const ProductRow = props => {
   const image = product.images?.[0]
   const { seasonsUID } = physicalProduct
 
-  const { barcode = "Unkwown", type = "Unknown", locationCode = "Unknown", itemCode = "Unknown" } =
+  const { barcode = "Unknown", type = "Unknown", locationCode = "Unknown", itemCode = "Unknown" } =
     physicalProduct.warehouseLocation || {}
 
   return (
