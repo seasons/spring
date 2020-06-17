@@ -48,7 +48,7 @@ const RefundButton = (props: ActionButtonProps) => {
       color="primary"
       size="small"
       variant="outlined"
-      onClick={() => props.actionHandler(props.record)}
+      onClick={() => props.action(props.record)}
     >
       Refund
     </Button>
@@ -187,8 +187,8 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
               <TextField source="dueDateNormalized" label="Due date" />
               <TextField source="amountNormalized" label="Amount" />
               <ActionButtons label="Actions">
-                <ViewButton actionHandler={handleRefundModalOpen} />
-                <RefundButton actionHandler={handleRefundModalOpen} />
+                <ViewButton action={handleRefundModalOpen} />
+                <RefundButton action={handleRefundModalOpen} />
               </ActionButtons>
             </Datagrid>
           </Card>

@@ -81,7 +81,7 @@ export interface GetReservation_returnedPackage {
   weight: number | null
 }
 
-export interface GetReservation_location {
+export interface GetReservation_lastLocation {
   __typename: "Location"
   id: string
 }
@@ -159,7 +159,7 @@ export interface GetReservation {
   customer: GetReservation_customer
   sentPackage: GetReservation_sentPackage | null
   returnedPackage: GetReservation_returnedPackage | null
-  location: GetReservation_location | null
+  lastLocation: GetReservation_lastLocation | null
   products: GetReservation_products[]
   images: GetReservation_images[]
   reservationNumber: number

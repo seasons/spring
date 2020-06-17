@@ -199,6 +199,11 @@ export enum PushNotificationStatus {
   Granted = "Granted",
 }
 
+export enum ReservationPhase {
+  BusinessToCustomer = "BusinessToCustomer",
+  CustomerToBusiness = "CustomerToBusiness",
+}
+
 export enum ReservationStatus {
   Blocked = "Blocked",
   Cancelled = "Cancelled",
@@ -1193,6 +1198,7 @@ export interface LocationWhereUniqueInput {
 export interface PackageCreateInput {
   id?: string | null
   items?: PhysicalProductCreateManyInput | null
+  transactionID: string
   shippingLabel: LabelCreateOneInput
   fromAddress: LocationCreateOneInput
   toAddress: LocationCreateOneInput
@@ -1209,6 +1215,7 @@ export interface PackageTransitEventCreateInput {
   id?: string | null
   status: PackageTransitEventStatus
   subStatus: PackageTransitEventSubStatus
+  data: any
 }
 
 export interface PackageTransitEventCreateManyInput {
@@ -1263,11 +1270,13 @@ export interface PackageTransitEventScalarWhereInput {
 export interface PackageTransitEventUpdateDataInput {
   status?: PackageTransitEventStatus | null
   subStatus?: PackageTransitEventSubStatus | null
+  data?: any | null
 }
 
 export interface PackageTransitEventUpdateManyDataInput {
   status?: PackageTransitEventStatus | null
   subStatus?: PackageTransitEventSubStatus | null
+  data?: any | null
 }
 
 export interface PackageTransitEventUpdateManyInput {
@@ -1304,6 +1313,7 @@ export interface PackageTransitEventWhereUniqueInput {
 
 export interface PackageUpdateDataInput {
   items?: PhysicalProductUpdateManyInput | null
+  transactionID?: string | null
   shippingLabel?: LabelUpdateOneRequiredInput | null
   fromAddress?: LocationUpdateOneRequiredInput | null
   toAddress?: LocationUpdateOneRequiredInput | null
@@ -2001,6 +2011,7 @@ export interface ProductMaterialCategoryUpsertWithoutProductsInput {
 
 export interface ProductMaterialCategoryWhereUniqueInput {
   id?: string | null
+  slug?: string | null
 }
 
 export interface ProductModelCreateOneWithoutProductsInput {
@@ -2966,6 +2977,7 @@ export interface ReservationCreateWithoutCustomerInput {
   returnedPackage?: PackageCreateOneInput | null
   products?: PhysicalProductCreateManyInput | null
   reservationNumber: number
+  phase: ReservationPhase
   shipped: boolean
   status: ReservationStatus
   shippedAt?: any | null
@@ -3128,6 +3140,10 @@ export interface ReservationScalarWhereInput {
   reservationNumber_lte?: number | null
   reservationNumber_gt?: number | null
   reservationNumber_gte?: number | null
+  phase?: ReservationPhase | null
+  phase_not?: ReservationPhase | null
+  phase_in?: ReservationPhase[] | null
+  phase_not_in?: ReservationPhase[] | null
   shipped?: boolean | null
   shipped_not?: boolean | null
   status?: ReservationStatus | null
@@ -3181,6 +3197,7 @@ export interface ReservationScalarWhereInput {
 
 export interface ReservationUpdateManyDataInput {
   reservationNumber?: number | null
+  phase?: ReservationPhase | null
   shipped?: boolean | null
   status?: ReservationStatus | null
   shippedAt?: any | null
@@ -3216,6 +3233,7 @@ export interface ReservationUpdateWithoutCustomerDataInput {
   returnedPackage?: PackageUpdateOneInput | null
   products?: PhysicalProductUpdateManyInput | null
   reservationNumber?: number | null
+  phase?: ReservationPhase | null
   shipped?: boolean | null
   status?: ReservationStatus | null
   shippedAt?: any | null

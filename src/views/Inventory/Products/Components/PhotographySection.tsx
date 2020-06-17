@@ -20,7 +20,17 @@ export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImage
   const [imagePreviews, setImagePreviews] = useState<any[]>(
     // Read the image files stored inside the form state by checking the keys
     // image_0, image_1, etc and if file exists, convert it to a URL
-    [...Array(numImages)].map((_, index) => values[`image_${index}`] && URL.createObjectURL(values[`image_${index}`]))
+    [...Array(numImages)].map((_, index) => {
+      const imageURL = values[`image_${index}`]
+      if (!imageURL) {
+        return null
+      }
+      if (typeof imageURL === "string") {
+        return imageURL
+      }
+
+      return URL.createObjectURL(imageURL)
+    })
   )
 
   const onReceivedImages = (images: File[], offset: number) => {
