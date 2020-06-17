@@ -47,11 +47,11 @@ export const NotificationsList: React.FC<MemberViewProps> = ({ match, props }) =
             <SinceDateField source="sentAt" label="Sent At" />
             <TextField source="title" label="Title" />
             <TextField source="body" label="Body" />
+            <UsersField label="Users" />
+            <TextField source="interest" label="Interest" />
             <TextField source="route" label="Route" />
             <TextField source="screen" label="Screen" />
             <TextField source="uri" label="URI" />
-            <TextField source="interest" label="Interest" />
-            <UsersField label="Users" />
           </Datagrid>
         </List>
       </Card>
