@@ -15,35 +15,35 @@ import { colors } from "theme"
 export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, onClose }) => {
   const memberValues = {
     firstName: {
-      label: "First Name",
+      label: "First Name *",
       type: "phone",
       value: "",
       error: false,
       helperText: "This field is required",
     },
     lastName: {
-      label: "Last Name",
+      label: "Last Name *",
       type: "phone",
       value: "",
       error: false,
       helperText: "This field is required",
     },
     email: {
-      label: "Email Address",
+      label: "Email Address *",
       type: "email",
       value: "",
       error: false,
       helperText: "This field is required",
     },
     phone: {
-      label: "Phone",
+      label: "Phone *",
       type: "tel",
       value: "",
       error: false,
       helperText: "This field is required, e.g 123-456-7890",
     },
     birthday: {
-      label: "Birthday",
+      label: "Birthday *",
       type: "date",
       value: "1990-01-01",
       error: false,

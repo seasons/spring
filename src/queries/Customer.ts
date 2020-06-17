@@ -39,6 +39,16 @@ const CustomerDetails = gql`
       lastName
       completeAccountURL
       createdAt
+      pushNotifications {
+        id
+        route
+        screen
+        uri
+        interest
+        body
+        title
+        sentAt
+      }
     }
     invoices {
       id

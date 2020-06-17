@@ -68,6 +68,7 @@ class App extends React.Component {
                       <Resource name="Reservation" intent="registration" />
                       <Resource name="Size" intent="registration" />
                       <Resource name="Tag" intent="registration" />
+                      <Resource name="PushNotificationReceipt" intent="registration" />
                       <Router history={history}>{renderRoutes(routes)}</Router>
                     </ThemeProvider>
                   </SCThemeProvider>
