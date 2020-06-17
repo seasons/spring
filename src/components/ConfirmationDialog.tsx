@@ -1,18 +1,24 @@
-import React from "react"
+import React, { useState } from "react"
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core"
+
+import { Loader } from "./Loader"
+import { colors } from "theme/colors"
 
 export interface ConfirmationDialogProps {
   title: string
   body: string
   open: boolean
   setOpen: (boolean) => void
-  onClose: (agreed: boolean) => void
+  onClose: (agreed: boolean) => Promise<void>
 }
 
 export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ title, body, open, setOpen, onClose }) => {
-  const handleClose = (agreed: boolean) => {
+  const [isMutating, setIsMutating] = useState(false)
+  const handleClose = async (agreed: boolean) => {
+    setIsMutating(true)
+    await onClose(agreed)
     setOpen(false)
-    onClose(agreed)
+    setIsMutating(false)
   }
 
   return (
@@ -31,7 +37,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ title, b
           Cancel
         </Button>
         <Button onClick={() => handleClose(true)} color="primary" autoFocus>
-          Ok
+          {isMutating ? <Loader color={colors.black100} size={20} /> : "Ok"}
         </Button>
       </DialogActions>
     </Dialog>

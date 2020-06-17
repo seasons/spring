@@ -3310,7 +3310,7 @@ export interface UpsertVariantInput {
   rise?: number | null
   hem?: number | null
   inseam?: number | null
-  weight: number
+  weight?: number | null
   total: number
   physicalProducts: UpsertPhysicalProductInput[]
 }

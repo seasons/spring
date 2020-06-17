@@ -1,11 +1,11 @@
 import { History } from "history"
 import { customer } from "generated/customer"
 
-interface editEntity {
+interface EditEntity {
   id: object
 }
 
-interface memberEntryValue {
+interface MemberEntryValue {
   label: string
   type: string
   value: string
@@ -13,18 +13,24 @@ interface memberEntryValue {
   helperText: string
 }
 
+interface Invoice {
+  id: string
+  amount: number
+  amountNormalized: string
+}
+
+// public interfaces
 export interface NewMemberProps {
-  firstName: memberEntryValue
-  email: memberEntryValue
-  lastName: memberEntryValue
-  phone: memberEntryValue
-  birthday: memberEntryValue
+  firstName: MemberEntryValue
+  email: MemberEntryValue
+  lastName: MemberEntryValue
+  phone: MemberEntryValue
+  birthday: MemberEntryValue
 }
 
 export interface MemberSubViewProps {
   adminKey?: string
   member: customer
-
   match?: { params: { id: string } }
 }
 
@@ -46,7 +52,7 @@ export interface MemberViewHeaderProps extends MemberSubViewProps {
 
 export interface EditModalProps {
   title: string
-  editEntity: editEntity
+  editEntity: EditEntity
   open: boolean
   onClose: () => void
   onSave(values: {}): void
@@ -54,14 +60,13 @@ export interface EditModalProps {
 
 export interface RefundInvoiceModalProps {
   title: string
-  invoice: invoice
+  invoice: Invoice
   open: boolean
   onClose: () => void
   onSave(values: {}): void
 }
 
-interface invoice {
-  id: string
-  amount: number
-  amountNormalized: string
+export interface ActionButtonProps {
+  record?: { id: string; status: string }
+  actionHandler: (record?: {}) => void
 }
