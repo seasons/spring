@@ -1,6 +1,8 @@
 import React, { useState } from "react"
+import { useRefresh } from "@seasons/react-admin"
 import { useMutation } from "react-apollo"
 import { Form } from "react-final-form"
+import slugify from "slugify"
 
 import {
   Button,
@@ -17,23 +19,29 @@ import {
 } from "@material-ui/core"
 
 import { DatePickerField, SelectField, TextField } from "fields"
-import { DialogTitle, Loader, Snackbar, Spacer, Text } from "components"
+import { DialogTitle, Loader, Spacer, Text } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { CREATE_BRAND } from "./mutations"
 
 interface BrandCreateModalProps {
   open: boolean
+  toggleSnackbar: (state: SnackbarState) => void
   onClose?: () => void
 }
 
-export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, onClose }) => {
+export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, toggleSnackbar, onClose }) => {
+  const refresh = useRefresh()
   const [isMutating, setIsMutating] = useState(false)
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
   const [createBrand] = useMutation(CREATE_BRAND, {
+    onCompleted: () => {
+      toggleSnackbar({
+        show: true,
+        message: "Brand created",
+        status: "success",
+      })
+      refresh()
+      onClose?.()
+    },
     onError: error => {
       toggleSnackbar({
         show: true,
@@ -43,11 +51,35 @@ export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, onClos
     },
   })
 
-  const onSubmit = values => {
+  const onSubmit = async values => {
     console.log("VALUES:", values)
+    setIsMutating(true)
     const { brandCode, brandTier, description, name, sinceDate, websiteURL } = values
-    // setIsMutating(true)
-    // setIsMutating(false)
+    const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
+    console.log("INPUT:", {
+      brandCode: brandCode.toUpperCase(),
+      description,
+      name,
+      since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
+      slug: slugify(name),
+      tier: brandTier,
+      websiteUrl: websiteURL,
+    })
+    const result = await createBrand({
+      variables: {
+        input: {
+          brandCode: brandCode.toUpperCase(),
+          description,
+          name,
+          since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
+          slug: slugify(name),
+          tier: brandTier,
+          websiteUrl: websiteURL,
+        },
+      },
+    })
+    console.log("RESULT:", result)
+    setIsMutating(false)
     // if (result?.data) {
     //   onClose?.()
     // }
@@ -65,68 +97,63 @@ export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, onClos
     "Discovery",
   ].map(choice => ({ display: choice, value: choice }))
   return (
-    <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
-      <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
-        Create brand
-      </DialogTitle>
-      <Form onSubmit={onSubmit}>
-        {({
-          handleSubmit,
-          form: {
-            mutators: { setValue },
-          },
-          values: formValues,
-          errors,
-        }) => {
-          return (
-            <>
-              <form onSubmit={handleSubmit}>
-                <DialogContent dividers>
-                  <Box my={1} width={550}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={6}>
-                        <Text variant="h6">Name*</Text>
-                        <Spacer mt={1} />
-                        <TextField name="name" placeholder="Enter a name" requiredString />
+    <>
+      <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
+          Create brand
+        </DialogTitle>
+        <Form onSubmit={onSubmit}>
+          {({ handleSubmit }) => {
+            return (
+              <>
+                <form onSubmit={handleSubmit}>
+                  <DialogContent dividers>
+                    <Box my={1} width={550}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <Text variant="h6">Name*</Text>
+                          <Spacer mt={1} />
+                          <TextField name="name" placeholder="Enter a name" requiredString />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Text variant="h6">Brand code*</Text>
+                          <Spacer mt={1} />
+                          <TextField name="brandCode" placeholder="Enter a brand code" requiredString />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Text variant="h6">Brand tier*</Text>
+                          <Spacer mt={1} />
+                          <SelectField name="brandTier" choices={brandTierChoices} requiredString />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Text variant="h6">Since</Text>
+                          <Spacer mt={1} />
+                          <DatePickerField name="sinceDate" format="yyyy" views={["year"]} optionalDate />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Text variant="h6">Description*</Text>
+                          <Spacer mt={1} />
+                          <TextField multiline name="description" placeholder="Enter a description" requiredString />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Text variant="h6">Website URL</Text>
+                          <Spacer mt={1} />
+                          <TextField name="websiteURL" placeholder="Enter a url" optionalURL />
+                        </Grid>
                       </Grid>
-                      <Grid item xs={6}>
-                        <Text variant="h6">Brand code*</Text>
-                        <Spacer mt={1} />
-                        <TextField name="brandCode" placeholder="Enter a brand code" requiredString />
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Text variant="h6">Brand tier*</Text>
-                        <Spacer mt={1} />
-                        <SelectField name="brandTier" choices={brandTierChoices} requiredString />
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Text variant="h6">Since</Text>
-                        <Spacer mt={1} />
-                        <DatePickerField name="sinceDate" format="yyyy" views={["year"]} optionalDate />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Text variant="h6">Description*</Text>
-                        <Spacer mt={1} />
-                        <TextField multiline name="description" placeholder="Enter a description" requiredString />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Text variant="h6">Website URL</Text>
-                        <Spacer mt={1} />
-                        <TextField name="websiteURL" placeholder="Enter a url" />
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </DialogContent>
-                <DialogActions>
-                  <Button autoFocus color="primary" variant="contained" type="submit">
-                    {isMutating ? <Loader size={20} /> : "Create"}
-                  </Button>
-                </DialogActions>
-              </form>
-            </>
-          )
-        }}
-      </Form>
-    </Dialog>
+                    </Box>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button autoFocus color="primary" variant="contained" type="submit">
+                      {isMutating ? <Loader size={20} /> : "Create"}
+                    </Button>
+                  </DialogActions>
+                </form>
+              </>
+            )
+          }}
+        </Form>
+      </Dialog>
+    </>
   )
 }

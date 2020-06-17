@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { Datagrid, DateField, Filter, List, TextField, TextInput } from "@seasons/react-admin"
-import { Header } from "components/Header"
+import { Header, Snackbar } from "components"
 import { BrandCreateModal } from "./BrandCreateModal"
+import { SnackbarState } from "components/Snackbar"
 
 export const BrandFilter = props => (
   <Filter {...props}>
@@ -11,6 +12,11 @@ export const BrandFilter = props => (
 
 export const BrandList = props => {
   const [brandCreateModalOpen, setBrandCreateModalOpen] = useState(true)
+  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
+    show: false,
+    message: "",
+    status: "success",
+  })
   return (
     <>
       <Header
@@ -46,7 +52,12 @@ export const BrandList = props => {
           <DateField source="updatedAt" label="UpdatedAt" />
         </Datagrid>
       </List>
-      <BrandCreateModal open={brandCreateModalOpen} onClose={() => setBrandCreateModalOpen(false)} />
+      <BrandCreateModal
+        open={brandCreateModalOpen}
+        onClose={() => setBrandCreateModalOpen(false)}
+        toggleSnackbar={toggleSnackbar}
+      />
+      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )
 }
