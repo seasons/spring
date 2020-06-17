@@ -1,29 +1,32 @@
 import { updateCustomer as updateCustomerAction } from "actions/customerActions"
 import { ActionButtons } from "fields"
-import { CardContent, EditButton, EditModal, IndicatorMap, Label, TableHeader, Snackbar } from "components"
+import { CardContent, EditButton, EditModal, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import moment from "moment"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { MembershipPlanOptions, MemberStatusOptions } from "../../Member.types"
 import { splitTitleCase } from "utils/strings"
+import { copyToClipboard } from "utils/copyToClipboard"
 import { useMutation } from "@apollo/react-hooks"
-import { Button, Card, Table, TableBody, TableCell, TableRow, Box } from "@material-ui/core"
+import { Button, Card, Table, TableBody, TableCell, TableRow, Box, Grid, Typography, Chip } from "@material-ui/core"
 import { CustomerStatus } from "generated/globalTypes"
 import { MemberSubViewProps, ActionButtonProps } from "../../interfaces"
 import { MEMBER_DETAIL_UPDATE } from "../../queries"
 import { MemberInviteModal } from "../../MemberInviteModal"
+import { Indicator } from "components/Indicator"
 
-const InviteButton = (props: ActionButtonProps) => {
-  return (
-    <Box component="span" ml={2}>
-      {props.record?.status === CustomerStatus.Created && (
-        <Button size="small" variant="outlined" color="primary" onClick={() => props.actionHandler(props.record)}>
+const InviteButton: React.FC<ActionButtonProps> = props => {
+  if (props.record?.status === CustomerStatus.Created) {
+    return (
+      <Box component="span" ml={2}>
+        <Button size="small" variant="outlined" color="primary" onClick={() => props.action(props.record)}>
           Invite
         </Button>
-      )}
-    </Box>
-  )
+      </Box>
+    )
+  }
+  return null
 }
 
 const inviteModalBody = "This will send the member an email to reset their password."
@@ -166,44 +169,65 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
         <Table>
           <TableBody>
             <TableRow>
-              <TableHeader>Personal details</TableHeader>
-              <TableCell></TableCell>
-              <TableCell>
-                <Box display="flex" alignItems="flex-end">
-                  <ActionButtons record={member}>
-                    <EditButton onClick={handleEditOpen} />
-                    <InviteButton actionHandler={openConfirmInviteModal} />
-                  </ActionButtons>
-                </Box>
+              <TableCell colSpan={3}>
+                <Grid justify="space-between" container>
+                  <Grid item alignItems="center" justify="center">
+                    <Box mt={0.5}>
+                      <Typography variant="h4">Personal Details</Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item>
+                    <ActionButtons record={member}>
+                      <EditButton onClick={handleEditOpen} />
+                      <InviteButton action={openConfirmInviteModal} />
+                    </ActionButtons>
+                  </Grid>
+                </Grid>
               </TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Status</TableCell>
               <TableCell>
-                <Label shape="rounded" color={IndicatorMap[member.status]}>
-                  {member.status}
-                </Label>
+                <Chip
+                  label={member.status}
+                  icon={
+                    <Box pl={1}>
+                      <Indicator status={member.status} />
+                    </Box>
+                  }
+                />
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Membership</TableCell>
               <TableCell>{splitTitleCase(member.plan)}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Email</TableCell>
               <TableCell>{member.user.email}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Phone number</TableCell>
               <TableCell>{member.detail.phoneNumber}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Birthday</TableCell>
               <TableCell>{birthday}</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Complete Account Link</TableCell>
+              <TableCell>
+                <Box>
+                  <Button variant="outlined" onClick={() => copyToClipboard(member.user.completeAccountURL)}>
+                    Copy
+                  </Button>
+                </Box>
+              </TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableBody>

@@ -1,18 +1,17 @@
 import React, { useContext } from "react"
 import { Datagrid, Filter, Loading, List, DataProviderContext, SelectInput, TextInput } from "@seasons/react-admin"
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
-import { Box, Container, Card } from "@material-ui/core"
+import { Box, Container } from "@material-ui/core"
 import { Header, StatusInput } from "components"
 
-const Filters = props => (
+const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => (
   <Box px={2}>
-    <Filter {...props}>
+    <Filter {...rest}>
       <TextInput label="Search name" source="customer.user.firstName_contains" alwaysOn />
       <SelectInput
         label="Status"
         source="status"
         choices={[
-          {},
           { id: "Queued", name: "Queued" },
           { id: "Packed", name: "Packed" },
           { id: "Shipped", name: "Shipped" },

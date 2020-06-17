@@ -8,6 +8,7 @@ const UserFragment = gql`
     email
     firstName
     lastName
+    completeAccountURL
     roles
     createdAt
     updatedAt
