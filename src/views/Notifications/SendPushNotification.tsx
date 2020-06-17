@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { DialogTitle, Loader, Spacer } from "components"
-import { Dialog, DialogContent, DialogActions, styled, Button, makeStyles } from "@material-ui/core"
-import { Form, Field } from "react-final-form"
+import { Dialog, DialogContent, DialogActions, Button, makeStyles } from "@material-ui/core"
+import { Form } from "react-final-form"
 import { TextField } from "fields"
 import { NOTIFY_INTEREST, NOTIFY_USER, GET_USERS } from "./queries"
 import { useMutation } from "@apollo/react-hooks"
@@ -11,13 +11,9 @@ import { useQuery } from "react-apollo"
 import { assign } from "lodash"
 import { SnackbarState, Snackbar } from "components/Snackbar"
 import { useRefresh } from "@seasons/react-admin"
-import { TextField as MuiTextField } from "@material-ui/core"
+import { Alert } from "@material-ui/lab"
 
 const createUserOption = u => `${u.fullName} (${u.email})`
-
-const StyledTextField = styled(MuiTextField)({
-  borderRadius: 4,
-})
 
 export const SendPushNotificationModal = ({ onClose, open }) => {
   // Set up user select data
@@ -70,7 +66,6 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
     title: "",
     body: "",
     users: [],
-    interest: null,
     route: null,
   }
 
@@ -92,24 +87,21 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
           initialValues={initialValues}
           validate={({ users, interest, route, uri }) => {
             const errors = {}
-            if (users?.length === 0 && !interest) {
-              const errorString = "Must supply at least 1 user or interest"
-              errors["users"] = errorString
-              errors["interests"] = errorString
+            if (users.length === 0) {
+              errors["users"] = "Required"
             }
             if (route === "Webview" && !uri) {
               errors["uri"] = "Must supply uri if route is Webview"
             }
             return errors
           }}
-          render={({ handleSubmit, values: { route, ...restOfValues }, ...rest }) => {
-            console.log(handleSubmit)
-            console.log(rest)
-            console.log(restOfValues)
+          render={({ handleSubmit, values: { route } }) => {
             return (
               <>
                 <form onSubmit={handleSubmit}>
                   <DialogContent>
+                    <Alert severity="warning">Be careful! This will send push notifications to *real* users :)</Alert>
+                    <Spacer mt={2} />
                     <TextField
                       label="Title"
                       name="title"
@@ -130,8 +122,6 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
                     />
                     <Spacer mt={1} />
                     <AutocompleteField label="User(s)" name="users" options={userOptions} />
-                    <Spacer mt={1} />
-                    <AutocompleteField label="Interest" name="interest" multiple={false} options={interests} />
                     <Spacer mt={1} />
                     <AutocompleteField label="Route" name="route" multiple={false} options={routes} />
                     {route === "Webview" && (
