@@ -20,7 +20,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   disabled = false,
   helperText,
   initialValue,
-  label,
+  label = "",
   multiline = false,
   name,
   placeholder,
@@ -29,6 +29,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   asterisk = false,
   ...rest
 }) => {
+  console.log(`name: `)
   return (
     <Field
       name={name}
