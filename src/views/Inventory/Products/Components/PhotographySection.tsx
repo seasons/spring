@@ -64,7 +64,7 @@ export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImage
         <Spacer mt={2} />
         <Grid container>
           {[...Array(numImages)].map((_, index) => (
-            <Grid item xs={3}>
+            <Grid item xs={3} key={index}>
               <DropzoneField
                 index={index}
                 imagePreview={imagePreviews[index]}
