@@ -48,7 +48,7 @@ export const TextField: React.FC<TextFieldProps> = ({
             onChange={input.onChange}
             type={type}
             helperText={helperText}
-            label={`${label}${asterisk ? "*" : ""}`}
+            label={`${label}${asterisk ? " *" : ""}`}
             {...rest}
           />
         </FormControl>

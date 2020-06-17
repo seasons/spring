@@ -127,7 +127,7 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
                     {route === "Webview" && (
                       <>
                         <Spacer mt={2} />
-                        <TextField label="URI" name="uri" />
+                        <TextField label="URI" name="uri" asterisk />
                       </>
                     )}
                   </DialogContent>

@@ -93,12 +93,12 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <SelectField name="architecture" choices={architectureChoices} />
           </Grid>
           <Grid item xs={12}>
-            <Text variant="h6">Category*</Text>
+            <Text variant="h6">Category *</Text>
             <Spacer mt={1} />
             <SelectField name="category" groupedChoices={groupedCategoryChoices} requiredString />
           </Grid>
           <Grid item xs={6}>
-            <Text variant="h6">Color*</Text>
+            <Text variant="h6">Color *</Text>
             <Spacer mt={1} />
             <SelectField name="color" choices={colorChoices} requiredString />
           </Grid>

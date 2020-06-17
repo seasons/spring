@@ -31,7 +31,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ isEditin
   const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 2) : []
   const typeSpecificSecondRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(2) : []
   const firstRowFields = ["SKU", "Weight", ...typeSpecificFirstRowFields]
-  const secondRowFields = ["Total count*", ...typeSpecificSecondRowFields]
+  const secondRowFields = ["Total count *", ...typeSpecificSecondRowFields]
   const requiredFields = ["Total count"]
   return (
     <ExpandableSection
