@@ -6,10 +6,10 @@
 import { BrandCreateInput } from "./globalTypes"
 
 // ====================================================
-// GraphQL mutation operation: CREATE_BRAND
+// GraphQL mutation operation: CreateBrand
 // ====================================================
 
-export interface CREATE_BRAND_createBrand {
+export interface CreateBrand_createBrand {
   __typename: "Brand"
   id: string
   name: string
@@ -17,10 +17,10 @@ export interface CREATE_BRAND_createBrand {
   brandCode: string
 }
 
-export interface CREATE_BRAND {
-  createBrand: CREATE_BRAND_createBrand | null
+export interface CreateBrand {
+  createBrand: CreateBrand_createBrand | null
 }
 
-export interface CREATE_BRANDVariables {
+export interface CreateBrandVariables {
   input: BrandCreateInput
 }
