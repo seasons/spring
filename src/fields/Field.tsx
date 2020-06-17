@@ -23,6 +23,8 @@ export interface ChildFieldProps {
 
   requiredDate?: boolean
   optionalDate?: boolean
+
+  optionalURL?: boolean
 }
 
 export interface FieldProps extends ChildFieldProps {
@@ -45,6 +47,7 @@ export const Field: React.FC<FieldProps> = ({
   minValue,
   requiredDate,
   optionalDate,
+  optionalURL,
   ...rest
 }) => {
   // Builds a yup schema for the specific field and validates it accordingly
@@ -103,6 +106,9 @@ export const Field: React.FC<FieldProps> = ({
     }
     if (optionalDate) {
       schema = yup.date()
+    }
+    if (optionalURL) {
+      schema = yup.string().url()
     }
     if (schema) {
       return await validate(schema, value)

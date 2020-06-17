@@ -2,14 +2,12 @@ import { colors } from "theme"
 import styled from "styled-components"
 
 const ReservationStatusMap = {
-  New: colors.green[100],
-  InQueue: colors.green[200],
-  OnHold: colors.green[200],
+  Queued: colors.green[100],
   Packed: colors.orange[200],
   Shipped: colors.orange[500],
-  InTransit: colors.blue[200],
-  Received: colors.blue[500],
+  Delivered: colors.blue[500],
   Cancelled: colors.red[500],
+  Blocked: colors.red[500],
   Completed: colors.black100,
 }
 
@@ -21,6 +19,7 @@ const InvoiceStatusMap = {
 export const IndicatorMap = {
   ...ReservationStatusMap,
   ...InvoiceStatusMap,
+  New: colors.green[100],
   Used: colors.green[200],
   Waitlisted: colors.black15,
   Invited: colors.black15,

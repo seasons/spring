@@ -8,11 +8,9 @@
     "Reservation",
     "Browse",
     "Home",
-    "Brand",
     "Account",
     "PaymentAndShipping",
     "PersonalPreferences",
-    "ProductRequest",
-    "Product"
+    "ProductRequest"
   ]
 }

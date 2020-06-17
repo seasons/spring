@@ -16,19 +16,6 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
 
   const { shippingLabel } = reservation?.sentPackage
 
-  const statusToDisplay = status => {
-    switch (status) {
-      case "InQueue":
-        return "In Queue"
-      case "OnHold":
-        return "On Hold"
-      case "InTransit":
-        return "In Transit"
-      default:
-        return status
-    }
-  }
-
   return (
     <Grid container spacing={3}>
       <Grid item md={6} xl={3} xs={12}>
@@ -78,7 +65,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <TableCell>Status</TableCell>
                 <TableCell>
                   <Chip
-                    label={statusToDisplay(reservation.status)}
+                    label={reservation.status}
                     icon={
                       <Box pl={1}>
                         <Indicator status={reservation.status} />

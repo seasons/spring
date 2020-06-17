@@ -15,7 +15,7 @@ export interface HeaderProps {
     text: string
     icon?: JSX.Element
     action?: () => void
-  }
+  } | null
   breadcrumbs?: Array<{ url: string; title: string }>
   menuItems?: Array<{ text: string; action?: () => void }>
 }

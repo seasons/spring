@@ -3,21 +3,16 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { UserRole } from "./globalTypes"
-
 // ====================================================
-// GraphQL fragment: user
+// GraphQL query operation: users
 // ====================================================
 
-export interface user {
+export interface users_users {
   __typename: "User"
-  id: string
-  auth0Id: string
+  fullName: string
   email: string
-  firstName: string
-  lastName: string
-  completeAccountURL: string
-  roles: UserRole[]
-  createdAt: any
-  updatedAt: any
+}
+
+export interface users {
+  users: (users_users | null)[]
 }

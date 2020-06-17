@@ -7,6 +7,22 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum AppRoute {
+  Account = "Account",
+  BagStack = "BagStack",
+  Brand = "Brand",
+  Browse = "Browse",
+  CurrentRotation = "CurrentRotation",
+  Faq = "Faq",
+  Home = "Home",
+  PaymentAndShipping = "PaymentAndShipping",
+  PersonalPreferences = "PersonalPreferences",
+  Product = "Product",
+  ProductRequest = "ProductRequest",
+  Reservation = "Reservation",
+  Webview = "Webview",
+}
+
 export enum BagItemStatus {
   Added = "Added",
   Received = "Received",
@@ -103,6 +119,45 @@ export enum LocationType {
   Warehouse = "Warehouse",
 }
 
+export enum PackageTransitEventStatus {
+  Delivered = "Delivered",
+  Failure = "Failure",
+  PreTransit = "PreTransit",
+  Returned = "Returned",
+  Transit = "Transit",
+  Unknown = "Unknown",
+}
+
+export enum PackageTransitEventSubStatus {
+  AddressIssue = "AddressIssue",
+  ContactCarrier = "ContactCarrier",
+  Delayed = "Delayed",
+  Delivered = "Delivered",
+  DeliveryAttempted = "DeliveryAttempted",
+  DeliveryRescheduled = "DeliveryRescheduled",
+  DeliveryScheduled = "DeliveryScheduled",
+  InformationReceived = "InformationReceived",
+  LocationInaccessible = "LocationInaccessible",
+  NoticeLeft = "NoticeLeft",
+  Other = "Other",
+  OutForDelivery = "OutForDelivery",
+  PackageAccepted = "PackageAccepted",
+  PackageArrived = "PackageArrived",
+  PackageDamaged = "PackageDamaged",
+  PackageDeparted = "PackageDeparted",
+  PackageDisposed = "PackageDisposed",
+  PackageForwarded = "PackageForwarded",
+  PackageHeld = "PackageHeld",
+  PackageLost = "PackageLost",
+  PackageProcessed = "PackageProcessed",
+  PackageProcessing = "PackageProcessing",
+  PackageUnclaimed = "PackageUnclaimed",
+  PackageUndeliverable = "PackageUndeliverable",
+  PickupAvailable = "PickupAvailable",
+  RescheduleDelivery = "RescheduleDelivery",
+  ReturnToSender = "ReturnToSender",
+}
+
 export enum PhotographyStatus {
   Done = "Done",
   InProgress = "InProgress",
@@ -154,22 +209,31 @@ export enum ProductType {
   Top = "Top",
 }
 
+export enum PushNotificationInterest {
+  SeasonsGeneralNotifications = "SeasonsGeneralNotifications",
+}
+
 export enum PushNotificationStatus {
   Blocked = "Blocked",
   Denied = "Denied",
   Granted = "Granted",
 }
 
+export enum ReservationPhase {
+  BusinessToCustomer = "BusinessToCustomer",
+  CustomerToBusiness = "CustomerToBusiness",
+}
+
 export enum ReservationStatus {
+  Blocked = "Blocked",
   Cancelled = "Cancelled",
   Completed = "Completed",
-  InQueue = "InQueue",
-  InTransit = "InTransit",
-  New = "New",
-  OnHold = "OnHold",
+  Delivered = "Delivered",
   Packed = "Packed",
+  Queued = "Queued",
   Received = "Received",
   Shipped = "Shipped",
+  Unknown = "Unknown",
 }
 
 export enum UserRole {
@@ -358,6 +422,21 @@ export interface BottomSizeUpsertNestedInput {
 
 export interface BottomSizeWhereUniqueInput {
   id?: string | null
+}
+
+export interface BrandCreateInput {
+  id?: string | null
+  slug: string
+  brandCode: string
+  description?: string | null
+  isPrimaryBrand?: boolean | null
+  logo?: any | null
+  name: string
+  basedIn?: string | null
+  since?: any | null
+  tier: BrandTier
+  websiteUrl?: string | null
+  products?: ProductCreateManyWithoutBrandInput | null
 }
 
 export interface BrandCreateOneWithoutProductsInput {
@@ -1119,11 +1198,13 @@ export interface LocationWhereUniqueInput {
 
 export interface PackageCreateInput {
   id?: string | null
+  transactionID: string
   weight?: number | null
   items?: PhysicalProductCreateManyInput | null
   shippingLabel: LabelCreateOneInput
   fromAddress: LocationCreateOneInput
   toAddress: LocationCreateOneInput
+  events?: PackageTransitEventCreateManyInput | null
 }
 
 export interface PackageCreateOneInput {
@@ -1131,12 +1212,114 @@ export interface PackageCreateOneInput {
   connect?: PackageWhereUniqueInput | null
 }
 
+export interface PackageTransitEventCreateInput {
+  id?: string | null
+  status: PackageTransitEventStatus
+  subStatus: PackageTransitEventSubStatus
+  data: any
+}
+
+export interface PackageTransitEventCreateManyInput {
+  create?: PackageTransitEventCreateInput[] | null
+  connect?: PackageTransitEventWhereUniqueInput[] | null
+}
+
+export interface PackageTransitEventScalarWhereInput {
+  AND?: PackageTransitEventScalarWhereInput[] | null
+  OR?: PackageTransitEventScalarWhereInput[] | null
+  NOT?: PackageTransitEventScalarWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  status?: PackageTransitEventStatus | null
+  status_not?: PackageTransitEventStatus | null
+  status_in?: PackageTransitEventStatus[] | null
+  status_not_in?: PackageTransitEventStatus[] | null
+  subStatus?: PackageTransitEventSubStatus | null
+  subStatus_not?: PackageTransitEventSubStatus | null
+  subStatus_in?: PackageTransitEventSubStatus[] | null
+  subStatus_not_in?: PackageTransitEventSubStatus[] | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+}
+
+export interface PackageTransitEventUpdateDataInput {
+  status?: PackageTransitEventStatus | null
+  subStatus?: PackageTransitEventSubStatus | null
+  data?: any | null
+}
+
+export interface PackageTransitEventUpdateManyDataInput {
+  status?: PackageTransitEventStatus | null
+  subStatus?: PackageTransitEventSubStatus | null
+  data?: any | null
+}
+
+export interface PackageTransitEventUpdateManyInput {
+  create?: PackageTransitEventCreateInput[] | null
+  connect?: PackageTransitEventWhereUniqueInput[] | null
+  set?: PackageTransitEventWhereUniqueInput[] | null
+  disconnect?: PackageTransitEventWhereUniqueInput[] | null
+  delete?: PackageTransitEventWhereUniqueInput[] | null
+  update?: PackageTransitEventUpdateWithWhereUniqueNestedInput[] | null
+  updateMany?: PackageTransitEventUpdateManyWithWhereNestedInput[] | null
+  deleteMany?: PackageTransitEventScalarWhereInput[] | null
+  upsert?: PackageTransitEventUpsertWithWhereUniqueNestedInput[] | null
+}
+
+export interface PackageTransitEventUpdateManyWithWhereNestedInput {
+  where: PackageTransitEventScalarWhereInput
+  data: PackageTransitEventUpdateManyDataInput
+}
+
+export interface PackageTransitEventUpdateWithWhereUniqueNestedInput {
+  where: PackageTransitEventWhereUniqueInput
+  data: PackageTransitEventUpdateDataInput
+}
+
+export interface PackageTransitEventUpsertWithWhereUniqueNestedInput {
+  where: PackageTransitEventWhereUniqueInput
+  update: PackageTransitEventUpdateDataInput
+  create: PackageTransitEventCreateInput
+}
+
+export interface PackageTransitEventWhereUniqueInput {
+  id?: string | null
+}
+
 export interface PackageUpdateDataInput {
+  transactionID?: string | null
   weight?: number | null
   items?: PhysicalProductUpdateManyInput | null
   shippingLabel?: LabelUpdateOneRequiredInput | null
   fromAddress?: LocationUpdateOneRequiredInput | null
   toAddress?: LocationUpdateOneRequiredInput | null
+  events?: PackageTransitEventUpdateManyInput | null
 }
 
 export interface PackageUpdateOneInput {
@@ -1603,6 +1786,11 @@ export interface PhysicalProductWhereUniqueInput {
   seasonsUID?: string | null
 }
 
+export interface ProductCreateManyWithoutBrandInput {
+  create?: ProductCreateWithoutBrandInput[] | null
+  connect?: ProductWhereUniqueInput[] | null
+}
+
 export interface ProductCreateManyWithoutCategoryInput {
   create?: ProductCreateWithoutCategoryInput[] | null
   connect?: ProductWhereUniqueInput[] | null
@@ -1611,6 +1799,34 @@ export interface ProductCreateManyWithoutCategoryInput {
 export interface ProductCreateOneWithoutVariantsInput {
   create?: ProductCreateWithoutVariantsInput | null
   connect?: ProductWhereUniqueInput | null
+}
+
+export interface ProductCreateWithoutBrandInput {
+  id?: string | null
+  slug: string
+  name: string
+  type?: ProductType | null
+  description?: string | null
+  externalURL?: string | null
+  modelHeight?: number | null
+  retailPrice?: number | null
+  status?: ProductStatus | null
+  season?: string | null
+  architecture?: ProductArchitecture | null
+  photographyStatus?: PhotographyStatus | null
+  publishedAt?: any | null
+  innerMaterials?: ProductCreateinnerMaterialsInput | null
+  outerMaterials?: ProductCreateouterMaterialsInput | null
+  category: CategoryCreateOneWithoutProductsInput
+  images?: ImageCreateManyInput | null
+  model?: ProductModelCreateOneWithoutProductsInput | null
+  modelSize?: SizeCreateOneInput | null
+  color: ColorCreateOneInput
+  secondaryColor?: ColorCreateOneInput | null
+  tags?: TagCreateManyWithoutProductsInput | null
+  functions?: ProductFunctionCreateManyInput | null
+  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
+  variants?: ProductVariantCreateManyWithoutProductInput | null
 }
 
 export interface ProductCreateWithoutCategoryInput {
@@ -1637,6 +1853,7 @@ export interface ProductCreateWithoutCategoryInput {
   secondaryColor?: ColorCreateOneInput | null
   tags?: TagCreateManyWithoutProductsInput | null
   functions?: ProductFunctionCreateManyInput | null
+  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   variants?: ProductVariantCreateManyWithoutProductInput | null
 }
 
@@ -1665,6 +1882,7 @@ export interface ProductCreateWithoutVariantsInput {
   secondaryColor?: ColorCreateOneInput | null
   tags?: TagCreateManyWithoutProductsInput | null
   functions?: ProductFunctionCreateManyInput | null
+  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
 }
 
 export interface ProductCreateinnerMaterialsInput {
@@ -1758,6 +1976,43 @@ export interface ProductFunctionUpsertWithWhereUniqueNestedInput {
 export interface ProductFunctionWhereUniqueInput {
   id?: string | null
   name?: string | null
+}
+
+export interface ProductMaterialCategoryCreateOneWithoutProductsInput {
+  create?: ProductMaterialCategoryCreateWithoutProductsInput | null
+  connect?: ProductMaterialCategoryWhereUniqueInput | null
+}
+
+export interface ProductMaterialCategoryCreateWithoutProductsInput {
+  id?: string | null
+  slug: string
+  lifeExpectancy: number
+  category: CategoryCreateOneInput
+}
+
+export interface ProductMaterialCategoryUpdateOneWithoutProductsInput {
+  create?: ProductMaterialCategoryCreateWithoutProductsInput | null
+  connect?: ProductMaterialCategoryWhereUniqueInput | null
+  disconnect?: boolean | null
+  delete?: boolean | null
+  update?: ProductMaterialCategoryUpdateWithoutProductsDataInput | null
+  upsert?: ProductMaterialCategoryUpsertWithoutProductsInput | null
+}
+
+export interface ProductMaterialCategoryUpdateWithoutProductsDataInput {
+  slug?: string | null
+  lifeExpectancy?: number | null
+  category?: CategoryUpdateOneRequiredInput | null
+}
+
+export interface ProductMaterialCategoryUpsertWithoutProductsInput {
+  update: ProductMaterialCategoryUpdateWithoutProductsDataInput
+  create: ProductMaterialCategoryCreateWithoutProductsInput
+}
+
+export interface ProductMaterialCategoryWhereUniqueInput {
+  id?: string | null
+  slug?: string | null
 }
 
 export interface ProductModelCreateOneWithoutProductsInput {
@@ -2017,6 +2272,7 @@ export interface ProductUpdateWithoutCategoryDataInput {
   secondaryColor?: ColorUpdateOneInput | null
   tags?: TagUpdateManyWithoutProductsInput | null
   functions?: ProductFunctionUpdateManyInput | null
+  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   variants?: ProductVariantUpdateManyWithoutProductInput | null
 }
 
@@ -2044,6 +2300,7 @@ export interface ProductUpdateWithoutVariantsDataInput {
   secondaryColor?: ColorUpdateOneInput | null
   tags?: TagUpdateManyWithoutProductsInput | null
   functions?: ProductFunctionUpdateManyInput | null
+  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
 }
 
 export interface ProductUpdateinnerMaterialsInput {
@@ -2476,6 +2733,14 @@ export interface ProductWhereUniqueInput {
   slug?: string | null
 }
 
+export interface PushNotifDataInput {
+  title?: string | null
+  body: string
+  route?: AppRoute | null
+  uri?: string | null
+  record?: RecordParamsInput | null
+}
+
 export interface PushNotificationReceiptCreateManyWithoutUsersInput {
   create?: PushNotificationReceiptCreateWithoutUsersInput[] | null
   connect?: PushNotificationReceiptWhereUniqueInput[] | null
@@ -2489,6 +2754,8 @@ export interface PushNotificationReceiptCreateWithoutUsersInput {
   interest?: string | null
   body: string
   title?: string | null
+  recordID?: string | null
+  recordSlug?: string | null
   sentAt: any
 }
 
@@ -2594,6 +2861,34 @@ export interface PushNotificationReceiptScalarWhereInput {
   title_not_starts_with?: string | null
   title_ends_with?: string | null
   title_not_ends_with?: string | null
+  recordID?: string | null
+  recordID_not?: string | null
+  recordID_in?: string[] | null
+  recordID_not_in?: string[] | null
+  recordID_lt?: string | null
+  recordID_lte?: string | null
+  recordID_gt?: string | null
+  recordID_gte?: string | null
+  recordID_contains?: string | null
+  recordID_not_contains?: string | null
+  recordID_starts_with?: string | null
+  recordID_not_starts_with?: string | null
+  recordID_ends_with?: string | null
+  recordID_not_ends_with?: string | null
+  recordSlug?: string | null
+  recordSlug_not?: string | null
+  recordSlug_in?: string[] | null
+  recordSlug_not_in?: string[] | null
+  recordSlug_lt?: string | null
+  recordSlug_lte?: string | null
+  recordSlug_gt?: string | null
+  recordSlug_gte?: string | null
+  recordSlug_contains?: string | null
+  recordSlug_not_contains?: string | null
+  recordSlug_starts_with?: string | null
+  recordSlug_not_starts_with?: string | null
+  recordSlug_ends_with?: string | null
+  recordSlug_not_ends_with?: string | null
   sentAt?: any | null
   sentAt_not?: any | null
   sentAt_in?: any[] | null
@@ -2627,6 +2922,8 @@ export interface PushNotificationReceiptUpdateManyDataInput {
   interest?: string | null
   body?: string | null
   title?: string | null
+  recordID?: string | null
+  recordSlug?: string | null
   sentAt?: any | null
 }
 
@@ -2659,6 +2956,8 @@ export interface PushNotificationReceiptUpdateWithoutUsersDataInput {
   interest?: string | null
   body?: string | null
   title?: string | null
+  recordID?: string | null
+  recordSlug?: string | null
   sentAt?: any | null
 }
 
@@ -2672,6 +2971,11 @@ export interface PushNotificationReceiptWhereUniqueInput {
   id?: string | null
 }
 
+export interface RecordParamsInput {
+  id: string
+  slug: string
+}
+
 export interface RefundInvoiceInput {
   invoiceId: string
   refundAmount?: number | null
@@ -2683,6 +2987,7 @@ export interface RefundInvoiceInput {
 export interface ReservationCreateWithoutCustomerInput {
   id?: string | null
   reservationNumber: number
+  phase: ReservationPhase
   shipped: boolean
   status: ReservationStatus
   shippedAt?: any | null
@@ -2691,9 +2996,9 @@ export interface ReservationCreateWithoutCustomerInput {
   user: UserCreateOneInput
   sentPackage?: PackageCreateOneInput | null
   returnedPackage?: PackageCreateOneInput | null
-  location?: LocationCreateOneInput | null
   products?: PhysicalProductCreateManyInput | null
   receipt?: ReservationReceiptCreateOneWithoutReservationInput | null
+  lastLocation?: LocationCreateOneInput | null
 }
 
 export interface ReservationProcessReturnInput {
@@ -2852,6 +3157,10 @@ export interface ReservationScalarWhereInput {
   reservationNumber_lte?: number | null
   reservationNumber_gt?: number | null
   reservationNumber_gte?: number | null
+  phase?: ReservationPhase | null
+  phase_not?: ReservationPhase | null
+  phase_in?: ReservationPhase[] | null
+  phase_not_in?: ReservationPhase[] | null
   shipped?: boolean | null
   shipped_not?: boolean | null
   status?: ReservationStatus | null
@@ -2902,6 +3211,7 @@ export interface ReservationScalarWhereInput {
 
 export interface ReservationUpdateManyDataInput {
   reservationNumber?: number | null
+  phase?: ReservationPhase | null
   shipped?: boolean | null
   status?: ReservationStatus | null
   shippedAt?: any | null
@@ -2933,6 +3243,7 @@ export interface ReservationUpdateWithWhereUniqueWithoutCustomerInput {
 
 export interface ReservationUpdateWithoutCustomerDataInput {
   reservationNumber?: number | null
+  phase?: ReservationPhase | null
   shipped?: boolean | null
   status?: ReservationStatus | null
   shippedAt?: any | null
@@ -2941,9 +3252,9 @@ export interface ReservationUpdateWithoutCustomerDataInput {
   user?: UserUpdateOneRequiredInput | null
   sentPackage?: PackageUpdateOneInput | null
   returnedPackage?: PackageUpdateOneInput | null
-  location?: LocationUpdateOneInput | null
   products?: PhysicalProductUpdateManyInput | null
   receipt?: ReservationReceiptUpdateOneWithoutReservationInput | null
+  lastLocation?: LocationUpdateOneInput | null
 }
 
 export interface ReservationUpsertWithWhereUniqueWithoutCustomerInput {
@@ -3283,7 +3594,7 @@ export interface UpsertProductInput {
   functions: string[]
   images: any[]
   innerMaterials: string[]
-  modelID: string
+  modelID?: string | null
   modelSizeDisplay?: string | null
   modelSizeName?: string | null
   name: string
