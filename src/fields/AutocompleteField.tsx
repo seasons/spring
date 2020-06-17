@@ -20,7 +20,7 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ label, nam
       name={name}
       render={({ input, meta }) => {
         return (
-          <FormControl error={meta.error}>
+          <FormControl error={meta.touched && meta.error}>
             <Autocomplete
               multiple={multiple}
               onChange={(event: any, value) => {

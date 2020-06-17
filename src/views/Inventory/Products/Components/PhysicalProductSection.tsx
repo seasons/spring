@@ -24,7 +24,7 @@ export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({
       content={
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Text variant="h5">Status</Text>
+            <Text variant="h5">Status*</Text>
             <Spacer mt={1} />
             <SelectField name={`${uid}_physicalProductStatus`} choices={statusChoices} requiredString />
           </Grid>
@@ -46,7 +46,7 @@ export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({
           </Grid>
           <Spacer grid mt={3} />
           <Grid item xs={6}>
-            <Text variant="h5">Inventory Status</Text>
+            <Text variant="h5">Inventory Status*</Text>
             <Spacer mt={1} />
             <SelectField name={`${uid}_inventoryStatus`} choices={inventoryStatusChoices} requiredString />
           </Grid>
