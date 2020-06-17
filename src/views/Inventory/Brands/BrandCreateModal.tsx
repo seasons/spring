@@ -40,19 +40,9 @@ export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, toggle
   })
 
   const onSubmit = async values => {
-    console.log("VALUES:", values)
     setIsMutating(true)
     const { brandCode, brandTier, description, name, sinceDate, websiteURL } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
-    console.log("INPUT:", {
-      brandCode: brandCode.toUpperCase(),
-      description,
-      name,
-      since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
-      slug: slugify(name).toLowerCase(),
-      tier: brandTier,
-      websiteUrl: websiteURL,
-    })
     const result = await createBrand({
       variables: {
         input: {
@@ -60,13 +50,12 @@ export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, toggle
           description,
           name,
           since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
-          slug: slugify(name),
+          slug: slugify(name).toLowerCase(),
           tier: brandTier,
           websiteUrl: websiteURL,
         },
       },
     })
-    console.log("RESULT:", result)
     setIsMutating(false)
   }
 

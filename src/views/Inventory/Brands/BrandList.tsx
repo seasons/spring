@@ -11,7 +11,7 @@ export const BrandFilter = props => (
 )
 
 export const BrandList = props => {
-  const [brandCreateModalOpen, setBrandCreateModalOpen] = useState(true)
+  const [brandCreateModalOpen, setBrandCreateModalOpen] = useState(false)
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
