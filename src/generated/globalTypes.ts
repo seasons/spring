@@ -404,6 +404,21 @@ export interface BottomSizeWhereUniqueInput {
   id?: string | null
 }
 
+export interface BrandCreateInput {
+  id?: string | null
+  slug: string
+  brandCode: string
+  description?: string | null
+  isPrimaryBrand?: boolean | null
+  logo?: any | null
+  name: string
+  basedIn?: string | null
+  products?: ProductCreateManyWithoutBrandInput | null
+  since?: any | null
+  tier: BrandTier
+  websiteUrl?: string | null
+}
+
 export interface BrandCreateOneWithoutProductsInput {
   create?: BrandCreateWithoutProductsInput | null
   connect?: BrandWhereUniqueInput | null
@@ -1770,6 +1785,11 @@ export interface PhysicalProductWhereUniqueInput {
   seasonsUID?: string | null
 }
 
+export interface ProductCreateManyWithoutBrandInput {
+  create?: ProductCreateWithoutBrandInput[] | null
+  connect?: ProductWhereUniqueInput[] | null
+}
+
 export interface ProductCreateManyWithoutCategoryInput {
   create?: ProductCreateWithoutCategoryInput[] | null
   connect?: ProductWhereUniqueInput[] | null
@@ -1778,6 +1798,34 @@ export interface ProductCreateManyWithoutCategoryInput {
 export interface ProductCreateOneWithoutVariantsInput {
   create?: ProductCreateWithoutVariantsInput | null
   connect?: ProductWhereUniqueInput | null
+}
+
+export interface ProductCreateWithoutBrandInput {
+  id?: string | null
+  slug: string
+  name: string
+  category: CategoryCreateOneWithoutProductsInput
+  type?: ProductType | null
+  description?: string | null
+  externalURL?: string | null
+  images?: ImageCreateManyInput | null
+  modelHeight?: number | null
+  retailPrice?: number | null
+  model?: ProductModelCreateOneWithoutProductsInput | null
+  modelSize?: SizeCreateOneInput | null
+  color: ColorCreateOneInput
+  secondaryColor?: ColorCreateOneInput | null
+  tags?: TagCreateManyWithoutProductsInput | null
+  functions?: ProductFunctionCreateManyInput | null
+  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
+  innerMaterials?: ProductCreateinnerMaterialsInput | null
+  outerMaterials?: ProductCreateouterMaterialsInput | null
+  variants?: ProductVariantCreateManyWithoutProductInput | null
+  status?: ProductStatus | null
+  season?: string | null
+  architecture?: ProductArchitecture | null
+  photographyStatus?: PhotographyStatus | null
+  publishedAt?: any | null
 }
 
 export interface ProductCreateWithoutCategoryInput {

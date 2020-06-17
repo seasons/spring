@@ -22,6 +22,7 @@ export interface customer_user {
   email: string
   firstName: string
   lastName: string
+  completeAccountURL: string
   createdAt: any
 }
 
