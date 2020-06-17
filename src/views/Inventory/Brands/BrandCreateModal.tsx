@@ -4,19 +4,7 @@ import { useMutation } from "react-apollo"
 import { Form } from "react-final-form"
 import slugify from "slugify"
 
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Box,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Typography,
-} from "@material-ui/core"
+import { Box, Button, Dialog, DialogActions, DialogContent, Grid } from "@material-ui/core"
 
 import { DatePickerField, SelectField, TextField } from "fields"
 import { DialogTitle, Loader, Spacer, Text } from "components"
@@ -61,7 +49,7 @@ export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, toggle
       description,
       name,
       since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
-      slug: slugify(name),
+      slug: slugify(name).toLowerCase(),
       tier: brandTier,
       websiteUrl: websiteURL,
     })
@@ -80,9 +68,6 @@ export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, toggle
     })
     console.log("RESULT:", result)
     setIsMutating(false)
-    // if (result?.data) {
-    //   onClose?.()
-    // }
   }
 
   const brandTierChoices = [
@@ -96,6 +81,7 @@ export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, toggle
     "Local",
     "Discovery",
   ].map(choice => ({ display: choice, value: choice }))
+
   return (
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
