@@ -1,14 +1,23 @@
 import React from "react"
-import { KeyboardDatePicker } from "@material-ui/pickers"
+import { KeyboardDatePicker, DatePickerView } from "@material-ui/pickers"
 import { Field, ChildFieldProps } from "./Field"
 
 import { FormControl } from "components/FormControl"
 
 export type DatePickerField = ChildFieldProps & {
   disabled?: boolean
+  format?: string
+  views?: DatePickerView[]
 }
 
-export const DatePickerField: React.FC<DatePickerField> = ({ disabled = false, name, initialValue, ...rest }) => {
+export const DatePickerField: React.FC<DatePickerField> = ({
+  disabled = false,
+  format = "MM/dd/yyyy",
+  name,
+  views,
+  initialValue,
+  ...rest
+}) => {
   return (
     <Field
       name={name}
@@ -18,8 +27,9 @@ export const DatePickerField: React.FC<DatePickerField> = ({ disabled = false, n
           <KeyboardDatePicker
             autoOk
             variant="inline"
+            views={views}
             inputVariant="outlined"
-            format="MM/dd/yyyy"
+            format={format}
             disabled={disabled}
             name={input.name}
             label="Date"
