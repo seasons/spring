@@ -90,14 +90,17 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
         <Form
           onSubmit={handleSubmit}
           initialValues={initialValues}
-          validate={({ users, interest }) => {
-            console.log(users)
-            console.log(interest)
+          validate={({ users, interest, route, uri }) => {
+            const errors = {}
             if (users?.length === 0 && !interest) {
               const errorString = "Must supply at least 1 user or interest"
-              return { users: errorString, interest: errorString }
+              errors["users"] = errorString
+              errors["interests"] = errorString
             }
-            return {}
+            if (route === "Webview" && !uri) {
+              errors["uri"] = "Must supply uri if route is Webview"
+            }
+            return errors
           }}
           render={({ handleSubmit, values: { route, ...restOfValues }, ...rest }) => {
             console.log(handleSubmit)
@@ -133,7 +136,7 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
                     <AutocompleteField label="Route" name="route" multiple={false} options={routes} />
                     {route === "Webview" && (
                       <>
-                        <Spacer mt={1} />
+                        <Spacer mt={2} />
                         <TextField label="URI" name="uri" />
                       </>
                     )}
