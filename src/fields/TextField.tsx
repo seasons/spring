@@ -32,7 +32,7 @@ export const TextField: React.FC<TextFieldProps> = ({
       name={name}
       initialValue={initialValue}
       render={({ input, meta }) => (
-        <FormControl error={meta.error}>
+        <FormControl error={meta.touched && meta.error}>
           <StyledTextField
             disabled={disabled}
             fullWidth

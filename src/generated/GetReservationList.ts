@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { ReservationStatus } from "./globalTypes"
+
 // ====================================================
 // GraphQL fragment: GetReservationList
 // ====================================================
@@ -33,7 +35,7 @@ export interface GetReservationList {
   images: GetReservationList_images[]
   reservationNumber: number
   shipped: boolean
-  status: string
+  status: ReservationStatus
   shippedAt: any | null
   returnAt: any | null
   createdAt: any

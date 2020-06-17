@@ -70,7 +70,7 @@ export default {
         }
         weight
       }
-      location {
+      lastLocation {
         id
       }
       products {
