@@ -3,11 +3,12 @@ import { CardContent, ComponentError, EditButton, EditModal, TableHeader } from 
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { Box, Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
+import { Box, Card, Table, TableBody, TableCell, TableRow, Typography, Grid } from "@material-ui/core"
 
 import { MemberSubViewProps } from "../../interfaces"
 import { MEMBER_DETAIL_UPDATE } from "../../queries"
 import { useMutation } from "@apollo/react-hooks"
+import { ActionButtons } from "fields"
 
 export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
@@ -157,24 +158,31 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
         <Table>
           <TableBody>
             <TableRow>
-              <TableHeader>Payment & Shipping</TableHeader>
-              <TableCell></TableCell>
-              <TableCell>
-                <Box display="flex" alignItems="flex-end">
-                  <EditButton onClick={handleEditOpen} />
-                </Box>
+              <TableCell colSpan={3}>
+                <Grid justify="space-between" container>
+                  <Grid item alignItems="center" justify="center">
+                    <Box mt={0.5}>
+                      <Typography variant="h4">Payment & Shipping</Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item>
+                    <ActionButtons record={member}>
+                      <EditButton onClick={handleEditOpen} />
+                    </ActionButtons>
+                  </Grid>
+                </Grid>
               </TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Payment</TableCell>
               <TableCell>
                 {billing?.brand.toUpperCase()}
-                {billing ? "ending " : ""}
+                {billing ? " ending " : ""}
                 {billing?.last_digits}
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Billing address</TableCell>
               <TableCell>
                 <Typography component="p">{billing?.name}</Typography>
@@ -188,7 +196,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Shipping address</TableCell>
               <TableCell>
                 <Typography component="div">

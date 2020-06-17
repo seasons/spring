@@ -68,17 +68,25 @@ export const ReservationView = ({ match, history }) => {
 
   const isReservationUnfulfilled = ["Queued", "Packed"].includes(data?.status)
 
-  const primaryButton = isReservationUnfulfilled
-    ? {
+  let primaryButton = () => {
+    if (isReservationUnfulfilled) {
+      return {
         text: "Start Picking",
         action: () => toggleModal(true),
         icon: <ArchiveIcon />,
       }
-    : {
+    }
+
+    if (["Delivered", "Received"].includes(data?.status)) {
+      return {
         text: "Process Returns",
         action: () => toggleModal(true),
         icon: <MoveToInboxIcon />,
       }
+    }
+
+    return null
+  }
 
   const Modal = isReservationUnfulfilled ? PickingModal : ProcessReturnModal
 
@@ -98,7 +106,7 @@ export const ReservationView = ({ match, history }) => {
             },
             { title: `Reservation: ${data.reservationNumber}`, url: `/reservations/${data.reservationNumber}` },
           ]}
-          primaryButton={primaryButton}
+          primaryButton={primaryButton()}
           menuItems={[
             {
               text: "Update status",
