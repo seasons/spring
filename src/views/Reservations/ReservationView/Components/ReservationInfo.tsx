@@ -25,7 +25,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
               <TableRow>
                 <TableCell>Customer</TableCell>
                 <TableCell>
-                  <Link component={RouterLink} to="/app/management/customers/1">
+                  <Link component={RouterLink} to={`/members/${customer.id}/account`}>
                     {name}
                   </Link>
                   <div>{address1}</div>
