@@ -130,7 +130,6 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
           <TextField source="detail.shippingAddress.state" label="State" />
           <TextField source="plan" label="Membership" />
           <StatusField label="Status" />
-          <TextField source="bagItems.id" label="Money Spent" />
           <EntityCountField label="Current Items" entityName="bagItems" />
           <ActionButtons label="Actions">
             <ViewButton action={openConfirmInviteModal} />
