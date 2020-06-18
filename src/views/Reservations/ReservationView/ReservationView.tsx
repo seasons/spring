@@ -16,11 +16,13 @@ import { useMutation, ExecutionResult } from "react-apollo"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 import { ProductGrid } from "./Components/ProductGrid"
 import { PickingModal } from "./Components/PickingModal/PickingModal"
+import { UpdateStatusModal } from "./Components/UpdateStatusModal/UpdateStatusModal"
 
 export const ReservationView = ({ match, history }) => {
   const { id } = match.params
   const [mode, setMode] = useState("grid")
   const [showModal, toggleModal] = useState(false)
+  const [showUpdateStatusModal, toggleUpdateStatusModal] = useState(false)
 
   const refresh = useRefresh()
   const { data, loading, error } = useQueryWithStore({
@@ -112,6 +114,7 @@ export const ReservationView = ({ match, history }) => {
               text: "Update status",
               action: () => {
                 console.log("Update status")
+                toggleUpdateStatusModal(true)
               },
             },
           ]}
@@ -197,6 +200,15 @@ export const ReservationView = ({ match, history }) => {
               status: "error",
             })
           }
+        }}
+      />
+      <UpdateStatusModal
+        open={showUpdateStatusModal}
+        toggleSnackbar={toggleSnackbar}
+        reservation={data}
+        onClose={() => {
+          toggleUpdateStatusModal(false)
+          refresh()
         }}
       />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
