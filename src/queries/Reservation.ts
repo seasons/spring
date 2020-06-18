@@ -81,6 +81,7 @@ export default {
         productStatus
         barcode
         warehouseLocation {
+          id
           barcode
           locationCode
           itemCode
