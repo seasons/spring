@@ -30,31 +30,28 @@ export const NotificationsList: React.FC<MemberViewProps> = ({ match, props }) =
           },
         ]}
       />
-      <Card>
-        <List
-          {...props}
-          perPage={10}
-          hasCreate={false}
-          hasEdit={false}
-          hasList={true}
-          hasShow={true}
-          component="div"
-          resource="PushNotificationReceipt"
-          basePath="/notifications"
-          sort={{ field: "sentAt", order: "DESC" }}
-        >
-          <Datagrid>
-            <SinceDateField source="sentAt" label="Sent At" />
-            <TextField source="title" label="Title" />
-            <TextField source="body" label="Body" />
-            <UsersField label="Users" />
-            <TextField source="interest" label="Interest" />
-            <TextField source="route" label="Route" />
-            <TextField source="screen" label="Screen" />
-            <TextField source="uri" label="URI" />
-          </Datagrid>
-        </List>
-      </Card>
+      <List
+        {...props}
+        perPage={10}
+        hasCreate={false}
+        hasEdit={false}
+        hasList={true}
+        hasShow={true}
+        resource="PushNotificationReceipt"
+        basePath="/notifications"
+        sort={{ field: "sentAt", order: "DESC" }}
+      >
+        <Datagrid>
+          <SinceDateField source="sentAt" label="Sent At" />
+          <TextField source="title" label="Title" />
+          <TextField source="body" label="Body" />
+          <UsersField label="Users" />
+          <TextField source="interest" label="Interest" />
+          <TextField source="route" label="Route" />
+          <TextField source="screen" label="Screen" />
+          <TextField source="uri" label="URI" />
+        </Datagrid>
+      </List>
 
       <SendPushNotificationModal onClose={handleEditClose} open={openEdit} />
     </Container>
