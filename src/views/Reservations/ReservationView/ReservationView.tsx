@@ -11,19 +11,21 @@ import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
 import ArchiveIcon from "@material-ui/icons/Archive"
 import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessReturnModal"
-import { PROCESS_RESERVATION, MARK_RESERVATION_PICKED } from "../mutations"
+import { PROCESS_RESERVATION, MARK_RESERVATION_PICKED, UPDATE_RESERVATION } from "../mutations"
 import { useMutation, ExecutionResult } from "react-apollo"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 import { ProductGrid } from "./Components/ProductGrid"
 import { PickingModal } from "./Components/PickingModal/PickingModal"
+import { UpdateStatusModal } from "./Components/UpdateStatusModal/UpdateStatusModal"
 
 export const ReservationView = ({ match, history }) => {
   const { id } = match.params
   const [mode, setMode] = useState("grid")
   const [showModal, toggleModal] = useState(false)
+  const [showUpdateStatusModal, toggleUpdateStatusModal] = useState(false)
 
   const refresh = useRefresh()
-  const { data, loading, error } = useQueryWithStore({
+  const { data, loading, loaded, error } = useQueryWithStore({
     type: "getOne",
     resource: "Reservation",
     payload: { id },
@@ -46,6 +48,23 @@ export const ReservationView = ({ match, history }) => {
   )
   const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED, mutationConfig)
 
+  const [updateReservation] = useMutation(UPDATE_RESERVATION, {
+    onCompleted: () => {
+      toggleSnackbar({
+        show: true,
+        message: "Reservation status updated",
+        status: "success",
+      })
+    },
+    onError: error => {
+      toggleSnackbar({
+        show: true,
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
+
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
@@ -56,7 +75,7 @@ export const ReservationView = ({ match, history }) => {
     setMode(value)
   }
 
-  if (loading) {
+  if (!loaded && loading) {
     return <Loading />
   }
 
@@ -112,6 +131,7 @@ export const ReservationView = ({ match, history }) => {
               text: "Update status",
               action: () => {
                 console.log("Update status")
+                toggleUpdateStatusModal(true)
               },
             },
           ]}
@@ -197,6 +217,27 @@ export const ReservationView = ({ match, history }) => {
               status: "error",
             })
           }
+        }}
+      />
+      <UpdateStatusModal
+        open={showUpdateStatusModal}
+        toggleSnackbar={toggleSnackbar}
+        reservation={data}
+        isMutating={isMutating}
+        onSubmit={async values => {
+          setIsMutating(true)
+          const result = await updateReservation({
+            variables: {
+              reservationNumber: data.reservationNumber,
+              status: values.reservationStatus,
+            },
+          })
+          refresh()
+          setIsMutating(false)
+          toggleUpdateStatusModal(false)
+        }}
+        onClose={() => {
+          toggleUpdateStatusModal(false)
         }}
       />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />

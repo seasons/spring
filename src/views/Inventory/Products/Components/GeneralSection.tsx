@@ -39,19 +39,19 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
         <>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <Text variant="h6">Brand</Text>
+              <Text variant="h6">Brand *</Text>
               <Spacer mt={1} />
               <SelectField name="brand" choices={brandChoices} requiredString />
             </Grid>
             <Grid item xs={6}>
-              <Text variant="h6">Product name</Text>
+              <Text variant="h6">Product name *</Text>
               <Spacer mt={1} />
               <TextField name="name" placeholder="Max 50 characters" maxLength={50} />
             </Grid>
           </Grid>
           <Spacer mt={3} />
           <Grid item xs={12}>
-            <Text variant="h6">Description</Text>
+            <Text variant="h6">Description *</Text>
             <Spacer mt={1} />
             <TextField multiline name="description" placeholder="Enter a description" requiredString />
             <Spacer mt={3} />
@@ -65,7 +65,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             </Grid>
           )}
           <Grid item xs={12}>
-            <Text variant="h6">Available sizes</Text>
+            <Text variant="h6">Available sizes *</Text>
             <Spacer mt={1} />
             <SelectField disabled={isEditing} multiple name="sizes" choices={sizes} requiredStringArray />
             <Spacer mt={3} />

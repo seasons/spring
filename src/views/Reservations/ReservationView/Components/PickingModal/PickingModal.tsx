@@ -24,7 +24,7 @@ type ProductStates = { [key: string]: ProductState }
 
 export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open, onSave, onClose, reservation }) => {
   const barcodeMaps = {}
-  const availableProducts = reservation.products.filter(a => a.inventoryStatus === "Reservable")
+  const availableProducts = reservation.products
   availableProducts.forEach(product => {
     barcodeMaps[product.barcode] = {
       productUID: product.seasonsUID,

@@ -43,6 +43,7 @@ export default {
           email
         }
         detail {
+          id
           shippingAddress {
             name
             address1
@@ -80,6 +81,7 @@ export default {
         productStatus
         barcode
         warehouseLocation {
+          id
           barcode
           locationCode
           itemCode

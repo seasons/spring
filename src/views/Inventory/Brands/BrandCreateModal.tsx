@@ -80,51 +80,49 @@ export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, toggle
         <Form onSubmit={onSubmit}>
           {({ handleSubmit }) => {
             return (
-              <>
-                <form onSubmit={handleSubmit}>
-                  <DialogContent dividers>
-                    <Box my={1} width={550}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          <Text variant="h6">Name*</Text>
-                          <Spacer mt={1} />
-                          <TextField name="name" placeholder="Enter a name" requiredString />
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Text variant="h6">Brand code*</Text>
-                          <Spacer mt={1} />
-                          <TextField name="brandCode" placeholder="Enter a brand code" requiredString />
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Text variant="h6">Brand tier*</Text>
-                          <Spacer mt={1} />
-                          <SelectField name="brandTier" choices={brandTierChoices} requiredString />
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Text variant="h6">Since</Text>
-                          <Spacer mt={1} />
-                          <DatePickerField name="sinceDate" format="yyyy" views={["year"]} optionalDate />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Text variant="h6">Description*</Text>
-                          <Spacer mt={1} />
-                          <TextField multiline name="description" placeholder="Enter a description" requiredString />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Text variant="h6">Website URL</Text>
-                          <Spacer mt={1} />
-                          <TextField name="websiteURL" placeholder="Enter a url" optionalURL />
-                        </Grid>
+              <form onSubmit={handleSubmit}>
+                <DialogContent dividers>
+                  <Box my={1} width={550}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
+                        <Text variant="h6">Name*</Text>
+                        <Spacer mt={1} />
+                        <TextField name="name" placeholder="Enter a name" requiredString />
                       </Grid>
-                    </Box>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button autoFocus color="primary" variant="contained" type="submit">
-                      {isMutating ? <Loader size={20} /> : "Create"}
-                    </Button>
-                  </DialogActions>
-                </form>
-              </>
+                      <Grid item xs={6}>
+                        <Text variant="h6">Brand code*</Text>
+                        <Spacer mt={1} />
+                        <TextField name="brandCode" placeholder="Enter a brand code" requiredString />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Text variant="h6">Brand tier*</Text>
+                        <Spacer mt={1} />
+                        <SelectField name="brandTier" choices={brandTierChoices} requiredString />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Text variant="h6">Since</Text>
+                        <Spacer mt={1} />
+                        <DatePickerField name="sinceDate" format="yyyy" views={["year"]} optionalDate />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Text variant="h6">Description*</Text>
+                        <Spacer mt={1} />
+                        <TextField multiline name="description" placeholder="Enter a description" requiredString />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Text variant="h6">Website URL</Text>
+                        <Spacer mt={1} />
+                        <TextField name="websiteURL" placeholder="Enter a url" optionalURL />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </DialogContent>
+                <DialogActions>
+                  <Button autoFocus color="primary" variant="contained" type="submit">
+                    {isMutating ? <Loader size={20} /> : "Create"}
+                  </Button>
+                </DialogActions>
+              </form>
             )
           }}
         </Form>
