@@ -12,53 +12,22 @@ interface UpdateStatusModalProps {
   open: boolean
   toggleSnackbar: (state: SnackbarState) => void
   onClose?: () => void
+  onSubmit: (values) => void
   reservation: any
+  isMutating: boolean
 }
 
-export const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({ open, toggleSnackbar, onClose, reservation }) => {
-  const choices = [
-    "Blocked",
-    "Cancelled",
-    "Completed",
-    "Delivered",
-    "Packed",
-    "Queued",
-    "Received",
-    "Shipped",
-    "Unknown",
-  ].map(choice => ({ display: choice, value: choice }))
-
-  const refresh = useRefresh()
-  const [isMutating, setIsMutating] = useState(false)
-  const [updateReservation] = useMutation(UPDATE_RESERVATION, {
-    onCompleted: () => {
-      toggleSnackbar({
-        show: true,
-        message: "Reservation status updated",
-        status: "success",
-      })
-      refresh()
-      onClose?.()
-    },
-    onError: error => {
-      toggleSnackbar({
-        show: true,
-        message: error?.message,
-        status: "error",
-      })
-    },
-  })
-
-  const onSubmit = async values => {
-    setIsMutating(true)
-    const result = await updateReservation({
-      variables: {
-        reservationNumber: reservation.reservationNumber,
-        status: values.reservationStatus,
-      },
-    })
-    setIsMutating(false)
-  }
+export const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({
+  open,
+  onSubmit,
+  onClose,
+  reservation,
+  isMutating = false,
+}) => {
+  const choices = ["Queued", "Packed", "Shipped", "Delivered", "Blocked", "Completed", "Cancelled"].map(choice => ({
+    display: choice,
+    value: choice,
+  }))
 
   return (
     <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -70,20 +39,16 @@ export const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({ open, togg
           return (
             <form onSubmit={handleSubmit}>
               <DialogContent dividers>
-                <Box my={2} width={["400px"]}>
-                  <Grid container spacing={3}>
-                    <Grid item xs={6}>
-                      <Text variant="h6">Reservation status *</Text>
-                      <Spacer mt={1} />
-                      <SelectField name="reservationStatus" choices={choices} requiredString />
-                    </Grid>
-                  </Grid>
+                <Box my={2} width={["300px"]}>
+                  <Text variant="h6">Reservation status *</Text>
+                  <Spacer mt={1} />
+                  <SelectField name="reservationStatus" choices={choices} requiredString />
                 </Box>
               </DialogContent>
               <DialogActions>
                 <Box mr={1} my={1}>
                   <Button autoFocus type="submit" color="primary" variant="contained">
-                    {isMutating ? <Loader size={20} /> : "Confirm"}
+                    {isMutating ? <Loader size={20} /> : "Save"}
                   </Button>
                 </Box>
               </DialogActions>

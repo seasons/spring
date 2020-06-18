@@ -4,44 +4,46 @@ import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField 
 import { Box, Container } from "@material-ui/core"
 import { Header, StatusInput } from "components"
 
-const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => (
-  <Box px={2}>
-    <Filter {...rest}>
-      <TextInput label="Search name" source="customer.user.firstName_contains" alwaysOn />
-      <SelectInput
-        label="Status"
-        source="status"
-        choices={[
-          { id: "Queued", name: "Queued" },
-          { id: "Packed", name: "Packed" },
-          { id: "Shipped", name: "Shipped" },
-          { id: "Delivered", name: "Delivered" },
-          { id: "Completed", name: "Completed" },
-          { id: "Cancelled", name: "Cancelled" },
-          { id: "Blocked", name: "Blocked" },
-        ]}
-        alwaysOn
-      />
-      <StatusInput
-        source="status_in"
-        tabs={[
-          { label: "All", id: "all", value: [] },
-          {
-            label: "Outgoing",
-            id: "outgoing",
-            value: ["Queued", "Packed", "Shipped"],
-          },
-          {
-            label: "Incoming",
-            id: "incoming",
-            value: ["Shipped", "Delivered", "Completed"],
-          },
-        ]}
-        alwaysOn
-      />
-    </Filter>
-  </Box>
-)
+const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => {
+  return (
+    <Box px={2}>
+      <Filter {...rest}>
+        <TextInput label="Search name" source="customer.user.firstName_contains" alwaysOn />
+        <SelectInput
+          label="Status"
+          source="status"
+          choices={[
+            { id: "Queued", name: "Queued" },
+            { id: "Packed", name: "Packed" },
+            { id: "Shipped", name: "Shipped" },
+            { id: "Delivered", name: "Delivered" },
+            { id: "Completed", name: "Completed" },
+            { id: "Cancelled", name: "Cancelled" },
+            { id: "Blocked", name: "Blocked" },
+          ]}
+          alwaysOn
+        />
+        <StatusInput
+          source="status_in"
+          tabs={[
+            { label: "All", id: "all", value: [] },
+            {
+              label: "Outgoing",
+              id: "outgoing",
+              value: ["Queued", "Packed", "Shipped"],
+            },
+            {
+              label: "Incoming",
+              id: "incoming",
+              value: ["Shipped", "Delivered", "Completed"],
+            },
+          ]}
+          alwaysOn
+        />
+      </Filter>
+    </Box>
+  )
+}
 
 export const ReservationList = ({ staticContext, ...props }) => {
   const dataProvider = useContext(DataProviderContext)
