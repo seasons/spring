@@ -1,8 +1,6 @@
 import React from "react"
 
-import { Grid, Theme } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
-
+import { Grid } from "@material-ui/core"
 import { MemberSubViewProps } from "../interfaces"
 import { Lifestyle } from "./Lifestyle"
 import { Sizing } from "./Sizing"

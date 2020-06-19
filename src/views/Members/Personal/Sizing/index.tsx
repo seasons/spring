@@ -5,7 +5,7 @@ import { CardContent, ComponentError, EditButton, EditModal, TableHeader } from 
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { Card, Table, TableBody, TableCell, TableRow } from "@material-ui/core"
+import { Card, Table, TableBody, TableCell, TableRow, Grid, Box, Typography } from "@material-ui/core"
 
 import { MemberSubViewProps } from "../../interfaces"
 
@@ -101,10 +101,17 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
         <Table>
           <TableBody>
             <TableRow>
-              <TableHeader>Sizing</TableHeader>
-              <TableCell></TableCell>
-              <TableCell>
-                <EditButton onClick={handleEditOpen} />
+              <TableCell colSpan={3}>
+                <Grid justify="space-between" container>
+                  <Grid item alignItems="center" justify="center">
+                    <Box mt={0.5}>
+                      <Typography variant="h4">Sizing</Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item>
+                    <EditButton onClick={handleEditOpen} />
+                  </Grid>
+                </Grid>
               </TableCell>
             </TableRow>
             <TableRow selected>
