@@ -94,6 +94,7 @@ const CustomerDetails = gql`
       expiration_year
       name
       street1
+      street2
       city
       state
       postal_code
@@ -120,6 +121,7 @@ const CustomerDetails = gql`
         id
         name
         address1
+        address2
         city
         state
         zipCode

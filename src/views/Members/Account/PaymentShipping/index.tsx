@@ -39,6 +39,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
           expiration_month: billing?.expiration_month,
           expiration_year: billing?.expiration_year,
           street1: values.billingStreet1.value,
+          street2: values.billingStreet2.value,
           city: values.billingCity.value,
           state: values.billingState.value,
           postal_code: values.billingPostal.value,
@@ -50,6 +51,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
             update: {
               name: values.shippingName.value,
               address1: values.shippingStreet1.value,
+              address2: values.shippingStreet2.value,
               city: values.shippingCity.value,
               state: values.shippingState.value,
               zipCode: values.shippingPostal.value,
@@ -113,7 +115,11 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
     },
     billingStreet1: {
       value: billing?.street1,
-      label: "Street",
+      label: "Street 1",
+    },
+    billingStreet2: {
+      value: billing?.street2,
+      label: "Street 2",
     },
     billingCity: {
       value: billing?.city,
@@ -136,7 +142,11 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
     },
     shippingStreet1: {
       value: shipping?.address1,
-      label: "Street",
+      label: "Street 1",
+    },
+    shippingStreet2: {
+      value: shipping?.address2,
+      label: "Street 2",
     },
     shippingCity: {
       value: shipping?.city,
@@ -187,10 +197,9 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
               <TableCell>
                 <Typography component="p">{billing?.name}</Typography>
                 <Typography component="p">{billing?.street1}</Typography>
+                <Typography component="p">{billing?.street2}</Typography>
                 <Typography component="p">
-                  {billing?.city}
-                  {billing ? ", " : ""}
-                  {billing?.state}
+                  {billing?.city && billing?.state && `${billing?.city}, ${billing?.state}`}
                 </Typography>
                 <Typography component="p">{billing?.postal_code}</Typography>
               </TableCell>
@@ -203,10 +212,9 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
                   <Typography component="p">{shipping?.name}</Typography>
                 </Typography>
                 <Typography component="p">{shipping?.address1}</Typography>
+                <Typography component="p">{shipping?.address2}</Typography>
                 <Typography component="p">
-                  {shipping?.city}
-                  {shipping ? ", " : ""}
-                  {shipping?.state}
+                  {shipping?.city && shipping?.state && `${shipping?.city}, ${shipping?.state}`}
                 </Typography>
                 <Typography component="p">{shipping?.zipCode}</Typography>
               </TableCell>

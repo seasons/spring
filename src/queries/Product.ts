@@ -47,6 +47,31 @@ export default {
         id
         name
       }
+      variants {
+        id
+        sku
+        internalSize {
+          id
+          display
+          productType
+          top {
+            id
+            letter
+          }
+          bottom {
+            id
+            value
+          }
+        }
+        physicalProducts {
+          id
+          seasonsUID
+          productStatus
+          inventoryStatus
+          offloadMethod
+          offloadNotes
+        }
+      }
       status
       createdAt
       updatedAt
