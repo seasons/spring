@@ -7,7 +7,7 @@ import { createUploadLink } from "apollo-upload-client"
 
 const URI = process.env.REACT_APP_MONSOON_ENDPOINT || "http://localhost:4000"
 
-const link = createUploadLink({ uri: URI })
+const link = createUploadLink({ uri: `${URI}/graphql` })
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists

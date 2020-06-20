@@ -2,6 +2,9 @@ import { Header } from "components/Header"
 import { BrandField, CheckField, ImagesField, SinceDateField, ViewEntityField } from "fields"
 import React from "react"
 import { Datagrid, Filter, List, SelectInput, TextField, TextInput } from "@seasons/react-admin"
+import { Box, Grid } from "@material-ui/core"
+import { VariantSummary } from "./Components"
+import jsonExport from "jsonexport/dist"
 
 export const ProductFilter = props => (
   <Filter {...props}>
@@ -36,6 +39,26 @@ export interface ProductListInterface {
   onNewProductBtnPressed: () => void
 }
 
+interface ExpandedRowProps {
+  id?: string
+  record?: any
+  resource?: string
+}
+
+const ExpandedRow: React.FC<ExpandedRowProps> = ({ id, record, resource }) => {
+  return (
+    <Box my={2}>
+      <Grid container spacing={3}>
+        {record?.variants.map((variant, index) => (
+          <Grid item md={4}>
+            <VariantSummary variant={variant} key={index} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  )
+}
+
 export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => (
   <>
     <Header
@@ -60,7 +83,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
       hasShow
       resource="Product"
     >
-      <Datagrid>
+      <Datagrid expand={<ExpandedRow />}>
         <ImagesField source="images" />
         <TextField source="name" />
         <BrandField label="Brand Name" />

@@ -176,7 +176,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
           <PaymentShipping adminKey={adminKey} member={member} />
         </Grid>
         <Grid item lg={12} md={12} xl={12} xs={12}>
-          <Card style={{ width: "100%" }}>
+          <Card>
             <CardHeader className={classes.cardHeader} title="Invoices" />
             <Divider />
             <Datagrid rowStyle={rowStyle} ids={invoicesIDs} data={stateInvoices} currentSort={defaultSort}>
