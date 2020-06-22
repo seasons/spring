@@ -168,6 +168,12 @@ export interface ProductEditQuery_product_functions {
   name: string | null
 }
 
+export interface ProductEditQuery_product_materialCategory {
+  __typename: "ProductMaterialCategory"
+  id: string
+  slug: string
+}
+
 export interface ProductEditQuery_product_model {
   __typename: "ProductModel"
   id: string
@@ -211,6 +217,7 @@ export interface ProductEditQuery_product {
   color: ProductEditQuery_product_color
   functions: ProductEditQuery_product_functions[] | null
   innerMaterials: string[]
+  materialCategory: ProductEditQuery_product_materialCategory | null
   model: ProductEditQuery_product_model | null
   modelSize: ProductEditQuery_product_modelSize | null
   outerMaterials: string[]

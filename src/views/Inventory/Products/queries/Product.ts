@@ -76,6 +76,10 @@ export const PRODUCT_EDIT_QUERY = gql`
         name
       }
       innerMaterials
+      materialCategory {
+        id
+        slug
+      }
       model {
         id
         name
