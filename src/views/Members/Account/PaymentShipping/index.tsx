@@ -31,20 +31,6 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
   const handleEditSave = values => {
     setOpenEdit(false)
     const customer = {
-      billingInfo: {
-        update: {
-          brand: billing?.brand,
-          name: values.billingName.value,
-          last_digits: billing?.last_digits,
-          expiration_month: billing?.expiration_month,
-          expiration_year: billing?.expiration_year,
-          street1: values.billingStreet1.value,
-          street2: values.billingStreet2.value,
-          city: values.billingCity.value,
-          state: values.billingState.value,
-          postal_code: values.billingPostal.value,
-        },
-      },
       detail: {
         update: {
           shippingAddress: {
@@ -75,7 +61,6 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
 
         updateMember({
           ...member,
-          billingInfo: customer.billingInfo.update,
           detail: reduxUpdatePayload,
         })
       })
@@ -91,47 +76,6 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
   const editEntity = {
     id: {
       value: member.id,
-    },
-    number: {
-      value: billing?.last_digits,
-      disabled: true,
-    },
-    expirationMonth: {
-      value: billing?.expiration_month,
-      label: "Expiration Month",
-      disabled: true,
-    },
-    expirationYear: {
-      value: billing?.expiration_year,
-      label: "Expiration Year",
-      disabled: true,
-    },
-    billingDivider: {
-      label: "Billing address",
-    },
-    billingName: {
-      value: billing?.name,
-      label: "Name",
-    },
-    billingStreet1: {
-      value: billing?.street1,
-      label: "Street 1",
-    },
-    billingStreet2: {
-      value: billing?.street2,
-      label: "Street 2",
-    },
-    billingCity: {
-      value: billing?.city,
-      label: "City",
-    },
-    billingState: {
-      value: billing?.state,
-      label: "State",
-    },
-    billingPostal: {
-      value: billing?.postal_code,
-      label: "Zip code",
     },
     shippingDivider: {
       label: "Shipping address",
@@ -224,7 +168,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
         </Table>
       </CardContent>
       <EditModal
-        title="Payment & Shipping"
+        title="Shipping Address"
         editEntity={editEntity}
         onSave={handleEditSave}
         onClose={handleEditClose}
