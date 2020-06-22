@@ -82,6 +82,9 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
   }
 
   const materials = materialsJSON.allMaterials
+  const materialCategoryChoices = getFormSelectChoices(
+    data.productMaterialCategories.map(materialCategory => materialCategory?.slug || "")
+  )
   const bottomSizeTypeChoices = getFormSelectChoices(getEnumValues(data.bottomSizeTypes))
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
@@ -165,7 +168,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
             types={productTypes}
           />
           <Spacer mt={6} />
-          <TagsSection materials={materials} tags={tags} />
+          <TagsSection materials={materials} materialCategoryChoices={materialCategoryChoices} tags={tags} />
           {isEditing && product && (
             <>
               <Spacer mt={6} />

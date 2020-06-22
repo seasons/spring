@@ -12,8 +12,8 @@ export type SelectChoice = {
 
 export type SelectFieldProps = ChildFieldProps & {
   choices?: SelectChoice[]
-  groupedChoices?: { name: string; children: SelectChoice[] }[]
   disabled?: boolean
+  groupedChoices?: { name: string; children: SelectChoice[] }[]
   name: string
   onChange?: (event: any) => void
 }
@@ -35,7 +35,6 @@ export const SelectField: React.FC<SelectFieldProps> = ({
         <FormControl error={meta.touched && meta.error}>
           <Select
             id="grouped-select"
-            defaultValue=""
             disabled={disabled}
             multiple={multiple}
             name={input.name}

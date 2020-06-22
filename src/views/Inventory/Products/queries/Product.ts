@@ -38,6 +38,11 @@ export const ProductUpsertFragment = gql`
       }
     }
 
+    productMaterialCategories {
+      id
+      slug
+    }
+
     productModels {
       id
       name

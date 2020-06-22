@@ -60,6 +60,12 @@ export interface ProductUpsertQuery_productArchitectures {
   enumValues: ProductUpsertQuery_productArchitectures_enumValues[] | null
 }
 
+export interface ProductUpsertQuery_productMaterialCategories {
+  __typename: "ProductMaterialCategory"
+  id: string
+  slug: string
+}
+
 export interface ProductUpsertQuery_productModels {
   __typename: "ProductModel"
   id: string
@@ -89,6 +95,7 @@ export interface ProductUpsertQuery {
   inventoryStatuses: ProductUpsertQuery_inventoryStatuses | null
   physicalProductStatuses: ProductUpsertQuery_physicalProductStatuses | null
   productArchitectures: ProductUpsertQuery_productArchitectures | null
+  productMaterialCategories: (ProductUpsertQuery_productMaterialCategories | null)[]
   productModels: (ProductUpsertQuery_productModels | null)[]
   productTypes: ProductUpsertQuery_productTypes | null
   tags: (ProductUpsertQuery_tags | null)[]
