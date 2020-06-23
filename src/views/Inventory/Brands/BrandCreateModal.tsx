@@ -43,7 +43,7 @@ export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, toggle
     setIsMutating(true)
     const { brandCode, brandTier, description, name, sinceDate, websiteURL } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
-    const result = await createBrand({
+    await createBrand({
       variables: {
         input: {
           brandCode: brandCode.toUpperCase(),
@@ -105,9 +105,9 @@ export const BrandCreateModal: React.FC<BrandCreateModalProps> = ({ open, toggle
                         <DatePickerField name="sinceDate" format="yyyy" views={["year"]} optionalDate />
                       </Grid>
                       <Grid item xs={12}>
-                        <Text variant="h6">Description*</Text>
+                        <Text variant="h6">Description</Text>
                         <Spacer mt={1} />
-                        <TextField multiline name="description" placeholder="Enter a description" requiredString />
+                        <TextField multiline name="description" placeholder="Enter a description" />
                       </Grid>
                       <Grid item xs={12}>
                         <Text variant="h6">Website URL</Text>

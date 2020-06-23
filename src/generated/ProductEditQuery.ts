@@ -6,13 +6,13 @@
 import {
   ProductWhereUniqueInput,
   PhotographyStatus,
-  ProductStatus,
-  ProductArchitecture,
   ProductType,
   LetterSize,
   PhysicalProductStatus,
   InventoryStatus,
   PhysicalProductOffloadMethod,
+  ProductStatus,
+  ProductArchitecture,
 } from "./globalTypes"
 
 // ====================================================
@@ -72,6 +72,12 @@ export interface ProductEditQuery_productArchitectures {
   enumValues: ProductEditQuery_productArchitectures_enumValues[] | null
 }
 
+export interface ProductEditQuery_productMaterialCategories {
+  __typename: "ProductMaterialCategory"
+  id: string
+  slug: string
+}
+
 export interface ProductEditQuery_productModels {
   __typename: "ProductModel"
   id: string
@@ -106,44 +112,6 @@ export interface ProductEditQuery_product_brand {
 
 export interface ProductEditQuery_product_category {
   __typename: "Category"
-  id: string
-  name: string
-}
-
-export interface ProductEditQuery_product_color {
-  __typename: "Color"
-  id: string
-  colorCode: string
-  name: string
-}
-
-export interface ProductEditQuery_product_functions {
-  __typename: "ProductFunction"
-  id: string
-  name: string | null
-}
-
-export interface ProductEditQuery_product_model {
-  __typename: "ProductModel"
-  id: string
-  name: string
-}
-
-export interface ProductEditQuery_product_modelSize {
-  __typename: "Size"
-  id: string
-  display: string
-}
-
-export interface ProductEditQuery_product_secondaryColor {
-  __typename: "Color"
-  id: string
-  colorCode: string
-  name: string
-}
-
-export interface ProductEditQuery_product_tags {
-  __typename: "Tag"
   id: string
   name: string
 }
@@ -187,6 +155,50 @@ export interface ProductEditQuery_product_variants {
   physicalProducts: ProductEditQuery_product_variants_physicalProducts[] | null
 }
 
+export interface ProductEditQuery_product_color {
+  __typename: "Color"
+  id: string
+  colorCode: string
+  name: string
+}
+
+export interface ProductEditQuery_product_functions {
+  __typename: "ProductFunction"
+  id: string
+  name: string | null
+}
+
+export interface ProductEditQuery_product_materialCategory {
+  __typename: "ProductMaterialCategory"
+  id: string
+  slug: string
+}
+
+export interface ProductEditQuery_product_model {
+  __typename: "ProductModel"
+  id: string
+  name: string
+}
+
+export interface ProductEditQuery_product_modelSize {
+  __typename: "Size"
+  id: string
+  display: string
+}
+
+export interface ProductEditQuery_product_secondaryColor {
+  __typename: "Color"
+  id: string
+  colorCode: string
+  name: string
+}
+
+export interface ProductEditQuery_product_tags {
+  __typename: "Tag"
+  id: string
+  name: string
+}
+
 export interface ProductEditQuery_product {
   __typename: "Product"
   id: string
@@ -199,11 +211,13 @@ export interface ProductEditQuery_product {
   updatedAt: any
   brand: ProductEditQuery_product_brand
   category: ProductEditQuery_product_category
+  variants: ProductEditQuery_product_variants[] | null
   status: ProductStatus | null
   architecture: ProductArchitecture | null
   color: ProductEditQuery_product_color
   functions: ProductEditQuery_product_functions[] | null
   innerMaterials: string[]
+  materialCategory: ProductEditQuery_product_materialCategory | null
   model: ProductEditQuery_product_model | null
   modelSize: ProductEditQuery_product_modelSize | null
   outerMaterials: string[]
@@ -211,7 +225,6 @@ export interface ProductEditQuery_product {
   secondaryColor: ProductEditQuery_product_secondaryColor | null
   tags: ProductEditQuery_product_tags[]
   type: ProductType | null
-  variants: ProductEditQuery_product_variants[] | null
 }
 
 export interface ProductEditQuery {
@@ -222,6 +235,7 @@ export interface ProductEditQuery {
   inventoryStatuses: ProductEditQuery_inventoryStatuses | null
   physicalProductStatuses: ProductEditQuery_physicalProductStatuses | null
   productArchitectures: ProductEditQuery_productArchitectures | null
+  productMaterialCategories: (ProductEditQuery_productMaterialCategories | null)[]
   productModels: (ProductEditQuery_productModels | null)[]
   productTypes: ProductEditQuery_productTypes | null
   tags: (ProductEditQuery_tags | null)[]

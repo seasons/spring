@@ -12,8 +12,8 @@ export type SelectChoice = {
 
 export type SelectFieldProps = ChildFieldProps & {
   choices?: SelectChoice[]
-  groupedChoices?: { name: string; children: SelectChoice[] }[]
   disabled?: boolean
+  groupedChoices?: { name: string; children: SelectChoice[] }[]
   name: string
   onChange?: (event: any) => void
 }
