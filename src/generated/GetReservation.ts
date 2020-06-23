@@ -34,6 +34,7 @@ export interface GetReservation_customer_user {
 
 export interface GetReservation_customer_detail_shippingAddress {
   __typename: "Location"
+  id: string
   name: string
   address1: string
   address2: string | null
@@ -43,6 +44,7 @@ export interface GetReservation_customer_detail_shippingAddress {
 
 export interface GetReservation_customer_detail {
   __typename: "CustomerDetail"
+  id: string
   shippingAddress: GetReservation_customer_detail_shippingAddress | null
 }
 
@@ -55,6 +57,7 @@ export interface GetReservation_customer {
 
 export interface GetReservation_sentPackage_shippingLabel {
   __typename: "Label"
+  id: string
   image: string | null
   trackingNumber: string | null
   trackingURL: string | null
@@ -69,6 +72,7 @@ export interface GetReservation_sentPackage {
 
 export interface GetReservation_returnedPackage_shippingLabel {
   __typename: "Label"
+  id: string
   image: string | null
   trackingNumber: string | null
   trackingURL: string | null
@@ -88,6 +92,7 @@ export interface GetReservation_lastLocation {
 
 export interface GetReservation_products_warehouseLocation {
   __typename: "WarehouseLocation"
+  id: string
   barcode: string
   locationCode: string
   itemCode: string
@@ -102,18 +107,21 @@ export interface GetReservation_products_productVariant_product_brand {
 
 export interface GetReservation_products_productVariant_product_color {
   __typename: "Color"
+  id: string
   hexCode: string
   name: string
 }
 
 export interface GetReservation_products_productVariant_product_secondaryColor {
   __typename: "Color"
+  id: string
   hexCode: string
   name: string
 }
 
 export interface GetReservation_products_productVariant_product_images {
   __typename: "Image"
+  id: string
   url: string | null
 }
 

@@ -3594,6 +3594,7 @@ export interface UpsertProductInput {
   functions: string[]
   images: any[]
   innerMaterials: string[]
+  materialCategorySlug?: string | null
   modelID?: string | null
   modelSizeDisplay?: string | null
   modelSizeName?: string | null
