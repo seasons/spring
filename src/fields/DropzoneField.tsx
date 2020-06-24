@@ -6,7 +6,6 @@ import { FormControl } from "components"
 import { Field, ChildFieldProps } from "./Field"
 import { UploadFileIcon } from "icons"
 import { colors } from "theme/colors"
-import styledC from "styled-components"
 
 export type DropzoneFieldProps = ChildFieldProps & {
   index: number
