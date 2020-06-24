@@ -26,10 +26,6 @@ export const PickingProductCard = ({ product, productState, onStateChange, doneP
     })
   }, [productState.picked])
 
-  if (!warehouseLocation) {
-    return null
-  }
-
   return (
     <Box my={1}>
       <Paper variant="outlined">
@@ -59,7 +55,7 @@ export const PickingProductCard = ({ product, productState, onStateChange, doneP
                   Type
                 </Typography>
                 <Typography variant="h3" color="textSecondary">
-                  {warehouseLocation?.type}
+                  {warehouseLocation?.type || "-"}
                 </Typography>
               </Box>
               <Divider orientation="vertical" flexItem />
@@ -68,7 +64,7 @@ export const PickingProductCard = ({ product, productState, onStateChange, doneP
                   Location
                 </Typography>
                 <Typography variant="h3" color="textSecondary">
-                  {warehouseLocation?.locationCode}
+                  {warehouseLocation?.locationCode || "-"}
                 </Typography>
               </Box>
               <Divider orientation="vertical" flexItem />
@@ -77,7 +73,7 @@ export const PickingProductCard = ({ product, productState, onStateChange, doneP
                   Item
                 </Typography>
                 <Typography variant="h3" color="textSecondary">
-                  {warehouseLocation?.itemCode}
+                  {warehouseLocation?.itemCode || "-"}
                 </Typography>
               </Box>
             </Box>
