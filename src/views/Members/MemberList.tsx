@@ -29,7 +29,7 @@ const InviteButton = (props: ActionButtonProps) => {
   return (
     <Box component="span" ml={2}>
       {props.record?.status === CustomerStatus.Waitlisted && (
-        <Button size="small" variant="contained" color="secondary" onClick={() => props.actionHandler(props.record)}>
+        <Button size="small" variant="contained" color="secondary" onClick={() => props.action(props.record)}>
           Invite
         </Button>
       )}
@@ -112,35 +112,31 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
           },
         ]}
       />
-      <Card>
-        <List
-          {...props}
-          filters={<MemberFilter />}
-          perPage={10}
-          hasCreate={false}
-          hasEdit={false}
-          hasList={true}
-          hasShow={true}
-          component="div"
-          resource="Customer"
-          basePath="/members"
-          sort={{ field: "id", order: "DESC" }}
-        >
-          <Datagrid>
-            <FullNameField label="Name" />
-            <TextField source="detail.shippingAddress.city" label="City" />
-            <TextField source="detail.shippingAddress.state" label="State" />
-            <TextField source="plan" label="Membership" />
-            <StatusField label="Status" />
-            <TextField source="bagItems.id" label="Money Spent" />
-            <EntityCountField label="Current Items" entityName="bagItems" />
-            <ActionButtons label="Actions">
-              <ViewButton actionHandler={openConfirmInviteModal} />
-              <InviteButton actionHandler={openConfirmInviteModal} />
-            </ActionButtons>
-          </Datagrid>
-        </List>
-      </Card>
+      <List
+        {...props}
+        filters={<MemberFilter />}
+        perPage={10}
+        hasCreate={false}
+        hasEdit={false}
+        hasList={true}
+        hasShow={true}
+        resource="Customer"
+        basePath="/members"
+        sort={{ field: "id", order: "DESC" }}
+      >
+        <Datagrid>
+          <FullNameField label="Name" />
+          <TextField source="detail.shippingAddress.city" label="City" />
+          <TextField source="detail.shippingAddress.state" label="State" />
+          <TextField source="plan" label="Membership" />
+          <StatusField label="Status" />
+          <EntityCountField label="Current Items" entityName="bagItems" />
+          <ActionButtons label="Actions">
+            <ViewButton action={openConfirmInviteModal} />
+            <InviteButton action={openConfirmInviteModal} />
+          </ActionButtons>
+        </Datagrid>
+      </List>
       <MemberCreateModal onClose={handleEditClose} open={openEdit} history={history} />
       <MemberInviteModal
         title="Confirm Invite"

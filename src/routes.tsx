@@ -16,6 +16,7 @@ import {
   ReservationView,
   VariantEdit,
 } from "./views"
+import { NotificationsList } from "views/Notifications/NotificationsList"
 
 export default [
   {
@@ -88,6 +89,13 @@ export default [
         path: "/reservation/:id",
         exact: true,
         component: props => <ReservationView {...props} basePath="/reservation" resource="Reservation" />,
+      },
+      {
+        path: "/notifications",
+        exact: true,
+        component: props => (
+          <NotificationsList {...props} basePath="/notifications" resource="PushNotificationReceipt" />
+        ),
       },
     ],
   },

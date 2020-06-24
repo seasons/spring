@@ -11,6 +11,7 @@ import { Header } from "./Header"
 import { HistoryView } from "./History"
 import { MemberViewProps } from "./interfaces"
 import { PersonalView } from "./Personal"
+import { PushNotificationsView } from "./Notifications"
 
 const useStyles = makeStyles<Theme>(theme => ({
   tabs: {
@@ -32,6 +33,7 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
     { value: "account", label: "Account" },
     { value: "personal", label: "Personal" },
     { value: "history", label: "History" },
+    { value: "notifs", label: "Notifications" },
   ]
 
   const { data, loading, error } = useQueryWithStore({
@@ -84,6 +86,9 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, hi
           <PersonalView {...props} basePath={`/members/${memberID}/personal`} member={data} adminKey={adminStoreKey} />
         )}
         {currentTab === "history" && <HistoryView {...props} basePath={`/members/${memberID}/history`} member={data} />}
+        {currentTab === "notifs" && (
+          <PushNotificationsView {...props} basePath={`/members/${memberID}/notifs`} member={data} />
+        )}
       </Box>
     </Container>
   )

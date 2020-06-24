@@ -38,6 +38,11 @@ export const ProductUpsertFragment = gql`
       }
     }
 
+    productMaterialCategories {
+      id
+      slug
+    }
+
     productModels {
       id
       name
@@ -71,6 +76,10 @@ export const PRODUCT_EDIT_QUERY = gql`
         name
       }
       innerMaterials
+      materialCategory {
+        id
+        slug
+      }
       model {
         id
         name

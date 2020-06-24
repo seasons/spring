@@ -9,6 +9,7 @@ const CustomerFragment = gql`
       email
       firstName
       lastName
+      completeAccountURL
     }
     detail {
       id
@@ -36,8 +37,22 @@ const CustomerDetails = gql`
       email
       firstName
       lastName
+<<<<<<< HEAD
       roles
+=======
+      completeAccountURL
+>>>>>>> master
       createdAt
+      pushNotifications {
+        id
+        route
+        screen
+        uri
+        interest
+        body
+        title
+        sentAt
+      }
     }
     invoices {
       id
@@ -83,6 +98,7 @@ const CustomerDetails = gql`
       expiration_year
       name
       street1
+      street2
       city
       state
       postal_code
@@ -109,6 +125,7 @@ const CustomerDetails = gql`
         id
         name
         address1
+        address2
         city
         state
         zipCode

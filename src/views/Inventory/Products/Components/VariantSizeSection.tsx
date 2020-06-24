@@ -39,33 +39,45 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({ isEditin
       content={
         <>
           <Grid container spacing={2}>
-            {firstRowFields.map((field, index) => (
-              <Grid item key={index} xs={3}>
-                <Text variant="h5">{field}</Text>
-                <Spacer mt={1} />
-                <TextField
-                  disabled={field === "SKU"}
-                  type={field === "SKU" ? "text" : "number"}
-                  name={`${size}_${field.toLowerCase()}`}
-                  initialValue={field === "SKU" ? sku : undefined}
-                  requiredNumber={requiredFields.includes(field)}
-                />
-              </Grid>
-            ))}
+            {firstRowFields.map((field, index) => {
+              const isRequired = requiredFields.includes(field)
+              return (
+                <Grid item key={index} xs={3}>
+                  <Text variant="h5">
+                    {field}
+                    {isRequired && " *"}
+                  </Text>
+                  <Spacer mt={1} />
+                  <TextField
+                    disabled={field === "SKU"}
+                    type={field === "SKU" ? "text" : "number"}
+                    name={`${size}_${field.toLowerCase()}`}
+                    initialValue={field === "SKU" ? sku : undefined}
+                    requiredNumber={isRequired}
+                  />
+                </Grid>
+              )
+            })}
             <Spacer grid mt={3} />
-            {secondRowFields.map((field, index) => (
-              <Grid item key={index} xs={3}>
-                <Text variant="h5">{field}</Text>
-                <Spacer mt={1} />
-                <TextField
-                  disabled={isEditing && field === "Total count"}
-                  type="number"
-                  name={`${size}_${field.toLowerCase().replace(" ", "")}`}
-                  requiredNumber={requiredFields.includes(field)}
-                  maxValue={field === "Total count" ? 99 : undefined}
-                />
-              </Grid>
-            ))}
+            {secondRowFields.map((field, index) => {
+              const isRequired = requiredFields.includes(field)
+              return (
+                <Grid item key={index} xs={3}>
+                  <Text variant="h5">
+                    {field}
+                    {isRequired && " *"}
+                  </Text>
+                  <Spacer mt={1} />
+                  <TextField
+                    disabled={isEditing && field === "Total count"}
+                    type="number"
+                    name={`${size}_${field.toLowerCase().replace(" ", "")}`}
+                    requiredNumber={isRequired}
+                    maxValue={field === "Total count" ? 99 : undefined}
+                  />
+                </Grid>
+              )
+            })}
             <Spacer grid mt={3} />
           </Grid>
         </>

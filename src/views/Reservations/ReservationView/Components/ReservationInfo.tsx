@@ -16,19 +16,6 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
 
   const { shippingLabel } = reservation?.sentPackage
 
-  const statusToDisplay = status => {
-    switch (status) {
-      case "InQueue":
-        return "In Queue"
-      case "OnHold":
-        return "On Hold"
-      case "InTransit":
-        return "In Transit"
-      default:
-        return status
-    }
-  }
-
   return (
     <Grid container spacing={3}>
       <Grid item md={6} xl={3} xs={12}>
@@ -38,7 +25,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
               <TableRow>
                 <TableCell>Customer</TableCell>
                 <TableCell>
-                  <Link component={RouterLink} to="/app/management/customers/1">
+                  <Link component={RouterLink} to={`/members/${customer.id}/account`}>
                     {name}
                   </Link>
                   <div>{address1}</div>
@@ -78,7 +65,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <TableCell>Status</TableCell>
                 <TableCell>
                   <Chip
-                    label={statusToDisplay(reservation.status)}
+                    label={reservation.status}
                     icon={
                       <Box pl={1}>
                         <Indicator status={reservation.status} />

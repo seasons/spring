@@ -48,7 +48,7 @@ const RefundButton = (props: ActionButtonProps) => {
       color="primary"
       size="small"
       variant="outlined"
-      onClick={() => props.actionHandler(props.record)}
+      onClick={() => props.action(props.record)}
     >
       Refund
     </Button>
@@ -176,7 +176,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
           <PaymentShipping adminKey={adminKey} member={member} />
         </Grid>
         <Grid item lg={12} md={12} xl={12} xs={12}>
-          <Card style={{ width: "100%" }}>
+          <Card>
             <CardHeader className={classes.cardHeader} title="Invoices" />
             <Divider />
             <Datagrid rowStyle={rowStyle} ids={invoicesIDs} data={stateInvoices} currentSort={defaultSort}>
@@ -187,8 +187,8 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
               <TextField source="dueDateNormalized" label="Due date" />
               <TextField source="amountNormalized" label="Amount" />
               <ActionButtons label="Actions">
-                <ViewButton actionHandler={handleRefundModalOpen} />
-                <RefundButton actionHandler={handleRefundModalOpen} />
+                <ViewButton action={handleRefundModalOpen} />
+                <RefundButton action={handleRefundModalOpen} />
               </ActionButtons>
             </Datagrid>
           </Card>

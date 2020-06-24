@@ -15,6 +15,14 @@ export const WarehouseLocationPopover = props => {
 
   const open = Boolean(anchorEl)
 
+  if (!warehouseLocation) {
+    return (
+      <Typography color="secondary" style={{ letterSpacing: 1 }}>
+        Unknown
+      </Typography>
+    )
+  }
+
   const { barcode, type, locationCode, itemCode } = warehouseLocation
 
   return (

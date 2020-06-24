@@ -6,19 +6,20 @@
 import { ReservationStatus } from "./globalTypes"
 
 // ====================================================
-// GraphQL mutation operation: UpdateReservationMutation
+// GraphQL mutation operation: UpdateReservation
 // ====================================================
 
-export interface UpdateReservationMutation_updateReservation {
+export interface UpdateReservation_updateReservation {
   __typename: "Reservation"
   id: string
   status: ReservationStatus
 }
 
-export interface UpdateReservationMutation {
-  updateReservation: UpdateReservationMutation_updateReservation | null
+export interface UpdateReservation {
+  updateReservation: UpdateReservation_updateReservation | null
 }
 
-export interface UpdateReservationMutationVariables {
+export interface UpdateReservationVariables {
   reservationNumber: number
+  status: ReservationStatus
 }

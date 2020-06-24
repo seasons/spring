@@ -3,11 +3,12 @@ import { CardContent, ComponentError, EditButton, EditModal, TableHeader } from 
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { Box, Card, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
+import { Box, Card, Table, TableBody, TableCell, TableRow, Typography, Grid } from "@material-ui/core"
 
 import { MemberSubViewProps } from "../../interfaces"
 import { MEMBER_DETAIL_UPDATE } from "../../queries"
 import { useMutation } from "@apollo/react-hooks"
+import { ActionButtons } from "fields"
 
 export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
@@ -30,25 +31,13 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
   const handleEditSave = values => {
     setOpenEdit(false)
     const customer = {
-      billingInfo: {
-        update: {
-          brand: billing?.brand,
-          name: values.billingName.value,
-          last_digits: billing?.last_digits,
-          expiration_month: billing?.expiration_month,
-          expiration_year: billing?.expiration_year,
-          street1: values.billingStreet1.value,
-          city: values.billingCity.value,
-          state: values.billingState.value,
-          postal_code: values.billingPostal.value,
-        },
-      },
       detail: {
         update: {
           shippingAddress: {
             update: {
               name: values.shippingName.value,
               address1: values.shippingStreet1.value,
+              address2: values.shippingStreet2.value,
               city: values.shippingCity.value,
               state: values.shippingState.value,
               zipCode: values.shippingPostal.value,
@@ -72,7 +61,6 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
 
         updateMember({
           ...member,
-          billingInfo: customer.billingInfo.update,
           detail: reduxUpdatePayload,
         })
       })
@@ -89,43 +77,6 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
     id: {
       value: member.id,
     },
-    number: {
-      value: billing?.last_digits,
-      disabled: true,
-    },
-    expirationMonth: {
-      value: billing?.expiration_month,
-      label: "Expiration Month",
-      disabled: true,
-    },
-    expirationYear: {
-      value: billing?.expiration_year,
-      label: "Expiration Year",
-      disabled: true,
-    },
-    billingDivider: {
-      label: "Billing address",
-    },
-    billingName: {
-      value: billing?.name,
-      label: "Name",
-    },
-    billingStreet1: {
-      value: billing?.street1,
-      label: "Street",
-    },
-    billingCity: {
-      value: billing?.city,
-      label: "City",
-    },
-    billingState: {
-      value: billing?.state,
-      label: "State",
-    },
-    billingPostal: {
-      value: billing?.postal_code,
-      label: "Zip code",
-    },
     shippingDivider: {
       label: "Shipping address",
     },
@@ -135,7 +86,11 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
     },
     shippingStreet1: {
       value: shipping?.address1,
-      label: "Street",
+      label: "Street 1",
+    },
+    shippingStreet2: {
+      value: shipping?.address2,
+      label: "Street 2",
     },
     shippingCity: {
       value: shipping?.city,
@@ -157,48 +112,53 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
         <Table>
           <TableBody>
             <TableRow>
-              <TableHeader>Payment & Shipping</TableHeader>
-              <TableCell></TableCell>
-              <TableCell>
-                <Box display="flex" alignItems="flex-end">
-                  <EditButton onClick={handleEditOpen} />
-                </Box>
+              <TableCell colSpan={3}>
+                <Grid justify="space-between" container>
+                  <Grid item alignItems="center" justify="center">
+                    <Box mt={0.5}>
+                      <Typography variant="h4">Payment & Shipping</Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item>
+                    <ActionButtons record={member}>
+                      <EditButton onClick={handleEditOpen} />
+                    </ActionButtons>
+                  </Grid>
+                </Grid>
               </TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Payment</TableCell>
               <TableCell>
                 {billing?.brand.toUpperCase()}
-                {billing ? "ending " : ""}
+                {billing ? " ending " : ""}
                 {billing?.last_digits}
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Billing address</TableCell>
               <TableCell>
                 <Typography component="p">{billing?.name}</Typography>
                 <Typography component="p">{billing?.street1}</Typography>
+                <Typography component="p">{billing?.street2}</Typography>
                 <Typography component="p">
-                  {billing?.city}
-                  {billing ? ", " : ""}
-                  {billing?.state}
+                  {billing?.city && billing?.state && `${billing?.city}, ${billing?.state}`}
                 </Typography>
                 <Typography component="p">{billing?.postal_code}</Typography>
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow selected>
+            <TableRow>
               <TableCell>Shipping address</TableCell>
               <TableCell>
                 <Typography component="div">
                   <Typography component="p">{shipping?.name}</Typography>
                 </Typography>
                 <Typography component="p">{shipping?.address1}</Typography>
+                <Typography component="p">{shipping?.address2}</Typography>
                 <Typography component="p">
-                  {shipping?.city}
-                  {shipping ? ", " : ""}
-                  {shipping?.state}
+                  {shipping?.city && shipping?.state && `${shipping?.city}, ${shipping?.state}`}
                 </Typography>
                 <Typography component="p">{shipping?.zipCode}</Typography>
               </TableCell>
@@ -208,7 +168,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
         </Table>
       </CardContent>
       <EditModal
-        title="Payment & Shipping"
+        title="Shipping Address"
         editEntity={editEntity}
         onSave={handleEditSave}
         onClose={handleEditClose}

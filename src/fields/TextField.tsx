@@ -13,26 +13,29 @@ export type TextFieldProps = ChildFieldProps & {
   rows?: number
   type?: string
   autoFocus?: boolean
+  asterisk?: boolean
 }
 
 export const TextField: React.FC<TextFieldProps> = ({
   disabled = false,
   helperText,
   initialValue,
-  label,
+  label = "",
   multiline = false,
   name,
   placeholder,
   rows = 5,
   type,
+  asterisk = false,
   ...rest
 }) => {
+  console.log(`name: `)
   return (
     <Field
       name={name}
       initialValue={initialValue}
       render={({ input, meta }) => (
-        <FormControl error={meta.error}>
+        <FormControl error={meta.touched && meta.error}>
           <StyledTextField
             disabled={disabled}
             fullWidth
@@ -45,7 +48,7 @@ export const TextField: React.FC<TextFieldProps> = ({
             onChange={input.onChange}
             type={type}
             helperText={helperText}
-            label={label}
+            label={`${label}${asterisk ? " *" : ""}`}
             {...rest}
           />
         </FormControl>

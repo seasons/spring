@@ -43,7 +43,9 @@ export default {
           email
         }
         detail {
+          id
           shippingAddress {
+            id
             name
             address1
             address2
@@ -55,6 +57,7 @@ export default {
       sentPackage {
         id
         shippingLabel {
+          id
           image
           trackingNumber
           trackingURL
@@ -64,13 +67,14 @@ export default {
       returnedPackage {
         id
         shippingLabel {
+          id
           image
           trackingNumber
           trackingURL
         }
         weight
       }
-      location {
+      lastLocation {
         id
       }
       products {
@@ -80,6 +84,7 @@ export default {
         productStatus
         barcode
         warehouseLocation {
+          id
           barcode
           locationCode
           itemCode
@@ -96,16 +101,19 @@ export default {
             }
             description
             color {
+              id
               hexCode
               name
             }
             secondaryColor {
+              id
               hexCode
               name
             }
             status
             type
             images {
+              id
               url
             }
           }
@@ -118,6 +126,7 @@ export default {
       shipped
       status
       sentPackage {
+        id
         weight
       }
       shippedAt

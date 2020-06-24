@@ -86,7 +86,7 @@ export const ProductCard = props => {
           <TableRow>
             <TableCell>Location Type</TableCell>
             <TableCell align="right">
-              <Chip label={physicalProduct?.warehouseLocation.type} color="secondary" />
+              <Chip label={physicalProduct?.warehouseLocation?.type || "Unknown"} color="secondary" />
             </TableCell>
           </TableRow>
           <TableRow>

@@ -16,6 +16,7 @@ export interface user {
   email: string
   firstName: string
   lastName: string
+  completeAccountURL: string
   roles: UserRole[]
   createdAt: any
   updatedAt: any

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { times, random } from "lodash"
+import { times, random, upperFirst } from "lodash"
 import { NewMemberProps, CreateMemberProps } from "views/Members/interfaces"
 import { makeStyles } from "@material-ui/styles"
 import InputMask from "react-input-mask"
@@ -15,35 +15,35 @@ import { colors } from "theme"
 export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, onClose }) => {
   const memberValues = {
     firstName: {
-      label: "First Name",
+      label: "First Name *",
       type: "phone",
       value: "",
       error: false,
       helperText: "This field is required",
     },
     lastName: {
-      label: "Last Name",
+      label: "Last Name *",
       type: "phone",
       value: "",
       error: false,
       helperText: "This field is required",
     },
     email: {
-      label: "Email Address",
+      label: "Email Address *",
       type: "email",
       value: "",
       error: false,
       helperText: "This field is required",
     },
     phone: {
-      label: "Phone",
+      label: "Phone *",
       type: "tel",
       value: "",
       error: false,
       helperText: "This field is required, e.g 123-456-7890",
     },
     birthday: {
-      label: "Birthday",
+      label: "Birthday *",
       type: "date",
       value: "1990-01-01",
       error: false,
@@ -68,8 +68,8 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
         firstName: values.firstName.value,
         lastName: values.lastName.value,
         email: values.email.value,
-        // generate random password with length of 16 characters, alphanumeric lowercase
-        password: times(16, () => random(35).toString(36)).join(""),
+        // generate random password with length of 10 characters, first letter capitalized and a gauranteed number in it
+        password: upperFirst(times(9, () => random(35).toString(36)).join("") + "1"),
         details: {
           phoneNumber: values.phone.value,
           birthday: values.birthday.value,
