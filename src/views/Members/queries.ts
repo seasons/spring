@@ -32,6 +32,8 @@ export const MEMBER_INVOICE_REFUND = gql`
 
 export const MEMBER_ASSIGN_ROLE = gql`
   mutation updateUser($email: String!, $data: UserUpdateInput!) {
-    updateUser(where: { email: $email }, data: $data)
+    updateUser(where: { email: $email }, data: $data) {
+      id
+    }
   }
 `

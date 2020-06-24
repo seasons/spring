@@ -9,6 +9,7 @@ import {
   WarehouseLocationType,
   ProductStatus,
   ProductType,
+  ReservationStatus,
 } from "./globalTypes"
 
 // ====================================================
@@ -163,7 +164,7 @@ export interface GetReservation {
   images: GetReservation_images[]
   reservationNumber: number
   shipped: boolean
-  status: string
+  status: ReservationStatus
   shippedAt: any | null
   receivedAt: any | null
   returnAt: any | null

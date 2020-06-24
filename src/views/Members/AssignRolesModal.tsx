@@ -19,7 +19,6 @@ export const AssignRolesModal = ({ open, onSave, onClose, title, member }) => {
     initialState[role] = member.user.roles.includes(role)
   }
 
-  console.log("member is ", member)
   const [values, setValues] = useState(initialState)
   const userIsAuthorized = member.status === CustomerStatus.Authorized
 
