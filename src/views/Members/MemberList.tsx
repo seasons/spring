@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Datagrid, List, TextField, useRefresh } from "@seasons/react-admin"
 import { Link as RouterLink } from "react-router-dom"
-import { Box, Button, Card, Container } from "@material-ui/core"
+import { Box, Button, Container } from "@material-ui/core"
 import { useMutation } from "@apollo/react-hooks"
 import { Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
@@ -95,7 +95,7 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
     updateDetails({
       variables: {
         id: member.id,
-        data: { status: CustomerStatus.Invited },
+        data: { status: CustomerStatus.Authorized },
       },
     })
   }
