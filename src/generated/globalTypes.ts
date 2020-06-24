@@ -763,6 +763,7 @@ export interface CustomProductUpdateInput {
   description?: string | null
   externalURL?: string | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
+  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   model?: ProductModelUpdateOneWithoutProductsInput | null
   modelHeight?: number | null
   name?: string | null
@@ -3594,6 +3595,7 @@ export interface UpsertProductInput {
   functions: string[]
   images: any[]
   innerMaterials: string[]
+  materialCategorySlug?: string | null
   modelID?: string | null
   modelSizeDisplay?: string | null
   modelSizeName?: string | null
@@ -3648,6 +3650,17 @@ export interface UserCreaterolesInput {
 }
 
 export interface UserUpdateDataInput {
+  auth0Id?: string | null
+  email?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  role?: UserRole | null
+  pushNotificationStatus?: PushNotificationStatus | null
+  roles?: UserUpdaterolesInput | null
+  pushNotifications?: PushNotificationReceiptUpdateManyWithoutUsersInput | null
+}
+
+export interface UserUpdateInput {
   auth0Id?: string | null
   email?: string | null
   firstName?: string | null

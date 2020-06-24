@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { times, random } from "lodash"
+import { times, random, upperFirst } from "lodash"
 import { NewMemberProps, CreateMemberProps } from "views/Members/interfaces"
 import { makeStyles } from "@material-ui/styles"
 import InputMask from "react-input-mask"
@@ -68,8 +68,8 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
         firstName: values.firstName.value,
         lastName: values.lastName.value,
         email: values.email.value,
-        // generate random password with length of 16 characters, alphanumeric lowercase
-        password: times(16, () => random(35).toString(36)).join(""),
+        // generate random password with length of 10 characters, first letter capitalized and a gauranteed number in it
+        password: upperFirst(times(9, () => random(35).toString(36)).join("") + "1"),
         details: {
           phoneNumber: values.phone.value,
           birthday: values.birthday.value,

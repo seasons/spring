@@ -6,6 +6,7 @@
 import {
   Plan,
   CustomerStatus,
+  UserRole,
   InvoiceStatus,
   CreditNoteReasonCode,
   CreditNoteStatus,
@@ -35,6 +36,7 @@ export interface customer_user {
   firstName: string
   lastName: string
   completeAccountURL: string
+  roles: UserRole[]
   createdAt: any
   pushNotifications: customer_user_pushNotifications[] | null
 }
@@ -103,6 +105,7 @@ export interface customer_billingInfo {
   expiration_year: number
   name: string | null
   street1: string | null
+  street2: string | null
   city: string | null
   state: string | null
   postal_code: string | null
@@ -113,6 +116,7 @@ export interface customer_detail_shippingAddress {
   id: string
   name: string
   address1: string
+  address2: string | null
   city: string
   state: string
   zipCode: string

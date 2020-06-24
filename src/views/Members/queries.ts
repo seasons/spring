@@ -29,3 +29,11 @@ export const MEMBER_INVOICE_REFUND = gql`
     refundInvoice(input: $input)
   }
 `
+
+export const MEMBER_ASSIGN_ROLE = gql`
+  mutation updateUser($email: String!, $data: UserUpdateInput!) {
+    updateUser(where: { email: $email }, data: $data) {
+      id
+    }
+  }
+`
