@@ -6,6 +6,7 @@
 import {
   Plan,
   CustomerStatus,
+  UserRole,
   InvoiceStatus,
   CreditNoteReasonCode,
   CreditNoteStatus,
@@ -35,6 +36,7 @@ export interface customer_user {
   firstName: string
   lastName: string
   completeAccountURL: string
+  roles: UserRole[]
   createdAt: any
   pushNotifications: customer_user_pushNotifications[] | null
 }
