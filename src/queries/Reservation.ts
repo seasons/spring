@@ -157,7 +157,7 @@ export const query = {
         }
         reservationNumber
         shipped
-        status(display: true)
+        status
         shippedAt
         returnAt
         createdAt
