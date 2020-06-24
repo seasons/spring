@@ -37,11 +37,7 @@ const CustomerDetails = gql`
       email
       firstName
       lastName
-<<<<<<< HEAD
       roles
-=======
-      completeAccountURL
->>>>>>> master
       createdAt
       pushNotifications {
         id
