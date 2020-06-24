@@ -1,7 +1,17 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Snackbar } from "@material-ui/core"
-import { DialogTitle } from "components"
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Box,
+  TextField,
+  Snackbar,
+  Typography,
+  Card,
+} from "@material-ui/core"
+import { DialogTitle, Spacer } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { PickingProductCard } from "./PickingProductCard"
 import { Alert, Color } from "@material-ui/lab"
@@ -36,6 +46,8 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
     ...barcodeMaps,
   })
   console.log(productStates)
+
+  const { shippingLabel } = reservation?.sentPackage!
 
   const [barcode, setBarcode] = useState("")
   const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
@@ -139,6 +151,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
             </Box>
           )}
           <Box mt={2} mb={2}>
+            <Typography variant="subtitle1">1. Picking items</Typography>
             {availableProducts.map(product => (
               <Box mb={2} key={`product-card-${product.id}`}>
                 <PickingProductCard
@@ -154,6 +167,27 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
                 />
               </Box>
             ))}
+          </Box>
+          <Box mt={4} mb={2}>
+            <Typography variant="subtitle1">2. Print shipping label</Typography>
+            <Spacer mt={1} />
+            <Card>
+              <Box display="flex" alignItems="center" py={2} px={1}>
+                <Box flex={1}>
+                  <Typography variant="body1">Shipping Label</Typography>
+                </Box>
+                <Box>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      window.open(shippingLabel?.image!, "_blank")
+                    }}
+                  >
+                    Print
+                  </Button>
+                </Box>
+              </Box>
+            </Card>
           </Box>
         </DialogContent>
         <DialogActions>
