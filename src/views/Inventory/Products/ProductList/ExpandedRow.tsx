@@ -17,9 +17,7 @@ export const ExpandedRow: React.FC<ExpandedRowProps> = ({
   setUpdatingStatusForPhysicalProduct,
   setOffloadingPhysicalProduct,
 }) => {
-  const physicalProducts = record?.variants
-    .map(variant => variant.physicalProducts.map(product => ({ ...product, variantID: variant.id })))
-    .flat()
+  const physicalProducts = record?.variants.map(variant => variant.physicalProducts).flat()
   return (
     <Box my={2}>
       <Grid container spacing={3}>
