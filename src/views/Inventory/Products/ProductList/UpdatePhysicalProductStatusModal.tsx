@@ -1,14 +1,11 @@
-import React, { useState } from "react"
-import { Box, Button, Grid, Dialog, DialogContent, DialogActions, Typography } from "@material-ui/core"
-import { useRefresh } from "@seasons/react-admin"
-import { useMutation } from "react-apollo"
+import React from "react"
+import { Box, Button, Dialog, DialogContent, DialogActions } from "@material-ui/core"
 import { DialogTitle, Spacer, Text, Loader } from "components"
 import { SelectField } from "fields"
 import { SnackbarState } from "components/Snackbar"
-import { UPDATE_RESERVATION } from "views/Reservations/mutations"
 import { Form } from "react-final-form"
 
-interface UpdateStatusModalProps {
+interface UpdatePhysicalProductStatusModalProps {
   open: boolean
   toggleSnackbar: (state: SnackbarState) => void
   onClose?: () => void
@@ -17,7 +14,7 @@ interface UpdateStatusModalProps {
   isMutating: boolean
 }
 
-export const UpdatePhysicalProductStatusModal: React.FC<UpdateStatusModalProps> = ({
+export const UpdatePhysicalProductStatusModal: React.FC<UpdatePhysicalProductStatusModalProps> = ({
   open,
   onSubmit,
   onClose,
@@ -28,17 +25,29 @@ export const UpdatePhysicalProductStatusModal: React.FC<UpdateStatusModalProps> 
     return null
   }
 
-  const choices = ["New", "Used", "Dirty", "Damaged", "PermanentlyDamaged", "Clean", "Lost"].map(choice => ({
+  const productStatusChoices = ["New", "Used", "Dirty", "Damaged", "PermanentlyDamaged", "Clean", "Lost"].map(
+    choice => ({
+      display: choice,
+      value: choice,
+    })
+  )
+  const inventoryStatusChoices = ["NonReservable", "Reservable", "Reserved", "Stored", "Offloaded"].map(choice => ({
     display: choice,
     value: choice,
+    disabled: choice === "Offloaded", // Must go through Offload action in order to set status to Offloaded
   }))
+
+  const initialValues = {
+    physicalProductStatus: physicalProduct.productStatus,
+    inventoryStatus: physicalProduct.inventoryStatus,
+  }
 
   return (
     <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
         Update Physical Product Status
       </DialogTitle>
-      <Form initialValues={{ physicalProductStatus: physicalProduct.productStatus }} onSubmit={onSubmit}>
+      <Form initialValues={initialValues} onSubmit={onSubmit}>
         {({ handleSubmit }) => {
           return (
             <form onSubmit={handleSubmit}>
@@ -46,7 +55,11 @@ export const UpdatePhysicalProductStatusModal: React.FC<UpdateStatusModalProps> 
                 <Box my={2} width={["300px"]}>
                   <Text variant="h6">Physical product status *</Text>
                   <Spacer mt={1} />
-                  <SelectField name="physicalProductStatus" choices={choices} requiredString />
+                  <SelectField name="physicalProductStatus" choices={productStatusChoices} requiredString />
+                  <Spacer mt={2} />
+                  <Text variant="h6">Inventory status *</Text>
+                  <Spacer mt={1} />
+                  <SelectField name="inventoryStatus" choices={inventoryStatusChoices} requiredString />
                 </Box>
               </DialogContent>
               <DialogActions>

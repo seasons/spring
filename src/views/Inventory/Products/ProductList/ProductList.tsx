@@ -29,7 +29,22 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
     status: "success",
   })
 
-  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
+  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
+    onCompleted: result => {
+      toggleSnackbar({
+        show: true,
+        message: `Successfully updated status for physical product ${result.updatePhysicalProduct.seasonsUID}.`,
+        status: "success",
+      })
+    },
+    onError: error => {
+      toggleSnackbar({
+        show: false,
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
 
   return (
     <>
@@ -91,12 +106,15 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         physicalProduct={updatingStatusForPhysicalProduct}
         isMutating={isMutating}
         onSubmit={async values => {
-          const { physicalProductStatus } = values
+          const { physicalProductStatus, inventoryStatus } = values
           setIsMutating(true)
           const result = await updatePhysicalProduct({
             variables: {
               where: { id: updatingStatusForPhysicalProduct?.id },
-              data: { productStatus: physicalProductStatus },
+              data: {
+                productStatus: physicalProductStatus,
+                inventoryStatus,
+              },
             },
           })
           refresh()
@@ -112,10 +130,16 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         open={!!offloadingPhysicalProduct}
         onClose={() => setOffloadingPhysicalProduct(null)}
         onSave={() => {
+          toggleSnackbar({
+            show: true,
+            message: `Successfully offloaded physical product ${offloadingPhysicalProduct.seasonsUID}.`,
+            status: "success",
+          })
           setOffloadingPhysicalProduct(null)
           refresh()
         }}
         physicalProduct={offloadingPhysicalProduct}
+        toggleSnackbar={toggleSnackbar}
       />
 
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
