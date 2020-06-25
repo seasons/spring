@@ -1,6 +1,7 @@
 import React from "react"
 import { Box, Grid } from "@material-ui/core"
 import { VariantSummary } from "../Components"
+import { PhysicalProductsGrid } from "./PhysicalProductsGrid"
 
 interface ExpandedRowProps {
   id?: string
@@ -9,14 +10,12 @@ interface ExpandedRowProps {
 }
 
 export const ExpandedRow: React.FC<ExpandedRowProps> = ({ id, record, resource }) => {
+  console.log("RECORD:", record)
+  const physicalProducts = record?.variants.map(variant => variant.physicalProducts).flat()
   return (
     <Box my={2}>
       <Grid container spacing={3}>
-        {record?.variants.map((variant, index) => (
-          <Grid item md={4}>
-            <VariantSummary variant={variant} key={index} />
-          </Grid>
-        ))}
+        <PhysicalProductsGrid physicalProducts={physicalProducts} />
       </Grid>
     </Box>
   )
