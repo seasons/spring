@@ -55,6 +55,7 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
     setIsMutating(false)
     if (result?.data) {
       onSave?.()
+      onClose?.()
     }
   }
 
