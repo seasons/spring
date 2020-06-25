@@ -1,39 +1,46 @@
 import React, { useState } from "react"
 import { useMutation } from "react-apollo"
+import { Form } from "react-final-form"
 
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Box,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
-  Typography,
-} from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, Typography } from "@material-ui/core"
 import { DialogTitle, Loader, Spacer } from "components"
+import { SnackbarState } from "components/Snackbar"
+import { SelectField, TextField } from "fields"
 import { UPDATE_PHYSICAL_PRODUCT } from "../../mutations"
 import { ProductEditQuery_product_variants_physicalProducts } from "generated/ProductEditQuery"
 
 interface OffloadPhysicalProductModalProps {
   open: boolean
-  onClose?: () => void
   physicalProduct: ProductEditQuery_product_variants_physicalProducts
+  onClose?: () => void
+  onSave?: () => void
+  toggleSnackbar?: (state: SnackbarState) => void
 }
 
 export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalProps> = ({
   open,
   onClose,
+  onSave,
+  toggleSnackbar,
   physicalProduct,
 }) => {
-  const [offloadMethod, setOffloadMethod] = useState(physicalProduct.offloadMethod || "")
-  const [offloadNotes, setOffloadNotes] = useState(physicalProduct.offloadNotes || "")
   const [isMutating, setIsMutating] = useState(false)
-  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
-  const onSave = async () => {
+  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
+    onError: error => {
+      toggleSnackbar?.({
+        show: true,
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
+
+  if (!physicalProduct) {
+    return null
+  }
+
+  const onSubmit = async values => {
+    const { offloadMethod, offloadNotes } = values
     setIsMutating(true)
     const result = await updatePhysicalProduct({
       variables: {
@@ -47,6 +54,7 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
     })
     setIsMutating(false)
     if (result?.data) {
+      onSave?.()
       onClose?.()
     }
   }
@@ -59,64 +67,44 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
     { value: "Unknown", display: "Unknown" },
   ]
 
-  const shouldAllowSave = !!offloadMethod
+  const initialValues = {
+    offloadMethod: physicalProduct?.offloadMethod,
+    offloadNotes: physicalProduct?.offloadNotes,
+  }
 
   return (
     <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
         Offload physical product
       </DialogTitle>
-      <DialogContent dividers>
-        <Box display="flex" flexDirection="column" width={550}>
-          <Box display="flex" height="30px">
-            <Box flexGrow={1}>
-              <Typography variant="body1" color="textSecondary">
-                {physicalProduct.seasonsUID}
-              </Typography>
-            </Box>
-          </Box>
-          <Spacer mt={1} />
-
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Offload method</InputLabel>
-            <Select
-              labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
-              value={offloadMethod}
-              onChange={e => {
-                setOffloadMethod(e.target.value as string)
-              }}
-              label="Offload method"
-              fullWidth
-            >
-              {offloadMethods.map((method, index) => (
-                <MenuItem value={method.value} key={index}>
-                  {method.display}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Spacer mt={2} />
-          <TextField
-            label="Notes"
-            name="notes"
-            type="text"
-            variant="outlined"
-            onChange={e => {
-              setOffloadNotes(e.target.value as string)
-            }}
-            value={offloadNotes}
-            rows={4}
-            fullWidth
-            multiline
-          />
-        </Box>
-      </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={onSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
-          {isMutating ? <Loader size={20} /> : "Offload"}
-        </Button>
-      </DialogActions>
+      <Form initialValues={initialValues} onSubmit={onSubmit}>
+        {({ handleSubmit }) => {
+          return (
+            <form onSubmit={handleSubmit}>
+              <DialogContent dividers>
+                <Box display="flex" flexDirection="column" width={550}>
+                  <Box display="flex" height="30px">
+                    <Box flexGrow={1}>
+                      <Typography variant="body1" color="textSecondary">
+                        {physicalProduct.seasonsUID}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Spacer mt={1} />
+                  <SelectField name="offloadMethod" choices={offloadMethods} requiredString />
+                  <Spacer mt={2} />
+                  <TextField multiline name="offloadNotes" placeholder="Enter notes" />
+                </Box>
+              </DialogContent>
+              <DialogActions>
+                <Button autoFocus color="primary" variant="contained" type="submit">
+                  {isMutating ? <Loader size={20} /> : "Offload"}
+                </Button>
+              </DialogActions>
+            </form>
+          )
+        }}
+      </Form>
     </Dialog>
   )
 }
