@@ -159,6 +159,10 @@ export const ProductCard = props => {
         open={showModal}
         physicalProduct={physicalProduct}
         onClose={() => toggleModal(false)}
+        onSave={() => {
+          props?.onSave()
+          toggleModal(false)
+        }}
       />
     </>
   )

@@ -166,7 +166,7 @@ export const ReservationView = ({ match, history }) => {
                   xs={12}
                   key={`product-card-${product.id}`}
                 >
-                  <ProductCard product={product} />
+                  <ProductCard product={product} onSave={() => refresh()} />
                 </Grid>
               ))
             )}

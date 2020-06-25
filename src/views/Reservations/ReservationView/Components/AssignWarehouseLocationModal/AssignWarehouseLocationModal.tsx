@@ -5,24 +5,18 @@ import { DialogTitle } from "components"
 import { Alert, Color } from "@material-ui/lab"
 import { trim } from "lodash"
 import { PhysicalProduct } from "generated/PhysicalProduct"
-import { useQuery } from "react-apollo"
+import { useQuery, useMutation } from "react-apollo"
 import { GET_WAREHOUSE_LOCATIONS } from "views/Reservations/queries"
 import { AssignWarehouseLocationInfo } from "./AssignWarehouseLocationInfo"
-
-interface ProductState {
-  productUID: string
-  picked: boolean
-}
+import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/Products/mutations"
 
 interface AssignWarehouseLocationModalProps {
   open: boolean
   onClose?: () => void
-  onSave?(values: ProductStates): void
+  onSave?(): void
   disableButton?: boolean
   physicalProduct: PhysicalProduct
 }
-
-type ProductStates = { [key: string]: ProductState }
 
 export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModalProps> = ({
   disableButton,
@@ -32,14 +26,30 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
   physicalProduct,
 }) => {
   const { data, loading } = useQuery(GET_WAREHOUSE_LOCATIONS)
+  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
+    onCompleted: () => {
+      toggleSnackbar({
+        show: true,
+        message: "Physical product updated",
+        status: "success",
+      })
+    },
+    onError: error => {
+      toggleSnackbar({
+        show: true,
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
   const [barcode, setBarcode] = useState("")
+  const [location, setLocation] = useState(physicalProduct?.warehouseLocation?.barcode || "")
   const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
     show: false,
     message: "",
     status: "success",
   })
-  const [shouldAllowSave, setShouldAllowSave] = useState(false)
-  const BARCODE_REGEX = /^SZNS[0-9]{5}$/
+  const BARCODE_REGEX = /^(SR|C|DB|)-[A-Z][0-9]{3}-[A-Z0-9]{4}$/
 
   const inputRef = useRef()
 
@@ -48,8 +58,23 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
     target?.focus()
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     console.log("Save: ")
+    await updatePhysicalProduct({
+      variables: {
+        where: {
+          id: physicalProduct.id,
+        },
+        data: {
+          warehouseLocation: {
+            connect: {
+              barcode: location,
+            },
+          },
+        },
+      },
+    })
+    onSave?.()
   }
 
   const hideSnackbar = () => {
@@ -64,16 +89,7 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
     const input = trim(e.target.value)
     if (input.match(BARCODE_REGEX)) {
       console.log("Found barcode: ", input)
-
-      const productState = true
-      if (productState) {
-      } else {
-        toggleSnackbar({
-          show: true,
-          message: `Barcode not found`,
-          status: "error",
-        })
-      }
+      setLocation(input)
     } else {
       setBarcode(input)
     }
@@ -94,7 +110,7 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
           <Typography variant="subtitle1">Assign Warehouse Location</Typography>
         </DialogTitle>
         <DialogContent dividers>
-          <Box my={2} width={["400px"]}>
+          <Box my={2}>
             <TextField
               label="Scan Barcode"
               helperText="Click into box and scan the barcode to mark as picked"
@@ -107,9 +123,19 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
               fullWidth
             />
           </Box>
+          <Typography variant="h6" style={{ textAlign: "center" }}>
+            OR
+          </Typography>
 
           <Box mt={2} mb={2}>
-            <AssignWarehouseLocationInfo product={physicalProduct} locations={data?.warehouseLocations} />
+            <AssignWarehouseLocationInfo
+              product={physicalProduct}
+              locations={data?.warehouseLocations}
+              barcode={location}
+              onChange={text => {
+                setLocation(text)
+              }}
+            />
           </Box>
         </DialogContent>
         <DialogActions>
@@ -118,7 +144,7 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
             onClick={handleSave}
             color="primary"
             variant="contained"
-            disabled={!shouldAllowSave || disableButton}
+            disabled={!location || disableButton}
           >
             Save
           </Button>
