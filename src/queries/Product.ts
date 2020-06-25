@@ -67,6 +67,7 @@ export default {
           id
           seasonsUID
           barcode
+          barcoded
           productStatus
           inventoryStatus
           offloadMethod
