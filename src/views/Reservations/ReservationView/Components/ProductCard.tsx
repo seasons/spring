@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import clsx from "clsx"
 import Card from "@material-ui/core/Card"
@@ -11,11 +11,12 @@ import Typography from "@material-ui/core/Typography"
 import ColorIcon from "@material-ui/icons/Brightness1"
 import { red } from "@material-ui/core/colors"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import { Box, Table, TableBody, TableCell, TableRow, Chip, Divider } from "@material-ui/core"
+import { Box, Table, TableBody, TableCell, TableRow, Chip, Divider, Button } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { WarehouseLocationPopover } from "components/WarehouseLocationPopover"
 
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+import { AssignWarehouseLocationModal } from "./AssignWarehouseLocationModal/AssignWarehouseLocationModal"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,7 +44,8 @@ const useStyles = makeStyles(theme => ({
 
 export const ProductCard = props => {
   const classes = useStyles()
-  const [expanded, setExpanded] = React.useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const [showModal, toggleModal] = useState(false)
 
   const { product: physicalProduct } = props
   const { product } = physicalProduct?.productVariant
@@ -56,98 +58,108 @@ export const ProductCard = props => {
   }
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        title={name}
-        subheader={brand.name}
-        action={
-          <IconButton aria-label="settings">
-            <MoreHorizIcon />
-          </IconButton>
-        }
-      />
-      <CardMedia className={classes.media} image={image.url} title="Paella dish" />
-      <Divider />
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TableCell>Product Status</TableCell>
-            <TableCell align="right">
-              <Chip
-                label={physicalProduct.productStatus}
-                icon={
-                  <Box pl={1}>
-                    <Indicator status={physicalProduct.productStatus} />
-                  </Box>
-                }
-              />
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Location Type</TableCell>
-            <TableCell align="right">
-              <Chip label={physicalProduct?.warehouseLocation?.type || "Unknown"} color="secondary" />
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Location ID</TableCell>
-            <TableCell align="right">
-              <WarehouseLocationPopover
-                warehouseLocation={physicalProduct.warehouseLocation}
-              ></WarehouseLocationPopover>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      <CardActions disableSpacing>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+    <>
+      <Card className={classes.root}>
+        <CardHeader
+          title={name}
+          subheader={brand.name}
+          action={
+            <IconButton aria-label="settings">
+              <MoreHorizIcon />
+            </IconButton>
+          }
+        />
+        <CardMedia className={classes.media} image={image.url} title="Paella dish" />
         <Divider />
         <Table>
-          <TableRow>
-            <TableCell style={{ paddingRight: 0 }}>SUID</TableCell>
-            <TableCell align="right" style={{ paddingLeft: 0 }}>
-              <Typography variant="body1" color="textSecondary">
-                {physicalProduct.seasonsUID}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Reservation Count</TableCell>
-            <TableCell align="right">
-              <Typography variant="body1" color="textSecondary">
-                9
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Utilization Rate</TableCell>
-            <TableCell align="right">
-              <Typography variant="body1" color="textSecondary">
-                58%
-              </Typography>
-            </TableCell>
-          </TableRow>
-          {color && (
+          <TableBody>
             <TableRow>
-              <TableCell>Color</TableCell>
+              <TableCell>Product Status</TableCell>
               <TableCell align="right">
-                <Chip icon={<ColorIcon style={{ color: color.hexCode }} />} label={color.name} variant="outlined" />
+                <Chip
+                  label={physicalProduct.productStatus}
+                  icon={
+                    <Box pl={1}>
+                      <Indicator status={physicalProduct.productStatus} />
+                    </Box>
+                  }
+                />
               </TableCell>
             </TableRow>
-          )}
+            <TableRow>
+              <TableCell>Location Type</TableCell>
+              <TableCell align="right">
+                <Chip label={physicalProduct?.warehouseLocation?.type || "Unknown"} color="secondary" />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Location ID</TableCell>
+              <TableCell align="right">
+                <WarehouseLocationPopover
+                  warehouseLocation={physicalProduct.warehouseLocation}
+                ></WarehouseLocationPopover>
+              </TableCell>
+            </TableRow>
+          </TableBody>
         </Table>
-      </Collapse>
-    </Card>
+        <CardActions disableSpacing>
+          <Button size="small" variant="contained" onClick={() => toggleModal(true)}>
+            Assign Location
+          </Button>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <Divider />
+          <Table>
+            <TableRow>
+              <TableCell style={{ paddingRight: 0 }}>SUID</TableCell>
+              <TableCell align="right" style={{ paddingLeft: 0 }}>
+                <Typography variant="body1" color="textSecondary">
+                  {physicalProduct.seasonsUID}
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Reservation Count</TableCell>
+              <TableCell align="right">
+                <Typography variant="body1" color="textSecondary">
+                  9
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Utilization Rate</TableCell>
+              <TableCell align="right">
+                <Typography variant="body1" color="textSecondary">
+                  58%
+                </Typography>
+              </TableCell>
+            </TableRow>
+            {color && (
+              <TableRow>
+                <TableCell>Color</TableCell>
+                <TableCell align="right">
+                  <Chip icon={<ColorIcon style={{ color: color.hexCode }} />} label={color.name} variant="outlined" />
+                </TableCell>
+              </TableRow>
+            )}
+          </Table>
+        </Collapse>
+      </Card>
+      <AssignWarehouseLocationModal
+        open={showModal}
+        physicalProduct={physicalProduct}
+        onClose={() => toggleModal(false)}
+      />
+    </>
   )
 }
