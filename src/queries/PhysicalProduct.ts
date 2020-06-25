@@ -5,6 +5,21 @@ const PhysicalProductFragment = gql`
   fragment PhysicalProduct on PhysicalProduct {
     id
     seasonsUID
+    warehouseLocation {
+      id
+      barcode
+      locationCode
+      itemCode
+      type
+    }
+    productVariant {
+      product {
+        name
+        images {
+          url
+        }
+      }
+    }
   }
 `
 

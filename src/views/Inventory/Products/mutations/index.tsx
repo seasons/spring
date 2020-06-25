@@ -59,3 +59,11 @@ export const UPDATE_PHYSICAL_PRODUCT = gql`
   }
   ${UpdatePhysicalProductFragment}
 `
+
+export const UPDATE_PHYSICAL_PRODUCTS = gql`
+  mutation UpdateManyPhysicalProducts($where: PhysicalProductWhereInput) {
+    updateManyPhysicalProducts(where: $where, data: { barcoded: true }) {
+      count
+    }
+  }
+`
