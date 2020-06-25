@@ -10,6 +10,7 @@ import { PrintBarcodesModal } from "./PrintBarcodesModal"
 import { useRefresh } from "@seasons/react-admin"
 import { UpdatePhysicalProductStatusModal } from "./UpdatePhysicalProductStatusModal"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
+import { OffloadPhysicalProductModal } from "../PhysicalProductEdit/Components"
 import { useMutation } from "react-apollo"
 
 export interface ProductListInterface {
@@ -19,7 +20,8 @@ export interface ProductListInterface {
 export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => {
   const refresh = useRefresh()
   const [openPrintBarcodesModal, togglePrintBarcodesModal] = useState(false)
-  const [updatingPhysicalProduct, setUpdatingPhysicalProduct] = useState<any>(null)
+  const [updatingStatusForPhysicalProduct, setUpdatingStatusForPhysicalProduct] = useState<any>(null)
+  const [offloadingPhysicalProduct, setOffloadingPhysicalProduct] = useState<any>(null)
   const [isMutating, setIsMutating] = useState(false)
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -54,7 +56,14 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         hasShow
         resource="Product"
       >
-        <Datagrid expand={<ExpandedRow setUpdatingPhysicalProduct={setUpdatingPhysicalProduct} />}>
+        <Datagrid
+          expand={
+            <ExpandedRow
+              setUpdatingStatusForPhysicalProduct={setUpdatingStatusForPhysicalProduct}
+              setOffloadingPhysicalProduct={setOffloadingPhysicalProduct}
+            />
+          }
+        >
           <ImagesField source="images" />
           <TextField source="name" />
           <BrandField label="Brand Name" />
@@ -77,26 +86,36 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
       />
 
       <UpdatePhysicalProductStatusModal
-        open={!!updatingPhysicalProduct}
+        open={!!updatingStatusForPhysicalProduct}
         toggleSnackbar={toggleSnackbar}
-        physicalProduct={updatingPhysicalProduct}
+        physicalProduct={updatingStatusForPhysicalProduct}
         isMutating={isMutating}
         onSubmit={async values => {
           const { physicalProductStatus } = values
           setIsMutating(true)
           const result = await updatePhysicalProduct({
             variables: {
-              where: { id: updatingPhysicalProduct?.id },
+              where: { id: updatingStatusForPhysicalProduct?.id },
               data: { productStatus: physicalProductStatus },
             },
           })
           refresh()
           setIsMutating(false)
-          setUpdatingPhysicalProduct(null)
+          setUpdatingStatusForPhysicalProduct(null)
         }}
         onClose={() => {
-          setUpdatingPhysicalProduct(null)
+          setUpdatingStatusForPhysicalProduct(null)
         }}
+      />
+
+      <OffloadPhysicalProductModal
+        open={!!offloadingPhysicalProduct}
+        onClose={() => setOffloadingPhysicalProduct(null)}
+        onSave={() => {
+          setOffloadingPhysicalProduct(null)
+          refresh()
+        }}
+        physicalProduct={offloadingPhysicalProduct}
       />
 
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />

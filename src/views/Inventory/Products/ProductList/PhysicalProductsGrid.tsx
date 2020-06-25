@@ -17,7 +17,11 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import { CheckField } from "fields"
 import { colors } from "theme"
 
-export const PhysicalProductRow = ({ physicalProduct, setUpdatingPhysicalProduct }) => {
+export const PhysicalProductRow = ({
+  physicalProduct,
+  setUpdatingStatusForPhysicalProduct,
+  setOffloadingPhysicalProduct,
+}) => {
   const { seasonsUID, productStatus, inventoryStatus, variantID } = physicalProduct
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -33,7 +37,11 @@ export const PhysicalProductRow = ({ physicalProduct, setUpdatingPhysicalProduct
   const menuItems = [
     {
       text: "Update status",
-      action: () => setUpdatingPhysicalProduct(physicalProduct),
+      action: () => setUpdatingStatusForPhysicalProduct(physicalProduct),
+    },
+    {
+      text: "Offload",
+      action: () => setOffloadingPhysicalProduct(physicalProduct),
     },
   ]
 
@@ -77,12 +85,14 @@ const BorderedIconButton = styled(IconButton)({
 
 interface PhysicalProductsGridProps {
   physicalProducts: any[]
-  setUpdatingPhysicalProduct: (physicalProduct: any) => void
+  setUpdatingStatusForPhysicalProduct: (physicalProduct: any) => void
+  setOffloadingPhysicalProduct: (physicalProduct: any) => void
 }
 
 export const PhysicalProductsGrid: React.FC<PhysicalProductsGridProps> = ({
   physicalProducts,
-  setUpdatingPhysicalProduct,
+  setUpdatingStatusForPhysicalProduct,
+  setOffloadingPhysicalProduct,
 }) => {
   return (
     <Box p={1} width="100%">
@@ -98,7 +108,11 @@ export const PhysicalProductsGrid: React.FC<PhysicalProductsGridProps> = ({
           </TableHead>
           <TableBody>
             {physicalProducts.map(product => (
-              <PhysicalProductRow physicalProduct={product} setUpdatingPhysicalProduct={setUpdatingPhysicalProduct} />
+              <PhysicalProductRow
+                physicalProduct={product}
+                setUpdatingStatusForPhysicalProduct={setUpdatingStatusForPhysicalProduct}
+                setOffloadingPhysicalProduct={setOffloadingPhysicalProduct}
+              />
             ))}
           </TableBody>
         </Table>

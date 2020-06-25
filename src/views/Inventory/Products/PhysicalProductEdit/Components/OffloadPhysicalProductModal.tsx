@@ -20,20 +20,27 @@ import { ProductEditQuery_product_variants_physicalProducts } from "generated/Pr
 
 interface OffloadPhysicalProductModalProps {
   open: boolean
-  onClose?: () => void
   physicalProduct: ProductEditQuery_product_variants_physicalProducts
+  onClose?: () => void
+  onSave?: () => void
 }
 
 export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalProps> = ({
   open,
   onClose,
+  onSave,
   physicalProduct,
 }) => {
-  const [offloadMethod, setOffloadMethod] = useState(physicalProduct.offloadMethod || "")
-  const [offloadNotes, setOffloadNotes] = useState(physicalProduct.offloadNotes || "")
+  const [offloadMethod, setOffloadMethod] = useState(physicalProduct?.offloadMethod || "")
+  const [offloadNotes, setOffloadNotes] = useState(physicalProduct?.offloadNotes || "")
   const [isMutating, setIsMutating] = useState(false)
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
-  const onSave = async () => {
+
+  if (!physicalProduct) {
+    return null
+  }
+
+  const handleSave = async () => {
     setIsMutating(true)
     const result = await updatePhysicalProduct({
       variables: {
@@ -47,7 +54,7 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
     })
     setIsMutating(false)
     if (result?.data) {
-      onClose?.()
+      onSave?.()
     }
   }
 
@@ -113,7 +120,7 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={onSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
+        <Button autoFocus onClick={handleSave} color="primary" variant="contained" disabled={!shouldAllowSave}>
           {isMutating ? <Loader size={20} /> : "Offload"}
         </Button>
       </DialogActions>
