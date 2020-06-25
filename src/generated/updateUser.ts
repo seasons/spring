@@ -6,19 +6,19 @@
 import { UserUpdateInput } from "./globalTypes"
 
 // ====================================================
-// GraphQL mutation operation: updateUser
+// GraphQL mutation operation: UpdateUser
 // ====================================================
 
-export interface updateUser_updateUser {
+export interface UpdateUser_updateUser {
   __typename: "User"
   id: string
 }
 
-export interface updateUser {
-  updateUser: updateUser_updateUser | null
+export interface UpdateUser {
+  updateUser: UpdateUser_updateUser | null
 }
 
-export interface updateUserVariables {
+export interface UpdateUserVariables {
   email: string
   data: UserUpdateInput
 }

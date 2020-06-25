@@ -59,6 +59,7 @@ export interface product_variants_physicalProducts {
   __typename: "PhysicalProduct"
   id: string
   seasonsUID: string
+  barcode: string
   productStatus: PhysicalProductStatus
   inventoryStatus: InventoryStatus
   offloadMethod: PhysicalProductOffloadMethod | null

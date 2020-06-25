@@ -66,6 +66,7 @@ export default {
         physicalProducts {
           id
           seasonsUID
+          barcode
           productStatus
           inventoryStatus
           offloadMethod

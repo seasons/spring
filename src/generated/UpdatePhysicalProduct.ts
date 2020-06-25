@@ -26,6 +26,7 @@ export interface UpdatePhysicalProduct_productVariant {
 export interface UpdatePhysicalProduct {
   __typename: "PhysicalProduct"
   id: string
+  barcode: string
   dateOrdered: any | null
   dateReceived: any | null
   inventoryStatus: InventoryStatus
