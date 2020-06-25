@@ -157,12 +157,14 @@ export const PrintBarcodesModal: React.FC<ProcessReturnModalProps> = ({ disableB
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
-          Print Barcodes
+          <Box display="flex" alignItems="center" mt="-3px" height="30px">
+            <Box flex={1}>Print Barcodes</Box>
+            <Box mr={4}>
+              <FormControlLabel control={<Checkbox checked={checkAll} onChange={handleCheckAll} />} label="Check All" />
+            </Box>
+          </Box>
         </DialogTitle>
         <DialogContent dividers>
-          <Box my={1}>
-            <FormControlLabel control={<Checkbox checked={checkAll} onChange={handleCheckAll} />} label="Check All" />
-          </Box>
           <Box mt={1} mb={2}>
             <Card>
               <Table>
