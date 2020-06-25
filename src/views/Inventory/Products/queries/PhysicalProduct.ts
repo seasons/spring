@@ -3,6 +3,7 @@ import gql from "graphql-tag"
 export const UpdatePhysicalProductFragment = gql`
   fragment UpdatePhysicalProduct on PhysicalProduct {
     id
+    barcode
     dateOrdered
     dateReceived
     inventoryStatus
