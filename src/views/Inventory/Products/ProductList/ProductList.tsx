@@ -39,7 +39,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
     },
     onError: error => {
       toggleSnackbar({
-        show: false,
+        show: true,
         message: error?.message,
         status: "error",
       })
