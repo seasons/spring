@@ -34,7 +34,9 @@ export const UpdatePhysicalProductStatusModal: React.FC<UpdatePhysicalProductSta
   const inventoryStatusChoices = ["NonReservable", "Reservable", "Reserved", "Stored", "Offloaded"].map(choice => ({
     display: choice,
     value: choice,
-    disabled: choice === "Offloaded", // Must go through Offload action in order to set status to Offloaded
+    // 1. Must go through Offload action in order to set status to Offloaded
+    // 2. Can only store a physicalProduct by storing its parent product.
+    disabled: ["Offloaded", "Stored"].includes(choice),
   }))
 
   const initialValues = {
