@@ -62,7 +62,10 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
 
   const isEditing = !!physicalProducts
 
-  const inventoryStatusChoices = getFormSelectChoices(inventoryStatuses.map(status => status.name))
+  const inventoryStatusChoices = getFormSelectChoices(inventoryStatuses.map(status => status.name)).map(a => ({
+    ...a,
+    disabled: ["Stored", "Offloaded"].includes(a.value),
+  }))
   // Only allow [New] and [Used] when creating a new product
   const statuses = isEditing ? physicalProductStatuses : [{ name: "New" }, { name: "Used" }]
   const statusChoices = getFormSelectChoices(statuses.map(status => status.name))
