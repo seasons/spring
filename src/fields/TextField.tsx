@@ -1,20 +1,21 @@
 import React, { ReactNode } from "react"
-import { TextField as MuiTextField, styled } from "@material-ui/core"
+import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps, styled } from "@material-ui/core"
 import { Field, ChildFieldProps } from "./Field"
 
 import { FormControl } from "components/FormControl"
 
-export type TextFieldProps = ChildFieldProps & {
-  disabled?: boolean
-  helperText?: ReactNode
-  label?: ReactNode
-  multiline?: boolean
-  placeholder?: string
-  rows?: number
-  type?: string
-  autoFocus?: boolean
-  asterisk?: boolean
-}
+export type TextFieldProps = ChildFieldProps &
+  MuiTextFieldProps & {
+    disabled?: boolean
+    helperText?: ReactNode
+    label?: ReactNode
+    multiline?: boolean
+    placeholder?: string
+    rows?: number
+    type?: string
+    autoFocus?: boolean
+    asterisk?: boolean
+  }
 
 export const TextField: React.FC<TextFieldProps> = ({
   disabled = false,

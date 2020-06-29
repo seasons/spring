@@ -103,6 +103,25 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
     },
   ]
 
+  const photographyStatuses: SelectChoice[] = [
+    {
+      value: "Done",
+      display: "Done",
+    },
+    {
+      value: "InProgress",
+      display: "In Progress",
+    },
+    {
+      value: "ReadyForEditing",
+      display: "Ready For Editing",
+    },
+    {
+      value: "ReadyToShoot",
+      display: "Ready To Shoot",
+    },
+  ]
+
   // Only show Offload and Stored status if editing product and neither should be selectable
   if (isEditing) {
     statuses.push({
@@ -157,6 +176,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
             productType={productType}
             sizes={sizes}
             statuses={statuses}
+            photographyStatuses={photographyStatuses}
           />
           <Spacer mt={6} />
           <MetadataSection

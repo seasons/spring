@@ -15,6 +15,7 @@ export interface GeneralSectionProps {
   productType: string
   sizes: FormSelectChoice[]
   statuses: FormSelectChoice[]
+  photographyStatuses: FormSelectChoice[]
 }
 
 // const required = value => (value ? undefined : 'Required')
@@ -74,6 +75,11 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <Text variant="h6">Available status</Text>
             <Spacer mt={1} />
             <SelectField name="status" choices={statuses} requiredString />
+          </Grid>
+          <Grid item xs={12}>
+            <Text variant="h6">Photography status</Text>
+            <Spacer mt={1} />
+            <SelectField name="photographyStatus" choices={statuses} requiredString />
           </Grid>
         </>
       }
