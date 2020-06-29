@@ -15,7 +15,7 @@ import { DialogTitle, Spacer } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { PickingProductCard } from "./PickingProductCard"
 import { Alert, Color } from "@material-ui/lab"
-import { BARCODE_REGEX } from "views/constants"
+import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { trim } from "lodash"
 
 interface ProductState {
@@ -81,7 +81,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
 
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
-    if (input.match(BARCODE_REGEX)) {
+    if (input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
       console.log("Found barcode: ", input)
 
       const productState = productStates[input]

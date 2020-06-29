@@ -7,7 +7,7 @@ import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { Alert, Color } from "@material-ui/lab"
 import { PhysicalProductStatus } from "generated/globalTypes"
 import { filter, values, trim } from "lodash"
-import { BARCODE_REGEX } from "views/constants"
+import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 
 interface ProductState {
   productUID: string
@@ -78,7 +78,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
 
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
-    if (input.match(BARCODE_REGEX)) {
+    if (input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
       console.log("Found barcode: ", input)
 
       const productState = productStates[input]

@@ -50,3 +50,35 @@ export const PHYSICAL_PRODUCT_EDIT_QUERY = gql`
   ${UpdatePhysicalProductFragment}
   ${PhysicalProductStatusesFragment}
 `
+
+export const PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY = gql`
+  query GetPhysicalProductsAndWarehouseLocations {
+    physicalProducts {
+      id
+      seasonsUID
+      barcode
+      productVariant {
+        id
+        product {
+          id
+          images {
+            id
+            url
+          }
+        }
+      }
+      warehouseLocation {
+        id
+        barcode
+      }
+    }
+
+    warehouseLocations {
+      id
+      barcode
+      locationCode
+      itemCode
+      type
+    }
+  }
+`

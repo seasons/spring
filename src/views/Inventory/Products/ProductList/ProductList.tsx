@@ -12,6 +12,7 @@ import { UpdatePhysicalProductStatusModal } from "./UpdatePhysicalProductStatusM
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { OffloadPhysicalProductModal } from "../PhysicalProductEdit/Components"
 import { useMutation } from "react-apollo"
+import { AssignWarehouseLocationModal } from "views/Reservations/ReservationView/Components/AssignWarehouseLocationModal/AssignWarehouseLocationModal"
 
 export interface ProductListInterface {
   onNewProductBtnPressed: () => void
@@ -20,6 +21,7 @@ export interface ProductListInterface {
 export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => {
   const refresh = useRefresh()
   const [openPrintBarcodesModal, togglePrintBarcodesModal] = useState(false)
+  const [openAssignWarehouseLocationModal, toggleAssignWarehouseLocationModal] = useState(false)
   const [updatingStatusForPhysicalProduct, setUpdatingStatusForPhysicalProduct] = useState<any>(null)
   const [offloadingPhysicalProduct, setOffloadingPhysicalProduct] = useState<any>(null)
   const [isMutating, setIsMutating] = useState(false)
@@ -29,6 +31,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
     status: "success",
   })
 
+  console.log(rest)
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onCompleted: result => {
       toggleSnackbar({
@@ -61,7 +64,12 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
       <List
         {...rest}
         filters={<ProductFilter />}
-        actions={<ProductListActions onClickPrintBarcodes={() => togglePrintBarcodesModal(true)} />}
+        actions={
+          <ProductListActions
+            onClickPrintBarcodes={() => togglePrintBarcodesModal(true)}
+            onClickStowProduct={() => toggleAssignWarehouseLocationModal(true)}
+          />
+        }
         currentSort={{ field: "createdAt", order: "ASC" }}
         perPage={10}
         hasCreate={false}
@@ -97,6 +105,18 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         }}
         onSave={() => {
           togglePrintBarcodesModal(false)
+        }}
+      />
+
+      <AssignWarehouseLocationModal
+        open={openAssignWarehouseLocationModal}
+        physicalProduct={undefined}
+        // physicalProduct={physicalProduct || null}
+        onClose={() => {
+          toggleAssignWarehouseLocationModal(false)
+        }}
+        onSave={() => {
+          toggleAssignWarehouseLocationModal(false)
         }}
       />
 
