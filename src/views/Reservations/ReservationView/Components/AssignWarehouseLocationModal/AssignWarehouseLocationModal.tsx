@@ -9,7 +9,7 @@ import { useQuery, useMutation } from "react-apollo"
 import { GET_WAREHOUSE_LOCATIONS } from "views/Reservations/queries"
 import { AssignWarehouseLocationInfo } from "./AssignWarehouseLocationInfo"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/Products/mutations"
-import { BARCODE_REGEX } from "views/constants"
+import { WAREHOUSE_LOCATION_BARCODE_REGEX } from "views/constants"
 
 interface AssignWarehouseLocationModalProps {
   open: boolean
@@ -86,9 +86,10 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
 
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
-    if (input.match(BARCODE_REGEX)) {
+    if (input.match(WAREHOUSE_LOCATION_BARCODE_REGEX)) {
       console.log("Found barcode: ", input)
       setLocation(input)
+      setBarcode(input)
     } else {
       setBarcode(input)
     }
@@ -112,7 +113,7 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
           <Box my={2}>
             <TextField
               label="Scan Barcode"
-              helperText="Click into box and scan the barcode to mark as picked"
+              helperText="Click into box and scan the barcode of the location"
               name="barcode"
               type="text"
               variant="outlined"
