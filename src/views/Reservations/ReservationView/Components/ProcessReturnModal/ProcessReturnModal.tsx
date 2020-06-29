@@ -7,6 +7,7 @@ import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { Alert, Color } from "@material-ui/lab"
 import { PhysicalProductStatus } from "generated/globalTypes"
 import { filter, values, trim } from "lodash"
+import { BARCODE_REGEX } from "views/constants"
 
 interface ProductState {
   productUID: string
@@ -53,7 +54,6 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
     message: "",
     status: "success",
   })
-  const BARCODE_REGEX = /^SZNS[0-9]{5}$/
 
   const inputRef = useRef()
   const shouldAllowSave = filter(values(productStates), a => a.returned).length > 0

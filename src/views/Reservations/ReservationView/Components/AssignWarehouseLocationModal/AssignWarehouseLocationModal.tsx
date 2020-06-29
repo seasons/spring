@@ -9,6 +9,7 @@ import { useQuery, useMutation } from "react-apollo"
 import { GET_WAREHOUSE_LOCATIONS } from "views/Reservations/queries"
 import { AssignWarehouseLocationInfo } from "./AssignWarehouseLocationInfo"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/Products/mutations"
+import { BARCODE_REGEX } from "views/constants"
 
 interface AssignWarehouseLocationModalProps {
   open: boolean
@@ -49,7 +50,6 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
     message: "",
     status: "success",
   })
-  const BARCODE_REGEX = /^(SR|C|DB|)-[A-Z][0-9]{3}-[A-Z0-9]{4}$/
 
   const inputRef = useRef()
 
@@ -59,7 +59,6 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
   }
 
   const handleSave = async () => {
-    console.log("Save: ")
     await updatePhysicalProduct({
       variables: {
         where: {
