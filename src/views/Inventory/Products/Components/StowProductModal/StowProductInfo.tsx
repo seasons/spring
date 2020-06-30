@@ -34,7 +34,17 @@ interface StowProductInfoProps {
 }
 
 export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, product, locations, onChange }) => {
+  const productBrandCode = product?.seasonsUID.slice(0, 4)
   const [currentBarcode, setCurrentBarcode] = useState(barcode)
+  const filteredLocations = locations?.filter(({ barcode }) => {
+    if (barcode.startsWith("SR")) {
+      const locationBrandCode = barcode.split("-")[2]
+      if (locationBrandCode !== productBrandCode) {
+        return false
+      }
+    }
+    return true
+  })
 
   useEffect(() => {
     setCurrentBarcode(barcode)
@@ -49,7 +59,7 @@ export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, produ
       <Box mb={2}>
         <Autocomplete
           id="combo-box-demo"
-          options={locations || []}
+          options={filteredLocations || []}
           onChange={e => {
             const id = (e.currentTarget as any).innerText
             console.log(id)
