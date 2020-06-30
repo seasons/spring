@@ -4,7 +4,6 @@ import styled from "styled-components"
 import { Typography, Box, Paper, TextField } from "@material-ui/core"
 import { PhysicalProduct } from "generated/PhysicalProduct"
 import { Autocomplete } from "@material-ui/lab"
-import { Spacer } from "components"
 
 const Image = styled.img`
   margin-right: 5px;
@@ -16,19 +15,14 @@ const ProductImage = ({ product }: { product: PhysicalProduct }) => {
   return <Image src={image?.url} width={200} height={250} />
 }
 
-interface AssignWarehouseLocationInfoProps {
+interface StowProductInfoProps {
   product?: PhysicalProduct
   locations?: any[]
   barcode?: string
   onChange?: (text: string) => void
 }
 
-export const AssignWarehouseLocationInfo: React.FC<AssignWarehouseLocationInfoProps> = ({
-  barcode,
-  product,
-  locations,
-  onChange,
-}) => {
+export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, product, locations, onChange }) => {
   const [currentBarcode, setCurrentBarcode] = useState(barcode)
 
   useEffect(() => {

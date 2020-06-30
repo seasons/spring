@@ -2,6 +2,7 @@ import * as React from "react"
 import { cloneElement } from "react"
 import { TopToolbar, ExportButton, Button, sanitizeListRestProps } from "@seasons/react-admin"
 import PrintIcon from "@material-ui/icons/Print"
+import InputIcon from "@material-ui/icons/Input"
 
 export const ProductListActions: React.FC<any> = ({
   currentSort,
@@ -20,6 +21,7 @@ export const ProductListActions: React.FC<any> = ({
   maxResults,
   total,
   onClickPrintBarcodes,
+  onClickStowProduct,
   ...rest
 }) => (
   <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
@@ -47,6 +49,14 @@ export const ProductListActions: React.FC<any> = ({
       label="Print Barcodes"
     >
       <PrintIcon />
+    </Button>
+    <Button
+      onClick={() => {
+        onClickStowProduct?.()
+      }}
+      label="Stow Product"
+    >
+      <InputIcon />
     </Button>
   </TopToolbar>
 )

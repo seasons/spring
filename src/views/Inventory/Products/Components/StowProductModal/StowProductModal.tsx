@@ -3,34 +3,29 @@ import React, { useEffect, useRef, useState } from "react"
 import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Snackbar, Typography } from "@material-ui/core"
 import { DialogTitle } from "components"
 import { Alert, Color } from "@material-ui/lab"
-import { trim } from "lodash"
+import { head, trim, groupBy } from "lodash"
 import { PhysicalProduct } from "generated/PhysicalProduct"
 import { useQuery, useMutation } from "react-apollo"
-import { GET_WAREHOUSE_LOCATIONS } from "views/Reservations/queries"
-import { AssignWarehouseLocationInfo } from "./AssignWarehouseLocationInfo"
+import { StowProductInfo } from "./StowProductInfo"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/Products/mutations"
+import { WAREHOUSE_LOCATION_BARCODE_REGEX, PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
+import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/Products/queries/PhysicalProduct"
 
-interface AssignWarehouseLocationModalProps {
+interface StowProductModalProps {
   open: boolean
   onClose?: () => void
   onSave?(): void
   disableButton?: boolean
-  physicalProduct: PhysicalProduct
 }
 
-export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModalProps> = ({
-  disableButton,
-  open,
-  onSave,
-  onClose,
-  physicalProduct,
-}) => {
-  const { data, loading } = useQuery(GET_WAREHOUSE_LOCATIONS)
+export const StowProductModal: React.FC<StowProductModalProps> = ({ disableButton, open, onSave, onClose }) => {
+  const { data, loading } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
+
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onCompleted: () => {
       toggleSnackbar({
         show: true,
-        message: "Physical product updated",
+        message: `Physical product stowed at ${location}`,
         status: "success",
       })
     },
@@ -43,13 +38,22 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
     },
   })
   const [barcode, setBarcode] = useState("")
-  const [location, setLocation] = useState(physicalProduct?.warehouseLocation?.barcode || "")
+  const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState<PhysicalProduct | undefined>(undefined)
+  const [location, setLocation] = useState(selectedPhysicalProduct?.warehouseLocation?.barcode || "")
   const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
     show: false,
     message: "",
     status: "success",
   })
-  const BARCODE_REGEX = /^(SR|C|DB|)-[A-Z][0-9]{3}-[A-Z0-9]{4}$/
+  const [physicalProductsByBarcode, setPhysicalProductsByBarcode] = useState({})
+  const [validWarehouseLocationBarcodes, setValidWarehouseLocationBarcodes] = useState<string[]>([])
+
+  useEffect(() => {
+    if (!loading) {
+      setPhysicalProductsByBarcode(groupBy(data?.physicalProducts, a => a.barcode))
+      setValidWarehouseLocationBarcodes(data?.warehouseLocations?.map(a => a.barcode))
+    }
+  }, [loading])
 
   const inputRef = useRef()
 
@@ -59,11 +63,10 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
   }
 
   const handleSave = async () => {
-    console.log("Save: ")
     await updatePhysicalProduct({
       variables: {
         where: {
-          id: physicalProduct.id,
+          id: selectedPhysicalProduct?.id,
         },
         data: {
           warehouseLocation: {
@@ -87,11 +90,20 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
 
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
-    if (input.match(BARCODE_REGEX)) {
-      console.log("Found barcode: ", input)
+    setBarcode(input)
+
+    if (!selectedPhysicalProduct && input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
+      // User has not yet selected a physical product
+      setSelectedPhysicalProduct(head(physicalProductsByBarcode[input]))
+      setBarcode("")
+    } else if (
+      !!selectedPhysicalProduct &&
+      input.match(WAREHOUSE_LOCATION_BARCODE_REGEX) &&
+      validWarehouseLocationBarcodes.includes(input)
+    ) {
+      // User has already selected a physical product
       setLocation(input)
-    } else {
-      setBarcode(input)
+      setBarcode("")
     }
   }
 
@@ -103,17 +115,23 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
     }
   }, [open])
 
+  const fullOnClose = () => {
+    setSelectedPhysicalProduct(undefined)
+    onClose?.()
+  }
   return (
     <>
-      <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
-          <Typography variant="subtitle1">Assign Warehouse Location</Typography>
+      <Dialog onClose={fullOnClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle id="customized-dialog-title" onClose={fullOnClose}>
+          <Typography variant="subtitle1">Stow Product</Typography>
         </DialogTitle>
         <DialogContent dividers>
           <Box my={2}>
             <TextField
               label="Scan Barcode"
-              helperText="Click into box and scan the barcode to mark as picked"
+              helperText={`Click into box and scan the barcode of the ${
+                !!selectedPhysicalProduct ? "warehouse location" : "product"
+              }`}
               name="barcode"
               type="text"
               variant="outlined"
@@ -123,20 +141,23 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
               fullWidth
             />
           </Box>
-          <Typography variant="h6" style={{ textAlign: "center" }}>
-            OR
-          </Typography>
-
-          <Box mt={2} mb={2}>
-            <AssignWarehouseLocationInfo
-              product={physicalProduct}
-              locations={data?.warehouseLocations}
-              barcode={location}
-              onChange={text => {
-                setLocation(text)
-              }}
-            />
-          </Box>
+          {!!selectedPhysicalProduct && (
+            <>
+              <Typography variant="h6" style={{ textAlign: "center" }}>
+                OR
+              </Typography>
+              <Box mt={2} mb={2}>
+                <StowProductInfo
+                  product={selectedPhysicalProduct}
+                  locations={data?.warehouseLocations}
+                  barcode={location}
+                  onChange={text => {
+                    setLocation(text)
+                  }}
+                />
+              </Box>
+            </>
+          )}
         </DialogContent>
         <DialogActions>
           <Button
