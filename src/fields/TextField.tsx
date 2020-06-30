@@ -30,7 +30,6 @@ export const TextField: React.FC<TextFieldProps> = ({
   asterisk = false,
   ...rest
 }) => {
-  console.log(`name: `)
   return (
     <Field
       name={name}
