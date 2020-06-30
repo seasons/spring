@@ -172,7 +172,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
           {isEditing && product && (
             <>
               <Spacer mt={6} />
-              <ProductVariantsSection variants={product?.variants || []} />
+              <ProductVariantsSection productID={product.id} variants={product?.variants || []} />
               <Spacer mt={6} />
             </>
           )}
