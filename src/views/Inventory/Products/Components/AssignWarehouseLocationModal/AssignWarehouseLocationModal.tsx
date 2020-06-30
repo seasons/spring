@@ -25,7 +25,7 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
   onSave,
   onClose,
 }) => {
-  const { data, loading, refetch } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
+  const { data, loading } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
 
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onCompleted: () => {
@@ -45,7 +45,6 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
   })
   const [barcode, setBarcode] = useState("")
   const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState<PhysicalProduct | undefined>(undefined)
-  // @ts-ignore
   const [location, setLocation] = useState(selectedPhysicalProduct?.warehouseLocation?.barcode || "")
   const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
     show: false,
@@ -69,20 +68,6 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
   }
 
   const handleSave = async () => {
-    alert({
-      variables: {
-        where: {
-          id: selectedPhysicalProduct?.id,
-        },
-        data: {
-          warehouseLocation: {
-            connect: {
-              barcode: location,
-            },
-          },
-        },
-      },
-    })
     await updatePhysicalProduct({
       variables: {
         where: {
@@ -134,10 +119,14 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
     }
   }, [open])
 
+  const fullOnClose = () => {
+    setSelectedPhysicalProduct(undefined)
+    onClose?.()
+  }
   return (
     <>
-      <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
+      <Dialog onClose={fullOnClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle id="customized-dialog-title" onClose={fullOnClose}>
           <Typography variant="subtitle1">Assign Warehouse Location</Typography>
         </DialogTitle>
         <DialogContent dividers>
