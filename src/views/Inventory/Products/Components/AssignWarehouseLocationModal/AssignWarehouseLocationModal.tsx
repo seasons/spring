@@ -24,17 +24,14 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
   open,
   onSave,
   onClose,
-  physicalProduct,
 }) => {
-  const { data, loading, refetch } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY, {
-    onError: error => alert(error),
-  })
+  const { data, loading, refetch } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
 
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onCompleted: () => {
       toggleSnackbar({
         show: true,
-        message: "Physical product updated",
+        message: `Physical product stowed at ${location}`,
         status: "success",
       })
     },
@@ -72,6 +69,20 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
   }
 
   const handleSave = async () => {
+    alert({
+      variables: {
+        where: {
+          id: selectedPhysicalProduct?.id,
+        },
+        data: {
+          warehouseLocation: {
+            connect: {
+              barcode: location,
+            },
+          },
+        },
+      },
+    })
     await updatePhysicalProduct({
       variables: {
         where: {

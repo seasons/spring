@@ -12,7 +12,7 @@ import { UpdatePhysicalProductStatusModal } from "./UpdatePhysicalProductStatusM
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { OffloadPhysicalProductModal } from "../PhysicalProductEdit/Components"
 import { useMutation } from "react-apollo"
-import { AssignWarehouseLocationModal } from "views/Reservations/ReservationView/Components/AssignWarehouseLocationModal/AssignWarehouseLocationModal"
+import { AssignWarehouseLocationModal } from "../Components"
 
 export interface ProductListInterface {
   onNewProductBtnPressed: () => void
@@ -110,7 +110,6 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
 
       <AssignWarehouseLocationModal
         open={openAssignWarehouseLocationModal}
-        physicalProduct={undefined}
         // physicalProduct={physicalProduct || null}
         onClose={() => {
           toggleAssignWarehouseLocationModal(false)
