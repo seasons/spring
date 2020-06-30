@@ -65,6 +65,10 @@ export const PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY = gql`
             id
             url
           }
+          brand {
+            id
+            brandCode
+          }
         }
       }
       warehouseLocation {
