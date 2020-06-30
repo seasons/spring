@@ -57,20 +57,6 @@ export const PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY = gql`
       id
       seasonsUID
       barcode
-      productVariant {
-        id
-        product {
-          id
-          images {
-            id
-            url
-          }
-          brand {
-            id
-            brandCode
-          }
-        }
-      }
       warehouseLocation {
         id
         barcode
@@ -83,6 +69,21 @@ export const PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY = gql`
       locationCode
       itemCode
       type
+    }
+  }
+`
+
+export const PHYSICAL_PRODUCT_WITH_IMAGES = gql`
+  query GetPhysicalProductWithImages($id: ID!) {
+    physicalProduct(where: { id: $id }) {
+      productVariant {
+        product {
+          id
+          images {
+            url
+          }
+        }
+      }
     }
   }
 `

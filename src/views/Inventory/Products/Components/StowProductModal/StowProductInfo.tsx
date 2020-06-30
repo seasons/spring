@@ -4,6 +4,8 @@ import styled from "styled-components"
 import { Typography, Box, Paper, TextField } from "@material-ui/core"
 import { PhysicalProduct } from "generated/PhysicalProduct"
 import { Autocomplete } from "@material-ui/lab"
+import { useQuery } from "react-apollo"
+import { PHYSICAL_PRODUCT_WITH_IMAGES } from "../../queries/PhysicalProduct"
 
 const Image = styled.img`
   margin-right: 5px;
@@ -11,7 +13,16 @@ const Image = styled.img`
 `
 
 const ProductImage = ({ product }: { product: PhysicalProduct }) => {
-  const image = product?.productVariant?.product.images?.[0]
+  const { data, loading } = useQuery(PHYSICAL_PRODUCT_WITH_IMAGES, { variables: { id: product.id } })
+  const [image, setImage] = useState({ url: "" })
+
+  useEffect(() => {
+    if (!loading) {
+      console.log(data)
+      setImage(data?.physicalProduct?.productVariant?.product?.images?.[0])
+    }
+  }, [loading])
+
   return <Image src={image?.url} width={200} height={250} />
 }
 
