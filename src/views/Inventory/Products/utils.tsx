@@ -1,3 +1,22 @@
+export const getSizes = ({ productType, bottomSizes }: { productType: string; bottomSizes: any[] }) => {
+  const sizes = {
+    Letter: ["XS", "S", "M", "L", "XL", "XXL"],
+  }
+  if (productType === "Bottom") {
+    bottomSizes.forEach(({ type: bottomType, value }) => {
+      if (bottomType !== "Letter") {
+        const sizeValue = `${bottomType} ${value}`
+        bottomType in sizes ? sizes[bottomType].push(sizeValue) : (sizes[bottomType] = [sizeValue])
+      }
+    })
+  }
+  const sortedKeys = Object.keys(sizes).sort()
+  return sortedKeys.map(key => ({
+    sizeType: key,
+    values: key === "Letter" ? sizes[key] : Array.from(new Set(sizes[key])).sort(),
+  }))
+}
+
 export const getModelSizeDisplay = (productType: string, modelSizeName: string, bottomSizeType: string) => {
   // Get the modelSizeDisplay which is usually just the modelSizeName except
   // for when it is a bottom whose type is not Letter.

@@ -11,6 +11,9 @@ import { PhysicalProductWhereInput } from "./globalTypes"
 
 export interface UpdateManyPhysicalProducts_updateManyPhysicalProducts {
   __typename: "BatchPayload"
+  /**
+   * The number of nodes that have been affected by the Batch operation.
+   */
   count: any
 }
 

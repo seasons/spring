@@ -23,6 +23,7 @@ import { TagsSection } from "./TagsSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 import { ProductVariantsSection } from "./ProductVariantsSection"
 import { UPDATE_PRODUCT } from "../mutations"
+import { getSizes } from "../utils"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -64,6 +65,8 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
   }
 
   let sizes: any[] = []
+  console.log("DATA:", data)
+  console.log("DATA: SIZES", getSizes({ productType: "Bottom", bottomSizes: data.bottomSizes.filter(Boolean) }))
   const baseSizes = ["XS", "S", "M", "L", "XL", "XXL"]
   switch (productType) {
     case "Top":
