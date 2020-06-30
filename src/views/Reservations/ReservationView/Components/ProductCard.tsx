@@ -16,7 +16,6 @@ import { Indicator } from "components/Indicator"
 import { WarehouseLocationPopover } from "components/WarehouseLocationPopover"
 
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
-import { AssignWarehouseLocationModal } from "./AssignWarehouseLocationModal/AssignWarehouseLocationModal"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -103,9 +102,7 @@ export const ProductCard = props => {
           </TableBody>
         </Table>
         <CardActions disableSpacing>
-          <Button size="small" variant="contained" onClick={() => toggleModal(true)}>
-            Assign Location
-          </Button>
+          <Typography>{`Click to ${expanded ? "hide" : "view"} Details`}</Typography>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -155,15 +152,6 @@ export const ProductCard = props => {
           </Table>
         </Collapse>
       </Card>
-      <AssignWarehouseLocationModal
-        open={showModal}
-        physicalProduct={physicalProduct}
-        onClose={() => toggleModal(false)}
-        onSave={() => {
-          props?.onSave()
-          toggleModal(false)
-        }}
-      />
     </>
   )
 }
