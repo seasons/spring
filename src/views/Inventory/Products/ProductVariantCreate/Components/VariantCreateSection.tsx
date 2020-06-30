@@ -52,8 +52,7 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
                   </Text>
                   <Spacer mt={1} />
                   <TextField
-                    disabled={field === "SKU"}
-                    type={field === "SKU" ? "text" : "number"}
+                    type="number"
                     name={`${variantIndex}_${field.toLowerCase()}`}
                     requiredNumber={isRequired}
                   />
@@ -81,7 +80,7 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
             })}
             <Spacer grid mt={3} />
             <Grid item xs={3}>
-              <Text variant="h5">Manufacturer Size *</Text>
+              <Text variant="h5">Manufacturer sizes *</Text>
               <Spacer mt={1} />
               <GroupedAutocompleteField
                 name={`${variantIndex}_${"Manufacturer Size".toLowerCase().replace(" ", "")}`}
@@ -90,12 +89,13 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
               />
             </Grid>
             <Grid item xs={3}>
-              <Text variant="h5">Letter Size *</Text>
+              <Text variant="h5">Internal size *</Text>
               <Spacer mt={1} />
               <GroupedAutocompleteField
                 name={`${variantIndex}_${"Letter Size".toLowerCase().replace(" ", "")}`}
                 groupedOptions={sizeOptions}
-                requiredStringArray
+                multiple={false}
+                requiredString
               />
             </Grid>
             <Spacer grid mt={3} />

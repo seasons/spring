@@ -27,43 +27,27 @@ export const VariantsCreate: React.FC<VariantsCreateProps> = ({ bottomSizes, pro
 
   if (!product || !bottomSizes) return null
   const sizes = getSizes({
-    // productType: product.type || "",
-    productType: "Bottom" || "",
+    productType: product.type || "",
     bottomSizes,
   })
   const sizeOptions = sizes.map(({ sizeType, values }) => values.map(value => ({ key: sizeType, value }))).flat()
   console.log("SIZES:", sizeOptions)
 
-  // if (createData && (loading || !data || error)) {
-  //   return <Loader />
-  // }
-
-  // if (!variantsData || !productType) {
-  //   return null
-  // }
-
-  // const isEditing = !!variants
-  // const title = isEditing ? variantsData[0].sku : "Product variants"
-  // const subtitle = isEditing ? "Edit measurement data" : "Confirm generated product variants"
-  // const breadcrumbs = [
-  //   {
-  //     title: "Products",
-  //     url: "/inventory/products",
-  //   },
-  // ]
-
-  // if (isEditing && variants && variants.length > 0) {
-  //   const { product } = variants[0]
-  //   breadcrumbs.push({
-  //     title: product.name,
-  //     url: `/inventory/products/${product.id}`,
-  //   })
-  // }
-
-  // breadcrumbs.push({
-  //   title: title,
-  //   url: location.pathname,
-  // })
+  const title = "New product variants"
+  const breadcrumbs = [
+    {
+      title: "Products",
+      url: "/inventory/products",
+    },
+    {
+      title: product.name,
+      url: `/inventory/products/${product.id}`,
+    },
+    {
+      title: title,
+      url: location.pathname,
+    },
+  ]
 
   return (
     <Box>
@@ -75,28 +59,12 @@ export const VariantsCreate: React.FC<VariantsCreateProps> = ({ bottomSizes, pro
           icon: <AddIcon />,
           action: () => setNumVariants(numVariants + 1),
         }}
+        breadcrumbs={breadcrumbs}
       />
       <ContainerGrid container spacing={2}>
         {[...Array(numVariants).keys()].map(index => (
           <VariantCreateSection productType={product?.type || ""} sizeOptions={sizeOptions} variantIndex={index} />
         ))}
-        {/* {variantsData.map((variant, index) => (
-          <VariantSizeSection
-            isEditing={isEditing}
-            size={variant.size}
-            sku={variant.sku}
-            productType={productType}
-            key={index}
-          />
-        ))} */}
-        {/* {isEditing && (
-          <>
-            {variants?.map(variant => (
-              <VariantPhysicalProductsSection physicalProducts={variant.physicalProducts || []} />
-            ))}
-            <Spacer grid mt={6} />
-          </>
-        )} */}
       </ContainerGrid>
     </Box>
   )

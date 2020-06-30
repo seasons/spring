@@ -34,7 +34,7 @@ export const GroupedAutocompleteField: React.FC<GroupedAutocompleteFieldProps> =
               value={input.value || []}
               options={groupedOptions}
               groupBy={option => option.key}
-              getOptionLabel={option => option.value}
+              getOptionLabel={option => option.value || ""}
               renderInput={params => <TextField label={label || ""} {...params} variant="outlined" />}
               filterOptions={(options, params) => {
                 const filtered: string[] = filter(options, params)

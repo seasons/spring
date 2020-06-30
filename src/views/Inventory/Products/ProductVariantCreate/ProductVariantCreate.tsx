@@ -37,6 +37,7 @@ export const ProductVariantCreate = props => {
   console.log("DATA:", data)
 
   const onNext = async values => {
+    console.log("VALUES:", values)
     setValues(values)
     return true
   }
