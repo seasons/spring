@@ -12,7 +12,7 @@ import { UpdatePhysicalProductStatusModal } from "./UpdatePhysicalProductStatusM
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { OffloadPhysicalProductModal } from "../PhysicalProductEdit/Components"
 import { useMutation } from "react-apollo"
-import { AssignWarehouseLocationModal } from "../Components"
+import { StowProductModal } from "../Components"
 
 export interface ProductListInterface {
   onNewProductBtnPressed: () => void
@@ -21,7 +21,7 @@ export interface ProductListInterface {
 export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => {
   const refresh = useRefresh()
   const [openPrintBarcodesModal, togglePrintBarcodesModal] = useState(false)
-  const [openAssignWarehouseLocationModal, toggleAssignWarehouseLocationModal] = useState(false)
+  const [openStowProductModal, toggleStowProductModal] = useState(false)
   const [updatingStatusForPhysicalProduct, setUpdatingStatusForPhysicalProduct] = useState<any>(null)
   const [offloadingPhysicalProduct, setOffloadingPhysicalProduct] = useState<any>(null)
   const [isMutating, setIsMutating] = useState(false)
@@ -67,7 +67,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         actions={
           <ProductListActions
             onClickPrintBarcodes={() => togglePrintBarcodesModal(true)}
-            onClickStowProduct={() => toggleAssignWarehouseLocationModal(true)}
+            onClickStowProduct={() => toggleStowProductModal(true)}
           />
         }
         currentSort={{ field: "createdAt", order: "ASC" }}
@@ -108,14 +108,13 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         }}
       />
 
-      <AssignWarehouseLocationModal
-        open={openAssignWarehouseLocationModal}
-        // physicalProduct={physicalProduct || null}
+      <StowProductModal
+        open={openStowProductModal}
         onClose={() => {
-          toggleAssignWarehouseLocationModal(false)
+          toggleStowProductModal(false)
         }}
         onSave={() => {
-          toggleAssignWarehouseLocationModal(false)
+          toggleStowProductModal(false)
         }}
       />
 

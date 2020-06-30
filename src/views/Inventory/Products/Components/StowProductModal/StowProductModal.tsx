@@ -6,25 +6,19 @@ import { Alert, Color } from "@material-ui/lab"
 import { head, trim, groupBy } from "lodash"
 import { PhysicalProduct } from "generated/PhysicalProduct"
 import { useQuery, useMutation } from "react-apollo"
-import { AssignWarehouseLocationInfo } from "./AssignWarehouseLocationInfo"
+import { StowProductInfo } from "./StowProductInfo"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/Products/mutations"
 import { WAREHOUSE_LOCATION_BARCODE_REGEX, PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/Products/queries/PhysicalProduct"
 
-interface AssignWarehouseLocationModalProps {
+interface StowProductModalProps {
   open: boolean
   onClose?: () => void
   onSave?(): void
   disableButton?: boolean
-  physicalProduct?: PhysicalProduct
 }
 
-export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModalProps> = ({
-  disableButton,
-  open,
-  onSave,
-  onClose,
-}) => {
+export const StowProductModal: React.FC<StowProductModalProps> = ({ disableButton, open, onSave, onClose }) => {
   const { data, loading } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
 
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
@@ -52,11 +46,12 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
     status: "success",
   })
   const [physicalProductsByBarcode, setPhysicalProductsByBarcode] = useState({})
+  const [validWarehouseLocationBarcodes, setValidWarehouseLocationBarcodes] = useState<string[]>([])
 
   useEffect(() => {
     if (!loading) {
-      console.log(data?.physicalProducts)
       setPhysicalProductsByBarcode(groupBy(data?.physicalProducts, a => a.barcode))
+      setValidWarehouseLocationBarcodes(data?.warehouseLocations?.map(a => a.barcode))
     }
   }, [loading])
 
@@ -99,13 +94,14 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
 
     if (!selectedPhysicalProduct && input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
       // User has not yet selected a physical product
-      console.log("Found barcode: ", input)
-      // console.log(physicalProductsByBarcode)
       setSelectedPhysicalProduct(head(physicalProductsByBarcode[input]))
       setBarcode("")
-    } else if (!!selectedPhysicalProduct && input.match(WAREHOUSE_LOCATION_BARCODE_REGEX)) {
+    } else if (
+      !!selectedPhysicalProduct &&
+      input.match(WAREHOUSE_LOCATION_BARCODE_REGEX) &&
+      validWarehouseLocationBarcodes.includes(input)
+    ) {
       // User has already selected a physical product
-      console.log("Found barcode: ", input)
       setLocation(input)
       setBarcode("")
     }
@@ -127,7 +123,7 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
     <>
       <Dialog onClose={fullOnClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={fullOnClose}>
-          <Typography variant="subtitle1">Assign Warehouse Location</Typography>
+          <Typography variant="subtitle1">Stow Product</Typography>
         </DialogTitle>
         <DialogContent dividers>
           <Box my={2}>
@@ -151,7 +147,7 @@ export const AssignWarehouseLocationModal: React.FC<AssignWarehouseLocationModal
                 OR
               </Typography>
               <Box mt={2} mb={2}>
-                <AssignWarehouseLocationInfo
+                <StowProductInfo
                   product={selectedPhysicalProduct}
                   locations={data?.warehouseLocations}
                   barcode={location}
