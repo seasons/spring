@@ -77,6 +77,8 @@ export const StowProductModal: React.FC<StowProductModalProps> = ({ disableButto
         },
       },
     })
+    setSelectedPhysicalProduct(undefined)
+    setLocation("")
     onSave?.()
   }
 
