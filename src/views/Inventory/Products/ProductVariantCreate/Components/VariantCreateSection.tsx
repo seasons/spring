@@ -35,7 +35,7 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
   const typeSpecificSecondRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(3) : []
   const firstRowFields = ["Weight", ...typeSpecificFirstRowFields]
   const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
-  const requiredFields = ["Total count"]
+  const requiredFields = productType === "Bottom" ? ["Total count", "Waist", "Inseam"] : ["Total count"]
   return (
     <ExpandableSection
       title={`#${variantIndex + 1}`}
@@ -83,21 +83,23 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
               <Text variant="h5">Manufacturer sizes *</Text>
               <Spacer mt={1} />
               <GroupedAutocompleteField
-                name={`${variantIndex}_${"Manufacturer Size".toLowerCase().replace(" ", "")}`}
+                name={`${variantIndex}_${"Manufacturer sizes".toLowerCase().replace(" ", "")}`}
                 groupedOptions={sizeOptions}
                 requiredStringArray
               />
             </Grid>
-            <Grid item xs={3}>
-              <Text variant="h5">Internal size *</Text>
-              <Spacer mt={1} />
-              <GroupedAutocompleteField
-                name={`${variantIndex}_${"Letter Size".toLowerCase().replace(" ", "")}`}
-                groupedOptions={sizeOptions}
-                multiple={false}
-                requiredString
-              />
-            </Grid>
+            {productType === "Top" && (
+              <Grid item xs={3}>
+                <Text variant="h5">Letter size *</Text>
+                <Spacer mt={1} />
+                <GroupedAutocompleteField
+                  name={`${variantIndex}_${"Letter size".toLowerCase().replace(" ", "")}`}
+                  groupedOptions={sizeOptions}
+                  multiple={false}
+                  requiredString
+                />
+              </Grid>
+            )}
             <Spacer grid mt={3} />
           </Grid>
         </>

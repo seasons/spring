@@ -68,7 +68,7 @@ export const ProductVariantCreate = props => {
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
         <VariantsCreate product={product} bottomSizes={bottomSizes} />
         <PhysicalProducts
-          createData={values}
+          newVariantsCreateData={{ product, values }}
           inventoryStatuses={inventoryStatuses?.enumValues || []}
           physicalProductStatuses={physicalProductStatuses?.enumValues || []}
         />

@@ -95,7 +95,7 @@ export const ProductCreate = props => {
         <Overview data={productUpsertQueryData} />
         <Variants createData={values} />
         <PhysicalProducts
-          createData={values}
+          newProductCreateData={values}
           inventoryStatuses={productUpsertQueryData.inventoryStatuses?.enumValues || []}
           physicalProductStatuses={productUpsertQueryData.physicalProductStatuses?.enumValues || []}
         />

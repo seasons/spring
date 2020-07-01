@@ -56,3 +56,9 @@ export const GET_GENERATED_VARIANT_SKUS = gql`
     generatedVariantSKUs(input: $input)
   }
 `
+
+export const GET_GENERATED_SEASONS_UIDS = gql`
+  query GetGeneratedSeasonsUIDs($input: PhysicalProductSeasonsUIDsInput!) {
+    generatedSeasonsUIDs(input: $input)
+  }
+`

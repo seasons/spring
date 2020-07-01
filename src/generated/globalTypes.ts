@@ -2411,6 +2411,17 @@ export interface PhysicalProductScalarWhereInput {
   updatedAt_gte?: any | null
 }
 
+export interface PhysicalProductSeasonsUIDSizes {
+  sizeName: string
+  count: number
+}
+
+export interface PhysicalProductSeasonsUIDsInput {
+  brandID: string
+  colorCode: string
+  sizes: PhysicalProductSeasonsUIDSizes[]
+}
+
 export interface PhysicalProductUpdateDataInput {
   seasonsUID?: string | null
   inventoryStatus?: InventoryStatus | null
