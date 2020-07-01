@@ -1,14 +1,10 @@
 import React, { useState } from "react"
-import { useQuery } from "react-apollo"
 import { useLocation } from "react-router-dom"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 import AddIcon from "@material-ui/icons/Add"
 
-import { Header, Loader, Spacer } from "components"
-import { GetGeneratedVariantSkus } from "generated/GetGeneratedVariantSkus"
-import { VariantEditQuery_productVariant } from "generated/VariantEditQuery"
-import { VariantSizeSection } from "../../Components"
+import { Header } from "components"
 import {
   ProductVariantUpsertQuery_product,
   ProductVariantUpsertQuery_bottomSizes,
@@ -31,7 +27,6 @@ export const VariantsCreate: React.FC<VariantsCreateProps> = ({ bottomSizes, pro
     bottomSizes,
   })
   const sizeOptions = sizes.map(({ sizeType, values }) => values.map(value => ({ key: sizeType, value }))).flat()
-  console.log("SIZES:", sizeOptions)
 
   const title = "New product variants"
   const breadcrumbs = [

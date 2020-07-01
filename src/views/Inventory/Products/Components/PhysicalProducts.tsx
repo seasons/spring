@@ -35,11 +35,13 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
 
   let physicalProductUIDs: string[] = []
 
+  // Sizes data here is used to get generated seasons UIDs in
+  // the create new variants flow
   const sizes: { sizeName: string; count: number }[] = []
   if (newVariantsCreateData) {
     const { values: formValues, product } = newVariantsCreateData
 
-    // Get number of variants
+    // Figure out number of variants we are creating
     let maxVariantIndex = -1
     Object.keys(formValues).forEach(formKey => {
       const variantIndex = Number(formKey.split("_")[0])
@@ -47,6 +49,7 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
     })
     const numVariants = maxVariantIndex + 1
 
+    // Get size data for each variant by looking at values
     Array.from(Array(numVariants).keys()).forEach(index => {
       const count = Number(formValues[`${index}_totalcount`])
       // All size options are of the form { key: string, value: string }
@@ -55,7 +58,6 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
       switch (product.type) {
         case "Top":
           const sizeOption = formValues[`${index}_lettersize`]
-          console.log(`${index}_lettersize`, sizeOption)
           sizes.push({ sizeName: sizeOption.value, count })
           break
         case "Bottom":
@@ -79,20 +81,22 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
   })
 
   if (newVariantsCreateData) {
-    console.log("PHYS DATA:", data)
     if (!data || loading || error) return <Loading />
 
     physicalProductUIDs = data?.generatedSeasonsUIDs || []
-    // Save SKUs and seasons UIDs in form state
+
+    // Save SKUs and seasons UIDs in form state to be used in upsertVariants mutation
     let currentSize = ""
     let currentIndex = -1
     let currentSeasonsUIDs: string[] = []
     physicalProductUIDs.forEach((seasonsUID, index) => {
-      // Extract size from seasons UID
+      // Use size in seasons UID to associate seasonsUID with
+      // their corresponding variant.
       const parts = seasonsUID.split("-")
       const size = parts[2]
       if (size !== currentSize) {
         if (currentIndex !== -1) {
+          // Store all current seasonsUIDs for currentIndex
           setValue(`${currentIndex}_seasonsUIDs`, currentSeasonsUIDs)
           currentSeasonsUIDs = []
         }
@@ -100,10 +104,11 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
         currentSize = size
       }
       const sku = parts.slice(0, parts.length - 1).join("-")
-      console.log("SKU, UID", sku, seasonsUID)
+      // Store sku for this variant
       setValue(`${currentIndex}_sku`, sku)
       currentSeasonsUIDs.push(seasonsUID)
 
+      // Store all current seasonsUIDs when we reach the end of the array
       if (index === physicalProductUIDs.length - 1) {
         setValue(`${currentIndex}_seasonsUIDs`, currentSeasonsUIDs)
         currentSeasonsUIDs = []

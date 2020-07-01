@@ -21,7 +21,6 @@ export const ProductCreate = props => {
   const { data, loading, error } = useQuery(PRODUCT_UPSERT_QUERY)
   const [upsertProduct] = useMutation(UPSERT_PRODUCT, {
     onCompleted: result => {
-      console.log("RESULT:", result)
       setIsSubmitting(false)
 
       // Redirect to product edit page for this product
@@ -29,7 +28,6 @@ export const ProductCreate = props => {
       history.push(`/inventory/products/${upsertProduct.id}`)
     },
     onError: error => {
-      console.log("ERROR:", error)
       toggleSnackbar({
         show: true,
         message: error?.message,
@@ -61,7 +59,6 @@ export const ProductCreate = props => {
   const onNext = async values => {
     setValues(values)
     const { sizes } = values
-    console.log("SIZES:", sizes)
     if (!sizes || sizes.length === 0) {
       setIsConfirmationDialogOpen(true)
       return false
@@ -73,7 +70,6 @@ export const ProductCreate = props => {
     setIsSubmitting(true)
     // Extract appropriate values from the WizardForm
     const productUpsertData = getProductUpsertData(values)
-    console.log("PRODUCT UPSERT:", productUpsertData)
     await upsertProduct({
       variables: {
         input: productUpsertData,

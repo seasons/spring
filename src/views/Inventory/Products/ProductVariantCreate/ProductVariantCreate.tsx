@@ -18,7 +18,6 @@ export interface ProductVariantCreateProps {}
 export const ProductVariantCreate = props => {
   const history = useHistory()
   const { productID } = useParams()
-  console.log("PRODUCT ID:", productID)
   const [values, setValues] = useState({})
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -29,14 +28,12 @@ export const ProductVariantCreate = props => {
 
   const [upsertVariants] = useMutation(UPSERT_VARIANTS, {
     onCompleted: result => {
-      console.log("RESULT:", result)
       setIsSubmitting(false)
 
       // Redirect to product edit page for this product
       history.push(`/inventory/products/${productID}`)
     },
     onError: error => {
-      console.log("ERROR:", error)
       toggleSnackbar({
         show: true,
         message: error?.message,
@@ -62,33 +59,21 @@ export const ProductVariantCreate = props => {
   }
 
   const onNext = async values => {
-    console.log("VALUES:", values)
     setValues(values)
     return true
   }
 
   const onSubmit = async values => {
-    console.log("SUBMITTING VALUES:", values)
     const variantUpsertData = getProductVariantUpsertData({
       values,
       productType: product.type,
     })
-    console.log("UPSERT DATA:", variantUpsertData)
     await upsertVariants({
       variables: {
         productID: product.id,
         inputs: variantUpsertData,
       },
     })
-    // setIsSubmitting(true)
-    // // Extract appropriate values from the WizardForm
-    // const productUpsertData = getProductUpsertData(values)
-    // console.log("PRODUCT UPSERT:", productUpsertData)
-    // await upsertProduct({
-    //   variables: {
-    //     input: productUpsertData,
-    //   },
-    // })
   }
 
   const initialValues = {}
