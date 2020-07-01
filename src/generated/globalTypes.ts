@@ -5462,6 +5462,7 @@ export interface UpsertProductInput {
 export interface UpsertVariantInput {
   sku: string
   internalSizeName: string
+  manufacturerSizeNames?: string[] | null
   sleeve?: number | null
   shoulder?: number | null
   chest?: number | null

@@ -65,8 +65,6 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
   }
 
   let sizes: any[] = []
-  console.log("DATA:", data)
-  console.log("DATA: SIZES", getSizes({ productType: "Bottom", bottomSizes: data.bottomSizes.filter(Boolean) }))
   const baseSizes = ["XS", "S", "M", "L", "XL", "XXL"]
   switch (productType) {
     case "Top":

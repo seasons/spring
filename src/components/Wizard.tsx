@@ -11,7 +11,7 @@ export interface WizardProps {
   submitButtonTitle?: string
   submitting?: boolean
 
-  // Returns boolean representing whether or not
+  // Returns boolean representing whether or not to continue
   onNext?: (values: any) => Promise<boolean>
   onSubmit: (values: any) => Promise<void>
 }

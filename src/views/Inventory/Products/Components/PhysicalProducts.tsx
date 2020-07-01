@@ -38,14 +38,16 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
   const sizes: { sizeName: string; count: number }[] = []
   if (newVariantsCreateData) {
     const { values: formValues, product } = newVariantsCreateData
-    console.log("VALUES:", formValues)
+
+    // Get number of variants
     let maxVariantIndex = -1
     Object.keys(formValues).forEach(formKey => {
       const variantIndex = Number(formKey.split("_")[0])
       maxVariantIndex = Math.max(maxVariantIndex, variantIndex)
     })
+    const numVariants = maxVariantIndex + 1
 
-    Array.from(Array(maxVariantIndex + 1).keys()).forEach(index => {
+    Array.from(Array(numVariants).keys()).forEach(index => {
       const count = Number(formValues[`${index}_totalcount`])
       // All size options are of the form { key: string, value: string }
       // where [key] is the size type (i.e. Letter, WxL, etc.) and
