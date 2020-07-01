@@ -4,6 +4,8 @@ import styled from "styled-components"
 import { Typography, Box, Paper, TextField } from "@material-ui/core"
 import { PhysicalProduct } from "generated/PhysicalProduct"
 import { Autocomplete } from "@material-ui/lab"
+import { useQuery } from "react-apollo"
+import { PHYSICAL_PRODUCT_WITH_IMAGES } from "../../queries/PhysicalProduct"
 
 const Image = styled.img`
   margin-right: 5px;
@@ -11,7 +13,16 @@ const Image = styled.img`
 `
 
 const ProductImage = ({ product }: { product: PhysicalProduct }) => {
-  const image = product?.productVariant?.product.images?.[0]
+  const { data, loading } = useQuery(PHYSICAL_PRODUCT_WITH_IMAGES, { variables: { id: product.id } })
+  const [image, setImage] = useState({ url: "" })
+
+  useEffect(() => {
+    if (!loading) {
+      console.log(data)
+      setImage(data?.physicalProduct?.productVariant?.product?.images?.[0])
+    }
+  }, [loading])
+
   return <Image src={image?.url} width={200} height={250} />
 }
 
@@ -23,7 +34,17 @@ interface StowProductInfoProps {
 }
 
 export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, product, locations, onChange }) => {
+  const productBrandCode = product?.seasonsUID.slice(0, 4)
   const [currentBarcode, setCurrentBarcode] = useState(barcode)
+  const filteredLocations = locations?.filter(({ barcode }) => {
+    if (barcode.startsWith("SR")) {
+      const locationBrandCode = barcode.split("-")[2]
+      if (locationBrandCode !== productBrandCode) {
+        return false
+      }
+    }
+    return true
+  })
 
   useEffect(() => {
     setCurrentBarcode(barcode)
@@ -38,7 +59,7 @@ export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, produ
       <Box mb={2}>
         <Autocomplete
           id="combo-box-demo"
-          options={locations || []}
+          options={filteredLocations || []}
           onChange={e => {
             const id = (e.currentTarget as any).innerText
             console.log(id)
