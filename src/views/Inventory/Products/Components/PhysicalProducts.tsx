@@ -69,8 +69,8 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
   const { data, loading, error } = useQuery(GET_GENERATED_SEASONS_UIDS, {
     variables: {
       input: {
-        brandID: newVariantsCreateData?.product.brand.id,
-        colorCode: newVariantsCreateData?.product?.color.colorCode,
+        brandID: newVariantsCreateData?.product.brand.id || "",
+        colorCode: newVariantsCreateData?.product?.color.colorCode || "",
         sizes,
       },
     },
