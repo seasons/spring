@@ -9,8 +9,8 @@ import { SnackbarState } from "components/Snackbar"
 import { Overview, Variants, PhysicalProducts } from "../Components"
 import { VariantsCreate } from "./Components"
 import { PRODUCT_VARIANT_UPSERT_QUERY } from "../queries"
-import { UPSERT_PRODUCT } from "../mutations"
-import { getProductUpsertData } from "../utils"
+import { UPSERT_VARIANTS } from "../mutations"
+import { getProductVariantUpsertData } from "../utils"
 import { ProductVariantUpsertQuery } from "generated/ProductVariantUpsertQuery"
 
 export interface ProductVariantCreateProps {}
@@ -19,22 +19,47 @@ export const ProductVariantCreate = props => {
   const history = useHistory()
   const { productID } = useParams()
   console.log("PRODUCT ID:", productID)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
-  const { data, loading, error } = useQuery(PRODUCT_VARIANT_UPSERT_QUERY, {
-    variables: { input: { id: productID } },
-  })
   const [values, setValues] = useState({})
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
     status: "success",
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const [upsertVariants] = useMutation(UPSERT_VARIANTS, {
+    onCompleted: result => {
+      console.log("RESULT:", result)
+      setIsSubmitting(false)
+
+      // Redirect to product edit page for this product
+      history.push(`/inventory/products/${productID}`)
+    },
+    onError: error => {
+      console.log("ERROR:", error)
+      toggleSnackbar({
+        show: true,
+        message: error?.message,
+        status: "error",
+      })
+      setIsSubmitting(false)
+    },
+  })
+  const { data, loading, error } = useQuery(PRODUCT_VARIANT_UPSERT_QUERY, {
+    variables: { input: { id: productID } },
+  })
 
   if (loading || error || !data) {
     return <Loading />
   }
   console.log("DATA:", data)
+
+  const productVariantUpsertQueryData: ProductVariantUpsertQuery = data
+  const { bottomSizes, inventoryStatuses, physicalProductStatuses, product } = productVariantUpsertQueryData
+
+  if (!product) {
+    return null
+  }
 
   const onNext = async values => {
     console.log("VALUES:", values)
@@ -43,6 +68,18 @@ export const ProductVariantCreate = props => {
   }
 
   const onSubmit = async values => {
+    console.log("SUBMITTING VALUES:", values)
+    const variantUpsertData = getProductVariantUpsertData({
+      values,
+      productType: product.type,
+    })
+    console.log("UPSERT DATA:", variantUpsertData)
+    await upsertVariants({
+      variables: {
+        productID: product.id,
+        inputs: variantUpsertData,
+      },
+    })
     // setIsSubmitting(true)
     // // Extract appropriate values from the WizardForm
     // const productUpsertData = getProductUpsertData(values)
@@ -55,13 +92,6 @@ export const ProductVariantCreate = props => {
   }
 
   const initialValues = {}
-
-  const productVariantUpsertQueryData: ProductVariantUpsertQuery = data
-  const { bottomSizes, inventoryStatuses, physicalProductStatuses, product } = productVariantUpsertQueryData
-
-  if (!product) {
-    return null
-  }
 
   return (
     <Container maxWidth={false}>

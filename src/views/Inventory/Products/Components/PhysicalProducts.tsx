@@ -3,6 +3,7 @@ import { useQuery } from "react-apollo"
 import { getFormSelectChoices } from "utils/form"
 import { useLocation } from "react-router-dom"
 import { Loading } from "@seasons/react-admin"
+import { useForm, useFormState } from "react-final-form"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 
@@ -27,14 +28,18 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
   physicalProducts,
   physicalProductStatuses,
 }) => {
+  const {
+    mutators: { setValue },
+  } = useForm()
   const location = useLocation()
+
   let physicalProductUIDs: string[] = []
 
   const sizes: { sizeName: string; count: number }[] = []
   if (newVariantsCreateData) {
     const { values: formValues, product } = newVariantsCreateData
     console.log("VALUES:", formValues)
-    let maxVariantIndex = 0
+    let maxVariantIndex = -1
     Object.keys(formValues).forEach(formKey => {
       const variantIndex = Number(formKey.split("_")[0])
       maxVariantIndex = Math.max(maxVariantIndex, variantIndex)
@@ -76,6 +81,32 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
     if (!data || loading || error) return <Loading />
 
     physicalProductUIDs = data?.generatedSeasonsUIDs || []
+    // Save SKUs and seasons UIDs in form state
+    let currentSize = ""
+    let currentIndex = -1
+    let currentSeasonsUIDs: string[] = []
+    physicalProductUIDs.forEach((seasonsUID, index) => {
+      // Extract size from seasons UID
+      const parts = seasonsUID.split("-")
+      const size = parts[2]
+      if (size !== currentSize) {
+        if (currentIndex !== -1) {
+          setValue(`${currentIndex}_seasonsUIDs`, currentSeasonsUIDs)
+          currentSeasonsUIDs = []
+        }
+        currentIndex += 1
+        currentSize = size
+      }
+      const sku = parts.slice(0, parts.length - 1).join("-")
+      console.log("SKU, UID", sku, seasonsUID)
+      setValue(`${currentIndex}_sku`, sku)
+      currentSeasonsUIDs.push(seasonsUID)
+
+      if (index === physicalProductUIDs.length - 1) {
+        setValue(`${currentIndex}_seasonsUIDs`, currentSeasonsUIDs)
+        currentSeasonsUIDs = []
+      }
+    })
   } else if (newProductCreateData) {
     // Read createData to get SKU's and total count for each SKU
     const sizes = newProductCreateData?.sizes || []

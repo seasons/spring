@@ -4,20 +4,8 @@ import { Grid } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "../../Components"
+import { getTypeSpecificVariantFields } from "../../utils"
 import { GroupedAutocompleteField, TextField } from "fields"
-
-export const getTypeSpecificVariantFields = productType => {
-  let fields: string[] = []
-  switch (productType) {
-    case "Top":
-      fields = ["Shoulder", "Chest", "Length", "Sleeve", "Neck"]
-      break
-    case "Bottom":
-      fields = ["Waist", "Rise", "Hem", "Inseam"]
-      break
-  }
-  return fields
-}
 
 export interface VariantCreateSectionProps {
   productType: string
@@ -80,12 +68,11 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
             })}
             <Spacer grid mt={3} />
             <Grid item xs={3}>
-              <Text variant="h5">Manufacturer sizes *</Text>
+              <Text variant="h5">Manufacturer sizes</Text>
               <Spacer mt={1} />
               <GroupedAutocompleteField
                 name={`${variantIndex}_${"Manufacturer sizes".toLowerCase().replace(" ", "")}`}
                 groupedOptions={sizeOptions}
-                requiredStringArray
               />
             </Grid>
             {productType === "Top" && (
