@@ -23,6 +23,7 @@ import { TagsSection } from "./TagsSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 import { ProductVariantsSection } from "./ProductVariantsSection"
 import { UPDATE_PRODUCT } from "../mutations"
+import { getSizes } from "../utils"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -172,7 +173,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
           {isEditing && product && (
             <>
               <Spacer mt={6} />
-              <ProductVariantsSection variants={product?.variants || []} />
+              <ProductVariantsSection productID={product.id} variants={product?.variants || []} />
               <Spacer mt={6} />
             </>
           )}

@@ -3,12 +3,15 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { BottomSizeType } from "./globalTypes"
+
 // ====================================================
 // GraphQL query operation: ProductUpsertQuery
 // ====================================================
 
 export interface ProductUpsertQuery_bottomSizes {
   __typename: "BottomSize"
+  type: BottomSizeType | null
   value: string | null
 }
 

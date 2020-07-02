@@ -1,9 +1,10 @@
 import gql from "graphql-tag"
-import { ProductFragment } from "queries/Product"
+import { ProductFragment as AdminProductFragment } from "queries/Product"
 
 export const ProductUpsertFragment = gql`
   fragment ProductUpsert on Query {
     bottomSizes {
+      type
       value
     }
 
@@ -60,72 +61,105 @@ export const ProductUpsertFragment = gql`
   }
 `
 
+export const ProductFragment = gql`
+  fragment ProductFragment on Product {
+    ...product
+    architecture
+    color {
+      id
+      colorCode
+      name
+    }
+    functions {
+      id
+      name
+    }
+    innerMaterials
+    materialCategory {
+      id
+      slug
+    }
+    model {
+      id
+      name
+    }
+    modelSize {
+      id
+      display
+    }
+    outerMaterials
+    season
+    secondaryColor {
+      id
+      colorCode
+      name
+    }
+    status
+    tags {
+      id
+      name
+    }
+    type
+    variants {
+      id
+      sku
+      internalSize {
+        id
+        display
+        productType
+        top {
+          id
+          letter
+        }
+        bottom {
+          id
+          value
+        }
+      }
+      physicalProducts {
+        id
+        seasonsUID
+        productStatus
+        inventoryStatus
+        offloadMethod
+        offloadNotes
+      }
+    }
+  }
+  ${AdminProductFragment}
+`
+
+export const PRODUCT_VARIANT_UPSERT_QUERY = gql`
+  query ProductVariantUpsertQuery($input: ProductWhereUniqueInput!) {
+    bottomSizes {
+      type
+      value
+    }
+
+    inventoryStatuses: __type(name: "InventoryStatus") {
+      enumValues {
+        name
+      }
+    }
+
+    physicalProductStatuses: __type(name: "PhysicalProductStatus") {
+      enumValues {
+        name
+      }
+    }
+
+    product(where: $input) {
+      ...ProductFragment
+    }
+  }
+  ${ProductFragment}
+`
+
 export const PRODUCT_EDIT_QUERY = gql`
   query ProductEditQuery($input: ProductWhereUniqueInput!) {
     ...ProductUpsert
     product(where: $input) {
-      ...product
-      architecture
-      color {
-        id
-        colorCode
-        name
-      }
-      functions {
-        id
-        name
-      }
-      innerMaterials
-      materialCategory {
-        id
-        slug
-      }
-      model {
-        id
-        name
-      }
-      modelSize {
-        id
-        display
-      }
-      outerMaterials
-      season
-      secondaryColor {
-        id
-        colorCode
-        name
-      }
-      status
-      tags {
-        id
-        name
-      }
-      type
-      variants {
-        id
-        sku
-        internalSize {
-          id
-          display
-          productType
-          top {
-            id
-            letter
-          }
-          bottom {
-            id
-            value
-          }
-        }
-        physicalProducts {
-          id
-          seasonsUID
-          productStatus
-          inventoryStatus
-          offloadMethod
-          offloadNotes
-        }
-      }
+      ...ProductFragment
     }
   }
   ${ProductUpsertFragment}

@@ -1,3 +1,22 @@
+export const getSizes = ({ productType, bottomSizes }: { productType: string; bottomSizes: any[] }) => {
+  const sizes = {
+    Letter: ["XS", "S", "M", "L", "XL", "XXL"],
+  }
+  if (productType === "Bottom") {
+    bottomSizes.forEach(({ type: bottomType, value }) => {
+      if (bottomType !== "Letter") {
+        const sizeValue = `${bottomType} ${value}`
+        bottomType in sizes ? sizes[bottomType].push(sizeValue) : (sizes[bottomType] = [sizeValue])
+      }
+    })
+  }
+  const sortedKeys = Object.keys(sizes).sort()
+  return sortedKeys.map(key => ({
+    sizeType: key,
+    values: key === "Letter" ? sizes[key] : Array.from(new Set(sizes[key])).sort(),
+  }))
+}
+
 export const getModelSizeDisplay = (productType: string, modelSizeName: string, bottomSizeType: string) => {
   // Get the modelSizeDisplay which is usually just the modelSizeName except
   // for when it is a bottom whose type is not Letter.
@@ -10,6 +29,19 @@ export const getModelSizeDisplay = (productType: string, modelSizeName: string, 
       modelSizeDisplay = bottomSizeType === "Letter" ? modelSizeName : `${bottomSizeType} ${modelSizeName}`
   }
   return modelSizeDisplay
+}
+
+export const getTypeSpecificVariantFields = productType => {
+  let fields: string[] = []
+  switch (productType) {
+    case "Top":
+      fields = ["Shoulder", "Chest", "Length", "Sleeve", "Neck"]
+      break
+    case "Bottom":
+      fields = ["Waist", "Rise", "Hem", "Inseam"]
+      break
+  }
+  return fields
 }
 
 export const extractVariantSizeFields = ({
@@ -262,4 +294,101 @@ export const getProductUpdateData = (values: any) => {
     type: productType,
   }
   return updateProductData
+}
+
+/**
+ * Uses [values] to form the data used in the variantsUpsert mutation
+ * inside the New variants flow.
+ * @param values: set of values retrieved from the New variants form
+ */
+export const getProductVariantUpsertData = ({ values, productType }) => {
+  let maxVariantIndex = -1
+  Object.keys(values).forEach(key => {
+    if (key.includes("_sku")) {
+      const variantIndex = Number(key.split("_")[0])
+      maxVariantIndex = Math.max(maxVariantIndex, variantIndex)
+    }
+  })
+  const numVariants = maxVariantIndex + 1
+
+  const typeSpecificVariantFieldKeys = getTypeSpecificVariantFields(productType).map(key => key.toLowerCase())
+  const variantMeasurementFieldKeys = ["weight", "totalcount", ...typeSpecificVariantFieldKeys]
+  const physicalProductFieldKeys = [
+    "dateOrdered",
+    "dateReceived",
+    "inventoryStatus",
+    "physicalProductStatus",
+    "unitCost",
+  ]
+  const data = Array.from(Array(numVariants).keys()).map(index => {
+    // Get internal size
+    let internalSizeName = ""
+    let bottomSizeType
+    switch (productType) {
+      case "Top":
+        internalSizeName = values[`${index}_lettersize`].value
+        break
+      case "Bottom":
+        const waist = Math.floor(Number(values[`${index}_waist`]))
+        const inseam = Math.floor(Number(values[`${index}_inseam`]))
+        internalSizeName = `${waist}x${inseam}`
+        bottomSizeType = "WxL"
+        break
+    }
+
+    // Get manufacturer sizes
+    const manufacturerSizes = values[`${index}_manufacturersizes`]
+    const manufacturerSizeNames =
+      manufacturerSizes &&
+      manufacturerSizes.map(size => {
+        const sizeType = size.key
+        // Manufacturer size names should be in the form [size type] [size name].
+        // For all bottom sizes, [size.value] includes in the bottom size type
+        // but for letter sizes, [size.value] is just the letter itself, i.e. S, M, L, etc.
+        // so we have to prepend "Letter" if it is a Letter size type.
+        return sizeType === "Letter" ? `Letter ${size.value}` : size.value
+      })
+
+    // Get measurement values
+    const measurementData = {}
+    variantMeasurementFieldKeys.forEach(key => {
+      const measurement = values[`${index}_${key}`]
+      if (measurement) {
+        const dataKey = key === "totalcount" ? "total" : key
+        measurementData[dataKey] = Number(measurement)
+      }
+    })
+
+    // Get physical products data
+    const seasonsUIDs = values[`${index}_seasonsUIDs`]
+    const physicalProducts = seasonsUIDs.map(seasonsUID => {
+      const physicalProductData = { seasonsUID }
+      physicalProductFieldKeys.forEach(key => {
+        let physicalProductValue = values[`${seasonsUID}_${key}`]
+        if (physicalProductValue) {
+          if (["dateOrdered", "dateReceived"].includes(key)) {
+            // Convert date to ISO string format
+            physicalProductValue = getDateISOString(physicalProductValue)
+          } else if (key === "unitCost") {
+            // Convert to float
+            physicalProductValue = Number(physicalProductValue)
+          }
+          const dataKey = key === "physicalProductStatus" ? "productStatus" : key
+          physicalProductData[dataKey] = physicalProductValue
+        }
+      })
+      return physicalProductData
+    })
+
+    return {
+      sku: values[`${index}_sku`],
+      internalSizeName,
+      manufacturerSizeNames,
+      bottomSizeType,
+      physicalProducts,
+      ...measurementData,
+    }
+  })
+
+  return data
 }
