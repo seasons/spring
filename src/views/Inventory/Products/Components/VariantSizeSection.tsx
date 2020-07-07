@@ -5,19 +5,7 @@ import { Grid } from "@material-ui/core"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "./ExpandableSection"
 import { TextField } from "fields"
-
-export const getTypeSpecificVariantFields = productType => {
-  let fields: string[] = []
-  switch (productType) {
-    case "Top":
-      fields = ["Shoulder", "Chest", "Length", "Sleeve", "Neck"]
-      break
-    case "Bottom":
-      fields = ["Waist", "Rise", "Hem", "Inseam"]
-      break
-  }
-  return fields
-}
+import { getTypeSpecificVariantFields } from "../utils"
 
 export interface VariantSizeSectionProps {
   isEditing?: boolean

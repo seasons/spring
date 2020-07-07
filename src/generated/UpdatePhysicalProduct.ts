@@ -27,6 +27,7 @@ export interface UpdatePhysicalProduct {
   __typename: "PhysicalProduct"
   id: string
   barcode: string
+  barcoded: boolean
   dateOrdered: any | null
   dateReceived: any | null
   inventoryStatus: InventoryStatus
