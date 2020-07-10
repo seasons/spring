@@ -17,16 +17,22 @@ import {
 // GraphQL fragment: customer
 // ====================================================
 
-export interface customer_user_pushNotifications {
+export interface customer_user_pushNotification_history {
   __typename: "PushNotificationReceipt"
   id: string
+  title: string | null
+  body: string
   route: string | null
   screen: string | null
   uri: string | null
-  interest: string | null
-  body: string
-  title: string | null
   sentAt: any
+  interest: string | null
+}
+
+export interface customer_user_pushNotification {
+  __typename: "UserPushNotification"
+  id: string
+  history: customer_user_pushNotification_history[] | null
 }
 
 export interface customer_user {
@@ -38,7 +44,7 @@ export interface customer_user {
   completeAccountURL: string
   roles: UserRole[]
   createdAt: any
-  pushNotifications: customer_user_pushNotifications[] | null
+  pushNotification: customer_user_pushNotification | null
 }
 
 export interface customer_invoices_creditNotes {
@@ -114,11 +120,11 @@ export interface customer_billingInfo {
 export interface customer_detail_shippingAddress {
   __typename: "Location"
   id: string
-  name: string
-  address1: string
+  name: string | null
+  address1: string | null
   address2: string | null
-  city: string
-  state: string
+  city: string | null
+  state: string | null
   zipCode: string
 }
 
@@ -128,7 +134,7 @@ export interface customer_detail {
   phoneNumber: string | null
   birthday: any | null
   height: number | null
-  weight: string | null
+  weight: number[]
   bodyType: string | null
   averageTopSize: string | null
   averageWaistSize: string | null

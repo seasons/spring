@@ -35,11 +35,11 @@ export interface GetReservation_customer_user {
 export interface GetReservation_customer_detail_shippingAddress {
   __typename: "Location"
   id: string
-  name: string
-  address1: string
+  name: string | null
+  address1: string | null
   address2: string | null
-  city: string
-  state: string
+  city: string | null
+  state: string | null
 }
 
 export interface GetReservation_customer_detail {
