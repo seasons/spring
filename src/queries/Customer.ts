@@ -40,15 +40,18 @@ const CustomerDetails = gql`
       completeAccountURL
       roles
       createdAt
-      pushNotifications {
+      pushNotification {
         id
-        route
-        screen
-        uri
-        interest
-        body
-        title
-        sentAt
+        history {
+          id
+          title
+          body
+          route
+          screen
+          uri
+          sentAt
+          interest
+        }
       }
     }
     invoices {

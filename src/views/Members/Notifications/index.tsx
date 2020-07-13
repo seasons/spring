@@ -8,8 +8,8 @@ import { MemberSubViewProps } from "../interfaces"
 
 export const PushNotificationsView: React.FC<MemberSubViewProps> = ({ member }) => {
   let normalizedPushNotifs = {}
-  member?.user?.pushNotifications?.forEach(notif => (normalizedPushNotifs[notif.id] = notif))
-  const ids = member?.user?.pushNotifications?.map(p => p.id)
+  member?.user?.pushNotification?.history?.forEach(notif => (normalizedPushNotifs[notif.id] = notif))
+  const ids = member?.user?.pushNotification?.history?.map(p => p.id)
 
   return (
     <Card>
