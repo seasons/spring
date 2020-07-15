@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Box, Grid } from "@material-ui/core"
+import { Box, Grid, InputAdornment } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import colorsJSON from "data/colors.json"
@@ -85,7 +85,12 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Retail price</Text>
             <Spacer mt={1} />
-            <TextField name="retailPrice" type="number" minValue={0} />
+            <TextField
+              name="retailPrice"
+              type="number"
+              minValue={0}
+              InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
+            />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Architecture</Text>
