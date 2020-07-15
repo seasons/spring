@@ -4,6 +4,7 @@ export const UpdatePhysicalProductFragment = gql`
   fragment UpdatePhysicalProduct on PhysicalProduct {
     id
     barcode
+    barcoded
     dateOrdered
     dateReceived
     inventoryStatus

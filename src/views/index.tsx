@@ -1,6 +1,12 @@
 export { AnalyticsView } from "./Analytics"
 export { InventoryView } from "./Inventory"
-export { PhysicalProductEdit, ProductCreate, ProductEdit, VariantEdit } from "./Inventory/Products"
+export {
+  PhysicalProductEdit,
+  ProductCreate,
+  ProductEdit,
+  ProductVariantCreate,
+  VariantEdit,
+} from "./Inventory/Products"
 export { MemberList } from "./Members"
 export { MemberView } from "./Members/MemberView"
 export { OverviewView } from "./Overview"

@@ -12,6 +12,7 @@ import {
   PhysicalProductEdit,
   ProductCreate,
   ProductEdit,
+  ProductVariantCreate,
   ReservationList,
   ReservationView,
   VariantEdit,
@@ -69,6 +70,13 @@ export default [
         path: "/inventory/product/new",
         exact: true,
         component: props => <ProductCreate {...props} basePath="/inventory/product/new" resource="Product" />,
+      },
+      {
+        path: "/inventory/product/:productID/variant/new",
+        exact: true,
+        component: props => (
+          <ProductVariantCreate {...props} basePath="/inventory/product/variant/new" resource="Product" />
+        ),
       },
       {
         path: "/members",

@@ -14,8 +14,8 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
   const address = customer?.detail?.shippingAddress
   const { address1, address2, city, state } = address
 
-  const { shippingLabel } = reservation?.sentPackage
-  const { shippingLabel: returnLabel } = reservation?.returnedPackage
+  const { shippingLabel } = reservation?.sentPackage || {}
+  const { shippingLabel: returnLabel } = reservation?.returnedPackage || {}
 
   return (
     <Grid container spacing={3}>
@@ -44,14 +44,18 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                   <Box display="flex" alignItems="center">
                     <Box flex={1}>Shipping Label</Box>
                     <Box>
-                      <Button
-                        variant="outlined"
-                        onClick={() => {
-                          window.open(shippingLabel.image, "_blank")
-                        }}
-                      >
-                        Print
-                      </Button>
+                      {!!shippingLabel ? (
+                        <Button
+                          variant="outlined"
+                          onClick={() => {
+                            window.open(shippingLabel.image, "_blank")
+                          }}
+                        >
+                          Print
+                        </Button>
+                      ) : (
+                        "Not Available"
+                      )}
                     </Box>
                   </Box>
                 </TableCell>
@@ -59,14 +63,18 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                   <Box display="flex" alignItems="center">
                     <Box flex={1}>Return Label</Box>
                     <Box>
-                      <Button
-                        variant="outlined"
-                        onClick={() => {
-                          window.open(returnLabel.image, "_blank")
-                        }}
-                      >
-                        Print
-                      </Button>
+                      {returnLabel ? (
+                        <Button
+                          variant="outlined"
+                          onClick={() => {
+                            window.open(returnLabel.image, "_blank")
+                          }}
+                        >
+                          Print
+                        </Button>
+                      ) : (
+                        "Not available"
+                      )}
                     </Box>
                   </Box>
                 </TableCell>

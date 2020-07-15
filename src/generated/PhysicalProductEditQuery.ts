@@ -53,6 +53,7 @@ export interface PhysicalProductEditQuery_physicalProduct {
   __typename: "PhysicalProduct"
   id: string
   barcode: string
+  barcoded: boolean
   dateOrdered: any | null
   dateReceived: any | null
   inventoryStatus: InventoryStatus

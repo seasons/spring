@@ -1,4 +1,5 @@
 export { BottomNavBar } from "./BottomNavBar"
+export { ExpandableSection } from "./ExpandableSection"
 export { GeneralSection } from "./GeneralSection"
 export { Header } from "./Header"
 export { ImageInputPlaceholder } from "./ImageInputPlaceholder"

@@ -23,6 +23,7 @@ import { TagsSection } from "./TagsSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 import { ProductVariantsSection } from "./ProductVariantsSection"
 import { UPDATE_PRODUCT } from "../mutations"
+import { getSizes } from "../utils"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -103,6 +104,25 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
     },
   ]
 
+  const photographyStatuses: SelectChoice[] = [
+    {
+      value: "Done",
+      display: "Done",
+    },
+    {
+      value: "InProgress",
+      display: "In Progress",
+    },
+    {
+      value: "ReadyForEditing",
+      display: "Ready For Editing",
+    },
+    {
+      value: "ReadyToShoot",
+      display: "Ready To Shoot",
+    },
+  ]
+
   // Only show Offload and Stored status if editing product and neither should be selectable
   if (isEditing) {
     statuses.push({
@@ -157,6 +177,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
             productType={productType}
             sizes={sizes}
             statuses={statuses}
+            photographyStatuses={photographyStatuses}
           />
           <Spacer mt={6} />
           <MetadataSection
@@ -172,7 +193,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
           {isEditing && product && (
             <>
               <Spacer mt={6} />
-              <ProductVariantsSection variants={product?.variants || []} />
+              <ProductVariantsSection productID={product.id} variants={product?.variants || []} />
               <Spacer mt={6} />
             </>
           )}

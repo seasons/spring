@@ -5,6 +5,7 @@
 
 import {
   ProductWhereUniqueInput,
+  BottomSizeType,
   PhotographyStatus,
   ProductType,
   LetterSize,
@@ -21,6 +22,7 @@ import {
 
 export interface ProductEditQuery_bottomSizes {
   __typename: "BottomSize"
+  type: BottomSizeType | null
   value: string | null
 }
 
@@ -142,6 +144,7 @@ export interface ProductEditQuery_product_variants_physicalProducts {
   id: string
   seasonsUID: string
   barcode: string
+  barcoded: boolean
   productStatus: PhysicalProductStatus
   inventoryStatus: InventoryStatus
   offloadMethod: PhysicalProductOffloadMethod | null
