@@ -34,8 +34,8 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
         update: {
           height: parseInt(values.height.value, 10),
           bodyType: values.bodyType.value,
-          averageTopSize: values.averageTopSize.value,
-          averageWaistSize: values.averageWaistSize.value,
+          topSizes: values.topSizes.value,
+          waistSizes: values.waistSizes.value,
           averagePantLength: values.averagePantLength.value,
         },
       },
@@ -79,12 +79,12 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
       value: user.bodyType,
       label: "Body Type",
     },
-    averageTopSize: {
-      value: user.averageTopSize,
+    topSizes: {
+      value: user.topSizes,
       label: "Average Top Size",
     },
-    averageWaistSize: {
-      value: user.averageWaistSize,
+    waistSizes: {
+      value: user.waistSizes,
       label: "Average Waist Size",
       type: "number",
     },

@@ -107,8 +107,8 @@ const CustomerDetails = gql`
       height
       weight
       bodyType
-      averageTopSize
-      averageWaistSize
+      topSizes
+      waistSizes
       averagePantLength
       preferredPronouns
       profession
