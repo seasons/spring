@@ -162,6 +162,7 @@ export interface ProductVariantUpsertQuery_product {
   category: ProductVariantUpsertQuery_product_category
   variants: ProductVariantUpsertQuery_product_variants[] | null
   status: ProductStatus | null
+  publishedAt: any
   architecture: ProductArchitecture | null
   color: ProductVariantUpsertQuery_product_color
   functions: ProductVariantUpsertQuery_product_functions[] | null

@@ -2,10 +2,7 @@ import React, { useState } from "react"
 import { useMutation } from "react-apollo"
 import { useRedirect } from "@seasons/react-admin"
 import { useLocation } from "react-router-dom"
-
 import { Grid } from "@material-ui/core"
-import StoreIcon from "@material-ui/icons/Store"
-
 import { ConfirmationDialog, Header, Spacer } from "components"
 import { SnackbarState } from "components/Snackbar"
 import materialsJSON from "data/materials.json"
@@ -23,7 +20,8 @@ import { TagsSection } from "./TagsSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 import { ProductVariantsSection } from "./ProductVariantsSection"
 import { UPDATE_PRODUCT } from "../mutations"
-import { getSizes } from "../utils"
+import { DateTime } from "luxon"
+import { PRODUCT_EDIT_QUERY } from "../queries"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -37,6 +35,12 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
   const [productType, setProductType] = useState("Top")
   const [isLongTermStorageDialogOpen, setIsLongTermStorageDialogOpen] = useState(false)
   const [updateProduct] = useMutation(UPDATE_PRODUCT, {
+    refetchQueries: [
+      {
+        query: PRODUCT_EDIT_QUERY,
+        variables: { input: { id: product?.id } },
+      },
+    ],
     onError: error => {
       toggleSnackbar?.({
         show: true,
@@ -139,20 +143,33 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
 
   const headerTitle = product?.name || "New product"
   const headerSubtitle = product?.brand?.name || "Please fill out all required fields"
-  const headerPrimaryBtn =
-    isEditing && product?.status !== "Stored"
-      ? {
-          text: "Send to long term storage",
-          icon: <StoreIcon />,
-          action: () => setIsLongTermStorageDialogOpen(true),
-        }
-      : undefined
+
+  const menuItems = [
+    {
+      text: "Republish",
+      action: async () =>
+        await updateProduct({
+          variables: {
+            where: { id: product?.id },
+            data: { publishedAt: DateTime.local() },
+          },
+        }),
+    },
+  ] as any
+
+  if (isEditing && product?.status !== "Stored") {
+    menuItems.push({
+      text: "Send to long term storage",
+      action: () => setIsLongTermStorageDialogOpen(true),
+    })
+  }
 
   return (
     <>
       <Header
         title={headerTitle}
         subtitle={headerSubtitle}
+        publishedAt={product?.publishedAt}
         breadcrumbs={[
           {
             title: "Products",
@@ -163,7 +180,8 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
             url: location.pathname,
           },
         ]}
-        primaryButton={headerPrimaryBtn}
+        primaryButton={null}
+        menuItems={menuItems}
       />
       <Grid container spacing={5}>
         <Grid item xs={4}>

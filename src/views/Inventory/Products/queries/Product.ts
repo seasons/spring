@@ -64,6 +64,7 @@ export const ProductUpsertFragment = gql`
 export const ProductFragment = gql`
   fragment ProductFragment on Product {
     ...product
+    publishedAt
     architecture
     color {
       id
