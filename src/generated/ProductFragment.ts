@@ -134,6 +134,7 @@ export interface ProductFragment {
   category: ProductFragment_category
   variants: ProductFragment_variants[] | null
   status: ProductStatus | null
+  publishedAt: any
   architecture: ProductArchitecture | null
   color: ProductFragment_color
   functions: ProductFragment_functions[] | null

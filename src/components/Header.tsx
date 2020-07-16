@@ -6,6 +6,7 @@ import { Spacer, Text } from "components"
 import NavigateNextIcon from "@material-ui/icons/NavigateNext"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import { colors } from "theme"
+import { DateTime } from "luxon"
 
 export interface HeaderProps {
   className?: string
@@ -18,9 +19,17 @@ export interface HeaderProps {
   } | null
   breadcrumbs?: Array<{ url: string; title: string }>
   menuItems?: Array<{ text: string; action?: () => void }>
+  publishedAt?: string
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, subtitle, primaryButton, breadcrumbs, menuItems }) => {
+export const Header: React.FC<HeaderProps> = ({
+  title,
+  subtitle,
+  primaryButton,
+  breadcrumbs,
+  menuItems,
+  publishedAt,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -66,34 +75,42 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, primaryButton, 
           </Text>
         )}
       </Box>
-      <Box display="flex" alignItems="center">
-        {primaryButton && (
+      <Box display="flex" alignItems="flex-end" justifyContent="flex-start" flexDirection="column">
+        {!!publishedAt && (
           <Box>
-            <Button color="primary" variant="contained" onClick={primaryButton.action} startIcon={primaryButton.icon}>
-              {primaryButton.text}
-            </Button>
+            <Text>{`Published: ${DateTime.fromISO(publishedAt).toLocaleString(DateTime.DATE_MED)}`}</Text>
+            <Spacer mt={1} />
           </Box>
         )}
-        {menuItems && (
-          <Box mx={2}>
-            <BorderedIconButton onClick={handleClick} size="small">
-              <MoreHorizIcon />
-            </BorderedIconButton>
-            <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-              {menuItems.map((item, i) => (
-                <MenuItem
-                  key={`menuitem-${item.text + i}`}
-                  onClick={() => {
-                    handleClose()
-                    item?.action?.()
-                  }}
-                >
-                  {item.text}
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        )}
+        <Box display="flex" alignItems="center" justifyContent="flex-end" flexDirection="row">
+          {primaryButton && (
+            <Box>
+              <Button color="primary" variant="contained" onClick={primaryButton.action} startIcon={primaryButton.icon}>
+                {primaryButton.text}
+              </Button>
+            </Box>
+          )}
+          {menuItems && (
+            <Box ml={2}>
+              <BorderedIconButton onClick={handleClick} size="small">
+                <MoreHorizIcon />
+              </BorderedIconButton>
+              <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                {menuItems.map((item, i) => (
+                  <MenuItem
+                    key={`menuitem-${item.text + i}`}
+                    onClick={() => {
+                      handleClose()
+                      item?.action?.()
+                    }}
+                  >
+                    {item.text}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          )}
+        </Box>
       </Box>
     </Box>
   )
