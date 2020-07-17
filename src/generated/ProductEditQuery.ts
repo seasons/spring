@@ -217,6 +217,7 @@ export interface ProductEditQuery_product {
   category: ProductEditQuery_product_category
   variants: ProductEditQuery_product_variants[] | null
   status: ProductStatus | null
+  publishedAt: any
   architecture: ProductArchitecture | null
   color: ProductEditQuery_product_color
   functions: ProductEditQuery_product_functions[] | null
