@@ -22,7 +22,7 @@ export const PhysicalProductRow = ({
   setUpdatingStatusForPhysicalProduct,
   setOffloadingPhysicalProduct,
 }) => {
-  const { seasonsUID, productStatus, inventoryStatus } = physicalProduct
+  const { seasonsUID, productStatus, inventoryStatus, barcode, warehouseLocation } = physicalProduct
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -53,6 +53,8 @@ export const PhysicalProductRow = ({
       <TableCell>
         <CheckField record={physicalProduct} source="barcoded" value={true} />
       </TableCell>
+      <TableCell>{barcode}</TableCell>
+      <TableCell>{warehouseLocation?.barcode || "None"}</TableCell>
       <TableCell>
         <Box>
           <BorderedIconButton onClick={handleClick} size="small">
@@ -102,6 +104,8 @@ export const PhysicalProductsGrid: React.FC<PhysicalProductsGridProps> = ({
             <TableCell>Product status</TableCell>
             <TableCell>Inventory status</TableCell>
             <TableCell>Barcoded</TableCell>
+            <TableCell>Barcode</TableCell>
+            <TableCell>Location</TableCell>
             <TableCell>Actions</TableCell>
           </TableHead>
           <TableBody>

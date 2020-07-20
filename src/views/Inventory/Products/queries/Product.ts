@@ -124,6 +124,10 @@ export const ProductFragment = gql`
         inventoryStatus
         offloadMethod
         offloadNotes
+        warehouseLocation {
+          id
+          barcode
+        }
       }
     }
   }
