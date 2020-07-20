@@ -136,8 +136,8 @@ export interface customer_detail {
   height: number | null
   weight: number[]
   bodyType: string | null
-  averageTopSize: string | null
-  averageWaistSize: string | null
+  topSizes: string[]
+  waistSizes: number[]
   averagePantLength: string | null
   preferredPronouns: string | null
   profession: string | null

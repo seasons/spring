@@ -13,6 +13,7 @@ import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { OffloadPhysicalProductModal } from "../PhysicalProductEdit/Components"
 import { useMutation } from "react-apollo"
 import { StowProductModal } from "../Components"
+import { BulkPublishButton } from "./BulkPublishButton"
 
 export interface ProductListInterface {
   onNewProductBtnPressed: () => void
@@ -31,7 +32,6 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
     status: "success",
   })
 
-  console.log(rest)
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onCompleted: result => {
       toggleSnackbar({
@@ -71,7 +71,8 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
           />
         }
         currentSort={{ field: "createdAt", order: "ASC" }}
-        perPage={10}
+        bulkActionButtons={<BulkPublishButton toggleSnackbar={toggleSnackbar} />}
+        perPage={25}
         hasCreate={false}
         hasEdit={false}
         exporter={() => {}}
