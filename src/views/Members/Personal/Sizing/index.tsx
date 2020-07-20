@@ -81,16 +81,11 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
     },
     topSizes: {
       value: user.topSizes,
-      label: "Average Top Size",
+      label: "Preferred Top Sizes",
     },
     waistSizes: {
       value: user.waistSizes,
-      label: "Average Waist Size",
-      type: "number",
-    },
-    averagePantLength: {
-      value: user.averagePantLength,
-      label: "Average Pant Length",
+      label: "Preferred Waist Sizes",
       type: "number",
     },
   }
@@ -109,36 +104,23 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
                     </Box>
                   </Grid>
                   <Grid item>
-                    <EditButton onClick={handleEditOpen} />
+                    <EditButton onClick={() => alert("Need to implement")} />
                   </Grid>
                 </Grid>
               </TableCell>
             </TableRow>
-            <TableRow selected>
-              <TableCell>Height</TableCell>
-              <TableCell>{user.height}</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-            <TableRow selected>
-              <TableCell>Body Type</TableCell>
-              <TableCell>{user.bodyType}</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-            <TableRow selected>
-              <TableCell>Avg. top size</TableCell>
-              <TableCell>{user.averageTopSize}</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-            <TableRow selected>
-              <TableCell>Avg. waist size</TableCell>
-              <TableCell>{user.averageWaistSize}</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-            <TableRow selected>
-              <TableCell>Avg. pant length</TableCell>
-              <TableCell>{user.averagePantLength}</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
+            <SizeTableRow
+              fieldName="Height"
+              fieldValue={user.height}
+              formatFunc={a => {
+                const feet = Math.floor(a / 12)
+                const inches = a - 12 * feet
+                return `${feet}'${inches}"`
+              }}
+            />
+            <SizeTableRow fieldName="Body Type" fieldValue={user.bodyType} />
+            <SizeTableRow fieldName="Preferred Top Sizes" fieldValue={`${user.topSizes}`} />
+            <SizeTableRow fieldName="Preferred Waist Sizes" fieldValue={`${user.waistSizes}`} />
           </TableBody>
         </Table>
       </CardContent>
@@ -150,5 +132,15 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
         open={openEdit}
       />
     </Card>
+  )
+}
+
+const SizeTableRow = ({ fieldName, fieldValue, formatFunc = a => a }) => {
+  return (
+    <TableRow>
+      <TableCell>{fieldName}</TableCell>
+      <TableCell>{formatFunc(fieldValue) || "n/a"}</TableCell>
+      <TableCell></TableCell>
+    </TableRow>
   )
 }
