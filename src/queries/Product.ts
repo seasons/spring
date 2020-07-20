@@ -72,6 +72,10 @@ export default {
           inventoryStatus
           offloadMethod
           offloadNotes
+          warehouseLocation {
+            id
+            barcode
+          }
         }
       }
       status
