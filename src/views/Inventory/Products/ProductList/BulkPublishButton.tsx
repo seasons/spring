@@ -6,7 +6,12 @@ import { useRefresh } from "@seasons/react-admin"
 
 const PUBLISH_PRODUCTS = gql`
   mutation PublishProducts($productIDs: [String!]) {
-    publishProducts(productIDs: $productIDs)
+    publishProducts(productIDs: $productIDs) {
+      message
+      validatedIDs
+      unvalidatedIDs
+      status
+    }
   }
 `
 
@@ -16,11 +21,10 @@ export const BulkPublishButton = props => {
   const { toggleSnackbar } = props
   const [publishProducts] = useMutation(PUBLISH_PRODUCTS, {
     onCompleted: result => {
-      const status = result?.publishProducts.includes("Some of the products weren't published") ? "error" : "success"
       toggleSnackbar({
         show: true,
-        message: result?.publishProducts || "",
-        status,
+        message: result?.publishProducts?.message,
+        status: result?.publishProducts?.status,
       })
       setIsMutating(false)
       refresh()
@@ -49,7 +53,7 @@ export const BulkPublishButton = props => {
   }
 
   return (
-    <Button color="primary" onClick={onClickButton} size="small" variant="contained">
+    <Button color="primary" onClick={onClickButton} size="small" variant="text">
       Publish
     </Button>
   )
