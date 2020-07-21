@@ -2,18 +2,15 @@ import React, { useState } from "react"
 import { Datagrid, List, TextField, useRefresh } from "@seasons/react-admin"
 import { Link as RouterLink } from "react-router-dom"
 import { Box, Button, Container } from "@material-ui/core"
-import { useMutation } from "@apollo/react-hooks"
 import { Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { Header } from "components/Header"
 import { EntityCountField, FullNameField, StatusField, ActionButtons } from "fields"
 import { MemberFilter } from "./MemberFilter"
 import { MemberCreateModal } from "./MemberCreate"
-import { MemberInviteModal } from "./MemberInviteModal"
+import { AuthorizeMemberModal } from "./AuthorizeMemberModal"
 import { MemberViewProps, ActionButtonProps } from "./interfaces"
-import { MEMBER_DETAIL_UPDATE } from "./queries"
-import { updateCustomerVariables } from "generated/updateCustomer"
-import { CustomerStatus } from "generated/globalTypes"
+import { AuthorizeButton } from "./AuthorizeButton"
 
 const ViewButton = (props: ActionButtonProps) => {
   const id = props.record?.id
@@ -25,43 +22,27 @@ const ViewButton = (props: ActionButtonProps) => {
   )
 }
 
-const InviteButton = (props: ActionButtonProps) => {
-  return (
-    <Box component="span" ml={2}>
-      {props.record?.status === CustomerStatus.Waitlisted && (
-        <Button size="small" variant="contained" color="secondary" onClick={() => props.action(props.record)}>
-          Invite
-        </Button>
-      )}
-    </Box>
-  )
-}
-
-const inviteModalBody = "This will send the member an email and update their status."
-
 export const MemberList: React.FC<MemberViewProps> = ({ match, history, props }) => {
   const [openEdit, setOpenEdit] = useState(false)
   const refresh = useRefresh()
 
-  const [updateDetails] = useMutation<any, updateCustomerVariables>(MEMBER_DETAIL_UPDATE, {
-    onCompleted: () => {
-      setMemberToInvite({ id: "" })
-      setConfirmInviteModal(false)
-      toggleSnackbar({
-        show: true,
-        message: "Member Invited",
-        status: "success",
-      })
-      refresh()
-    },
-    onError: () => {
-      toggleSnackbar({
-        show: true,
-        message: "Error inviting member",
-        status: "error",
-      })
-    },
-  })
+  const onAuthorizeMemberComplete = () => {
+    setMemberToInvite({ id: "" })
+    setConfirmInviteModal(false)
+    toggleSnackbar({
+      show: true,
+      message: "Member Authorized",
+      status: "success",
+    })
+    refresh()
+  }
+  const onAuthorizeMemberError = error => {
+    toggleSnackbar({
+      show: true,
+      message: `Error authorizing member: ${error?.message}`,
+      status: "error",
+    })
+  }
 
   const [confirmInviteModalIsOpen, setConfirmInviteModal] = useState(false)
   const [memberToInvite, setMemberToInvite] = useState({
@@ -89,15 +70,6 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
 
   const closeConfirmInviteModal = () => {
     setConfirmInviteModal(false)
-  }
-
-  const inviteMember = member => {
-    updateDetails({
-      variables: {
-        id: member.id,
-        data: { status: CustomerStatus.Authorized },
-      },
-    })
   }
 
   return (
@@ -133,17 +105,20 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
           <EntityCountField label="Current Items" entityName="bagItems" />
           <ActionButtons label="Actions">
             <ViewButton action={openConfirmInviteModal} />
-            <InviteButton action={openConfirmInviteModal} />
+            <AuthorizeButton
+              action={openConfirmInviteModal}
+              buttonProps={{ variant: "contained", color: "secondary" }}
+            />
           </ActionButtons>
         </Datagrid>
       </List>
       <MemberCreateModal onClose={handleEditClose} open={openEdit} history={history} />
-      <MemberInviteModal
-        title="Confirm Invite"
-        body={inviteModalBody}
-        onSave={() => inviteMember(memberToInvite)}
+      <AuthorizeMemberModal
+        member={memberToInvite}
         onClose={closeConfirmInviteModal}
         open={confirmInviteModalIsOpen}
+        onCompleted={onAuthorizeMemberComplete}
+        onError={onAuthorizeMemberError}
       />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
