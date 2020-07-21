@@ -81,7 +81,16 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
       secondaryColor: product.secondaryColor?.colorCode,
       sizes: availableSizes,
       tags: product.tags.map(tag => tag.name),
-      ...pick(product, ["description", "name", "innerMaterials", "outerMaterials", "retailPrice", "season", "status"]),
+      ...pick(product, [
+        "description",
+        "name",
+        "innerMaterials",
+        "outerMaterials",
+        "retailPrice",
+        "season",
+        "status",
+        "photographyStatus",
+      ]),
     }
     product.images.forEach((image, index) => {
       initialValues[`image_${index}`] = image.url

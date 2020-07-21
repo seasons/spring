@@ -18,7 +18,6 @@ const ProductImage = ({ product }: { product: PhysicalProduct }) => {
 
   useEffect(() => {
     if (!loading) {
-      console.log(data)
       setImage(data?.physicalProduct?.productVariant?.product?.images?.[0])
     }
   }, [loading])
@@ -62,7 +61,6 @@ export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, produ
           options={filteredLocations || []}
           onChange={e => {
             const id = (e.currentTarget as any).innerText
-            console.log(id)
             setCurrentBarcode(id)
             onChange?.(id)
           }}
