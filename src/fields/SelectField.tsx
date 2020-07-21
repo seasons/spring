@@ -31,43 +31,41 @@ export const SelectField: React.FC<SelectFieldProps> = ({
     <Field
       multiple={multiple}
       name={name}
-      render={({ input, meta }) => {
-        return (
-          <FormControl error={meta.touched && meta.error}>
-            <Select
-              id={input.name}
-              defaultValue=""
-              disabled={disabled}
-              multiple={multiple}
-              name={input.name}
-              value={multiple ? input.value || [] : input.value}
-              variant="outlined"
-              onChange={event => {
-                if (onChange) {
-                  onChange(event)
-                }
-                input.onChange(event)
-              }}
-            >
-              {choices &&
-                choices.map(({ disabled, display, value }, index) => (
-                  <MenuItem key={index} value={value} disabled={disabled}>
+      render={({ input, meta }) => (
+        <FormControl error={meta.touched && meta.error}>
+          <Select
+            id={input.name}
+            defaultValue=""
+            disabled={disabled}
+            multiple={multiple}
+            name={input.name}
+            value={multiple ? input.value || [] : input.value}
+            variant="outlined"
+            onChange={event => {
+              if (onChange) {
+                onChange(event)
+              }
+              input.onChange(event)
+            }}
+          >
+            {choices &&
+              choices.map(({ disabled, display, value }, index) => (
+                <MenuItem key={index} value={value} disabled={disabled}>
+                  {display}
+                </MenuItem>
+              ))}
+            {groupedChoices &&
+              groupedChoices.map(({ name, children }) => [
+                <ListSubheader disableSticky>{name}</ListSubheader>,
+                children.map(({ display, value }, index) => (
+                  <MenuItem key={index} value={value}>
                     {display}
                   </MenuItem>
-                ))}
-              {groupedChoices &&
-                groupedChoices.map(({ name, children }) => [
-                  <ListSubheader disableSticky>{name}</ListSubheader>,
-                  children.map(({ display, value }, index) => (
-                    <MenuItem key={index} value={value}>
-                      {display}
-                    </MenuItem>
-                  )),
-                ])}
-            </Select>
-          </FormControl>
-        )
-      }}
+                )),
+              ])}
+          </Select>
+        </FormControl>
+      )}
       {...rest}
     />
   )
