@@ -23,12 +23,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({ state, toggleSnackbar }) => 
     })
   }
   return (
-    <MuiSnackbar
-      open={state.show}
-      autoHideDuration={6000}
-      onClose={hideSnackbar}
-      anchorOrigin={{ vertical: "top", horizontal: "center" }}
-    >
+    <MuiSnackbar open={state.show} onClose={hideSnackbar} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
       <Alert onClose={hideSnackbar} severity={state.status}>
         {state.message}
       </Alert>
