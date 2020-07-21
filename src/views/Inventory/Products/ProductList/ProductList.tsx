@@ -70,7 +70,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
             onClickStowProduct={() => toggleStowProductModal(true)}
           />
         }
-        currentSort={{ field: "createdAt", order: "ASC" }}
+        currentSort={{ field: "createdAt", order: "DESC" }}
         bulkActionButtons={<BulkPublishButton toggleSnackbar={toggleSnackbar} />}
         perPage={25}
         hasCreate={false}
@@ -90,9 +90,10 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         >
           <ImagesField source="images" />
           <TextField source="name" />
-          <BrandField label="Brand Name" />
-          <TextField source="category.name" label="Category Name" />
+          <BrandField label="Brand" />
+          <TextField source="category.name" label="Category" />
           <SinceDateField source="createdAt" label="Created" />
+          <SinceDateField source="publishedAt" label="Published" />
           <CheckField source="status" value="Available" />
           <TextField source="photographyStatus" label="Photography" />
           <ViewEntityField source="id" entityPath="inventory/products" label="Actions" />
@@ -127,7 +128,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         onSubmit={async values => {
           const { physicalProductStatus, inventoryStatus } = values
           setIsMutating(true)
-          const result = await updatePhysicalProduct({
+          await updatePhysicalProduct({
             variables: {
               where: { id: updatingStatusForPhysicalProduct?.id },
               data: {
