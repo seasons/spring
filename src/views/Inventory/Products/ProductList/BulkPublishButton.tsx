@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Button } from "@material-ui/core"
 import { useMutation } from "react-apollo"
 import gql from "graphql-tag"
+import { useRefresh } from "@seasons/react-admin"
 
 const PUBLISH_PRODUCTS = gql`
   mutation PublishProducts($productIDs: [String!]) {
@@ -10,6 +11,7 @@ const PUBLISH_PRODUCTS = gql`
 `
 
 export const BulkPublishButton = props => {
+  const refresh = useRefresh()
   const [isMutating, setIsMutating] = useState(false)
   const { toggleSnackbar } = props
   const [publishProducts] = useMutation(PUBLISH_PRODUCTS, {
@@ -21,11 +23,12 @@ export const BulkPublishButton = props => {
         status,
       })
       setIsMutating(false)
+      refresh()
     },
     onError: error => {
       toggleSnackbar({
         show: true,
-        message: "There was an error publishing the products.",
+        message: `There was an error publishing the products. ${error?.graphQLErrors?.[0]?.message}`,
         status: "error",
       })
       setIsMutating(false)

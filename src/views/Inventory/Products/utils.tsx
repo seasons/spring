@@ -295,6 +295,7 @@ export const getProductUpdateData = (values: any) => {
     tags,
     type: productType,
   }
+
   return updateProductData
 }
 
