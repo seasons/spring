@@ -97,7 +97,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
 
   const isEditing = !!product?.variants
 
-  const statuses: SelectChoice[] = [
+  const availabilityStatuses: SelectChoice[] = [
     {
       value: "Available",
       display: "Available",
@@ -125,16 +125,20 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
       value: "ReadyToShoot",
       display: "Ready To Shoot",
     },
+    {
+      value: "Steam",
+      display: "Steam",
+    },
   ]
 
   // Only show Offload and Stored status if editing product and neither should be selectable
   if (isEditing) {
-    statuses.push({
+    availabilityStatuses.push({
       value: "Offloaded",
       display: "Offloaded",
       disabled: true,
     })
-    statuses.push({
+    availabilityStatuses.push({
       value: "Stored",
       display: "Stored",
       disabled: true,
@@ -194,7 +198,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
             isEditing={isEditing}
             productType={productType}
             sizes={sizes}
-            statuses={statuses}
+            availabilityStatuses={availabilityStatuses}
             photographyStatuses={photographyStatuses}
           />
           <Spacer mt={6} />

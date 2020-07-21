@@ -66,6 +66,12 @@ export const ProductFragment = gql`
     ...product
     publishedAt
     architecture
+    photographyStatus
+    innerMaterials
+    outerMaterials
+    season
+    status
+    type
     color {
       id
       colorCode
@@ -75,7 +81,6 @@ export const ProductFragment = gql`
       id
       name
     }
-    innerMaterials
     materialCategory {
       id
       slug
@@ -88,19 +93,15 @@ export const ProductFragment = gql`
       id
       display
     }
-    outerMaterials
-    season
     secondaryColor {
       id
       colorCode
       name
     }
-    status
     tags {
       id
       name
     }
-    type
     variants {
       id
       sku

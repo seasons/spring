@@ -254,6 +254,7 @@ export const getProductUpdateData = (values: any) => {
     modelSize: modelSizeName,
     name,
     outerMaterials,
+    photographyStatus,
     productType,
     retailPrice,
     season,
@@ -286,6 +287,7 @@ export const getProductUpdateData = (values: any) => {
     modelSizeName,
     name,
     outerMaterials: { set: outerMaterials },
+    photographyStatus,
     retailPrice,
     season,
     secondaryColor: secondaryColorCode && { connect: { colorCode: secondaryColorCode } },
@@ -293,6 +295,7 @@ export const getProductUpdateData = (values: any) => {
     tags,
     type: productType,
   }
+
   return updateProductData
 }
 

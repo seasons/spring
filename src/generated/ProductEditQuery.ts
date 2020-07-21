@@ -219,17 +219,17 @@ export interface ProductEditQuery_product {
   status: ProductStatus | null
   publishedAt: any
   architecture: ProductArchitecture | null
+  innerMaterials: string[]
+  outerMaterials: string[]
+  season: string | null
+  type: ProductType | null
   color: ProductEditQuery_product_color
   functions: ProductEditQuery_product_functions[] | null
-  innerMaterials: string[]
   materialCategory: ProductEditQuery_product_materialCategory | null
   model: ProductEditQuery_product_model | null
   modelSize: ProductEditQuery_product_modelSize | null
-  outerMaterials: string[]
-  season: string | null
   secondaryColor: ProductEditQuery_product_secondaryColor | null
   tags: ProductEditQuery_product_tags[]
-  type: ProductType | null
 }
 
 export interface ProductEditQuery {

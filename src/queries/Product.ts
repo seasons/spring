@@ -7,12 +7,13 @@ export const ProductFragment = gql`
     name
     description
     photographyStatus
+    createdAt
+    updatedAt
+    publishedAt
+    retailPrice
     images(size: Small, options: { retina: true }) {
       url
     }
-    retailPrice
-    createdAt
-    updatedAt
     brand {
       id
       name
@@ -21,8 +22,6 @@ export const ProductFragment = gql`
       id
       name
     }
-    createdAt
-    updatedAt
   }
 `
 
@@ -39,6 +38,7 @@ export default {
       retailPrice
       createdAt
       updatedAt
+      publishedAt
       brand {
         id
         name

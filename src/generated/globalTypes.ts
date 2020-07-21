@@ -236,6 +236,21 @@ export enum ReservationStatus {
   Unknown = "Unknown",
 }
 
+export enum SmsStatus {
+  Accepted = "Accepted",
+  Delivered = "Delivered",
+  Failed = "Failed",
+  PartiallyDelivered = "PartiallyDelivered",
+  Queued = "Queued",
+  Read = "Read",
+  Received = "Received",
+  Receiving = "Receiving",
+  Scheduled = "Scheduled",
+  Sending = "Sending",
+  Sent = "Sent",
+  Undelivered = "Undelivered",
+}
+
 export enum UserPushNotificationInterestType {
   Bag = "Bag",
   Blog = "Blog",
@@ -1167,6 +1182,8 @@ export interface CustomProductUpdateInput {
   status?: ProductStatus | null
   type?: ProductType | null
   variants?: ProductVariantUpdateManyWithoutProductInput | null
+  publishedAt?: any | null
+  photographyStatus?: PhotographyStatus | null
   bottomSizeType?: BottomSizeType | null
   functions?: string[] | null
   images?: any[] | null
@@ -5240,6 +5257,209 @@ export interface SizeWhereUniqueInput {
   slug?: string | null
 }
 
+export interface SmsReceiptCreateInput {
+  id?: string | null
+  externalId?: string | null
+  body: string
+  status: SmsStatus
+  mediaUrls?: SmsReceiptCreatemediaUrlsInput | null
+}
+
+export interface SmsReceiptCreateManyInput {
+  create?: SmsReceiptCreateInput[] | null
+  connect?: SmsReceiptWhereUniqueInput[] | null
+}
+
+export interface SmsReceiptCreatemediaUrlsInput {
+  set?: string[] | null
+}
+
+export interface SmsReceiptScalarWhereInput {
+  AND?: SmsReceiptScalarWhereInput[] | null
+  OR?: SmsReceiptScalarWhereInput[] | null
+  NOT?: SmsReceiptScalarWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  externalId?: string | null
+  externalId_not?: string | null
+  externalId_in?: string[] | null
+  externalId_not_in?: string[] | null
+  externalId_lt?: string | null
+  externalId_lte?: string | null
+  externalId_gt?: string | null
+  externalId_gte?: string | null
+  externalId_contains?: string | null
+  externalId_not_contains?: string | null
+  externalId_starts_with?: string | null
+  externalId_not_starts_with?: string | null
+  externalId_ends_with?: string | null
+  externalId_not_ends_with?: string | null
+  body?: string | null
+  body_not?: string | null
+  body_in?: string[] | null
+  body_not_in?: string[] | null
+  body_lt?: string | null
+  body_lte?: string | null
+  body_gt?: string | null
+  body_gte?: string | null
+  body_contains?: string | null
+  body_not_contains?: string | null
+  body_starts_with?: string | null
+  body_not_starts_with?: string | null
+  body_ends_with?: string | null
+  body_not_ends_with?: string | null
+  status?: SmsStatus | null
+  status_not?: SmsStatus | null
+  status_in?: SmsStatus[] | null
+  status_not_in?: SmsStatus[] | null
+  sentAt?: any | null
+  sentAt_not?: any | null
+  sentAt_in?: any[] | null
+  sentAt_not_in?: any[] | null
+  sentAt_lt?: any | null
+  sentAt_lte?: any | null
+  sentAt_gt?: any | null
+  sentAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+}
+
+export interface SmsReceiptUpdateDataInput {
+  externalId?: string | null
+  body?: string | null
+  status?: SmsStatus | null
+  mediaUrls?: SmsReceiptUpdatemediaUrlsInput | null
+}
+
+export interface SmsReceiptUpdateManyDataInput {
+  externalId?: string | null
+  body?: string | null
+  status?: SmsStatus | null
+  mediaUrls?: SmsReceiptUpdatemediaUrlsInput | null
+}
+
+export interface SmsReceiptUpdateManyInput {
+  create?: SmsReceiptCreateInput[] | null
+  connect?: SmsReceiptWhereUniqueInput[] | null
+  set?: SmsReceiptWhereUniqueInput[] | null
+  disconnect?: SmsReceiptWhereUniqueInput[] | null
+  delete?: SmsReceiptWhereUniqueInput[] | null
+  update?: SmsReceiptUpdateWithWhereUniqueNestedInput[] | null
+  updateMany?: SmsReceiptUpdateManyWithWhereNestedInput[] | null
+  deleteMany?: SmsReceiptScalarWhereInput[] | null
+  upsert?: SmsReceiptUpsertWithWhereUniqueNestedInput[] | null
+}
+
+export interface SmsReceiptUpdateManyWithWhereNestedInput {
+  where: SmsReceiptScalarWhereInput
+  data: SmsReceiptUpdateManyDataInput
+}
+
+export interface SmsReceiptUpdateWithWhereUniqueNestedInput {
+  where: SmsReceiptWhereUniqueInput
+  data: SmsReceiptUpdateDataInput
+}
+
+export interface SmsReceiptUpdatemediaUrlsInput {
+  set?: string[] | null
+}
+
+export interface SmsReceiptUpsertWithWhereUniqueNestedInput {
+  where: SmsReceiptWhereUniqueInput
+  update: SmsReceiptUpdateDataInput
+  create: SmsReceiptCreateInput
+}
+
+export interface SmsReceiptWhereInput {
+  AND?: SmsReceiptWhereInput[] | null
+  OR?: SmsReceiptWhereInput[] | null
+  NOT?: SmsReceiptWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  externalId?: string | null
+  externalId_not?: string | null
+  externalId_in?: string[] | null
+  externalId_not_in?: string[] | null
+  externalId_lt?: string | null
+  externalId_lte?: string | null
+  externalId_gt?: string | null
+  externalId_gte?: string | null
+  externalId_contains?: string | null
+  externalId_not_contains?: string | null
+  externalId_starts_with?: string | null
+  externalId_not_starts_with?: string | null
+  externalId_ends_with?: string | null
+  externalId_not_ends_with?: string | null
+  body?: string | null
+  body_not?: string | null
+  body_in?: string[] | null
+  body_not_in?: string[] | null
+  body_lt?: string | null
+  body_lte?: string | null
+  body_gt?: string | null
+  body_gte?: string | null
+  body_contains?: string | null
+  body_not_contains?: string | null
+  body_starts_with?: string | null
+  body_not_starts_with?: string | null
+  body_ends_with?: string | null
+  body_not_ends_with?: string | null
+  status?: SmsStatus | null
+  status_not?: SmsStatus | null
+  status_in?: SmsStatus[] | null
+  status_not_in?: SmsStatus[] | null
+  sentAt?: any | null
+  sentAt_not?: any | null
+  sentAt_in?: any[] | null
+  sentAt_not_in?: any[] | null
+  sentAt_lt?: any | null
+  sentAt_lte?: any | null
+  sentAt_gt?: any | null
+  sentAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+}
+
+export interface SmsReceiptWhereUniqueInput {
+  id?: string | null
+}
+
 export interface StylePreferencesCreateInput {
   id?: string | null
   styles?: StylePreferencesCreatestylesInput | null
@@ -5682,6 +5902,7 @@ export interface UserCreateInput {
   roles?: UserCreaterolesInput | null
   pushNotifications?: PushNotificationReceiptCreateManyWithoutUsersInput | null
   pushNotification?: UserPushNotificationCreateOneInput | null
+  smsReceipts?: SmsReceiptCreateManyInput | null
 }
 
 export interface UserCreateManyWithoutPushNotificationsInput {
@@ -5706,6 +5927,7 @@ export interface UserCreateWithoutPushNotificationsInput {
   verificationMethod?: UserVerificationMethod | null
   roles?: UserCreaterolesInput | null
   pushNotification?: UserPushNotificationCreateOneInput | null
+  smsReceipts?: SmsReceiptCreateManyInput | null
 }
 
 export interface UserCreaterolesInput {
@@ -6035,6 +6257,7 @@ export interface UserUpdateDataInput {
   roles?: UserUpdaterolesInput | null
   pushNotifications?: PushNotificationReceiptUpdateManyWithoutUsersInput | null
   pushNotification?: UserPushNotificationUpdateOneInput | null
+  smsReceipts?: SmsReceiptUpdateManyInput | null
 }
 
 export interface UserUpdateInput {
@@ -6049,6 +6272,7 @@ export interface UserUpdateInput {
   roles?: UserUpdaterolesInput | null
   pushNotifications?: PushNotificationReceiptUpdateManyWithoutUsersInput | null
   pushNotification?: UserPushNotificationUpdateOneInput | null
+  smsReceipts?: SmsReceiptUpdateManyInput | null
 }
 
 export interface UserUpdateManyDataInput {
@@ -6112,6 +6336,7 @@ export interface UserUpdateWithoutPushNotificationsDataInput {
   verificationMethod?: UserVerificationMethod | null
   roles?: UserUpdaterolesInput | null
   pushNotification?: UserPushNotificationUpdateOneInput | null
+  smsReceipts?: SmsReceiptUpdateManyInput | null
 }
 
 export interface UserUpdaterolesInput {
@@ -6239,6 +6464,9 @@ export interface UserWhereInput {
   pushNotifications_some?: PushNotificationReceiptWhereInput | null
   pushNotifications_none?: PushNotificationReceiptWhereInput | null
   pushNotification?: UserPushNotificationWhereInput | null
+  smsReceipts_every?: SmsReceiptWhereInput | null
+  smsReceipts_some?: SmsReceiptWhereInput | null
+  smsReceipts_none?: SmsReceiptWhereInput | null
 }
 
 export interface UserWhereUniqueInput {

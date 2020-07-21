@@ -34,7 +34,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({
       render={({ input, meta }) => (
         <FormControl error={meta.touched && meta.error}>
           <Select
-            id="grouped-select"
+            id={input.name}
             defaultValue=""
             disabled={disabled}
             multiple={multiple}
