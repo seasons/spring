@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface PublishProducts {
-  publishProducts: string[] | null
+  publishProducts: string
 }
 
 export interface PublishProductsVariables {

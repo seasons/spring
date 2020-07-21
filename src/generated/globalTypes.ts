@@ -1183,6 +1183,7 @@ export interface CustomProductUpdateInput {
   type?: ProductType | null
   variants?: ProductVariantUpdateManyWithoutProductInput | null
   publishedAt?: any | null
+  photographyStatus?: PhotographyStatus | null
   bottomSizeType?: BottomSizeType | null
   functions?: string[] | null
   images?: any[] | null
