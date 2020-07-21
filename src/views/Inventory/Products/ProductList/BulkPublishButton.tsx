@@ -14,11 +14,11 @@ export const BulkPublishButton = props => {
   const { toggleSnackbar } = props
   const [publishProducts] = useMutation(PUBLISH_PRODUCTS, {
     onCompleted: result => {
-      console.log("result", result)
+      const status = result?.publishProducts.includes("Some of the products weren't published") ? "error" : "success"
       toggleSnackbar({
         show: true,
-        message: `Successfully updated status for physical product ${result}.`,
-        status: "success",
+        message: result?.publishProducts || "",
+        status,
       })
       setIsMutating(false)
     },
