@@ -164,17 +164,17 @@ export interface ProductVariantUpsertQuery_product {
   status: ProductStatus | null
   publishedAt: any
   architecture: ProductArchitecture | null
+  innerMaterials: string[]
+  outerMaterials: string[]
+  season: string | null
+  type: ProductType | null
   color: ProductVariantUpsertQuery_product_color
   functions: ProductVariantUpsertQuery_product_functions[] | null
-  innerMaterials: string[]
   materialCategory: ProductVariantUpsertQuery_product_materialCategory | null
   model: ProductVariantUpsertQuery_product_model | null
   modelSize: ProductVariantUpsertQuery_product_modelSize | null
-  outerMaterials: string[]
-  season: string | null
   secondaryColor: ProductVariantUpsertQuery_product_secondaryColor | null
   tags: ProductVariantUpsertQuery_product_tags[]
-  type: ProductType | null
 }
 
 export interface ProductVariantUpsertQuery {

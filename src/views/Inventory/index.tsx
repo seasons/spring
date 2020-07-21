@@ -1,9 +1,7 @@
 import React from "react"
 import { Redirect } from "react-router-dom"
-
 import { colors, Container, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
-
 import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
 import { ProductList } from "./Products"

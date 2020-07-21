@@ -136,15 +136,15 @@ export interface ProductFragment {
   status: ProductStatus | null
   publishedAt: any
   architecture: ProductArchitecture | null
+  innerMaterials: string[]
+  outerMaterials: string[]
+  season: string | null
+  type: ProductType | null
   color: ProductFragment_color
   functions: ProductFragment_functions[] | null
-  innerMaterials: string[]
   materialCategory: ProductFragment_materialCategory | null
   model: ProductFragment_model | null
   modelSize: ProductFragment_modelSize | null
-  outerMaterials: string[]
-  season: string | null
   secondaryColor: ProductFragment_secondaryColor | null
   tags: ProductFragment_tags[]
-  type: ProductType | null
 }

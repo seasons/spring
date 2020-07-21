@@ -3,10 +3,10 @@ import React from "react"
 import { Grid } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
-import { ProductUpsertQuery_brands } from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
 import { FormSelectChoice } from "utils/form"
+import { ProductUpsertQuery_brands } from "generated/ProductUpsertQuery"
 
 export interface GeneralSectionProps {
   bottomSizeTypeChoices: any[]
@@ -14,11 +14,9 @@ export interface GeneralSectionProps {
   isEditing: boolean
   productType: string
   sizes: FormSelectChoice[]
-  statuses: FormSelectChoice[]
+  availabilityStatuses: FormSelectChoice[]
   photographyStatuses: FormSelectChoice[]
 }
-
-// const required = value => (value ? undefined : 'Required')
 
 export const GeneralSection: React.FC<GeneralSectionProps> = ({
   bottomSizeTypeChoices,
@@ -26,7 +24,8 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   isEditing,
   productType,
   sizes,
-  statuses,
+  availabilityStatuses,
+  photographyStatuses,
 }) => {
   const brandChoices = brands.map(brand => ({
     display: brand.name,
@@ -74,12 +73,13 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
           <Grid item xs={12}>
             <Text variant="h6">Available status</Text>
             <Spacer mt={1} />
-            <SelectField name="status" choices={statuses} requiredString />
+            <SelectField name="status" choices={availabilityStatuses} requiredString />
+            <Spacer mt={3} />
           </Grid>
           <Grid item xs={12}>
             <Text variant="h6">Photography status</Text>
             <Spacer mt={1} />
-            <SelectField name="photographyStatus" choices={statuses} requiredString />
+            <SelectField name="photographyStatus" choices={photographyStatuses} requiredString />
           </Grid>
         </>
       }
