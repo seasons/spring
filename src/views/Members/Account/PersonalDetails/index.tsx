@@ -11,25 +11,11 @@ import { copyToClipboard } from "utils/copyToClipboard"
 import { useMutation } from "@apollo/react-hooks"
 import { Button, Card, Table, TableBody, TableCell, TableRow, Box, Grid, Typography, Chip } from "@material-ui/core"
 import { CustomerStatus } from "generated/globalTypes"
-import { MemberSubViewProps, ActionButtonProps } from "../../interfaces"
+import { MemberSubViewProps } from "../../interfaces"
 import { MEMBER_DETAIL_UPDATE } from "../../queries"
-import { MemberInviteModal } from "../../MemberInviteModal"
+import { AuthorizeMemberModal } from "../../AuthorizeMemberModal"
 import { Indicator } from "components/Indicator"
-
-const InviteButton: React.FC<ActionButtonProps> = props => {
-  if (props.record?.status === CustomerStatus.Created) {
-    return (
-      <Box component="span" ml={2}>
-        <Button size="small" variant="outlined" color="primary" onClick={() => props.action(props.record)}>
-          Invite
-        </Button>
-      </Box>
-    )
-  }
-  return null
-}
-
-const inviteModalBody = "This will send the member an email to reset their password."
+import { AuthorizeButton } from "views/Members/AuthorizeButton"
 
 export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
@@ -97,35 +83,27 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
     setConfirmInviteModal(false)
   }
 
-  const inviteMember = member => {
-    updateDetails({
-      variables: {
-        id: member.id,
-        data: { status: CustomerStatus.Invited },
-      },
+  const onAuthorizeMemberComplete = () => {
+    // (1) update state so card reflects latest data optimistically
+    updateMember({
+      ...member,
+      status: CustomerStatus.Authorized,
     })
-      .then(() => {
-        // (1) update state so card reflects latest data optimistically
-        updateMember({
-          ...member,
-          status: CustomerStatus.Invited,
-        })
 
-        setMemberToInvite({ id: "" })
-        setConfirmInviteModal(false)
-        toggleSnackbar({
-          show: true,
-          message: "Member Invited",
-          status: "success",
-        })
-      })
-      .catch(error => {
-        toggleSnackbar({
-          show: true,
-          message: "Error inviting member",
-          status: "error",
-        })
-      })
+    setMemberToInvite({ id: "" })
+    setConfirmInviteModal(false)
+    toggleSnackbar({
+      show: true,
+      message: "Member Authorized",
+      status: "success",
+    })
+  }
+  const onAuthorizeMemberError = error => {
+    toggleSnackbar({
+      show: true,
+      message: `Error authorizing member: ${error?.message}`,
+      status: "error",
+    })
   }
 
   // (2) update Redux store optimistically to
@@ -179,7 +157,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
                   <Grid item>
                     <ActionButtons record={member}>
                       <EditButton onClick={handleEditOpen} />
-                      <InviteButton action={openConfirmInviteModal} />
+                      <AuthorizeButton action={openConfirmInviteModal} />
                     </ActionButtons>
                   </Grid>
                 </Grid>
@@ -240,10 +218,10 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
         onClose={handleEditClose}
         open={openEdit}
       />
-      <MemberInviteModal
-        title="Confirm Invite"
-        body={inviteModalBody}
-        onSave={() => inviteMember(memberToInvite)}
+      <AuthorizeMemberModal
+        member={memberToInvite}
+        onCompleted={onAuthorizeMemberComplete}
+        onError={onAuthorizeMemberError}
         onClose={closeConfirmInviteModal}
         open={confirmInviteModalIsOpen}
       />

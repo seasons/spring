@@ -6,7 +6,7 @@ import InputMask from "react-input-mask"
 import * as Yup from "yup"
 import { DialogTitle } from "components"
 import { Button, Box, Dialog, DialogContent, DialogActions, Grid, TextField, Snackbar, Theme } from "@material-ui/core"
-import { MEMBER_CREATE } from "./queries"
+import { MEMBER_CREATE, MEMBER_DETAIL_UPDATE } from "./queries"
 import { useMutation } from "@apollo/react-hooks"
 import { Alert, Color } from "@material-ui/lab"
 import { Loader } from "components"
@@ -53,7 +53,23 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
 
   const [values, setValues] = useState<NewMemberProps>(memberValues)
   const [isSubmitting, setSubmitting] = useState(false)
-  const [saveMember] = useMutation(MEMBER_CREATE)
+  const onNetworkError = error => {
+    setSubmitting(false)
+    console.log("error saving member:", error)
+    toggleSnackbar({
+      show: true,
+      message: `Error creating member: ${error?.message}`,
+      status: "error",
+    })
+  }
+  const [saveMember] = useMutation(MEMBER_CREATE, {
+    onCompleted: resp => updateMember({ variables: { id: resp.signup.customer.id, data: { status: "Invited" } } }),
+    onError: onNetworkError,
+  })
+  const [updateMember] = useMutation(MEMBER_DETAIL_UPDATE, {
+    onCompleted: resp => history.push(`/members/${resp.updateCustomer.id}/account`),
+    onError: onNetworkError,
+  })
 
   const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
     show: false,
@@ -76,18 +92,6 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
         },
       },
     })
-      .then(resp => {
-        history.push(`/members/${resp.data.signup.customer.id}/account`)
-      })
-      .catch(error => {
-        setSubmitting(false)
-        console.log("error saving member:", error)
-        toggleSnackbar({
-          show: true,
-          message: "Error creating member",
-          status: "error",
-        })
-      })
   }
 
   const handleFieldChange = event => {
