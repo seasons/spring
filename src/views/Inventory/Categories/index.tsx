@@ -16,7 +16,7 @@ export const CategoryList = props => (
     />
     <List
       {...props}
-      perPage={10}
+      perPage={25}
       hasCreate={false}
       hasEdit={false}
       hasList={true}

@@ -32,7 +32,7 @@ export const NotificationsList: React.FC<MemberViewProps> = ({ match, props }) =
       />
       <List
         {...props}
-        perPage={10}
+        perPage={25}
         hasCreate={false}
         hasEdit={false}
         hasList={true}

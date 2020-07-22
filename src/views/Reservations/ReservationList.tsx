@@ -72,7 +72,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
           hasList={true}
           hasShow={true}
           exporter={false}
-          perPage={10}
+          perPage={25}
           sort={{
             field: "createdAt",
             order: "DESC",

@@ -4,7 +4,7 @@ import { Datagrid, List, TextField } from "@seasons/react-admin"
 export const SizeList = props => (
   <List
     {...props}
-    perPage={10}
+    perPage={25}
     hasCreate={false}
     hasEdit={false}
     hasList={true}
