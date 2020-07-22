@@ -48,8 +48,6 @@ export const EditModal: React.FunctionComponent<EditModalProps> = ({ title, open
     ...editEntity,
   })
 
-  console.log(editEntity)
-
   const editTitle = `Edit ${title}`
 
   const handleFieldChange = event => {
@@ -90,13 +88,11 @@ export const EditModal: React.FunctionComponent<EditModalProps> = ({ title, open
                         <FormControl variant="outlined" fullWidth>
                           <InputLabel id={key}>{capitalize(key)}</InputLabel>
                           <Select id={key} name={key} value={values[key].value} onChange={handleFieldChange}>
-                            {values[key].options.map(option => {
-                              return (
-                                <MenuItem key={option} value={option} style={{ minHeight: "33px" }}>
-                                  {option}
-                                </MenuItem>
-                              )
-                            })}
+                            {values[key].options.map(option => (
+                              <MenuItem key={option} value={option} style={{ minHeight: "33px" }}>
+                                {option}
+                              </MenuItem>
+                            ))}
                           </Select>
                         </FormControl>
                       </Grid>
