@@ -36,7 +36,7 @@ export const BrandList = props => {
         {...props}
         filters={<BrandFilter />}
         exporter={false}
-        perPage={10}
+        perPage={25}
         hasCreate={false}
         hasEdit={false}
         hasList={true}
