@@ -74,13 +74,8 @@ function reduceChildRoutes({ acc, pathname, item, depth = 0 }) {
   const key = Math.floor(Math.random() * Math.floor(10000))
 
   if (item.items) {
-    const open = matchPath(pathname, {
-      path: item.href,
-      exact: false,
-    })
-
     acc.push(
-      <NavItem key={key} depth={depth} icon={item.icon} info={item.info} open={Boolean(open)} title={item.title}>
+      <NavItem key={key} depth={depth} icon={item.icon} info={item.info} open={true} title={item.title}>
         {renderNavItems({
           depth: depth + 1,
           pathname,

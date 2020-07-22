@@ -37,7 +37,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ title, b
           Cancel
         </Button>
         <Button onClick={() => handleClose(true)} color="primary" autoFocus>
-          {isMutating ? <Loader color={colors.black100} size={20} /> : "Ok"}
+          {isMutating ? <Loader color={colors.black100} size={20} /> : "Okay"}
         </Button>
       </DialogActions>
     </Dialog>
