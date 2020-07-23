@@ -70,7 +70,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
             onClickStowProduct={() => toggleStowProductModal(true)}
           />
         }
-        currentSort={{ field: "createdAt", order: "DESC" }}
+        currentSort={{ field: "publishedAt", order: "DESC" }}
         bulkActionButtons={<BulkPublishButton toggleSnackbar={toggleSnackbar} />}
         perPage={25}
         hasCreate={false}
@@ -92,7 +92,6 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
           <TextField source="name" />
           <BrandField label="Brand" />
           <TextField source="category.name" label="Category" />
-          <SinceDateField source="createdAt" label="Created" />
           <SinceDateField source="publishedAt" label="Published" />
           <CheckField source="status" value="Available" />
           <TextField source="photographyStatus" label="Photography" />
