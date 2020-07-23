@@ -68,7 +68,8 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   }
 
   const physicalProductEditQueryData: PhysicalProductEditQuery = data
-  const { warehouseLocation } = data
+  console.log(physicalProductEditQueryData)
+  const { warehouseLocation } = physicalProductEditQueryData.physicalProduct as any
 
   return (
     <Box mx={5} display="flex" flexDirection="column">
@@ -79,32 +80,35 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
           physicalProducts={[physicalProduct]}
         />
       </Wizard>
-      <Box display="flex" flexDirection="row">
-        <Box m={1} flexDirection="column">
-          <Typography variant="body1" color="textSecondary">
-            Type
-          </Typography>
-          <Typography variant="h3" color="textSecondary">
-            {warehouseLocation?.type || "-"}
-          </Typography>
-        </Box>
-        <Divider orientation="vertical" flexItem />
-        <Box m={1} flexDirection="column">
-          <Typography variant="body1" color="textSecondary">
-            Location
-          </Typography>
-          <Typography variant="h3" color="textSecondary">
-            {warehouseLocation?.locationCode || "-"}
-          </Typography>
-        </Box>
-        <Divider orientation="vertical" flexItem />
-        <Box m={1} flexDirection="column">
-          <Typography variant="body1" color="textSecondary">
-            Item
-          </Typography>
-          <Typography variant="h3" color="textSecondary">
-            {warehouseLocation?.itemCode || "-"}
-          </Typography>
+      <Box display="flex" flexDirection="column" mb={2}>
+        <Text variant="h5">Warehouse Location *</Text>
+        <Box display="flex" flexDirection="row" ml={0}>
+          <Box mr={1} mt={1} flexDirection="column">
+            <Typography variant="body1" color="textSecondary">
+              Type
+            </Typography>
+            <Typography variant="h3" color="textSecondary">
+              {warehouseLocation?.type || "-"}
+            </Typography>
+          </Box>
+          <Divider orientation="vertical" flexItem />
+          <Box m={1} flexDirection="column">
+            <Typography variant="body1" color="textSecondary">
+              Location
+            </Typography>
+            <Typography variant="h3" color="textSecondary">
+              {warehouseLocation?.locationCode || "-"}
+            </Typography>
+          </Box>
+          <Divider orientation="vertical" flexItem />
+          <Box m={1} flexDirection="column">
+            <Typography variant="body1" color="textSecondary">
+              Item
+            </Typography>
+            <Typography variant="h3" color="textSecondary">
+              {warehouseLocation?.itemCode || "-"}
+            </Typography>
+          </Box>
         </Box>
       </Box>
       {physicalProduct.inventoryStatus !== "Offloaded" && (
