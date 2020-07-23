@@ -87,7 +87,7 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
       <List
         {...props}
         filters={<MemberFilter />}
-        perPage={10}
+        perPage={25}
         hasCreate={false}
         hasEdit={false}
         hasList={true}

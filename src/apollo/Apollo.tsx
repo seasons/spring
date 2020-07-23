@@ -1,9 +1,10 @@
-import { InMemoryCache } from "apollo-cache-inmemory"
+import { InMemoryCache, IntrospectionFragmentMatcher } from "apollo-cache-inmemory"
 import { ApolloClient } from "apollo-client"
 import { ApolloLink, Observable } from "apollo-link"
 import { setContext } from "apollo-link-context"
 import { onError } from "apollo-link-error"
 import { createUploadLink } from "apollo-upload-client"
+import introspectionQueryResultData from "../fragmentTypes.json"
 
 const URI = process.env.REACT_APP_MONSOON_ENDPOINT || "http://localhost:4000"
 
@@ -112,7 +113,11 @@ const getNewToken = async () => {
   return newUserSession
 }
 
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData,
+})
+
 export const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({ fragmentMatcher }),
   link: ApolloLink.from([authLink, errorLink, link]),
 })
