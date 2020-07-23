@@ -7,8 +7,16 @@
 // GraphQL mutation operation: PublishProducts
 // ====================================================
 
+export interface PublishProducts_publishProducts {
+  __typename: "PublishProductsResponse"
+  message: string
+  validatedIDs: (string | null)[]
+  unvalidatedIDs: (string | null)[]
+  status: string
+}
+
 export interface PublishProducts {
-  publishProducts: string
+  publishProducts: PublishProducts_publishProducts
 }
 
 export interface PublishProductsVariables {

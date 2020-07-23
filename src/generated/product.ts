@@ -55,6 +55,12 @@ export interface product_variants_internalSize {
   bottom: product_variants_internalSize_bottom | null
 }
 
+export interface product_variants_physicalProducts_warehouseLocation {
+  __typename: "WarehouseLocation"
+  id: string
+  barcode: string
+}
+
 export interface product_variants_physicalProducts {
   __typename: "PhysicalProduct"
   id: string
@@ -65,6 +71,7 @@ export interface product_variants_physicalProducts {
   inventoryStatus: InventoryStatus
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
+  warehouseLocation: product_variants_physicalProducts_warehouseLocation | null
 }
 
 export interface product_variants {
@@ -85,6 +92,7 @@ export interface product {
   retailPrice: number | null
   createdAt: any
   updatedAt: any
+  publishedAt: any
   brand: product_brand
   category: product_category
   variants: product_variants[] | null

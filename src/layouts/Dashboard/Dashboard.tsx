@@ -63,12 +63,18 @@ export class Dashboard extends React.Component<DashboardProps> {
     const { route } = this.props
     const { hasError, errorMessage, errorInfo, openMenu } = this.state
 
+    const handleSearch = () => {}
+
     return (
       <DataProviderContext.Consumer>
         {dataProvider => (
           <>
             <TopBar onMobileNavOpen={() => this.setState({ openMenu: true })} />
-            <NavBar onMobileClose={() => this.setState({ openMenu: false })} openMobile={openMenu} />
+            <NavBar
+              onMobileClose={() => this.setState({ openMenu: false })}
+              openMobile={openMenu}
+              openSearch={handleSearch}
+            />
             <Container>
               <Content>
                 <Suspense fallback={<LinearProgress />}>
