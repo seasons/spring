@@ -84,6 +84,12 @@ export interface ProductVariantUpsertQuery_product_variants_internalSize {
   bottom: ProductVariantUpsertQuery_product_variants_internalSize_bottom | null
 }
 
+export interface ProductVariantUpsertQuery_product_variants_physicalProducts_warehouseLocation {
+  __typename: "WarehouseLocation"
+  id: string
+  barcode: string
+}
+
 export interface ProductVariantUpsertQuery_product_variants_physicalProducts {
   __typename: "PhysicalProduct"
   id: string
@@ -94,6 +100,7 @@ export interface ProductVariantUpsertQuery_product_variants_physicalProducts {
   inventoryStatus: InventoryStatus
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
+  warehouseLocation: ProductVariantUpsertQuery_product_variants_physicalProducts_warehouseLocation | null
 }
 
 export interface ProductVariantUpsertQuery_product_variants {
@@ -158,11 +165,11 @@ export interface ProductVariantUpsertQuery_product {
   retailPrice: number | null
   createdAt: any
   updatedAt: any
+  publishedAt: any
   brand: ProductVariantUpsertQuery_product_brand
   category: ProductVariantUpsertQuery_product_category
   variants: ProductVariantUpsertQuery_product_variants[] | null
   status: ProductStatus | null
-  publishedAt: any
   architecture: ProductArchitecture | null
   innerMaterials: string[]
   outerMaterials: string[]

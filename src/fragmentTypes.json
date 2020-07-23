@@ -1,0 +1,16 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "UNION",
+        "name": "SearchResultData",
+        "possibleTypes": [{ "name": "ProductSearchResultData" }, { "name": "PhysicalProductSearchResultData" }]
+      },
+      {
+        "kind": "UNION",
+        "name": "HomepageResult",
+        "possibleTypes": [{ "name": "Product" }, { "name": "Collection" }, { "name": "Brand" }]
+      }
+    ]
+  }
+}

@@ -35,11 +35,13 @@
     "lodash": "^4.17.15",
     "luxon": "^1.23.0",
     "moment": "^2.24.0",
+    "notistack": "^0.9.17",
     "react": "^16.13.1",
     "react-apollo": "^3.1.2",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
     "react-dropzone": "^10.2.2",
+    "react-feather": "^2.0.8",
     "react-final-form": "^6.4.0",
     "react-images": "^1.1.7",
     "react-input-mask": "2.0.4",
@@ -64,6 +66,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write 'src/**/*.{js,ts,tsx,md,graphql}'",
+    "generate-fragments": "node -r dotenv/config -r ts-node/register ./src/schemaQuery.ts",
     "apollo": "apollo service:push && rm -rf src/generated && apollo codegen:generate --excludes=node_modules/* --target typescript --tagName gql --outputFlat src/generated"
   },
   "eslintConfig": {

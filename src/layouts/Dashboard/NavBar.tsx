@@ -15,6 +15,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 
 import "react-perfect-scrollbar/dist/css/styles.css"
 import navConfig from "./navConfig"
+import Search from "./Search"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -95,7 +96,7 @@ function reduceChildRoutes({ acc, pathname, item, depth = 0 }) {
   return acc
 }
 
-export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: any) => {
+export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, openSearch, ...rest }: any) => {
   const classes = useStyles()
   const location = useLocation()
   const session = useSelector(state => state.session)
@@ -138,6 +139,9 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, ...rest }: an
       </nav>
 
       <div className={classes.profile}>
+        <Box>
+          <Search />
+        </Box>
         <Divider className={classes.divider} />
         <Box m={2}>
           <UserInfo variant="h6">{`${user?.firstName} ${user?.lastName}`}</UserInfo>

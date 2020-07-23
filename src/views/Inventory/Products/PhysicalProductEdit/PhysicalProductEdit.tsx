@@ -104,7 +104,7 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
         <OffloadPhysicalProductModal
           open={openOffloadPhysicalProductModal}
           onClose={onCloseOffloadPhysicalProductModal}
-          physicalProduct={physicalProduct}
+          physicalProduct={physicalProduct as any}
         />
       )}
     </Box>
