@@ -35,6 +35,11 @@ export interface PhysicalProductEditQuery_physicalProductStatuses {
   enumValues: PhysicalProductEditQuery_physicalProductStatuses_enumValues[] | null
 }
 
+export interface PhysicalProductEditQuery_physicalProduct_warehouseLocation {
+  __typename: "WarehouseLocation"
+  id: string
+}
+
 export interface PhysicalProductEditQuery_physicalProduct_productVariant_product {
   __typename: "Product"
   id: string
@@ -62,6 +67,7 @@ export interface PhysicalProductEditQuery_physicalProduct {
   unitCost: number | null
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
+  warehouseLocation: PhysicalProductEditQuery_physicalProduct_warehouseLocation | null
   productVariant: PhysicalProductEditQuery_physicalProduct_productVariant
 }
 

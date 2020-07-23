@@ -9,6 +9,11 @@ import { InventoryStatus, PhysicalProductStatus, PhysicalProductOffloadMethod, P
 // GraphQL fragment: UpdatePhysicalProduct
 // ====================================================
 
+export interface UpdatePhysicalProduct_warehouseLocation {
+  __typename: "WarehouseLocation"
+  id: string
+}
+
 export interface UpdatePhysicalProduct_productVariant_product {
   __typename: "Product"
   id: string
@@ -36,5 +41,6 @@ export interface UpdatePhysicalProduct {
   unitCost: number | null
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
+  warehouseLocation: UpdatePhysicalProduct_warehouseLocation | null
   productVariant: UpdatePhysicalProduct_productVariant
 }

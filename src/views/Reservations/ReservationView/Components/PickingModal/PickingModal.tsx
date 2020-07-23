@@ -35,7 +35,9 @@ type ProductStates = { [key: string]: ProductState }
 
 export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open, onSave, onClose, reservation }) => {
   const barcodeMaps = {}
-  const availableProducts = reservation.products
+  const availableProducts = reservation?.products.filter(
+    product => product?.location?.slug === process.env.REACT_APP_MONSOON_ENDPOINT
+  )
   availableProducts.forEach(product => {
     barcodeMaps[product.barcode] = {
       productUID: product.seasonsUID,
@@ -46,7 +48,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
   const [productStates, setProductStates] = useState<ProductStates>({
     ...barcodeMaps,
   })
-  console.log(productStates)
+  console.log("availableProducts", availableProducts)
 
   const { shippingLabel } = reservation?.sentPackage!
 

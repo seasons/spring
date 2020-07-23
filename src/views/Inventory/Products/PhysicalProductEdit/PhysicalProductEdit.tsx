@@ -38,7 +38,7 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
     setOpenOffloadPhysicalProductModal(true)
   }
 
-  const { physicalProduct }: { physicalProduct: PhysicalProductEditQuery_physicalProduct } = data
+  const { physicalProduct }: { physicalProduct } = data
   const { dateOrdered, dateReceived, inventoryStatus, productStatus, seasonsUID, unitCost } = physicalProduct
   const initialValues = {
     [`${seasonsUID}_dateOrdered`]: getLocaleDateString(dateOrdered) || undefined,
