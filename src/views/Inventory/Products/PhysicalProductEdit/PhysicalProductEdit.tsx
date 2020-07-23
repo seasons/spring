@@ -1,4 +1,4 @@
-import { Box } from "@material-ui/core"
+import { Box, Typography, Divider } from "@material-ui/core"
 import { styled as muiStyled } from "@material-ui/core/styles"
 import React, { useState } from "react"
 import { Loading } from "@seasons/react-admin"
@@ -68,6 +68,7 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   }
 
   const physicalProductEditQueryData: PhysicalProductEditQuery = data
+  const { warehouseLocation } = data
 
   return (
     <Box mx={5} display="flex" flexDirection="column">
@@ -78,6 +79,34 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
           physicalProducts={[physicalProduct]}
         />
       </Wizard>
+      <Box display="flex" flexDirection="row">
+        <Box m={1} flexDirection="column">
+          <Typography variant="body1" color="textSecondary">
+            Type
+          </Typography>
+          <Typography variant="h3" color="textSecondary">
+            {warehouseLocation?.type || "-"}
+          </Typography>
+        </Box>
+        <Divider orientation="vertical" flexItem />
+        <Box m={1} flexDirection="column">
+          <Typography variant="body1" color="textSecondary">
+            Location
+          </Typography>
+          <Typography variant="h3" color="textSecondary">
+            {warehouseLocation?.locationCode || "-"}
+          </Typography>
+        </Box>
+        <Divider orientation="vertical" flexItem />
+        <Box m={1} flexDirection="column">
+          <Typography variant="body1" color="textSecondary">
+            Item
+          </Typography>
+          <Typography variant="h3" color="textSecondary">
+            {warehouseLocation?.itemCode || "-"}
+          </Typography>
+        </Box>
+      </Box>
       {physicalProduct.inventoryStatus !== "Offloaded" && (
         <>
           <Box

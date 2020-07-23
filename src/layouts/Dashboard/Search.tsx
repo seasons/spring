@@ -14,6 +14,7 @@ import {
   Typography,
   makeStyles,
   TextField,
+  Divider,
 } from "@material-ui/core"
 import styled from "styled-components"
 import { Search as SearchIcon, XCircle as XIcon } from "react-feather"
@@ -174,27 +175,29 @@ function Search() {
                       switch (result.kindOf) {
                         case "Product":
                           return (
-                            <Box display="flex" flexDirection="row">
-                              <Box width="50px" height="50px">
-                                <Image url={data.image} size="small" />
+                            <>
+                              <Box display="flex" flexDirection="row">
+                                <Box>
+                                  <Image url={data.image} size="medium" />
+                                </Box>
+                                <Box ml={1} mb={2} flex={1}>
+                                  <Link
+                                    variant="h4"
+                                    color="textPrimary"
+                                    component={RouterLink}
+                                    to={`/inventory/products/${data.id}`}
+                                  >
+                                    {data?.name}
+                                  </Link>
+                                  <Typography variant="body2" color="textPrimary">
+                                    {data?.brandName}
+                                  </Typography>
+                                </Box>
                               </Box>
-                              <Box ml={1} mb={2} flex={1}>
-                                <Link
-                                  variant="h4"
-                                  color="textPrimary"
-                                  component={RouterLink}
-                                  to={`/inventory/products/${result.id}`}
-                                >
-                                  {data?.name}
-                                </Link>
-                                <Typography variant="body2" color="textPrimary">
-                                  {data?.brandName}
-                                </Typography>
-                                <Typography variant="body2" color="textPrimary">
-                                  {data?.description}
-                                </Typography>
+                              <Box my={1}>
+                                <Divider />
                               </Box>
-                            </Box>
+                            </>
                           )
                         case "PhysicalProduct":
                           return (
@@ -203,7 +206,7 @@ function Search() {
                                 variant="h4"
                                 color="textPrimary"
                                 component={RouterLink}
-                                to={`/inventory/products/${result.id}`}
+                                to={`/inventory/product/variant/physicalProducts/${data.id}`}
                               >
                                 {data?.seasonsUID}
                               </Link>
@@ -213,6 +216,9 @@ function Search() {
                               <Typography variant="body2" color="textPrimary">
                                 {data?.productName}
                               </Typography>
+                              <Box my={1}>
+                                <Divider />
+                              </Box>
                             </Box>
                           )
 
