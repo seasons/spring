@@ -33,7 +33,7 @@ interface StowProductInfoProps {
 }
 
 export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, product, locations, onChange }) => {
-  const productBrandCode = product?.seasonsUID.slice(0, 4)
+  const productBrandCode = product?.seasonsUID?.split("-")?.[0]
   const [currentBarcode, setCurrentBarcode] = useState(barcode)
   const filteredLocations = locations?.filter(({ barcode }) => {
     if (barcode.startsWith("SR")) {
