@@ -46,7 +46,6 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
   const [productStates, setProductStates] = useState<ProductStates>({
     ...barcodeMaps,
   })
-  console.log("availableProducts", availableProducts)
 
   const { shippingLabel } = reservation?.sentPackage!
 
