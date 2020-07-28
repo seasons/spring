@@ -9,20 +9,16 @@ import { FormSelectChoice } from "utils/form"
 import { ProductUpsertQuery_brands } from "generated/ProductUpsertQuery"
 
 export interface GeneralSectionProps {
-  bottomSizeTypeChoices: any[]
   brands: ProductUpsertQuery_brands[]
   isEditing: boolean
-  productType: string
   sizes: FormSelectChoice[]
   availabilityStatuses: FormSelectChoice[]
   photographyStatuses: FormSelectChoice[]
 }
 
 export const GeneralSection: React.FC<GeneralSectionProps> = ({
-  bottomSizeTypeChoices,
   brands,
   isEditing,
-  productType,
   sizes,
   availabilityStatuses,
   photographyStatuses,
@@ -71,14 +67,6 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <SelectField name="category" groupedChoices={groupedCategoryChoices} requiredString />
             <Spacer mt={3} />
           </Grid>
-          {productType === "Bottom" && (
-            <Grid item xs={12}>
-              <Text variant="h6">Size Type</Text>
-              <Spacer mt={1} />
-              <SelectField multiple name="bottomSizeType" choices={bottomSizeTypeChoices} requiredStringArray />
-              <Spacer mt={3} />
-            </Grid>
-          )}
           <Grid item xs={12}>
             <Text variant="h6">Available sizes</Text>
             <Spacer mt={1} />
