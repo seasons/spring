@@ -10,6 +10,7 @@ import {
   MemberView,
   OverviewView,
   PhysicalProductEdit,
+  PhysicalProductList,
   ProductCreate,
   ProductEdit,
   ProductVariantCreate,

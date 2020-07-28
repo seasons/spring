@@ -81,7 +81,6 @@ function Search() {
   const [isLoading, setLoading] = useState(false)
   const [search, { loading, data }] = useLazyQuery(SEARCH)
 
-  console.log("Data: ", data)
   const handleOpen = () => {
     setOpen(true)
   }
