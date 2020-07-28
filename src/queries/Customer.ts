@@ -54,6 +54,14 @@ const CustomerDetails = gql`
         }
       }
     }
+    membership {
+      id
+      pauseRequests(orderBy: createdAt_DESC) {
+        id
+        resumeDate
+        pauseDate
+      }
+    }
     invoices {
       id
       subscriptionId
