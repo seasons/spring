@@ -1,7 +1,7 @@
 import React from "react"
 
 import { Grid } from "@material-ui/core"
-
+import categoriesJSON from "data/categories.json"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
@@ -32,6 +32,15 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
     value: brand.id,
   }))
 
+  const { categories } = categoriesJSON
+  const groupedCategoryChoices = Object.keys(categories).map(categoryName => ({
+    name: categoryName,
+    children: categories[categoryName].map(child => ({
+      display: child,
+      value: child,
+    })),
+  }))
+
   return (
     <ExpandableSection
       title="General"
@@ -54,6 +63,12 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <Text variant="h6">Description *</Text>
             <Spacer mt={1} />
             <TextField multiline name="description" placeholder="Enter a description" requiredString />
+            <Spacer mt={3} />
+          </Grid>
+          <Grid item xs={12}>
+            <Text variant="h6">Category *</Text>
+            <Spacer mt={1} />
+            <SelectField name="category" groupedChoices={groupedCategoryChoices} requiredString />
             <Spacer mt={3} />
           </Grid>
           {productType === "Bottom" && (
