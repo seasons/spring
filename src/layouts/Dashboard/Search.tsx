@@ -21,7 +21,7 @@ import { Search as SearchIcon, XCircle as XIcon } from "react-feather"
 import { useLazyQuery } from "react-apollo"
 import gql from "graphql-tag"
 import { colors } from "theme/colors"
-import { Image } from "components"
+import { SearchResultCard } from "./SearchResultCard"
 
 const useStyles = makeStyles(() => ({
   drawer: {
@@ -110,14 +110,9 @@ function Search() {
 
   return (
     <>
-      <Tooltip title="Search">
-        <Button color="primary" onClick={handleOpen}>
-          <SvgIcon fontSize="small">
-            <SearchIcon />
-          </SvgIcon>
-          Search
-        </Button>
-      </Tooltip>
+      <Button color="primary" onClick={handleOpen} startIcon={<SearchIcon />}>
+        Search
+      </Button>
       <Drawer
         anchor="right"
         classes={{ paper: classes.drawer }}
@@ -138,95 +133,30 @@ function Search() {
                 </SvgIcon>
               </IconButton>
             </Box>
-            <Box mt={2}>
-              <TextField
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon fontSize="small" color="action">
-                        <SearchIcon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  ),
-                }}
-                onChange={event => setValue(event.target.value)}
-                placeholder="Search people &amp; places"
-                value={value}
-                variant="outlined"
-              />
+            <Box mt={2} display="flex" flexDirection="row">
+              <Box flex={1}>
+                <TextField
+                  fullWidth
+                  onChange={event => setValue(event.target.value)}
+                  placeholder="Search products, brands &amp; users"
+                  value={value}
+                  variant="outlined"
+                />
+              </Box>
+              <Box display="flex" justifyContent="flex-end">
+                <MuiButton color="primary" size="small" onClick={handleSearch}>
+                  Search
+                </MuiButton>
+              </Box>
             </Box>
-            <Box mt={2} display="flex" justifyContent="flex-end">
-              <Button color="secondary" variant="contained" onClick={handleSearch}>
-                Search
-              </Button>
-            </Box>
+
             <Box mt={4}>
               {isLoading ? (
                 <Box display="flex" justifyContent="center">
                   <CircularProgress />
                 </Box>
               ) : (
-                <>
-                  {results &&
-                    (results || []).map((result: any) => {
-                      const { data } = result
-
-                      switch (result.kindOf) {
-                        case "Product":
-                          return (
-                            <>
-                              <Box display="flex" flexDirection="row">
-                                <Box>
-                                  <Image url={data.image} size="medium" />
-                                </Box>
-                                <Box ml={1} mb={2} flex={1}>
-                                  <Link
-                                    variant="h4"
-                                    color="textPrimary"
-                                    component={RouterLink}
-                                    to={`/inventory/products/${data.id}`}
-                                  >
-                                    {data?.name}
-                                  </Link>
-                                  <Typography variant="body2" color="textPrimary">
-                                    {data?.brandName}
-                                  </Typography>
-                                </Box>
-                              </Box>
-                              <Box my={1}>
-                                <Divider />
-                              </Box>
-                            </>
-                          )
-                        case "PhysicalProduct":
-                          return (
-                            <Box>
-                              <Link
-                                variant="h4"
-                                color="textPrimary"
-                                component={RouterLink}
-                                to={`/inventory/product/variant/physicalProducts/${data.id}`}
-                              >
-                                {data?.seasonsUID}
-                              </Link>
-                              <Typography variant="body2" color="textPrimary">
-                                {data?.barcode}
-                              </Typography>
-                              <Typography variant="body2" color="textPrimary">
-                                {data?.productName}
-                              </Typography>
-                              <Box my={1}>
-                                <Divider />
-                              </Box>
-                            </Box>
-                          )
-
-                        default:
-                          return ""
-                      }
-                    })}
-                </>
+                <>{results && (results || []).map((result: any) => <SearchResultCard result={result} />)}</>
               )}
             </Box>
           </Box>
