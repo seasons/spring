@@ -3,7 +3,7 @@ import { useQuery } from "react-apollo"
 import { getFormSelectChoices } from "utils/form"
 import { useLocation } from "react-router-dom"
 import { Loading } from "@seasons/react-admin"
-import { useForm, useFormState } from "react-final-form"
+import { useForm } from "react-final-form"
 
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 

@@ -12,9 +12,7 @@ import { UPSERT_PRODUCT } from "../mutations"
 import { getProductUpsertData } from "../utils"
 import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
 
-export interface ProductCreateProps {}
-
-export const ProductCreate = props => {
+export const ProductCreate: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
@@ -46,7 +44,6 @@ export const ProductCreate = props => {
   if (loading || error || !data) {
     return <Loading />
   }
-  console.log("DATA:", data)
 
   const onCloseConfirmationDialog = async (agreed: boolean) => {
     // Make sure user has confirmed submission
@@ -70,6 +67,8 @@ export const ProductCreate = props => {
     setIsSubmitting(true)
     // Extract appropriate values from the WizardForm
     const productUpsertData = getProductUpsertData(values)
+    console.log("values", values)
+    console.log("productUpsertData", productUpsertData)
     await upsertProduct({
       variables: {
         input: productUpsertData,
