@@ -33,7 +33,7 @@ export interface OverviewProps {
 export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackbar }) => {
   const location = useLocation()
   const redirect = useRedirect()
-  const [productType, setProductType] = useState("Top")
+  const [productType, setProductType] = useState(product?.type || "Top")
   const [isLongTermStorageDialogOpen, setIsLongTermStorageDialogOpen] = useState(false)
   const [updateProduct] = useMutation(UPDATE_PRODUCT, {
     refetchQueries: [
