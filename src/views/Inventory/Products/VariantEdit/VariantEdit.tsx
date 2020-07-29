@@ -10,9 +10,7 @@ import { VARIANT_EDIT_QUERY } from "../queries"
 import { UPDATE_VARIANT } from "../mutations"
 import { extractVariantSizeFields } from "../utils"
 
-export interface VariantEditProps {}
-
-export const VariantEdit: React.FC<VariantEditProps> = props => {
+export const VariantEdit: React.FC = () => {
   const history = useHistory()
   const { variantID } = useParams()
   const { data, loading, error } = useQuery(VARIANT_EDIT_QUERY, {

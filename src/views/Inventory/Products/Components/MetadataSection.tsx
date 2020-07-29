@@ -4,7 +4,6 @@ import { Box, Grid, InputAdornment } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import colorsJSON from "data/colors.json"
-import categoriesJSON from "data/categories.json"
 import { ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
@@ -33,14 +32,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
   }))
   const typeChoices = getFormSelectChoices(types)
   const architectureChoices = getFormSelectChoices(architectures)
-  const { categories } = categoriesJSON
-  const groupedCategoryChoices = Object.keys(categories).map(categoryName => ({
-    name: categoryName,
-    children: categories[categoryName].map(child => ({
-      display: child,
-      value: child,
-    })),
-  }))
+
   const colorChoices = colorsJSON.colors.map(color => ({
     display: (
       <Box display="flex" alignItems="center">
@@ -96,11 +88,6 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <Text variant="h6">Architecture</Text>
             <Spacer mt={1} />
             <SelectField name="architecture" choices={architectureChoices} />
-          </Grid>
-          <Grid item xs={12}>
-            <Text variant="h6">Category *</Text>
-            <Spacer mt={1} />
-            <SelectField name="category" groupedChoices={groupedCategoryChoices} requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Color *</Text>
