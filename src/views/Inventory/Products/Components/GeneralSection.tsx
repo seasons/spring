@@ -1,7 +1,7 @@
 import React from "react"
 
 import { Grid } from "@material-ui/core"
-
+import categoriesJSON from "data/categories.json"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
@@ -9,20 +9,16 @@ import { FormSelectChoice } from "utils/form"
 import { ProductUpsertQuery_brands } from "generated/ProductUpsertQuery"
 
 export interface GeneralSectionProps {
-  bottomSizeTypeChoices: any[]
   brands: ProductUpsertQuery_brands[]
   isEditing: boolean
-  productType: string
   sizes: FormSelectChoice[]
   availabilityStatuses: FormSelectChoice[]
   photographyStatuses: FormSelectChoice[]
 }
 
 export const GeneralSection: React.FC<GeneralSectionProps> = ({
-  bottomSizeTypeChoices,
   brands,
   isEditing,
-  productType,
   sizes,
   availabilityStatuses,
   photographyStatuses,
@@ -30,6 +26,15 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   const brandChoices = brands.map(brand => ({
     display: brand.name,
     value: brand.id,
+  }))
+
+  const { categories } = categoriesJSON
+  const groupedCategoryChoices = Object.keys(categories).map(categoryName => ({
+    name: categoryName,
+    children: categories[categoryName].map(child => ({
+      display: child,
+      value: child,
+    })),
   }))
 
   return (
@@ -56,14 +61,12 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <TextField multiline name="description" placeholder="Enter a description" requiredString />
             <Spacer mt={3} />
           </Grid>
-          {productType === "Bottom" && (
-            <Grid item xs={12}>
-              <Text variant="h6">Size Type</Text>
-              <Spacer mt={1} />
-              <SelectField multiple name="bottomSizeType" choices={bottomSizeTypeChoices} requiredStringArray />
-              <Spacer mt={3} />
-            </Grid>
-          )}
+          <Grid item xs={12}>
+            <Text variant="h6">Category *</Text>
+            <Spacer mt={1} />
+            <SelectField name="category" groupedChoices={groupedCategoryChoices} requiredString />
+            <Spacer mt={3} />
+          </Grid>
           <Grid item xs={12}>
             <Text variant="h6">Available sizes</Text>
             <Spacer mt={1} />
