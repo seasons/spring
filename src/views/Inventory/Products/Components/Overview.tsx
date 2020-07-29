@@ -22,6 +22,7 @@ import { ProductVariantsSection } from "./ProductVariantsSection"
 import { UPDATE_PRODUCT } from "../mutations"
 import { DateTime } from "luxon"
 import { PRODUCT_EDIT_QUERY } from "../queries"
+import { uniq } from "lodash"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -76,9 +77,9 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
       sizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
-      const baseBottomSizes: string[] = data?.bottomSizes
-        ?.filter(size => size?.type === "WxL")
-        .map(size => size?.value || "")
+      const baseBottomSizes: string[] = uniq(
+        data?.bottomSizes?.filter(size => size?.type === "WxL").map(size => size?.value || "")
+      )
       baseBottomSizes.sort((a, b) => {
         const aSplit = a.split("x")
         const bSplit = b.split("x")
