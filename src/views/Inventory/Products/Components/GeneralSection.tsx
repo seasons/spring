@@ -80,7 +80,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <Spacer mt={3} />
           </Grid>
           <Grid item xs={12}>
-            <Text variant="h6">Photography status</Text>
+            <Text variant="h6">Photography status *</Text>
             <Spacer mt={1} />
             <SelectField name="photographyStatus" choices={photographyStatuses} requiredString />
           </Grid>

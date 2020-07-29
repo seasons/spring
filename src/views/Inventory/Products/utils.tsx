@@ -26,7 +26,7 @@ export const getModelSizeDisplay = (productType: string, modelSizeName: string, 
       modelSizeDisplay = modelSizeName
       break
     case "Bottom":
-      modelSizeDisplay = bottomSizeType === "Letter" ? modelSizeName : `${bottomSizeType} ${modelSizeName}`
+      modelSizeDisplay = bottomSizeType === "Letter" ? modelSizeName : `${bottomSizeType || "WxL"} ${modelSizeName}`
   }
   return modelSizeDisplay
 }
@@ -103,6 +103,7 @@ export const getProductUpsertData = (values: any) => {
     name,
     outerMaterials,
     productType,
+    photographyStatus,
     retailPrice,
     season,
     secondaryColor: secondaryColorCode,
@@ -209,7 +210,7 @@ export const getProductUpsertData = (values: any) => {
   // Piece all the data together
   const productsData = {
     architecture: architecture,
-    bottomSizeType,
+    bottomSizeType: bottomSizeType ?? "WxL",
     brandID,
     categoryName,
     colorCode,
@@ -223,6 +224,7 @@ export const getProductUpsertData = (values: any) => {
     modelSizeName,
     name,
     outerMaterials: outerMaterials || [],
+    photographyStatus,
     retailPrice: parseInt(retailPrice),
     season,
     secondaryColorCode,
@@ -273,7 +275,7 @@ export const getProductUpdateData = (values: any) => {
 
   const updateProductData = {
     architecture,
-    bottomSizeType,
+    bottomSizeType: bottomSizeType ?? "WxL",
     brand: { connect: { id: brandID } },
     category: { connect: { name: categoryName } },
     color: { connect: { colorCode } },
@@ -387,7 +389,7 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
       sku: values[`${index}_sku`],
       internalSizeName,
       manufacturerSizeNames,
-      bottomSizeType,
+      bottomSizeType: bottomSizeType ?? "WxL",
       physicalProducts,
       ...measurementData,
     }
