@@ -67,8 +67,6 @@ export const VariantEdit: React.FC = () => {
     }
   }
 
-  console.log("data", data)
-
   const onSubmit = async values => {
     if (!internalSize?.productType || !internalSize?.display) {
       return
@@ -79,7 +77,6 @@ export const VariantEdit: React.FC = () => {
       size: internalSize.display,
       values,
     })
-    console.log("variantSizeData", variantSizeData)
     const updateVariantData = {
       id,
       productType: internalSize.productType,

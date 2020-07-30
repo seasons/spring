@@ -41,8 +41,6 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
     })),
   }))
 
-  console.log("sizes", sizes)
-
   return (
     <ExpandableSection
       title="General"
