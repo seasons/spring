@@ -8,12 +8,6 @@ export const ProductUpsertFragment = gql`
       value
     }
 
-    bottomSizeTypes: __type(name: "BottomSizeType") {
-      enumValues {
-        name
-      }
-    }
-
     brands(orderBy: name_ASC) {
       id
       brandCode

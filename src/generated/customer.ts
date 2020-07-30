@@ -47,6 +47,19 @@ export interface customer_user {
   pushNotification: customer_user_pushNotification | null
 }
 
+export interface customer_membership_pauseRequests {
+  __typename: "PauseRequest"
+  id: string
+  resumeDate: any | null
+  pauseDate: any | null
+}
+
+export interface customer_membership {
+  __typename: "CustomerMembership"
+  id: string
+  pauseRequests: customer_membership_pauseRequests[] | null
+}
+
 export interface customer_invoices_creditNotes {
   __typename: "CreditNote"
   id: string
@@ -156,6 +169,7 @@ export interface customer {
   plan: Plan | null
   status: CustomerStatus | null
   user: customer_user
+  membership: customer_membership | null
   invoices: (customer_invoices | null)[] | null
   reservations: customer_reservations[] | null
   billingInfo: customer_billingInfo | null

@@ -15,16 +15,6 @@ export interface ProductUpsertQuery_bottomSizes {
   value: string | null
 }
 
-export interface ProductUpsertQuery_bottomSizeTypes_enumValues {
-  __typename: "__EnumValue"
-  name: string
-}
-
-export interface ProductUpsertQuery_bottomSizeTypes {
-  __typename: "__Type"
-  enumValues: ProductUpsertQuery_bottomSizeTypes_enumValues[] | null
-}
-
 export interface ProductUpsertQuery_brands {
   __typename: "Brand"
   id: string
@@ -93,7 +83,6 @@ export interface ProductUpsertQuery_tags {
 export interface ProductUpsertQuery {
   __typename: "Query"
   bottomSizes: (ProductUpsertQuery_bottomSizes | null)[]
-  bottomSizeTypes: ProductUpsertQuery_bottomSizeTypes | null
   brands: (ProductUpsertQuery_brands | null)[]
   inventoryStatuses: ProductUpsertQuery_inventoryStatuses | null
   physicalProductStatuses: ProductUpsertQuery_physicalProductStatuses | null

@@ -55,7 +55,7 @@ export const extractVariantSizeFields = ({
   size: string
   values: any
 }) => {
-  const sizeData = {}
+  const sizeData = {} as any
   // We don't include the total count when editing a variant
   const genericMeasurementKeys = isEdit ? ["weight"] : ["weight", "totalcount"]
   let measurementKeys
@@ -71,6 +71,32 @@ export const extractVariantSizeFields = ({
     const key = measurementKey === "totalcount" ? "total" : measurementKey
     sizeData[key] = parseFloat(values[`${size}_${measurementKey}`]) || undefined
   })
+
+  const manufacturerSizeNames: any[] = []
+
+  Object.keys(values).forEach(key => {
+    if (key.includes("manufacturerSize")) {
+      manufacturerSizeNames.push(values[key])
+    }
+  })
+
+  if (manufacturerSizeNames.length) {
+    sizeData.manufacturerSizeNames = manufacturerSizeNames
+  }
+
+  // const manufacturerSizes = []
+  // const manufacturerSizeNames =
+  //   manufacturerSizes &&
+  //   manufacturerSizes.map(size => {
+  //     // const sizeType = size?.key
+  //     // Manufacturer size names should be in the form [size type] [size name].
+  //     // For all bottom sizes, [size.value] includes in the bottom size type
+  //     // but for letter sizes, [size.value] is just the letter itself, i.e. S, M, L, etc.
+  //     // so we have to prepend "Letter" if it is a Letter size type.
+  //     // return sizeType === "Letter" ? `Letter ${size.value}` : size.value
+  //     return null
+  //   })
+
   return sizeData
 }
 
@@ -341,19 +367,6 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
         break
     }
 
-    // Get manufacturer sizes
-    const manufacturerSizes = values[`${index}_manufacturersizes`]
-    const manufacturerSizeNames =
-      manufacturerSizes &&
-      manufacturerSizes.map(size => {
-        const sizeType = size.key
-        // Manufacturer size names should be in the form [size type] [size name].
-        // For all bottom sizes, [size.value] includes in the bottom size type
-        // but for letter sizes, [size.value] is just the letter itself, i.e. S, M, L, etc.
-        // so we have to prepend "Letter" if it is a Letter size type.
-        return sizeType === "Letter" ? `Letter ${size.value}` : size.value
-      })
-
     // Get measurement values
     const measurementData = {}
     variantMeasurementFieldKeys.forEach(key => {
@@ -388,7 +401,7 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     return {
       sku: values[`${index}_sku`],
       internalSizeName,
-      manufacturerSizeNames,
+      // manufacturerSizeNames,
       bottomSizeType: bottomSizeType ?? "WxL",
       physicalProducts,
       ...measurementData,

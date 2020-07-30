@@ -16,13 +16,13 @@ export const VariantEdit: React.FC = () => {
   const { data, loading, error } = useQuery(VARIANT_EDIT_QUERY, {
     variables: { where: { id: variantID } },
   })
-  const [updateVariant] = useMutation(UPDATE_VARIANT)
+  const [updateProductVariant] = useMutation(UPDATE_VARIANT)
 
   if (loading || error || !data) {
     return <Loading />
   }
 
-  let initialValues = {}
+  let initialValues = {} as any
   const { productVariant } = data
   const { id, internalSize, product, total, weight } = productVariant
   if (internalSize) {
@@ -39,7 +39,6 @@ export const VariantEdit: React.FC = () => {
           [`${size}_totalcount`]: total,
           [`${size}_weight`]: parseFloat(weight) || undefined,
         }
-        console.log("TOP", top)
         break
       case "Bottom":
         const { bottom } = internalSize
@@ -51,11 +50,24 @@ export const VariantEdit: React.FC = () => {
           [`${size}_totalcount`]: total,
           [`${size}_weight`]: parseFloat(weight) || undefined,
         }
+        if (!!productVariant.manufacturerSizes.length) {
+          const types: any[] = []
+          productVariant.manufacturerSizes.forEach(size => {
+            const sizeType = size.display.split(" ")
+            !!sizeType && types.push(sizeType?.[0])
+            initialValues[`${sizeType?.[0]}_manufacturerSize`] = size.display
+          })
+          if (types?.length) {
+            initialValues.bottomSizeTypes = types
+          }
+        }
         break
       default:
         break
     }
   }
+
+  console.log("data", data)
 
   const onSubmit = async values => {
     if (!internalSize?.productType || !internalSize?.display) {
@@ -67,12 +79,13 @@ export const VariantEdit: React.FC = () => {
       size: internalSize.display,
       values,
     })
+    console.log("variantSizeData", variantSizeData)
     const updateVariantData = {
       id,
       productType: internalSize.productType,
       ...variantSizeData,
     }
-    const result = await updateVariant({
+    const result = await updateProductVariant({
       variables: { input: updateVariantData },
     })
     if (result?.data) {
@@ -83,7 +96,7 @@ export const VariantEdit: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
-        <Variants variants={[productVariant]} />
+        <Variants variants={[productVariant]} initialBottomSizeTypes={initialValues.bottomSizeTypes} />
       </Wizard>
       <Spacer mt={9} />
     </Container>

@@ -9,6 +9,13 @@ import { ProductType, LetterSize, BottomSizeType, PhysicalProductStatus, Invento
 // GraphQL fragment: UpdateVariant
 // ====================================================
 
+export interface UpdateVariant_manufacturerSizes {
+  __typename: "Size"
+  id: string
+  display: string
+  productType: ProductType | null
+}
+
 export interface UpdateVariant_product {
   __typename: "Product"
   id: string
@@ -60,6 +67,7 @@ export interface UpdateVariant {
   sku: string | null
   total: number
   weight: number | null
+  manufacturerSizes: UpdateVariant_manufacturerSizes[] | null
   product: UpdateVariant_product
   internalSize: UpdateVariant_internalSize | null
   physicalProducts: UpdateVariant_physicalProducts[] | null

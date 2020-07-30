@@ -8,6 +8,7 @@ import {
   InventoryStatus,
   PhysicalProductStatus,
   PhysicalProductOffloadMethod,
+  WarehouseLocationType,
   ProductStatus,
 } from "./globalTypes"
 
@@ -33,6 +34,17 @@ export interface PhysicalProductEditQuery_physicalProductStatuses_enumValues {
 export interface PhysicalProductEditQuery_physicalProductStatuses {
   __typename: "__Type"
   enumValues: PhysicalProductEditQuery_physicalProductStatuses_enumValues[] | null
+}
+
+export interface PhysicalProductEditQuery_physicalProduct_warehouseLocation {
+  __typename: "WarehouseLocation"
+  id: string
+  barcode: string
+  type: WarehouseLocationType
+  itemCode: string
+  locationCode: string
+  createdAt: any
+  updatedAt: any
 }
 
 export interface PhysicalProductEditQuery_physicalProduct_productVariant_product {
@@ -62,6 +74,7 @@ export interface PhysicalProductEditQuery_physicalProduct {
   unitCost: number | null
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
+  warehouseLocation: PhysicalProductEditQuery_physicalProduct_warehouseLocation | null
   productVariant: PhysicalProductEditQuery_physicalProduct_productVariant
 }
 
