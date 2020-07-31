@@ -94,19 +94,21 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
     <Box>
       <ContainerGrid container spacing={2}>
         <Header title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} />
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <Text variant="h5">Manufacturer size types</Text>
-            <Spacer mt={1} />
-            <SelectField
-              onChange={e => setManufacturerSizes(e.target.value)}
-              multiple
-              name="bottomSizeTypes"
-              choices={bottomSizeTypeChoices}
-            />
-            <Spacer mt={2} />
+        {createData.productType === "Bottom" && (
+          <Grid container spacing={2}>
+            <Grid item xs={3}>
+              <Text variant="h5">Manufacturer size types</Text>
+              <Spacer mt={1} />
+              <SelectField
+                onChange={e => setManufacturerSizes(e.target.value)}
+                multiple
+                name="bottomSizeTypes"
+                choices={bottomSizeTypeChoices}
+              />
+              <Spacer mt={2} />
+            </Grid>
           </Grid>
-        </Grid>
+        )}
         {variantsData.map((variant, index) => (
           <VariantSizeSection
             isEditing={isEditing}
