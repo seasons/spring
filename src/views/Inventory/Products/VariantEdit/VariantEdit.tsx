@@ -55,7 +55,7 @@ export const VariantEdit: React.FC = () => {
           productVariant.manufacturerSizes.forEach(size => {
             const sizeType = size.display.split(" ")
             !!sizeType && types.push(sizeType?.[0])
-            initialValues[`${sizeType?.[0]}_manufacturerSize`] = size.display
+            initialValues[`${internalSize.display}_manufacturerSize_${sizeType?.[0]}`] = size.display
           })
           if (types?.length) {
             initialValues.bottomSizeTypes = types

@@ -94,12 +94,15 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
             })}
             <Spacer grid mt={2} />
             {!!manufacturerSizes?.length &&
-              manufacturerSizes.map((size, index) => {
+              manufacturerSizes.map((sizeType, index) => {
                 return (
                   <Grid item key={index} xs={3}>
-                    <Text variant="h5">{`Manufacturer size ${size}`}</Text>
+                    <Text variant="h5">{`Manufacturer size ${sizeType}`}</Text>
                     <Spacer mt={1} />
-                    <SelectField name={`${size}_manufacturerSize`} choices={getManufacturerSizes(size)} />
+                    <SelectField
+                      name={`${size}_manufacturerSize_${sizeType}`}
+                      choices={getManufacturerSizes(sizeType)}
+                    />
                     <Spacer grid mt={2} />
                   </Grid>
                 )

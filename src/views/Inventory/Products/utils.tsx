@@ -44,6 +44,22 @@ export const getTypeSpecificVariantFields = productType => {
   return fields
 }
 
+const getManufacturerSizeNames = (values, size) => {
+  const manufacturerSizeNames: any[] = []
+
+  Object.keys(values).forEach(key => {
+    // We use a single input for each manufacturer size type
+    // so here we consolidate them all into one array
+    if (key.includes("_manufacturerSize_")) {
+      const keySize = key.split("_")[0]
+      if (keySize === size) {
+        manufacturerSizeNames.push(values[key])
+      }
+    }
+  })
+  return manufacturerSizeNames
+}
+
 export const extractVariantSizeFields = ({
   isEdit,
   productType,
@@ -72,30 +88,11 @@ export const extractVariantSizeFields = ({
     sizeData[key] = parseFloat(values[`${size}_${measurementKey}`]) || undefined
   })
 
-  const manufacturerSizeNames: any[] = []
-
-  Object.keys(values).forEach(key => {
-    if (key.includes("manufacturerSize")) {
-      manufacturerSizeNames.push(values[key])
-    }
-  })
+  const manufacturerSizeNames = getManufacturerSizeNames(values, size)
 
   if (manufacturerSizeNames.length) {
     sizeData.manufacturerSizeNames = manufacturerSizeNames
   }
-
-  // const manufacturerSizes = []
-  // const manufacturerSizeNames =
-  //   manufacturerSizes &&
-  //   manufacturerSizes.map(size => {
-  //     // const sizeType = size?.key
-  //     // Manufacturer size names should be in the form [size type] [size name].
-  //     // For all bottom sizes, [size.value] includes in the bottom size type
-  //     // but for letter sizes, [size.value] is just the letter itself, i.e. S, M, L, etc.
-  //     // so we have to prepend "Letter" if it is a Letter size type.
-  //     // return sizeType === "Letter" ? `Letter ${size.value}` : size.value
-  //     return null
-  //   })
 
   return sizeData
 }
