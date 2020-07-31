@@ -44,6 +44,10 @@ export default [
             title: "Categories",
             href: "/inventory/categories",
           },
+          {
+            title: "Physical Products",
+            href: "/inventory/physical-products",
+          },
         ],
       },
     ],
