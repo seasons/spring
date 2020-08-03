@@ -43,6 +43,7 @@
     "react-dropzone": "^10.2.2",
     "react-feather": "^2.0.8",
     "react-final-form": "^6.4.0",
+    "react-iframe": "^1.8.0",
     "react-images": "^1.1.7",
     "react-input-mask": "2.0.4",
     "react-perfect-scrollbar": "^1.5.8",

@@ -1,23 +1,46 @@
 import { GET_ONE, GET_LIST } from "@seasons/react-admin"
 import gql from "graphql-tag"
 
-const PhysicalProductFragment = gql`
+export const PhysicalProductFragment = gql`
   fragment PhysicalProduct on PhysicalProduct {
     id
     seasonsUID
+    inventoryStatus
+    sequenceNumber
+    unitCost
+    dateOrdered
+    dateReceived
+    productStatus
+    createdAt
     warehouseLocation {
-      id
       barcode
       locationCode
-      itemCode
       type
     }
     productVariant {
+      sku
+      internalSize {
+        display
+      }
+      retailPrice
+
       product {
         name
-        images {
-          url
+        publishedAt
+        category {
+          name
         }
+        createdAt
+        brand {
+          name
+        }
+        architecture
+        materialCategory {
+          slug
+        }
+        season
+        photographyStatus
+        status
       }
     }
   }

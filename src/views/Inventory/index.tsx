@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/styles"
 import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
 import { ProductList } from "./Products"
+import { PhysicalProductList } from "./PhysicalProducts"
 import { SizeList } from "./Sizes"
 import { TagList } from "./Tags"
 
@@ -56,6 +57,9 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
         {currentTab === "categories" && <CategoryList {...props} basePath="/inventory/products" resource="Category" />}
         {currentTab === "sizes" && <SizeList {...props} basePath="/inventory/sizes" resource="Size" />}
         {currentTab === "tags" && <TagList {...props} basePath="/inventory/tags" resource="Tag" />}
+        {currentTab == "physical-products" && (
+          <PhysicalProductList {...props} basePath="/inventory/physical-products" resource="PhysicalProduct" />
+        )}
       </div>
     </Container>
   )

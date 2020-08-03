@@ -16,6 +16,16 @@ export default [
         title: "Analytics",
         href: "/analytics",
         icon: BarChartIcon,
+        items: [
+          {
+            title: "Inventory Health",
+            href: "/analytics/inventory-health",
+          },
+          {
+            title: "Inventory Health Detail",
+            href: "/analytics/inventory-health/detail",
+          },
+        ],
       },
       {
         title: "Members",
@@ -43,6 +53,10 @@ export default [
           {
             title: "Categories",
             href: "/inventory/categories",
+          },
+          {
+            title: "Physical Products",
+            href: "/inventory/physical-products",
           },
         ],
       },

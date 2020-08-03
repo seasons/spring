@@ -10,6 +10,7 @@ import {
   MemberView,
   OverviewView,
   PhysicalProductEdit,
+  PhysicalProductList,
   ProductCreate,
   ProductEdit,
   ProductVariantCreate,
@@ -18,6 +19,8 @@ import {
   VariantEdit,
 } from "./views"
 import { NotificationsList } from "views/Notifications/NotificationsList"
+import { AnalyticsReport } from "components/AnalyticsReport"
+import { ViewType } from "generated/globalTypes"
 
 export default [
   {
@@ -43,6 +46,25 @@ export default [
         path: "/analytics",
         exact: true,
         component: AnalyticsView,
+      },
+      {
+        path: "/analytics/inventory-health",
+        exact: true,
+        component: () => (
+          <AnalyticsReport title="Inventory Health" url={"/inventory-health"} type={ViewType.Dashboard} index={4} />
+        ),
+      },
+      {
+        path: "/analytics/inventory-health/detail",
+        exact: true,
+        component: () => (
+          <AnalyticsReport
+            title="Inventory Health Detail"
+            url={"/inventory-health/detail"}
+            type={ViewType.Dashboard}
+            index={5}
+          />
+        ),
       },
       {
         path: "/inventory/:tab",

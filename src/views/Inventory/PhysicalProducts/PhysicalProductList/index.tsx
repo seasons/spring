@@ -1,0 +1,1 @@
+export { PhysicalProductList } from "./PhysicalProductList"
