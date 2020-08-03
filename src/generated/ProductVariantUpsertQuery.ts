@@ -165,7 +165,7 @@ export interface ProductVariantUpsertQuery_product {
   retailPrice: number | null
   createdAt: any
   updatedAt: any
-  publishedAt: any
+  publishedAt: any | null
   brand: ProductVariantUpsertQuery_product_brand
   category: ProductVariantUpsertQuery_product_category
   variants: ProductVariantUpsertQuery_product_variants[] | null
