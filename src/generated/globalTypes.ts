@@ -283,6 +283,11 @@ export enum UserVerificationStatus {
   Pending = "Pending",
 }
 
+export enum ViewType {
+  Dashboard = "Dashboard",
+  Look = "Look",
+}
+
 export enum WarehouseLocationType {
   Bin = "Bin",
   Conveyor = "Conveyor",
@@ -1185,6 +1190,11 @@ export interface ColorWhereUniqueInput {
   id?: string | null
   slug?: string | null
   colorCode?: string | null
+}
+
+export interface CreateEmbedURLInput {
+  type?: ViewType | null
+  index?: number | null
 }
 
 export interface CustomProductUpdateInput {
@@ -5888,6 +5898,7 @@ export interface UpsertProductInput {
   outerMaterials: string[]
   retailPrice: number
   season?: string | null
+  photographyStatus?: PhotographyStatus | null
   secondaryColorCode?: string | null
   status: ProductStatus
   tags: string[]

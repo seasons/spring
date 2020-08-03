@@ -220,7 +220,7 @@ export interface ProductEditQuery_product {
   retailPrice: number | null
   createdAt: any
   updatedAt: any
-  publishedAt: any
+  publishedAt: any | null
   brand: ProductEditQuery_product_brand
   category: ProductEditQuery_product_category
   variants: ProductEditQuery_product_variants[] | null

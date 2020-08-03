@@ -92,7 +92,7 @@ export interface product {
   retailPrice: number | null
   createdAt: any
   updatedAt: any
-  publishedAt: any
+  publishedAt: any | null
   brand: product_brand
   category: product_category
   variants: product_variants[] | null

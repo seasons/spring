@@ -16,6 +16,16 @@ export default [
         title: "Analytics",
         href: "/analytics",
         icon: BarChartIcon,
+        items: [
+          {
+            title: "Inventory Health",
+            href: "/analytics/inventory-health",
+          },
+          {
+            title: "Inventory Health Detail",
+            href: "/analytics/inventory-health/detail",
+          },
+        ],
       },
       {
         title: "Members",
