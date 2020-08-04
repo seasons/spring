@@ -26,16 +26,6 @@ export interface ProductEditQuery_bottomSizes {
   value: string | null
 }
 
-export interface ProductEditQuery_bottomSizeTypes_enumValues {
-  __typename: "__EnumValue"
-  name: string
-}
-
-export interface ProductEditQuery_bottomSizeTypes {
-  __typename: "__Type"
-  enumValues: ProductEditQuery_bottomSizeTypes_enumValues[] | null
-}
-
 export interface ProductEditQuery_brands {
   __typename: "Brand"
   id: string
@@ -242,7 +232,6 @@ export interface ProductEditQuery_product {
 export interface ProductEditQuery {
   __typename: "Query"
   bottomSizes: (ProductEditQuery_bottomSizes | null)[]
-  bottomSizeTypes: ProductEditQuery_bottomSizeTypes | null
   brands: (ProductEditQuery_brands | null)[]
   inventoryStatuses: ProductEditQuery_inventoryStatuses | null
   physicalProductStatuses: ProductEditQuery_physicalProductStatuses | null

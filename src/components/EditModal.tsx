@@ -89,7 +89,7 @@ export const EditModal: React.FunctionComponent<EditModalProps> = ({ title, open
                           <InputLabel id={key}>{capitalize(key)}</InputLabel>
                           <Select id={key} name={key} value={values[key].value} onChange={handleFieldChange}>
                             {values[key].options.map(option => (
-                              <MenuItem key={option} value={option}>
+                              <MenuItem key={option} value={option} style={{ minHeight: "33px" }}>
                                 {option}
                               </MenuItem>
                             ))}

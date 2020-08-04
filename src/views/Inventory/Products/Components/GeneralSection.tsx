@@ -5,7 +5,7 @@ import categoriesJSON from "data/categories.json"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
-import { FormSelectChoice } from "utils/form"
+import { FormSelectChoice, getFormSelectChoices } from "utils/form"
 import { ProductUpsertQuery_brands } from "generated/ProductUpsertQuery"
 
 export interface GeneralSectionProps {
@@ -14,6 +14,8 @@ export interface GeneralSectionProps {
   sizes: FormSelectChoice[]
   availabilityStatuses: FormSelectChoice[]
   photographyStatuses: FormSelectChoice[]
+  types: string[]
+  setProductType: (string) => void
 }
 
 export const GeneralSection: React.FC<GeneralSectionProps> = ({
@@ -22,12 +24,14 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   sizes,
   availabilityStatuses,
   photographyStatuses,
+  types,
+  setProductType,
 }) => {
   const brandChoices = brands.map(brand => ({
     display: brand.name,
     value: brand.id,
   }))
-
+  const typeChoices = getFormSelectChoices(types)
   const { categories } = categoriesJSON
   const groupedCategoryChoices = Object.keys(categories).map(categoryName => ({
     name: categoryName,
@@ -67,11 +71,24 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <SelectField name="category" groupedChoices={groupedCategoryChoices} requiredString />
             <Spacer mt={3} />
           </Grid>
-          <Grid item xs={12}>
-            <Text variant="h6">Available sizes</Text>
-            <Spacer mt={1} />
-            <SelectField disabled={isEditing} multiple name="sizes" choices={sizes} />
-            <Spacer mt={3} />
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Text variant="h6">Type</Text>
+              <Spacer mt={1} />
+              <SelectField
+                disabled={isEditing}
+                name="productType"
+                choices={typeChoices}
+                onChange={event => setProductType(event.target.value)}
+                requiredString
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Available sizes</Text>
+              <Spacer mt={1} />
+              <SelectField disabled={isEditing} multiple name="sizes" choices={sizes} />
+              <Spacer mt={3} />
+            </Grid>
           </Grid>
           <Grid item xs={12}>
             <Text variant="h6">Available status</Text>

@@ -16,6 +16,13 @@ import {
 // GraphQL query operation: VariantEditQuery
 // ====================================================
 
+export interface VariantEditQuery_productVariant_manufacturerSizes {
+  __typename: "Size"
+  id: string
+  display: string
+  productType: ProductType | null
+}
+
 export interface VariantEditQuery_productVariant_product {
   __typename: "Product"
   id: string
@@ -67,6 +74,7 @@ export interface VariantEditQuery_productVariant {
   sku: string | null
   total: number
   weight: number | null
+  manufacturerSizes: VariantEditQuery_productVariant_manufacturerSizes[] | null
   product: VariantEditQuery_productVariant_product
   internalSize: VariantEditQuery_productVariant_internalSize | null
   physicalProducts: VariantEditQuery_productVariant_physicalProducts[] | null

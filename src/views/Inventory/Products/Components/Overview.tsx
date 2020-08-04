@@ -201,15 +201,14 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
             sizes={sizes}
             availabilityStatuses={availabilityStatuses}
             photographyStatuses={photographyStatuses}
+            types={productTypes}
+            setProductType={setProductType}
           />
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}
-            isEditing={isEditing}
             models={data.productModels as ProductUpsertQuery_productModels[]}
-            setProductType={setProductType}
             sizes={sizes}
-            types={productTypes}
           />
           <Spacer mt={6} />
           <TagsSection materials={materials} materialCategoryChoices={materialCategoryChoices} tags={tags} />

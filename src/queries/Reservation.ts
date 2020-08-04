@@ -76,6 +76,7 @@ export default {
       }
       lastLocation {
         id
+        slug
       }
       products {
         id
@@ -83,6 +84,10 @@ export default {
         inventoryStatus
         productStatus
         barcode
+        location {
+          id
+          slug
+        }
         warehouseLocation {
           id
           barcode

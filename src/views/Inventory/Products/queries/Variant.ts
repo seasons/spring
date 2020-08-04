@@ -6,6 +6,11 @@ export const UpdateVariantFragment = gql`
     sku
     total
     weight
+    manufacturerSizes {
+      id
+      display
+      productType
+    }
     product {
       id
       name
@@ -51,8 +56,17 @@ export const VARIANT_EDIT_QUERY = gql`
   ${UpdateVariantFragment}
 `
 
-export const GET_GENERATED_VARIANT_SKUS = gql`
+export const GET_VARIANT_SKUS_AND_SIZE_TYPES = gql`
   query GetGeneratedVariantSkus($input: ProductVariantSKUsInput!) {
+    bottomSizeTypes: __type(name: "BottomSizeType") {
+      enumValues {
+        name
+      }
+    }
+    bottomSizes {
+      type
+      value
+    }
     generatedVariantSKUs(input: $input)
   }
 `
