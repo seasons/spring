@@ -22,6 +22,7 @@ import { ProductVariantsSection } from "./ProductVariantsSection"
 import { UPDATE_PRODUCT } from "../mutations"
 import { DateTime } from "luxon"
 import { PRODUCT_EDIT_QUERY } from "../queries"
+import { uniq } from "lodash"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -32,7 +33,7 @@ export interface OverviewProps {
 export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackbar }) => {
   const location = useLocation()
   const redirect = useRedirect()
-  const [productType, setProductType] = useState("Top")
+  const [productType, setProductType] = useState(product?.type || "Top")
   const [isLongTermStorageDialogOpen, setIsLongTermStorageDialogOpen] = useState(false)
   const [updateProduct] = useMutation(UPDATE_PRODUCT, {
     refetchQueries: [
@@ -76,13 +77,16 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
       sizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
-      // Ensure the baseSizes are included and sorted correctly
-      const baseBottomSizes: string[] = Array.from(
-        new Set(data.bottomSizes.map(bottomSize => bottomSize?.value || ""))
-      ).filter(size => !baseSizes.includes(size))
+      const baseBottomSizes: string[] = uniq(
+        data?.bottomSizes?.filter(size => size?.type === "WxL").map(size => size?.value || "")
+      )
+      baseBottomSizes.sort((a, b) => {
+        const aSplit = a.split("x")
+        const bSplit = b.split("x")
+        return Number(aSplit?.[1]) - Number(bSplit?.[1])
+      })
       baseBottomSizes.sort()
-      const bottomSizes = [...baseSizes, ...baseBottomSizes]
-      sizes = getFormSelectChoices(bottomSizes)
+      sizes = getFormSelectChoices(baseBottomSizes)
       break
   }
 
@@ -90,7 +94,6 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
   const materialCategoryChoices = getFormSelectChoices(
     data.productMaterialCategories.map(materialCategory => materialCategory?.slug || "")
   )
-  const bottomSizeTypeChoices = getFormSelectChoices(getEnumValues(data.bottomSizeTypes))
   const productArchitectures = getEnumValues(data.productArchitectures)
   const productTypes = getEnumValues(data.productTypes)
   const tags = data.tags.map(tag => tag?.name || "").sort()
@@ -194,9 +197,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
         <Grid item xs={8}>
           <GeneralSection
             brands={data.brands.filter(Boolean) as ProductUpsertQuery_brands[]}
-            bottomSizeTypeChoices={bottomSizeTypeChoices}
             isEditing={isEditing}
-            productType={productType}
             sizes={sizes}
             availabilityStatuses={availabilityStatuses}
             photographyStatuses={photographyStatuses}

@@ -137,7 +137,7 @@ export interface ProductFragment {
   retailPrice: number | null
   createdAt: any
   updatedAt: any
-  publishedAt: any
+  publishedAt: any | null
   brand: ProductFragment_brand
   category: ProductFragment_category
   variants: ProductFragment_variants[] | null

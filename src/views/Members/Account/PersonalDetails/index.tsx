@@ -16,7 +16,6 @@ import { MEMBER_DETAIL_UPDATE } from "../../queries"
 import { AuthorizeMemberModal } from "../../AuthorizeMemberModal"
 import { Indicator } from "components/Indicator"
 import { AuthorizeButton } from "views/Members/AuthorizeButton"
-
 export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
@@ -123,6 +122,9 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
 
   const birthday = moment(member.detail.birthday).format("MM/DD/YYYY")
 
+  const resumeDate = member?.membership?.pauseRequests?.[0]?.resumeDate
+  const pauseDate = member?.membership?.pauseRequests?.[0]?.pauseDate
+
   const editEntity = {
     id: {
       value: member.id,
@@ -185,6 +187,21 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
+
+            {!!resumeDate && member.status === "Paused" && (
+              <TableRow>
+                <TableCell>Resume date</TableCell>
+                <TableCell>{moment(resumeDate).format("MM/DD/YYYY")}</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            )}
+            {!!pauseDate && member.status === "Paused" && (
+              <TableRow>
+                <TableCell>Pause date</TableCell>
+                <TableCell>{moment(pauseDate).format("MM/DD/YYYY")}</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            )}
             <TableRow>
               <TableCell>Membership</TableCell>
               <TableCell>{splitTitleCase(member.plan)}</TableCell>

@@ -3,7 +3,13 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { InventoryStatus, PhysicalProductStatus, PhysicalProductOffloadMethod, ProductStatus } from "./globalTypes"
+import {
+  InventoryStatus,
+  PhysicalProductStatus,
+  PhysicalProductOffloadMethod,
+  WarehouseLocationType,
+  ProductStatus,
+} from "./globalTypes"
 
 // ====================================================
 // GraphQL fragment: UpdatePhysicalProduct
@@ -12,6 +18,12 @@ import { InventoryStatus, PhysicalProductStatus, PhysicalProductOffloadMethod, P
 export interface UpdatePhysicalProduct_warehouseLocation {
   __typename: "WarehouseLocation"
   id: string
+  barcode: string
+  type: WarehouseLocationType
+  itemCode: string
+  locationCode: string
+  createdAt: any
+  updatedAt: any
 }
 
 export interface UpdatePhysicalProduct_productVariant_product {

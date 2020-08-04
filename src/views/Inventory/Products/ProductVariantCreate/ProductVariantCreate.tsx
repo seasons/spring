@@ -8,15 +8,15 @@ import { Snackbar, Spacer, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { PhysicalProducts } from "../Components"
 import { VariantsCreate } from "./Components"
+import { useRefresh } from "@seasons/react-admin"
 import { PRODUCT_VARIANT_UPSERT_QUERY } from "../queries"
 import { UPSERT_VARIANTS } from "../mutations"
 import { getProductVariantUpsertData } from "../utils"
 import { ProductVariantUpsertQuery } from "generated/ProductVariantUpsertQuery"
 
-export interface ProductVariantCreateProps {}
-
-export const ProductVariantCreate = props => {
+export const ProductVariantCreate: React.FC = () => {
   const history = useHistory()
+  const refresh = useRefresh()
   const { productID } = useParams()
   const [values, setValues] = useState({})
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
@@ -27,10 +27,10 @@ export const ProductVariantCreate = props => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [upsertVariants] = useMutation(UPSERT_VARIANTS, {
-    onCompleted: result => {
+    onCompleted: () => {
       setIsSubmitting(false)
-
       // Redirect to product edit page for this product
+      refresh()
       history.push(`/inventory/products/${productID}`)
     },
     onError: error => {
@@ -49,7 +49,6 @@ export const ProductVariantCreate = props => {
   if (loading || error || !data) {
     return <Loading />
   }
-  console.log("DATA:", data)
 
   const productVariantUpsertQueryData: ProductVariantUpsertQuery = data
   const { bottomSizes, inventoryStatuses, physicalProductStatuses, product } = productVariantUpsertQueryData

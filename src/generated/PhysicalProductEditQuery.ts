@@ -8,6 +8,7 @@ import {
   InventoryStatus,
   PhysicalProductStatus,
   PhysicalProductOffloadMethod,
+  WarehouseLocationType,
   ProductStatus,
 } from "./globalTypes"
 
@@ -38,6 +39,12 @@ export interface PhysicalProductEditQuery_physicalProductStatuses {
 export interface PhysicalProductEditQuery_physicalProduct_warehouseLocation {
   __typename: "WarehouseLocation"
   id: string
+  barcode: string
+  type: WarehouseLocationType
+  itemCode: string
+  locationCode: string
+  createdAt: any
+  updatedAt: any
 }
 
 export interface PhysicalProductEditQuery_physicalProduct_productVariant_product {
