@@ -48,7 +48,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
     }))
   } else if (variants) {
     // Get variants data from the already existing variants
-    variantsData = variants.map((variant, index) => ({
+    variantsData = variants.map(variant => ({
       sku: variant.sku,
       size: variant.internalSize?.display,
     }))
@@ -94,7 +94,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
     <Box>
       <ContainerGrid container spacing={2}>
         <Header title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} />
-        {createData.productType === "Bottom" && (
+        {productType === "Bottom" && (
           <Grid container spacing={2}>
             <Grid item xs={3}>
               <Text variant="h5">Manufacturer size types</Text>
