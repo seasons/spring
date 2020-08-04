@@ -11,26 +11,15 @@ import { getFormSelectChoices, FormSelectChoice } from "utils/form"
 
 export interface MetadataSectionProps {
   architectures: string[]
-  isEditing: boolean
   models: ProductUpsertQuery_productModels[]
   sizes: FormSelectChoice[]
-  types: string[]
-  setProductType: (string) => void
 }
 
-export const MetadataSection: React.FC<MetadataSectionProps> = ({
-  architectures,
-  isEditing,
-  models,
-  sizes,
-  types,
-  setProductType,
-}) => {
+export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures, models, sizes }) => {
   const modelChoices = models.map(model => ({
     display: model.name,
     value: model.id,
   }))
-  const typeChoices = getFormSelectChoices(types)
   const architectureChoices = getFormSelectChoices(architectures)
 
   const colorChoices = colorsJSON.colors.map(color => ({
@@ -57,17 +46,6 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <Text variant="h6">Model size</Text>
             <Spacer mt={1} />
             <SelectField name="modelSize" choices={sizes} />
-          </Grid>
-          <Grid item xs={6}>
-            <Text variant="h6">Type</Text>
-            <Spacer mt={1} />
-            <SelectField
-              disabled={isEditing}
-              name="productType"
-              choices={typeChoices}
-              onChange={event => setProductType(event.target.value)}
-              requiredString
-            />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Season</Text>
