@@ -88,6 +88,13 @@ export interface GetReservation_returnedPackage {
 export interface GetReservation_lastLocation {
   __typename: "Location"
   id: string
+  slug: string | null
+}
+
+export interface GetReservation_products_location {
+  __typename: "Location"
+  id: string
+  slug: string | null
 }
 
 export interface GetReservation_products_warehouseLocation {
@@ -151,6 +158,7 @@ export interface GetReservation_products {
   inventoryStatus: InventoryStatus
   productStatus: PhysicalProductStatus
   barcode: string
+  location: GetReservation_products_location | null
   warehouseLocation: GetReservation_products_warehouseLocation | null
   productVariant: GetReservation_products_productVariant
 }

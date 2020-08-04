@@ -45,10 +45,21 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
 
   const handleEditSave = values => {
     setOpenEdit(false)
+    const status = values.status.value
 
     const customer = {
-      status: values.status.value,
-      plan: values.plan.value.replace(/\s/g, ""),
+      status,
+    } as any
+
+    const memberData = {
+      ...member,
+      status,
+    }
+
+    if (!!values.plan.value) {
+      const plan = values.plan.value.replace(/\s/g, "")
+      memberData.plan = plan
+      customer.plan = plan
     }
 
     updateDetails({
@@ -59,11 +70,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
     })
       .then(() => {
         // (1) update state so card reflects latest data optimistically
-        updateMember({
-          ...member,
-          status: customer.status,
-          plan: customer.plan,
-        })
+        updateMember(memberData)
       })
       .catch(error => {
         toggleSnackbar({
@@ -73,6 +80,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
         })
       })
   }
+
   const openConfirmInviteModal = id => {
     setMemberToInvite(id)
     setConfirmInviteModal(true)
@@ -127,7 +135,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
     },
     plan: {
       value: splitTitleCase(member.plan),
-      options: MembershipPlanOptions,
+      options: [...MembershipPlanOptions, ""],
     },
     email: {
       value: member.user.email,

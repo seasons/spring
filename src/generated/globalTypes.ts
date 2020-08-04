@@ -5858,8 +5858,9 @@ export interface TopSizeWhereUniqueInput {
 
 export interface UpdateVariantInput {
   id: string
+  manufacturerSizeNames?: string[] | null
   productType: ProductType
-  weight: number
+  weight?: number | null
   sleeve?: number | null
   shoulder?: number | null
   chest?: number | null
