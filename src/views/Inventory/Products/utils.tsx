@@ -398,7 +398,6 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     return {
       sku: values[`${index}_sku`],
       internalSizeName,
-      // manufacturerSizeNames,
       bottomSizeType: bottomSizeType ?? "WxL",
       physicalProducts,
       ...measurementData,
