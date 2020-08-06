@@ -26,7 +26,12 @@ export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h5">Status *</Text>
             <Spacer mt={1} />
-            <SelectField name={`${uid}_physicalProductStatus`} choices={statusChoices} requiredString />
+            <SelectField
+              name={`${uid}_physicalProductStatus`}
+              choices={statusChoices}
+              requiredString
+              initialValue="New"
+            />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h5">Date ordered</Text>
@@ -48,7 +53,12 @@ export const PhysicalProductSection: React.FC<PhysicalProductSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h5">Inventory Status *</Text>
             <Spacer mt={1} />
-            <SelectField name={`${uid}_inventoryStatus`} choices={inventoryStatusChoices} requiredString />
+            <SelectField
+              name={`${uid}_inventoryStatus`}
+              choices={inventoryStatusChoices}
+              requiredString
+              initialValue="NonReservable"
+            />
           </Grid>
           <Spacer grid mt={5} />
         </Grid>
