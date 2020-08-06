@@ -24,7 +24,7 @@ export const VariantEdit: React.FC = () => {
 
   let initialValues = {} as any
   const { productVariant } = data
-  const { id, internalSize, product, total, weight, sku } = productVariant
+  const { id, internalSize, product, total, weight } = productVariant
   if (internalSize) {
     const size = internalSize?.display
     switch (internalSize.productType) {
@@ -80,7 +80,6 @@ export const VariantEdit: React.FC = () => {
     const updateVariantData = {
       id,
       productType: internalSize.productType,
-      sku,
       ...variantSizeData,
     }
     const result = await updateProductVariant({
