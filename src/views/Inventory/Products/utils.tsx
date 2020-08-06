@@ -313,7 +313,7 @@ export const getProductUpdateData = (values: any) => {
     name,
     outerMaterials: { set: outerMaterials },
     photographyStatus,
-    retailPrice,
+    retailPrice: parseInt(retailPrice),
     season,
     secondaryColor: secondaryColorCode && { connect: { colorCode: secondaryColorCode } },
     status,
