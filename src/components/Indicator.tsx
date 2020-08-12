@@ -16,9 +16,17 @@ const InvoiceStatusMap = {
   Refunded: colors.orange[500],
 }
 
+const FitPicStatusMap = {
+  Live: colors.green[500],
+  Submitted: colors.grey[500],
+  Unapproved: colors.grey[500],
+  Reported: colors.red[500],
+}
+
 export const IndicatorMap = {
   ...ReservationStatusMap,
   ...InvoiceStatusMap,
+  ...FitPicStatusMap,
   New: colors.green[100],
   Used: colors.green[200],
   Waitlisted: colors.black15,

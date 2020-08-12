@@ -1,4 +1,5 @@
 export { AnalyticsView } from "./Analytics"
+export { FitPicList } from "./Community"
 export { InventoryView } from "./Inventory"
 export {
   PhysicalProductEdit,

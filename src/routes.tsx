@@ -4,13 +4,13 @@ import { Redirect } from "react-router-dom"
 import { Dashboard } from "./layouts/Dashboard"
 import {
   AnalyticsView,
+  FitPicList,
   InventoryView,
   LoginView,
   MemberList,
   MemberView,
   OverviewView,
   PhysicalProductEdit,
-  PhysicalProductList,
   ProductCreate,
   ProductEdit,
   ProductVariantCreate,
@@ -21,6 +21,7 @@ import {
 import { NotificationsList } from "views/Notifications/NotificationsList"
 import { AnalyticsReport } from "components/AnalyticsReport"
 import { ViewType } from "generated/globalTypes"
+import { CreateFitPicView, FitPicView } from "views/Community"
 
 export default [
   {
@@ -65,6 +66,21 @@ export default [
             index={5}
           />
         ),
+      },
+      {
+        path: "/community",
+        exact: true,
+        component: props => <FitPicList {...props} basePath="/community" resource="FitPic" />,
+      },
+      {
+        path: "/community/create",
+        exact: true,
+        component: props => <CreateFitPicView {...props} basePath="/community/create" resource="FitPic" />,
+      },
+      {
+        path: "/community/fit-pic/:id",
+        exact: true,
+        component: props => <FitPicView {...props} basePath="/community/fit-pic" resource="FitPic" />,
       },
       {
         path: "/inventory/:tab",
