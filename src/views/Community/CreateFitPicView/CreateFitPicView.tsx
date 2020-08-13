@@ -8,8 +8,9 @@ import { SnackbarState } from "components/Snackbar"
 import { Overview } from "./Components"
 import { SUBMIT_FIT_PIC, UPDATE_FIT_PIC } from "../mutations"
 import { ApolloError } from "apollo-client"
+import { FitPicStatus } from "generated/globalTypes"
 
-type FormValues = { approved?: string; image?: File; city?: string; state?: string; zipCode?: string }
+type FormValues = { status?: FitPicStatus; image?: File; city?: string; state?: string; zipCode?: string }
 
 export const CreateFitPicView: React.FC = () => {
   const history = useHistory()
@@ -33,7 +34,7 @@ export const CreateFitPicView: React.FC = () => {
     status: "success",
   })
 
-  const onSubmit = async ({ approved, city, image, state, zipCode }: FormValues) => {
+  const onSubmit = async ({ status, city, image, state, zipCode }: FormValues) => {
     if (!image) {
       toggleSnackbar({
         show: true,
@@ -59,11 +60,11 @@ export const CreateFitPicView: React.FC = () => {
     })
     const id = result?.data?.submitFitPic
     if (id) {
-      if (approved === "true") {
+      if (status === "Published") {
         await updateFitPic({
           variables: {
             id,
-            data: { approved: true },
+            data: { status },
           },
         })
         history.push(`/community/fit-pic/${id}`)

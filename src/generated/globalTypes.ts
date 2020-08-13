@@ -91,6 +91,12 @@ export enum FitPicReportStatus {
   Reviewed = "Reviewed",
 }
 
+export enum FitPicStatus {
+  Published = "Published",
+  Submitted = "Submitted",
+  Unpublished = "Unpublished",
+}
+
 export enum InventoryStatus {
   NonReservable = "NonReservable",
   Offloaded = "Offloaded",
@@ -1353,7 +1359,7 @@ export interface FitPicCreateManyWithoutUserInput {
 
 export interface FitPicCreateWithoutUserInput {
   id?: string | null
-  approved?: boolean | null
+  status?: FitPicStatus | null
   image: ImageCreateOneInput
   location?: LocationCreateOneInput | null
   products?: ProductCreateManyInput | null
@@ -1512,8 +1518,10 @@ export interface FitPicScalarWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
-  approved?: boolean | null
-  approved_not?: boolean | null
+  status?: FitPicStatus | null
+  status_not?: FitPicStatus | null
+  status_in?: FitPicStatus[] | null
+  status_not_in?: FitPicStatus[] | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -1533,16 +1541,16 @@ export interface FitPicScalarWhereInput {
 }
 
 export interface FitPicUpdateInput {
-  approved?: boolean | null
-  user?: UserUpdateOneRequiredWithoutFitPicsInput | null
+  status?: FitPicStatus | null
   image?: ImageUpdateOneRequiredInput | null
   location?: LocationUpdateOneInput | null
   products?: ProductUpdateManyInput | null
   reports?: FitPicReportUpdateManyWithoutReportedInput | null
+  user?: UserUpdateOneRequiredWithoutFitPicsInput | null
 }
 
 export interface FitPicUpdateManyDataInput {
-  approved?: boolean | null
+  status?: FitPicStatus | null
 }
 
 export interface FitPicUpdateManyWithWhereNestedInput {
@@ -1568,7 +1576,7 @@ export interface FitPicUpdateWithWhereUniqueWithoutUserInput {
 }
 
 export interface FitPicUpdateWithoutUserDataInput {
-  approved?: boolean | null
+  status?: FitPicStatus | null
   image?: ImageUpdateOneRequiredInput | null
   location?: LocationUpdateOneInput | null
   products?: ProductUpdateManyInput | null
@@ -1599,8 +1607,10 @@ export interface FitPicWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
-  approved?: boolean | null
-  approved_not?: boolean | null
+  status?: FitPicStatus | null
+  status_not?: FitPicStatus | null
+  status_in?: FitPicStatus[] | null
+  status_not_in?: FitPicStatus[] | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -1617,7 +1627,6 @@ export interface FitPicWhereInput {
   updatedAt_lte?: any | null
   updatedAt_gt?: any | null
   updatedAt_gte?: any | null
-  user?: UserWhereInput | null
   image?: ImageWhereInput | null
   location?: LocationWhereInput | null
   products_every?: ProductWhereInput | null
@@ -1626,6 +1635,7 @@ export interface FitPicWhereInput {
   reports_every?: FitPicReportWhereInput | null
   reports_some?: FitPicReportWhereInput | null
   reports_none?: FitPicReportWhereInput | null
+  user?: UserWhereInput | null
 }
 
 export interface FitPicWhereUniqueInput {
@@ -2394,6 +2404,7 @@ export interface PauseRequestCreateWithoutMembershipInput {
   pausePending: boolean
   pauseDate?: any | null
   resumeDate?: any | null
+  notified?: boolean | null
 }
 
 export interface PauseRequestScalarWhereInput {
@@ -2448,12 +2459,15 @@ export interface PauseRequestScalarWhereInput {
   resumeDate_lte?: any | null
   resumeDate_gt?: any | null
   resumeDate_gte?: any | null
+  notified?: boolean | null
+  notified_not?: boolean | null
 }
 
 export interface PauseRequestUpdateManyDataInput {
   pausePending?: boolean | null
   pauseDate?: any | null
   resumeDate?: any | null
+  notified?: boolean | null
 }
 
 export interface PauseRequestUpdateManyWithWhereNestedInput {
@@ -2482,6 +2496,7 @@ export interface PauseRequestUpdateWithoutMembershipDataInput {
   pausePending?: boolean | null
   pauseDate?: any | null
   resumeDate?: any | null
+  notified?: boolean | null
 }
 
 export interface PauseRequestUpsertWithWhereUniqueWithoutMembershipInput {

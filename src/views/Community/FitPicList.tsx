@@ -1,13 +1,13 @@
 import { Header } from "components/Header"
-import { FullNameField, SinceDateField, ImageField, ViewEntityField } from "fields"
+import { SinceDateField, ImageField, ViewEntityField } from "fields"
 import React, { useState } from "react"
 import { Datagrid, List } from "@seasons/react-admin"
 
-import { Container, Box, Button } from "@material-ui/core"
-import { MemberViewProps } from "views/Members/interfaces"
+import { Container, Box, Button, colors } from "@material-ui/core"
+import CloseIcon from "@material-ui/icons/Close"
 import { fitPic } from "generated/fitPic"
 import { Indicator, Snackbar } from "components"
-import { FitPicReportStatus } from "generated/globalTypes"
+import { FitPicReportStatus, FitPicStatus } from "generated/globalTypes"
 
 import { useRefresh } from "@seasons/react-admin"
 import { useMutation } from "react-apollo"
@@ -16,7 +16,7 @@ import { get } from "lodash"
 import { FitPicFilter } from "./CreateFitPicView/Components"
 import { SnackbarState } from "components/Snackbar"
 
-export const FitPicList: React.FC<MemberViewProps> = props => {
+export const FitPicList: React.FC<{ history: any }> = props => {
   const refresh = useRefresh()
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -71,9 +71,10 @@ export const FitPicList: React.FC<MemberViewProps> = props => {
           <GeneralField source="location.state" label="State" />
           <SinceDateField source="createdAt" label="Published At" />
           <StatusField label="Status" />
+          <ReportsField label="Reports" />
           <ActionsField
             label="Actions"
-            onPublish={(id: string) => updateFitPic({ variables: { id, data: { approved: true } } })}
+            onPublish={(id: string) => updateFitPic({ variables: { id, data: { status: FitPicStatus.Published } } })}
           />
         </Datagrid>
       </List>
@@ -100,29 +101,38 @@ const ActionsField: React.FC<{ label: string; onPublish: (id: string) => void; r
   record,
 }) => (
   <>
-    {record && !record.approved && <PublishButton onClick={() => onPublish(record.id)} record={record} />}
+    {record && record.status !== "Published" && <PublishButton onClick={() => onPublish(record.id)} record={record} />}
     <ViewEntityField entityPath="community/fit-pic" record={record} source="id" />
   </>
 )
+
+const ReportsField: React.FC<{ label: string; record?: fitPic }> = ({ label, record }) => {
+  if (!record) {
+    return null
+  }
+
+  const pendingReports = record.reports?.filter(report => report.status === FitPicReportStatus.Pending)
+  if (pendingReports.length > 0) {
+    return (
+      <Box display="flex" alignItems="center" m="0 auto">
+        <CloseIcon style={{ color: colors.red[500] }} />
+      </Box>
+    )
+  } else {
+    return null
+  }
+}
 
 const StatusField: React.FC<{ label: string; record?: fitPic }> = ({ label, record }) => {
   if (!record) {
     return null
   }
 
-  const someReport = record.reports && record.reports.length > 0
-  const someOpenReport = record.reports?.some(report => report.status === FitPicReportStatus.Pending) || false
-  let status: string
-  if (record.approved) {
-    status = someOpenReport ? "Reported" : "Live"
-  } else {
-    status = someReport ? "Unapproved" : "Submitted"
-  }
   return (
     <>
-      <Indicator status={status} />
+      <Indicator status={record.status} />
       <Box ml={1} style={{ display: "inline-block" }}>
-        {status}
+        {record.status}
       </Box>
     </>
   )

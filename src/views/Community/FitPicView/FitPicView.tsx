@@ -7,11 +7,17 @@ import { Header, Spacer, Snackbar, Text, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { fitPic } from "generated/fitPic"
 import { SelectField, TextField } from "fields"
-import { publishedChoices } from "../CreateFitPicView/Components/GeneralSection"
 import { DateTime } from "luxon"
 import { UPDATE_FIT_PIC, DELETE_FIT_PIC } from "../mutations"
 import { colors } from "theme/colors"
 import { ApolloError } from "apollo-client"
+import { FitPicStatus } from "generated/globalTypes"
+
+const publishedChoices = [
+  { value: FitPicStatus.Submitted, display: "Submitted", disabled: true },
+  { value: FitPicStatus.Published, display: "Published" },
+  { value: FitPicStatus.Unpublished, display: "Unpublished" },
+]
 
 export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, history }) => {
   const { id } = match.params
@@ -45,8 +51,8 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
   if (!loaded && loading) return <Loading />
   if (error || !data) return <Box>{error.message}</Box>
 
-  const onSubmit = async ({ approved }) => {
-    await updateFitPic({ variables: { id, data: { approved: approved === "true" } } })
+  const onSubmit = async ({ status }) => {
+    await updateFitPic({ variables: { id, data: { status } } })
     refresh()
   }
 
@@ -119,12 +125,7 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
                 <Grid item xs={12}>
                   <Text variant="h6">Status</Text>
                   <Spacer mt={1} />
-                  <SelectField
-                    name="approved"
-                    choices={publishedChoices}
-                    initialValue={fitPic.approved ? "true" : "false"}
-                    requiredString
-                  />
+                  <SelectField name="status" choices={publishedChoices} initialValue={fitPic.status} requiredString />
                 </Grid>
               </Grid>
             </Grid>

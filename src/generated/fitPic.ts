@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FitPicReportStatus } from "./globalTypes"
+import { FitPicStatus, FitPicReportStatus } from "./globalTypes"
 
 // ====================================================
 // GraphQL fragment: fitPic
@@ -32,7 +32,7 @@ export interface fitPic {
   __typename: "FitPic"
   id: string
   author: string
-  approved: boolean
+  status: FitPicStatus
   createdAt: any
   updatedAt: any
   image: fitPic_image

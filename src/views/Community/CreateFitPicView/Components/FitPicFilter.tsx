@@ -5,14 +5,14 @@ export const FitPicFilter = props => (
   <Filter {...props}>
     <SelectInput
       label="Status"
-      source="adminFilter"
+      source="status"
       choices={[
-        { id: "Live", name: "Live" },
         { id: "Submitted", name: "Submitted" },
-        { id: "Reported", name: "Reported" },
-        { id: "Unapproved", name: "Unapproved" },
+        { id: "Published", name: "Published" },
+        { id: "Unpublished", name: "Unpublished" },
       ]}
       alwaysOn
     />
+    <SelectInput label="Reports" source="reports_some.status" choices={[{ id: "Pending", name: "Pending" }]} alwaysOn />
   </Filter>
 )

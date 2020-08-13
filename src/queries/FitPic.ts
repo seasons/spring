@@ -5,7 +5,7 @@ const FitPic = gql`
   fragment fitPic on FitPic {
     id
     author
-    approved
+    status
     createdAt
     updatedAt
     image {
@@ -21,6 +21,7 @@ const FitPic = gql`
       status
       reportedAt
     }
+    status
   }
 `
 

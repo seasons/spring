@@ -17,9 +17,9 @@ const InvoiceStatusMap = {
 }
 
 const FitPicStatusMap = {
-  Live: colors.green[500],
+  Published: colors.green[500],
   Submitted: colors.grey[500],
-  Unapproved: colors.grey[500],
+  Unpublished: colors.grey[500],
   Reported: colors.red[500],
 }
 
