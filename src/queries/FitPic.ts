@@ -21,7 +21,6 @@ const FitPic = gql`
       status
       reportedAt
     }
-    status
   }
 `
 
