@@ -2,8 +2,8 @@ import React from "react"
 import { Box } from "@material-ui/core"
 import { Image } from "components/Image"
 
-type ImageSize = "small" | "medium" | "large"
-interface ImagesFieldProps {
+export type ImageSize = "small" | "medium" | "large"
+export interface ImagesFieldProps {
   label?: String
   record?: any
   source: any

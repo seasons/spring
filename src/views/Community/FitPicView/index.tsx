@@ -1,0 +1,1 @@
+export { FitPicView } from "./FitPicView"

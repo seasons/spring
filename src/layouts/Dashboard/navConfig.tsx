@@ -2,6 +2,7 @@ import BarChartIcon from "@material-ui/icons/BarChart"
 import HomeIcon from "@material-ui/icons/HomeOutlined"
 import ListIcon from "@material-ui/icons/List"
 import PersonIcon from "@material-ui/icons/PersonOutlined"
+import PeopleIcon from "@material-ui/icons/PeopleOutlined"
 import ArchiveIcon from "@material-ui/icons/Archive"
 
 export default [
@@ -59,6 +60,11 @@ export default [
             href: "/inventory/physical-products",
           },
         ],
+      },
+      {
+        title: "Community",
+        href: "/community",
+        icon: PeopleIcon,
       },
     ],
   },
