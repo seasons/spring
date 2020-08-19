@@ -46,7 +46,6 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
   const [productStates, setProductStates] = useState<ProductStates>({
     ...barcodeMaps,
   })
-  console.log(productStates)
 
   const [barcode, setBarcode] = useState("")
   const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
@@ -64,7 +63,6 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
   }
 
   const handleSave = () => {
-    console.log("Save: ", productStates)
     onSave?.(productStates)
   }
 
@@ -79,8 +77,6 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
     if (input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
-      console.log("Found barcode: ", input)
-
       const productState = productStates[input]
       if (productState) {
         setBarcode("")

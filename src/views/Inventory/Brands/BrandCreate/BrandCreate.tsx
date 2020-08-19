@@ -2,15 +2,14 @@ import React, { useState } from "react"
 import { useMutation } from "react-apollo"
 import slugify from "slugify"
 import { Box, Container } from "@material-ui/core"
-import { Header, Spacer, Wizard, Snackbar } from "components"
+import { Spacer, Wizard, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { CREATE_BRAND } from "../mutations"
-import { useHistory, useLocation } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import { BrandFields } from "../BrandComponents"
 
 export const BrandCreate: React.FC = () => {
   const history = useHistory()
-  const location = useLocation()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [createBrand] = useMutation(CREATE_BRAND, {
     onCompleted: result => {
@@ -43,12 +42,15 @@ export const BrandCreate: React.FC = () => {
     setIsSubmitting(true)
     const { brandCode, brandTier, description, name, sinceDate, websiteURL } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
+    const numImages = 4
+    const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
     await createBrand({
       variables: {
         input: {
           brandCode: brandCode.toUpperCase(),
           description,
           name,
+          images,
           since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
           slug: slugify(name).toLowerCase(),
           tier: brandTier,

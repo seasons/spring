@@ -25,7 +25,6 @@ export const BrandEdit: React.FC = () => {
       },
     ],
     onCompleted: result => {
-      console.log("result", result)
       toggleSnackbar({
         show: true,
         message: "Brand updated",
@@ -62,8 +61,6 @@ export const BrandEdit: React.FC = () => {
       })
       .filter(Boolean)
 
-    console.log("images", images)
-
     await updateBrand({
       variables: {
         where: { id: brandID },
@@ -86,7 +83,7 @@ export const BrandEdit: React.FC = () => {
     return <Loading />
   }
 
-  let initialValues = {}
+  let initialValues = {} as any
 
   if (data?.brand) {
     const { brand } = data
@@ -94,9 +91,11 @@ export const BrandEdit: React.FC = () => {
       name: brand.name,
       description: brand.description,
       brandCode: brand.brandCode,
-      sinceDate: brand.since,
       brandTier: brand.tier,
       websiteURL: brand.websiteUrl,
+    }
+    if (brand.since) {
+      initialValues.sinceDate = brand.since
     }
     brand.images?.forEach((image, index) => {
       initialValues[`image_${index}`] = image.url

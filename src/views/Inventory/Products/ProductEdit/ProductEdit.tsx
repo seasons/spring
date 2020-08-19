@@ -41,7 +41,6 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
 
   const onSubmit = async values => {
     const updateProductData = getProductUpdateData(values)
-    console.log("updateProductData", updateProductData)
     const result = await updateProduct({
       variables: {
         where: { id: productID },
