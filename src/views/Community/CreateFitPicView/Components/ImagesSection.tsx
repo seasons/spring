@@ -1,12 +1,8 @@
 import React, { useState } from "react"
-import Carousel from "react-images"
 import { useForm, useFormState } from "react-final-form"
-
-import { Box, Grid } from "@material-ui/core"
-
+import { Box } from "@material-ui/core"
 import { Spacer, Text } from "components"
 import { DropzoneField } from "fields"
-import { colors } from "theme/colors"
 
 export const ImagesSection: React.FC = () => {
   const {

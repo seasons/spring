@@ -18,6 +18,12 @@ export const BrandEdit: React.FC = () => {
     variables: { input: { id: brandID } },
   })
   const [updateBrand] = useMutation(UPDATE_BRAND, {
+    refetchQueries: [
+      {
+        query: BRAND_EDIT_QUERY,
+        variables: { input: { id: brandID } },
+      },
+    ],
     onCompleted: result => {
       console.log("result", result)
       toggleSnackbar({

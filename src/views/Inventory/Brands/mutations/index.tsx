@@ -12,7 +12,7 @@ export const CREATE_BRAND = gql`
 `
 
 export const UPDATE_BRAND = gql`
-  mutation UpdateBrand($where: BrandWhereUniqueInput!, $data: BrandUpdateInput!) {
+  mutation UpdateBrand($where: BrandWhereUniqueInput!, $data: CustomBrandUpdateInput!) {
     updateBrand(where: $where, data: $data) {
       id
       name
