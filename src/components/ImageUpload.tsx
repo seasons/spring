@@ -8,11 +8,12 @@ import { Spacer, Text } from "components"
 import { DropzoneField } from "fields"
 import { colors } from "theme/colors"
 
-export interface PhotographySectionProps {
+export interface Props {
   numImages: number
+  title?: string
 }
 
-export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImages }) => {
+export const ImageUpload: React.FC<Props> = ({ numImages, title }) => {
   const {
     mutators: { setValue },
   } = useForm()
@@ -47,7 +48,7 @@ export const PhotographySection: React.FC<PhotographySectionProps> = ({ numImage
 
   return (
     <>
-      <Text variant="h4">Photography</Text>
+      <Text variant="h4">{title ? title : "Photography"}</Text>
       <Spacer mt={2} />
       <Box borderColor="#e5e5e5" borderRadius={4} border={1} p={2}>
         {filteredImagePreviews.length > 0 ? (

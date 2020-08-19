@@ -564,6 +564,7 @@ export interface BrandCreateInput {
   tier: BrandTier
   websiteUrl?: string | null
   products?: ProductCreateManyWithoutBrandInput | null
+  images?: ImageCreateManyInput | null
 }
 
 export interface BrandCreateOneWithoutProductsInput {
@@ -583,6 +584,7 @@ export interface BrandCreateWithoutProductsInput {
   since?: any | null
   tier: BrandTier
   websiteUrl?: string | null
+  images?: ImageCreateManyInput | null
 }
 
 export interface BrandUpdateOneRequiredWithoutProductsInput {
@@ -603,6 +605,7 @@ export interface BrandUpdateWithoutProductsDataInput {
   since?: any | null
   tier?: BrandTier | null
   websiteUrl?: string | null
+  images?: ImageUpdateManyInput | null
 }
 
 export interface BrandUpsertWithoutProductsInput {
@@ -745,6 +748,9 @@ export interface BrandWhereInput {
   products_every?: ProductWhereInput | null
   products_some?: ProductWhereInput | null
   products_none?: ProductWhereInput | null
+  images_every?: ImageWhereInput | null
+  images_some?: ImageWhereInput | null
+  images_none?: ImageWhereInput | null
 }
 
 export interface BrandWhereUniqueInput {

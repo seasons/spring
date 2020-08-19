@@ -3,7 +3,7 @@ import { useMutation } from "react-apollo"
 import { useRedirect } from "@seasons/react-admin"
 import { useLocation } from "react-router-dom"
 import { Grid } from "@material-ui/core"
-import { ConfirmationDialog, Header, Spacer } from "components"
+import { ConfirmationDialog, Header, Spacer, ImageUpload } from "components"
 import { SnackbarState } from "components/Snackbar"
 import materialsJSON from "data/materials.json"
 import { SelectChoice } from "fields/SelectField"
@@ -15,7 +15,6 @@ import {
 } from "generated/ProductUpsertQuery"
 import { ProductEditQuery_product } from "generated/ProductEditQuery"
 import { MetadataSection } from "./MetadataSection"
-import { PhotographySection } from "./PhotographySection"
 import { TagsSection } from "./TagsSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
 import { ProductVariantsSection } from "./ProductVariantsSection"
@@ -192,7 +191,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
       />
       <Grid container spacing={5}>
         <Grid item xs={4}>
-          <PhotographySection numImages={4} />
+          <ImageUpload numImages={4} />
         </Grid>
         <Grid item xs={8}>
           <GeneralSection

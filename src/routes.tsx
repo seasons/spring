@@ -17,6 +17,8 @@ import {
   ReservationList,
   ReservationView,
   VariantEdit,
+  BrandCreate,
+  BrandEdit,
 } from "./views"
 import { NotificationsList } from "views/Notifications/NotificationsList"
 import { AnalyticsReport } from "components/AnalyticsReport"
@@ -108,6 +110,16 @@ export default [
         path: "/inventory/product/new",
         exact: true,
         component: props => <ProductCreate {...props} basePath="/inventory/product/new" resource="Product" />,
+      },
+      {
+        path: "/inventory/brands/new",
+        exact: true,
+        component: props => <BrandCreate {...props} basePath="/inventory/brands/new" resource="Brand" />,
+      },
+      {
+        path: "/inventory/brands/:brandID",
+        exact: true,
+        component: props => <BrandEdit {...props} basePath="/inventory/brands" resource="Brand" />,
       },
       {
         path: "/inventory/product/:productID/variant/new",

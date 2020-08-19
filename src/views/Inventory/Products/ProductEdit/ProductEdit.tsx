@@ -4,7 +4,6 @@ import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { pick } from "lodash"
-
 import { Snackbar, Spacer, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { Overview } from "../Components"

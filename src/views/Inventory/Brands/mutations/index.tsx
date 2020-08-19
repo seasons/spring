@@ -10,3 +10,14 @@ export const CREATE_BRAND = gql`
     }
   }
 `
+
+export const UPDATE_BRAND = gql`
+  mutation UpdateBrand($where: BrandWhereUniqueInput!, $data: BrandUpdateInput!) {
+    updateBrand(where: $where, data: $data) {
+      id
+      name
+      slug
+      brandCode
+    }
+  }
+`

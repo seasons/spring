@@ -45,7 +45,7 @@ export const DropzoneField: React.FC<DropzoneFieldProps> = ({
           <FormControl error={meta.error}>
             <Box
               display="flex"
-              style={{ backgroundColor: colors.white95 }}
+              style={{ backgroundColor: colors.white95, overflow: "hidden" }}
               borderRadius={4}
               height={wrapperHeight}
               flexDirection="column"
