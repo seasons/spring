@@ -8,12 +8,12 @@ import { Spacer, Text } from "components"
 import { DropzoneField } from "fields"
 import { colors } from "theme/colors"
 
-export interface Props {
+export interface ImageUploadProps {
   numImages: number
   title?: string
 }
 
-export const ImageUpload: React.FC<Props> = ({ numImages, title }) => {
+export const ImageUpload: React.FC<ImageUploadProps> = ({ numImages, title }) => {
   const {
     mutators: { setValue },
   } = useForm()
