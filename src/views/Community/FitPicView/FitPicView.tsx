@@ -96,7 +96,11 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
                 alignItems="center"
                 p={1}
               >
-                <img src={data?.image?.url} alt="Image" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <img
+                  src={data?.image?.url}
+                  alt="Image"
+                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                />
               </Box>
             </Grid>
             <Grid item xs={8}>
