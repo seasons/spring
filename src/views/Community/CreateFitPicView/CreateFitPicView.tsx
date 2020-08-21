@@ -52,12 +52,6 @@ export const CreateFitPicView: React.FC = () => {
         location: { create: { city, state, zipCode } },
       },
     })
-    console.log({
-      variables: {
-        image,
-        location: { create: { city, state, zipCode } },
-      },
-    })
     const id = result?.data?.submitFitPic
     if (id) {
       if (status === "Published") {

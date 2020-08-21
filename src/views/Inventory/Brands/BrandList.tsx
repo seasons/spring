@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 import { Datagrid, DateField, Filter, List, TextField, TextInput } from "@seasons/react-admin"
 import { Header, Snackbar } from "components"
-import { BrandCreateModal } from "./BrandCreateModal"
 import { SnackbarState } from "components/Snackbar"
+import { useHistory } from "react-router-dom"
+import { ViewEntityField } from "fields"
 
 export const BrandFilter = props => (
   <Filter {...props}>
@@ -11,7 +12,7 @@ export const BrandFilter = props => (
 )
 
 export const BrandList = props => {
-  const [brandCreateModalOpen, setBrandCreateModalOpen] = useState(false)
+  const history = useHistory()
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
@@ -23,7 +24,7 @@ export const BrandList = props => {
         title="Brands"
         primaryButton={{
           text: "New Brand",
-          action: () => setBrandCreateModalOpen(!brandCreateModalOpen),
+          action: () => history.push("/inventory/brands/new"),
         }}
         breadcrumbs={[
           {
@@ -50,13 +51,9 @@ export const BrandList = props => {
           <TextField source="tier" label="Tier" />
           <DateField source="createdAt" label="CreatedAt" />
           <DateField source="updatedAt" label="UpdatedAt" />
+          <ViewEntityField source="id" entityPath="inventory/brands" label="Actions" />
         </Datagrid>
       </List>
-      <BrandCreateModal
-        open={brandCreateModalOpen}
-        onClose={() => setBrandCreateModalOpen(false)}
-        toggleSnackbar={toggleSnackbar}
-      />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )

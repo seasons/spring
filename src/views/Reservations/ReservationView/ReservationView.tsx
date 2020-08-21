@@ -130,7 +130,6 @@ export const ReservationView = ({ match, history }) => {
             {
               text: "Update status",
               action: () => {
-                console.log("Update status")
                 toggleUpdateStatusModal(true)
               },
             },
@@ -201,7 +200,6 @@ export const ReservationView = ({ match, history }) => {
             }
 
             // TODO: check result to see if there are any backend errors
-            console.log("Result: ", result)
             refresh()
             toggleModal(false)
             toggleSnackbar({

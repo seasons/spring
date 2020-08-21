@@ -13,3 +13,21 @@ export default {
     }
   `,
 }
+
+export const BRAND_EDIT_QUERY = gql`
+  query BrandEditQuery($input: BrandWhereUniqueInput!) {
+    brand(where: $input) {
+      id
+      name
+      description
+      brandCode
+      since
+      images {
+        id
+        url
+      }
+      tier
+      websiteUrl
+    }
+  }
+`
