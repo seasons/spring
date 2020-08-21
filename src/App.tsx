@@ -62,6 +62,7 @@ class App extends React.Component {
                     <ThemeProvider theme={theme}>
                       <Resource name="Product" intent="registration" />
                       <Resource name="PhysicalProduct" intent="registration" />
+                      <Resource name="FitPic" intent="registration" />
                       <Resource name="Customer" intent="registration" />
                       <Resource name="Category" intent="registration" />
                       <Resource name="Brand" intent="registration" />

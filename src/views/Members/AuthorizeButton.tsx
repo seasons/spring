@@ -8,7 +8,7 @@ export const AuthorizeButton: React.FC<ActionButtonProps & { buttonProps?: Butto
   const waitlisted = props.record?.status === CustomerStatus.Waitlisted
   if (invited || waitlisted) {
     return (
-      <Box component="span" ml={2}>
+      <Box component="span" ml={1}>
         <Button
           size="small"
           variant="outlined"

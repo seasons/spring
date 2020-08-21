@@ -66,7 +66,6 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
   }
 
   const handleSave = () => {
-    console.log("Save: ", productStates)
     onSave?.(productStates)
   }
 
@@ -81,8 +80,6 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
     if (input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
-      console.log("Found barcode: ", input)
-
       const productState = productStates[input]
       if (productState) {
         setBarcode("")
