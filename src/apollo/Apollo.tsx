@@ -10,7 +10,8 @@ const URI = process.env.REACT_APP_MONSOON_ENDPOINT || "http://localhost:4000"
 
 const link = createUploadLink({ uri: `${URI}/graphql` })
 
-const authLink = setContext(async (_, { headers }) => {
+const authLink = setContext(async (_, { headers: oldHeaders }) => {
+  const headers = { ...oldHeaders, client: "Spring" }
   // get the authentication token from local storage if it exists
   try {
     // return the headers to the context so httpLink can read them
