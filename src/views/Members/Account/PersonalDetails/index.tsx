@@ -222,17 +222,6 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
               <TableCell>{birthday}</TableCell>
               <TableCell></TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell>Complete Account Link</TableCell>
-              <TableCell>
-                <Box>
-                  <Button variant="outlined" onClick={() => copyToClipboard(member.user.completeAccountURL)}>
-                    Copy
-                  </Button>
-                </Box>
-              </TableCell>
-              <TableCell></TableCell>
-            </TableRow>
           </TableBody>
         </Table>
       </CardContent>
