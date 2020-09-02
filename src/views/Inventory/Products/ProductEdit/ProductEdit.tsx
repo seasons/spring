@@ -33,6 +33,13 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
         status: "error",
       })
     },
+    onCompleted: data => {
+      toggleSnackbar({
+        show: true,
+        message: "Product updated!",
+        status: "success",
+      })
+    },
   })
 
   if (loading || error || !data) {
@@ -47,9 +54,9 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
         data: updateProductData,
       },
     })
-    if (result?.data) {
-      history.push("/inventory/products")
-    }
+    // if (result?.data) {
+    //   history.push("/inventory/products")
+    // }
   }
 
   const productEditData: ProductEditQuery = data
