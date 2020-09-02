@@ -18,7 +18,7 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
   // Set up select data
   const { data } = useQuery(GET_USERS)
   const userOptions = data?.users?.map(createUserOption)
-  const userGroups = ["Active", "Waitlisted", "Authorized", "Created"].map(a => ({
+  const userGroups = ["Active", "Waitlisted", "Authorized", "Created", "Paused"].map(a => ({
     label: `All ${a} Users`,
     value: data?.users?.filter(b => b?.customer?.status === a).map(c => c.email),
   }))
