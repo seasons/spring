@@ -33,6 +33,13 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
         status: "error",
       })
     },
+    onCompleted: data => {
+      toggleSnackbar?.({
+        show: true,
+        message: "Physical Product offloaded!",
+        status: "success",
+      })
+    },
   })
 
   if (!physicalProduct) {
