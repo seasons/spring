@@ -26,7 +26,15 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ label, nam
               onChange={(event: any, value) => {
                 input.onChange({ target: { name, value } })
               }}
-              getOptionLabel={option => option?.label || option}
+              getOptionLabel={option => {
+                if (typeof option === "string") {
+                  return option
+                }
+                if (!!option.label) {
+                  return option.label
+                }
+                return ""
+              }}
               groupBy={option => option.group}
               value={input.value || []}
               options={options}
