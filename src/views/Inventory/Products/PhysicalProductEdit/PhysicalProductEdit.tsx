@@ -5,11 +5,12 @@ import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 
-import { Spacer, Text, Wizard } from "components"
+import { Spacer, Text, Wizard, Snackbar } from "components"
 import { PhysicalProducts } from "../Components"
 import { OffloadPhysicalProductModal } from "./Components"
 import { PhysicalProductEditQuery, PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
+import { SnackbarState } from "components/Snackbar"
 import { PHYSICAL_PRODUCT_EDIT_QUERY } from "../queries"
 import { getDateISOString, getLocaleDateString } from "../utils"
 import { colors } from "theme/colors"
@@ -22,7 +23,28 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_EDIT_QUERY, {
     variables: { where: { id: physicalProductID } },
   })
-  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
+  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
+    refetchQueries: [
+      {
+        query: PHYSICAL_PRODUCT_EDIT_QUERY,
+        variables: { where: { id: physicalProductID } },
+      },
+    ],
+    onError: error => {
+      toggleSnackbar({
+        show: true,
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
+
+  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
+    show: false,
+    message: "",
+    status: "error",
+  })
+
   const [openOffloadPhysicalProductModal, setOpenOffloadPhysicalProductModal] = useState(false)
 
   if (loading || error || !data) {
@@ -140,6 +162,8 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
           physicalProduct={physicalProduct as any}
         />
       )}
+      <Spacer mt={9} />
+      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Box>
   )
 }
