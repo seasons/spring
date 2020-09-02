@@ -8,7 +8,7 @@ import { FormControl } from "../components/FormControl"
 const filter = createFilterOptions<string>()
 
 export type AutocompleteFieldProps = ChildFieldProps & {
-  options: string[]
+  options: (string | { label: string; group?: string })[]
   label?: string
   multiple?: boolean
 }
@@ -26,6 +26,8 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ label, nam
               onChange={(event: any, value) => {
                 input.onChange({ target: { name, value } })
               }}
+              getOptionLabel={option => option?.label || option}
+              groupBy={option => option.group}
               value={input.value || []}
               options={options}
               renderInput={params => <TextField label={label || ""} {...params} variant="outlined" />}
