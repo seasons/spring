@@ -30,13 +30,12 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
         variables: { where: { id: physicalProductID } },
       },
     ],
-    onCompleted: result => {
+    onCompleted: () => {
       toggleSnackbar({
         show: true,
         message: "Physical Product updated",
         status: "success",
       })
-      history.push(`/inventory/product/variants/physicalProducts/${result.updatePhysicalProduct.id}`)
     },
     onError: error => {
       toggleSnackbar({
