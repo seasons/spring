@@ -1,21 +1,23 @@
-import { Box, Typography, Divider, Grid } from "@material-ui/core"
+import { Box, Typography, Divider } from "@material-ui/core"
 import { styled as muiStyled } from "@material-ui/core/styles"
 import React, { useState } from "react"
-import { Loading } from "@seasons/react-admin"
+import { Loading, useRefresh } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { Spacer, Text, Wizard, Header } from "components"
 import { PHYSICAL_PRODUCT_VIEW_QUERY } from "../queries"
 import { getLocaleDateString, getDateISOString } from "views/Inventory/Products/utils"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
-import { PhysicalProductForm, OffloadPhysicalProductModal } from "../Components"
+import { PhysicalProductForm, OffloadPhysicalProductModal, PickPhysicalProductModal } from "../Components"
 
 export interface PhysicalProductViewProps {}
 
 export const PhysicalProductView: React.FC<PhysicalProductViewProps> = () => {
   const history = useHistory()
+  const refresh = useRefresh()
   const { physicalProductID } = useParams()
-  const [openOffloadPhysicalProductModal, setOpenOffloadPhysicalProductModal] = useState(false)
+  const [openOffloadModal, setOpenOffloadModal] = useState(false)
+  const [openPickModal, setOpenPickModal] = useState(false)
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_VIEW_QUERY, {
     variables: { where: { id: physicalProductID } },
   })
@@ -66,26 +68,31 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = () => {
   const menuItems = [
     {
       text: "Pick",
-      action: async () => null,
+      action: async () => setOpenPickModal(true),
     },
   ] as any
 
   if (physicalProduct.inventoryStatus !== "Offloaded") {
     menuItems.push({
       text: "Offload",
-      action: async () => setOpenOffloadPhysicalProductModal(true),
+      action: async () => setOpenOffloadModal(true),
     })
-  }
-
-  const onCloseOffloadPhysicalProductModal = () => {
-    setOpenOffloadPhysicalProductModal(false)
-    history.push(`/inventory/product/variants/${physicalProduct.productVariant.id}`)
   }
 
   const productVariant = data?.physicalProduct?.productVariant
   const uid = data?.physicalProduct?.seasonsUID
   const inventoryStatuses = data?.inventoryStatuses?.enumValues
   const statuses = data?.physicalProductStatuses?.enumValues
+
+  const onCloseOffloadModal = () => {
+    setOpenOffloadModal(false)
+    refresh()
+  }
+
+  const onClosePickModal = () => {
+    setOpenPickModal(false)
+    refresh()
+  }
 
   if (productVariant) {
     const { product } = productVariant
@@ -148,10 +155,17 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = () => {
         </Box>
       </Box>
       <Spacer mt={9} />
-      {openOffloadPhysicalProductModal && (
+      {openOffloadModal && (
         <OffloadPhysicalProductModal
-          open={openOffloadPhysicalProductModal}
-          onClose={onCloseOffloadPhysicalProductModal}
+          open={openOffloadModal}
+          onClose={onCloseOffloadModal}
+          physicalProduct={physicalProduct as any}
+        />
+      )}
+      {openPickModal && (
+        <PickPhysicalProductModal
+          open={openPickModal}
+          onClose={onClosePickModal}
           physicalProduct={physicalProduct as any}
         />
       )}
