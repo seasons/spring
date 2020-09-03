@@ -1,9 +1,9 @@
 import { Header } from "components/Header"
-import { EntityCountField, FullNameField, StatusField, ViewEntityField, SinceDateField, MemberField } from "fields"
+import { SinceDateField } from "fields"
 import React, { useState } from "react"
 import { Datagrid, List, TextField } from "@seasons/react-admin"
 
-import { Card, Container } from "@material-ui/core"
+import { Container } from "@material-ui/core"
 import { MemberViewProps } from "views/Members/interfaces"
 import { UsersField } from "fields/UsersField"
 import { SendPushNotificationModal } from "./SendPushNotification"

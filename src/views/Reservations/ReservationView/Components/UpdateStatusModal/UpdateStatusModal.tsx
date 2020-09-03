@@ -1,11 +1,8 @@
-import React, { useState } from "react"
-import { Box, Button, Grid, Dialog, DialogContent, DialogActions, Typography } from "@material-ui/core"
-import { useRefresh } from "@seasons/react-admin"
-import { useMutation } from "react-apollo"
+import React from "react"
+import { Box, Button, Dialog, DialogContent, DialogActions } from "@material-ui/core"
 import { DialogTitle, Spacer, Text, Loader } from "components"
 import { SelectField } from "fields"
 import { SnackbarState } from "components/Snackbar"
-import { UPDATE_RESERVATION } from "views/Reservations/mutations"
 import { Form } from "react-final-form"
 
 interface UpdateStatusModalProps {

@@ -35,7 +35,7 @@ export const SearchResultCard = ({ result }) => {
             variant="h4"
             color="textPrimary"
             component={RouterLink}
-            to={`/inventory/product/variant/physicalProducts/${data.id}`}
+            to={`/inventory/product/variant/physicalProduct/${data.id}`}
           >
             {data?.seasonsUID}
           </Link>

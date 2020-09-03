@@ -1,32 +1,28 @@
 import React from "react"
 import { useQuery } from "react-apollo"
-import { getFormSelectChoices } from "utils/form"
 import { useLocation } from "react-router-dom"
 import { Loading } from "@seasons/react-admin"
 import { useForm } from "react-final-form"
-
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
-
 import { Header, Spacer, Text } from "components"
 import { PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"
 import { ProductVariantUpsertQuery_product } from "generated/ProductVariantUpsertQuery"
-import { PhysicalProductSection } from "./PhysicalProductSection"
 import { GET_GENERATED_SEASONS_UIDS } from "../queries"
+import { PhysicalProductForm } from "../Components"
+import { ExpandableSection } from "views/Inventory/Products/Components"
 
-export interface PhysicalProductsProps {
-  physicalProductStatuses: { name: string }[]
+export interface PhysicalProductsCreateProps {
   inventoryStatuses: { name: string }[]
   newProductCreateData?: any // Passed in when creating new physical products in New product flow
   newVariantsCreateData?: { product: ProductVariantUpsertQuery_product; values: any } // Passed in when creating new physical products in New variants flow
   physicalProducts?: PhysicalProductEditQuery_physicalProduct[] // Passed in when editing physical products
 }
 
-export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
+export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
   newProductCreateData,
   newVariantsCreateData,
   inventoryStatuses,
   physicalProducts,
-  physicalProductStatuses,
 }) => {
   const {
     mutators: { setValue },
@@ -152,35 +148,16 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
 
   const isEditing = !!physicalProducts
 
-  const inventoryStatusChoices = getFormSelectChoices(inventoryStatuses.map(status => status.name)).map(a => ({
-    ...a,
-    disabled: ["Stored", "Offloaded"].includes(a.value),
-  }))
   // Only allow [New] and [Used] when creating a new product
-  const statuses = isEditing ? physicalProductStatuses : [{ name: "New" }, { name: "Used" }]
-  const statusChoices = getFormSelectChoices(statuses.map(status => status.name))
+  const statuses = [{ name: "New" }, { name: "Used" }]
 
-  const title = isEditing ? physicalProducts?.[0]?.seasonsUID || "" : "Physical products"
-  const subtitle = isEditing ? "Edit physical product data" : "Add metadata to physical products"
+  const title = "Physical products"
   const breadcrumbs = [
     {
       title: "Products",
       url: "/inventory/products",
     },
   ]
-
-  if (isEditing && physicalProducts && physicalProducts.length > 0) {
-    const { productVariant } = physicalProducts[0]
-    const { product } = productVariant
-    breadcrumbs.push({
-      title: product.name,
-      url: `/inventory/products/${product.id}`,
-    })
-    breadcrumbs.push({
-      title: productVariant.sku || "",
-      url: `/inventory/product/variants/${productVariant.id}`,
-    })
-  }
 
   breadcrumbs.push({
     title: title,
@@ -189,14 +166,13 @@ export const PhysicalProducts: React.FC<PhysicalProductsProps> = ({
 
   return (
     <Box>
+      <Header title={title} subtitle="Add metadata to physical products" breadcrumbs={breadcrumbs} />
       <ContainerGrid container spacing={2}>
-        <Header title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} />
         {physicalProductUIDs.map((uid, index) => (
-          <PhysicalProductSection
-            inventoryStatusChoices={inventoryStatusChoices}
-            statusChoices={statusChoices}
-            uid={uid}
+          <ExpandableSection
+            title={uid}
             key={index}
+            content={<PhysicalProductForm inventoryStatuses={inventoryStatuses} statuses={statuses} uid={uid} />}
           />
         ))}
         <Spacer mt={2} />
