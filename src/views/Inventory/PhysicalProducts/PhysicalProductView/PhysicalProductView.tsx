@@ -103,8 +103,6 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = () => {
     })
   }
 
-  console.log("data", data)
-
   return (
     <Box mx={5} display="flex" flexDirection="column">
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>

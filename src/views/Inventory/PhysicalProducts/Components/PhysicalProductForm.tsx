@@ -19,8 +19,6 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({ status
 
   const statusChoices = getFormSelectChoices(statuses.map(status => status.name))
 
-  console.log("rendering")
-
   return (
     <ContainerGrid container spacing={2}>
       <Grid item xs={6}>
