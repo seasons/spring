@@ -1,5 +1,7 @@
 {
-  "interests": ["SeasonsGeneralNotifications"],
+  "interests": [
+    { "value": "SeasonsGeneralNotifications", "description": "All users who have the app and have push notifs enabled" }
+  ],
   "routes": [
     "BagStack",
     "Faq",

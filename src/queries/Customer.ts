@@ -9,7 +9,6 @@ const CustomerFragment = gql`
       email
       firstName
       lastName
-      completeAccountURL
     }
     detail {
       id
@@ -37,7 +36,6 @@ const CustomerDetails = gql`
       email
       firstName
       lastName
-      completeAccountURL
       roles
       createdAt
       pushNotification {

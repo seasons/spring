@@ -22,7 +22,7 @@ import {
 import { DialogTitle } from "components"
 import { Alert, Color } from "@material-ui/lab"
 import { filter, values } from "lodash"
-import { UPDATE_PHYSICAL_PRODUCTS } from "../mutations"
+import { UPDATE_PHYSICAL_PRODUCTS } from "views/Inventory/PhysicalProducts/mutations"
 
 interface ProcessReturnModalProps {
   open: boolean
