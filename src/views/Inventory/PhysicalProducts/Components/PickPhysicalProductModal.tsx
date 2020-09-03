@@ -1,10 +1,8 @@
 import React, { useState } from "react"
 import { useMutation } from "react-apollo"
-import { Form } from "react-final-form"
-import { Button, Dialog, DialogContent, DialogActions, Box, Typography, DialogContentText } from "@material-ui/core"
-import { DialogTitle, Loader, Spacer } from "components"
+import { Button, Dialog, DialogContent, DialogActions, DialogContentText } from "@material-ui/core"
+import { DialogTitle, Loader } from "components"
 import { SnackbarState } from "components/Snackbar"
-import { SelectField, TextField } from "fields"
 import { ProductEditQuery_product_variants_physicalProducts } from "generated/ProductEditQuery"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { colors } from "theme"
@@ -12,15 +10,13 @@ import { colors } from "theme"
 interface PickPhysicalProductModalProps {
   open: boolean
   physicalProduct: ProductEditQuery_product_variants_physicalProducts
-  onClose?: () => void
-  onSave?: () => void
+  onClose: () => void
   toggleSnackbar?: (state: SnackbarState) => void
 }
 
 export const PickPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = ({
   open,
   onClose,
-  onSave,
   toggleSnackbar,
   physicalProduct,
 }) => {
@@ -41,21 +37,17 @@ export const PickPhysicalProductModal: React.FC<PickPhysicalProductModalProps> =
 
   const onSubmit = async () => {
     setIsMutating(true)
-    const result = await updatePhysicalProduct({
+    await updatePhysicalProduct({
       variables: {
         where: { id: physicalProduct.id },
         data: {
-          location: null,
-          warehouseLocation: null,
+          warehouseLocation: { disconnect: true },
           inventoryStatus: "NonReservable",
         },
       },
     })
     setIsMutating(false)
-    if (result?.data) {
-      onSave?.()
-      onClose?.()
-    }
+    onClose()
   }
 
   return (
