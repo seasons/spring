@@ -30,6 +30,14 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
         variables: { where: { id: physicalProductID } },
       },
     ],
+    onCompleted: result => {
+      toggleSnackbar({
+        show: true,
+        message: "Physical Product updated",
+        status: "success",
+      })
+      history.push(`/inventory/product/variants/physicalProducts/${result.updatePhysicalProduct.id}`)
+    },
     onError: error => {
       toggleSnackbar({
         show: true,
@@ -42,7 +50,7 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
-    status: "error",
+    status: "success",
   })
 
   const [openOffloadPhysicalProductModal, setOpenOffloadPhysicalProductModal] = useState(false)
@@ -162,7 +170,6 @@ export const PhysicalProductEdit: React.FC<PhysicalProductEditProps> = props => 
           physicalProduct={physicalProduct as any}
         />
       )}
-      <Spacer mt={9} />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Box>
   )
