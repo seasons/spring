@@ -1,20 +1,20 @@
 import { Snackbar, Header } from "components"
-import { BrandField, ViewEntityField } from "fields"
+import { ViewEntityField } from "fields"
 import { SnackbarState } from "components/Snackbar"
 import React, { useState } from "react"
 import { Datagrid, List, TextField, downloadCSV } from "@seasons/react-admin"
 import { ExpandedRow } from "./ExpandedRow"
 import { useRefresh } from "@seasons/react-admin"
 import { UpdatePhysicalProductStatusModal } from "../../Products/ProductList/UpdatePhysicalProductStatusModal"
-import { UPDATE_PHYSICAL_PRODUCT } from "../../Products/mutations"
-import { OffloadPhysicalProductModal } from "../../Products/PhysicalProductEdit/Components"
 import { useMutation, useApolloClient } from "react-apollo"
 import { PhysicalProductFragment } from "queries/PhysicalProduct"
 import gql from "graphql-tag"
 import jsonExport from "jsonexport/dist"
 import moment from "moment"
+import { OffloadPhysicalProductModal } from "../Components"
+import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 
-export interface ProductListInterface {
+export interface PhysicalProductsListInterface {
   onNewProductBtnPressed: () => void
 }
 
@@ -28,7 +28,7 @@ const GET_PHYSICAL_PRODUCTS = gql`
   ${PhysicalProductFragment}
 `
 
-export const PhysicalProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPressed, ...rest }) => {
+export const PhysicalProductsList: React.FC<PhysicalProductsListInterface> = ({ onNewProductBtnPressed, ...rest }) => {
   const refresh = useRefresh()
   const [updatingStatusForPhysicalProduct, setUpdatingStatusForPhysicalProduct] = useState<any>(null)
   const [offloadingPhysicalProduct, setOffloadingPhysicalProduct] = useState<any>(null)
@@ -125,7 +125,7 @@ export const PhysicalProductList: React.FC<ProductListInterface> = ({ onNewProdu
           <TextField source="productVariant.product.name" label="Product Name" />
           <TextField source="productVariant.product.category.name" label="Category" />
           <TextField source="warehouseLocation.barcode" label="Warehouse Location" />
-          <ViewEntityField source="id" entityPath="inventory/products" label="Actions" />
+          <ViewEntityField source="id" entityPath="inventory/product/variant/physicalProduct" label="Actions" />
         </Datagrid>
       </List>
 

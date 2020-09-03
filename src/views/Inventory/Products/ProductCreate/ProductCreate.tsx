@@ -3,14 +3,14 @@ import React, { useState } from "react"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
-
 import { ConfirmationDialog, Snackbar, Spacer, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
-import { Overview, Variants, PhysicalProducts } from "../Components"
+import { Overview, Variants } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
 import { getProductUpsertData } from "../utils"
 import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
+import { PhysicalProductsCreate } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
 
 export const ProductCreate: React.FC = () => {
   const history = useHistory()
@@ -87,10 +87,9 @@ export const ProductCreate: React.FC = () => {
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
         <Overview data={productUpsertQueryData} />
         <Variants createData={values} />
-        <PhysicalProducts
+        <PhysicalProductsCreate
           newProductCreateData={values}
           inventoryStatuses={productUpsertQueryData.inventoryStatuses?.enumValues || []}
-          physicalProductStatuses={productUpsertQueryData.physicalProductStatuses?.enumValues || []}
         />
       </Wizard>
       <Spacer mt={18} />

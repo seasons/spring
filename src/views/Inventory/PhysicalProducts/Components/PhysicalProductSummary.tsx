@@ -16,7 +16,7 @@ export const PhysicalProductSummary: React.FC<PhysicalProductSummaryProps> = ({ 
   const history = useHistory()
 
   const onClickView = () => {
-    history.push(`/inventory/product/variant/physicalProducts/${physicalProduct.id}`)
+    history.push(`/inventory/product/variant/physicalProduct/${physicalProduct.id}`)
   }
 
   return (

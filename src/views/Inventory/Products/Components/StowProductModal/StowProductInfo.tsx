@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-
 import { Typography, Box, Paper, TextField } from "@material-ui/core"
 import { PhysicalProduct } from "generated/PhysicalProduct"
 import { Autocomplete } from "@material-ui/lab"
 import { useQuery } from "react-apollo"
-import { PHYSICAL_PRODUCT_WITH_IMAGES } from "../../queries/PhysicalProduct"
+import { PHYSICAL_PRODUCT_WITH_IMAGES } from "views/Inventory/PhysicalProducts/queries"
 
 const Image = styled.img`
   margin-right: 5px;

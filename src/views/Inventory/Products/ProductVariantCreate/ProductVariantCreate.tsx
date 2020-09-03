@@ -3,16 +3,15 @@ import React, { useState } from "react"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
-
 import { Snackbar, Spacer, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
-import { PhysicalProducts } from "../Components"
 import { VariantsCreate } from "./Components"
 import { useRefresh } from "@seasons/react-admin"
 import { PRODUCT_VARIANT_UPSERT_QUERY } from "../queries"
 import { UPSERT_VARIANTS } from "../mutations"
 import { getProductVariantUpsertData } from "../utils"
 import { ProductVariantUpsertQuery } from "generated/ProductVariantUpsertQuery"
+import { PhysicalProductsCreate } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
 
 export const ProductVariantCreate: React.FC = () => {
   const history = useHistory()
@@ -81,10 +80,9 @@ export const ProductVariantCreate: React.FC = () => {
     <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
         <VariantsCreate product={product} bottomSizes={bottomSizes} />
-        <PhysicalProducts
+        <PhysicalProductsCreate
           newVariantsCreateData={{ product, values }}
           inventoryStatuses={inventoryStatuses?.enumValues || []}
-          physicalProductStatuses={physicalProductStatuses?.enumValues || []}
         />
       </Wizard>
       <Spacer mt={18} />
