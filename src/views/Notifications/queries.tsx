@@ -22,6 +22,9 @@ export const GET_USERS = gql`
     users {
       fullName
       email
+      customer {
+        status
+      }
     }
   }
 `

@@ -1,17 +1,15 @@
 import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
-
 import { Box, Grid } from "@material-ui/core"
 import { styled as muiStyled } from "@material-ui/core/styles"
-
 import { Separator, Spacer, Text } from "components"
 import {
   ProductEditQuery_product_variants,
   ProductEditQuery_product_variants_physicalProducts,
 } from "generated/ProductEditQuery"
-import { OffloadPhysicalProductModal } from "../PhysicalProductEdit/Components"
 import { colors } from "theme/colors"
 import { SnackbarState } from "components/Snackbar"
+import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Components"
 
 export interface VariantSummaryProps {
   variant: ProductEditQuery_product_variants

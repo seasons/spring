@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Error, useQueryWithStore, Loading, useRefresh } from "@seasons/react-admin"
+import { useQueryWithStore, Loading, useRefresh } from "@seasons/react-admin"
 import { Container, Box, Typography, Grid } from "@material-ui/core"
 import { Header, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
@@ -18,7 +18,7 @@ import { ProductGrid } from "./Components/ProductGrid"
 import { PickingModal } from "./Components/PickingModal/PickingModal"
 import { UpdateStatusModal } from "./Components/UpdateStatusModal/UpdateStatusModal"
 
-export const ReservationView = ({ match, history }) => {
+export const ReservationView = ({ match }) => {
   const { id } = match.params
   const [mode, setMode] = useState("grid")
   const [showModal, toggleModal] = useState(false)

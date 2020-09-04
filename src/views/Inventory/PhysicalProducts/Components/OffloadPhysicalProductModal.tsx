@@ -1,13 +1,12 @@
 import React, { useState } from "react"
 import { useMutation } from "react-apollo"
 import { Form } from "react-final-form"
-
 import { Button, Dialog, DialogContent, DialogActions, Box, Typography } from "@material-ui/core"
 import { DialogTitle, Loader, Spacer } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { SelectField, TextField } from "fields"
-import { UPDATE_PHYSICAL_PRODUCT } from "../../mutations"
 import { ProductEditQuery_product_variants_physicalProducts } from "generated/ProductEditQuery"
+import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 
 interface OffloadPhysicalProductModalProps {
   open: boolean
