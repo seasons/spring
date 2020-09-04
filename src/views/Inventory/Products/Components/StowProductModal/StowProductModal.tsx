@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react"
-
 import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Snackbar, Typography } from "@material-ui/core"
 import { DialogTitle } from "components"
 import { Alert, Color } from "@material-ui/lab"
@@ -7,9 +6,9 @@ import { head, trim, groupBy } from "lodash"
 import { PhysicalProduct } from "generated/PhysicalProduct"
 import { useQuery, useMutation } from "react-apollo"
 import { StowProductInfo } from "./StowProductInfo"
-import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/Products/mutations"
 import { WAREHOUSE_LOCATION_BARCODE_REGEX, PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
-import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/Products/queries/PhysicalProduct"
+import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/PhysicalProducts/mutations"
+import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/PhysicalProducts/queries"
 
 interface StowProductModalProps {
   open: boolean

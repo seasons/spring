@@ -1,7 +1,6 @@
 import React from "react"
 import { Box } from "@material-ui/core"
 import { Filter, SelectInput, TextInput } from "@seasons/react-admin"
-import { StatusInput } from "components"
 
 export const MemberFilter = props => (
   <Box px={2}>

@@ -1,5 +1,11 @@
 import gql from "graphql-tag"
 
+export const GET_GENERATED_SEASONS_UIDS = gql`
+  query GetGeneratedSeasonsUIDs($input: PhysicalProductSeasonsUIDsInput!) {
+    generatedSeasonsUIDs(input: $input)
+  }
+`
+
 export const UpdatePhysicalProductFragment = gql`
   fragment UpdatePhysicalProduct on PhysicalProduct {
     id
@@ -50,7 +56,7 @@ export const PhysicalProductStatusesFragment = gql`
   }
 `
 
-export const PHYSICAL_PRODUCT_EDIT_QUERY = gql`
+export const PHYSICAL_PRODUCT_VIEW_QUERY = gql`
   query PhysicalProductEditQuery($where: PhysicalProductWhereUniqueInput!) {
     ...PhysicalProductStatuses
     physicalProduct(where: $where) {
