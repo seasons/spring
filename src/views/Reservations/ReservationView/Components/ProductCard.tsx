@@ -85,6 +85,13 @@ export const ProductCard = props => {
                 />
               </TableCell>
             </TableRow>
+            {/* Right Here: this I would need to input a row to capture the Product sizes====> must create a table row and a table cell */}
+            <TableRow>
+              <TableCell>
+                {/* add logic to show the product size inside of the Chip */}
+                <Chip label={physicalProduct.internalSize} />
+              </TableCell>
+            </TableRow>
             <TableRow>
               <TableCell>Location Type</TableCell>
               <TableCell align="right">
