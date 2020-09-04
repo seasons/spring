@@ -5,11 +5,13 @@ import { Loading, useRefresh } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { Spacer, Text, Wizard, Header, Snackbar } from "components"
+
 import { PHYSICAL_PRODUCT_VIEW_QUERY } from "../queries"
 import { getLocaleDateString, getDateISOString } from "views/Inventory/Products/utils"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { PhysicalProductForm, OffloadPhysicalProductModal, PickPhysicalProductModal } from "../Components"
 import { SnackbarState } from "components/Snackbar"
+
 
 export interface PhysicalProductViewProps {}
 
@@ -52,6 +54,7 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = () => {
     message: "",
     status: "success",
   })
+
 
   if (loading || error || !data) {
     return <Loading />
