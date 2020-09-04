@@ -45,6 +45,8 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = () => {
     },
   })
 
+  // added necessary code for surfacing error snackbar
+
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
