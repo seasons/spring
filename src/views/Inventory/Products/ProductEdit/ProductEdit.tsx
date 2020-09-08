@@ -48,15 +48,12 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
 
   const onSubmit = async values => {
     const updateProductData = getProductUpdateData(values)
-    const result = await updateProduct({
+    await updateProduct({
       variables: {
         where: { id: productID },
         data: updateProductData,
       },
     })
-    // if (result?.data) {
-    //   history.push("/inventory/products")
-    // }
   }
 
   const productEditData: ProductEditQuery = data
