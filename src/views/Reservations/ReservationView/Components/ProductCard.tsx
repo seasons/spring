@@ -54,8 +54,8 @@ export const ProductCard = props => {
   const image = product.images?.[0]
   const color = product.color
   // let variants = props.variantSizeSection
-  // const availableVariants = variants.filter((a) => !!a?.internalSize?.display)
-  // const showSize = availableVariants.map((variant: any) => {
+  // const sizeVariants = variants.filter((a) => !!a?.internalSize?.display)
+  // const showSize = sizeVariants.map((variant: any) => {
   //   return (
   //     <Typography>{variant?.internalSize?.display}</Typography>
   //   )
@@ -95,17 +95,17 @@ export const ProductCard = props => {
               </TableCell>
             </TableRow>
             {/* Right Here: this I would need to input a row to capture the Product sizes====> must create a table row and a table cell */}
-            {/* <TableRow>
+            <TableRow>
               <TableCell>Product Size</TableCell>
               <TableCell align="right">
                 {/* add logic to show the product size inside of the Chip */}
-            {/* <Typography variant="body1" color="textSecondary">medium</Typography> */}
-            {/* {`size: ${Size}`} ====> physicalProduct.productVariant.internalSize     {props?.internalSize?.display}*/}
-            {/* <VariantSizeSection size={availableVariants} /> */}
-            {/* <Typography>{availableVariants.inter}</Typography> */}
-            {/* {showSize} */}
-            {/* </TableCell>
-            </TableRow> */}
+                {/* <Typography variant="body1" color="textSecondary">medium</Typography> */}
+                {/* {`size: ${Size}`} ====> physicalProduct.productVariant.internalSize     {props?.internalSize?.display}*/}
+                {/* <VariantSizeSection size={availableVariants} /> */}
+                {/* <Typography>{availableVariants.inter}</Typography> */}
+                {/* {showSize} */}
+              </TableCell>
+            </TableRow>
             <TableRow>
               <TableCell>Location Type</TableCell>
               <TableCell align="right">
