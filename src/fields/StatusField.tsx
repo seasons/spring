@@ -5,9 +5,11 @@ import { startCase } from "lodash"
 import Zoom from "@material-ui/core/Zoom"
 import { withStyles } from "@material-ui/core/styles"
 import { DateTime } from "luxon"
+import { CustomerStatus } from "generated/globalTypes"
+import { customer_membership } from "generated/customer"
 
 export interface StatusFieldProps {
-  record?: { status: string; tooltipText?: string; membership?: any }
+  record?: { status: CustomerStatus; tooltipText?: string; membership?: customer_membership }
   label?: string
 }
 
