@@ -4,12 +4,10 @@ import { Indicator } from "components/Indicator"
 import { startCase } from "lodash"
 import Zoom from "@material-ui/core/Zoom"
 import { withStyles } from "@material-ui/core/styles"
-import { DateTime } from "luxon"
 import { CustomerStatus } from "generated/globalTypes"
-import { customer_membership } from "generated/customer"
 
 export interface StatusFieldProps {
-  record?: { status: CustomerStatus; tooltipText?: string; membership?: customer_membership }
+  record?: { status: CustomerStatus; tooltipText?: string }
   label?: string
 }
 
@@ -25,7 +23,6 @@ const DarkTooltip = withStyles(theme => ({
 export const StatusField: React.FC<StatusFieldProps> = ({ record, label }) => {
   const ref = useRef(null)
   const status = record?.status
-  const resumeDate = record?.membership?.pauseRequests?.[0]?.resumeDate
 
   return (
     <DarkTooltip title={record?.tooltipText || ""} placement="top-start" TransitionComponent={Zoom}>
@@ -34,7 +31,6 @@ export const StatusField: React.FC<StatusFieldProps> = ({ record, label }) => {
         <Box ml={1} style={{ display: "inline-block" }}>
           {startCase(status)}
         </Box>
-        {!!resumeDate && <Box>Resumes: {DateTime.fromISO(resumeDate).toLocaleString(DateTime.DATE_MED)}</Box>}
       </div>
     </DarkTooltip>
   )
