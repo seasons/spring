@@ -14,8 +14,10 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import { Box, Table, TableBody, TableCell, TableRow, Chip, Divider, Button } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { WarehouseLocationPopover } from "components/WarehouseLocationPopover"
+// import { VariantSizeSectionProps, VariantSizeSection } from "views/Inventory/Products/Components/VariantSizeSection"
 
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+// import Size from "queries/Size"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,6 +53,13 @@ export const ProductCard = props => {
   const { name, brand } = product
   const image = product.images?.[0]
   const color = product.color
+  // let variants = props.variantSizeSection
+  // const availableVariants = variants.filter((a) => !!a?.internalSize?.display)
+  // const showSize = availableVariants.map((variant: any) => {
+  //   return (
+  //     <Typography>{variant?.internalSize?.display}</Typography>
+  //   )
+  // })
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -86,12 +95,17 @@ export const ProductCard = props => {
               </TableCell>
             </TableRow>
             {/* Right Here: this I would need to input a row to capture the Product sizes====> must create a table row and a table cell */}
-            <TableRow>
-              <TableCell>
+            {/* <TableRow>
+              <TableCell>Product Size</TableCell>
+              <TableCell align="right">
                 {/* add logic to show the product size inside of the Chip */}
-                <Chip label={physicalProduct.internalSize} />
-              </TableCell>
-            </TableRow>
+            {/* <Typography variant="body1" color="textSecondary">medium</Typography> */}
+            {/* {`size: ${Size}`} ====> physicalProduct.productVariant.internalSize     {props?.internalSize?.display}*/}
+            {/* <VariantSizeSection size={availableVariants} /> */}
+            {/* <Typography>{availableVariants.inter}</Typography> */}
+            {/* {showSize} */}
+            {/* </TableCell>
+            </TableRow> */}
             <TableRow>
               <TableCell>Location Type</TableCell>
               <TableCell align="right">
