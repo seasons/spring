@@ -8,6 +8,7 @@ const ReservationStatusMap = {
   Delivered: colors.blue[500],
   Cancelled: colors.red[500],
   Blocked: colors.red[500],
+  Received: colors.blue[500],
   Completed: colors.black100,
 }
 
