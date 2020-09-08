@@ -77,6 +77,10 @@ export default {
       lastLocation {
         id
         slug
+        address1
+        address2
+        city
+        state
       }
       products {
         id
