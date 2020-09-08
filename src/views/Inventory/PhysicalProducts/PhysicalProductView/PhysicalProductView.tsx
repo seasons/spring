@@ -4,11 +4,13 @@ import React, { useState } from "react"
 import { Loading, useRefresh } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
-import { Spacer, Text, Wizard, Header } from "components"
+import { Spacer, Text, Wizard, Header, Snackbar } from "components"
+
 import { PHYSICAL_PRODUCT_VIEW_QUERY } from "../queries"
 import { getLocaleDateString, getDateISOString } from "views/Inventory/Products/utils"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { PhysicalProductForm, OffloadPhysicalProductModal, PickPhysicalProductModal } from "../Components"
+import { SnackbarState } from "components/Snackbar"
 
 export interface PhysicalProductViewProps {}
 
@@ -21,7 +23,36 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = () => {
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_VIEW_QUERY, {
     variables: { where: { id: physicalProductID } },
   })
-  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT)
+  const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
+    refetchQueries: [
+      {
+        query: PHYSICAL_PRODUCT_VIEW_QUERY,
+        variables: { where: { id: physicalProductID } },
+      },
+    ],
+    onCompleted: () => {
+      toggleSnackbar({
+        show: true,
+        message: "Physical Product updated",
+        status: "success",
+      })
+    },
+    onError: error => {
+      toggleSnackbar({
+        show: true,
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
+
+  // added necessary code for surfacing error snackbar
+
+  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
+    show: false,
+    message: "",
+    status: "success",
+  })
 
   if (loading || error || !data) {
     return <Loading />
@@ -169,6 +200,7 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = () => {
           physicalProduct={physicalProduct as any}
         />
       )}
+      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Box>
   )
 }
