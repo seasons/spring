@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography"
 import ColorIcon from "@material-ui/icons/Brightness1"
 import { red } from "@material-ui/core/colors"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import { Box, Table, TableBody, TableCell, TableRow, Chip, Divider, Button } from "@material-ui/core"
+import { Box, Table, TableBody, TableCell, TableRow, Chip, Divider } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { WarehouseLocationPopover } from "components/WarehouseLocationPopover"
 // import { VariantSizeSectionProps, VariantSizeSection } from "views/Inventory/Products/Components/VariantSizeSection"
@@ -94,12 +94,13 @@ export const ProductCard = props => {
                 />
               </TableCell>
             </TableRow>
-            {/* Right Here: this I would need to input a row to capture the Product sizes====> must create a table row and a table cell */}
             <TableRow>
               <TableCell>Product Size</TableCell>
               <TableCell align="right">
                 {/* add logic to show the product size inside of the Chip */}
-                {/* <Typography variant="body1" color="textSecondary">medium</Typography> */}
+                <Typography variant="body1" color="textSecondary">
+                  medium
+                </Typography>
                 {/* {`size: ${Size}`} ====> physicalProduct.productVariant.internalSize     {props?.internalSize?.display}*/}
                 {/* <VariantSizeSection size={availableVariants} /> */}
                 {/* <Typography>{availableVariants.inter}</Typography> */}
