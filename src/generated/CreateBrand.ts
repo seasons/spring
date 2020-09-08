@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { BrandCreateInput } from "./globalTypes"
+import { CustomBrandCreateInput } from "./globalTypes"
 
 // ====================================================
 // GraphQL mutation operation: CreateBrand
@@ -22,5 +22,5 @@ export interface CreateBrand {
 }
 
 export interface CreateBrandVariables {
-  input: BrandCreateInput
+  input: CustomBrandCreateInput
 }

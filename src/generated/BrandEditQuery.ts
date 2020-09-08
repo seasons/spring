@@ -9,6 +9,12 @@ import { BrandWhereUniqueInput, BrandTier } from "./globalTypes"
 // GraphQL query operation: BrandEditQuery
 // ====================================================
 
+export interface BrandEditQuery_brand_images {
+  __typename: "Image"
+  id: string
+  url: string | null
+}
+
 export interface BrandEditQuery_brand {
   __typename: "Brand"
   id: string
@@ -16,6 +22,7 @@ export interface BrandEditQuery_brand {
   description: string | null
   brandCode: string
   since: any | null
+  images: BrandEditQuery_brand_images[] | null
   tier: BrandTier
   websiteUrl: string | null
 }
