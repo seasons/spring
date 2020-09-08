@@ -12,7 +12,6 @@ import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { PhysicalProductForm, OffloadPhysicalProductModal, PickPhysicalProductModal } from "../Components"
 import { SnackbarState } from "components/Snackbar"
 
-
 export interface PhysicalProductViewProps {}
 
 export const PhysicalProductView: React.FC<PhysicalProductViewProps> = () => {
@@ -54,7 +53,6 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = () => {
     message: "",
     status: "success",
   })
-
 
   if (loading || error || !data) {
     return <Loading />

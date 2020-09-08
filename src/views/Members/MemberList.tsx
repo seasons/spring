@@ -5,7 +5,7 @@ import { Button, Container } from "@material-ui/core"
 import { Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { Header } from "components/Header"
-import { EntityCountField, FullNameField, StatusField, ActionButtons } from "fields"
+import { EntityCountField, FullNameField, StatusField, ActionButtons, ResumeDateField } from "fields"
 import { MemberFilter } from "./MemberFilter"
 import { MemberCreateModal } from "./MemberCreate"
 import { AuthorizeMemberModal } from "./AuthorizeMemberModal"
@@ -102,6 +102,7 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
           <TextField source="detail.shippingAddress.state" label="State" />
           <TextField source="plan" label="Membership" />
           <StatusField label="Status" />
+          <ResumeDateField label="Resume date" />
           <EntityCountField label="Current Items" entityName="bagItems" />
           <ActionButtons label="Actions">
             <ViewButton action={openConfirmInviteModal} />

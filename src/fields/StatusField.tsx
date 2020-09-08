@@ -4,9 +4,10 @@ import { Indicator } from "components/Indicator"
 import { startCase } from "lodash"
 import Zoom from "@material-ui/core/Zoom"
 import { withStyles } from "@material-ui/core/styles"
+import { CustomerStatus } from "generated/globalTypes"
 
 export interface StatusFieldProps {
-  record?: { status: string; tooltipText?: string }
+  record?: { status: CustomerStatus; tooltipText?: string }
   label?: string
 }
 

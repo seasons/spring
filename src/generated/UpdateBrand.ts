@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { BrandWhereUniqueInput, BrandCreateInput } from "./globalTypes"
+import { BrandWhereUniqueInput, CustomBrandUpdateInput } from "./globalTypes"
 
 // ====================================================
 // GraphQL mutation operation: UpdateBrand
@@ -23,5 +23,5 @@ export interface UpdateBrand {
 
 export interface UpdateBrandVariables {
   where: BrandWhereUniqueInput
-  data: BrandCreateInput
+  data: CustomBrandUpdateInput
 }

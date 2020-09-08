@@ -89,6 +89,10 @@ export interface GetReservation_lastLocation {
   __typename: "Location"
   id: string
   slug: string | null
+  address1: string | null
+  address2: string | null
+  city: string | null
+  state: string | null
 }
 
 export interface GetReservation_products_location {
