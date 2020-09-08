@@ -214,11 +214,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
           {isEditing && product && (
             <>
               <Spacer mt={6} />
-              <ProductVariantsSection
-                productID={product.id}
-                variants={product?.variants || []}
-                toggleSnackbar={toggleSnackbar}
-              />
+              <ProductVariantsSection productID={product.id} variants={product?.variants || []} />
               <Spacer mt={6} />
             </>
           )}

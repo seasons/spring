@@ -8,7 +8,7 @@ const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => {
   return (
     <Box px={2}>
       <Filter {...rest}>
-        <TextInput label="Search name" source="q" alwaysOn />
+        <TextInput label="Search name" source="customer.user.firstName_contains" alwaysOn />
         <SelectInput
           label="Status"
           source="status"
@@ -24,18 +24,18 @@ const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => {
           alwaysOn
         />
         <StatusInput
-          source="phase"
+          source="status_in"
           tabs={[
             { label: "All", id: "all", value: [] },
             {
               label: "Outgoing",
               id: "outgoing",
-              value: "BusinessToCustomer",
+              value: ["Queued", "Packed", "Shipped"],
             },
             {
               label: "Incoming",
               id: "incoming",
-              value: "CustomerToBusiness",
+              value: ["Shipped", "Delivered", "Completed"],
             },
           ]}
           alwaysOn

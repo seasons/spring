@@ -8,15 +8,13 @@ import {
   ProductEditQuery_product_variants_physicalProducts,
 } from "generated/ProductEditQuery"
 import { colors } from "theme/colors"
-import { SnackbarState } from "components/Snackbar"
 import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Components"
 
 export interface VariantSummaryProps {
   variant: ProductEditQuery_product_variants
-  toggleSnackbar?: (state: SnackbarState) => void
 }
 
-export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant, toggleSnackbar }) => {
+export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant }) => {
   const history = useHistory()
   const [openOffloadPhysicalProductModal, setOpenOffloadPhysicalProductModal] = useState(false)
   const [offloadPhysicalProduct, setOffloadPhysicalProduct] = useState<
@@ -109,7 +107,6 @@ export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant, toggleS
             open={openOffloadPhysicalProductModal}
             onClose={onCloseOffloadPhysicalProductModal}
             physicalProduct={offloadPhysicalProduct}
-            toggleSnackbar={toggleSnackbar}
           />
         )}
       </Container>

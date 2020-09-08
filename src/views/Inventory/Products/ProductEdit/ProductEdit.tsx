@@ -33,13 +33,6 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
         status: "error",
       })
     },
-    onCompleted: data => {
-      toggleSnackbar({
-        show: true,
-        message: "Product updated!",
-        status: "success",
-      })
-    },
   })
 
   if (loading || error || !data) {
@@ -48,12 +41,15 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
 
   const onSubmit = async values => {
     const updateProductData = getProductUpdateData(values)
-    await updateProduct({
+    const result = await updateProduct({
       variables: {
         where: { id: productID },
         data: updateProductData,
       },
     })
+    if (result?.data) {
+      history.push("/inventory/products")
+    }
   }
 
   const productEditData: ProductEditQuery = data
