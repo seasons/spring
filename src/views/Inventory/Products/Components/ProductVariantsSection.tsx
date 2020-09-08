@@ -7,13 +7,19 @@ import AddIcon from "@material-ui/icons/Add"
 import { ExpandableSection } from "./ExpandableSection"
 import { ProductEditQuery_product_variants } from "generated/ProductEditQuery"
 import { VariantSummary } from "./VariantSummary"
+import { SnackbarState } from "components/Snackbar"
 
 export interface ProductVariantsSectionProps {
   productID: string
   variants: ProductEditQuery_product_variants[]
+  toggleSnackbar?: (state: SnackbarState) => void
 }
 
-export const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({ productID, variants }) => {
+export const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({
+  productID,
+  variants,
+  toggleSnackbar,
+}) => {
   const redirect = useRedirect()
   return (
     <ExpandableSection
@@ -26,7 +32,7 @@ export const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({ 
       content={
         <Grid container>
           {variants.map((variant, index) => (
-            <VariantSummary variant={variant} key={index} />
+            <VariantSummary variant={variant} key={index} toggleSnackbar={toggleSnackbar} />
           ))}
         </Grid>
       }
