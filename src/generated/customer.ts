@@ -41,7 +41,6 @@ export interface customer_user {
   email: string
   firstName: string
   lastName: string
-  completeAccountURL: string
   roles: UserRole[]
   createdAt: any
   pushNotification: customer_user_pushNotification | null

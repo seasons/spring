@@ -4,6 +4,15 @@ import { GET_LIST, GET_ONE } from "@seasons/react-admin"
 const CustomerFragment = gql`
   fragment customer on Customer {
     id
+    plan
+    status
+    membership {
+      id
+      pauseRequests(orderBy: createdAt_DESC) {
+        id
+        resumeDate
+      }
+    }
     user {
       id
       email
@@ -21,8 +30,6 @@ const CustomerFragment = gql`
     bagItems {
       id
     }
-    plan
-    status
   }
 `
 

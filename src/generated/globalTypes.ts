@@ -279,6 +279,7 @@ export enum UserPushNotificationInterestType {
 export enum UserRole {
   Admin = "Admin",
   Customer = "Customer",
+  Marketer = "Marketer",
   Partner = "Partner",
 }
 
@@ -549,22 +550,6 @@ export interface BottomSizeWhereInput {
 
 export interface BottomSizeWhereUniqueInput {
   id?: string | null
-}
-
-export interface BrandCreateInput {
-  id?: string | null
-  slug: string
-  brandCode: string
-  description?: string | null
-  isPrimaryBrand?: boolean | null
-  logo?: any | null
-  name: string
-  basedIn?: string | null
-  since?: any | null
-  tier: BrandTier
-  websiteUrl?: string | null
-  products?: ProductCreateManyWithoutBrandInput | null
-  images?: ImageCreateManyInput | null
 }
 
 export interface BrandCreateOneWithoutProductsInput {
@@ -1193,6 +1178,37 @@ export interface ColorWhereUniqueInput {
 export interface CreateEmbedURLInput {
   type?: ViewType | null
   index?: number | null
+}
+
+export interface CustomBrandCreateInput {
+  id?: string | null
+  slug: string
+  brandCode: string
+  description?: string | null
+  isPrimaryBrand?: boolean | null
+  logo?: any | null
+  name: string
+  basedIn?: string | null
+  since?: any | null
+  tier: BrandTier
+  websiteUrl?: string | null
+  products?: ProductCreateManyWithoutBrandInput | null
+  images?: any[] | null
+}
+
+export interface CustomBrandUpdateInput {
+  slug?: string | null
+  brandCode?: string | null
+  description?: string | null
+  isPrimaryBrand?: boolean | null
+  logo?: any | null
+  name?: string | null
+  basedIn?: string | null
+  products?: ProductUpdateManyWithoutBrandInput | null
+  since?: any | null
+  tier?: BrandTier | null
+  websiteUrl?: string | null
+  images?: any[] | null
 }
 
 export interface CustomProductUpdateInput {
@@ -3920,6 +3936,18 @@ export interface ProductUpdateManyWithWhereNestedInput {
   data: ProductUpdateManyDataInput
 }
 
+export interface ProductUpdateManyWithoutBrandInput {
+  create?: ProductCreateWithoutBrandInput[] | null
+  connect?: ProductWhereUniqueInput[] | null
+  set?: ProductWhereUniqueInput[] | null
+  disconnect?: ProductWhereUniqueInput[] | null
+  delete?: ProductWhereUniqueInput[] | null
+  update?: ProductUpdateWithWhereUniqueWithoutBrandInput[] | null
+  updateMany?: ProductUpdateManyWithWhereNestedInput[] | null
+  deleteMany?: ProductScalarWhereInput[] | null
+  upsert?: ProductUpsertWithWhereUniqueWithoutBrandInput[] | null
+}
+
 export interface ProductUpdateManyWithoutCategoryInput {
   create?: ProductCreateWithoutCategoryInput[] | null
   connect?: ProductWhereUniqueInput[] | null
@@ -3944,9 +3972,42 @@ export interface ProductUpdateWithWhereUniqueNestedInput {
   data: ProductUpdateDataInput
 }
 
+export interface ProductUpdateWithWhereUniqueWithoutBrandInput {
+  where: ProductWhereUniqueInput
+  data: ProductUpdateWithoutBrandDataInput
+}
+
 export interface ProductUpdateWithWhereUniqueWithoutCategoryInput {
   where: ProductWhereUniqueInput
   data: ProductUpdateWithoutCategoryDataInput
+}
+
+export interface ProductUpdateWithoutBrandDataInput {
+  slug?: string | null
+  name?: string | null
+  type?: ProductType | null
+  description?: string | null
+  externalURL?: string | null
+  modelHeight?: number | null
+  retailPrice?: number | null
+  status?: ProductStatus | null
+  season?: string | null
+  architecture?: ProductArchitecture | null
+  photographyStatus?: PhotographyStatus | null
+  publishedAt?: any | null
+  innerMaterials?: ProductUpdateinnerMaterialsInput | null
+  outerMaterials?: ProductUpdateouterMaterialsInput | null
+  category?: CategoryUpdateOneRequiredWithoutProductsInput | null
+  images?: ImageUpdateManyInput | null
+  model?: ProductModelUpdateOneWithoutProductsInput | null
+  modelSize?: SizeUpdateOneInput | null
+  color?: ColorUpdateOneRequiredInput | null
+  secondaryColor?: ColorUpdateOneInput | null
+  tags?: TagUpdateManyWithoutProductsInput | null
+  functions?: ProductFunctionUpdateManyInput | null
+  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
+  variants?: ProductVariantUpdateManyWithoutProductInput | null
+  statusChanges?: ProductStatusChangeUpdateManyWithoutProductInput | null
 }
 
 export interface ProductUpdateWithoutCategoryDataInput {
@@ -4017,6 +4078,12 @@ export interface ProductUpsertWithWhereUniqueNestedInput {
   where: ProductWhereUniqueInput
   update: ProductUpdateDataInput
   create: ProductCreateInput
+}
+
+export interface ProductUpsertWithWhereUniqueWithoutBrandInput {
+  where: ProductWhereUniqueInput
+  update: ProductUpdateWithoutBrandDataInput
+  create: ProductCreateWithoutBrandInput
 }
 
 export interface ProductUpsertWithWhereUniqueWithoutCategoryInput {
@@ -4772,6 +4839,7 @@ export interface PushNotificationReceiptCreateInput {
   title?: string | null
   recordID?: string | null
   recordSlug?: string | null
+  notificationKey?: string | null
   sentAt: any
   users?: UserCreateManyWithoutPushNotificationsInput | null
 }
@@ -4796,6 +4864,7 @@ export interface PushNotificationReceiptCreateWithoutUsersInput {
   title?: string | null
   recordID?: string | null
   recordSlug?: string | null
+  notificationKey?: string | null
   sentAt: any
 }
 
@@ -4929,6 +4998,20 @@ export interface PushNotificationReceiptScalarWhereInput {
   recordSlug_not_starts_with?: string | null
   recordSlug_ends_with?: string | null
   recordSlug_not_ends_with?: string | null
+  notificationKey?: string | null
+  notificationKey_not?: string | null
+  notificationKey_in?: string[] | null
+  notificationKey_not_in?: string[] | null
+  notificationKey_lt?: string | null
+  notificationKey_lte?: string | null
+  notificationKey_gt?: string | null
+  notificationKey_gte?: string | null
+  notificationKey_contains?: string | null
+  notificationKey_not_contains?: string | null
+  notificationKey_starts_with?: string | null
+  notificationKey_not_starts_with?: string | null
+  notificationKey_ends_with?: string | null
+  notificationKey_not_ends_with?: string | null
   sentAt?: any | null
   sentAt_not?: any | null
   sentAt_in?: any[] | null
@@ -4964,6 +5047,7 @@ export interface PushNotificationReceiptUpdateDataInput {
   title?: string | null
   recordID?: string | null
   recordSlug?: string | null
+  notificationKey?: string | null
   sentAt?: any | null
   users?: UserUpdateManyWithoutPushNotificationsInput | null
 }
@@ -4977,6 +5061,7 @@ export interface PushNotificationReceiptUpdateManyDataInput {
   title?: string | null
   recordID?: string | null
   recordSlug?: string | null
+  notificationKey?: string | null
   sentAt?: any | null
 }
 
@@ -5028,6 +5113,7 @@ export interface PushNotificationReceiptUpdateWithoutUsersDataInput {
   title?: string | null
   recordID?: string | null
   recordSlug?: string | null
+  notificationKey?: string | null
   sentAt?: any | null
 }
 
@@ -5173,6 +5259,20 @@ export interface PushNotificationReceiptWhereInput {
   recordSlug_not_starts_with?: string | null
   recordSlug_ends_with?: string | null
   recordSlug_not_ends_with?: string | null
+  notificationKey?: string | null
+  notificationKey_not?: string | null
+  notificationKey_in?: string[] | null
+  notificationKey_not_in?: string[] | null
+  notificationKey_lt?: string | null
+  notificationKey_lte?: string | null
+  notificationKey_gt?: string | null
+  notificationKey_gte?: string | null
+  notificationKey_contains?: string | null
+  notificationKey_not_contains?: string | null
+  notificationKey_starts_with?: string | null
+  notificationKey_not_starts_with?: string | null
+  notificationKey_ends_with?: string | null
+  notificationKey_not_ends_with?: string | null
   sentAt?: any | null
   sentAt_not?: any | null
   sentAt_in?: any[] | null
