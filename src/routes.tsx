@@ -144,7 +144,7 @@ export default [
         component: props => <ReservationList {...props} basePath="/reservations" resource="Reservation" />,
       },
       {
-        path: "/reservation/:id",
+        path: "/reservation/:id/:tab",
         exact: true,
         component: props => <ReservationView {...props} basePath="/reservation" resource="Reservation" />,
       },
