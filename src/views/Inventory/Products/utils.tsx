@@ -132,6 +132,11 @@ export const getProductUpsertData = (values: any) => {
     secondaryColor: secondaryColorCode,
     status,
     tags,
+    wearableSeasons,
+    internalSeasonSeasonCode,
+    internalSeasonYear,
+    vendorSeasonSeasonCode,
+    vendorSeasonYear,
   } = values
 
   // Get the image files which are stored as image_0, image_1, etc.
@@ -255,6 +260,11 @@ export const getProductUpsertData = (values: any) => {
     tags: tags || [],
     type: productType,
     variants: variantsData,
+    wearableSeasons,
+    internalSeasonSeasonCode,
+    internalSeasonYear,
+    vendorSeasonSeasonCode,
+    vendorSeasonYear,
   }
   return productsData
 }
@@ -282,10 +292,14 @@ export const getProductUpdateData = (values: any) => {
     photographyStatus,
     productType,
     retailPrice,
-    season,
     secondaryColor: secondaryColorCode,
     status,
     tags,
+    wearableSeasons,
+    internalSeasonSeasonCode,
+    internalSeasonYear,
+    vendorSeasonSeasonCode,
+    vendorSeasonYear,
   } = values
 
   const modelSizeDisplay = modelSizeName ? getModelSizeDisplay(productType, modelSizeName, bottomSizeType) : null
@@ -314,11 +328,15 @@ export const getProductUpdateData = (values: any) => {
     outerMaterials: { set: outerMaterials },
     photographyStatus,
     retailPrice: parseInt(retailPrice),
-    season,
     secondaryColor: secondaryColorCode && { connect: { colorCode: secondaryColorCode } },
     status,
     tags,
     type: productType,
+    wearableSeasons,
+    internalSeasonSeasonCode,
+    internalSeasonYear,
+    vendorSeasonSeasonCode,
+    vendorSeasonYear,
   }
 
   return updateProductData

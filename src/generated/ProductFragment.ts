@@ -12,6 +12,8 @@ import {
   PhysicalProductOffloadMethod,
   ProductStatus,
   ProductArchitecture,
+  SeasonCode,
+  SeasonString,
 } from "./globalTypes"
 
 // ====================================================
@@ -83,6 +85,28 @@ export interface ProductFragment_variants {
   physicalProducts: ProductFragment_variants_physicalProducts[] | null
 }
 
+export interface ProductFragment_season_internalSeason {
+  __typename: "Season"
+  id: string
+  year: number | null
+  seasonCode: SeasonCode | null
+}
+
+export interface ProductFragment_season_vendorSeason {
+  __typename: "Season"
+  id: string
+  year: number | null
+  seasonCode: SeasonCode | null
+}
+
+export interface ProductFragment_season {
+  __typename: "ProductSeason"
+  id: string
+  internalSeason: ProductFragment_season_internalSeason
+  vendorSeason: ProductFragment_season_vendorSeason | null
+  wearableSeasons: SeasonString[]
+}
+
 export interface ProductFragment_color {
   __typename: "Color"
   id: string
@@ -145,7 +169,7 @@ export interface ProductFragment {
   architecture: ProductArchitecture | null
   innerMaterials: string[]
   outerMaterials: string[]
-  season: string | null
+  season: ProductFragment_season | null
   type: ProductType | null
   color: ProductFragment_color
   functions: ProductFragment_functions[] | null

@@ -8,6 +8,8 @@ import {
   PhysicalProductStatus,
   WarehouseLocationType,
   ProductArchitecture,
+  SeasonCode,
+  SeasonString,
   PhotographyStatus,
   ProductStatus,
 } from "./globalTypes"
@@ -43,6 +45,28 @@ export interface GetPhysicalProducts_physicalProducts_productVariant_product_mat
   slug: string
 }
 
+export interface GetPhysicalProducts_physicalProducts_productVariant_product_season_internalSeason {
+  __typename: "Season"
+  id: string
+  year: number | null
+  seasonCode: SeasonCode | null
+}
+
+export interface GetPhysicalProducts_physicalProducts_productVariant_product_season_vendorSeason {
+  __typename: "Season"
+  id: string
+  year: number | null
+  seasonCode: SeasonCode | null
+}
+
+export interface GetPhysicalProducts_physicalProducts_productVariant_product_season {
+  __typename: "ProductSeason"
+  id: string
+  internalSeason: GetPhysicalProducts_physicalProducts_productVariant_product_season_internalSeason
+  vendorSeason: GetPhysicalProducts_physicalProducts_productVariant_product_season_vendorSeason | null
+  wearableSeasons: SeasonString[]
+}
+
 export interface GetPhysicalProducts_physicalProducts_productVariant_product {
   __typename: "Product"
   name: string
@@ -52,7 +76,7 @@ export interface GetPhysicalProducts_physicalProducts_productVariant_product {
   brand: GetPhysicalProducts_physicalProducts_productVariant_product_brand
   architecture: ProductArchitecture | null
   materialCategory: GetPhysicalProducts_physicalProducts_productVariant_product_materialCategory | null
-  season: string | null
+  season: GetPhysicalProducts_physicalProducts_productVariant_product_season | null
   photographyStatus: PhotographyStatus | null
   status: ProductStatus | null
 }

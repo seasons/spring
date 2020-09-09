@@ -14,3 +14,4 @@ export { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection
 export { VariantSizeSection } from "./VariantSizeSection"
 export { VariantSummary } from "./VariantSummary"
 export { StowProductModal } from "./StowProductModal/StowProductModal"
+export { SeasonsSection } from "./SeasonsSection"
