@@ -89,7 +89,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
             <SinceDateField source="statusUpdatedAt" label="Status Last Updated" />
             {/* <SinceDateField source="returnAt" label="Return" /> */}
             <PhaseField source="phase" />
-            <ViewEntityField entityPath="reservation" source="id" label="Actions" />
+            <ViewEntityField entityPath="reservation" entityTab="overview" source="id" label="Actions" />
           </Datagrid>
         </List>
       </Box>
