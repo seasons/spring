@@ -13,6 +13,8 @@ import { StowProductModal } from "../Components"
 import { BulkPublishButton } from "./BulkPublishButton"
 import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Components"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/PhysicalProducts/mutations"
+import { ProductEditQuery_inventoryStatuses } from "generated/ProductEditQuery"
+import PhysicalProduct from "queries/PhysicalProduct"
 
 export interface ProductListInterface {
   onNewProductBtnPressed: () => void
@@ -47,6 +49,10 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
       })
     },
   })
+
+  const totalNum = (productTotal: ProductEditQuery_inventoryStatuses) => {
+    return totalNum
+  }
 
   return (
     <>
@@ -91,6 +97,9 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
           <TextField source="name" />
           <BrandField label="Brand" />
           <TextField source="category.name" label="Category" />
+          <TextField source={totalNum} label="Total Count">
+            {" "}
+          </TextField>
           <SinceDateField source="publishedAt" label="Published" />
           <CheckField source="status" value="Available" />
           <TextField source="photographyStatus" label="Photography" />
