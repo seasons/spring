@@ -96,8 +96,8 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                   }
                 />
               </TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
+              <TableCell>Logic for sent package url</TableCell>
+              <TableCell>Logic for return package url</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Amount</TableCell>
