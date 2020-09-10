@@ -17,10 +17,12 @@ export default {
       images(size: Thumb) {
         url
       }
+      phase
       reservationNumber
       shipped
       status
       shippedAt
+      statusUpdatedAt
       returnAt
       createdAt
     }
@@ -73,6 +75,13 @@ export default {
           trackingURL
         }
         weight
+      }
+      packageEvents(orderBy: createdAt_DESC, first: 1) {
+        id
+        data
+        status
+        createdAt
+        updatedAt
       }
       lastLocation {
         id
@@ -141,36 +150,9 @@ export default {
       shippedAt
       receivedAt
       returnAt
+      statusUpdatedAt
       createdAt
       updatedAt
-    }
-  `,
-}
-
-export const query = {
-  [GET_LIST]: gql`
-    query GetReservationList {
-      reservations {
-        id
-        customer {
-          id
-          user {
-            id
-            firstName
-            lastName
-            email
-          }
-        }
-        images(width: 50) {
-          url
-        }
-        reservationNumber
-        shipped
-        status
-        shippedAt
-        returnAt
-        createdAt
-      }
     }
   `,
 }

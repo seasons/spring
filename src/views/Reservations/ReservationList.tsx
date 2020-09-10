@@ -3,6 +3,7 @@ import { Datagrid, Filter, Loading, List, DataProviderContext, SelectInput, Text
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
 import { Box, Container } from "@material-ui/core"
 import { Header, StatusInput } from "components"
+import { PhaseField } from "fields/PhaseField"
 
 const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => {
   return (
@@ -85,7 +86,9 @@ export const ReservationList = ({ staticContext, ...props }) => {
             <ImagesField source="images" label="Images" size="medium" />
             <StatusField label="Status" />
             <MemberField label="Member" />
-            <SinceDateField source="returnAt" label="Return" />
+            <SinceDateField source="statusUpdatedAt" label="Status Last Updated" />
+            {/* <SinceDateField source="returnAt" label="Return" /> */}
+            <PhaseField source="phase" />
             <ViewEntityField entityPath="reservation" source="id" label="Actions" />
           </Datagrid>
         </List>
