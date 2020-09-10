@@ -1,7 +1,7 @@
 import React from "react"
 import { Link as RouterLink } from "react-router-dom"
 import { DateTime } from "luxon"
-import { Button, Card, Link, Table, TableBody, TableCell, TableRow, Box, Grid, Chip } from "@material-ui/core"
+import { Button, Card, Link, Table, TableBody, TableCell, TableRow, Box, Grid, Chip, colors } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { Spacer } from "components"
 
@@ -23,6 +23,49 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
       <div>{state}</div>
     </Box>
   )
+  // Making changes to track reservation
+  let step
+  let trackingURL
+  let statusTxt = ""
+  const statCheck = reservation.status
+  const sentPackageTrackingURL = reservation?.sentPackage?.shippingLabel?.trackingURL
+  const returnedPackageTrackingURL = reservation?.returnedPackage?.shippingLabel?.trackingURL
+
+  if (reservation.phase === "CustomerToBusiness") {
+    // This is for when the package is going back to the warehouse
+    trackingURL = returnedPackageTrackingURL
+    if (statCheck === "Delivered") {
+      statusTxt = "Returned"
+      step = 3
+    } else if (statCheck === "Shipped") {
+      statusTxt = "In-Transit"
+      step = 2
+    } else if (statCheck) {
+      statusTxt = "Recieved by UPS"
+      step = 1
+    } else {
+      return null
+    }
+  } else {
+    // This is for when the pacakage is being sent to the customer
+    trackingURL = sentPackageTrackingURL
+    if (statCheck === "Delivered") {
+      statusTxt = "Delivered"
+      step = 3
+    } else if (statCheck === "Shipped") {
+      statusTxt = "Shipped"
+      step = 2
+    } else if (statCheck === "Packed") {
+      statusTxt = "Order being prepared"
+      step = 1
+    } else if (statCheck === "Queued") {
+      statusTxt = "Order received"
+      step = 0
+    } else {
+      return null
+    }
+  }
+
   return (
     <>
       <Card {...rest}>
@@ -53,6 +96,8 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                   }
                 />
               </TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Amount</TableCell>
