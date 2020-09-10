@@ -37,6 +37,7 @@ export interface GetReservationList {
   shipped: boolean
   status: ReservationStatus
   shippedAt: any | null
+  statusUpdatedAt: any | null
   returnAt: any | null
   createdAt: any
 }
