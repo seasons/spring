@@ -1,9 +1,9 @@
-import React, { useState } from "react"
+import React from "react"
 
 import { DetailView } from "components/DetailView"
-import { ManageView } from "../Manage"
-import { ReservationHeader } from "../ReservationHeader"
+import { OverviewView } from "../Overview"
 import { TrackingInfo } from "./Components/TrackingInfo"
+import { ReservationHeader } from "../ReservationHeader/index"
 
 export const ReservationView: React.FunctionComponent<{ match: any }> = ({ match }) => {
   return (
@@ -17,7 +17,7 @@ export const ReservationView: React.FunctionComponent<{ match: any }> = ({ match
           value: "manage",
           label: "Manage",
           //@ts-ignore
-          render: ({ data, adminKey, match, recordID }) => <ManageView match={match} data={data} />,
+          render: ({ data, match }) => <OverviewView match={match} data={data} />,
         },
         {
           value: "transitEvents",

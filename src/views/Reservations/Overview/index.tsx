@@ -16,7 +16,7 @@ export interface ReserationManageViewProps {
   data: any
 }
 
-export const ManageView: React.FunctionComponent<ReserationManageViewProps> = ({ match, data }) => {
+export const OverviewView: React.FunctionComponent<ReserationManageViewProps> = ({ match, data }) => {
   const [mode, setMode] = useState("grid")
 
   const refresh = useRefresh()

@@ -7,10 +7,10 @@ import { useMutation, ExecutionResult } from "react-apollo"
 import { useRefresh } from "@seasons/react-admin"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 import { SnackbarState } from "components/Snackbar"
-import { PickingModal } from "./Manage/Components/PickingModal/PickingModal"
-import { ProcessReturnModal } from "./Manage/Components/ProcessReturnModal/ProcessReturnModal"
-import { MARK_RESERVATION_PICKED, UPDATE_RESERVATION, PROCESS_RESERVATION } from "./mutations"
-import { UpdateStatusModal } from "./Manage/Components/UpdateStatusModal/UpdateStatusModal"
+import { MARK_RESERVATION_PICKED, UPDATE_RESERVATION, PROCESS_RESERVATION } from "../mutations"
+import { PickingModal } from "./Components/PickingModal/PickingModal"
+import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessReturnModal"
+import { UpdateStatusModal } from "./Components/UpdateStatusModal/UpdateStatusModal"
 
 export const ReservationHeader = ({ data }) => {
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
