@@ -8,14 +8,13 @@ import { PushNotificationsView } from "./Notifications"
 import { DetailView } from "components/DetailView"
 import { Header } from "./Header"
 
-export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, history, props }) => {
+export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, props }) => {
   return (
     <DetailView
       match={match}
-      history={history}
       resource={"Customer"}
       renderHeader={({ data: member }) => {
-        return <Header history={history} member={member} />
+        return <Header member={member} />
       }}
       tabs={[
         {

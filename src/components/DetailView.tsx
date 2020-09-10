@@ -1,12 +1,11 @@
 import { ComponentError, Spacer } from "components"
 import React, { useState } from "react"
 import { Loading, useQueryWithStore } from "@seasons/react-admin"
-import { Redirect } from "react-router-dom"
+import { Redirect, useHistory } from "react-router-dom"
 
 import { Box, colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"
 import { Snackbar, Header as BaseHeader } from "components"
 import { makeStyles } from "@material-ui/styles"
-import { History } from "history"
 import { SnackbarState } from "./Snackbar"
 
 const useStyles = makeStyles<Theme>(theme => ({
@@ -39,7 +38,6 @@ export interface HeaderRenderProps {
 }
 
 export interface DetailViewProps {
-  history: History
   match: DetailViewMatch
   resource: "Customer" | "Reservation"
   renderHeader: (props: HeaderRenderProps) => React.Component
@@ -52,7 +50,6 @@ export interface DetailViewProps {
 
 export const DetailView: React.FunctionComponent<DetailViewProps> = ({
   match,
-  history,
   tabs,
   resource,
   renderHeader,
@@ -60,6 +57,8 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
 }) => {
   const classes = useStyles()
   const { tab: currentTab, id: recordID } = match.params
+
+  const history = useHistory()
 
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,

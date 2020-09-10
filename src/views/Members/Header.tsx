@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { DateTime } from "luxon"
 import { Header as BaseHeader, ConfirmationDialog } from "components"
-import { MemberViewHeaderProps } from "./interfaces"
+import { MemberSubViewProps } from "./interfaces"
 import { AssignRolesModal } from "./AssignRolesModal"
 import { useMutation } from "@apollo/react-hooks"
 import { Snackbar } from "components"
@@ -17,7 +17,7 @@ const RESET_PASSWORD = gql`
   }
 `
 
-export const Header: React.FunctionComponent<MemberViewHeaderProps> = ({ history, member }) => {
+export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) => {
   const [showResetPasswordConfirmation, setShowResetPasswordConfirmation] = useState(false)
   const [assignMemberRoles] = useMutation<any, any>(MEMBER_ASSIGN_ROLE, {
     onCompleted: () => {
