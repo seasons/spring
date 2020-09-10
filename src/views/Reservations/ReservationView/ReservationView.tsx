@@ -2,8 +2,9 @@ import React from "react"
 
 import { DetailView } from "components/DetailView"
 import { OverviewView } from "../Overview"
-import { TrackingInfo } from "./Components/TrackingInfo"
+import { TrackingInfo } from "../TrackingInfo/index"
 import { ReservationHeader } from "../ReservationHeader/index"
+import { AdminLogsView } from "components/AdminLogsView"
 
 export const ReservationView: React.FunctionComponent<{ match: any }> = ({ match }) => {
   return (
@@ -14,8 +15,8 @@ export const ReservationView: React.FunctionComponent<{ match: any }> = ({ match
       renderHeader={({ data }) => <ReservationHeader data={data} />}
       tabs={[
         {
-          value: "manage",
-          label: "Manage",
+          value: "overview",
+          label: "Overview",
           //@ts-ignore
           render: ({ data, match }) => <OverviewView match={match} data={data} />,
         },
@@ -24,6 +25,15 @@ export const ReservationView: React.FunctionComponent<{ match: any }> = ({ match
           label: "Transit History",
           //@ts-ignore
           render: ({ data }) => <TrackingInfo packageEvents={data.packageEvents} />,
+        },
+        {
+          value: "logs",
+          label: "Admin Logs",
+          //@ts-ignore
+          render: ({ data }) => {
+            console.log(data)
+            return <AdminLogsView logs={data.adminLogs} />
+          },
         },
       ]}
     />

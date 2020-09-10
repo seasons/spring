@@ -8,15 +8,12 @@ import { ReservationInfo } from "./Components/ReservationInfo"
 import { ProductGrid } from "./Components/ProductGrid"
 import { ProductCard } from "./Components/ProductCard"
 import { useRefresh } from "@seasons/react-admin"
-import { Spacer } from "components"
-import { TrackingInfo } from "../ReservationView/Components/TrackingInfo"
-
-export interface ReserationManageViewProps {
+export interface ReservationManageViewProps {
   match: any
   data: any
 }
 
-export const OverviewView: React.FunctionComponent<ReserationManageViewProps> = ({ match, data }) => {
+export const OverviewView: React.FunctionComponent<ReservationManageViewProps> = ({ match, data }) => {
   const [mode, setMode] = useState("grid")
 
   const refresh = useRefresh()
@@ -74,9 +71,6 @@ export const OverviewView: React.FunctionComponent<ReserationManageViewProps> = 
                 )}
               </Grid>
             </Box>
-            <Spacer mt={3} />
-            <TrackingInfo packageEvents={data?.packageEvents} />
-            <Spacer mt={3} />
           </Grid>
         </Grid>
       </Container>
