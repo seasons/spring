@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useQueryWithStore, Loading, useRefresh } from "@seasons/react-admin"
 import { Container, Box, Typography, Grid } from "@material-ui/core"
-import { Header, Snackbar } from "components"
+import { Header, Snackbar, Spacer } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { ReservationInfo } from "./Components/ReservationInfo"
 import { ProductCard } from "./Components/ProductCard"
@@ -17,6 +17,7 @@ import { ProcessReservationMutationVariables } from "generated/ProcessReservatio
 import { ProductGrid } from "./Components/ProductGrid"
 import { PickingModal } from "./Components/PickingModal/PickingModal"
 import { UpdateStatusModal } from "./Components/UpdateStatusModal/UpdateStatusModal"
+import { TrackingInfo } from "./Components/TrackingInfo"
 
 export const ReservationView = ({ match }) => {
   const { id } = match.params
@@ -176,6 +177,9 @@ export const ReservationView = ({ match }) => {
                 )}
               </Grid>
             </Box>
+            <Spacer mt={3} />
+            <TrackingInfo packageEvents={data?.packageEvents} />
+            <Spacer mt={3} />
           </Grid>
         </Grid>
       </Container>

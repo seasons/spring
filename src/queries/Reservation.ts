@@ -17,6 +17,7 @@ export default {
       images(size: Thumb) {
         url
       }
+      phase
       reservationNumber
       shipped
       status
@@ -74,6 +75,13 @@ export default {
           trackingURL
         }
         weight
+      }
+      packageEvents(orderBy: createdAt_DESC, first: 1) {
+        id
+        data
+        status
+        createdAt
+        updatedAt
       }
       lastLocation {
         id
