@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Container, Box, Typography, Grid, Tabs, Tab } from "@material-ui/core"
-import { SnackbarState } from "components/Snackbar"
 import ViewModuleIcon from "@material-ui/icons/ViewModule"
 import ListIcon from "@material-ui/icons/List"
 import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab"
@@ -9,6 +8,8 @@ import { ReservationInfo } from "./Components/ReservationInfo"
 import { ProductGrid } from "./Components/ProductGrid"
 import { ProductCard } from "./Components/ProductCard"
 import { useRefresh } from "@seasons/react-admin"
+import { Spacer } from "components"
+import { TrackingInfo } from "../ReservationView/Components/TrackingInfo"
 
 export interface ReserationManageViewProps {
   match: any
@@ -25,6 +26,7 @@ export const ManageView: React.FunctionComponent<ReserationManageViewProps> = ({
   }
 
   if (!data) {
+    alert("no data")
     return <>{"hi"}</>
   }
 
@@ -72,6 +74,9 @@ export const ManageView: React.FunctionComponent<ReserationManageViewProps> = ({
                 )}
               </Grid>
             </Box>
+            <Spacer mt={3} />
+            <TrackingInfo packageEvents={data?.packageEvents} />
+            <Spacer mt={3} />
           </Grid>
         </Grid>
       </Container>
