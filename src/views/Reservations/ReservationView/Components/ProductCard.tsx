@@ -97,13 +97,13 @@ export const ProductCard = props => {
             <TableRow>
               <TableCell>Product Size</TableCell>
               <TableCell align="right">
-                {/* add logic to show the product size inside of the Chip */}
+                {/* Hardcoded this to find out why there is an error happening*/}
                 <Typography variant="body1" color="textSecondary">
                   medium
                 </Typography>
                 {/* {`size: ${Size}`} ====> physicalProduct.productVariant.internalSize     {props?.internalSize?.display}*/}
-                {/* <VariantSizeSection size={availableVariants} /> */}
-                {/* <Typography>{availableVariants.inter}</Typography> */}
+                {/* <VariantSizeSection size={showVariants} /> */}
+                {/* <Typography>{showVariants.inter}</Typography> */}
                 {/* {showSize} */}
               </TableCell>
             </TableRow>
