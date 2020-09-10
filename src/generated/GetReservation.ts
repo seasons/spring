@@ -188,6 +188,7 @@ export interface GetReservation {
   shippedAt: any | null
   receivedAt: any | null
   returnAt: any | null
+  statusUpdatedAt: any | null
   createdAt: any
   updatedAt: any
 }
