@@ -1,8 +1,7 @@
 import React from "react"
-import { StatusField, SinceDateField, CheckField } from "fields"
-import { DateTime } from "luxon"
+import { SinceDateField } from "fields"
 import { Box, Typography, Table, TableBody, TableRow, TableCell, Card } from "@material-ui/core"
-import { head, stubArray } from "lodash"
+import { head } from "lodash"
 
 interface TrackingInfoProps {
   packageEvents: any
@@ -14,14 +13,10 @@ export const TrackingInfo: React.FC<TrackingInfoProps> = ({ packageEvents }) => 
   }
   const firstEvent: any = head(packageEvents)
   const eventData = firstEvent.data.data
-  const { trackingNumber, trackingHistory } = eventData
+  const { trackingHistory } = eventData
 
   return (
     <Box>
-      <Box mb={2}>
-        <Typography variant="h3">Package Events</Typography>
-      </Box>
-
       <Card>
         <Table>
           <TableBody>

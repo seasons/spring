@@ -83,6 +83,16 @@ export default {
         createdAt
         updatedAt
       }
+      adminLogs {
+        action
+        triggeredAt
+        changedFields
+        rowData
+        activeAdminUser {
+          id
+          fullName
+        }
+      }
       lastLocation {
         id
         slug

@@ -4,6 +4,8 @@
 // This file was automatically generated and should not be edited.
 
 import {
+  PackageTransitEventStatus,
+  AdminAction,
   InventoryStatus,
   PhysicalProductStatus,
   WarehouseLocationType,
@@ -83,6 +85,30 @@ export interface GetReservation_returnedPackage {
   id: string
   shippingLabel: GetReservation_returnedPackage_shippingLabel
   weight: number | null
+}
+
+export interface GetReservation_packageEvents {
+  __typename: "PackageTransitEvent"
+  id: string
+  data: any
+  status: PackageTransitEventStatus
+  createdAt: any
+  updatedAt: any
+}
+
+export interface GetReservation_adminLogs_activeAdminUser {
+  __typename: "User"
+  id: string
+  fullName: string
+}
+
+export interface GetReservation_adminLogs {
+  __typename: "AdminActionLog"
+  action: AdminAction
+  triggeredAt: any
+  changedFields: any | null
+  rowData: any
+  activeAdminUser: GetReservation_adminLogs_activeAdminUser
 }
 
 export interface GetReservation_lastLocation {
@@ -179,6 +205,8 @@ export interface GetReservation {
   customer: GetReservation_customer
   sentPackage: GetReservation_sentPackage | null
   returnedPackage: GetReservation_returnedPackage | null
+  packageEvents: GetReservation_packageEvents[] | null
+  adminLogs: GetReservation_adminLogs[]
   lastLocation: GetReservation_lastLocation | null
   products: GetReservation_products[]
   images: GetReservation_images[]

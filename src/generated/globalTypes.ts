@@ -7,6 +7,13 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum AdminAction {
+  Delete = "Delete",
+  Insert = "Insert",
+  Truncate = "Truncate",
+  Update = "Update",
+}
+
 export enum AppRoute {
   Account = "Account",
   BagStack = "BagStack",

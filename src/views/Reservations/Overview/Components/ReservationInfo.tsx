@@ -4,7 +4,6 @@ import { DateTime } from "luxon"
 import { Button, Card, Link, Table, TableBody, TableCell, TableRow, Box, Grid, Chip } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { Spacer } from "components"
-import { TrackingInfo } from "./TrackingInfo"
 
 export const ReservationInfo = ({ reservation, ...rest }) => {
   const { reservationNumber } = reservation
