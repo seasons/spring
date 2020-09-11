@@ -49,9 +49,9 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
       })
     },
   })
-
+  // Need to adjust logic here
   const totalNum = (productTotal: ProductEditQuery_inventoryStatuses) => {
-    return totalNum
+    return productTotal
   }
 
   return (
