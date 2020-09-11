@@ -22,11 +22,6 @@ export const OverviewView: React.FunctionComponent<ReservationManageViewProps> =
     setMode(value)
   }
 
-  if (!data) {
-    alert("no data")
-    return <>{"hi"}</>
-  }
-
   return (
     <Box>
       <Container maxWidth={false}>
