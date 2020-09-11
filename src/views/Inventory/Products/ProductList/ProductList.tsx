@@ -14,6 +14,10 @@ import { BulkPublishButton } from "./BulkPublishButton"
 import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Components"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/PhysicalProducts/mutations"
 import PhysicalProduct from "queries/PhysicalProduct"
+import {
+  ProductEditQuery_product_variants,
+  ProductEditQuery_product_variants_physicalProducts,
+} from "generated/ProductEditQuery"
 
 export interface ProductListInterface {
   onNewProductBtnPressed: () => void
@@ -49,7 +53,9 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
     },
   })
   // Need to adjust logic here
-  const totalNum = ProductVariantsSection?.length
+  const totalNum = (variant: ProductEditQuery_product_variants) => {
+    return variant.physicalProducts?.length
+  }
 
   return (
     <>
@@ -94,9 +100,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
           <TextField source="name" />
           <BrandField label="Brand" />
           <TextField source="category.name" label="Category" />
-          <TextField source={totalNum} label="Total Count">
-            {" "}
-          </TextField>
+          <TextField source={totalNum} label="Total Count" />
           <SinceDateField source="publishedAt" label="Published" />
           <CheckField source="status" value="Available" />
           <TextField source="photographyStatus" label="Photography" />
