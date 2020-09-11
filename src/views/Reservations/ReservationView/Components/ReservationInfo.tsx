@@ -23,6 +23,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
       <div>{state}</div>
     </Box>
   )
+  // color for tracking url if needed blue100: "#2442EC",
   // Making changes to track reservation
   let step
   let trackingURL
