@@ -9,11 +9,10 @@ import { ExpandedRow } from "./ExpandedRow"
 import { PrintBarcodesModal } from "./PrintBarcodesModal"
 import { UpdatePhysicalProductStatusModal } from "./UpdatePhysicalProductStatusModal"
 import { useMutation } from "react-apollo"
-import { StowProductModal } from "../Components"
+import { StowProductModal, ProductVariantsSection } from "../Components"
 import { BulkPublishButton } from "./BulkPublishButton"
 import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Components"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/PhysicalProducts/mutations"
-import { ProductEditQuery_inventoryStatuses } from "generated/ProductEditQuery"
 import PhysicalProduct from "queries/PhysicalProduct"
 
 export interface ProductListInterface {
@@ -50,9 +49,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
     },
   })
   // Need to adjust logic here
-  const totalNum = (productTotal: ProductEditQuery_inventoryStatuses) => {
-    return productTotal
-  }
+  const totalNum = ProductVariantsSection?.length
 
   return (
     <>
