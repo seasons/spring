@@ -38,20 +38,6 @@ export const PhysicalProductFragment = gql`
         materialCategory {
           slug
         }
-        season {
-          id
-          internalSeason {
-            id
-            year
-            seasonCode
-          }
-          vendorSeason {
-            id
-            year
-            seasonCode
-          }
-          wearableSeasons
-        }
         photographyStatus
         status
       }
