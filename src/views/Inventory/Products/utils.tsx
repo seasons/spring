@@ -128,7 +128,6 @@ export const getProductUpsertData = (values: any) => {
     productType,
     photographyStatus,
     retailPrice,
-    season,
     secondaryColor: secondaryColorCode,
     status,
     tags,
@@ -235,6 +234,17 @@ export const getProductUpsertData = (values: any) => {
     }
   })
 
+  let season
+  if (wearableSeasons || internalSeasonSeasonCode || internalSeasonYear || vendorSeasonSeasonCode || vendorSeasonYear) {
+    season = {
+      wearableSeasons,
+      internalSeasonSeasonCode,
+      internalSeasonYear,
+      vendorSeasonSeasonCode,
+      vendorSeasonYear,
+    }
+  }
+
   // Piece all the data together
   const productsData = {
     architecture: architecture,
@@ -254,17 +264,12 @@ export const getProductUpsertData = (values: any) => {
     outerMaterials: outerMaterials || [],
     photographyStatus,
     retailPrice: parseInt(retailPrice),
-    season,
     secondaryColorCode,
     status,
     tags: tags || [],
     type: productType,
     variants: variantsData,
-    wearableSeasons,
-    internalSeasonSeasonCode,
-    internalSeasonYear,
-    vendorSeasonSeasonCode,
-    vendorSeasonYear,
+    season,
   }
   return productsData
 }
@@ -310,6 +315,17 @@ export const getProductUpdateData = (values: any) => {
     })
     .filter(Boolean)
 
+  let season
+  if (wearableSeasons || internalSeasonSeasonCode || internalSeasonYear || vendorSeasonSeasonCode || vendorSeasonYear) {
+    season = {
+      wearableSeasons,
+      internalSeasonSeasonCode,
+      internalSeasonYear,
+      vendorSeasonSeasonCode,
+      vendorSeasonYear,
+    }
+  }
+
   const updateProductData = {
     architecture,
     bottomSizeType: bottomSizeType ?? "WxL",
@@ -332,11 +348,7 @@ export const getProductUpdateData = (values: any) => {
     status,
     tags,
     type: productType,
-    wearableSeasons,
-    internalSeasonSeasonCode,
-    internalSeasonYear,
-    vendorSeasonSeasonCode,
-    vendorSeasonYear,
+    season,
   }
 
   return updateProductData
