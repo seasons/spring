@@ -53,7 +53,7 @@ export const ProductCard = props => {
   const { name, brand } = product
   const image = product.images?.[0]
   const color = product.color
-  // let variants = props.variantSizeSection
+  // let variants = props.variantSizeSection ProductEditQuery_product_variants_internalSize
   // const sizeVariants = variants.filter((a) => !!a?.internalSize?.display)
   // const showSize = sizeVariants.map((variant: any) => {
   //   return (
