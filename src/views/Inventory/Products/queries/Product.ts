@@ -168,6 +168,21 @@ export const PRODUCT_VARIANT_UPSERT_QUERY = gql`
   ${ProductFragment}
 `
 
+export const PHYSICAL_PRODUCT_STATUSES_QUERY = gql`
+  query PhysicalProductStatusesQuery {
+    inventoryStatuses: __type(name: "InventoryStatus") {
+      enumValues {
+        name
+      }
+    }
+
+    physicalProductStatuses: __type(name: "PhysicalProductStatus") {
+      enumValues {
+        name
+      }
+    }
+  }
+`
 export const PRODUCT_EDIT_QUERY = gql`
   query ProductEditQuery($input: ProductWhereUniqueInput!) {
     ...ProductUpsert
