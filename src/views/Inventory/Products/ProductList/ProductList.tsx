@@ -100,6 +100,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
           <TextField source="name" />
           <BrandField label="Brand" />
           <TextField source="category.name" label="Category" />
+          {/* Want to get the total count to show up here */}
           <TextField source={totalNum} label="Total Count" />
           <SinceDateField source="publishedAt" label="Published" />
           <CheckField source="status" value="Available" />
