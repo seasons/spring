@@ -82,7 +82,7 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct, toggleS
       {openPickModal && (
         <PickPhysicalProductModal
           open={openPickModal}
-          onClose={onClosePickModal}
+          setOpen={setOpenPickModal}
           physicalProduct={physicalProduct as any}
           toggleSnackbar={toggleSnackbar}
         />
