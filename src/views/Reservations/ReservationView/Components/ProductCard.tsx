@@ -14,10 +14,10 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import { Box, Table, TableBody, TableCell, TableRow, Chip, Divider } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { WarehouseLocationPopover } from "components/WarehouseLocationPopover"
-// import { VariantSizeSectionProps, VariantSizeSection } from "views/Inventory/Products/Components/VariantSizeSection"
+import { ProductEditQuery_product_variants } from "generated/ProductEditQuery"
 
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
-// import Size from "queries/Size"
+import { Variants } from "views/Inventory/Products/Components"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,13 +53,13 @@ export const ProductCard = props => {
   const { name, brand } = product
   const image = product.images?.[0]
   const color = product.color
-  // let variants = props.variantSizeSection ProductEditQuery_product_variants_internalSize
-  // const sizeVariants = variants.filter((a) => !!a?.internalSize?.display)
-  // const showSize = sizeVariants.map((variant: any) => {
-  //   return (
-  //     <Typography>{variant?.internalSize?.display}</Typography>
-  //   )
-  // })
+  // ProductEditQuery_product_variants_internalSize =====> Not sure if I should be using this one.
+  const grabVariants = (variants: ProductEditQuery_product_variants) => {
+    const sizeVariants = variants.filter(a => !!a?.internalSize?.display)
+    sizeVariants.map((variants: any) => {
+      return <Typography>{variants?.internalSize?.display}</Typography>
+    })
+  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -98,13 +98,10 @@ export const ProductCard = props => {
               <TableCell>Product Size</TableCell>
               <TableCell align="right">
                 {/* Hardcoded this to find out why there is an error happening*/}
-                <Typography variant="body1" color="textSecondary">
+                {/* <Typography variant="body1" color="textSecondary">
                   medium
-                </Typography>
-                {/* {`size: ${Size}`} ====> physicalProduct.productVariant.internalSize     {props?.internalSize?.display}*/}
-                {/* <VariantSizeSection size={showVariants} /> */}
-                {/* <Typography>{showVariants.inter}</Typography> */}
-                {/* {showSize} */}
+                </Typography> */}
+                <Typography>{grabVariants}</Typography>
               </TableCell>
             </TableRow>
             <TableRow>
