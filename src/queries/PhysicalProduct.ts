@@ -12,6 +12,8 @@ export const PhysicalProductFragment = gql`
     dateReceived
     productStatus
     createdAt
+    barcoded
+    barcode
     reservations(orderBy: createdAt_DESC) {
       id
       customer {

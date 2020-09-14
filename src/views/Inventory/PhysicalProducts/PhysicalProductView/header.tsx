@@ -3,6 +3,7 @@ import { Header } from "components"
 import { HeaderRenderProps } from "components/DetailView"
 import { useRefresh } from "@seasons/react-admin"
 import { OffloadPhysicalProductModal, PickPhysicalProductModal } from "../Components"
+import { PrintBarcodeModal } from "../Components/PrintBarcodeModal"
 
 export const PhysicalProductDetailViewHeader = ({ data: physicalProduct, toggleSnackbar }: HeaderRenderProps) => {
   const { productVariant, seasonsUID } = physicalProduct
@@ -11,6 +12,7 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct, toggleS
   // Modal handlers
   const [openOffloadModal, setOpenOffloadModal] = useState(false)
   const [openPickModal, setOpenPickModal] = useState(false)
+  const [openPrintBarcodeModal, setOpenPrintBarcodeModal] = useState(false)
   const onCloseOffloadModal = () => {
     setOpenOffloadModal(false)
     refresh()
@@ -49,6 +51,10 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct, toggleS
       text: "Pick",
       action: async () => setOpenPickModal(true),
     },
+    {
+      text: "Print barcode",
+      action: async () => setOpenPrintBarcodeModal(true),
+    },
   ] as any
   if (physicalProduct.inventoryStatus !== "Offloaded") {
     menuItems.push({
@@ -79,6 +85,14 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct, toggleS
           onClose={onClosePickModal}
           physicalProduct={physicalProduct as any}
           toggleSnackbar={toggleSnackbar}
+        />
+      )}
+      {openPrintBarcodeModal && (
+        <PrintBarcodeModal
+          physicalProduct={physicalProduct}
+          toggleSnackbar={toggleSnackbar}
+          open={openPrintBarcodeModal}
+          setOpen={setOpenPrintBarcodeModal}
         />
       )}
     </>
