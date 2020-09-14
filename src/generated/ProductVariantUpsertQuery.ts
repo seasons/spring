@@ -14,6 +14,8 @@ import {
   PhysicalProductOffloadMethod,
   ProductStatus,
   ProductArchitecture,
+  SeasonCode,
+  SeasonString,
 } from "./globalTypes"
 
 // ====================================================
@@ -111,6 +113,28 @@ export interface ProductVariantUpsertQuery_product_variants {
   physicalProducts: ProductVariantUpsertQuery_product_variants_physicalProducts[] | null
 }
 
+export interface ProductVariantUpsertQuery_product_season_internalSeason {
+  __typename: "Season"
+  id: string
+  year: number | null
+  seasonCode: SeasonCode | null
+}
+
+export interface ProductVariantUpsertQuery_product_season_vendorSeason {
+  __typename: "Season"
+  id: string
+  year: number | null
+  seasonCode: SeasonCode | null
+}
+
+export interface ProductVariantUpsertQuery_product_season {
+  __typename: "ProductSeason"
+  id: string
+  internalSeason: ProductVariantUpsertQuery_product_season_internalSeason
+  vendorSeason: ProductVariantUpsertQuery_product_season_vendorSeason | null
+  wearableSeasons: SeasonString[]
+}
+
 export interface ProductVariantUpsertQuery_product_color {
   __typename: "Color"
   id: string
@@ -173,7 +197,7 @@ export interface ProductVariantUpsertQuery_product {
   architecture: ProductArchitecture | null
   innerMaterials: string[]
   outerMaterials: string[]
-  season: string | null
+  season: ProductVariantUpsertQuery_product_season | null
   type: ProductType | null
   color: ProductVariantUpsertQuery_product_color
   functions: ProductVariantUpsertQuery_product_functions[] | null

@@ -38,7 +38,6 @@ export const PhysicalProductFragment = gql`
         materialCategory {
           slug
         }
-        season
         photographyStatus
         status
       }

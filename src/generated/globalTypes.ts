@@ -260,6 +260,22 @@ export enum SearchResultType {
   Product = "Product",
 }
 
+export enum SeasonCode {
+  AW = "AW",
+  FW = "FW",
+  HO = "HO",
+  PF = "PF",
+  PS = "PS",
+  SS = "SS",
+}
+
+export enum SeasonString {
+  Fall = "Fall",
+  Spring = "Spring",
+  Summer = "Summer",
+  Winter = "Winter",
+}
+
 export enum SmsStatus {
   Accepted = "Accepted",
   Delivered = "Delivered",
@@ -3311,7 +3327,7 @@ export interface ProductCreateInput {
   modelHeight?: number | null
   retailPrice?: number | null
   status?: ProductStatus | null
-  season?: string | null
+  seasonDeprecated?: string | null
   architecture?: ProductArchitecture | null
   photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
@@ -3329,6 +3345,7 @@ export interface ProductCreateInput {
   materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   variants?: ProductVariantCreateManyWithoutProductInput | null
   statusChanges?: ProductStatusChangeCreateManyWithoutProductInput | null
+  season?: ProductSeasonCreateOneInput | null
 }
 
 export interface ProductCreateManyInput {
@@ -3361,7 +3378,7 @@ export interface ProductCreateWithoutBrandInput {
   modelHeight?: number | null
   retailPrice?: number | null
   status?: ProductStatus | null
-  season?: string | null
+  seasonDeprecated?: string | null
   architecture?: ProductArchitecture | null
   photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
@@ -3378,6 +3395,7 @@ export interface ProductCreateWithoutBrandInput {
   materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   variants?: ProductVariantCreateManyWithoutProductInput | null
   statusChanges?: ProductStatusChangeCreateManyWithoutProductInput | null
+  season?: ProductSeasonCreateOneInput | null
 }
 
 export interface ProductCreateWithoutCategoryInput {
@@ -3390,7 +3408,7 @@ export interface ProductCreateWithoutCategoryInput {
   modelHeight?: number | null
   retailPrice?: number | null
   status?: ProductStatus | null
-  season?: string | null
+  seasonDeprecated?: string | null
   architecture?: ProductArchitecture | null
   photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
@@ -3407,6 +3425,7 @@ export interface ProductCreateWithoutCategoryInput {
   materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   variants?: ProductVariantCreateManyWithoutProductInput | null
   statusChanges?: ProductStatusChangeCreateManyWithoutProductInput | null
+  season?: ProductSeasonCreateOneInput | null
 }
 
 export interface ProductCreateWithoutVariantsInput {
@@ -3419,7 +3438,7 @@ export interface ProductCreateWithoutVariantsInput {
   modelHeight?: number | null
   retailPrice?: number | null
   status?: ProductStatus | null
-  season?: string | null
+  seasonDeprecated?: string | null
   architecture?: ProductArchitecture | null
   photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
@@ -3436,6 +3455,7 @@ export interface ProductCreateWithoutVariantsInput {
   functions?: ProductFunctionCreateManyInput | null
   materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   statusChanges?: ProductStatusChangeCreateManyWithoutProductInput | null
+  season?: ProductSeasonCreateOneInput | null
 }
 
 export interface ProductCreateinnerMaterialsInput {
@@ -3826,20 +3846,20 @@ export interface ProductScalarWhereInput {
   status_not?: ProductStatus | null
   status_in?: ProductStatus[] | null
   status_not_in?: ProductStatus[] | null
-  season?: string | null
-  season_not?: string | null
-  season_in?: string[] | null
-  season_not_in?: string[] | null
-  season_lt?: string | null
-  season_lte?: string | null
-  season_gt?: string | null
-  season_gte?: string | null
-  season_contains?: string | null
-  season_not_contains?: string | null
-  season_starts_with?: string | null
-  season_not_starts_with?: string | null
-  season_ends_with?: string | null
-  season_not_ends_with?: string | null
+  seasonDeprecated?: string | null
+  seasonDeprecated_not?: string | null
+  seasonDeprecated_in?: string[] | null
+  seasonDeprecated_not_in?: string[] | null
+  seasonDeprecated_lt?: string | null
+  seasonDeprecated_lte?: string | null
+  seasonDeprecated_gt?: string | null
+  seasonDeprecated_gte?: string | null
+  seasonDeprecated_contains?: string | null
+  seasonDeprecated_not_contains?: string | null
+  seasonDeprecated_starts_with?: string | null
+  seasonDeprecated_not_starts_with?: string | null
+  seasonDeprecated_ends_with?: string | null
+  seasonDeprecated_not_ends_with?: string | null
   architecture?: ProductArchitecture | null
   architecture_not?: ProductArchitecture | null
   architecture_in?: ProductArchitecture[] | null
@@ -3872,6 +3892,72 @@ export interface ProductScalarWhereInput {
   updatedAt_lte?: any | null
   updatedAt_gt?: any | null
   updatedAt_gte?: any | null
+}
+
+export interface ProductSeasonCreateInput {
+  id?: string | null
+  wearableSeasons?: ProductSeasonCreatewearableSeasonsInput | null
+  vendorSeason?: SeasonCreateOneInput | null
+  internalSeason: SeasonCreateOneInput
+}
+
+export interface ProductSeasonCreateOneInput {
+  create?: ProductSeasonCreateInput | null
+  connect?: ProductSeasonWhereUniqueInput | null
+}
+
+export interface ProductSeasonCreatewearableSeasonsInput {
+  set?: SeasonString[] | null
+}
+
+export interface ProductSeasonUpdateDataInput {
+  wearableSeasons?: ProductSeasonUpdatewearableSeasonsInput | null
+  vendorSeason?: SeasonUpdateOneInput | null
+  internalSeason?: SeasonUpdateOneRequiredInput | null
+}
+
+export interface ProductSeasonUpdateOneInput {
+  create?: ProductSeasonCreateInput | null
+  connect?: ProductSeasonWhereUniqueInput | null
+  disconnect?: boolean | null
+  delete?: boolean | null
+  update?: ProductSeasonUpdateDataInput | null
+  upsert?: ProductSeasonUpsertNestedInput | null
+}
+
+export interface ProductSeasonUpdatewearableSeasonsInput {
+  set?: SeasonString[] | null
+}
+
+export interface ProductSeasonUpsertNestedInput {
+  update: ProductSeasonUpdateDataInput
+  create: ProductSeasonCreateInput
+}
+
+export interface ProductSeasonWhereInput {
+  AND?: ProductSeasonWhereInput[] | null
+  OR?: ProductSeasonWhereInput[] | null
+  NOT?: ProductSeasonWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  vendorSeason?: SeasonWhereInput | null
+  internalSeason?: SeasonWhereInput | null
+}
+
+export interface ProductSeasonWhereUniqueInput {
+  id?: string | null
 }
 
 export interface ProductStateInput {
@@ -4032,7 +4118,7 @@ export interface ProductUpdateDataInput {
   modelHeight?: number | null
   retailPrice?: number | null
   status?: ProductStatus | null
-  season?: string | null
+  seasonDeprecated?: string | null
   architecture?: ProductArchitecture | null
   photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
@@ -4050,6 +4136,7 @@ export interface ProductUpdateDataInput {
   materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   variants?: ProductVariantUpdateManyWithoutProductInput | null
   statusChanges?: ProductStatusChangeUpdateManyWithoutProductInput | null
+  season?: ProductSeasonUpdateOneInput | null
 }
 
 export interface ProductUpdateManyDataInput {
@@ -4061,7 +4148,7 @@ export interface ProductUpdateManyDataInput {
   modelHeight?: number | null
   retailPrice?: number | null
   status?: ProductStatus | null
-  season?: string | null
+  seasonDeprecated?: string | null
   architecture?: ProductArchitecture | null
   photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
@@ -4141,7 +4228,7 @@ export interface ProductUpdateWithoutBrandDataInput {
   modelHeight?: number | null
   retailPrice?: number | null
   status?: ProductStatus | null
-  season?: string | null
+  seasonDeprecated?: string | null
   architecture?: ProductArchitecture | null
   photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
@@ -4158,6 +4245,7 @@ export interface ProductUpdateWithoutBrandDataInput {
   materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   variants?: ProductVariantUpdateManyWithoutProductInput | null
   statusChanges?: ProductStatusChangeUpdateManyWithoutProductInput | null
+  season?: ProductSeasonUpdateOneInput | null
 }
 
 export interface ProductUpdateWithoutCategoryDataInput {
@@ -4169,7 +4257,7 @@ export interface ProductUpdateWithoutCategoryDataInput {
   modelHeight?: number | null
   retailPrice?: number | null
   status?: ProductStatus | null
-  season?: string | null
+  seasonDeprecated?: string | null
   architecture?: ProductArchitecture | null
   photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
@@ -4186,6 +4274,7 @@ export interface ProductUpdateWithoutCategoryDataInput {
   materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   variants?: ProductVariantUpdateManyWithoutProductInput | null
   statusChanges?: ProductStatusChangeUpdateManyWithoutProductInput | null
+  season?: ProductSeasonUpdateOneInput | null
 }
 
 export interface ProductUpdateWithoutVariantsDataInput {
@@ -4197,7 +4286,7 @@ export interface ProductUpdateWithoutVariantsDataInput {
   modelHeight?: number | null
   retailPrice?: number | null
   status?: ProductStatus | null
-  season?: string | null
+  seasonDeprecated?: string | null
   architecture?: ProductArchitecture | null
   photographyStatus?: PhotographyStatus | null
   publishedAt?: any | null
@@ -4214,6 +4303,7 @@ export interface ProductUpdateWithoutVariantsDataInput {
   functions?: ProductFunctionUpdateManyInput | null
   materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   statusChanges?: ProductStatusChangeUpdateManyWithoutProductInput | null
+  season?: ProductSeasonUpdateOneInput | null
 }
 
 export interface ProductUpdateinnerMaterialsInput {
@@ -4896,20 +4986,20 @@ export interface ProductWhereInput {
   status_not?: ProductStatus | null
   status_in?: ProductStatus[] | null
   status_not_in?: ProductStatus[] | null
-  season?: string | null
-  season_not?: string | null
-  season_in?: string[] | null
-  season_not_in?: string[] | null
-  season_lt?: string | null
-  season_lte?: string | null
-  season_gt?: string | null
-  season_gte?: string | null
-  season_contains?: string | null
-  season_not_contains?: string | null
-  season_starts_with?: string | null
-  season_not_starts_with?: string | null
-  season_ends_with?: string | null
-  season_not_ends_with?: string | null
+  seasonDeprecated?: string | null
+  seasonDeprecated_not?: string | null
+  seasonDeprecated_in?: string[] | null
+  seasonDeprecated_not_in?: string[] | null
+  seasonDeprecated_lt?: string | null
+  seasonDeprecated_lte?: string | null
+  seasonDeprecated_gt?: string | null
+  seasonDeprecated_gte?: string | null
+  seasonDeprecated_contains?: string | null
+  seasonDeprecated_not_contains?: string | null
+  seasonDeprecated_starts_with?: string | null
+  seasonDeprecated_not_starts_with?: string | null
+  seasonDeprecated_ends_with?: string | null
+  seasonDeprecated_not_ends_with?: string | null
   architecture?: ProductArchitecture | null
   architecture_not?: ProductArchitecture | null
   architecture_in?: ProductArchitecture[] | null
@@ -4964,6 +5054,7 @@ export interface ProductWhereInput {
   statusChanges_every?: ProductStatusChangeWhereInput | null
   statusChanges_some?: ProductStatusChangeWhereInput | null
   statusChanges_none?: ProductStatusChangeWhereInput | null
+  season?: ProductSeasonWhereInput | null
 }
 
 export interface ProductWhereUniqueInput {
@@ -5820,6 +5911,79 @@ export interface ReservationUpsertWithoutPackageEventsInput {
 export interface ReservationWhereUniqueInput {
   id?: string | null
   reservationNumber?: number | null
+}
+
+export interface SeasonCreateInput {
+  id?: string | null
+  year?: number | null
+  seasonCode?: SeasonCode | null
+}
+
+export interface SeasonCreateOneInput {
+  create?: SeasonCreateInput | null
+  connect?: SeasonWhereUniqueInput | null
+}
+
+export interface SeasonUpdateDataInput {
+  year?: number | null
+  seasonCode?: SeasonCode | null
+}
+
+export interface SeasonUpdateOneInput {
+  create?: SeasonCreateInput | null
+  connect?: SeasonWhereUniqueInput | null
+  disconnect?: boolean | null
+  delete?: boolean | null
+  update?: SeasonUpdateDataInput | null
+  upsert?: SeasonUpsertNestedInput | null
+}
+
+export interface SeasonUpdateOneRequiredInput {
+  create?: SeasonCreateInput | null
+  connect?: SeasonWhereUniqueInput | null
+  update?: SeasonUpdateDataInput | null
+  upsert?: SeasonUpsertNestedInput | null
+}
+
+export interface SeasonUpsertNestedInput {
+  update: SeasonUpdateDataInput
+  create: SeasonCreateInput
+}
+
+export interface SeasonWhereInput {
+  AND?: SeasonWhereInput[] | null
+  OR?: SeasonWhereInput[] | null
+  NOT?: SeasonWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  year?: number | null
+  year_not?: number | null
+  year_in?: number[] | null
+  year_not_in?: number[] | null
+  year_lt?: number | null
+  year_lte?: number | null
+  year_gt?: number | null
+  year_gte?: number | null
+  seasonCode?: SeasonCode | null
+  seasonCode_not?: SeasonCode | null
+  seasonCode_in?: SeasonCode[] | null
+  seasonCode_not_in?: SeasonCode[] | null
+}
+
+export interface SeasonWhereUniqueInput {
+  id?: string | null
 }
 
 export interface SizeCreateInput {

@@ -63,7 +63,20 @@ export const ProductFragment = gql`
     photographyStatus
     innerMaterials
     outerMaterials
-    season
+    season {
+      id
+      internalSeason {
+        id
+        year
+        seasonCode
+      }
+      vendorSeason {
+        id
+        year
+        seasonCode
+      }
+      wearableSeasons
+    }
     status
     type
     color {
