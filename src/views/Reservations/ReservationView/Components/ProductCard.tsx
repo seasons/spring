@@ -17,7 +17,6 @@ import { WarehouseLocationPopover } from "components/WarehouseLocationPopover"
 import { ProductEditQuery_product_variants } from "generated/ProductEditQuery"
 
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
-import { Variants } from "views/Inventory/Products/Components"
 
 const useStyles = makeStyles(theme => ({
   root: {
