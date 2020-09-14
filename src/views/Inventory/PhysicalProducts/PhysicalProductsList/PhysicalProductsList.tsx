@@ -125,7 +125,12 @@ export const PhysicalProductsList: React.FC<PhysicalProductsListInterface> = ({ 
           <TextField source="productVariant.product.name" label="Product Name" />
           <TextField source="productVariant.product.category.name" label="Category" />
           <TextField source="warehouseLocation.barcode" label="Warehouse Location" />
-          <ViewEntityField source="id" entityPath="inventory/product/variant/physicalProduct" label="Actions" />
+          <ViewEntityField
+            source="id"
+            entityPath="inventory/product/variant/physicalProduct"
+            entityTab={"manage"}
+            label="Actions"
+          />
         </Datagrid>
       </List>
 

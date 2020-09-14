@@ -1,0 +1,86 @@
+import React, { useState } from "react"
+import { Header } from "components"
+import { HeaderRenderProps } from "components/DetailView"
+import { useRefresh } from "@seasons/react-admin"
+import { OffloadPhysicalProductModal, PickPhysicalProductModal } from "../Components"
+
+export const PhysicalProductDetailViewHeader = ({ data: physicalProduct, toggleSnackbar }: HeaderRenderProps) => {
+  const { productVariant, seasonsUID } = physicalProduct
+  const refresh = useRefresh()
+
+  // Modal handlers
+  const [openOffloadModal, setOpenOffloadModal] = useState(false)
+  const [openPickModal, setOpenPickModal] = useState(false)
+  const onCloseOffloadModal = () => {
+    setOpenOffloadModal(false)
+    refresh()
+  }
+  const onClosePickModal = () => {
+    setOpenPickModal(false)
+    refresh()
+  }
+
+  // Create breadcrumbs
+  const breadcrumbs = [
+    {
+      title: "Physical products",
+      url: "/inventory/physicalproducts",
+    },
+  ]
+  if (productVariant) {
+    const { product } = productVariant
+    breadcrumbs.push({
+      title: product.name,
+      url: `/inventory/products/${product.id}`,
+    })
+    breadcrumbs.push({
+      title: productVariant.sku || "",
+      url: `/inventory/product/variants/${productVariant.id}`,
+    })
+    breadcrumbs.push({
+      title: seasonsUID,
+      url: `/inventory/product/variants/physicalProducts/${physicalProduct.id}`,
+    })
+  }
+
+  // Create menu items
+  const menuItems = [
+    {
+      text: "Pick",
+      action: async () => setOpenPickModal(true),
+    },
+  ] as any
+  if (physicalProduct.inventoryStatus !== "Offloaded") {
+    menuItems.push({
+      text: "Offload",
+      action: async () => setOpenOffloadModal(true),
+    })
+  }
+
+  return (
+    <>
+      <Header
+        title="Physical product edit"
+        subtitle="Edit physical product data"
+        breadcrumbs={breadcrumbs}
+        menuItems={menuItems}
+      />
+      {openOffloadModal && (
+        <OffloadPhysicalProductModal
+          open={openOffloadModal}
+          onClose={onCloseOffloadModal}
+          physicalProduct={physicalProduct as any}
+          toggleSnackbar={toggleSnackbar}
+        />
+      )}
+      {openPickModal && (
+        <PickPhysicalProductModal
+          open={openPickModal}
+          onClose={onClosePickModal}
+          physicalProduct={physicalProduct as any}
+          toggleSnackbar={toggleSnackbar}
+        />
+      )}
+    </>
+  )
+}

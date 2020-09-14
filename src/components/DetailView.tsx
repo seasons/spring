@@ -31,15 +31,17 @@ export interface TabRenderProps {
   adminKey: string
   recordID: string
   match: DetailViewMatch
+  toggleSnackbar: (state: SnackbarState) => void
 }
 
 export interface HeaderRenderProps {
   data: any
+  toggleSnackbar: (state: SnackbarState) => void
 }
 
 export interface DetailViewProps {
   match: DetailViewMatch
-  resource: "Customer" | "Reservation"
+  resource: "Customer" | "Reservation" | "PhysicalProduct"
   renderHeader: (props: HeaderRenderProps) => React.Component
   tabs: Array<{
     value: string
@@ -67,12 +69,12 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
   })
 
   // Get the data
-  const { data, loading, error } = useQueryWithStore({
+  const { data, loading, loaded, error } = useQueryWithStore({
     type: "getOne",
     resource,
     payload: { id: recordID },
   })
-  if (loading) return <Loading />
+  if (!loaded || loading) return <Loading />
   if (error || !data) return <ComponentError />
 
   // Edge Case
@@ -86,11 +88,11 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
   const renderCurrentTab = () => {
     const activeTab = tabs.find(t => t.value === currentTab)
     const adminStoreKey = JSON.stringify({ type: "GET_ONE", resource, payload: { id: data.id } })
-    return activeTab?.render({ data, adminKey: adminStoreKey, match, recordID: match.params.id })
+    return activeTab?.render({ data, adminKey: adminStoreKey, match, recordID: match.params.id, toggleSnackbar })
   }
   return (
     <Container maxWidth={false}>
-      {renderHeader({ data })}
+      {renderHeader({ data, toggleSnackbar })}
       <Spacer mt={2} />
       <Tabs
         indicatorColor={"primary"}
