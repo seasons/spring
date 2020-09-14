@@ -19,7 +19,6 @@ export const PrintBarcodeModal: React.FC<PrintBarcodeModalProps> = ({
   toggleSnackbar,
   setOpen,
 }) => {
-  console.log(physicalProduct)
   const { id: physicalProductID, barcoded, barcode, seasonsUID } = physicalProduct
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onError: error =>
