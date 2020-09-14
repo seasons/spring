@@ -41,11 +41,13 @@ export const PhysicalProductFragment = gql`
       }
     }
     warehouseLocation {
+      id
       barcode
       locationCode
       type
     }
     productVariant {
+      id
       sku
       internalSize {
         display
@@ -53,17 +55,21 @@ export const PhysicalProductFragment = gql`
       retailPrice
 
       product {
+        id
         name
         publishedAt
         category {
+          id
           name
         }
         createdAt
         brand {
+          id
           name
         }
         architecture
         materialCategory {
+          id
           slug
         }
         photographyStatus
