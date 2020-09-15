@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Container } from "@material-ui/core"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
-import { useHistory, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { pick } from "lodash"
 import { Snackbar, Spacer, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
@@ -15,7 +15,6 @@ import { getProductUpdateData } from "../utils"
 export interface ProductEditProps {}
 
 export const ProductEdit: React.FC<ProductEditProps> = props => {
-  const history = useHistory()
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
@@ -83,14 +82,18 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
       productType: product.type,
       secondaryColor: product.secondaryColor?.colorCode,
       sizes: availableSizes,
+      wearableSeasons: product.season?.wearableSeasons,
       tags: product.tags.map(tag => tag.name),
+      vendorSeasonSeasonCode: product.season?.vendorSeason?.seasonCode,
+      vendorSeasonYear: product.season?.vendorSeason?.year,
+      internalSeasonSeasonCode: product.season?.internalSeason?.seasonCode,
+      internalSeasonYear: product.season?.internalSeason?.year,
       ...pick(product, [
         "description",
         "name",
         "innerMaterials",
         "outerMaterials",
         "retailPrice",
-        "season",
         "status",
         "photographyStatus",
       ]),

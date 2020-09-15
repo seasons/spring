@@ -128,10 +128,14 @@ export const getProductUpsertData = (values: any) => {
     productType,
     photographyStatus,
     retailPrice,
-    season,
     secondaryColor: secondaryColorCode,
     status,
     tags,
+    wearableSeasons,
+    internalSeasonSeasonCode,
+    internalSeasonYear,
+    vendorSeasonSeasonCode,
+    vendorSeasonYear,
   } = values
 
   // Get the image files which are stored as image_0, image_1, etc.
@@ -230,6 +234,17 @@ export const getProductUpsertData = (values: any) => {
     }
   })
 
+  let season
+  if (wearableSeasons || internalSeasonSeasonCode || internalSeasonYear || vendorSeasonSeasonCode || vendorSeasonYear) {
+    season = {
+      wearableSeasons,
+      internalSeasonSeasonCode,
+      internalSeasonYear,
+      vendorSeasonSeasonCode,
+      vendorSeasonYear,
+    }
+  }
+
   // Piece all the data together
   const productsData = {
     architecture: architecture,
@@ -249,12 +264,12 @@ export const getProductUpsertData = (values: any) => {
     outerMaterials: outerMaterials || [],
     photographyStatus,
     retailPrice: parseInt(retailPrice),
-    season,
     secondaryColorCode,
     status,
     tags: tags || [],
     type: productType,
     variants: variantsData,
+    season,
   }
   return productsData
 }
@@ -282,10 +297,14 @@ export const getProductUpdateData = (values: any) => {
     photographyStatus,
     productType,
     retailPrice,
-    season,
     secondaryColor: secondaryColorCode,
     status,
     tags,
+    wearableSeasons,
+    internalSeasonSeasonCode,
+    internalSeasonYear,
+    vendorSeasonSeasonCode,
+    vendorSeasonYear,
   } = values
 
   const modelSizeDisplay = modelSizeName ? getModelSizeDisplay(productType, modelSizeName, bottomSizeType) : null
@@ -295,6 +314,17 @@ export const getProductUpdateData = (values: any) => {
       return values[`image_${index}`]
     })
     .filter(Boolean)
+
+  let season
+  if (wearableSeasons || internalSeasonSeasonCode || internalSeasonYear || vendorSeasonSeasonCode || vendorSeasonYear) {
+    season = {
+      wearableSeasons,
+      internalSeasonSeasonCode,
+      internalSeasonYear,
+      vendorSeasonSeasonCode,
+      vendorSeasonYear,
+    }
+  }
 
   const updateProductData = {
     architecture,
@@ -314,11 +344,11 @@ export const getProductUpdateData = (values: any) => {
     outerMaterials: { set: outerMaterials },
     photographyStatus,
     retailPrice: parseInt(retailPrice),
-    season,
     secondaryColor: secondaryColorCode && { connect: { colorCode: secondaryColorCode } },
     status,
     tags,
     type: productType,
+    season,
   }
 
   return updateProductData

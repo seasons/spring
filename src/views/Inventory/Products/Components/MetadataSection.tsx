@@ -48,11 +48,6 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures,
             <SelectField name="modelSize" choices={sizes} />
           </Grid>
           <Grid item xs={6}>
-            <Text variant="h6">Season</Text>
-            <Spacer mt={1} />
-            <TextField name="season" />
-          </Grid>
-          <Grid item xs={6}>
             <Text variant="h6">Retail price</Text>
             <Spacer mt={1} />
             <TextField

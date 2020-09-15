@@ -22,6 +22,7 @@ import { UPDATE_PRODUCT } from "../mutations"
 import { DateTime } from "luxon"
 import { PRODUCT_EDIT_QUERY } from "../queries"
 import { uniq } from "lodash"
+import { SeasonsSection } from "."
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -205,6 +206,12 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
           />
           <Spacer mt={6} />
           <MetadataSection
+            architectures={productArchitectures}
+            models={data.productModels as ProductUpsertQuery_productModels[]}
+            sizes={sizes}
+          />
+          <Spacer mt={6} />
+          <SeasonsSection
             architectures={productArchitectures}
             models={data.productModels as ProductUpsertQuery_productModels[]}
             sizes={sizes}
