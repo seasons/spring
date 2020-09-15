@@ -44,6 +44,7 @@ export const PhysicalProductFragment = gql`
       id
       barcode
       locationCode
+      itemCode
       type
     }
     productVariant {
