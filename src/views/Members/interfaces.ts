@@ -46,10 +46,6 @@ export interface CreateMemberProps {
   onClose: () => void
 }
 
-export interface MemberViewHeaderProps extends MemberSubViewProps {
-  history: History
-}
-
 export interface EditModalProps {
   title: string
   editEntity: EditEntity

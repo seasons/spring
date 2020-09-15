@@ -100,7 +100,7 @@ export default [
         component: props => <VariantEdit {...props} basePath="/inventory/product/variants" resource="Product" />,
       },
       {
-        path: "/inventory/product/variant/physicalProduct/:physicalProductID",
+        path: "/inventory/product/variant/physicalProduct/:id/:tab",
         exact: true,
         component: props => (
           <PhysicalProductView {...props} basePath="/inventory/product/variant/physicalProduct" resource="Product" />
@@ -144,7 +144,7 @@ export default [
         component: props => <ReservationList {...props} basePath="/reservations" resource="Reservation" />,
       },
       {
-        path: "/reservation/:id",
+        path: "/reservation/:id/:tab",
         exact: true,
         component: props => <ReservationView {...props} basePath="/reservation" resource="Reservation" />,
       },
