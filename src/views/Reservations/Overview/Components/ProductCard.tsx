@@ -52,8 +52,9 @@ export const ProductCard = props => {
   const { name, brand } = product
   const image = product.images?.[0]
   const color = product.color
+
   // ProductEditQuery_product_variants_internalSize =====> Not sure if I should be using this one.
-  const grabVariants = (variants: ProductEditQuery_product_variants) => {
+  const grabVariants = (variants: ProductEditQuery_product_variants[]) => {
     const sizeVariants = variants.filter(a => !!a?.internalSize?.display)
     sizeVariants.map((variants: any) => {
       return <Typography>{variants?.internalSize?.display}</Typography>
