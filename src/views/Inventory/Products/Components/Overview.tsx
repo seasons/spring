@@ -227,6 +227,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
             photographyStatuses={photographyStatuses}
             types={productTypes}
             setProductType={setProductType}
+            currentStatus={product?.status}
           />
           <Spacer mt={6} />
           <MetadataSection
