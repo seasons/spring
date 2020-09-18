@@ -4,20 +4,23 @@ import { styled as muiStyled } from "@material-ui/core/styles"
 import { Spacer, Text, ComponentError } from "components"
 import { DatePickerField, SelectField, TextField } from "fields"
 import { getFormSelectChoices } from "utils/form"
-import { useQuery, useMutation } from "react-apollo"
+import { useQuery } from "react-apollo"
 import { PHYSICAL_PRODUCT_STATUSES_QUERY } from "views/Inventory/Products/queries/Product"
-import { Loading, useQueryWithStore } from "@seasons/react-admin"
+import { Loading } from "@seasons/react-admin"
+import { InventoryStatus } from "generated/globalTypes"
 
 export interface PhysicalProductFormProps {
   statuses?: any[]
   uid: string
   inventoryStatuses?: any[]
+  currentInventoryStatus?: InventoryStatus
 }
 
 export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
   statuses = [],
   uid,
   inventoryStatuses = [],
+  currentInventoryStatus = "",
 }) => {
   const receivedStatusesFromParent = statuses.length > 0 && inventoryStatuses.length > 0
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_STATUSES_QUERY, {
@@ -66,6 +69,7 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
         <SelectField
           name={`${uid}_inventoryStatus`}
           choices={inventoryStatusChoices}
+          disabled={["Offloaded", "Stored"].includes(currentInventoryStatus)}
           requiredString
           initialValue="NonReservable"
         />
