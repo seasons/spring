@@ -10,8 +10,7 @@ export const NOTIFY_USER = gql`
 
 export const NOTIFY_INTEREST = gql`
   mutation pushNotifyInterest($interest: PushNotificationInterest, $data: PushNotifDataInput!) {
-    # TODO: Turn off debug
-    pushNotifyInterest(interest: $interest, data: $data, debug: true) {
+    pushNotifyInterest(interest: $interest, data: $data, debug: false) {
       id
     }
   }
