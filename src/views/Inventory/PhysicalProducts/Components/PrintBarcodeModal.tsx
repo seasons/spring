@@ -38,7 +38,7 @@ export const PrintBarcodeModal: React.FC<PrintBarcodeModalProps> = ({
   const onClose = async (agreed: boolean) => {
     if (agreed) {
       jsonExport(
-        { id: physicalProductID, barcode },
+        [{ id: seasonsUID, barcode }],
         {
           headers: ["id", "barcode"],
         },
