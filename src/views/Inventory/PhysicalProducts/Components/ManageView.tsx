@@ -73,7 +73,7 @@ export const ManageView: React.FC<TabRenderProps> = ({ data, toggleSnackbar }) =
     <Box mx={5} display="flex" flexDirection="column">
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
         <Box>
-          <PhysicalProductForm uid={seasonsUID} />
+          <PhysicalProductForm uid={seasonsUID} currentInventoryStatus={inventoryStatus} />
         </Box>
       </Wizard>
       <Box display="flex" flexDirection="column" mb={2}>

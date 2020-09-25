@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { useMutation } from "react-apollo"
-import { useRedirect } from "@seasons/react-admin"
 import { useLocation } from "react-router-dom"
 import { Grid } from "@material-ui/core"
 import { ConfirmationDialog, Header, Spacer, ImageUpload } from "components"
@@ -32,9 +31,9 @@ export interface OverviewProps {
 
 export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackbar }) => {
   const location = useLocation()
-  const redirect = useRedirect()
   const [productType, setProductType] = useState(product?.type || "Top")
   const [isLongTermStorageDialogOpen, setIsLongTermStorageDialogOpen] = useState(false)
+  const [isRestoreFromLongTermStorageDialogOpen, setIsRestoreFromLongTermStorageDialogOpen] = useState(false)
   const [updateProduct] = useMutation(UPDATE_PRODUCT, {
     refetchQueries: [
       {
@@ -49,6 +48,13 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
         status: "error",
       })
     },
+    onCompleted: data => {
+      toggleSnackbar?.({
+        show: true,
+        message: "Success!",
+        status: "success",
+      })
+    },
   })
 
   const onCloseLongTermStorageDialog = async (agreed: boolean) => {
@@ -58,15 +64,26 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
     }
 
     // Update product status to be [Stored]
-    const result = await updateProduct({
+    await updateProduct({
       variables: {
         where: { id: product?.id },
         data: { status: "Stored" },
       },
     })
-    if (result?.data) {
-      redirect("/inventory/products")
+  }
+
+  const onCloseRestoreFromLongTermStorageDialog = async (agreed: boolean) => {
+    // Make sure user has confirmed submission
+    if (!agreed) {
+      return
     }
+    // Update product status to be [Stored]
+    await updateProduct({
+      variables: {
+        where: { id: product?.id },
+        data: { status: "NotAvailable" },
+      },
+    })
   }
 
   let sizes: any[] = []
@@ -164,11 +181,18 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
     },
   ] as any
 
-  if (isEditing && product?.status !== "Stored") {
-    menuItems.push({
-      text: "Send to long term storage",
-      action: () => setIsLongTermStorageDialogOpen(true),
-    })
+  if (isEditing) {
+    if (product?.status === "Stored") {
+      menuItems.push({
+        text: "Restore from long term storage",
+        action: () => setIsRestoreFromLongTermStorageDialogOpen(true),
+      })
+    } else {
+      menuItems.push({
+        text: "Send to long term storage",
+        action: () => setIsLongTermStorageDialogOpen(true),
+      })
+    }
   }
 
   return (
@@ -203,6 +227,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
             photographyStatuses={photographyStatuses}
             types={productTypes}
             setProductType={setProductType}
+            currentStatus={product?.status}
           />
           <Spacer mt={6} />
           <MetadataSection
@@ -237,6 +262,13 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
         open={isLongTermStorageDialogOpen}
         setOpen={setIsLongTermStorageDialogOpen}
         onClose={onCloseLongTermStorageDialog}
+      />
+      <ConfirmationDialog
+        title={`Are you sure you want to retrieve ${product?.name} from long term storage?`}
+        body="This will mark the product as Not Available, with all child physical products NonReservable. You'll need to publish it separately."
+        open={isRestoreFromLongTermStorageDialogOpen}
+        setOpen={setIsRestoreFromLongTermStorageDialogOpen}
+        onClose={onCloseRestoreFromLongTermStorageDialog}
       />
     </>
   )

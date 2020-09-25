@@ -15,14 +15,20 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
   const { shippingLabel } = reservation?.sentPackage || {}
   const { shippingLabel: returnLabel } = reservation?.returnedPackage || {}
 
-  const Address = ({ address: { address1, address2, city, state } }) => (
-    <Box>
-      <div>{address1}</div>
-      <div>{address2}</div>
-      <div>{city}</div>
-      <div>{state}</div>
-    </Box>
-  )
+  const Address = ({ address }) => {
+    if (!address) {
+      return <>Not Available</>
+    }
+    const { address1, address2, city, state } = address
+    return (
+      <Box>
+        <div>{address1}</div>
+        <div>{address2}</div>
+        <div>{city}</div>
+        <div>{state}</div>
+      </Box>
+    )
+  }
   return (
     <>
       <Card {...rest}>
