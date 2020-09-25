@@ -7,6 +7,7 @@ import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
 import { FormSelectChoice, getFormSelectChoices } from "utils/form"
 import { ProductUpsertQuery_brands } from "generated/ProductUpsertQuery"
+import { ProductStatus } from "generated/globalTypes"
 
 export interface GeneralSectionProps {
   brands: ProductUpsertQuery_brands[]
@@ -16,6 +17,7 @@ export interface GeneralSectionProps {
   photographyStatuses: FormSelectChoice[]
   types: string[]
   setProductType: (string) => void
+  currentStatus?: ProductStatus | null | undefined
 }
 
 export const GeneralSection: React.FC<GeneralSectionProps> = ({
@@ -26,6 +28,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   photographyStatuses,
   types,
   setProductType,
+  currentStatus,
 }) => {
   const brandChoices = brands.map(brand => ({
     display: brand.name,
@@ -93,7 +96,12 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
           <Grid item xs={12}>
             <Text variant="h6">Available status</Text>
             <Spacer mt={1} />
-            <SelectField name="status" choices={availabilityStatuses} requiredString />
+            <SelectField
+              name="status"
+              disabled={["Stored", "Offloaded"].includes(currentStatus || "")}
+              choices={availabilityStatuses}
+              requiredString
+            />
             <Spacer mt={3} />
           </Grid>
           <Grid item xs={12}>
