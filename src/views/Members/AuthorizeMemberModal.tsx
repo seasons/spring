@@ -34,7 +34,7 @@ export const AuthorizeMemberModal = ({ member, open, onCompleted, onError, onClo
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography component="p">
-              This will send the member an email, push notify them, and update their status.
+              This will send the member an email, push notify them, send them a text message, and update their status.
             </Typography>
           </Grid>
         </Grid>
