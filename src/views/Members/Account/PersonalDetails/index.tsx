@@ -12,7 +12,7 @@ import { useMutation } from "@apollo/react-hooks"
 import { Button, Card, Table, TableBody, TableCell, TableRow, Box, Grid, Typography, Chip } from "@material-ui/core"
 import { CustomerStatus } from "generated/globalTypes"
 import { MemberSubViewProps } from "../../interfaces"
-import { MEMBER_DETAIL_UPDATE } from "../../queries"
+import { MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT } from "../../queries"
 import { AuthorizeMemberModal } from "../../AuthorizeMemberModal"
 import { Indicator } from "components/Indicator"
 import { AuthorizeButton } from "views/Members/AuthorizeButton"
@@ -22,7 +22,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
 
   const [openEdit, setOpenEdit] = useState(false)
   const [member, updateMember] = useState(memberFromStore)
-  const [updateDetails] = useMutation(MEMBER_DETAIL_UPDATE)
+  const [updateDetails] = useMutation(MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT)
   const [confirmInviteModalIsOpen, setConfirmInviteModal] = useState(false)
   const [memberToInvite, setMemberToInvite] = useState({
     id: "",
