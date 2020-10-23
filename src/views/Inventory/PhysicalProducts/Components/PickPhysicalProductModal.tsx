@@ -21,6 +21,8 @@ export const PickPhysicalProductModal: React.FC<PickPhysicalProductModalProps> =
   physicalProduct,
 }) => {
   const refresh = useRefresh()
+
+  const extraSuccessText = physicalProduct.inventoryStatus === "Stored" ? "" : "and marked as NonReservable"
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onError: error =>
       toggleSnackbar?.({
@@ -31,7 +33,7 @@ export const PickPhysicalProductModal: React.FC<PickPhysicalProductModalProps> =
     onCompleted: data => {
       toggleSnackbar?.({
         show: true,
-        message: `Successfully detached warehouse location and marked as NonReservable`,
+        message: `Successfully detached warehouse location ${extraSuccessText}.`,
         status: "success",
       })
       refresh()
@@ -43,23 +45,26 @@ export const PickPhysicalProductModal: React.FC<PickPhysicalProductModalProps> =
   }
 
   const onClose = async (agreed: boolean) => {
+    let inventoryStatus = physicalProduct.inventoryStatus === "Stored" ? "Stored" : "NonReservable"
     if (agreed) {
       await updatePhysicalProduct({
         variables: {
           where: { id: physicalProduct.id },
           data: {
             warehouseLocation: { disconnect: true },
-            inventoryStatus: "NonReservable",
+            inventoryStatus,
           },
         },
       })
     }
   }
 
+  let extraConfirmationText = physicalProduct.inventoryStatus === "Stored" ? "" : " and mark it as non-reservable"
+  let confirmationText = `Are you sure you want to pick this physical product? This will remove it's warehouse location${extraConfirmationText}.`
   return (
     <ConfirmationDialog
       title={"Pick Physical Product"}
-      body={`Are you sure you want to pick this physical product? This will remove it's warehouse location and mark it as non-reservable.`}
+      body={confirmationText}
       open={open}
       setOpen={setOpen}
       onClose={onClose}
