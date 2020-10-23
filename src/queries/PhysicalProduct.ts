@@ -51,6 +51,7 @@ export const PhysicalProductFragment = gql`
       id
       sku
       internalSize {
+        id
         display
       }
       retailPrice
