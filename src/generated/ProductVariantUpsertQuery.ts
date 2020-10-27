@@ -130,7 +130,7 @@ export interface ProductVariantUpsertQuery_product_season_vendorSeason {
 export interface ProductVariantUpsertQuery_product_season {
   __typename: "ProductSeason"
   id: string
-  internalSeason: ProductVariantUpsertQuery_product_season_internalSeason
+  internalSeason: ProductVariantUpsertQuery_product_season_internalSeason | null
   vendorSeason: ProductVariantUpsertQuery_product_season_vendorSeason | null
   wearableSeasons: SeasonString[]
 }

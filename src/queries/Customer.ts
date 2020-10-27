@@ -69,6 +69,12 @@ const CustomerDetails = gql`
         }
       }
     }
+    admissions {
+      id
+      inServiceableZipcode
+      admissable
+      inAdmissableReason
+    }
     membership {
       id
       pauseRequests(orderBy: createdAt_DESC) {

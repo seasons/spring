@@ -16,6 +16,7 @@ import { useMutation } from "@apollo/react-hooks"
 import { RefundInvoiceModal } from "./RefundInvoice"
 import { Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
+import { Admissions } from "./Admissions"
 
 const STATUS_REFUNDED = "Refunded"
 
@@ -174,6 +175,9 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
         </Grid>
         <Grid item lg={6} md={6} xl={6} xs={12}>
           <PaymentShipping adminKey={adminKey} member={member} />
+        </Grid>
+        <Grid item lg={6} md={6} xl={6} xs={12}>
+          <Admissions adminKey={adminKey} member={member} />
         </Grid>
         <Grid item lg={12} md={12} xl={12} xs={12}>
           <Card>

@@ -175,7 +175,7 @@ export interface ProductEditQuery_product_season_vendorSeason {
 export interface ProductEditQuery_product_season {
   __typename: "ProductSeason"
   id: string
-  internalSeason: ProductEditQuery_product_season_internalSeason
+  internalSeason: ProductEditQuery_product_season_internalSeason | null
   vendorSeason: ProductEditQuery_product_season_vendorSeason | null
   wearableSeasons: SeasonString[]
 }

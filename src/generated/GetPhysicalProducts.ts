@@ -6,10 +6,10 @@
 import {
   InventoryStatus,
   PhysicalProductStatus,
+  ReservationStatus,
+  ReservationPhase,
   WarehouseLocationType,
   ProductArchitecture,
-  SeasonCode,
-  SeasonString,
   PhotographyStatus,
   ProductStatus,
 } from "./globalTypes"
@@ -18,57 +18,82 @@ import {
 // GraphQL query operation: GetPhysicalProducts
 // ====================================================
 
+export interface GetPhysicalProducts_physicalProducts_reservations_customer_user {
+  __typename: "User"
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+}
+
+export interface GetPhysicalProducts_physicalProducts_reservations_customer {
+  __typename: "Customer"
+  id: string
+  user: GetPhysicalProducts_physicalProducts_reservations_customer_user
+}
+
+export interface GetPhysicalProducts_physicalProducts_reservations_images {
+  __typename: "Image"
+  url: string | null
+}
+
+export interface GetPhysicalProducts_physicalProducts_reservations_products {
+  __typename: "PhysicalProduct"
+  id: string
+}
+
+export interface GetPhysicalProducts_physicalProducts_reservations {
+  __typename: "Reservation"
+  id: string
+  customer: GetPhysicalProducts_physicalProducts_reservations_customer
+  statusUpdatedAt: any | null
+  reservationNumber: number
+  shipped: boolean
+  status: ReservationStatus
+  shippedAt: any | null
+  receivedAt: any | null
+  createdAt: any
+  phase: ReservationPhase
+  images: GetPhysicalProducts_physicalProducts_reservations_images[]
+  products: GetPhysicalProducts_physicalProducts_reservations_products[]
+}
+
 export interface GetPhysicalProducts_physicalProducts_warehouseLocation {
   __typename: "WarehouseLocation"
+  id: string
   barcode: string
   locationCode: string
+  itemCode: string
   type: WarehouseLocationType
 }
 
 export interface GetPhysicalProducts_physicalProducts_productVariant_internalSize {
   __typename: "Size"
+  id: string
   display: string
 }
 
 export interface GetPhysicalProducts_physicalProducts_productVariant_product_category {
   __typename: "Category"
+  id: string
   name: string
 }
 
 export interface GetPhysicalProducts_physicalProducts_productVariant_product_brand {
   __typename: "Brand"
+  id: string
   name: string
 }
 
 export interface GetPhysicalProducts_physicalProducts_productVariant_product_materialCategory {
   __typename: "ProductMaterialCategory"
+  id: string
   slug: string
-}
-
-export interface GetPhysicalProducts_physicalProducts_productVariant_product_season_internalSeason {
-  __typename: "Season"
-  id: string
-  year: number | null
-  seasonCode: SeasonCode | null
-}
-
-export interface GetPhysicalProducts_physicalProducts_productVariant_product_season_vendorSeason {
-  __typename: "Season"
-  id: string
-  year: number | null
-  seasonCode: SeasonCode | null
-}
-
-export interface GetPhysicalProducts_physicalProducts_productVariant_product_season {
-  __typename: "ProductSeason"
-  id: string
-  internalSeason: GetPhysicalProducts_physicalProducts_productVariant_product_season_internalSeason
-  vendorSeason: GetPhysicalProducts_physicalProducts_productVariant_product_season_vendorSeason | null
-  wearableSeasons: SeasonString[]
 }
 
 export interface GetPhysicalProducts_physicalProducts_productVariant_product {
   __typename: "Product"
+  id: string
   name: string
   publishedAt: any | null
   category: GetPhysicalProducts_physicalProducts_productVariant_product_category
@@ -76,13 +101,13 @@ export interface GetPhysicalProducts_physicalProducts_productVariant_product {
   brand: GetPhysicalProducts_physicalProducts_productVariant_product_brand
   architecture: ProductArchitecture | null
   materialCategory: GetPhysicalProducts_physicalProducts_productVariant_product_materialCategory | null
-  season: GetPhysicalProducts_physicalProducts_productVariant_product_season | null
   photographyStatus: PhotographyStatus | null
   status: ProductStatus | null
 }
 
 export interface GetPhysicalProducts_physicalProducts_productVariant {
   __typename: "ProductVariant"
+  id: string
   sku: string | null
   internalSize: GetPhysicalProducts_physicalProducts_productVariant_internalSize | null
   retailPrice: number | null
@@ -100,6 +125,9 @@ export interface GetPhysicalProducts_physicalProducts {
   dateReceived: any | null
   productStatus: PhysicalProductStatus
   createdAt: any
+  barcoded: boolean
+  barcode: string
+  reservations: GetPhysicalProducts_physicalProducts_reservations[]
   warehouseLocation: GetPhysicalProducts_physicalProducts_warehouseLocation | null
   productVariant: GetPhysicalProducts_physicalProducts_productVariant
 }
