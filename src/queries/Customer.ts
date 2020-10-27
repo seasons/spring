@@ -8,6 +8,10 @@ const CustomerFragment = gql`
     status
     membership {
       id
+      plan {
+        id
+        planID
+      }
       pauseRequests(orderBy: createdAt_DESC) {
         id
         resumeDate
@@ -29,6 +33,12 @@ const CustomerFragment = gql`
     }
     bagItems {
       id
+    }
+    admissions {
+      id
+      inServiceableZipcode
+      admissable
+      inAdmissableReason
     }
   }
 `
