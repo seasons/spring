@@ -1,4 +1,4 @@
-import { StatusField, ActionButtons } from "fields"
+import { StatusField, ActionButtons, CheckField } from "fields"
 import { makeStyles } from "@material-ui/styles"
 import React, { useState } from "react"
 import { Datagrid, TextField } from "@seasons/react-admin"
@@ -17,6 +17,8 @@ import { RefundInvoiceModal } from "./RefundInvoice"
 import { Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { Admissions } from "./Admissions"
+import { SummaryCard } from "components/SummaryCard"
+import { curryRight, get } from "lodash"
 
 const STATUS_REFUNDED = "Refunded"
 
@@ -177,7 +179,56 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
           <PaymentShipping adminKey={adminKey} member={member} />
         </Grid>
         <Grid item lg={6} md={6} xl={6} xs={12}>
-          <Admissions adminKey={adminKey} member={member} />
+          <SummaryCard
+            title={"Admissions"}
+            record={member}
+            rows={[
+              {
+                fieldName: "Admissable",
+                fieldValueFunc: rec => <CheckField record={rec} source={"admissions.admissable"} value={true} />,
+              },
+              {
+                fieldName: "In Serviceable Zipcode",
+                fieldValueFunc: rec => (
+                  <CheckField record={rec} source={"admissions.inServiceableZipcode"} value={true} />
+                ),
+              },
+              {
+                fieldName: `Inadmissable Reason`,
+                fieldValuePath: `admissions.inAdmissableReason`,
+              },
+              {
+                fieldName: `Authorizations`,
+                fieldValueFunc: rec => {
+                  const count = get(rec, "admissions.authorizationsCount")
+                  if (typeof count === "number") {
+                    return `${count}`
+                  }
+                  return count
+                },
+              },
+            ]}
+          />
+        </Grid>
+        <Grid item lg={6} md={6} xl={6} xs={12}>
+          <SummaryCard
+            title={"Links"}
+            record={member.user.links}
+            rows={[
+              {
+                fieldName: "Mixpanel",
+                fieldValueFunc: getCreateUserLinkFunc("mixpanel"),
+              },
+              {
+                fieldName: "Sendgrid",
+                fieldValueFunc: getCreateUserLinkFunc("sendgrid"),
+              },
+              {
+                fieldName: "Intercom",
+                fieldValueFunc: getCreateUserLinkFunc("intercom"),
+              },
+            ]}
+          />
         </Grid>
         <Grid item lg={12} md={12} xl={12} xs={12}>
           <Card>
@@ -209,3 +260,9 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
     </>
   )
 }
+
+const getCreateUserLinkFunc = linkName => rec => (
+  <a href={get(rec, linkName)} target="_blank">
+    View
+  </a>
+)

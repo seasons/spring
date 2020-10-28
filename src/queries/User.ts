@@ -11,6 +11,11 @@ const UserFragment = gql`
     roles
     createdAt
     updatedAt
+    links {
+      mixpanel
+      sendgrid
+      intercom
+    }
   }
 `
 

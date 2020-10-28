@@ -1,21 +1,7 @@
 import React from "react"
-import {
-  Table,
-  TableHead,
-  TableCell,
-  TableBody,
-  TableRow,
-  Card,
-  Box,
-  Menu,
-  IconButton,
-  MenuItem,
-  styled,
-} from "@material-ui/core"
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+import { Table, TableHead, TableCell, TableBody, TableRow, Card, Box } from "@material-ui/core"
 
 import { CheckField } from "fields"
-import { colors } from "theme"
 
 interface ExpandedRowProps {
   id?: string
@@ -24,11 +10,11 @@ interface ExpandedRowProps {
 }
 
 export const ExpandedRow = ({ record: customer }: ExpandedRowProps) => {
-  if (!customer.admissions) {
-    return <p>No further data</p>
-  }
   const {
-    admissions: { admissable, inAdmissableReason, authorizationsCount },
+    admissions,
+    user: {
+      links: { sendgrid, mixpanel, intercom },
+    },
   } = customer
 
   return (
@@ -36,21 +22,47 @@ export const ExpandedRow = ({ record: customer }: ExpandedRowProps) => {
       <Card style={{ width: "100%" }}>
         <Table>
           <TableHead>
-            <TableCell>Admissable</TableCell>
-            <TableCell>In Serviceable Zipcode</TableCell>
-            {!admissable && <TableCell>Inadmissable Reason</TableCell>}
-            <TableCell>Authorizations</TableCell>
+            {!!admissions && (
+              <>
+                <TableCell>Admissable</TableCell>
+                <TableCell>In Serviceable Zipcode</TableCell>
+                {!admissions.admissable && <TableCell>Inadmissable Reason</TableCell>}
+                <TableCell>Authorizations</TableCell>
+              </>
+            )}
+            <TableCell>Mixpanel</TableCell>
+            <TableCell>Sendgrid</TableCell>
+            <TableCell>Intercom</TableCell>
           </TableHead>
           <TableBody>
             <TableRow>
+              {!!admissions && (
+                <>
+                  <TableCell>
+                    <CheckField record={customer} source="admissions.admissable" value={true} />
+                  </TableCell>
+                  <TableCell>
+                    <CheckField record={customer} source="admissions.inServiceableZipcode" value={true} />
+                  </TableCell>
+                  {!admissions.admissable && <TableCell>{admissions.inAdmissableReason}</TableCell>}
+                  <TableCell>{admissions.authorizationsCount}</TableCell>
+                </>
+              )}
               <TableCell>
-                <CheckField record={customer} source="admissions.admissable" value={true} />
+                <a target="_blank" href={`${mixpanel}`}>
+                  View
+                </a>
               </TableCell>
               <TableCell>
-                <CheckField record={customer} source="admissions.inServiceableZipcode" value={true} />
+                <a target="_blank" href={`${sendgrid}`}>
+                  View
+                </a>
               </TableCell>
-              {!admissable && <TableCell>{inAdmissableReason}</TableCell>}
-              <TableCell>{authorizationsCount}</TableCell>
+              <TableCell>
+                <a target="_blank" href={`${intercom}`}>
+                  View
+                </a>
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -18,6 +18,13 @@ import {
 // GraphQL fragment: customer
 // ====================================================
 
+export interface customer_user_links {
+  __typename: "UserLinks"
+  sendgrid: string
+  mixpanel: string
+  intercom: string
+}
+
 export interface customer_user_pushNotification_history {
   __typename: "PushNotificationReceipt"
   id: string
@@ -44,6 +51,7 @@ export interface customer_user {
   lastName: string
   roles: UserRole[]
   createdAt: any
+  links: customer_user_links | null
   pushNotification: customer_user_pushNotification | null
 }
 

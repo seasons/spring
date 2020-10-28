@@ -22,6 +22,11 @@ const CustomerFragment = gql`
       email
       firstName
       lastName
+      links {
+        sendgrid
+        mixpanel
+        intercom
+      }
     }
     detail {
       id
@@ -56,6 +61,11 @@ const CustomerDetails = gql`
       lastName
       roles
       createdAt
+      links {
+        sendgrid
+        mixpanel
+        intercom
+      }
       pushNotification {
         id
         history {
