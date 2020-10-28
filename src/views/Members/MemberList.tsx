@@ -2,15 +2,17 @@ import React, { useState } from "react"
 import { Datagrid, List, TextField, useRefresh } from "@seasons/react-admin"
 import { Link as RouterLink } from "react-router-dom"
 import { Button, Container } from "@material-ui/core"
-import { Snackbar } from "components"
+import { Indicator, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { Header } from "components/Header"
-import { EntityCountField, FullNameField, StatusField, ActionButtons, ResumeDateField } from "fields"
+import { EntityCountField, FullNameField, StatusField, ActionButtons, ResumeDateField, CheckField } from "fields"
 import { MemberFilter } from "./MemberFilter"
 import { MemberCreateModal } from "./MemberCreate"
 import { AuthorizeMemberModal } from "./AuthorizeMemberModal"
 import { MemberViewProps, ActionButtonProps } from "./interfaces"
 import { AuthorizeButton } from "./AuthorizeButton"
+import { ExpandedRow } from "./ExpandedRow"
+import { get } from "lodash"
 
 const ViewButton = (props: ActionButtonProps) => {
   const id = props.record?.id
@@ -96,11 +98,22 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
         basePath="/members"
         sort={{ field: "id", order: "DESC" }}
       >
-        <Datagrid>
+        <Datagrid expand={<ExpandedRow />}>
           <FullNameField label="Name" />
           <TextField source="detail.shippingAddress.city" label="City" />
           <TextField source="detail.shippingAddress.state" label="State" />
-          <TextField source="plan" label="Membership" />
+          <TextField source="membership.plan.planID" label="Membership" />
+          <CheckField
+            source="admissions.admissable"
+            value={true}
+            label="Admissable"
+            nullIf={(rec, source, value) => {
+              if (get(rec, "status") === "Active") {
+                console.log(get(rec, source))
+              }
+              return get(rec, source) == null
+            }}
+          />
           <StatusField label="Status" />
           <ResumeDateField label="Resume date" />
           <EntityCountField label="Current Items" entityName="bagItems" />

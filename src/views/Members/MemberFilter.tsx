@@ -21,6 +21,15 @@ export const MemberFilter = props => (
         ]}
         alwaysOn
       />
+      <SelectInput
+        label="Admissable"
+        source="admissions.admissable"
+        choices={[
+          { id: true, name: "True" },
+          { id: false, name: "False" },
+        ]}
+        alwaysOn
+      />
     </Filter>
   </Box>
 )

@@ -8,6 +8,10 @@ const CustomerFragment = gql`
     status
     membership {
       id
+      plan {
+        id
+        planID
+      }
       pauseRequests(orderBy: createdAt_DESC) {
         id
         resumeDate
@@ -18,6 +22,11 @@ const CustomerFragment = gql`
       email
       firstName
       lastName
+      links {
+        sendgrid
+        mixpanel
+        intercom
+      }
     }
     detail {
       id
@@ -29,6 +38,13 @@ const CustomerFragment = gql`
     }
     bagItems {
       id
+    }
+    admissions {
+      id
+      inServiceableZipcode
+      admissable
+      inAdmissableReason
+      authorizationsCount
     }
   }
 `
@@ -45,6 +61,11 @@ const CustomerDetails = gql`
       lastName
       roles
       createdAt
+      links {
+        sendgrid
+        mixpanel
+        intercom
+      }
       pushNotification {
         id
         history {
@@ -58,6 +79,13 @@ const CustomerDetails = gql`
           interest
         }
       }
+    }
+    admissions {
+      id
+      inServiceableZipcode
+      admissable
+      inAdmissableReason
+      authorizationsCount
     }
     membership {
       id
