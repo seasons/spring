@@ -16,9 +16,8 @@ import { useMutation } from "@apollo/react-hooks"
 import { RefundInvoiceModal } from "./RefundInvoice"
 import { Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
-import { Admissions } from "./Admissions"
 import { SummaryCard } from "components/SummaryCard"
-import { curryRight, get } from "lodash"
+import { get } from "lodash"
 
 const STATUS_REFUNDED = "Refunded"
 
