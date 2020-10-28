@@ -9,7 +9,7 @@ export const MEMBER_DETAIL_UPDATE = gql`
 `
 
 export const MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT = gql`
-  mutation updateCustomer($id: ID!, $data: CustomerUpdateInput!) {
+  mutation updateCustomerWithoutContact($id: ID!, $data: CustomerUpdateInput!) {
     updateCustomer(where: { id: $id }, data: $data, withContact: false) {
       id
     }
