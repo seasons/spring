@@ -68,7 +68,7 @@ export const ProductVariantCreate: React.FC = () => {
     })
     await upsertVariants({
       variables: {
-        productID: product.id,
+        productID: product.slug,
         inputs: variantUpsertData,
       },
     })

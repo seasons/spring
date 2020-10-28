@@ -162,6 +162,7 @@ export const PRODUCT_VARIANT_UPSERT_QUERY = gql`
     }
 
     product(where: $input) {
+      slug
       ...ProductFragment
     }
   }

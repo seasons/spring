@@ -102,7 +102,7 @@ export interface ProductFragment_season_vendorSeason {
 export interface ProductFragment_season {
   __typename: "ProductSeason"
   id: string
-  internalSeason: ProductFragment_season_internalSeason
+  internalSeason: ProductFragment_season_internalSeason | null
   vendorSeason: ProductFragment_season_vendorSeason | null
   wearableSeasons: SeasonString[]
 }
@@ -155,6 +155,7 @@ export interface ProductFragment {
   __typename: "Product"
   id: string
   name: string
+  slug: string
   description: string | null
   photographyStatus: PhotographyStatus | null
   images: ProductFragment_images[]

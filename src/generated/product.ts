@@ -86,6 +86,7 @@ export interface product {
   __typename: "Product"
   id: string
   name: string
+  slug: string
   description: string | null
   photographyStatus: PhotographyStatus | null
   images: product_images[]

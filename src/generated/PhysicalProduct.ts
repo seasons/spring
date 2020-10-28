@@ -6,10 +6,10 @@
 import {
   InventoryStatus,
   PhysicalProductStatus,
+  ReservationStatus,
+  ReservationPhase,
   WarehouseLocationType,
   ProductArchitecture,
-  SeasonCode,
-  SeasonString,
   PhotographyStatus,
   ProductStatus,
 } from "./globalTypes"
@@ -18,57 +18,82 @@ import {
 // GraphQL fragment: PhysicalProduct
 // ====================================================
 
+export interface PhysicalProduct_reservations_customer_user {
+  __typename: "User"
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+}
+
+export interface PhysicalProduct_reservations_customer {
+  __typename: "Customer"
+  id: string
+  user: PhysicalProduct_reservations_customer_user
+}
+
+export interface PhysicalProduct_reservations_images {
+  __typename: "Image"
+  url: string | null
+}
+
+export interface PhysicalProduct_reservations_products {
+  __typename: "PhysicalProduct"
+  id: string
+}
+
+export interface PhysicalProduct_reservations {
+  __typename: "Reservation"
+  id: string
+  customer: PhysicalProduct_reservations_customer
+  statusUpdatedAt: any | null
+  reservationNumber: number
+  shipped: boolean
+  status: ReservationStatus
+  shippedAt: any | null
+  receivedAt: any | null
+  createdAt: any
+  phase: ReservationPhase
+  images: PhysicalProduct_reservations_images[]
+  products: PhysicalProduct_reservations_products[]
+}
+
 export interface PhysicalProduct_warehouseLocation {
   __typename: "WarehouseLocation"
+  id: string
   barcode: string
   locationCode: string
+  itemCode: string
   type: WarehouseLocationType
 }
 
 export interface PhysicalProduct_productVariant_internalSize {
   __typename: "Size"
+  id: string
   display: string
 }
 
 export interface PhysicalProduct_productVariant_product_category {
   __typename: "Category"
+  id: string
   name: string
 }
 
 export interface PhysicalProduct_productVariant_product_brand {
   __typename: "Brand"
+  id: string
   name: string
 }
 
 export interface PhysicalProduct_productVariant_product_materialCategory {
   __typename: "ProductMaterialCategory"
+  id: string
   slug: string
-}
-
-export interface PhysicalProduct_productVariant_product_season_internalSeason {
-  __typename: "Season"
-  id: string
-  year: number | null
-  seasonCode: SeasonCode | null
-}
-
-export interface PhysicalProduct_productVariant_product_season_vendorSeason {
-  __typename: "Season"
-  id: string
-  year: number | null
-  seasonCode: SeasonCode | null
-}
-
-export interface PhysicalProduct_productVariant_product_season {
-  __typename: "ProductSeason"
-  id: string
-  internalSeason: PhysicalProduct_productVariant_product_season_internalSeason
-  vendorSeason: PhysicalProduct_productVariant_product_season_vendorSeason | null
-  wearableSeasons: SeasonString[]
 }
 
 export interface PhysicalProduct_productVariant_product {
   __typename: "Product"
+  id: string
   name: string
   publishedAt: any | null
   category: PhysicalProduct_productVariant_product_category
@@ -76,13 +101,13 @@ export interface PhysicalProduct_productVariant_product {
   brand: PhysicalProduct_productVariant_product_brand
   architecture: ProductArchitecture | null
   materialCategory: PhysicalProduct_productVariant_product_materialCategory | null
-  season: PhysicalProduct_productVariant_product_season | null
   photographyStatus: PhotographyStatus | null
   status: ProductStatus | null
 }
 
 export interface PhysicalProduct_productVariant {
   __typename: "ProductVariant"
+  id: string
   sku: string | null
   internalSize: PhysicalProduct_productVariant_internalSize | null
   retailPrice: number | null
@@ -100,6 +125,9 @@ export interface PhysicalProduct {
   dateReceived: any | null
   productStatus: PhysicalProductStatus
   createdAt: any
+  barcoded: boolean
+  barcode: string
+  reservations: PhysicalProduct_reservations[]
   warehouseLocation: PhysicalProduct_warehouseLocation | null
   productVariant: PhysicalProduct_productVariant
 }
