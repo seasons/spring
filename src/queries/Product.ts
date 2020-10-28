@@ -4,6 +4,7 @@ import gql from "graphql-tag"
 export const ProductFragment = gql`
   fragment product on Product {
     id
+    slug
     name
     description
     photographyStatus
@@ -30,6 +31,7 @@ export default {
     fragment product on Product {
       id
       name
+      slug
       description
       photographyStatus
       images(size: Small, options: { retina: false }) {

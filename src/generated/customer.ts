@@ -7,6 +7,7 @@ import {
   Plan,
   CustomerStatus,
   UserRole,
+  InAdmissableReason,
   InvoiceStatus,
   CreditNoteReasonCode,
   CreditNoteStatus,
@@ -16,6 +17,13 @@ import {
 // ====================================================
 // GraphQL fragment: customer
 // ====================================================
+
+export interface customer_user_links {
+  __typename: "UserLinks"
+  sendgrid: string
+  mixpanel: string
+  intercom: string
+}
 
 export interface customer_user_pushNotification_history {
   __typename: "PushNotificationReceipt"
@@ -43,7 +51,17 @@ export interface customer_user {
   lastName: string
   roles: UserRole[]
   createdAt: any
+  links: customer_user_links | null
   pushNotification: customer_user_pushNotification | null
+}
+
+export interface customer_admissions {
+  __typename: "CustomerAdmissionsData"
+  id: string
+  inServiceableZipcode: boolean
+  admissable: boolean
+  inAdmissableReason: InAdmissableReason | null
+  authorizationsCount: number
 }
 
 export interface customer_membership_pauseRequests {
@@ -168,6 +186,7 @@ export interface customer {
   plan: Plan | null
   status: CustomerStatus | null
   user: customer_user
+  admissions: customer_admissions | null
   membership: customer_membership | null
   invoices: (customer_invoices | null)[] | null
   reservations: customer_reservations[] | null
