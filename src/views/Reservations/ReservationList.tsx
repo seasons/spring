@@ -9,7 +9,7 @@ const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => {
   return (
     <Box px={2}>
       <Filter {...rest}>
-        <TextInput label="Search name" source="q" alwaysOn />
+        <TextInput label="Search name" source="user.firstName_contains" alwaysOn />
         <SelectInput
           label="Status"
           source="status"
