@@ -1,28 +1,10 @@
-import React, { useState } from "react"
-import {
-  Box,
-  Card,
-  Button,
-  Grid,
-  CardHeader,
-  Divider,
-  Theme,
-  CardContent,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-} from "@material-ui/core"
-import { EditButton, EditModal } from "components"
-import { useDispatch, useSelector } from "react-redux"
+import React from "react"
+import { Box, Card, Grid, CardContent, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 import { MemberSubViewProps } from "../interfaces"
 import { CheckField } from "fields/CheckField"
 
 export const Admissions: React.FunctionComponent<MemberSubViewProps> = ({ member }) => {
   const { admissions } = member
-  console.log(member)
-  console.log(admissions)
   return (
     <Card>
       <CardContent>
@@ -48,6 +30,11 @@ export const Admissions: React.FunctionComponent<MemberSubViewProps> = ({ member
               fieldValue={<CheckField record={member} source={"admissions.inServiceableZipcode"} value={true} />}
             />
             <AdmissionsRow fieldName="Inadmissable Reason" fieldValue={admissions?.inAdmissableReason} />
+            <AdmissionsRow
+              fieldName="Authorizations"
+              fieldValue={admissions?.authorizationsCount}
+              formatFunc={a => `${a}`}
+            />
           </TableBody>
         </Table>
       </CardContent>

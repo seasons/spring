@@ -1306,36 +1306,38 @@ export interface CustomProductUpdateInput {
   tags?: string[] | null
 }
 
-export interface CustomerAdmissionsDataCreateOneWithoutCustomersInput {
-  create?: CustomerAdmissionsDataCreateWithoutCustomersInput | null
+export interface CustomerAdmissionsDataCreateOneWithoutCustomerInput {
+  create?: CustomerAdmissionsDataCreateWithoutCustomerInput | null
   connect?: CustomerAdmissionsDataWhereUniqueInput | null
 }
 
-export interface CustomerAdmissionsDataCreateWithoutCustomersInput {
+export interface CustomerAdmissionsDataCreateWithoutCustomerInput {
   id?: string | null
   inServiceableZipcode: boolean
   admissable: boolean
   inAdmissableReason?: InAdmissableReason | null
+  authorizationsCount: number
 }
 
-export interface CustomerAdmissionsDataUpdateOneWithoutCustomersInput {
-  create?: CustomerAdmissionsDataCreateWithoutCustomersInput | null
+export interface CustomerAdmissionsDataUpdateOneWithoutCustomerInput {
+  create?: CustomerAdmissionsDataCreateWithoutCustomerInput | null
   connect?: CustomerAdmissionsDataWhereUniqueInput | null
   disconnect?: boolean | null
   delete?: boolean | null
-  update?: CustomerAdmissionsDataUpdateWithoutCustomersDataInput | null
-  upsert?: CustomerAdmissionsDataUpsertWithoutCustomersInput | null
+  update?: CustomerAdmissionsDataUpdateWithoutCustomerDataInput | null
+  upsert?: CustomerAdmissionsDataUpsertWithoutCustomerInput | null
 }
 
-export interface CustomerAdmissionsDataUpdateWithoutCustomersDataInput {
+export interface CustomerAdmissionsDataUpdateWithoutCustomerDataInput {
   inServiceableZipcode?: boolean | null
   admissable?: boolean | null
   inAdmissableReason?: InAdmissableReason | null
+  authorizationsCount?: number | null
 }
 
-export interface CustomerAdmissionsDataUpsertWithoutCustomersInput {
-  update: CustomerAdmissionsDataUpdateWithoutCustomersDataInput
-  create: CustomerAdmissionsDataCreateWithoutCustomersInput
+export interface CustomerAdmissionsDataUpsertWithoutCustomerInput {
+  update: CustomerAdmissionsDataUpdateWithoutCustomerDataInput
+  create: CustomerAdmissionsDataCreateWithoutCustomerInput
 }
 
 export interface CustomerAdmissionsDataWhereUniqueInput {
@@ -1358,7 +1360,7 @@ export interface CustomerCreateWithoutReservationsInput {
   membership?: CustomerMembershipCreateOneWithoutCustomerInput | null
   bagItems?: BagItemCreateManyWithoutCustomerInput | null
   emailedProducts?: ProductCreateManyInput | null
-  admissions?: CustomerAdmissionsDataCreateOneWithoutCustomersInput | null
+  admissions?: CustomerAdmissionsDataCreateOneWithoutCustomerInput | null
 }
 
 export interface CustomerDetailCreateInput {
@@ -1506,7 +1508,7 @@ export interface CustomerUpdateInput {
   bagItems?: BagItemUpdateManyWithoutCustomerInput | null
   reservations?: ReservationUpdateManyWithoutCustomerInput | null
   emailedProducts?: ProductUpdateManyInput | null
-  admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomersInput | null
+  admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
 }
 
 export interface CustomerUpdateOneRequiredWithoutReservationsInput {
@@ -1526,7 +1528,7 @@ export interface CustomerUpdateWithoutReservationsDataInput {
   membership?: CustomerMembershipUpdateOneWithoutCustomerInput | null
   bagItems?: BagItemUpdateManyWithoutCustomerInput | null
   emailedProducts?: ProductUpdateManyInput | null
-  admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomersInput | null
+  admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
 }
 
 export interface CustomerUpsertWithoutReservationsInput {

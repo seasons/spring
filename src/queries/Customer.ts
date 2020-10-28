@@ -39,6 +39,7 @@ const CustomerFragment = gql`
       inServiceableZipcode
       admissable
       inAdmissableReason
+      authorizationsCount
     }
   }
 `
@@ -74,6 +75,7 @@ const CustomerDetails = gql`
       inServiceableZipcode
       admissable
       inAdmissableReason
+      authorizationsCount
     }
     membership {
       id

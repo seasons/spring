@@ -53,6 +53,7 @@ export interface customer_admissions {
   inServiceableZipcode: boolean
   admissable: boolean
   inAdmissableReason: InAdmissableReason | null
+  authorizationsCount: number
 }
 
 export interface customer_membership_pauseRequests {

@@ -28,7 +28,7 @@ export const ExpandedRow = ({ record: customer }: ExpandedRowProps) => {
     return <p>No further data</p>
   }
   const {
-    admissions: { inServiceableZipcode, admissable, inAdmissableReason },
+    admissions: { admissable, inAdmissableReason, authorizationsCount },
   } = customer
 
   return (
@@ -38,7 +38,8 @@ export const ExpandedRow = ({ record: customer }: ExpandedRowProps) => {
           <TableHead>
             <TableCell>Admissable</TableCell>
             <TableCell>In Serviceable Zipcode</TableCell>
-            <TableCell>Inadmissable Reason</TableCell>
+            {!admissable && <TableCell>Inadmissable Reason</TableCell>}
+            <TableCell>Authorizations</TableCell>
           </TableHead>
           <TableBody>
             <TableRow>
@@ -48,7 +49,8 @@ export const ExpandedRow = ({ record: customer }: ExpandedRowProps) => {
               <TableCell>
                 <CheckField record={customer} source="admissions.inServiceableZipcode" value={true} />
               </TableCell>
-              <TableCell>{inAdmissableReason}</TableCell>
+              {!admissable && <TableCell>{inAdmissableReason}</TableCell>}
+              <TableCell>{authorizationsCount}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
