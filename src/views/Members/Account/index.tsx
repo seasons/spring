@@ -209,7 +209,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
               },
               {
                 fieldName: `BagItems Count`,
-                fieldValueFunc: (rec: customer) => rec.bagItems?.length,
+                fieldValueFunc: (rec: customer) => rec.bagItems?.length || 0,
               },
             ]}
           />
