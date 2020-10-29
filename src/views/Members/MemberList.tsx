@@ -102,7 +102,7 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
           <FullNameField label="Name" />
           <TextField source="detail.shippingAddress.city" label="City" />
           <TextField source="detail.shippingAddress.state" label="State" />
-          <TextField source="membership.plan.planID" label="Membership" />
+          <TextField source="admissions.authorizationsCount" label="Authorizations" />
           <CheckField
             source="admissions.admissable"
             value={true}
