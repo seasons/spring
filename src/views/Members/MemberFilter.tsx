@@ -22,6 +22,12 @@ export const MemberFilter = props => (
         alwaysOn
       />
       <SelectInput
+        label="Authorizations"
+        source="admissions.authorizationsCount"
+        choices={[{ id: 0, name: "0" }]}
+        alwaysOn
+      />
+      <SelectInput
         label="Admissable"
         source="admissions.admissable"
         choices={[
