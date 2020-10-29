@@ -54,6 +54,15 @@ const CustomerDetails = gql`
     id
     plan
     status
+    bagItems {
+      id
+      saved
+      status
+      productVariant {
+        id
+        sku
+      }
+    }
     user {
       id
       email

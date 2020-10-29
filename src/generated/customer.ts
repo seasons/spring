@@ -6,6 +6,7 @@
 import {
   Plan,
   CustomerStatus,
+  BagItemStatus,
   UserRole,
   InAdmissableReason,
   InvoiceStatus,
@@ -17,6 +18,20 @@ import {
 // ====================================================
 // GraphQL fragment: customer
 // ====================================================
+
+export interface customer_bagItems_productVariant {
+  __typename: "ProductVariant"
+  id: string
+  sku: string | null
+}
+
+export interface customer_bagItems {
+  __typename: "BagItem"
+  id: string
+  saved: boolean | null
+  status: BagItemStatus
+  productVariant: customer_bagItems_productVariant
+}
 
 export interface customer_user_links {
   __typename: "UserLinks"
@@ -185,6 +200,7 @@ export interface customer {
   id: string
   plan: Plan | null
   status: CustomerStatus | null
+  bagItems: customer_bagItems[] | null
   user: customer_user
   admissions: customer_admissions | null
   membership: customer_membership | null

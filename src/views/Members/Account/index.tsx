@@ -18,6 +18,7 @@ import { Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { SummaryCard } from "components/SummaryCard"
 import { get } from "lodash"
+import { customer } from "generated/customer"
 
 const STATUS_REFUNDED = "Refunded"
 
@@ -205,6 +206,10 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
                   }
                   return count
                 },
+              },
+              {
+                fieldName: `BagItems Count`,
+                fieldValueFunc: (rec: customer) => rec.bagItems?.length,
               },
             ]}
           />
