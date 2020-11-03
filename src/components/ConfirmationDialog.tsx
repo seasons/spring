@@ -3,6 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 
 import { Loader } from "./Loader"
 import { colors } from "theme/colors"
+import { Separator } from "./Separator"
 
 export interface ConfirmationDialogProps {
   title: string
@@ -29,6 +30,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ title, b
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+      <Separator />
       <DialogContent>
         <DialogContentText id="alert-dialog-description">{body}</DialogContentText>
       </DialogContent>
