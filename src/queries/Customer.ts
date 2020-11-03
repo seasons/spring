@@ -61,6 +61,23 @@ const CustomerDetails = gql`
       productVariant {
         id
         sku
+        internalSize {
+          id
+          display
+        }
+        product {
+          id
+          slug
+          name
+          images(size: Thumb) {
+            id
+            url
+          }
+          brand {
+            id
+            name
+          }
+        }
       }
     }
     user {
