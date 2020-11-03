@@ -7,6 +7,7 @@ import { PersonalView } from "./Personal"
 import { PushNotificationsView } from "./Notifications"
 import { DetailView } from "components/DetailView"
 import { Header } from "./Header"
+import { BagView } from "./Bag"
 
 export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, props }) => {
   return (
@@ -35,6 +36,13 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
           label: "Personal",
           render: ({ data, adminKey, recordID }) => (
             <PersonalView {...props} basePath={`/members/${recordID}/personal`} member={data} adminKey={adminKey} />
+          ),
+        },
+        {
+          value: "bag",
+          label: "Bag",
+          render: ({ data, adminKey, recordID }) => (
+            <BagView {...props} basePath={`/members/${recordID}/bag`} member={data} />
           ),
         },
         {
