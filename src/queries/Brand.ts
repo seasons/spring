@@ -22,6 +22,10 @@ export const BRAND_EDIT_QUERY = gql`
       description
       brandCode
       since
+      published
+      featured
+      designer
+      basedIn
       images {
         id
         url

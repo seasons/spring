@@ -22,6 +22,10 @@ export interface BrandEditQuery_brand {
   description: string | null
   brandCode: string
   since: any | null
+  published: boolean
+  featured: boolean
+  designer: string | null
+  basedIn: string | null
   images: BrandEditQuery_brand_images[] | null
   tier: BrandTier
   websiteUrl: string | null
