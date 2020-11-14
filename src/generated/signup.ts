@@ -15,7 +15,7 @@ export interface signup_signup_customer {
 }
 
 export interface signup_signup {
-  __typename: "AuthPayload"
+  __typename: "SignupPayload"
   customer: signup_signup_customer
 }
 

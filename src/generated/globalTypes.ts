@@ -308,6 +308,11 @@ export enum SeasonString {
   Winter = "Winter",
 }
 
+export enum ShippingCode {
+  UPSGround = "UPSGround",
+  UPSSelect = "UPSSelect",
+}
+
 export enum SmsStatus {
   Accepted = "Accepted",
   Delivered = "Delivered",
@@ -630,10 +635,13 @@ export interface BrandCreateWithoutProductsInput {
   isPrimaryBrand?: boolean | null
   logo?: any | null
   name: string
+  designer?: string | null
   basedIn?: string | null
   images?: ImageCreateManyInput | null
   since?: any | null
   tier: BrandTier
+  published?: boolean | null
+  featured?: boolean | null
   websiteUrl?: string | null
 }
 
@@ -651,10 +659,13 @@ export interface BrandUpdateWithoutProductsDataInput {
   isPrimaryBrand?: boolean | null
   logo?: any | null
   name?: string | null
+  designer?: string | null
   basedIn?: string | null
   images?: ImageUpdateManyInput | null
   since?: any | null
   tier?: BrandTier | null
+  published?: boolean | null
+  featured?: boolean | null
   websiteUrl?: string | null
 }
 
@@ -736,6 +747,20 @@ export interface BrandWhereInput {
   name_not_starts_with?: string | null
   name_ends_with?: string | null
   name_not_ends_with?: string | null
+  designer?: string | null
+  designer_not?: string | null
+  designer_in?: string[] | null
+  designer_not_in?: string[] | null
+  designer_lt?: string | null
+  designer_lte?: string | null
+  designer_gt?: string | null
+  designer_gte?: string | null
+  designer_contains?: string | null
+  designer_not_contains?: string | null
+  designer_starts_with?: string | null
+  designer_not_starts_with?: string | null
+  designer_ends_with?: string | null
+  designer_not_ends_with?: string | null
   basedIn?: string | null
   basedIn_not?: string | null
   basedIn_in?: string[] | null
@@ -768,6 +793,10 @@ export interface BrandWhereInput {
   tier_not?: BrandTier | null
   tier_in?: BrandTier[] | null
   tier_not_in?: BrandTier[] | null
+  published?: boolean | null
+  published_not?: boolean | null
+  featured?: boolean | null
+  featured_not?: boolean | null
   websiteUrl?: string | null
   websiteUrl_not?: string | null
   websiteUrl_in?: string[] | null
@@ -1335,7 +1364,9 @@ export interface CustomerAdmissionsDataCreateWithoutCustomerInput {
   inServiceableZipcode: boolean
   admissable: boolean
   inAdmissableReason?: InAdmissableReason | null
+  allAccessEnabled?: boolean | null
   authorizationsCount: number
+  authorizationWindowClosesAt?: any | null
 }
 
 export interface CustomerAdmissionsDataUpdateOneWithoutCustomerInput {
@@ -1351,7 +1382,9 @@ export interface CustomerAdmissionsDataUpdateWithoutCustomerDataInput {
   inServiceableZipcode?: boolean | null
   admissable?: boolean | null
   inAdmissableReason?: InAdmissableReason | null
+  allAccessEnabled?: boolean | null
   authorizationsCount?: number | null
+  authorizationWindowClosesAt?: any | null
 }
 
 export interface CustomerAdmissionsDataUpsertWithoutCustomerInput {
@@ -1363,9 +1396,55 @@ export interface CustomerAdmissionsDataWhereUniqueInput {
   id?: string | null
 }
 
+export interface CustomerCreateManyWithoutReferrerInput {
+  create?: CustomerCreateWithoutReferrerInput[] | null
+  connect?: CustomerWhereUniqueInput[] | null
+}
+
+export interface CustomerCreateOneWithoutReferreesInput {
+  create?: CustomerCreateWithoutReferreesInput | null
+  connect?: CustomerWhereUniqueInput | null
+}
+
 export interface CustomerCreateOneWithoutReservationsInput {
   create?: CustomerCreateWithoutReservationsInput | null
   connect?: CustomerWhereUniqueInput | null
+}
+
+export interface CustomerCreateWithoutReferreesInput {
+  id?: string | null
+  user: UserCreateOneInput
+  status?: CustomerStatus | null
+  detail?: CustomerDetailCreateOneInput | null
+  billingInfo?: BillingInfoCreateOneInput | null
+  plan?: Plan | null
+  membership?: CustomerMembershipCreateOneWithoutCustomerInput | null
+  bagItems?: BagItemCreateManyWithoutCustomerInput | null
+  reservations?: ReservationCreateManyWithoutCustomerInput | null
+  referralLink?: string | null
+  referrerId?: string | null
+  referrer?: CustomerCreateOneWithoutReferreesInput | null
+  emailedProducts?: ProductCreateManyInput | null
+  admissions?: CustomerAdmissionsDataCreateOneWithoutCustomerInput | null
+  authorizedAt?: any | null
+}
+
+export interface CustomerCreateWithoutReferrerInput {
+  id?: string | null
+  user: UserCreateOneInput
+  status?: CustomerStatus | null
+  detail?: CustomerDetailCreateOneInput | null
+  billingInfo?: BillingInfoCreateOneInput | null
+  plan?: Plan | null
+  membership?: CustomerMembershipCreateOneWithoutCustomerInput | null
+  bagItems?: BagItemCreateManyWithoutCustomerInput | null
+  reservations?: ReservationCreateManyWithoutCustomerInput | null
+  referralLink?: string | null
+  referrerId?: string | null
+  referrees?: CustomerCreateManyWithoutReferrerInput | null
+  emailedProducts?: ProductCreateManyInput | null
+  admissions?: CustomerAdmissionsDataCreateOneWithoutCustomerInput | null
+  authorizedAt?: any | null
 }
 
 export interface CustomerCreateWithoutReservationsInput {
@@ -1377,6 +1456,10 @@ export interface CustomerCreateWithoutReservationsInput {
   plan?: Plan | null
   membership?: CustomerMembershipCreateOneWithoutCustomerInput | null
   bagItems?: BagItemCreateManyWithoutCustomerInput | null
+  referralLink?: string | null
+  referrerId?: string | null
+  referrer?: CustomerCreateOneWithoutReferreesInput | null
+  referrees?: CustomerCreateManyWithoutReferrerInput | null
   emailedProducts?: ProductCreateManyInput | null
   admissions?: CustomerAdmissionsDataCreateOneWithoutCustomerInput | null
   authorizedAt?: any | null
@@ -1516,6 +1599,86 @@ export interface CustomerMembershipWhereUniqueInput {
   id?: string | null
 }
 
+export interface CustomerScalarWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  status?: CustomerStatus | null
+  status_not?: CustomerStatus | null
+  status_in?: CustomerStatus[] | null
+  status_not_in?: CustomerStatus[] | null
+  plan?: Plan | null
+  plan_not?: Plan | null
+  plan_in?: Plan[] | null
+  plan_not_in?: Plan[] | null
+  referralLink?: string | null
+  referralLink_not?: string | null
+  referralLink_in?: string[] | null
+  referralLink_not_in?: string[] | null
+  referralLink_lt?: string | null
+  referralLink_lte?: string | null
+  referralLink_gt?: string | null
+  referralLink_gte?: string | null
+  referralLink_contains?: string | null
+  referralLink_not_contains?: string | null
+  referralLink_starts_with?: string | null
+  referralLink_not_starts_with?: string | null
+  referralLink_ends_with?: string | null
+  referralLink_not_ends_with?: string | null
+  referrerId?: string | null
+  referrerId_not?: string | null
+  referrerId_in?: string[] | null
+  referrerId_not_in?: string[] | null
+  referrerId_lt?: string | null
+  referrerId_lte?: string | null
+  referrerId_gt?: string | null
+  referrerId_gte?: string | null
+  referrerId_contains?: string | null
+  referrerId_not_contains?: string | null
+  referrerId_starts_with?: string | null
+  referrerId_not_starts_with?: string | null
+  referrerId_ends_with?: string | null
+  referrerId_not_ends_with?: string | null
+  authorizedAt?: any | null
+  authorizedAt_not?: any | null
+  authorizedAt_in?: any[] | null
+  authorizedAt_not_in?: any[] | null
+  authorizedAt_lt?: any | null
+  authorizedAt_lte?: any | null
+  authorizedAt_gt?: any | null
+  authorizedAt_gte?: any | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  AND?: CustomerScalarWhereInput[] | null
+  OR?: CustomerScalarWhereInput[] | null
+  NOT?: CustomerScalarWhereInput[] | null
+}
+
 export interface CustomerUpdateInput {
   user?: UserUpdateOneRequiredInput | null
   status?: CustomerStatus | null
@@ -1525,9 +1688,38 @@ export interface CustomerUpdateInput {
   membership?: CustomerMembershipUpdateOneWithoutCustomerInput | null
   bagItems?: BagItemUpdateManyWithoutCustomerInput | null
   reservations?: ReservationUpdateManyWithoutCustomerInput | null
+  referralLink?: string | null
+  referrerId?: string | null
+  referrer?: CustomerUpdateOneWithoutReferreesInput | null
+  referrees?: CustomerUpdateManyWithoutReferrerInput | null
   emailedProducts?: ProductUpdateManyInput | null
   admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
   authorizedAt?: any | null
+}
+
+export interface CustomerUpdateManyDataInput {
+  status?: CustomerStatus | null
+  plan?: Plan | null
+  referralLink?: string | null
+  referrerId?: string | null
+  authorizedAt?: any | null
+}
+
+export interface CustomerUpdateManyWithWhereNestedInput {
+  where: CustomerScalarWhereInput
+  data: CustomerUpdateManyDataInput
+}
+
+export interface CustomerUpdateManyWithoutReferrerInput {
+  create?: CustomerCreateWithoutReferrerInput[] | null
+  delete?: CustomerWhereUniqueInput[] | null
+  connect?: CustomerWhereUniqueInput[] | null
+  set?: CustomerWhereUniqueInput[] | null
+  disconnect?: CustomerWhereUniqueInput[] | null
+  update?: CustomerUpdateWithWhereUniqueWithoutReferrerInput[] | null
+  upsert?: CustomerUpsertWithWhereUniqueWithoutReferrerInput[] | null
+  deleteMany?: CustomerScalarWhereInput[] | null
+  updateMany?: CustomerUpdateManyWithWhereNestedInput[] | null
 }
 
 export interface CustomerUpdateOneRequiredWithoutReservationsInput {
@@ -1535,6 +1727,54 @@ export interface CustomerUpdateOneRequiredWithoutReservationsInput {
   update?: CustomerUpdateWithoutReservationsDataInput | null
   upsert?: CustomerUpsertWithoutReservationsInput | null
   connect?: CustomerWhereUniqueInput | null
+}
+
+export interface CustomerUpdateOneWithoutReferreesInput {
+  create?: CustomerCreateWithoutReferreesInput | null
+  update?: CustomerUpdateWithoutReferreesDataInput | null
+  upsert?: CustomerUpsertWithoutReferreesInput | null
+  delete?: boolean | null
+  disconnect?: boolean | null
+  connect?: CustomerWhereUniqueInput | null
+}
+
+export interface CustomerUpdateWithWhereUniqueWithoutReferrerInput {
+  where: CustomerWhereUniqueInput
+  data: CustomerUpdateWithoutReferrerDataInput
+}
+
+export interface CustomerUpdateWithoutReferreesDataInput {
+  user?: UserUpdateOneRequiredInput | null
+  status?: CustomerStatus | null
+  detail?: CustomerDetailUpdateOneInput | null
+  billingInfo?: BillingInfoUpdateOneInput | null
+  plan?: Plan | null
+  membership?: CustomerMembershipUpdateOneWithoutCustomerInput | null
+  bagItems?: BagItemUpdateManyWithoutCustomerInput | null
+  reservations?: ReservationUpdateManyWithoutCustomerInput | null
+  referralLink?: string | null
+  referrerId?: string | null
+  referrer?: CustomerUpdateOneWithoutReferreesInput | null
+  emailedProducts?: ProductUpdateManyInput | null
+  admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
+  authorizedAt?: any | null
+}
+
+export interface CustomerUpdateWithoutReferrerDataInput {
+  user?: UserUpdateOneRequiredInput | null
+  status?: CustomerStatus | null
+  detail?: CustomerDetailUpdateOneInput | null
+  billingInfo?: BillingInfoUpdateOneInput | null
+  plan?: Plan | null
+  membership?: CustomerMembershipUpdateOneWithoutCustomerInput | null
+  bagItems?: BagItemUpdateManyWithoutCustomerInput | null
+  reservations?: ReservationUpdateManyWithoutCustomerInput | null
+  referralLink?: string | null
+  referrerId?: string | null
+  referrees?: CustomerUpdateManyWithoutReferrerInput | null
+  emailedProducts?: ProductUpdateManyInput | null
+  admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
+  authorizedAt?: any | null
 }
 
 export interface CustomerUpdateWithoutReservationsDataInput {
@@ -1545,9 +1785,24 @@ export interface CustomerUpdateWithoutReservationsDataInput {
   plan?: Plan | null
   membership?: CustomerMembershipUpdateOneWithoutCustomerInput | null
   bagItems?: BagItemUpdateManyWithoutCustomerInput | null
+  referralLink?: string | null
+  referrerId?: string | null
+  referrer?: CustomerUpdateOneWithoutReferreesInput | null
+  referrees?: CustomerUpdateManyWithoutReferrerInput | null
   emailedProducts?: ProductUpdateManyInput | null
   admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
   authorizedAt?: any | null
+}
+
+export interface CustomerUpsertWithWhereUniqueWithoutReferrerInput {
+  where: CustomerWhereUniqueInput
+  update: CustomerUpdateWithoutReferrerDataInput
+  create: CustomerCreateWithoutReferrerInput
+}
+
+export interface CustomerUpsertWithoutReferreesInput {
+  update: CustomerUpdateWithoutReferreesDataInput
+  create: CustomerCreateWithoutReferreesInput
 }
 
 export interface CustomerUpsertWithoutReservationsInput {
@@ -1557,6 +1812,7 @@ export interface CustomerUpsertWithoutReservationsInput {
 
 export interface CustomerWhereUniqueInput {
   id?: string | null
+  referralLink?: string | null
 }
 
 export interface EmailReceiptCreateManyWithoutUserInput {
@@ -2301,6 +2557,7 @@ export interface LocationCreateInput {
   lat?: number | null
   lng?: number | null
   physicalProducts?: PhysicalProductCreateManyWithoutLocationInput | null
+  shippingOptions?: ShippingOptionCreateManyWithoutDestinationInput | null
 }
 
 export interface LocationCreateOneInput {
@@ -2310,6 +2567,11 @@ export interface LocationCreateOneInput {
 
 export interface LocationCreateOneWithoutPhysicalProductsInput {
   create?: LocationCreateWithoutPhysicalProductsInput | null
+  connect?: LocationWhereUniqueInput | null
+}
+
+export interface LocationCreateOneWithoutShippingOptionsInput {
+  create?: LocationCreateWithoutShippingOptionsInput | null
   connect?: LocationWhereUniqueInput | null
 }
 
@@ -2329,6 +2591,26 @@ export interface LocationCreateWithoutPhysicalProductsInput {
   user?: UserCreateOneInput | null
   lat?: number | null
   lng?: number | null
+  shippingOptions?: ShippingOptionCreateManyWithoutDestinationInput | null
+}
+
+export interface LocationCreateWithoutShippingOptionsInput {
+  id?: string | null
+  slug?: string | null
+  name?: string | null
+  company?: string | null
+  description?: string | null
+  address1?: string | null
+  address2?: string | null
+  city?: string | null
+  country?: string | null
+  state?: string | null
+  zipCode: string
+  locationType?: LocationType | null
+  user?: UserCreateOneInput | null
+  lat?: number | null
+  lng?: number | null
+  physicalProducts?: PhysicalProductCreateManyWithoutLocationInput | null
 }
 
 export interface LocationUpdateDataInput {
@@ -2347,6 +2629,7 @@ export interface LocationUpdateDataInput {
   lat?: number | null
   lng?: number | null
   physicalProducts?: PhysicalProductUpdateManyWithoutLocationInput | null
+  shippingOptions?: ShippingOptionUpdateManyWithoutDestinationInput | null
 }
 
 export interface LocationUpdateOneInput {
@@ -2374,6 +2657,15 @@ export interface LocationUpdateOneWithoutPhysicalProductsInput {
   connect?: LocationWhereUniqueInput | null
 }
 
+export interface LocationUpdateOneWithoutShippingOptionsInput {
+  create?: LocationCreateWithoutShippingOptionsInput | null
+  update?: LocationUpdateWithoutShippingOptionsDataInput | null
+  upsert?: LocationUpsertWithoutShippingOptionsInput | null
+  delete?: boolean | null
+  disconnect?: boolean | null
+  connect?: LocationWhereUniqueInput | null
+}
+
 export interface LocationUpdateWithoutPhysicalProductsDataInput {
   slug?: string | null
   name?: string | null
@@ -2389,6 +2681,25 @@ export interface LocationUpdateWithoutPhysicalProductsDataInput {
   user?: UserUpdateOneInput | null
   lat?: number | null
   lng?: number | null
+  shippingOptions?: ShippingOptionUpdateManyWithoutDestinationInput | null
+}
+
+export interface LocationUpdateWithoutShippingOptionsDataInput {
+  slug?: string | null
+  name?: string | null
+  company?: string | null
+  description?: string | null
+  address1?: string | null
+  address2?: string | null
+  city?: string | null
+  country?: string | null
+  state?: string | null
+  zipCode?: string | null
+  locationType?: LocationType | null
+  user?: UserUpdateOneInput | null
+  lat?: number | null
+  lng?: number | null
+  physicalProducts?: PhysicalProductUpdateManyWithoutLocationInput | null
 }
 
 export interface LocationUpsertNestedInput {
@@ -2399,6 +2710,11 @@ export interface LocationUpsertNestedInput {
 export interface LocationUpsertWithoutPhysicalProductsInput {
   update: LocationUpdateWithoutPhysicalProductsDataInput
   create: LocationCreateWithoutPhysicalProductsInput
+}
+
+export interface LocationUpsertWithoutShippingOptionsInput {
+  update: LocationUpdateWithoutShippingOptionsDataInput
+  create: LocationCreateWithoutShippingOptionsInput
 }
 
 export interface LocationWhereInput {
@@ -2580,6 +2896,9 @@ export interface LocationWhereInput {
   physicalProducts_every?: PhysicalProductWhereInput | null
   physicalProducts_some?: PhysicalProductWhereInput | null
   physicalProducts_none?: PhysicalProductWhereInput | null
+  shippingOptions_every?: ShippingOptionWhereInput | null
+  shippingOptions_some?: ShippingOptionWhereInput | null
+  shippingOptions_none?: ShippingOptionWhereInput | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -2614,6 +2933,7 @@ export interface PackageCreateInput {
   fromAddress: LocationCreateOneInput
   toAddress: LocationCreateOneInput
   weight?: number | null
+  cost?: number | null
   events?: PackageTransitEventCreateManyWithoutPackageInput | null
 }
 
@@ -2635,6 +2955,7 @@ export interface PackageCreateWithoutEventsInput {
   fromAddress: LocationCreateOneInput
   toAddress: LocationCreateOneInput
   weight?: number | null
+  cost?: number | null
 }
 
 export interface PackageTransitEventCreateManyWithoutPackageInput {
@@ -2789,6 +3110,7 @@ export interface PackageUpdateDataInput {
   fromAddress?: LocationUpdateOneRequiredInput | null
   toAddress?: LocationUpdateOneRequiredInput | null
   weight?: number | null
+  cost?: number | null
   events?: PackageTransitEventUpdateManyWithoutPackageInput | null
 }
 
@@ -2815,6 +3137,7 @@ export interface PackageUpdateWithoutEventsDataInput {
   fromAddress?: LocationUpdateOneRequiredInput | null
   toAddress?: LocationUpdateOneRequiredInput | null
   weight?: number | null
+  cost?: number | null
 }
 
 export interface PackageUpsertNestedInput {
@@ -5516,6 +5839,11 @@ export interface RefundInvoiceInput {
   reasonCode?: CreditNoteReasonCodeInput | null
 }
 
+export interface ReservationCreateManyWithoutCustomerInput {
+  create?: ReservationCreateWithoutCustomerInput[] | null
+  connect?: ReservationWhereUniqueInput[] | null
+}
+
 export interface ReservationCreateOneWithoutPackageEventsInput {
   create?: ReservationCreateWithoutPackageEventsInput | null
   connect?: ReservationWhereUniqueInput | null
@@ -5538,6 +5866,7 @@ export interface ReservationCreateWithoutCustomerInput {
   statusUpdatedAt?: any | null
   receipt?: ReservationReceiptCreateOneWithoutReservationInput | null
   lastLocation?: LocationCreateOneInput | null
+  shippingOption?: ShippingOptionCreateOneInput | null
 }
 
 export interface ReservationCreateWithoutPackageEventsInput {
@@ -5557,6 +5886,7 @@ export interface ReservationCreateWithoutPackageEventsInput {
   statusUpdatedAt?: any | null
   receipt?: ReservationReceiptCreateOneWithoutReservationInput | null
   lastLocation?: LocationCreateOneInput | null
+  shippingOption?: ShippingOptionCreateOneInput | null
 }
 
 export interface ReservationProcessReturnInput {
@@ -5833,6 +6163,7 @@ export interface ReservationUpdateWithoutCustomerDataInput {
   statusUpdatedAt?: any | null
   receipt?: ReservationReceiptUpdateOneWithoutReservationInput | null
   lastLocation?: LocationUpdateOneInput | null
+  shippingOption?: ShippingOptionUpdateOneInput | null
 }
 
 export interface ReservationUpdateWithoutPackageEventsDataInput {
@@ -5851,6 +6182,7 @@ export interface ReservationUpdateWithoutPackageEventsDataInput {
   statusUpdatedAt?: any | null
   receipt?: ReservationReceiptUpdateOneWithoutReservationInput | null
   lastLocation?: LocationUpdateOneInput | null
+  shippingOption?: ShippingOptionUpdateOneInput | null
 }
 
 export interface ReservationUpsertWithWhereUniqueWithoutCustomerInput {
@@ -5932,6 +6264,294 @@ export interface SeasonWhereInput {
 }
 
 export interface SeasonWhereUniqueInput {
+  id?: string | null
+}
+
+export interface ShippingMethodCreateInput {
+  id?: string | null
+  code: ShippingCode
+  displayText: string
+}
+
+export interface ShippingMethodCreateOneInput {
+  create?: ShippingMethodCreateInput | null
+  connect?: ShippingMethodWhereUniqueInput | null
+}
+
+export interface ShippingMethodUpdateDataInput {
+  code?: ShippingCode | null
+  displayText?: string | null
+}
+
+export interface ShippingMethodUpdateOneInput {
+  create?: ShippingMethodCreateInput | null
+  update?: ShippingMethodUpdateDataInput | null
+  upsert?: ShippingMethodUpsertNestedInput | null
+  delete?: boolean | null
+  disconnect?: boolean | null
+  connect?: ShippingMethodWhereUniqueInput | null
+}
+
+export interface ShippingMethodUpsertNestedInput {
+  update: ShippingMethodUpdateDataInput
+  create: ShippingMethodCreateInput
+}
+
+export interface ShippingMethodWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  code?: ShippingCode | null
+  code_not?: ShippingCode | null
+  code_in?: ShippingCode[] | null
+  code_not_in?: ShippingCode[] | null
+  displayText?: string | null
+  displayText_not?: string | null
+  displayText_in?: string[] | null
+  displayText_not_in?: string[] | null
+  displayText_lt?: string | null
+  displayText_lte?: string | null
+  displayText_gt?: string | null
+  displayText_gte?: string | null
+  displayText_contains?: string | null
+  displayText_not_contains?: string | null
+  displayText_starts_with?: string | null
+  displayText_not_starts_with?: string | null
+  displayText_ends_with?: string | null
+  displayText_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  AND?: ShippingMethodWhereInput[] | null
+  OR?: ShippingMethodWhereInput[] | null
+  NOT?: ShippingMethodWhereInput[] | null
+}
+
+export interface ShippingMethodWhereUniqueInput {
+  id?: string | null
+}
+
+export interface ShippingOptionCreateInput {
+  id?: string | null
+  origin?: LocationCreateOneInput | null
+  destination?: LocationCreateOneWithoutShippingOptionsInput | null
+  shippingMethod?: ShippingMethodCreateOneInput | null
+  externalCost?: number | null
+  averageDuration?: number | null
+}
+
+export interface ShippingOptionCreateManyWithoutDestinationInput {
+  create?: ShippingOptionCreateWithoutDestinationInput[] | null
+  connect?: ShippingOptionWhereUniqueInput[] | null
+}
+
+export interface ShippingOptionCreateOneInput {
+  create?: ShippingOptionCreateInput | null
+  connect?: ShippingOptionWhereUniqueInput | null
+}
+
+export interface ShippingOptionCreateWithoutDestinationInput {
+  id?: string | null
+  origin?: LocationCreateOneInput | null
+  shippingMethod?: ShippingMethodCreateOneInput | null
+  externalCost?: number | null
+  averageDuration?: number | null
+}
+
+export interface ShippingOptionScalarWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  externalCost?: number | null
+  externalCost_not?: number | null
+  externalCost_in?: number[] | null
+  externalCost_not_in?: number[] | null
+  externalCost_lt?: number | null
+  externalCost_lte?: number | null
+  externalCost_gt?: number | null
+  externalCost_gte?: number | null
+  averageDuration?: number | null
+  averageDuration_not?: number | null
+  averageDuration_in?: number[] | null
+  averageDuration_not_in?: number[] | null
+  averageDuration_lt?: number | null
+  averageDuration_lte?: number | null
+  averageDuration_gt?: number | null
+  averageDuration_gte?: number | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  AND?: ShippingOptionScalarWhereInput[] | null
+  OR?: ShippingOptionScalarWhereInput[] | null
+  NOT?: ShippingOptionScalarWhereInput[] | null
+}
+
+export interface ShippingOptionUpdateDataInput {
+  origin?: LocationUpdateOneInput | null
+  destination?: LocationUpdateOneWithoutShippingOptionsInput | null
+  shippingMethod?: ShippingMethodUpdateOneInput | null
+  externalCost?: number | null
+  averageDuration?: number | null
+}
+
+export interface ShippingOptionUpdateManyDataInput {
+  externalCost?: number | null
+  averageDuration?: number | null
+}
+
+export interface ShippingOptionUpdateManyWithWhereNestedInput {
+  where: ShippingOptionScalarWhereInput
+  data: ShippingOptionUpdateManyDataInput
+}
+
+export interface ShippingOptionUpdateManyWithoutDestinationInput {
+  create?: ShippingOptionCreateWithoutDestinationInput[] | null
+  delete?: ShippingOptionWhereUniqueInput[] | null
+  connect?: ShippingOptionWhereUniqueInput[] | null
+  set?: ShippingOptionWhereUniqueInput[] | null
+  disconnect?: ShippingOptionWhereUniqueInput[] | null
+  update?: ShippingOptionUpdateWithWhereUniqueWithoutDestinationInput[] | null
+  upsert?: ShippingOptionUpsertWithWhereUniqueWithoutDestinationInput[] | null
+  deleteMany?: ShippingOptionScalarWhereInput[] | null
+  updateMany?: ShippingOptionUpdateManyWithWhereNestedInput[] | null
+}
+
+export interface ShippingOptionUpdateOneInput {
+  create?: ShippingOptionCreateInput | null
+  update?: ShippingOptionUpdateDataInput | null
+  upsert?: ShippingOptionUpsertNestedInput | null
+  delete?: boolean | null
+  disconnect?: boolean | null
+  connect?: ShippingOptionWhereUniqueInput | null
+}
+
+export interface ShippingOptionUpdateWithWhereUniqueWithoutDestinationInput {
+  where: ShippingOptionWhereUniqueInput
+  data: ShippingOptionUpdateWithoutDestinationDataInput
+}
+
+export interface ShippingOptionUpdateWithoutDestinationDataInput {
+  origin?: LocationUpdateOneInput | null
+  shippingMethod?: ShippingMethodUpdateOneInput | null
+  externalCost?: number | null
+  averageDuration?: number | null
+}
+
+export interface ShippingOptionUpsertNestedInput {
+  update: ShippingOptionUpdateDataInput
+  create: ShippingOptionCreateInput
+}
+
+export interface ShippingOptionUpsertWithWhereUniqueWithoutDestinationInput {
+  where: ShippingOptionWhereUniqueInput
+  update: ShippingOptionUpdateWithoutDestinationDataInput
+  create: ShippingOptionCreateWithoutDestinationInput
+}
+
+export interface ShippingOptionWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  origin?: LocationWhereInput | null
+  destination?: LocationWhereInput | null
+  shippingMethod?: ShippingMethodWhereInput | null
+  externalCost?: number | null
+  externalCost_not?: number | null
+  externalCost_in?: number[] | null
+  externalCost_not_in?: number[] | null
+  externalCost_lt?: number | null
+  externalCost_lte?: number | null
+  externalCost_gt?: number | null
+  externalCost_gte?: number | null
+  averageDuration?: number | null
+  averageDuration_not?: number | null
+  averageDuration_in?: number[] | null
+  averageDuration_not_in?: number[] | null
+  averageDuration_lt?: number | null
+  averageDuration_lte?: number | null
+  averageDuration_gt?: number | null
+  averageDuration_gte?: number | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  AND?: ShippingOptionWhereInput[] | null
+  OR?: ShippingOptionWhereInput[] | null
+  NOT?: ShippingOptionWhereInput[] | null
+}
+
+export interface ShippingOptionWhereUniqueInput {
   id?: string | null
 }
 

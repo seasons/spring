@@ -40,7 +40,18 @@ export const BrandCreate: React.FC = () => {
       return
     }
     setIsSubmitting(true)
-    const { brandCode, brandTier, description, name, sinceDate, websiteURL } = values
+    const {
+      brandCode,
+      brandTier,
+      description,
+      name,
+      sinceDate,
+      websiteURL,
+      basedIn,
+      designer,
+      featured,
+      published,
+    } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
     const numImages = 4
     const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
@@ -49,6 +60,10 @@ export const BrandCreate: React.FC = () => {
         input: {
           brandCode: brandCode.toUpperCase(),
           description,
+          basedIn,
+          designer,
+          featured,
+          published,
           name,
           images,
           since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
@@ -61,7 +76,17 @@ export const BrandCreate: React.FC = () => {
     setIsSubmitting(false)
   }
 
-  const initialValues = { brandCode: "", brandTier: "", description: "", name: "", wesiteURL: "" }
+  const initialValues = {
+    brandCode: "",
+    brandTier: "",
+    description: "",
+    name: "",
+    wesiteURL: "",
+    basedIn: "",
+    designer: "",
+    published: true,
+    featured: false,
+  }
 
   return (
     <Container maxWidth={false}>

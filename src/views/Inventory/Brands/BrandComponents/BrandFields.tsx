@@ -19,6 +19,11 @@ export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) 
     "Discovery",
   ].map(choice => ({ display: choice, value: choice }))
 
+  const trueOrFalseSelectFields = [
+    { display: "True", value: true },
+    { display: "False", value: false },
+  ]
+
   return (
     <Box my={1}>
       <Header
@@ -40,29 +45,75 @@ export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) 
           <ImageUpload numImages={4} />
         </Grid>
         <Grid item xs={8}>
-          <Text variant="h6">Name*</Text>
-          <Spacer mt={1} />
-          <TextField name="name" placeholder="Enter a name" requiredString />
-          <Spacer mt={3} />
-          <Text variant="h6">Brand code*</Text>
-          <Spacer mt={1} />
-          <TextField name="brandCode" placeholder="Enter a brand code" requiredString />
-          <Spacer mt={3} />
-          <Text variant="h6">Brand tier*</Text>
-          <Spacer mt={1} />
-          <SelectField name="brandTier" choices={brandTierChoices} requiredString />
-          <Spacer mt={3} />
-          <Text variant="h6">Since</Text>
-          <Spacer mt={1} />
-          <DatePickerField name="sinceDate" format="yyyy" views={["year"]} optionalDate />
-          <Spacer mt={3} />
-          <Text variant="h6">Description</Text>
-          <Spacer mt={1} />
-          <TextField multiline name="description" placeholder="Enter a description" />
-          <Spacer mt={3} />
-          <Text variant="h6">Website URL</Text>
-          <Spacer mt={1} />
-          <TextField name="websiteURL" placeholder="Enter a url" optionalURL />
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Text variant="h6">Name*</Text>
+              <Spacer mt={1} />
+              <TextField name="name" placeholder="Enter a name" requiredString />
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Brand code*</Text>
+              <Spacer mt={1} />
+              <TextField name="brandCode" placeholder="Enter a brand code" requiredString />
+            </Grid>
+
+            <Spacer mt={3} />
+
+            <Grid item xs={6}>
+              <Text variant="h6">Brand tier*</Text>
+              <Spacer mt={1} />
+              <SelectField name="brandTier" choices={brandTierChoices} requiredString />
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Website URL</Text>
+              <Spacer mt={1} />
+              <TextField name="websiteURL" placeholder="Enter a url" optionalURL />
+            </Grid>
+
+            <Spacer mt={3} />
+
+            <Grid item xs={6}>
+              <Text variant="h6">Published</Text>
+              <Spacer mt={1} />
+              <SelectField name="published" choices={trueOrFalseSelectFields} />
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Featured</Text>
+              <Spacer mt={1} />
+              <SelectField name="featured" choices={trueOrFalseSelectFields} />
+            </Grid>
+
+            <Spacer mt={3} />
+
+            <Grid item xs={12}>
+              <Text variant="h6">Description</Text>
+              <Spacer mt={1} />
+              <TextField multiline name="description" placeholder="Enter a description" />
+            </Grid>
+
+            <Spacer mt={3} />
+
+            <Grid item xs={6}>
+              <Text variant="h6">Since</Text>
+              <Spacer mt={1} />
+              <DatePickerField name="sinceDate" format="yyyy" views={["year"]} optionalDate />
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Designer</Text>
+              <Spacer mt={1} />
+              <TextField name="designer" />
+            </Grid>
+
+            <Spacer mt={3} />
+
+            <Grid item xs={6}>
+              <Text variant="h6">Based in</Text>
+              <Spacer mt={1} />
+              <TextField name="basedIn" />
+            </Grid>
+
+            <Spacer mt={10} />
+          </Grid>
         </Grid>
       </Grid>
     </Box>
