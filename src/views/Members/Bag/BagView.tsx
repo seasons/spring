@@ -20,7 +20,7 @@ export const BagView = ({ member, adminKey }) => {
               .map(bagItem => {
                 return (
                   <Grid item lg={4} md={4} sm={4} xs={12} key={`product-card`}>
-                    <BagItemCard bagItem={bagItem} />
+                    <BagItemCard bagItem={bagItem} member={member} />
                   </Grid>
                 )
               })}
