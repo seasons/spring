@@ -38,8 +38,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const REMOVE_FROM_BAG = gql`
-  mutation RemoveFromBag($id: ID!, $saved: Boolean!) {
-    removeFromBag(item: $id, saved: $saved) {
+  mutation RemoveFromBag($id: ID!, $saved: Boolean!, $customer: ID) {
+    removeFromBag(item: $id, saved: $saved, customer: $customer) {
       id
     }
   }
@@ -61,7 +61,7 @@ export const BagItemCard = props => {
     },
   })
 
-  const { bagItem } = props
+  const { bagItem, member } = props
   const { product, id } = bagItem.productVariant
   const { name, brand } = product
   const image = product.images?.[0]
@@ -77,6 +77,7 @@ export const BagItemCard = props => {
       variables: {
         id: id,
         saved: false,
+        customer: member.id,
       },
     })
     setIsSubmitting(false)

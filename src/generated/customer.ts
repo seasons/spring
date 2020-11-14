@@ -19,10 +19,39 @@ import {
 // GraphQL fragment: customer
 // ====================================================
 
+export interface customer_bagItems_productVariant_internalSize {
+  __typename: "Size"
+  id: string
+  display: string
+}
+
+export interface customer_bagItems_productVariant_product_images {
+  __typename: "Image"
+  id: string
+  url: string | null
+}
+
+export interface customer_bagItems_productVariant_product_brand {
+  __typename: "Brand"
+  id: string
+  name: string
+}
+
+export interface customer_bagItems_productVariant_product {
+  __typename: "Product"
+  id: string
+  slug: string
+  name: string
+  images: customer_bagItems_productVariant_product_images[]
+  brand: customer_bagItems_productVariant_product_brand
+}
+
 export interface customer_bagItems_productVariant {
   __typename: "ProductVariant"
   id: string
   sku: string | null
+  internalSize: customer_bagItems_productVariant_internalSize | null
+  product: customer_bagItems_productVariant_product
 }
 
 export interface customer_bagItems {

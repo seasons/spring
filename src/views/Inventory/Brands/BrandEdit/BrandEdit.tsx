@@ -52,7 +52,18 @@ export const BrandEdit: React.FC = () => {
       return
     }
     setIsSubmitting(true)
-    const { brandCode, brandTier, description, name, sinceDate, websiteURL } = values
+    const {
+      brandCode,
+      brandTier,
+      description,
+      name,
+      sinceDate,
+      websiteURL,
+      basedIn,
+      designer,
+      featured,
+      published,
+    } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
     const numImages = 4
     const images = [...Array(numImages).keys()]
@@ -73,6 +84,10 @@ export const BrandEdit: React.FC = () => {
           slug: slugify(name).toLowerCase(),
           tier: brandTier,
           websiteUrl: websiteURL,
+          basedIn,
+          designer,
+          featured,
+          published,
         },
       },
     })
@@ -93,6 +108,10 @@ export const BrandEdit: React.FC = () => {
       brandCode: brand.brandCode,
       brandTier: brand.tier,
       websiteURL: brand.websiteUrl,
+      basedIn: brand.basedIn,
+      designer: brand.designer,
+      featured: brand.featured,
+      published: brand.published,
     }
     if (brand.since) {
       initialValues.sinceDate = brand.since
