@@ -19,4 +19,5 @@ export interface RemoveFromBag {
 export interface RemoveFromBagVariables {
   id: string
   saved: boolean
+  customer?: string | null
 }

@@ -92,6 +92,11 @@ const CustomerDetails = gql`
         mixpanel
         intercom
       }
+      emails {
+        id
+        emailId
+        createdAt
+      }
       pushNotification {
         id
         history {

@@ -8,6 +8,7 @@ import {
   CustomerStatus,
   BagItemStatus,
   UserRole,
+  EmailId,
   InAdmissableReason,
   InvoiceStatus,
   CreditNoteReasonCode,
@@ -69,6 +70,12 @@ export interface customer_user_links {
   intercom: string
 }
 
+export interface customer_user_emails {
+  __typename: "EmailReceipt"
+  id: string
+  emailId: EmailId
+}
+
 export interface customer_user_pushNotification_history {
   __typename: "PushNotificationReceipt"
   id: string
@@ -96,6 +103,7 @@ export interface customer_user {
   roles: UserRole[]
   createdAt: any
   links: customer_user_links | null
+  emails: customer_user_emails[]
   pushNotification: customer_user_pushNotification | null
 }
 
