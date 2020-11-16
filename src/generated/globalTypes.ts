@@ -1296,6 +1296,9 @@ export interface CreateEmbedURLInput {
 export interface CustomBrandCreateInput {
   id?: string | null
   slug: string
+  designer?: string | null
+  published?: boolean | null
+  featured?: boolean | null
   brandCode: string
   description?: string | null
   isPrimaryBrand?: boolean | null
@@ -1311,6 +1314,9 @@ export interface CustomBrandCreateInput {
 
 export interface CustomBrandUpdateInput {
   slug?: string | null
+  designer?: string | null
+  published?: boolean | null
+  featured?: boolean | null
   brandCode?: string | null
   description?: string | null
   isPrimaryBrand?: boolean | null
