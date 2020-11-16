@@ -241,7 +241,7 @@ export const getProductUpsertData = (values: any) => {
       internalSeasonSeasonCode,
       internalSeasonYear,
       vendorSeasonSeasonCode,
-      vendorSeasonYear,
+      vendorSeasonYear: Number(vendorSeasonYear),
     }
   }
 
@@ -322,7 +322,7 @@ export const getProductUpdateData = (values: any) => {
       internalSeasonSeasonCode,
       internalSeasonYear,
       vendorSeasonSeasonCode,
-      vendorSeasonYear,
+      vendorSeasonYear: Number(vendorSeasonYear),
     }
   }
 

@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core"
 import { Spacer, Text } from "components"
 import { ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "./ExpandableSection"
-import { SelectField } from "fields"
+import { SelectField, TextField } from "fields"
 import { FormSelectChoice } from "utils/form"
 
 interface SeasonsSectionProps {
@@ -62,7 +62,7 @@ export const SeasonsSection: React.FC<SeasonsSectionProps> = () => {
           <Grid item xs={6}>
             <Text variant="h6">Vendor year</Text>
             <Spacer mt={1} />
-            <SelectField name="vendorSeasonYear" choices={years} />
+            <TextField name="vendorSeasonYear" />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Wearable seasons</Text>
