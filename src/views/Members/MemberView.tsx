@@ -8,6 +8,7 @@ import { PushNotificationsView } from "./Notifications"
 import { DetailView } from "components/DetailView"
 import { Header } from "./Header"
 import { BagView } from "./Bag"
+import { EmailReceiptsView } from "./EmailsView"
 
 export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, props }) => {
   return (
@@ -57,6 +58,13 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
           label: "Notifications",
           render: ({ data, recordID }) => (
             <PushNotificationsView {...props} basePath={`/members/${recordID}/notifs`} member={data} />
+          ),
+        },
+        {
+          value: "emails",
+          label: "Email Receipts",
+          render: ({ data, recordID }) => (
+            <EmailReceiptsView {...props} basePath={`/members/${recordID}/emails`} member={data} />
           ),
         },
       ]}
