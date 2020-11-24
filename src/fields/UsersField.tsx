@@ -1,6 +1,8 @@
 import React from "react"
 import { Link } from "@material-ui/core"
 import { Link as RouterLink } from "react-router-dom"
+import { Text } from "components/Text"
+import { colors } from "theme/colors"
 
 interface UserFieldProps {
   label?: string
@@ -8,9 +10,12 @@ interface UserFieldProps {
 }
 
 export const UsersField: React.FC<UserFieldProps> = ({ record }) => {
+  const users = [...record?.users]
+  const numRemainingUsers = users.splice(3)?.length
+  const firstThreeUsers = users
   return (
     <>
-      {record?.users?.map(u => (
+      {firstThreeUsers?.map(u => (
         <>
           <Link
             component={RouterLink}
@@ -23,6 +28,11 @@ export const UsersField: React.FC<UserFieldProps> = ({ record }) => {
           <br />
         </>
       ))}
+      {numRemainingUsers > 0 && (
+        <Text variant="body2" color={colors.black50}>
+          ...{numRemainingUsers} more
+        </Text>
+      )}
     </>
   )
 }
