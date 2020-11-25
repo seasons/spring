@@ -74,6 +74,7 @@ export interface customer_user_emails {
   __typename: "EmailReceipt"
   id: string
   emailId: EmailId
+  createdAt: any
 }
 
 export interface customer_user_pushNotification_history {
@@ -184,6 +185,16 @@ export interface customer_reservations {
   products: customer_reservations_products[]
 }
 
+export interface customer_utm {
+  __typename: "UTMData"
+  id: string
+  source: string | null
+  medium: string | null
+  campaign: string | null
+  term: string | null
+  content: string | null
+}
+
 export interface customer_billingInfo {
   __typename: "BillingInfo"
   id: string
@@ -243,6 +254,7 @@ export interface customer {
   membership: customer_membership | null
   invoices: (customer_invoices | null)[] | null
   reservations: customer_reservations[] | null
+  utm: customer_utm | null
   billingInfo: customer_billingInfo | null
   detail: customer_detail | null
 }
