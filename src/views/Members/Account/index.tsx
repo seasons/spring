@@ -220,7 +220,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
             record={member.user.links}
             rows={[
               {
-                fieldName: "Mixpanel",
+                fieldName: "Source",
                 fieldValueFunc: getCreateUserLinkFunc("mixpanel"),
               },
               {
@@ -231,6 +231,31 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
                 fieldName: "Intercom",
                 fieldValueFunc: getCreateUserLinkFunc("intercom"),
               },
+            ]}
+          />
+        </Grid>
+        <Grid item lg={6} md={6} xl={6} xs={12}>
+          <SummaryCard
+            title={"UTM"}
+            record={member.utm}
+            rows={[
+              {
+                fieldName: "Source",
+                fieldValuePath: "source",
+              },
+              {
+                fieldName: "Medium",
+                fieldValuePath: "medium",
+              },
+              {
+                fieldName: "Campaign",
+                fieldValuePath: "campaign",
+              },
+              {
+                fieldName: "Term",
+                fieldValuePath: "term",
+              },
+              { fieldName: "Content", fieldValuePath: "content" },
             ]}
           />
         </Grid>

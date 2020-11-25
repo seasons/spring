@@ -16,7 +16,6 @@ export interface SummaryCardProps {
 }
 
 export const SummaryCard: React.FunctionComponent<SummaryCardProps> = ({ record, title, rows }) => {
-  console.log(record)
   return (
     <Card>
       <CardContent>

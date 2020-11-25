@@ -162,6 +162,14 @@ const CustomerDetails = gql`
         }
       }
     }
+    utm {
+      id
+      source
+      medium
+      campaign
+      term
+      content
+    }
     billingInfo {
       id
       brand
