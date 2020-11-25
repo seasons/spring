@@ -44,6 +44,15 @@ export const MemberFilter = props => (
         ]}
         alwaysOn
       />
+      <SelectInput
+        label="AllAccessEnabled"
+        source="admissions.allAccessEnabled"
+        choices={[
+          { id: true, name: "True" },
+          { id: false, name: "False" },
+        ]}
+        alwaysOn
+      />
     </Filter>
   </Box>
 )
