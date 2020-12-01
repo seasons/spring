@@ -59,6 +59,7 @@ export const ProductFragment = gql`
   fragment ProductFragment on Product {
     ...product
     publishedAt
+    externalURL
     architecture
     photographyStatus
     innerMaterials
