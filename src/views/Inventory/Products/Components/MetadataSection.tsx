@@ -72,6 +72,11 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures,
             <Spacer mt={1} />
             <SelectField name="secondaryColor" choices={colorChoices} />
           </Grid>
+          <Grid item xs={6}>
+            <Text variant="h6">External URL</Text>
+            <Spacer mt={1} />
+            <TextField name="externalURL" type="url" />
+          </Grid>
         </Grid>
       }
     />
