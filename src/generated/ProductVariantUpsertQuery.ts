@@ -195,6 +195,7 @@ export interface ProductVariantUpsertQuery_product {
   category: ProductVariantUpsertQuery_product_category
   variants: ProductVariantUpsertQuery_product_variants[] | null
   status: ProductStatus | null
+  externalURL: string | null
   architecture: ProductArchitecture | null
   innerMaterials: string[]
   outerMaterials: string[]

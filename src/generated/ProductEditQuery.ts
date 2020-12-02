@@ -240,6 +240,7 @@ export interface ProductEditQuery_product {
   category: ProductEditQuery_product_category
   variants: ProductEditQuery_product_variants[] | null
   status: ProductStatus | null
+  externalURL: string | null
   architecture: ProductArchitecture | null
   innerMaterials: string[]
   outerMaterials: string[]

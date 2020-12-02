@@ -75,6 +75,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
       brand: product.brand.id,
       category: product.category.name,
       color: product.color.colorCode,
+      externalURL: product.externalURL,
       functions: product.functions?.map(func => func.name),
       materialCategory: product.materialCategory?.slug,
       model: product.model?.id,

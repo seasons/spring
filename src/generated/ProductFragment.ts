@@ -167,6 +167,7 @@ export interface ProductFragment {
   category: ProductFragment_category
   variants: ProductFragment_variants[] | null
   status: ProductStatus | null
+  externalURL: string | null
   architecture: ProductArchitecture | null
   innerMaterials: string[]
   outerMaterials: string[]
