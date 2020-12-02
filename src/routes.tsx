@@ -58,6 +58,13 @@ export default [
         ),
       },
       {
+        path: "/analytics/reactivations",
+        exact: true,
+        component: () => (
+          <AnalyticsReport title="Reactivations" url={"/reactivations"} type={ViewType.Dashboard} index={8} />
+        ),
+      },
+      {
         path: "/analytics/inventory-health/detail",
         exact: true,
         component: () => (

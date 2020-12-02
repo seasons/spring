@@ -26,6 +26,10 @@ export default [
             title: "Inventory Health Detail",
             href: "/analytics/inventory-health/detail",
           },
+          {
+            title: "Reactivations",
+            href: "/analytics/reactivations",
+          },
         ],
       },
       {
