@@ -76,7 +76,14 @@ function reduceChildRoutes({ acc, pathname, item, depth = 0 }) {
 
   if (item.items) {
     acc.push(
-      <NavItem key={key} depth={depth} icon={item.icon} info={item.info} open={true} title={item.title}>
+      <NavItem
+        key={key}
+        depth={depth}
+        icon={item.icon}
+        info={item.info}
+        open={typeof item.open === "boolean" ? item.open : true}
+        title={item.title}
+      >
         {renderNavItems({
           depth: depth + 1,
           pathname,

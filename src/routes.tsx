@@ -58,12 +58,52 @@ export default [
         ),
       },
       {
-        path: "/analytics/reactivations",
+        path: "/sales/reactivations",
         exact: true,
         component: () => (
           <AnalyticsReport title="Reactivations" url={"/reactivations"} type={ViewType.Dashboard} index={8} />
         ),
       },
+      ...[
+        { month: "Nov", index: 9 },
+        { month: "Dec", index: 10 },
+      ].map(a => ({
+        path: `/sales/${a.month.toLowerCase()}19`,
+        exact: true,
+        component: () => (
+          <AnalyticsReport
+            title={`${a.month} 19 Sales`}
+            url={`/${a.month.toLowerCase}19`}
+            type={ViewType.Dashboard}
+            index={a.index}
+          />
+        ),
+      })),
+      ...[
+        { month: "Jan", index: 11 },
+        { month: "Feb", index: 12 },
+        { month: "Mar", index: 13 },
+        { month: "Apr", index: 14 },
+        { month: "May", index: 15 },
+        { month: "Jun", index: 16 },
+        { month: "Jul", index: 17 },
+        { month: "Aug", index: 18 },
+        { month: "Sep", index: 19 },
+        { month: "Oct", index: 20 },
+        { month: "Nov", index: 21 },
+        { month: "Dec", index: 22 },
+      ].map(a => ({
+        path: `/sales/${a.month.toLowerCase()}20`,
+        exact: true,
+        component: () => (
+          <AnalyticsReport
+            title={`${a.month} 20 Sales`}
+            url={`/${a.month.toLowerCase}20`}
+            type={ViewType.Dashboard}
+            index={a.index}
+          />
+        ),
+      })),
       {
         path: "/analytics/inventory-health/detail",
         exact: true,

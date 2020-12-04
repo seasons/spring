@@ -54,7 +54,7 @@ export const AnalyticsReport: React.FC<AnalyticsReportProps> = ({ title, url, ty
     <>
       <Container maxWidth={false} style={{ height: "85%" }}>
         <Header
-          title="Analytics"
+          title={title}
           breadcrumbs={[
             {
               title,
