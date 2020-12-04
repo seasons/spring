@@ -32,6 +32,7 @@ export default [
         title: "Sales",
         href: "/sales",
         icon: BarChartIcon,
+        open: false,
         items: [
           {
             title: "Reactivations",
