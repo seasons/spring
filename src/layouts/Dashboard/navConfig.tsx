@@ -26,10 +26,25 @@ export default [
             title: "Inventory Health Detail",
             href: "/analytics/inventory-health/detail",
           },
+        ],
+      },
+      {
+        title: "Sales",
+        href: "/sales",
+        icon: BarChartIcon,
+        items: [
           {
             title: "Reactivations",
-            href: "/analytics/reactivations",
+            href: "/sales/reactivations",
           },
+          ...["Nov", "Dec"].map(a => ({
+            title: `${a} 19`,
+            href: `/sales/${a.toLowerCase()}19`,
+          })),
+          ...["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map(a => ({
+            title: `${a} 20`,
+            href: `/sales/${a.toLowerCase()}20`,
+          })),
         ],
       },
       {
