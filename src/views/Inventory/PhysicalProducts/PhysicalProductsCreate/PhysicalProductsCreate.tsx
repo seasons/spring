@@ -18,6 +18,13 @@ export interface PhysicalProductsCreateProps {
   physicalProducts?: PhysicalProductEditQuery_physicalProduct[] // Passed in when editing physical products
 }
 
+type InitialSellable = {
+  sellableNew: boolean
+  sellableNewPrice: number
+  sellableUsed: boolean
+  sellableUsedPrice: number
+}
+
 export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
   newProductCreateData,
   newVariantsCreateData,
@@ -34,20 +41,21 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
   // Sizes data here is used to get generated seasons UIDs in
   // the create new variants flow
   const sizes: { sizeName: string; count: number }[] = []
+  const initialSellables: InitialSellable[] = []
   if (newVariantsCreateData) {
     const { values: formValues, product } = newVariantsCreateData
 
     // Figure out number of variants we are creating
-    let maxVariantIndex = -1
-    Object.keys(formValues).forEach(formKey => {
+    const maxVariantIndex = Object.keys(formValues).reduce((maxVariantIndex, formKey) => {
       const variantIndex = Number(formKey.split("_")[0])
-      maxVariantIndex = Math.max(maxVariantIndex, variantIndex)
-    })
+      return Math.max(maxVariantIndex, variantIndex)
+    }, -1)
     const numVariants = maxVariantIndex + 1
 
-    // Get size data for each variant by looking at values
     Array.from(Array(numVariants).keys()).forEach(index => {
       const count = Number(formValues[`${index}_totalcount`])
+      // Get size data for each variant by looking at values
+      //
       // All size options are of the form { key: string, value: string }
       // where [key] is the size type (i.e. Letter, WxL, etc.) and
       // [value] is the size name (i.e. XS, S, 32x30, etc.)
@@ -62,10 +70,34 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
           sizes.push({ sizeName: `${Math.floor(waist)}x${Math.floor(inseam)}`, count })
           break
         default:
-          return
+          break
       }
+
+      // Get sellable data for each variant
+      const variantSellable = {
+        sellableNew: formValues[`${index}_sellableNew`],
+        sellableNewPrice: formValues[`${index}_sellableNewPrice`],
+        sellableUsed: formValues[`${index}_sellableUsed`],
+        sellableUsedPrice: formValues[`${index}_sellableUsedPrice`],
+      }
+      initialSellables.push.apply(initialSellables, Array(count).fill(variantSellable))
+    })
+  } else if (newProductCreateData) {
+    const sizes = newProductCreateData?.sizes || []
+
+    // Get sellable data for each variant
+    sizes.forEach((size: string) => {
+      const count = parseInt(newProductCreateData[`${size}_totalcount`] || "0")
+      const variantSellable = {
+        sellableNew: newProductCreateData[`${size}_sellableNew`],
+        sellableNewPrice: newProductCreateData[`${size}_sellableNewPrice`],
+        sellableUsed: newProductCreateData[`${size}_sellableUsed`],
+        sellableUsedPrice: newProductCreateData[`${size}_sellableUsedPrice`],
+      }
+      initialSellables.push.apply(initialSellables, Array(count).fill(variantSellable))
     })
   }
+
   const { data, loading, error } = useQuery(GET_GENERATED_SEASONS_UIDS, {
     variables: {
       input: {
@@ -172,7 +204,14 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
           <ExpandableSection
             title={uid}
             key={index}
-            content={<PhysicalProductForm inventoryStatuses={inventoryStatuses} statuses={statuses} uid={uid} />}
+            content={
+              <PhysicalProductForm
+                inventoryStatuses={inventoryStatuses}
+                statuses={statuses}
+                uid={uid}
+                initialSellable={index < initialSellables.length ? initialSellables[index] : undefined}
+              />
+            }
           />
         ))}
         <Spacer mt={2} />

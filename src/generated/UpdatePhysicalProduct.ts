@@ -53,6 +53,10 @@ export interface UpdatePhysicalProduct {
   unitCost: number | null
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
+  sellableNew: boolean | null
+  sellableNewPrice: number | null
+  sellableUsed: boolean | null
+  sellableUsedPrice: number | null
   warehouseLocation: UpdatePhysicalProduct_warehouseLocation | null
   productVariant: UpdatePhysicalProduct_productVariant | null
 }

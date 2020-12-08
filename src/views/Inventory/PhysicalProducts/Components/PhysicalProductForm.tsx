@@ -1,8 +1,8 @@
 import React from "react"
-import { Grid } from "@material-ui/core"
+import { Grid, Box } from "@material-ui/core"
 import { styled as muiStyled } from "@material-ui/core/styles"
 import { Spacer, Text, ComponentError } from "components"
-import { DatePickerField, SelectField, TextField } from "fields"
+import { DatePickerField, SelectField, TextField, CheckboxField } from "fields"
 import { getFormSelectChoices } from "utils/form"
 import { useQuery } from "react-apollo"
 import { PHYSICAL_PRODUCT_STATUSES_QUERY } from "views/Inventory/Products/queries/Product"
@@ -14,6 +14,12 @@ export interface PhysicalProductFormProps {
   uid: string
   inventoryStatuses?: any[]
   currentInventoryStatus?: InventoryStatus
+  initialSellable?: {
+    sellableNew: boolean
+    sellableNewPrice: number
+    sellableUsed: boolean
+    sellableUsedPrice: number
+  }
 }
 
 export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
@@ -21,6 +27,7 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
   uid,
   inventoryStatuses = [],
   currentInventoryStatus = "",
+  initialSellable,
 }) => {
   const receivedStatusesFromParent = statuses.length > 0 && inventoryStatuses.length > 0
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_STATUSES_QUERY, {
@@ -72,6 +79,36 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
           disabled={["Offloaded", "Stored"].includes(currentInventoryStatus)}
           requiredString
           initialValue="NonReservable"
+        />
+      </Grid>
+      <Spacer grid mt={5} />
+      <Grid item xs={6} direction="row" alignItems="center" container>
+        <Text variant="h5">Sellable New</Text>
+        <CheckboxField name={`${uid}_sellableNew`} initialValue={initialSellable?.sellableNew} />
+      </Grid>
+      <Grid item xs={6}>
+        <Text variant="h5">Sellable New Price</Text>
+        <Spacer mt={1} />
+        <TextField
+          name={`${uid}_sellableNewPrice`}
+          type="number"
+          optionalNumber
+          initialValue={initialSellable?.sellableNewPrice ? String(initialSellable.sellableNewPrice) : undefined}
+        />
+      </Grid>
+      <Spacer grid mt={5} />
+      <Grid item xs={6} direction="row" alignItems="center" container>
+        <Text variant="h5">Sellable Used</Text>
+        <CheckboxField name={`${uid}_sellableUsed`} initialValue={initialSellable?.sellableUsed} />
+      </Grid>
+      <Grid item xs={6}>
+        <Text variant="h5">Sellable Used Price</Text>
+        <Spacer mt={1} />
+        <TextField
+          name={`${uid}_sellableUsedPrice`}
+          type="number"
+          optionalNumber
+          initialValue={initialSellable?.sellableUsedPrice ? String(initialSellable.sellableUsedPrice) : undefined}
         />
       </Grid>
       <Spacer grid mt={5} />

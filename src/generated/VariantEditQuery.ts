@@ -66,6 +66,10 @@ export interface VariantEditQuery_productVariant_physicalProducts {
   seasonsUID: string
   productStatus: PhysicalProductStatus
   inventoryStatus: InventoryStatus
+  sellableNew: boolean | null
+  sellableNewPrice: number | null
+  sellableUsed: boolean | null
+  sellableUsedPrice: number | null
 }
 
 export interface VariantEditQuery_productVariant {
@@ -77,6 +81,10 @@ export interface VariantEditQuery_productVariant {
   manufacturerSizes: VariantEditQuery_productVariant_manufacturerSizes[] | null
   product: VariantEditQuery_productVariant_product
   internalSize: VariantEditQuery_productVariant_internalSize | null
+  sellableNew: boolean
+  sellableNewPrice: number | null
+  sellableUsed: boolean
+  sellableUsedPrice: number | null
   physicalProducts: VariantEditQuery_productVariant_physicalProducts[] | null
 }
 
