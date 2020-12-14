@@ -8,6 +8,7 @@ export const ProductFragment = gql`
     name
     description
     photographyStatus
+    productFit
     createdAt
     updatedAt
     publishedAt
