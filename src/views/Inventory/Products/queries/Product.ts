@@ -64,6 +64,9 @@ export const ProductFragment = gql`
     photographyStatus
     innerMaterials
     outerMaterials
+    status
+    type
+    productFit
     season {
       id
       internalSeason {
@@ -78,8 +81,6 @@ export const ProductFragment = gql`
       }
       wearableSeasons
     }
-    status
-    type
     color {
       id
       colorCode
