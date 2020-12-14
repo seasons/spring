@@ -129,7 +129,7 @@ export interface GetPhysicalProducts_physicalProducts {
   barcode: string
   reservations: GetPhysicalProducts_physicalProducts_reservations[]
   warehouseLocation: GetPhysicalProducts_physicalProducts_warehouseLocation | null
-  productVariant: GetPhysicalProducts_physicalProducts_productVariant
+  productVariant: GetPhysicalProducts_physicalProducts_productVariant | null
 }
 
 export interface GetPhysicalProducts {

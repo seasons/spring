@@ -75,7 +75,7 @@ export interface PhysicalProductEditQuery_physicalProduct {
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
   warehouseLocation: PhysicalProductEditQuery_physicalProduct_warehouseLocation | null
-  productVariant: PhysicalProductEditQuery_physicalProduct_productVariant
+  productVariant: PhysicalProductEditQuery_physicalProduct_productVariant | null
 }
 
 export interface PhysicalProductEditQuery {

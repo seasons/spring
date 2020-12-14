@@ -14,6 +14,7 @@ import {
   PhysicalProductOffloadMethod,
   ProductStatus,
   ProductArchitecture,
+  ProductFit,
   SeasonCode,
   SeasonString,
 } from "./globalTypes"
@@ -244,8 +245,9 @@ export interface ProductEditQuery_product {
   architecture: ProductArchitecture | null
   innerMaterials: string[]
   outerMaterials: string[]
-  season: ProductEditQuery_product_season | null
   type: ProductType | null
+  productFit: ProductFit | null
+  season: ProductEditQuery_product_season | null
   color: ProductEditQuery_product_color
   functions: ProductEditQuery_product_functions[] | null
   materialCategory: ProductEditQuery_product_materialCategory | null

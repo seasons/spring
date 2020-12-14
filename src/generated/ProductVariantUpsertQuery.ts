@@ -14,6 +14,7 @@ import {
   PhysicalProductOffloadMethod,
   ProductStatus,
   ProductArchitecture,
+  ProductFit,
   SeasonCode,
   SeasonString,
 } from "./globalTypes"
@@ -199,8 +200,9 @@ export interface ProductVariantUpsertQuery_product {
   architecture: ProductArchitecture | null
   innerMaterials: string[]
   outerMaterials: string[]
-  season: ProductVariantUpsertQuery_product_season | null
   type: ProductType | null
+  productFit: ProductFit | null
+  season: ProductVariantUpsertQuery_product_season | null
   color: ProductVariantUpsertQuery_product_color
   functions: ProductVariantUpsertQuery_product_functions[] | null
   materialCategory: ProductVariantUpsertQuery_product_materialCategory | null

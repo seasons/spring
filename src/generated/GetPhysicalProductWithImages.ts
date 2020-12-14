@@ -25,7 +25,7 @@ export interface GetPhysicalProductWithImages_physicalProduct_productVariant {
 
 export interface GetPhysicalProductWithImages_physicalProduct {
   __typename: "PhysicalProduct"
-  productVariant: GetPhysicalProductWithImages_physicalProduct_productVariant
+  productVariant: GetPhysicalProductWithImages_physicalProduct_productVariant | null
 }
 
 export interface GetPhysicalProductWithImages {

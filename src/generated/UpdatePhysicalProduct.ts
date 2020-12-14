@@ -54,5 +54,5 @@ export interface UpdatePhysicalProduct {
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
   warehouseLocation: UpdatePhysicalProduct_warehouseLocation | null
-  productVariant: UpdatePhysicalProduct_productVariant
+  productVariant: UpdatePhysicalProduct_productVariant | null
 }
