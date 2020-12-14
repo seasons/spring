@@ -129,5 +129,5 @@ export interface PhysicalProduct {
   barcode: string
   reservations: PhysicalProduct_reservations[]
   warehouseLocation: PhysicalProduct_warehouseLocation | null
-  productVariant: PhysicalProduct_productVariant
+  productVariant: PhysicalProduct_productVariant | null
 }

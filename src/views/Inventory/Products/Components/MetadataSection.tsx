@@ -32,6 +32,13 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures,
     ),
     value: color.colorCode,
   }))
+
+  const productFitChoices = [
+    { display: "Runs small", value: "RunsSmall" },
+    { display: "True to size", value: "TrueToSize" },
+    { display: "Runs big", value: "RunsBig" },
+  ]
+
   return (
     <ExpandableSection
       title="Metadata"
@@ -76,6 +83,11 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures,
             <Text variant="h6">External URL</Text>
             <Spacer mt={1} />
             <TextField name="externalURL" type="url" />
+          </Grid>
+          <Grid item xs={6}>
+            <Text variant="h6">Fit</Text>
+            <Spacer mt={1} />
+            <SelectField name="productFit" choices={productFitChoices} />
           </Grid>
         </Grid>
       }

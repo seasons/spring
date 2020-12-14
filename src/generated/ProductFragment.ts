@@ -12,6 +12,7 @@ import {
   PhysicalProductOffloadMethod,
   ProductStatus,
   ProductArchitecture,
+  ProductFit,
   SeasonCode,
   SeasonString,
 } from "./globalTypes"
@@ -171,8 +172,9 @@ export interface ProductFragment {
   architecture: ProductArchitecture | null
   innerMaterials: string[]
   outerMaterials: string[]
-  season: ProductFragment_season | null
   type: ProductType | null
+  productFit: ProductFit | null
+  season: ProductFragment_season | null
   color: ProductFragment_color
   functions: ProductFragment_functions[] | null
   materialCategory: ProductFragment_materialCategory | null

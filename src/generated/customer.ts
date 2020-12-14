@@ -171,7 +171,7 @@ export interface customer_reservations_products_productVariant {
 export interface customer_reservations_products {
   __typename: "PhysicalProduct"
   id: string
-  productVariant: customer_reservations_products_productVariant
+  productVariant: customer_reservations_products_productVariant | null
 }
 
 export interface customer_reservations {

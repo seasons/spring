@@ -246,6 +246,12 @@ export enum ProductArchitecture {
   Staple = "Staple",
 }
 
+export enum ProductFit {
+  RunsBig = "RunsBig",
+  RunsSmall = "RunsSmall",
+  TrueToSize = "TrueToSize",
+}
+
 export enum ProductStatus {
   Available = "Available",
   NotAvailable = "NotAvailable",
@@ -412,6 +418,22 @@ export interface BagItemScalarWhereInput {
   status_not?: BagItemStatus | null
   status_in?: BagItemStatus[] | null
   status_not_in?: BagItemStatus[] | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
 }
 
 export interface BagItemUpdateManyDataInput {
@@ -1319,6 +1341,7 @@ export interface CustomProductUpdateInput {
   color?: ColorUpdateOneRequiredInput | null
   description?: string | null
   externalURL?: string | null
+  productFit?: ProductFit | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   model?: ProductModelUpdateOneWithoutProductsInput | null
@@ -3323,6 +3346,7 @@ export interface PhysicalProductCreateInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
+  sellable?: boolean | null
   location?: LocationCreateOneWithoutPhysicalProductsInput | null
   productVariant: ProductVariantCreateOneWithoutPhysicalProductsInput
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
@@ -3360,6 +3384,7 @@ export interface PhysicalProductCreateWithoutLocationInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
+  sellable?: boolean | null
   productVariant: ProductVariantCreateOneWithoutPhysicalProductsInput
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
 }
@@ -3376,6 +3401,7 @@ export interface PhysicalProductCreateWithoutProductVariantInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
+  sellable?: boolean | null
   location?: LocationCreateOneWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
 }
@@ -3472,6 +3498,8 @@ export interface PhysicalProductScalarWhereInput {
   unitCost_lte?: number | null
   unitCost_gt?: number | null
   unitCost_gte?: number | null
+  sellable?: boolean | null
+  sellable_not?: boolean | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -3512,6 +3540,7 @@ export interface PhysicalProductUpdateDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
+  sellable?: boolean | null
   location?: LocationUpdateOneWithoutPhysicalProductsInput | null
   productVariant?: ProductVariantUpdateOneRequiredWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
@@ -3545,6 +3574,7 @@ export interface PhysicalProductUpdateManyDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
+  sellable?: boolean | null
 }
 
 export interface PhysicalProductUpdateManyInput {
@@ -3621,6 +3651,7 @@ export interface PhysicalProductUpdateWithoutLocationDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
+  sellable?: boolean | null
   productVariant?: ProductVariantUpdateOneRequiredWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
 }
@@ -3636,6 +3667,7 @@ export interface PhysicalProductUpdateWithoutProductVariantDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
+  sellable?: boolean | null
   location?: LocationUpdateOneWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
 }
@@ -3755,6 +3787,8 @@ export interface PhysicalProductWhereInput {
   unitCost_lte?: number | null
   unitCost_gt?: number | null
   unitCost_gte?: number | null
+  sellable?: boolean | null
+  sellable_not?: boolean | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -3785,6 +3819,7 @@ export interface ProductCreateInput {
   id?: string | null
   slug: string
   name: string
+  productFit?: ProductFit | null
   type?: ProductType | null
   description?: string | null
   externalURL?: string | null
@@ -3834,6 +3869,7 @@ export interface ProductCreateWithoutBrandInput {
   id?: string | null
   slug: string
   name: string
+  productFit?: ProductFit | null
   type?: ProductType | null
   description?: string | null
   externalURL?: string | null
@@ -3862,6 +3898,7 @@ export interface ProductCreateWithoutCategoryInput {
   id?: string | null
   slug: string
   name: string
+  productFit?: ProductFit | null
   type?: ProductType | null
   description?: string | null
   externalURL?: string | null
@@ -3890,6 +3927,7 @@ export interface ProductCreateWithoutVariantsInput {
   id?: string | null
   slug: string
   name: string
+  productFit?: ProductFit | null
   type?: ProductType | null
   description?: string | null
   externalURL?: string | null
@@ -4250,6 +4288,10 @@ export interface ProductScalarWhereInput {
   name_not_starts_with?: string | null
   name_ends_with?: string | null
   name_not_ends_with?: string | null
+  productFit?: ProductFit | null
+  productFit_not?: ProductFit | null
+  productFit_in?: ProductFit[] | null
+  productFit_not_in?: ProductFit[] | null
   type?: ProductType | null
   type_not?: ProductType | null
   type_in?: ProductType[] | null
@@ -4412,6 +4454,7 @@ export interface ProductStateInput {
 export interface ProductUpdateDataInput {
   slug?: string | null
   name?: string | null
+  productFit?: ProductFit | null
   type?: ProductType | null
   description?: string | null
   externalURL?: string | null
@@ -4440,6 +4483,7 @@ export interface ProductUpdateDataInput {
 export interface ProductUpdateManyDataInput {
   slug?: string | null
   name?: string | null
+  productFit?: ProductFit | null
   type?: ProductType | null
   description?: string | null
   externalURL?: string | null
@@ -4519,6 +4563,7 @@ export interface ProductUpdateWithWhereUniqueWithoutCategoryInput {
 export interface ProductUpdateWithoutBrandDataInput {
   slug?: string | null
   name?: string | null
+  productFit?: ProductFit | null
   type?: ProductType | null
   description?: string | null
   externalURL?: string | null
@@ -4546,6 +4591,7 @@ export interface ProductUpdateWithoutBrandDataInput {
 export interface ProductUpdateWithoutCategoryDataInput {
   slug?: string | null
   name?: string | null
+  productFit?: ProductFit | null
   type?: ProductType | null
   description?: string | null
   externalURL?: string | null
@@ -4573,6 +4619,7 @@ export interface ProductUpdateWithoutCategoryDataInput {
 export interface ProductUpdateWithoutVariantsDataInput {
   slug?: string | null
   name?: string | null
+  productFit?: ProductFit | null
   type?: ProductType | null
   description?: string | null
   externalURL?: string | null
@@ -5225,6 +5272,10 @@ export interface ProductWhereInput {
   name_not_starts_with?: string | null
   name_ends_with?: string | null
   name_not_ends_with?: string | null
+  productFit?: ProductFit | null
+  productFit_not?: ProductFit | null
+  productFit_in?: ProductFit[] | null
+  productFit_not_in?: ProductFit[] | null
   type?: ProductType | null
   type_not?: ProductType | null
   type_in?: ProductType[] | null
@@ -7381,6 +7432,7 @@ export interface UpsertProductInput {
   modelSizeName?: string | null
   name: string
   outerMaterials: string[]
+  productFit?: ProductFit | null
   retailPrice: number
   season?: UpsertSeasonInput | null
   photographyStatus?: PhotographyStatus | null
