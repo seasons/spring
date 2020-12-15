@@ -9,6 +9,7 @@ import { VariantEditQuery_productVariant } from "generated/VariantEditQuery"
 import { GET_VARIANT_SKUS_AND_SIZE_TYPES } from "../queries"
 import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection"
 import { VariantSizeSection } from "./VariantSizeSection"
+import { VariantSellableSection } from "./VariantSellableSection"
 import { getFormSelectChoices, getEnumValues } from "utils/form"
 
 export interface VariantsProps {
@@ -51,6 +52,10 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
     variantsData = variants.map(variant => ({
       sku: variant.sku,
       size: variant.internalSize?.display,
+      sellableNew: variant.sellableNew,
+      sellableUsed: variant.sellableUsed,
+      sellableNewPrice: variant.sellableNewPrice,
+      sellableUsedPrice: variant.sellableUsedPrice,
     }))
   } else {
     return null
@@ -110,20 +115,32 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
           </Grid>
         )}
         {variantsData.map((variant, index) => (
-          <VariantSizeSection
-            isEditing={isEditing}
-            size={variant.size}
-            sku={variant.sku}
-            productType={productType}
-            key={index}
-            manufacturerSizes={manufacturerSizes}
-            bottomSizes={data?.bottomSizes}
-          />
+          <>
+            <VariantSizeSection
+              isEditing={isEditing}
+              size={variant.size}
+              sku={variant.sku}
+              productType={productType}
+              key={index}
+              manufacturerSizes={manufacturerSizes}
+              bottomSizes={data?.bottomSizes}
+            />
+            <VariantSellableSection
+              isEditing={isEditing}
+              size={variant.size}
+              sellableNew={variant.sellableNew}
+              sellableNewPrice={variant.sellableNewPrice}
+              sellableUsed={variant.sellableUsed}
+              sellableUsedPrice={variant.sellableUsedPrice}
+            />
+          </>
         ))}
         {isEditing && (
           <>
             {variants?.map((variant, index) => (
-              <VariantPhysicalProductsSection key={index} physicalProducts={variant.physicalProducts || []} />
+              <>
+                <VariantPhysicalProductsSection key={index} physicalProducts={variant.physicalProducts || []} />
+              </>
             ))}
             <Spacer grid mt={6} />
           </>

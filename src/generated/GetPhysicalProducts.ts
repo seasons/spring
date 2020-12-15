@@ -127,6 +127,10 @@ export interface GetPhysicalProducts_physicalProducts {
   createdAt: any
   barcoded: boolean
   barcode: string
+  sellableNew: boolean | null
+  sellableNewPrice: number | null
+  sellableUsed: boolean | null
+  sellableUsedPrice: number | null
   reservations: GetPhysicalProducts_physicalProducts_reservations[]
   warehouseLocation: GetPhysicalProducts_physicalProducts_warehouseLocation | null
   productVariant: GetPhysicalProducts_physicalProducts_productVariant | null

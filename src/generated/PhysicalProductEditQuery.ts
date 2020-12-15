@@ -74,6 +74,10 @@ export interface PhysicalProductEditQuery_physicalProduct {
   unitCost: number | null
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
+  sellableNew: boolean | null
+  sellableNewPrice: number | null
+  sellableUsed: boolean | null
+  sellableUsedPrice: number | null
   warehouseLocation: PhysicalProductEditQuery_physicalProduct_warehouseLocation | null
   productVariant: PhysicalProductEditQuery_physicalProduct_productVariant | null
 }

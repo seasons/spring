@@ -5,7 +5,7 @@ import { Grid } from "@material-ui/core"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "../../Components"
 import { getTypeSpecificVariantFields } from "../../utils"
-import { GroupedAutocompleteField, TextField } from "fields"
+import { GroupedAutocompleteField, TextField, CheckboxField } from "fields"
 
 export interface VariantCreateSectionProps {
   productType: string
@@ -87,6 +87,26 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
                 />
               </Grid>
             )}
+            <Spacer grid mt={3} />
+            <Grid item xs={3} direction="row" alignItems="center" container>
+              <Text variant="h5">Sellable New</Text>
+              <CheckboxField name={`${variantIndex}_sellableNew`} />
+            </Grid>
+            <Grid item xs={3}>
+              <Text variant="h5">Sellable New Price</Text>
+              <Spacer mt={1} />
+              <TextField name={`${variantIndex}_sellableNewPrice`} type="number" optionalNumber />
+            </Grid>
+            <Spacer grid mt={3} />
+            <Grid item xs={3} direction="row" alignItems="center" container>
+              <Text variant="h5">Sellable Used</Text>
+              <CheckboxField name={`${variantIndex}_sellableUsed`} />
+            </Grid>
+            <Grid item xs={3}>
+              <Text variant="h5">Sellable Used Price</Text>
+              <Spacer mt={1} />
+              <TextField name={`${variantIndex}_sellableUsedPrice`} type="number" optionalNumber />
+            </Grid>
             <Spacer grid mt={3} />
           </Grid>
         </>

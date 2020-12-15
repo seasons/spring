@@ -38,11 +38,19 @@ export const UpdateVariantFragment = gql`
         inseam
       }
     }
+    sellableNew
+    sellableNewPrice
+    sellableUsed
+    sellableUsedPrice
     physicalProducts {
       id
       seasonsUID
       productStatus
       inventoryStatus
+      sellableNew
+      sellableNewPrice
+      sellableUsed
+      sellableUsedPrice
     }
   }
 `

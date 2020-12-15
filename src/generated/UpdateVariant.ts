@@ -59,6 +59,10 @@ export interface UpdateVariant_physicalProducts {
   seasonsUID: string
   productStatus: PhysicalProductStatus
   inventoryStatus: InventoryStatus
+  sellableNew: boolean | null
+  sellableNewPrice: number | null
+  sellableUsed: boolean | null
+  sellableUsedPrice: number | null
 }
 
 export interface UpdateVariant {
@@ -70,5 +74,9 @@ export interface UpdateVariant {
   manufacturerSizes: UpdateVariant_manufacturerSizes[] | null
   product: UpdateVariant_product
   internalSize: UpdateVariant_internalSize | null
+  sellableNew: boolean
+  sellableNewPrice: number | null
+  sellableUsed: boolean
+  sellableUsedPrice: number | null
   physicalProducts: UpdateVariant_physicalProducts[] | null
 }
