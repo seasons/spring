@@ -14,10 +14,13 @@ export const PhysicalProductFragment = gql`
     createdAt
     barcoded
     barcode
-    sellableNew
-    sellableNewPrice
-    sellableUsed
-    sellableUsedPrice
+    sellable {
+      id
+      newPrice
+      new
+      usedPrice
+      used
+    }
     reservations(orderBy: createdAt_DESC) {
       id
       customer {
