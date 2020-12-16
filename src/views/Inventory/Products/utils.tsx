@@ -229,10 +229,12 @@ export const getProductUpsertData = (values: any) => {
             productStatus: physicalProductStatus,
             seasonsUID,
             unitCost,
-            sellableNew,
-            sellableUsed,
-            sellableNewPrice,
-            sellableUsedPrice,
+            sellable: {
+              new: sellableNew || false,
+              used: sellableUsed || false,
+              newPrice: sellableNewPrice,
+              usedPrice: sellableUsedPrice,
+            },
           }
         } else {
           return null
@@ -400,8 +402,8 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     "physicalProductStatus",
     "unitCost",
     "sellableNew",
-    "sellableNewPrice",
     "sellableUsed",
+    "sellableNewPrice",
     "sellableUsedPrice",
   ]
   const data = Array.from(Array(numVariants).keys()).map(index => {

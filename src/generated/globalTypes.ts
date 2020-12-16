@@ -3346,13 +3346,10 @@ export interface PhysicalProductCreateInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellableNew?: boolean | null
-  sellableNewPrice?: number | null
-  sellableUsed?: boolean | null
-  sellableUsedPrice?: number | null
   location?: LocationCreateOneWithoutPhysicalProductsInput | null
   productVariant: ProductVariantCreateOneWithoutPhysicalProductsInput
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableCreateOneInput | null
 }
 
 export interface PhysicalProductCreateManyInput {
@@ -3387,12 +3384,9 @@ export interface PhysicalProductCreateWithoutLocationInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellableNew?: boolean | null
-  sellableNewPrice?: number | null
-  sellableUsed?: boolean | null
-  sellableUsedPrice?: number | null
   productVariant: ProductVariantCreateOneWithoutPhysicalProductsInput
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableCreateOneInput | null
 }
 
 export interface PhysicalProductCreateWithoutProductVariantInput {
@@ -3407,12 +3401,9 @@ export interface PhysicalProductCreateWithoutProductVariantInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellableNew?: boolean | null
-  sellableNewPrice?: number | null
-  sellableUsed?: boolean | null
-  sellableUsedPrice?: number | null
   location?: LocationCreateOneWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableCreateOneInput | null
 }
 
 export interface PhysicalProductScalarWhereInput {
@@ -3507,26 +3498,6 @@ export interface PhysicalProductScalarWhereInput {
   unitCost_lte?: number | null
   unitCost_gt?: number | null
   unitCost_gte?: number | null
-  sellableNew?: boolean | null
-  sellableNew_not?: boolean | null
-  sellableNewPrice?: number | null
-  sellableNewPrice_not?: number | null
-  sellableNewPrice_in?: number[] | null
-  sellableNewPrice_not_in?: number[] | null
-  sellableNewPrice_lt?: number | null
-  sellableNewPrice_lte?: number | null
-  sellableNewPrice_gt?: number | null
-  sellableNewPrice_gte?: number | null
-  sellableUsed?: boolean | null
-  sellableUsed_not?: boolean | null
-  sellableUsedPrice?: number | null
-  sellableUsedPrice_not?: number | null
-  sellableUsedPrice_in?: number[] | null
-  sellableUsedPrice_not_in?: number[] | null
-  sellableUsedPrice_lt?: number | null
-  sellableUsedPrice_lte?: number | null
-  sellableUsedPrice_gt?: number | null
-  sellableUsedPrice_gte?: number | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -3556,6 +3527,91 @@ export interface PhysicalProductSeasonsUIDsInput {
   sizes: PhysicalProductSeasonsUIDSizes[]
 }
 
+export interface PhysicalProductSellableCreateInput {
+  id?: string | null
+  new?: boolean | null
+  newPrice?: number | null
+  used?: boolean | null
+  usedPrice?: number | null
+}
+
+export interface PhysicalProductSellableCreateOneInput {
+  create?: PhysicalProductSellableCreateInput | null
+  connect?: PhysicalProductSellableWhereUniqueInput | null
+}
+
+export interface PhysicalProductSellableInput {
+  new: boolean
+  newPrice?: number | null
+  used: boolean
+  usedPrice?: number | null
+}
+
+export interface PhysicalProductSellableUpdateDataInput {
+  new?: boolean | null
+  newPrice?: number | null
+  used?: boolean | null
+  usedPrice?: number | null
+}
+
+export interface PhysicalProductSellableUpdateOneInput {
+  create?: PhysicalProductSellableCreateInput | null
+  connect?: PhysicalProductSellableWhereUniqueInput | null
+  disconnect?: boolean | null
+  delete?: boolean | null
+  update?: PhysicalProductSellableUpdateDataInput | null
+  upsert?: PhysicalProductSellableUpsertNestedInput | null
+}
+
+export interface PhysicalProductSellableUpsertNestedInput {
+  update: PhysicalProductSellableUpdateDataInput
+  create: PhysicalProductSellableCreateInput
+}
+
+export interface PhysicalProductSellableWhereInput {
+  AND?: PhysicalProductSellableWhereInput[] | null
+  OR?: PhysicalProductSellableWhereInput[] | null
+  NOT?: PhysicalProductSellableWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  new?: boolean | null
+  new_not?: boolean | null
+  newPrice?: number | null
+  newPrice_not?: number | null
+  newPrice_in?: number[] | null
+  newPrice_not_in?: number[] | null
+  newPrice_lt?: number | null
+  newPrice_lte?: number | null
+  newPrice_gt?: number | null
+  newPrice_gte?: number | null
+  used?: boolean | null
+  used_not?: boolean | null
+  usedPrice?: number | null
+  usedPrice_not?: number | null
+  usedPrice_in?: number[] | null
+  usedPrice_not_in?: number[] | null
+  usedPrice_lt?: number | null
+  usedPrice_lte?: number | null
+  usedPrice_gt?: number | null
+  usedPrice_gte?: number | null
+}
+
+export interface PhysicalProductSellableWhereUniqueInput {
+  id?: string | null
+}
+
 export interface PhysicalProductUpdateDataInput {
   seasonsUID?: string | null
   inventoryStatus?: InventoryStatus | null
@@ -3567,13 +3623,10 @@ export interface PhysicalProductUpdateDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellableNew?: boolean | null
-  sellableNewPrice?: number | null
-  sellableUsed?: boolean | null
-  sellableUsedPrice?: number | null
   location?: LocationUpdateOneWithoutPhysicalProductsInput | null
   productVariant?: ProductVariantUpdateOneRequiredWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableUpdateOneInput | null
 }
 
 export interface PhysicalProductUpdateInput {
@@ -3591,10 +3644,7 @@ export interface PhysicalProductUpdateInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellableNew?: boolean | null
-  sellableNewPrice?: number | null
-  sellableUsed?: boolean | null
-  sellableUsedPrice?: number | null
+  sellable?: PhysicalProductSellableInput | null
 }
 
 export interface PhysicalProductUpdateManyDataInput {
@@ -3608,10 +3658,6 @@ export interface PhysicalProductUpdateManyDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellableNew?: boolean | null
-  sellableNewPrice?: number | null
-  sellableUsed?: boolean | null
-  sellableUsedPrice?: number | null
 }
 
 export interface PhysicalProductUpdateManyInput {
@@ -3688,12 +3734,9 @@ export interface PhysicalProductUpdateWithoutLocationDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellableNew?: boolean | null
-  sellableNewPrice?: number | null
-  sellableUsed?: boolean | null
-  sellableUsedPrice?: number | null
   productVariant?: ProductVariantUpdateOneRequiredWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableUpdateOneInput | null
 }
 
 export interface PhysicalProductUpdateWithoutProductVariantDataInput {
@@ -3707,12 +3750,9 @@ export interface PhysicalProductUpdateWithoutProductVariantDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellableNew?: boolean | null
-  sellableNewPrice?: number | null
-  sellableUsed?: boolean | null
-  sellableUsedPrice?: number | null
   location?: LocationUpdateOneWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableUpdateOneInput | null
 }
 
 export interface PhysicalProductUpsertNestedInput {
@@ -3830,26 +3870,6 @@ export interface PhysicalProductWhereInput {
   unitCost_lte?: number | null
   unitCost_gt?: number | null
   unitCost_gte?: number | null
-  sellableNew?: boolean | null
-  sellableNew_not?: boolean | null
-  sellableNewPrice?: number | null
-  sellableNewPrice_not?: number | null
-  sellableNewPrice_in?: number[] | null
-  sellableNewPrice_not_in?: number[] | null
-  sellableNewPrice_lt?: number | null
-  sellableNewPrice_lte?: number | null
-  sellableNewPrice_gt?: number | null
-  sellableNewPrice_gte?: number | null
-  sellableUsed?: boolean | null
-  sellableUsed_not?: boolean | null
-  sellableUsedPrice?: number | null
-  sellableUsedPrice_not?: number | null
-  sellableUsedPrice_in?: number[] | null
-  sellableUsedPrice_not_in?: number[] | null
-  sellableUsedPrice_lt?: number | null
-  sellableUsedPrice_lte?: number | null
-  sellableUsedPrice_gt?: number | null
-  sellableUsedPrice_gte?: number | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -3869,6 +3889,7 @@ export interface PhysicalProductWhereInput {
   location?: LocationWhereInput | null
   productVariant?: ProductVariantWhereInput | null
   warehouseLocation?: WarehouseLocationWhereInput | null
+  sellable?: PhysicalProductSellableWhereInput | null
 }
 
 export interface PhysicalProductWhereUniqueInput {
@@ -4973,6 +4994,13 @@ export interface ProductVariantScalarWhereInput {
   updatedAt_lte?: any | null
   updatedAt_gt?: any | null
   updatedAt_gte?: any | null
+}
+
+export interface ProductVariantSellableInput {
+  new: boolean
+  newPrice?: number | null
+  used: boolean
+  usedPrice?: number | null
 }
 
 export interface ProductVariantUpdateDataInput {
@@ -7475,10 +7503,7 @@ export interface UpsertPhysicalProductInput {
   productStatus: PhysicalProductStatus
   seasonsUID: string
   unitCost?: number | null
-  sellableNew?: boolean | null
-  sellableNewPrice?: number | null
-  sellableUsed?: boolean | null
-  sellableUsedPrice?: number | null
+  sellable?: PhysicalProductSellableInput | null
 }
 
 export interface UpsertProductInput {
@@ -7533,10 +7558,7 @@ export interface UpsertVariantInput {
   weight?: number | null
   total: number
   physicalProducts: UpsertPhysicalProductInput[]
-  sellableNew?: boolean | null
-  sellableNewPrice?: number | null
-  sellableUsed?: boolean | null
-  sellableUsedPrice?: number | null
+  sellable: ProductVariantSellableInput
 }
 
 export interface UserCreateInput {

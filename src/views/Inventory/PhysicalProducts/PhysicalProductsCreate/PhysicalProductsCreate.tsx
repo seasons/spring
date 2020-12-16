@@ -19,10 +19,10 @@ export interface PhysicalProductsCreateProps {
 }
 
 type InitialSellable = {
-  sellableNew: boolean
-  sellableNewPrice: number
-  sellableUsed: boolean
-  sellableUsedPrice: number
+  new: boolean
+  newPrice: number
+  used: boolean
+  usedPrice: number
 }
 
 export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
@@ -75,10 +75,10 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
 
       // Get sellable data for each variant
       const variantSellable = {
-        sellableNew: formValues[`${index}_sellableNew`],
-        sellableNewPrice: formValues[`${index}_sellableNewPrice`],
-        sellableUsed: formValues[`${index}_sellableUsed`],
-        sellableUsedPrice: formValues[`${index}_sellableUsedPrice`],
+        new: formValues[`${index}_sellableNew`],
+        newPrice: formValues[`${index}_sellableNewPrice`],
+        used: formValues[`${index}_sellableUsed`],
+        usedPrice: formValues[`${index}_sellableUsedPrice`],
       }
       initialSellables.push.apply(initialSellables, Array(count).fill(variantSellable))
     })
@@ -89,10 +89,10 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
     sizes.forEach((size: string) => {
       const count = parseInt(newProductCreateData[`${size}_totalcount`] || "0")
       const variantSellable = {
-        sellableNew: newProductCreateData[`${size}_sellableNew`],
-        sellableNewPrice: newProductCreateData[`${size}_sellableNewPrice`],
-        sellableUsed: newProductCreateData[`${size}_sellableUsed`],
-        sellableUsedPrice: newProductCreateData[`${size}_sellableUsedPrice`],
+        new: newProductCreateData[`${size}_sellableNew`],
+        newPrice: newProductCreateData[`${size}_sellableNewPrice`],
+        used: newProductCreateData[`${size}_sellableUsed`],
+        usedPrice: newProductCreateData[`${size}_sellableUsedPrice`],
       }
       initialSellables.push.apply(initialSellables, Array(count).fill(variantSellable))
     })

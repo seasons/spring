@@ -52,10 +52,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
     variantsData = variants.map(variant => ({
       sku: variant.sku,
       size: variant.internalSize?.display,
-      sellableNew: variant.sellableNew,
-      sellableUsed: variant.sellableUsed,
-      sellableNewPrice: variant.sellableNewPrice,
-      sellableUsedPrice: variant.sellableUsedPrice,
+      sellable: variant.sellable,
     }))
   } else {
     return null
@@ -125,14 +122,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
               manufacturerSizes={manufacturerSizes}
               bottomSizes={data?.bottomSizes}
             />
-            <VariantSellableSection
-              isEditing={isEditing}
-              size={variant.size}
-              sellableNew={variant.sellableNew}
-              sellableNewPrice={variant.sellableNewPrice}
-              sellableUsed={variant.sellableUsed}
-              sellableUsedPrice={variant.sellableUsedPrice}
-            />
+            <VariantSellableSection isEditing={isEditing} size={variant.size} sellable={variant.sellable} />
           </>
         ))}
         {isEditing && (

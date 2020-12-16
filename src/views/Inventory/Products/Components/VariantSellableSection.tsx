@@ -5,21 +5,16 @@ import { TextField, CheckboxField } from "fields"
 
 type Props = {
   isEditing: boolean
-  sellableNew: boolean
-  sellableNewPrice: number | null
-  sellableUsed: boolean
-  sellableUsedPrice: number | null
+  sellable: {
+    new: boolean
+    newPrice: number | null
+    used: boolean
+    usedPrice: number | null
+  }
   size: string | null
 }
 
-export const VariantSellableSection: React.FC<Props> = ({
-  isEditing,
-  sellableNew,
-  sellableNewPrice,
-  sellableUsed,
-  sellableUsedPrice,
-  size,
-}) => {
+export const VariantSellableSection: React.FC<Props> = ({ isEditing, sellable, size }) => {
   return (
     <>
       <Grid item xs={3} direction="row" alignItems="center" container>
@@ -27,7 +22,7 @@ export const VariantSellableSection: React.FC<Props> = ({
         <CheckboxField
           name={`${size}_sellableNew`}
           disabled={isEditing}
-          initialValue={sellableNew}
+          initialValue={sellable?.new}
           inputProps={{
             title: "Edit the physical product to update sellable new status.",
           }}
@@ -41,7 +36,7 @@ export const VariantSellableSection: React.FC<Props> = ({
           type="number"
           optionalNumber
           disabled={isEditing}
-          value={sellableNewPrice}
+          value={sellable?.newPrice}
           inputProps={{
             title: "Edit the physical product to update sellable new price.",
           }}
@@ -53,7 +48,7 @@ export const VariantSellableSection: React.FC<Props> = ({
         <CheckboxField
           name={`${size}_sellableUsed`}
           disabled={isEditing}
-          initialValue={sellableUsed}
+          initialValue={sellable?.used}
           inputProps={{
             title: "Edit the physical product to update sellable used status.",
           }}
@@ -67,7 +62,7 @@ export const VariantSellableSection: React.FC<Props> = ({
           type="number"
           optionalNumber
           disabled={isEditing}
-          value={sellableUsedPrice}
+          value={sellable?.usedPrice}
           inputProps={{
             title: "Edit the physical product to update sellable used price.",
           }}
