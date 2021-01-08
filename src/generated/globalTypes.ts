@@ -1132,6 +1132,21 @@ export interface CategoryWhereUniqueInput {
   name?: string | null
 }
 
+export interface CollectionCreatedescriptionsInput {
+  set?: string[] | null
+}
+
+export interface CollectionUpsertInput {
+  id?: string | null
+  slug?: string | null
+  images?: any | null
+  title?: string | null
+  subTitle?: string | null
+  descriptions?: CollectionCreatedescriptionsInput | null
+  productIDs?: (string | null)[] | null
+  published?: boolean | null
+}
+
 export interface ColorCreateInput {
   id?: string | null
   slug: string
@@ -1585,6 +1600,7 @@ export interface CustomerMembershipCreateOneWithoutCustomerInput {
 export interface CustomerMembershipCreateWithoutCustomerInput {
   id?: string | null
   subscriptionId: string
+  giftId?: string | null
   plan?: PaymentPlanCreateOneInput | null
   pauseRequests?: PauseRequestCreateManyWithoutMembershipInput | null
 }
@@ -1600,6 +1616,7 @@ export interface CustomerMembershipUpdateOneWithoutCustomerInput {
 
 export interface CustomerMembershipUpdateWithoutCustomerDataInput {
   subscriptionId?: string | null
+  giftId?: string | null
   plan?: PaymentPlanUpdateOneInput | null
   pauseRequests?: PauseRequestUpdateManyWithoutMembershipInput | null
 }
@@ -4760,6 +4777,7 @@ export interface ProductUpsertWithoutVariantsInput {
 export interface ProductVariantCreateInput {
   id?: string | null
   sku?: string | null
+  displayShort: string
   weight?: number | null
   height?: number | null
   productID: string
@@ -4800,6 +4818,7 @@ export interface ProductVariantCreateOneWithoutPhysicalProductsInput {
 export interface ProductVariantCreateWithoutColorInput {
   id?: string | null
   sku?: string | null
+  displayShort: string
   weight?: number | null
   height?: number | null
   productID: string
@@ -4819,6 +4838,7 @@ export interface ProductVariantCreateWithoutColorInput {
 export interface ProductVariantCreateWithoutPhysicalProductsInput {
   id?: string | null
   sku?: string | null
+  displayShort: string
   weight?: number | null
   height?: number | null
   productID: string
@@ -4838,6 +4858,7 @@ export interface ProductVariantCreateWithoutPhysicalProductsInput {
 export interface ProductVariantCreateWithoutProductInput {
   id?: string | null
   sku?: string | null
+  displayShort: string
   weight?: number | null
   height?: number | null
   productID: string
@@ -4892,6 +4913,20 @@ export interface ProductVariantScalarWhereInput {
   sku_not_starts_with?: string | null
   sku_ends_with?: string | null
   sku_not_ends_with?: string | null
+  displayShort?: string | null
+  displayShort_not?: string | null
+  displayShort_in?: string[] | null
+  displayShort_not_in?: string[] | null
+  displayShort_lt?: string | null
+  displayShort_lte?: string | null
+  displayShort_gt?: string | null
+  displayShort_gte?: string | null
+  displayShort_contains?: string | null
+  displayShort_not_contains?: string | null
+  displayShort_starts_with?: string | null
+  displayShort_not_starts_with?: string | null
+  displayShort_ends_with?: string | null
+  displayShort_not_ends_with?: string | null
   weight?: number | null
   weight_not?: number | null
   weight_in?: number[] | null
@@ -5005,6 +5040,7 @@ export interface ProductVariantSellableInput {
 
 export interface ProductVariantUpdateDataInput {
   sku?: string | null
+  displayShort?: string | null
   weight?: number | null
   height?: number | null
   productID?: string | null
@@ -5024,6 +5060,7 @@ export interface ProductVariantUpdateDataInput {
 
 export interface ProductVariantUpdateManyDataInput {
   sku?: string | null
+  displayShort?: string | null
   weight?: number | null
   height?: number | null
   productID?: string | null
@@ -5091,6 +5128,7 @@ export interface ProductVariantUpdateWithWhereUniqueWithoutProductInput {
 
 export interface ProductVariantUpdateWithoutColorDataInput {
   sku?: string | null
+  displayShort?: string | null
   weight?: number | null
   height?: number | null
   productID?: string | null
@@ -5109,6 +5147,7 @@ export interface ProductVariantUpdateWithoutColorDataInput {
 
 export interface ProductVariantUpdateWithoutPhysicalProductsDataInput {
   sku?: string | null
+  displayShort?: string | null
   weight?: number | null
   height?: number | null
   productID?: string | null
@@ -5127,6 +5166,7 @@ export interface ProductVariantUpdateWithoutPhysicalProductsDataInput {
 
 export interface ProductVariantUpdateWithoutProductDataInput {
   sku?: string | null
+  displayShort?: string | null
   weight?: number | null
   height?: number | null
   productID?: string | null
@@ -5197,6 +5237,20 @@ export interface ProductVariantWhereInput {
   sku_not_starts_with?: string | null
   sku_ends_with?: string | null
   sku_not_ends_with?: string | null
+  displayShort?: string | null
+  displayShort_not?: string | null
+  displayShort_in?: string[] | null
+  displayShort_not_in?: string[] | null
+  displayShort_lt?: string | null
+  displayShort_lte?: string | null
+  displayShort_gt?: string | null
+  displayShort_gte?: string | null
+  displayShort_contains?: string | null
+  displayShort_not_contains?: string | null
+  displayShort_starts_with?: string | null
+  displayShort_not_starts_with?: string | null
+  displayShort_ends_with?: string | null
+  displayShort_not_ends_with?: string | null
   weight?: number | null
   weight_not?: number | null
   weight_in?: number[] | null
@@ -6881,6 +6935,7 @@ export interface SmsReceiptCreateInput {
   externalId?: string | null
   body: string
   status: SmsStatus
+  smsId?: string | null
   mediaUrls?: SmsReceiptCreatemediaUrlsInput | null
 }
 
@@ -6943,6 +6998,20 @@ export interface SmsReceiptScalarWhereInput {
   status_not?: SmsStatus | null
   status_in?: SmsStatus[] | null
   status_not_in?: SmsStatus[] | null
+  smsId?: string | null
+  smsId_not?: string | null
+  smsId_in?: string[] | null
+  smsId_not_in?: string[] | null
+  smsId_lt?: string | null
+  smsId_lte?: string | null
+  smsId_gt?: string | null
+  smsId_gte?: string | null
+  smsId_contains?: string | null
+  smsId_not_contains?: string | null
+  smsId_starts_with?: string | null
+  smsId_not_starts_with?: string | null
+  smsId_ends_with?: string | null
+  smsId_not_ends_with?: string | null
   sentAt?: any | null
   sentAt_not?: any | null
   sentAt_in?: any[] | null
@@ -6965,6 +7034,7 @@ export interface SmsReceiptUpdateDataInput {
   externalId?: string | null
   body?: string | null
   status?: SmsStatus | null
+  smsId?: string | null
   mediaUrls?: SmsReceiptUpdatemediaUrlsInput | null
 }
 
@@ -6972,6 +7042,7 @@ export interface SmsReceiptUpdateManyDataInput {
   externalId?: string | null
   body?: string | null
   status?: SmsStatus | null
+  smsId?: string | null
   mediaUrls?: SmsReceiptUpdatemediaUrlsInput | null
 }
 
@@ -7057,6 +7128,20 @@ export interface SmsReceiptWhereInput {
   status_not?: SmsStatus | null
   status_in?: SmsStatus[] | null
   status_not_in?: SmsStatus[] | null
+  smsId?: string | null
+  smsId_not?: string | null
+  smsId_in?: string[] | null
+  smsId_not_in?: string[] | null
+  smsId_lt?: string | null
+  smsId_lte?: string | null
+  smsId_gt?: string | null
+  smsId_gte?: string | null
+  smsId_contains?: string | null
+  smsId_not_contains?: string | null
+  smsId_starts_with?: string | null
+  smsId_not_starts_with?: string | null
+  smsId_ends_with?: string | null
+  smsId_not_ends_with?: string | null
   sentAt?: any | null
   sentAt_not?: any | null
   sentAt_in?: any[] | null
@@ -7558,7 +7643,7 @@ export interface UpsertVariantInput {
   weight?: number | null
   total: number
   physicalProducts: UpsertPhysicalProductInput[]
-  sellable: ProductVariantSellableInput
+  sellable?: ProductVariantSellableInput | null
 }
 
 export interface UserCreateInput {
