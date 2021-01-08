@@ -7,49 +7,36 @@ import { Container, Box, Button, colors } from "@material-ui/core"
 import CloseIcon from "@material-ui/icons/Close"
 import { fitPic } from "generated/fitPic"
 import { Indicator, Snackbar } from "components"
-import { FitPicReportStatus, FitPicStatus } from "generated/globalTypes"
+import { FitPicReportStatus } from "generated/globalTypes"
 
 import { useRefresh } from "@seasons/react-admin"
 import { useMutation } from "react-apollo"
-import { UPDATE_FIT_PIC } from "./mutations"
 import { get } from "lodash"
-import { FitPicFilter } from "./CreateFitPicView/Components"
 import { SnackbarState } from "components/Snackbar"
 
-export const FitPicList: React.FC<{ history: any }> = props => {
+export const CollectionsList: React.FC<{ history: any }> = props => {
   const refresh = useRefresh()
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
     status: "success",
   })
-  const [updateFitPic] = useMutation(UPDATE_FIT_PIC, {
-    onCompleted: () => {
-      toggleSnackbar({
-        show: true,
-        message: "Fit pic published",
-        status: "success",
-      })
-      refresh()
-    },
-    onError: error => {
-      toggleSnackbar({
-        show: true,
-        message: error?.message,
-        status: "error",
-      })
-    },
-  })
+
+  console.log("true")
 
   return (
     <Container maxWidth={false}>
       <Header
-        title="Community"
-        primaryButton={{ text: "Add Photo", action: () => props.history.push("/content/community/create") }}
+        title="Collections"
+        primaryButton={{ text: "Create collection", action: () => props.history.push("/content/collections/create") }}
         breadcrumbs={[
           {
-            title: "Community",
-            url: "/content/community",
+            title: "Content",
+            url: "/content",
+          },
+          {
+            title: "Collection",
+            url: "/content/collections",
           },
         ]}
       />
@@ -61,21 +48,10 @@ export const FitPicList: React.FC<{ history: any }> = props => {
         hasList={true}
         hasShow={true}
         sort={{ field: "createdAt", order: "DESC" }}
-        filters={<FitPicFilter />}
         bulkActionButtons={[]}
       >
         <Datagrid>
-          <ImageField source="image" label="Image" size="large" />
-          <GeneralField source="author" label="Author" />
-          <GeneralField source="location.city" label="City" />
-          <GeneralField source="location.state" label="State" />
-          <SinceDateField source="createdAt" label="Published At" />
-          <StatusField label="Status" />
-          <ReportsField label="Reports" />
-          <ActionsField
-            label="Actions"
-            onPublish={(id: string) => updateFitPic({ variables: { id, data: { status: FitPicStatus.Published } } })}
-          />
+          <GeneralField source="title" label="Title" />
         </Datagrid>
       </List>
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
@@ -102,7 +78,7 @@ const ActionsField: React.FC<{ label: string; onPublish: (id: string) => void; r
 }) => (
   <>
     {record && record.status !== "Published" && <PublishButton onClick={() => onPublish(record.id)} record={record} />}
-    <ViewEntityField entityPath="content/community/fit-pic" record={record} source="id" />
+    <ViewEntityField entityPath="content/collection" record={record} source="id" />
   </>
 )
 

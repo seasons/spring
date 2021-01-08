@@ -5,21 +5,12 @@ import { useQueryWithStore, Loading } from "@seasons/react-admin"
 import { useRefresh } from "@seasons/react-admin"
 import { Header, Spacer, Snackbar, Text, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
-import { fitPic } from "generated/fitPic"
 import { SelectField, TextField } from "fields"
 import { DateTime } from "luxon"
-import { UPDATE_FIT_PIC, DELETE_FIT_PIC } from "../mutations"
 import { colors } from "theme/colors"
 import { ApolloError } from "apollo-client"
-import { FitPicStatus } from "generated/globalTypes"
 
-const publishedChoices = [
-  { value: FitPicStatus.Submitted, display: "Submitted", disabled: true },
-  { value: FitPicStatus.Published, display: "Published" },
-  { value: FitPicStatus.Unpublished, display: "Unpublished" },
-]
-
-export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, history }) => {
+export const CollectionsView: React.FC<{ match: any; history: any }> = ({ match, history }) => {
   const { id } = match.params
   const refresh = useRefresh()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -29,14 +20,14 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
       message: error?.message,
       status: "error",
     })
-  const [updateFitPic] = useMutation(UPDATE_FIT_PIC, {
-    onCompleted: () => setIsSubmitting(true),
-    onError: onMutationError,
-  })
-  const [deleteFitPic] = useMutation(DELETE_FIT_PIC, {
-    onCompleted: () => setIsSubmitting(true),
-    onError: onMutationError,
-  })
+  //   const [updateFitPic] = useMutation(UPDATE_FIT_PIC, {
+  //     onCompleted: () => setIsSubmitting(true),
+  //     onError: onMutationError,
+  //   })
+  //   const [deleteFitPic] = useMutation(DELETE_FIT_PIC, {
+  //     onCompleted: () => setIsSubmitting(true),
+  //     onError: onMutationError,
+  //   })
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
@@ -52,16 +43,16 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
   if (error || !data) return <Box>{error.message}</Box>
 
   const onSubmit = async ({ status }) => {
-    await updateFitPic({ variables: { id, data: { status } } })
-    refresh()
+    // await updateFitPic({ variables: { id, data: { status } } })
+    // refresh()
   }
 
   const onDelete = async () => {
-    await deleteFitPic({ variables: { id } })
-    history.push(`/content/community`)
+    // await deleteFitPic({ variables: { id } })
+    // history.push(`/content/community`)
   }
 
-  const fitPic = data as fitPic
+  const fitPic = data
   const updatedAt = DateTime.fromISO(fitPic.updatedAt)
 
   return (
@@ -73,12 +64,12 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
             subtitle={`Updated on ${updatedAt.monthLong} ${updatedAt.day}, ${updatedAt.year}`}
             breadcrumbs={[
               {
-                title: "Community",
-                url: "/content/community",
+                title: "Content",
+                url: "/content",
               },
               {
-                title: "Fit Pic",
-                url: "/content/community/fit-pic",
+                title: "Collections",
+                url: "/content/collections",
               },
             ]}
             primaryButton={{ text: "Delete", action: onDelete }}
@@ -99,36 +90,7 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
                 <img src={data?.image?.url} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
               </Box>
             </Grid>
-            <Grid item xs={8}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Text variant="h6">Author name</Text>
-                  <Spacer mt={1} />
-                  <TextField name="name" initialValue={fitPic.author} disabled />
-                </Grid>
-              </Grid>
-              <Spacer mt={3} />
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <Text variant="h6">City</Text>
-                  <Spacer mt={1} />
-                  <TextField name="city" initialValue={fitPic.location?.city ?? ""} disabled />
-                </Grid>
-                <Grid item xs={6}>
-                  <Text variant="h6">State</Text>
-                  <Spacer mt={1} />
-                  <TextField name="state" initialValue={fitPic.location?.state ?? ""} disabled />
-                </Grid>
-              </Grid>
-              <Spacer mt={3} />
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Text variant="h6">Status</Text>
-                  <Spacer mt={1} />
-                  <SelectField name="status" choices={publishedChoices} initialValue={fitPic.status} requiredString />
-                </Grid>
-              </Grid>
-            </Grid>
+            <Grid item xs={8}></Grid>
           </Grid>
         </>
       </Wizard>

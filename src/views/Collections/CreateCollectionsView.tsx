@@ -2,17 +2,17 @@ import { Container } from "@material-ui/core"
 import React, { useState } from "react"
 import { useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
-
-import { Snackbar, Spacer, Wizard } from "components"
+import { Grid } from "@material-ui/core"
+import { SelectField, TextField } from "fields"
+import { Header, ImageUpload, Snackbar, Spacer, Wizard, Text } from "components"
 import { SnackbarState } from "components/Snackbar"
-import { Overview } from "./Components"
-import { SUBMIT_FIT_PIC, UPDATE_FIT_PIC } from "../mutations"
 import { ApolloError } from "apollo-client"
 import { FitPicStatus } from "generated/globalTypes"
+import { Overview } from "./Components/Overview"
 
 type FormValues = { status?: FitPicStatus; image?: File; city?: string; state?: string; zipCode?: string }
 
-export const CreateFitPicView: React.FC = () => {
+export const CreateCollectionsView: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const onMutationError = (error: ApolloError) => {
@@ -22,11 +22,11 @@ export const CreateFitPicView: React.FC = () => {
       status: "error",
     })
   }
-  const [updateFitPic] = useMutation(UPDATE_FIT_PIC, { onError: onMutationError })
-  const [createFitPic] = useMutation(SUBMIT_FIT_PIC, {
-    onCompleted: () => setIsSubmitting(false),
-    onError: onMutationError,
-  })
+  //   const [updateFitPic] = useMutation(UPDATE_FIT_PIC, { onError: onMutationError })
+  //   const [createFitPic] = useMutation(SUBMIT_FIT_PIC, {
+  //     onCompleted: () => setIsSubmitting(false),
+  //     onError: onMutationError,
+  //   })
 
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -46,27 +46,27 @@ export const CreateFitPicView: React.FC = () => {
       return
     }
     setIsSubmitting(true)
-    const result = await createFitPic({
-      variables: {
-        image,
-        location: { create: { city, state, zipCode } },
-      },
-    })
-    const id = result?.data?.submitFitPic
-    if (id) {
-      if (status === "Published") {
-        await updateFitPic({
-          variables: {
-            id,
-            data: { status },
-          },
-        })
-        history.push(`/content/community/fit-pic/${id}`)
-      } else {
-        // Redirect to community page
-        history.push(`/content/community/fit-pic/${id}`)
-      }
-    }
+    // const result = await createFitPic({
+    //   variables: {
+    //     image,
+    //     location: { create: { city, state, zipCode } },
+    //   },
+    // })
+    // const id = result?.data?.submitFitPic
+    // if (id) {
+    //   if (status === "Published") {
+    // await updateFitPic({
+    //   variables: {
+    //     id,
+    //     data: { status },
+    //   },
+    // })
+    //     history.push(`/content/community/fit-pic/${id}`)
+    //   } else {
+    // Redirect to community page
+    //     history.push(`/content/community/fit-pic/${id}`)
+    //   }
+    // }
   }
 
   return (
