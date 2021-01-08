@@ -24,7 +24,7 @@ import { NotificationsList } from "views/Notifications/NotificationsList"
 import { AnalyticsReport } from "components/AnalyticsReport"
 import { ViewType } from "generated/globalTypes"
 import { CreateFitPicView, FitPicView } from "views/Community"
-import { CollectionsList, CollectionsView, CreateCollectionsView } from "views/Collections"
+import { CollectionsList, CollectionsEdit, CollectionsCreate } from "views/Collections"
 
 export default [
   {
@@ -141,13 +141,13 @@ export default [
         path: "/content/collections/create",
         exact: true,
         component: props => (
-          <CreateCollectionsView {...props} basePath="/content/collections/create" resource="Collection" />
+          <CollectionsCreate {...props} basePath="/content/collections/create" resource="Collection" />
         ),
       },
       {
         path: "/content/collections/:id",
         exact: true,
-        component: props => <CollectionsView {...props} basePath="/content/collections" resource="Collection" />,
+        component: props => <CollectionsEdit {...props} basePath="/content/collections" resource="Collection" />,
       },
       {
         path: "/inventory/:tab",

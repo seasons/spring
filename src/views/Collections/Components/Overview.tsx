@@ -4,16 +4,16 @@ import { SelectField, TextField } from "fields"
 import { Header, ImageUpload, Spacer, Text } from "components"
 import { ProductSearch } from "components/ProductSearch"
 import { ProductSelects } from "components/ProductSelects"
-const publishedChoices = [
-  { value: true, display: "True" },
-  { value: false, display: "False" },
+
+const trueOrFalseSelectFields = [
+  { display: "True", value: true },
+  { display: "False", value: false },
 ]
 
 export const Overview: React.FC<{
   selectedProducts: any[]
   setSelectedProducts: (products: any[]) => void
-  collection?: any
-}> = ({ selectedProducts, setSelectedProducts, collection }) => {
+}> = ({ selectedProducts, setSelectedProducts }) => {
   return (
     <>
       <Header
@@ -61,12 +61,7 @@ export const Overview: React.FC<{
             <Grid item xs={6}>
               <Text variant="h6">Published</Text>
               <Spacer mt={1} />
-              <SelectField
-                name="status"
-                choices={publishedChoices}
-                initialValue={collection?.published || false}
-                requiredString
-              />
+              <SelectField name="published" choices={trueOrFalseSelectFields} />
             </Grid>
             <Grid item xs={6}>
               <Text variant="h6">Product search</Text>

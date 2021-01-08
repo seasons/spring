@@ -1,3 +1,3 @@
 export { CollectionsList } from "./CollectionsList"
-export { CollectionsView } from "./CollectionsView"
-export { CreateCollectionsView } from "./CreateCollectionsView"
+export { CollectionsEdit } from "./CollectionsEdit"
+export { CollectionsCreate } from "./CollectionsCreate"

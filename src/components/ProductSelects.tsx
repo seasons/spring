@@ -12,7 +12,7 @@ export const ProductSelects: React.FC<{ selectedProducts: any[]; setSelectedProd
     <Box mt={2}>
       {selectedProducts.map(product => {
         return (
-          <Box style={{ position: "relative" }}>
+          <Box style={{ position: "relative" }} key={product.id}>
             <RemoveWrapper>
               <IconButton
                 aria-label="remove"

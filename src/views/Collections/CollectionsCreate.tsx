@@ -17,7 +17,7 @@ export type CollectionFormValues = {
   products?: any
 }
 
-export const CreateCollectionsView: React.FC = () => {
+export const CollectionsCreate: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedProducts, setSelectedProducts] = useState([] as any[])
@@ -36,7 +36,10 @@ export const CreateCollectionsView: React.FC = () => {
     status: "success",
   })
 
-  const onSubmit = async ({ images, title, subTitle, published, description }: CollectionFormValues) => {
+  const onSubmit = async values => {
+    const numImages = 4
+    const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
+    const { title, subTitle, published, description } = values
     setIsSubmitting(true)
     const result = await upsertCollection({
       variables: {

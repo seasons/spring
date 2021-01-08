@@ -1,22 +1,15 @@
-import { Container, Box, Grid } from "@material-ui/core"
+import { Container } from "@material-ui/core"
 import React, { useEffect, useState } from "react"
-import { useMutation } from "react-apollo"
-import { useQueryWithStore, Loading } from "@seasons/react-admin"
-import { useRefresh } from "@seasons/react-admin"
-import { Header, Spacer, Snackbar, Text, Wizard } from "components"
+import { useMutation, useQuery } from "react-apollo"
+import { Spacer, Snackbar, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
-import { SelectField, TextField } from "fields"
-import { DateTime } from "luxon"
-import { colors } from "theme/colors"
 import { ApolloError } from "apollo-client"
 import { Overview } from "./Components/Overview"
 import { UPSERT_COLLECTION } from "./mutations"
-import { useHistory } from "react-router-dom"
-import { CollectionFormValues } from "./CreateCollectionsView"
+import { COLLECTION_EDIT_QUERY } from "queries/Collection"
 
-export const CollectionsView: React.FC<{ match: any }> = ({ match }) => {
+export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   const { id } = match.params
-  const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedProducts, setSelectedProducts] = useState([] as any[])
   const onMutationError = (error: ApolloError) => {
@@ -26,17 +19,16 @@ export const CollectionsView: React.FC<{ match: any }> = ({ match }) => {
       status: "error",
     })
   }
-  const { data, loading, loaded, error } = useQueryWithStore({
-    type: "getOne",
-    resource: "Collection",
-    payload: { id },
+  const { data, refetch } = useQuery(COLLECTION_EDIT_QUERY, {
+    variables: { input: { id } },
   })
   const [upsertCollection] = useMutation(UPSERT_COLLECTION, { onError: onMutationError })
+  const collection = data?.collection
   useEffect(() => {
-    if (data.products) {
-      setSelectedProducts(data.products)
+    if (collection) {
+      setSelectedProducts(collection.products)
     }
-  }, [data])
+  }, [collection])
 
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -44,7 +36,10 @@ export const CollectionsView: React.FC<{ match: any }> = ({ match }) => {
     status: "success",
   })
 
-  const onSubmit = async ({ images, title, subTitle, published, description }: CollectionFormValues) => {
+  const onSubmit = async values => {
+    const numImages = 4
+    const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
+    const { title, subTitle, published, description } = values
     setIsSubmitting(true)
     const result = await upsertCollection({
       variables: {
@@ -60,13 +55,28 @@ export const CollectionsView: React.FC<{ match: any }> = ({ match }) => {
     })
     const id = result?.data?.id
     if (id) {
-      history.push(`/content/collection/${id}`)
+      refetch()
     }
+  }
+
+  let initialValues = {} as any
+
+  if (collection) {
+    initialValues = {
+      images: collection.images,
+      title: collection.title,
+      subTitle: collection.subTitle,
+      published: collection.published,
+      description: collection.descriptions?.[0],
+    }
+    collection.images?.forEach((image, index) => {
+      initialValues[`image_${index}`] = image.url
+    })
   }
 
   return (
     <Container maxWidth={false}>
-      <Wizard onSubmit={onSubmit} submitting={isSubmitting} submitButtonTitle="Save">
+      <Wizard onSubmit={onSubmit} submitting={isSubmitting} submitButtonTitle="Save" initialValues={initialValues}>
         <Overview selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
       </Wizard>
       <Spacer mt={18} />

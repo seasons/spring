@@ -3,6 +3,7 @@ import { Box, Link, Typography } from "@material-ui/core"
 import { Link as RouterLink } from "react-router-dom"
 
 export const ProductTile: React.FC<{ product: any }> = ({ product }) => {
+  console.log("product", product)
   return (
     <Box>
       <img style={{ width: "100%" }} src={product.image} />
