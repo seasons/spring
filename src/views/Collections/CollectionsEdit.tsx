@@ -77,7 +77,11 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   return (
     <Container maxWidth={false}>
       <Wizard onSubmit={onSubmit} submitting={isSubmitting} submitButtonTitle="Save" initialValues={initialValues}>
-        <Overview selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
+        <Overview
+          selectedProducts={selectedProducts}
+          setSelectedProducts={setSelectedProducts}
+          headerTitle="Edit a collection"
+        />
       </Wizard>
       <Spacer mt={18} />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />

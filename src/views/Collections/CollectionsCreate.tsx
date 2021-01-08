@@ -63,7 +63,11 @@ export const CollectionsCreate: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard onSubmit={onSubmit} submitting={isSubmitting} submitButtonTitle="Save">
-        <Overview selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
+        <Overview
+          selectedProducts={selectedProducts}
+          setSelectedProducts={setSelectedProducts}
+          headerTitle="Create a new collection"
+        />
       </Wizard>
       <Spacer mt={18} />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />

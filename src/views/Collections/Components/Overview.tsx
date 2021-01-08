@@ -4,6 +4,7 @@ import { SelectField, TextField } from "fields"
 import { Header, ImageUpload, Spacer, Text } from "components"
 import { ProductSearch } from "components/ProductSearch"
 import { ProductSelects } from "components/ProductSelects"
+import { useLocation } from "react-router-dom"
 
 const trueOrFalseSelectFields = [
   { display: "True", value: true },
@@ -13,12 +14,14 @@ const trueOrFalseSelectFields = [
 export const Overview: React.FC<{
   selectedProducts: any[]
   setSelectedProducts: (products: any[]) => void
-}> = ({ selectedProducts, setSelectedProducts }) => {
+  headerTitle: string
+}> = ({ selectedProducts, setSelectedProducts, headerTitle }) => {
+  const location = useLocation()
   return (
     <>
       <Header
-        title="New collection"
-        subtitle="Create a collection of products."
+        title={headerTitle}
+        subtitle="A collection is a group of products that tell a story"
         breadcrumbs={[
           {
             title: "Content",
@@ -29,8 +32,8 @@ export const Overview: React.FC<{
             url: "/content/collections",
           },
           {
-            title: "New collection",
-            url: "/content/collections/create",
+            title: headerTitle,
+            url: location.pathname,
           },
         ]}
       />
@@ -43,7 +46,7 @@ export const Overview: React.FC<{
             <Grid item xs={6}>
               <Text variant="h6">Title</Text>
               <Spacer mt={1} />
-              <TextField name="title" placeholder="Holiday" requiredString />
+              <TextField name="title" requiredString />
             </Grid>
             <Grid item xs={6}>
               <Text variant="h6">Subtitle</Text>
