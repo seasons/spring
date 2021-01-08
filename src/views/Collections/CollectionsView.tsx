@@ -1,5 +1,5 @@
 import { Container, Box, Grid } from "@material-ui/core"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useMutation } from "react-apollo"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
 import { useRefresh } from "@seasons/react-admin"
@@ -9,90 +9,65 @@ import { SelectField, TextField } from "fields"
 import { DateTime } from "luxon"
 import { colors } from "theme/colors"
 import { ApolloError } from "apollo-client"
+import { Overview } from "./Components/Overview"
+import { UPSERT_COLLECTION } from "./mutations"
+import { useHistory } from "react-router-dom"
+import { CollectionFormValues } from "./CreateCollectionsView"
 
-export const CollectionsView: React.FC<{ match: any; history: any }> = ({ match, history }) => {
+export const CollectionsView: React.FC<{ match: any }> = ({ match }) => {
   const { id } = match.params
-  const refresh = useRefresh()
+  const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const onMutationError = (error: ApolloError) =>
+  const [selectedProducts, setSelectedProducts] = useState([] as any[])
+  const onMutationError = (error: ApolloError) => {
     toggleSnackbar({
       show: true,
       message: error?.message,
       status: "error",
     })
-  //   const [updateFitPic] = useMutation(UPDATE_FIT_PIC, {
-  //     onCompleted: () => setIsSubmitting(true),
-  //     onError: onMutationError,
-  //   })
-  //   const [deleteFitPic] = useMutation(DELETE_FIT_PIC, {
-  //     onCompleted: () => setIsSubmitting(true),
-  //     onError: onMutationError,
-  //   })
+  }
+  const { data, loading, loaded, error } = useQueryWithStore({
+    type: "getOne",
+    resource: "Collection",
+    payload: { id },
+  })
+  const [upsertCollection] = useMutation(UPSERT_COLLECTION, { onError: onMutationError })
+  useEffect(() => {
+    if (data.products) {
+      setSelectedProducts(data.products)
+    }
+  }, [data])
+
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
     status: "success",
   })
-  const { data, loading, loaded, error } = useQueryWithStore({
-    type: "getOne",
-    resource: "FitPic",
-    payload: { id },
-  })
 
-  if (!loaded && loading) return <Loading />
-  if (error || !data) return <Box>{error.message}</Box>
-
-  const onSubmit = async ({ status }) => {
-    // await updateFitPic({ variables: { id, data: { status } } })
-    // refresh()
+  const onSubmit = async ({ images, title, subTitle, published, description }: CollectionFormValues) => {
+    setIsSubmitting(true)
+    const result = await upsertCollection({
+      variables: {
+        data: {
+          images,
+          title,
+          subTitle,
+          published,
+          productIDs: selectedProducts?.map(p => p.id),
+          descriptions: { set: [description] },
+        },
+      },
+    })
+    const id = result?.data?.id
+    if (id) {
+      history.push(`/content/collection/${id}`)
+    }
   }
-
-  const onDelete = async () => {
-    // await deleteFitPic({ variables: { id } })
-    // history.push(`/content/community`)
-  }
-
-  const fitPic = data
-  const updatedAt = DateTime.fromISO(fitPic.updatedAt)
 
   return (
     <Container maxWidth={false}>
       <Wizard onSubmit={onSubmit} submitting={isSubmitting} submitButtonTitle="Save">
-        <>
-          <Header
-            title="Fit Pic"
-            subtitle={`Updated on ${updatedAt.monthLong} ${updatedAt.day}, ${updatedAt.year}`}
-            breadcrumbs={[
-              {
-                title: "Content",
-                url: "/content",
-              },
-              {
-                title: "Collections",
-                url: "/content/collections",
-              },
-            ]}
-            primaryButton={{ text: "Delete", action: onDelete }}
-          />
-          <Spacer mt={2} />
-          <Grid container spacing={5}>
-            <Grid item xs={4}>
-              <Box
-                display="flex"
-                style={{ backgroundColor: colors.white95 }}
-                borderRadius={4}
-                height={400}
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                p={1}
-              >
-                <img src={data?.image?.url} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-              </Box>
-            </Grid>
-            <Grid item xs={8}></Grid>
-          </Grid>
-        </>
+        <Overview selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
       </Wizard>
       <Spacer mt={18} />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />

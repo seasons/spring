@@ -10,8 +10,8 @@ import { colors } from "theme/colors"
 import CloseIcon from "@material-ui/icons/Close"
 import { SearchResultCard } from "layouts/Dashboard/SearchResultCard"
 
-const SEARCH = gql`
-  query Search($query: String!) {
+const PRODUCT_SEARCH = gql`
+  query ProductSearch($query: String!) {
     search(query: $query) {
       kindOf
       __typename
@@ -29,12 +29,14 @@ const SEARCH = gql`
   }
 `
 
-export const ProductSearch: React.FC = () => {
+export const ProductSearch: React.FC<{ selectedProducts: any[]; setSelectedProducts: (products: any[]) => void }> = ({
+  selectedProducts,
+  setSelectedProducts,
+}) => {
   const [isLoading, setLoading] = useState(false)
   const [value, setValue] = useState("")
   const [openSearch, setOpenSearch] = useState(false)
-  const [search, { data }] = useLazyQuery(SEARCH)
-  const [selectedProducts, setSelectedProducts] = useState([] as any)
+  const [search, { data }] = useLazyQuery(PRODUCT_SEARCH)
 
   const handleSearch = async () => {
     try {
@@ -53,8 +55,6 @@ export const ProductSearch: React.FC = () => {
   }
 
   const results = data?.search
-  const resultsEmpty = selectedProducts.length > 0
-
   useEffect(() => {
     if (results) {
       setOpenSearch(true)
@@ -62,95 +62,62 @@ export const ProductSearch: React.FC = () => {
   }, [results])
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={6}>
-        <Box mt={2} flexDirection="row">
-          <Box flex={1}>
-            <TextField
-              fullWidth
-              onChange={event => setValue(event.target.value)}
-              placeholder="Search products, brands &amp; users"
-              value={value}
-              variant="outlined"
-            />
-          </Box>
-          <Box display="flex" justifyContent="flex-end">
-            <MuiButton color="primary" size="small" onClick={handleSearch}>
-              Search
-            </MuiButton>
-          </Box>
-          <Box style={{ position: "relative", width: "100%" }}>
-            {(openSearch || isLoading) && (
-              <>
-                <CloseWrapper>
-                  <IconButton aria-label="close" onClick={() => setOpenSearch(false)}>
-                    <CloseIcon />
-                  </IconButton>
-                </CloseWrapper>
-                <ResultsWrapped>
-                  {isLoading ? (
-                    <Box display="flex" justifyContent="center">
-                      <CircularProgress />
-                    </Box>
-                  ) : (
-                    <>
-                      {results?.map((result: any) => {
-                        const alreadyIncluded = !!selectedProducts.find((p: any) => p.data?.id === result.data?.id)
-                        return (
-                          <Box
-                            style={{ cursor: "pointer" }}
-                            onClick={() =>
-                              setSelectedProducts([
-                                ...(alreadyIncluded
-                                  ? selectedProducts.filter((p: any) => p.data?.id !== result.data?.id)
-                                  : selectedProducts.concat([result])),
-                              ])
-                            }
-                          >
-                            <Box style={{ pointerEvents: "none" }}>
-                              <SearchResultCard result={result} />
-                            </Box>
-                          </Box>
-                        )
-                      })}
-                    </>
-                  )}
-                </ResultsWrapped>
-              </>
-            )}
-          </Box>
-        </Box>
-      </Grid>
-      <Grid item xs={6}>
-        <SavedProducts mt={2} resultsEmpty={resultsEmpty}>
-          {resultsEmpty ? (
-            <>
-              {selectedProducts.map(product => {
-                return (
-                  <Box style={{ position: "relative" }}>
-                    <CloseWrapper>
-                      <IconButton
-                        aria-label="close"
+    <Box flexDirection="row">
+      <Box flex={1}>
+        <TextField
+          fullWidth
+          onChange={event => setValue(event.target.value)}
+          placeholder="Search products or brands"
+          value={value}
+          variant="outlined"
+        />
+      </Box>
+      <Box display="flex" justifyContent="flex-end">
+        <MuiButton color="primary" size="small" onClick={handleSearch}>
+          Search
+        </MuiButton>
+      </Box>
+      <Box style={{ position: "relative", width: "100%" }}>
+        {(openSearch || isLoading) && (
+          <>
+            <CloseWrapper>
+              <IconButton aria-label="close" onClick={() => setOpenSearch(false)}>
+                <CloseIcon />
+              </IconButton>
+            </CloseWrapper>
+            <ResultsWrapped>
+              {isLoading ? (
+                <Box display="flex" justifyContent="center">
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <>
+                  {results?.map((result: any) => {
+                    const alreadyIncluded = !!selectedProducts.find((p: any) => p?.id === result?.id)
+                    return (
+                      <Box
+                        style={{ cursor: "pointer", backgroundColor: "white" }}
                         onClick={() =>
-                          setSelectedProducts([...selectedProducts.filter((p: any) => p.data?.id !== product.data?.id)])
+                          setSelectedProducts([
+                            ...(alreadyIncluded
+                              ? selectedProducts.filter((p: any) => p?.id !== result.data?.id)
+                              : selectedProducts.concat([result.data])),
+                          ])
                         }
                       >
-                        <CloseIcon />
-                      </IconButton>
-                    </CloseWrapper>
-                    <SearchResultCard result={product} />
-                  </Box>
-                )
-              })}
-            </>
-          ) : (
-            <Box style={{ padding: "18.5px 14px" }}>
-              <Text variant="h6">Added products will appear here</Text>
-            </Box>
-          )}
-        </SavedProducts>
-      </Grid>
-    </Grid>
+                        <Box style={{ pointerEvents: "none" }}>
+                          <SearchResultCard result={result} />
+                        </Box>
+                      </Box>
+                    )
+                  })}
+                </>
+              )}
+            </ResultsWrapped>
+          </>
+        )}
+      </Box>
+    </Box>
   )
 }
 

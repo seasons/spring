@@ -2,19 +2,25 @@ import { Container } from "@material-ui/core"
 import React, { useState } from "react"
 import { useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
-import { Grid } from "@material-ui/core"
-import { SelectField, TextField } from "fields"
-import { Header, ImageUpload, Snackbar, Spacer, Wizard, Text } from "components"
+import { Snackbar, Spacer, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { ApolloError } from "apollo-client"
-import { FitPicStatus } from "generated/globalTypes"
 import { Overview } from "./Components/Overview"
+import { UPSERT_COLLECTION } from "./mutations"
 
-type FormValues = { status?: FitPicStatus; image?: File; city?: string; state?: string; zipCode?: string }
+export type CollectionFormValues = {
+  title: string
+  subTitle?: string
+  description: string
+  images?: File[]
+  published: boolean
+  products?: any
+}
 
 export const CreateCollectionsView: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [selectedProducts, setSelectedProducts] = useState([] as any[])
   const onMutationError = (error: ApolloError) => {
     toggleSnackbar({
       show: true,
@@ -22,11 +28,7 @@ export const CreateCollectionsView: React.FC = () => {
       status: "error",
     })
   }
-  //   const [updateFitPic] = useMutation(UPDATE_FIT_PIC, { onError: onMutationError })
-  //   const [createFitPic] = useMutation(SUBMIT_FIT_PIC, {
-  //     onCompleted: () => setIsSubmitting(false),
-  //     onError: onMutationError,
-  //   })
+  const [upsertCollection] = useMutation(UPSERT_COLLECTION, { onError: onMutationError })
 
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -34,45 +36,31 @@ export const CreateCollectionsView: React.FC = () => {
     status: "success",
   })
 
-  const onSubmit = async ({ status, city, image, state, zipCode }: FormValues) => {
-    if (!image) {
-      toggleSnackbar({
-        show: true,
-        message: "An image is required.",
-        status: "error",
-      })
-      return
-    } else if (isSubmitting) {
-      return
-    }
+  const onSubmit = async ({ images, title, subTitle, published, description }: CollectionFormValues) => {
     setIsSubmitting(true)
-    // const result = await createFitPic({
-    //   variables: {
-    //     image,
-    //     location: { create: { city, state, zipCode } },
-    //   },
-    // })
-    // const id = result?.data?.submitFitPic
-    // if (id) {
-    //   if (status === "Published") {
-    // await updateFitPic({
-    //   variables: {
-    //     id,
-    //     data: { status },
-    //   },
-    // })
-    //     history.push(`/content/community/fit-pic/${id}`)
-    //   } else {
-    // Redirect to community page
-    //     history.push(`/content/community/fit-pic/${id}`)
-    //   }
-    // }
+    const result = await upsertCollection({
+      variables: {
+        data: {
+          images,
+          title,
+          subTitle,
+          published,
+          productIDs: selectedProducts?.map(p => p.id),
+          descriptions: { set: [description] },
+        },
+      },
+    })
+    console.log("result", result)
+    const id = result?.data?.id
+    if (id) {
+      history.push(`/content/collection/${id}`)
+    }
   }
 
   return (
     <Container maxWidth={false}>
       <Wizard onSubmit={onSubmit} submitting={isSubmitting} submitButtonTitle="Save">
-        <Overview />
+        <Overview selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
       </Wizard>
       <Spacer mt={18} />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
