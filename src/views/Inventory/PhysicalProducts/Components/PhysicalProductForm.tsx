@@ -15,10 +15,10 @@ export interface PhysicalProductFormProps {
   inventoryStatuses?: any[]
   currentInventoryStatus?: InventoryStatus
   initialSellable?: {
-    sellableNew: boolean
-    sellableNewPrice: number
-    sellableUsed: boolean
-    sellableUsedPrice: number
+    new: boolean
+    newPrice: number
+    used: boolean
+    usedPrice: number
   }
 }
 
@@ -84,7 +84,7 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
       <Spacer grid mt={5} />
       <Grid item xs={6} direction="row" alignItems="center" container>
         <Text variant="h5">Sellable New</Text>
-        <CheckboxField name={`${uid}_sellableNew`} initialValue={initialSellable?.sellableNew} />
+        <CheckboxField name={`${uid}_sellableNew`} initialValue={initialSellable?.new} />
       </Grid>
       <Grid item xs={6}>
         <Text variant="h5">Sellable New Price</Text>
@@ -93,13 +93,13 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
           name={`${uid}_sellableNewPrice`}
           type="number"
           optionalNumber
-          initialValue={initialSellable?.sellableNewPrice ? String(initialSellable.sellableNewPrice) : undefined}
+          initialValue={initialSellable?.newPrice ? String(initialSellable.newPrice) : undefined}
         />
       </Grid>
       <Spacer grid mt={5} />
       <Grid item xs={6} direction="row" alignItems="center" container>
         <Text variant="h5">Sellable Used</Text>
-        <CheckboxField name={`${uid}_sellableUsed`} initialValue={initialSellable?.sellableUsed} />
+        <CheckboxField name={`${uid}_sellableUsed`} initialValue={initialSellable?.used} />
       </Grid>
       <Grid item xs={6}>
         <Text variant="h5">Sellable Used Price</Text>
@@ -108,7 +108,7 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
           name={`${uid}_sellableUsedPrice`}
           type="number"
           optionalNumber
-          initialValue={initialSellable?.sellableUsedPrice ? String(initialSellable.sellableUsedPrice) : undefined}
+          initialValue={initialSellable?.usedPrice ? String(initialSellable.usedPrice) : undefined}
         />
       </Grid>
       <Spacer grid mt={5} />
