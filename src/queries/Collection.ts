@@ -5,7 +5,10 @@ const CollectionFragment = gql`
   fragment CollectionFragment on Collection {
     id
     slug
-    images
+    images {
+      id
+      url
+    }
     title
     subTitle
     descriptions
@@ -14,6 +17,7 @@ const CollectionFragment = gql`
       id
       name
       brand {
+        id
         name
       }
       images {
@@ -26,13 +30,28 @@ const CollectionFragment = gql`
   }
 `
 
-export const COLLECTION_EDIT_QUERY = gql`
-  query CollectionEditQuery($input: CollectionWhereUniqueInput!) {
-    collection(where: $input) {
-      ...CollectionFragment
+const CollectionProductFragment = gql`
+  fragment CollectionProductFragment on Product {
+    id
+    name
+    images {
+      id
+      url
+    }
+    brand {
+      id
+      name
     }
   }
-  ${CollectionFragment}
+`
+
+export const COLLECTION_PRODUCTS_QUERY = gql`
+  query CollectionCreateQuery($productIDs: [ID!]) {
+    products(where: { id_in: $productIDs }) {
+      ...CollectionProductFragment
+    }
+  }
+  ${CollectionProductFragment}
 `
 
 export default {

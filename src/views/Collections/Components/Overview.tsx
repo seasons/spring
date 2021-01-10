@@ -12,10 +12,11 @@ const trueOrFalseSelectFields = [
 ]
 
 export const Overview: React.FC<{
-  selectedProducts: any[]
-  setSelectedProducts: (products: any[]) => void
+  selectedProductIDs: string[]
+  products: any[]
+  setSelectedProductIDs: (id: string[]) => void
   headerTitle: string
-}> = ({ selectedProducts, setSelectedProducts, headerTitle }) => {
+}> = ({ selectedProductIDs, setSelectedProductIDs, headerTitle, products }) => {
   const location = useLocation()
   return (
     <>
@@ -69,15 +70,19 @@ export const Overview: React.FC<{
             <Grid item xs={6}>
               <Text variant="h6">Product search</Text>
               <Spacer mt={1} />
-              <ProductSearch selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
+              <ProductSearch selectedProductIDs={selectedProductIDs} setSelectedProductIDs={setSelectedProductIDs} />
             </Grid>
           </Grid>
           <Spacer mt={3} />
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Text variant="h6">Selected products</Text>
               <Spacer mt={1} />
-              <ProductSelects selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
+              <ProductSelects
+                products={products}
+                selectedProductIDs={selectedProductIDs}
+                setSelectedProductIDs={setSelectedProductIDs}
+              />
             </Grid>
           </Grid>
         </Grid>

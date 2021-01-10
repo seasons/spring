@@ -7,6 +7,7 @@ import Reservation from "./Reservation"
 import User from "./User"
 import Customer from "./Customer"
 import Package from "./Package"
+import Collection from "./Collection"
 import PhysicalProduct from "./PhysicalProduct"
 import Size from "./Size"
 import PushNotificationReceipt from "./PushNotificationReceipt"
@@ -15,6 +16,7 @@ import FitPic from "./FitPic"
 export default {
   Product,
   Brand,
+  Collection,
   Reservation,
   User,
   Customer,

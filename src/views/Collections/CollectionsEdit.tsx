@@ -6,12 +6,14 @@ import { SnackbarState } from "components/Snackbar"
 import { ApolloError } from "apollo-client"
 import { Overview } from "./Components/Overview"
 import { UPSERT_COLLECTION } from "./mutations"
-import { COLLECTION_EDIT_QUERY } from "queries/Collection"
+import { useParams } from "react-router-dom"
+import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
+import { useQueryWithStore } from "@seasons/react-admin"
 
 export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
-  const { id } = match.params
+  const { collectionID } = useParams()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [selectedProducts, setSelectedProducts] = useState([] as any[])
+  const [selectedProductIDs, setSelectedProductIDs] = useState([] as any[])
   const onMutationError = (error: ApolloError) => {
     toggleSnackbar({
       show: true,
@@ -19,16 +21,55 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
       status: "error",
     })
   }
-  const { data, refetch } = useQuery(COLLECTION_EDIT_QUERY, {
-    variables: { input: { id } },
+
+  const { data } = useQueryWithStore({
+    type: "getOne",
+    resource: "Collection",
+    payload: { id: collectionID },
   })
-  const [upsertCollection] = useMutation(UPSERT_COLLECTION, { onError: onMutationError })
+
+  const { data: productsData, refetch } = useQuery(COLLECTION_PRODUCTS_QUERY, {
+    variables: { productIDs: selectedProductIDs },
+  })
+  const products = productsData?.products
   const collection = data?.collection
+
   useEffect(() => {
-    if (collection) {
-      setSelectedProducts(collection.products)
+    if (selectedProductIDs?.length > 0 && selectedProductIDs?.length !== products?.length) {
+      refetch()
     }
-  }, [collection])
+  }, [selectedProductIDs, products, refetch])
+
+  console.log("data", data)
+
+  const [upsertCollection] = useMutation(UPSERT_COLLECTION, {
+    refetchQueries: [
+      {
+        query: COLLECTION_PRODUCTS_QUERY,
+        variables: { productIDs: selectedProductIDs },
+      },
+    ],
+    onCompleted: result => {
+      toggleSnackbar({
+        show: true,
+        message: "Collection updated",
+        status: "success",
+      })
+    },
+    onError: error => {
+      toggleSnackbar({
+        show: true,
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
+
+  useEffect(() => {
+    if (collection && selectedProductIDs.length === 0) {
+      setSelectedProductIDs(collection.products.map(p => p.id))
+    }
+  }, [collection, selectedProductIDs])
 
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -41,22 +82,18 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
     const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
     const { title, subTitle, published, description } = values
     setIsSubmitting(true)
-    const result = await upsertCollection({
+    await upsertCollection({
       variables: {
         data: {
           images,
           title,
           subTitle,
           published,
-          productIDs: selectedProducts?.map(p => p.id),
+          productIDs: selectedProductIDs,
           descriptions: { set: [description] },
         },
       },
     })
-    const id = result?.data?.id
-    if (id) {
-      refetch()
-    }
   }
 
   let initialValues = {} as any
@@ -78,8 +115,9 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
     <Container maxWidth={false}>
       <Wizard onSubmit={onSubmit} submitting={isSubmitting} submitButtonTitle="Save" initialValues={initialValues}>
         <Overview
-          selectedProducts={selectedProducts}
-          setSelectedProducts={setSelectedProducts}
+          selectedProductIDs={selectedProductIDs}
+          setSelectedProductIDs={setSelectedProductIDs}
+          products={products}
           headerTitle="Edit a collection"
         />
       </Wizard>

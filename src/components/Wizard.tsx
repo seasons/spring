@@ -33,12 +33,6 @@ export const Wizard: React.FC<WizardProps> = ({
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(submitting)
 
-  React.useEffect(() => {
-    if (initialValues) {
-      setValues(initialValues)
-    }
-  }, [initialValues])
-
   const next = async vals => {
     setValues(vals)
     const shouldGoNext = onNext ? await onNext?.(vals) : true

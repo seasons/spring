@@ -145,7 +145,7 @@ export default [
         ),
       },
       {
-        path: "/content/collections/:id",
+        path: "/content/collections/:collectionID",
         exact: true,
         component: props => <CollectionsEdit {...props} basePath="/content/collections" resource="Collection" />,
       },

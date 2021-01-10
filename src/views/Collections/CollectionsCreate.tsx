@@ -1,12 +1,13 @@
 import { Container } from "@material-ui/core"
 import React, { useState } from "react"
-import { useMutation } from "react-apollo"
+import { useMutation, useQuery } from "react-apollo"
 import { useHistory } from "react-router-dom"
 import { Snackbar, Spacer, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { ApolloError } from "apollo-client"
 import { Overview } from "./Components/Overview"
 import { UPSERT_COLLECTION } from "./mutations"
+import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
 
 export type CollectionFormValues = {
   title: string
@@ -20,7 +21,7 @@ export type CollectionFormValues = {
 export const CollectionsCreate: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [selectedProducts, setSelectedProducts] = useState([] as any[])
+  const [selectedProductIDs, setSelectedProductIDs] = useState([] as string[])
   const onMutationError = (error: ApolloError) => {
     toggleSnackbar({
       show: true,
@@ -29,6 +30,16 @@ export const CollectionsCreate: React.FC = () => {
     })
   }
   const [upsertCollection] = useMutation(UPSERT_COLLECTION, { onError: onMutationError })
+  const { data, refetch } = useQuery(COLLECTION_PRODUCTS_QUERY, {
+    variables: { productIDs: selectedProductIDs },
+  })
+  const products = data?.products
+
+  React.useEffect(() => {
+    if (selectedProductIDs?.length > 0 && selectedProductIDs?.length !== products?.length) {
+      refetch()
+    }
+  }, [selectedProductIDs, products, refetch])
 
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -40,6 +51,7 @@ export const CollectionsCreate: React.FC = () => {
     const numImages = 4
     const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
     const { title, subTitle, published, description } = values
+    console.log("images", images)
     setIsSubmitting(true)
     const result = await upsertCollection({
       variables: {
@@ -48,24 +60,37 @@ export const CollectionsCreate: React.FC = () => {
           title,
           subTitle,
           published,
-          productIDs: selectedProducts?.map(p => p.id),
+          productIDs: selectedProductIDs,
           descriptions: { set: [description] },
         },
       },
     })
-    console.log("result", result)
-    const id = result?.data?.id
+    const id = result?.data?.upsertCollection?.id
     if (id) {
-      history.push(`/content/collection/${id}`)
+      history.push(`/content/collections/${id}`)
+    } else {
+      toggleSnackbar({
+        show: true,
+        message: "Error saving your collection",
+        status: "error",
+      })
     }
+  }
+
+  const initialValues = {
+    title: "",
+    subTitle: "",
+    description: "",
+    published: false,
   }
 
   return (
     <Container maxWidth={false}>
-      <Wizard onSubmit={onSubmit} submitting={isSubmitting} submitButtonTitle="Save">
+      <Wizard onSubmit={onSubmit} submitting={isSubmitting} initialValues={initialValues} submitButtonTitle="Save">
         <Overview
-          selectedProducts={selectedProducts}
-          setSelectedProducts={setSelectedProducts}
+          products={products}
+          selectedProductIDs={selectedProductIDs}
+          setSelectedProductIDs={setSelectedProductIDs}
           headerTitle="Create a new collection"
         />
       </Wizard>

@@ -1,11 +1,10 @@
 import React, { useEffect } from "react"
-import { Grid, Box, CircularProgress, IconButton } from "@material-ui/core"
+import { Box, CircularProgress, IconButton } from "@material-ui/core"
 import { Button as MuiButton, TextField } from "@material-ui/core"
 import { gql } from "apollo-boost"
 import styled from "styled-components"
 import { useState } from "react"
 import { useLazyQuery } from "react-apollo"
-import { Text } from "components"
 import { colors } from "theme/colors"
 import CloseIcon from "@material-ui/icons/Close"
 import { SearchResultCard } from "layouts/Dashboard/SearchResultCard"
@@ -29,10 +28,10 @@ const PRODUCT_SEARCH = gql`
   }
 `
 
-export const ProductSearch: React.FC<{ selectedProducts: any[]; setSelectedProducts: (products: any[]) => void }> = ({
-  selectedProducts,
-  setSelectedProducts,
-}) => {
+export const ProductSearch: React.FC<{
+  selectedProductIDs: string[]
+  setSelectedProductIDs: (IDs: string[]) => void
+}> = ({ selectedProductIDs, setSelectedProductIDs }) => {
   const [isLoading, setLoading] = useState(false)
   const [value, setValue] = useState("")
   const [openSearch, setOpenSearch] = useState(false)
@@ -93,17 +92,16 @@ export const ProductSearch: React.FC<{ selectedProducts: any[]; setSelectedProdu
               ) : (
                 <>
                   {results?.map((result: any) => {
-                    const alreadyIncluded = !!selectedProducts.find((p: any) => p?.id === result?.id)
+                    const alreadyIncluded = !!selectedProductIDs.find((id: string) => id === result?.data?.id)
                     return (
                       <Box
+                        key={result?.data?.id}
                         style={{ cursor: "pointer", backgroundColor: "white" }}
-                        onClick={() =>
-                          setSelectedProducts([
-                            ...(alreadyIncluded
-                              ? selectedProducts.filter((p: any) => p?.id !== result.data?.id)
-                              : selectedProducts.concat([result.data])),
-                          ])
-                        }
+                        onClick={() => {
+                          if (!alreadyIncluded) {
+                            setSelectedProductIDs([...selectedProductIDs.concat([result.data.id])])
+                          }
+                        }}
                       >
                         <Box style={{ pointerEvents: "none" }}>
                           <SearchResultCard result={result} />
@@ -130,6 +128,7 @@ const CloseWrapper = styled("div")`
 
 const ResultsWrapped = styled("div")`
   border: 1px solid #d7d6d7;
+  background-color: white;
   box-sizing: border-box;
   border-radius: 4px;
   max-height: 300px;
@@ -138,10 +137,5 @@ const ResultsWrapped = styled("div")`
   width: 100%;
   overflow-y: scroll;
   position: absolute;
-`
-
-const SavedProducts = styled(Box)<{ resultsEmpty: boolean }>`
-  border-radius: 4px;
-  border: 1px solid #d7d6d7;
-  background-color: ${p => (p.resultsEmpty ? "transparent" : colors.white95)};
+  z-index: 39;
 `
