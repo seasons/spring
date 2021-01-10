@@ -76,7 +76,7 @@ export const Overview: React.FC<{
           <Spacer mt={3} />
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Text variant="h6">Selected products</Text>
+              <Text variant="h6">{`Selected products: (${products?.length})`}</Text>
               <Spacer mt={1} />
               <ProductSelects
                 products={products}

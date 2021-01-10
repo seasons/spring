@@ -40,6 +40,8 @@ export const IndicatorMap = {
   Deactivated: colors.red[500],
   Reserved: colors.blue[500],
   Reservable: colors.green[500],
+  True: colors.green[500],
+  False: colors.black15,
 }
 
 export interface IndicatorProps {

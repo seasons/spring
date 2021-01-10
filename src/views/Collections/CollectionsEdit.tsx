@@ -1,28 +1,22 @@
-import { Container } from "@material-ui/core"
+import { Box, Container } from "@material-ui/core"
 import React, { useEffect, useState } from "react"
 import { useMutation, useQuery } from "react-apollo"
 import { Spacer, Snackbar, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
+import { useRefresh } from "@seasons/react-admin"
 import { ApolloError } from "apollo-client"
 import { Overview } from "./Components/Overview"
 import { UPSERT_COLLECTION } from "./mutations"
 import { useParams } from "react-router-dom"
 import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
-import { useQueryWithStore } from "@seasons/react-admin"
+import { useQueryWithStore, Loading } from "@seasons/react-admin"
 
 export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   const { collectionID } = useParams()
+  const refresh = useRefresh()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedProductIDs, setSelectedProductIDs] = useState([] as any[])
-  const onMutationError = (error: ApolloError) => {
-    toggleSnackbar({
-      show: true,
-      message: error?.message,
-      status: "error",
-    })
-  }
-
-  const { data } = useQueryWithStore({
+  const { data, loading, loaded, error } = useQueryWithStore({
     type: "getOne",
     resource: "Collection",
     payload: { id: collectionID },
@@ -32,15 +26,12 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
     variables: { productIDs: selectedProductIDs },
   })
   const products = productsData?.products
-  const collection = data?.collection
 
   useEffect(() => {
     if (selectedProductIDs?.length > 0 && selectedProductIDs?.length !== products?.length) {
       refetch()
     }
   }, [selectedProductIDs, products, refetch])
-
-  console.log("data", data)
 
   const [upsertCollection] = useMutation(UPSERT_COLLECTION, {
     refetchQueries: [
@@ -66,10 +57,10 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   })
 
   useEffect(() => {
-    if (collection && selectedProductIDs.length === 0) {
-      setSelectedProductIDs(collection.products.map(p => p.id))
+    if (data?.products?.length && selectedProductIDs.length === 0) {
+      setSelectedProductIDs(data.products.map(p => p.id))
     }
-  }, [collection, selectedProductIDs])
+  }, [data, selectedProductIDs])
 
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
@@ -85,6 +76,7 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
     await upsertCollection({
       variables: {
         data: {
+          id: collectionID,
           images,
           title,
           subTitle,
@@ -94,22 +86,26 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
         },
       },
     })
+    refresh()
   }
 
   let initialValues = {} as any
 
-  if (collection) {
+  if (data) {
     initialValues = {
-      images: collection.images,
-      title: collection.title,
-      subTitle: collection.subTitle,
-      published: collection.published,
-      description: collection.descriptions?.[0],
+      images: data.images,
+      title: data.title,
+      subTitle: data.subTitle,
+      published: data.published,
+      description: data.descriptions?.[0],
     }
-    collection.images?.forEach((image, index) => {
+    data.images?.forEach((image, index) => {
       initialValues[`image_${index}`] = image.url
     })
   }
+
+  if (!loaded && loading) return <Loading />
+  if (error || !data) return <Box>{error.message}</Box>
 
   return (
     <Container maxWidth={false}>

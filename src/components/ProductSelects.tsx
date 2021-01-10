@@ -17,9 +17,7 @@ export const ProductSelects: React.FC<{
             <RemoveWrapper>
               <IconButton
                 aria-label="remove"
-                onClick={() =>
-                  setSelectedProductIDs([...selectedProductIDs.filter((p: any) => p.data?.id !== product.data?.id)])
-                }
+                onClick={() => setSelectedProductIDs([...selectedProductIDs.filter((p: any) => p !== product.id)])}
               >
                 <CloseIcon />
               </IconButton>
@@ -36,5 +34,5 @@ const RemoveWrapper = styled("div")`
   position: absolute;
   top: 4px;
   right: 4px;
-  z-index: 30;
+  z-index: 2;
 `

@@ -5,7 +5,6 @@ import { gql } from "apollo-boost"
 import styled from "styled-components"
 import { useState } from "react"
 import { useLazyQuery } from "react-apollo"
-import { colors } from "theme/colors"
 import CloseIcon from "@material-ui/icons/Close"
 import { SearchResultCard } from "layouts/Dashboard/SearchResultCard"
 
@@ -91,15 +90,15 @@ export const ProductSearch: React.FC<{
                 </Box>
               ) : (
                 <>
-                  {results?.map((result: any) => {
+                  {results?.map((result: any, index) => {
                     const alreadyIncluded = !!selectedProductIDs.find((id: string) => id === result?.data?.id)
                     return (
                       <Box
-                        key={result?.data?.id}
+                        key={(result?.data?.id || "") + index}
                         style={{ cursor: "pointer", backgroundColor: "white" }}
                         onClick={() => {
                           if (!alreadyIncluded) {
-                            setSelectedProductIDs([...selectedProductIDs.concat([result.data.id])])
+                            setSelectedProductIDs([result.data.id, ...selectedProductIDs])
                           }
                         }}
                       >

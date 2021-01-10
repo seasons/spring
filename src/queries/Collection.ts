@@ -22,7 +22,6 @@ const CollectionFragment = gql`
       }
       images {
         id
-        url
       }
     }
     createdAt
@@ -34,7 +33,7 @@ const CollectionProductFragment = gql`
   fragment CollectionProductFragment on Product {
     id
     name
-    images {
+    images(size: Thumb) {
       id
       url
     }

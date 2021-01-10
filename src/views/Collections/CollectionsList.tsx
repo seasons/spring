@@ -1,10 +1,11 @@
 import React, { useState } from "react"
-import { Datagrid, DateField, Filter, List, TextField, TextInput } from "@seasons/react-admin"
+import { Datagrid, DateField, List, TextField } from "@seasons/react-admin"
+import { ViewEntityField } from "fields"
 import { Header, Indicator, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { useHistory } from "react-router-dom"
-import { ViewEntityField } from "fields"
 import { collection } from "generated/collection"
+import { Box } from "@material-ui/core"
 
 export const CollectionsList = props => {
   const history = useHistory()
@@ -13,13 +14,14 @@ export const CollectionsList = props => {
     message: "",
     status: "success",
   })
+
   return (
-    <>
+    <Box px={2}>
       <Header
         title="Collections"
         primaryButton={{
           text: "New Collection",
-          action: () => history.push("/content/collections/new"),
+          action: () => history.push("/content/collections/create"),
         }}
         breadcrumbs={[
           {
@@ -52,7 +54,7 @@ export const CollectionsList = props => {
         </Datagrid>
       </List>
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
-    </>
+    </Box>
   )
 }
 
@@ -60,10 +62,5 @@ const PublishedField: React.FC<{ label: string; record?: collection }> = ({ labe
   if (!record) {
     return null
   }
-
-  return (
-    <>
-      <Indicator status={record.published} />
-    </>
-  )
+  return <Indicator status={record.published ? "True" : "False"} />
 }
