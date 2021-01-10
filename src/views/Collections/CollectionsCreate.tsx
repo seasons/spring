@@ -51,7 +51,6 @@ export const CollectionsCreate: React.FC = () => {
     const numImages = 4
     const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
     const { title, subTitle, published, description } = values
-    console.log("images", images)
     setIsSubmitting(true)
     const result = await upsertCollection({
       variables: {
