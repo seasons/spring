@@ -61,10 +61,10 @@ export const CreateFitPicView: React.FC = () => {
             data: { status },
           },
         })
-        history.push(`/community/fit-pic/${id}`)
+        history.push(`/content/community/fit-pic/${id}`)
       } else {
         // Redirect to community page
-        history.push(`/community/fit-pic/${id}`)
+        history.push(`/content/community/fit-pic/${id}`)
       }
     }
   }

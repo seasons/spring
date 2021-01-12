@@ -11,6 +11,7 @@ import { useQuery } from "react-apollo"
 import { SnackbarState, Snackbar } from "components/Snackbar"
 import { useRefresh } from "@seasons/react-admin"
 import { Alert } from "@material-ui/lab"
+import { Loading } from "@seasons/react-admin"
 
 const createUserOption = u => ({ label: `${u.fullName} (${u.email})`, value: u.email })
 
@@ -78,15 +79,13 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
     interest: "",
   }
 
+  const dialogClasses = makeStyles(() => ({
+    paper: { minWidth: "500px" },
+  }))()
+
   return (
     <>
-      <Dialog
-        onClose={onClose}
-        open={open}
-        classes={makeStyles(() => ({
-          paper: { minWidth: "500px" },
-        }))()}
-      >
+      <Dialog onClose={onClose} open={open} classes={dialogClasses}>
         <DialogTitle id="send-push-notif-modal" onClose={onClose}>
           Send Push Notification
         </DialogTitle>
@@ -120,53 +119,69 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
                     <Text variant="h6" style={{ marginLeft: "5px" }}>
                       Send To
                     </Text>
-                    <Spacer mt={1} />
-                    {showUsers && <AutocompleteField label="User(s)" name="users" options={userOptions} />}
-                    <Spacer mt={1} />
-                    {showInterest && (
-                      <AutocompleteField label="Interest" name="interest" options={interestOptions} multiple={false} />
-                    )}
-                    {!!interest && (
+                    {!data ? (
+                      <Loading />
+                    ) : (
                       <>
                         <Spacer mt={1} />
-                        <Text variant="body1" style={{ marginLeft: "6px" }}>
-                          ({interest.description})
-                        </Text>
-                      </>
-                    )}
-                    <Spacer mt={1} />
-                    {showUserGroups && (
-                      <AutocompleteField label="User Group" name="userGroup" options={userGroups} multiple={false} />
-                    )}
-                    <Spacer mt={2} />
-                    <Text variant="h6" style={{ marginLeft: "5px" }}>
-                      Content
-                    </Text>
-                    <Spacer mt={1} />
-                    <TextField
-                      label="Title"
-                      name="title"
-                      autoFocus
-                      maxLength={50}
-                      asterisk
-                      placeholder={"max 50 chars"}
-                    />
-                    <Spacer mt={1} />
-                    <TextField
-                      label="Body"
-                      name="body"
-                      maxLength={110}
-                      multiline
-                      rows={3}
-                      asterisk
-                      placeholder={"max 110 chars"}
-                    />
-                    <Spacer mt={1} />
-                    <AutocompleteField label="Route" name="route" multiple={false} options={routes} />
-                    {route === "Webview" && (
-                      <>
+                        {showUsers && <AutocompleteField label="User(s)" name="users" options={userOptions} />}
+                        <Spacer mt={1} />
+                        {showInterest && (
+                          <AutocompleteField
+                            label="Interest"
+                            name="interest"
+                            options={interestOptions}
+                            multiple={false}
+                          />
+                        )}
+                        {!!interest && (
+                          <>
+                            <Spacer mt={1} />
+                            <Text variant="body1" style={{ marginLeft: "6px" }}>
+                              ({interest.description})
+                            </Text>
+                          </>
+                        )}
+                        <Spacer mt={1} />
+                        {showUserGroups && (
+                          <AutocompleteField
+                            label="User Group"
+                            name="userGroup"
+                            options={userGroups}
+                            multiple={false}
+                          />
+                        )}
                         <Spacer mt={2} />
-                        <TextField label="URI" name="uri" asterisk />
+                        <Text variant="h6" style={{ marginLeft: "5px" }}>
+                          Content
+                        </Text>
+                        <Spacer mt={1} />
+                        <TextField
+                          label="Title"
+                          name="title"
+                          autoFocus
+                          maxLength={50}
+                          asterisk
+                          placeholder={"max 50 chars"}
+                        />
+                        <Spacer mt={1} />
+                        <TextField
+                          label="Body"
+                          name="body"
+                          maxLength={110}
+                          multiline
+                          rows={3}
+                          asterisk
+                          placeholder={"max 110 chars"}
+                        />
+                        <Spacer mt={1} />
+                        <AutocompleteField label="Route" name="route" multiple={false} options={routes} />
+                        {route === "Webview" && (
+                          <>
+                            <Spacer mt={2} />
+                            <TextField label="URI" name="uri" asterisk />
+                          </>
+                        )}
                       </>
                     )}
                   </DialogContent>

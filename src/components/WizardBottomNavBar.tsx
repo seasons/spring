@@ -44,6 +44,7 @@ const StyledBox = styled(Box)({
   right: 0,
   height: 72,
   backgroundColor: "white",
+  zIndex: 1000,
 })
 
 const FlexBox = styled(Box)({

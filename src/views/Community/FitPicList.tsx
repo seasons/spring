@@ -45,11 +45,11 @@ export const FitPicList: React.FC<{ history: any }> = props => {
     <Container maxWidth={false}>
       <Header
         title="Community"
-        primaryButton={{ text: "Add Photo", action: () => props.history.push("/community/create") }}
+        primaryButton={{ text: "Add Photo", action: () => props.history.push("/content/community/create") }}
         breadcrumbs={[
           {
             title: "Community",
-            url: "/community",
+            url: "/content/community",
           },
         ]}
       />
@@ -102,7 +102,7 @@ const ActionsField: React.FC<{ label: string; onPublish: (id: string) => void; r
 }) => (
   <>
     {record && record.status !== "Published" && <PublishButton onClick={() => onPublish(record.id)} record={record} />}
-    <ViewEntityField entityPath="community/fit-pic" record={record} source="id" />
+    <ViewEntityField entityPath="content/community/fit-pic" record={record} source="id" />
   </>
 )
 
