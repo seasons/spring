@@ -95,6 +95,11 @@ export enum CustomerStatus {
 
 export enum EmailId {
   CompleteAccount = "CompleteAccount",
+  DayFiveAuthorizationFollowup = "DayFiveAuthorizationFollowup",
+  DayFourAuthorizationFollowup = "DayFourAuthorizationFollowup",
+  DaySixAuthorizationFollowup = "DaySixAuthorizationFollowup",
+  DayThreeAuthorizationFollowup = "DayThreeAuthorizationFollowup",
+  DayTwoAuthorizationFollowup = "DayTwoAuthorizationFollowup",
   FreeToReserve = "FreeToReserve",
   Paused = "Paused",
   PriorityAccess = "PriorityAccess",
@@ -1139,7 +1144,7 @@ export interface CollectionCreatedescriptionsInput {
 export interface CollectionUpsertInput {
   id?: string | null
   slug?: string | null
-  images?: any | null
+  images?: any[] | null
   title?: string | null
   subTitle?: string | null
   descriptions?: CollectionCreatedescriptionsInput | null

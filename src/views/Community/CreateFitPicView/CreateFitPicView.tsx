@@ -15,6 +15,7 @@ type FormValues = { status?: FitPicStatus; image?: File; city?: string; state?: 
 export const CreateFitPicView: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [selectedProductIDs, setSelectedProductIDs] = useState([] as string[])
   const onMutationError = (error: ApolloError) => {
     toggleSnackbar({
       show: true,

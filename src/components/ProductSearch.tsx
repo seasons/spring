@@ -27,10 +27,12 @@ const PRODUCT_SEARCH = gql`
   }
 `
 
-export const ProductSearch: React.FC<{
+export interface ProductSearchProps {
   selectedProductIDs: string[]
   setSelectedProductIDs: (IDs: string[]) => void
-}> = ({ selectedProductIDs, setSelectedProductIDs }) => {
+}
+
+export const ProductSearch: React.FC<ProductSearchProps> = ({ selectedProductIDs, setSelectedProductIDs }) => {
   const [isLoading, setLoading] = useState(false)
   const [value, setValue] = useState("")
   const [openSearch, setOpenSearch] = useState(false)

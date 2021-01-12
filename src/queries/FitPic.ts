@@ -21,6 +21,9 @@ const FitPic = gql`
       status
       reportedAt
     }
+    products {
+      id
+    }
   }
 `
 
