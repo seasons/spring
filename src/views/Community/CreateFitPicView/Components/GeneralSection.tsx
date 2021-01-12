@@ -4,7 +4,6 @@ import { Grid } from "@material-ui/core"
 import { Spacer, Text } from "components"
 import { SelectField, TextField } from "fields"
 import { FitPicStatus } from "generated/globalTypes"
-import { ProductSearch, ProductSearchProps } from "components/ProductSearch"
 
 const publishedChoices = [
   { value: FitPicStatus.Submitted, display: "Submitted" },
