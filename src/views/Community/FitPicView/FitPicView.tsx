@@ -51,7 +51,7 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
   const { data: productsQueryData, refetch } = useQuery(COLLECTION_PRODUCTS_QUERY, {
     variables: { productIDs: selectedProductIDs },
   })
-  const products = productsQueryData?.products
+  const selectedProducts = productsQueryData?.products
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
@@ -68,6 +68,9 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
   if (selectedProductIDs.length === 0 && data?.products?.length > 0) {
     setSelectedProductIDs(data.products?.map(a => a.id) || [])
   }
+  const reservedProducts = data?.user?.customer?.reservations?.reduce((acc, curval) => {
+    return [...acc, ...curval?.products?.map(a => a.productVariant.product)]
+  }, [])
 
   const onSubmit = async ({ status }) => {
     let data = { status, products: { set: selectedProductIDs.map(id => ({ id })) } }
@@ -157,12 +160,24 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Text variant="h6">{`Selected products: (${products?.length})`}</Text>
+                  <Text variant="h6">{`Selected products: (${selectedProducts?.length})`}</Text>
                   <Spacer mt={1} />
                   <ProductSelects
-                    products={products}
+                    products={selectedProducts}
                     selectedProductIDs={selectedProductIDs}
                     setSelectedProductIDs={setSelectedProductIDs}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Text variant="h6">{`Reserved products: (${reservedProducts?.length})`}</Text>
+                  <Spacer mt={1} />
+                  <ProductSelects
+                    products={reservedProducts}
+                    selectedProductIDs={selectedProductIDs}
+                    setSelectedProductIDs={setSelectedProductIDs}
+                    type="add"
                   />
                 </Grid>
               </Grid>
