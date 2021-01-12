@@ -1,9 +1,30 @@
 import { GET_ONE, GET_LIST } from "@seasons/react-admin"
 import gql from "graphql-tag"
 
-// TODO: Make more efficient by making a simpler fragment for GET_LIST
+const FitPicList = gql`
+  fragment fitPic on FitPic {
+    id
+    author
+    status
+    createdAt
+    updatedAt
+    image {
+      id
+      url
+    }
+    location {
+      city
+      state
+    }
+    reports {
+      id
+      status
+      reportedAt
+    }
+  }
+`
 
-const FitPic = gql`
+const FitPicOne = gql`
   fragment fitPic on FitPic {
     id
     author
@@ -59,6 +80,6 @@ const FitPic = gql`
 `
 
 export default {
-  [GET_LIST]: FitPic,
-  [GET_ONE]: FitPic,
+  [GET_LIST]: FitPicList,
+  [GET_ONE]: FitPicOne,
 }
