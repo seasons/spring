@@ -30,8 +30,9 @@ const FitPic = gql`
       id
       customer {
         id
-        reservations {
+        reservations(orderBy: createdAt_DESC) {
           id
+          createdAt
           products {
             id
             productVariant {

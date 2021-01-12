@@ -1,5 +1,5 @@
 import { Container, Box, Grid } from "@material-ui/core"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useMutation, useQuery } from "react-apollo"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
 import { useRefresh } from "@seasons/react-admin"
@@ -12,7 +12,7 @@ import { UPDATE_FIT_PIC, DELETE_FIT_PIC } from "../mutations"
 import { colors } from "theme/colors"
 import { ApolloError } from "apollo-client"
 import { FitPicStatus } from "generated/globalTypes"
-import { ProductSearchProps, ProductSearch } from "components/ProductSearch"
+import { ProductSearch } from "components/ProductSearch"
 import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
 import { ProductSelects } from "components/ProductSelects"
 
@@ -63,11 +63,14 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
     payload: { id },
   })
 
+  useEffect(() => {
+    if (selectedProductIDs.length === 0 && data?.products?.length > 0) {
+      setSelectedProductIDs(data.products?.map(a => a.id) || [])
+    }
+  }, [data])
+
   if (!loaded && loading) return <Loading />
   if (error || !data) return <Box>{error.message}</Box>
-  if (selectedProductIDs.length === 0 && data?.products?.length > 0) {
-    setSelectedProductIDs(data.products?.map(a => a.id) || [])
-  }
   const reservedProducts = data?.user?.customer?.reservations?.reduce((acc, curval) => {
     return [...acc, ...curval?.products?.map(a => a.productVariant.product)]
   }, [])
@@ -150,7 +153,7 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
                   <SelectField name="status" choices={publishedChoices} initialValue={fitPic.status} requiredString />
                 </Grid>
                 <Grid item xs={6}>
-                  <Text variant="h6">Status</Text>
+                  <Text variant="h6">Search Products</Text>
                   <Spacer mt={1} />
                   <ProductSearch
                     selectedProductIDs={selectedProductIDs}
