@@ -29,7 +29,7 @@ const CollectionFragment = gql`
   }
 `
 
-const CollectionProductFragment = gql`
+export const CollectionProductFragment = gql`
   fragment CollectionProductFragment on Product {
     id
     name

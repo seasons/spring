@@ -1,6 +1,6 @@
 import { Container, Box, Grid } from "@material-ui/core"
-import React, { useState } from "react"
-import { useMutation } from "react-apollo"
+import React, { useEffect, useState } from "react"
+import { useMutation, useQuery } from "react-apollo"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
 import { useRefresh } from "@seasons/react-admin"
 import { Header, Spacer, Snackbar, Text, Wizard } from "components"
@@ -12,6 +12,9 @@ import { UPDATE_FIT_PIC, DELETE_FIT_PIC } from "../mutations"
 import { colors } from "theme/colors"
 import { ApolloError } from "apollo-client"
 import { FitPicStatus } from "generated/globalTypes"
+import { ProductSearch } from "components/ProductSearch"
+import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
+import { ProductSelects } from "components/ProductSelects"
 
 const publishedChoices = [
   { value: FitPicStatus.Submitted, display: "Submitted", disabled: true },
@@ -23,6 +26,7 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
   const { id } = match.params
   const refresh = useRefresh()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [selectedProductIDs, setSelectedProductIDs] = useState([] as string[])
   const onMutationError = (error: ApolloError) =>
     toggleSnackbar({
       show: true,
@@ -30,13 +34,24 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
       status: "error",
     })
   const [updateFitPic] = useMutation(UPDATE_FIT_PIC, {
-    onCompleted: () => setIsSubmitting(true),
+    onCompleted: () => {
+      toggleSnackbar({
+        show: true,
+        message: "Success!",
+        status: "success",
+      })
+      setIsSubmitting(true)
+    },
     onError: onMutationError,
   })
   const [deleteFitPic] = useMutation(DELETE_FIT_PIC, {
     onCompleted: () => setIsSubmitting(true),
     onError: onMutationError,
   })
+  const { data: productsQueryData, refetch } = useQuery(COLLECTION_PRODUCTS_QUERY, {
+    variables: { productIDs: selectedProductIDs },
+  })
+  const selectedProducts = productsQueryData?.products
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
@@ -48,11 +63,21 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
     payload: { id },
   })
 
+  useEffect(() => {
+    if (selectedProductIDs.length === 0 && data?.products?.length > 0) {
+      setSelectedProductIDs(data.products?.map(a => a.id) || [])
+    }
+  }, [data])
+
   if (!loaded && loading) return <Loading />
   if (error || !data) return <Box>{error.message}</Box>
+  const reservedProducts = data?.user?.customer?.reservations?.reduce((acc, curval) => {
+    return [...acc, ...curval?.products?.map(a => a.productVariant.product)]
+  }, [])
 
   const onSubmit = async ({ status }) => {
-    await updateFitPic({ variables: { id, data: { status } } })
+    let data = { status, products: { set: selectedProductIDs.map(id => ({ id })) } }
+    await updateFitPic({ variables: { id, data } })
     refresh()
   }
 
@@ -122,10 +147,41 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
               </Grid>
               <Spacer mt={3} />
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Text variant="h6">Status</Text>
                   <Spacer mt={1} />
                   <SelectField name="status" choices={publishedChoices} initialValue={fitPic.status} requiredString />
+                </Grid>
+                <Grid item xs={6}>
+                  <Text variant="h6">Search Products</Text>
+                  <Spacer mt={1} />
+                  <ProductSearch
+                    selectedProductIDs={selectedProductIDs}
+                    setSelectedProductIDs={setSelectedProductIDs}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Text variant="h6">{`Selected products: (${selectedProducts?.length})`}</Text>
+                  <Spacer mt={1} />
+                  <ProductSelects
+                    products={selectedProducts}
+                    selectedProductIDs={selectedProductIDs}
+                    setSelectedProductIDs={setSelectedProductIDs}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Text variant="h6">{`Reserved products: (${reservedProducts?.length})`}</Text>
+                  <Spacer mt={1} />
+                  <ProductSelects
+                    products={reservedProducts}
+                    selectedProductIDs={selectedProductIDs}
+                    setSelectedProductIDs={setSelectedProductIDs}
+                    type="add"
+                  />
                 </Grid>
               </Grid>
             </Grid>

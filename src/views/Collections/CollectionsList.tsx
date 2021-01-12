@@ -4,7 +4,6 @@ import { ViewEntityField } from "fields"
 import { Header, Indicator, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { useHistory } from "react-router-dom"
-import { collection } from "generated/collection"
 import { Box } from "@material-ui/core"
 
 export const CollectionsList = props => {
@@ -58,7 +57,7 @@ export const CollectionsList = props => {
   )
 }
 
-const PublishedField: React.FC<{ label: string; record?: collection }> = ({ label, record }) => {
+const PublishedField: React.FC<{ label: string; record?: any }> = ({ label, record }) => {
   if (!record) {
     return null
   }
