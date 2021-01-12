@@ -8,9 +8,9 @@
 // ====================================================
 
 export interface UploadImage {
-  uploadImage: string | null
+  uploadImage: string | null;
 }
 
 export interface UploadImageVariables {
-  image: any
+  image: any;
 }

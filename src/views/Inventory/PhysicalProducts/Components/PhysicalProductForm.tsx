@@ -14,11 +14,9 @@ export interface PhysicalProductFormProps {
   uid: string
   inventoryStatuses?: any[]
   currentInventoryStatus?: InventoryStatus
-  initialSellable?: {
-    new: boolean
-    newPrice: number
-    used: boolean
-    usedPrice: number
+  initialPrice?: {
+    buyUsedEnabled: boolean
+    buyUsedPrice: number
   }
 }
 
@@ -27,7 +25,7 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
   uid,
   inventoryStatuses = [],
   currentInventoryStatus = "",
-  initialSellable,
+  initialPrice,
 }) => {
   const receivedStatusesFromParent = statuses.length > 0 && inventoryStatuses.length > 0
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_STATUSES_QUERY, {
@@ -83,32 +81,17 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
       </Grid>
       <Spacer grid mt={5} />
       <Grid item xs={6} direction="row" alignItems="center" container>
-        <Text variant="h5">Sellable New</Text>
-        <CheckboxField name={`${uid}_sellableNew`} initialValue={initialSellable?.new} />
+        <Text variant="h5">Buy Used Enabled</Text>
+        <CheckboxField name={`${uid}_priceBuyUsedEnabled`} initialValue={initialPrice?.buyUsedEnabled} />
       </Grid>
       <Grid item xs={6}>
-        <Text variant="h5">Sellable New Price</Text>
+        <Text variant="h5">Buy Used Price</Text>
         <Spacer mt={1} />
         <TextField
-          name={`${uid}_sellableNewPrice`}
+          name={`${uid}_priceBuyUsedPrice`}
           type="number"
           optionalNumber
-          initialValue={initialSellable?.newPrice ? String(initialSellable.newPrice) : undefined}
-        />
-      </Grid>
-      <Spacer grid mt={5} />
-      <Grid item xs={6} direction="row" alignItems="center" container>
-        <Text variant="h5">Sellable Used</Text>
-        <CheckboxField name={`${uid}_sellableUsed`} initialValue={initialSellable?.used} />
-      </Grid>
-      <Grid item xs={6}>
-        <Text variant="h5">Sellable Used Price</Text>
-        <Spacer mt={1} />
-        <TextField
-          name={`${uid}_sellableUsedPrice`}
-          type="number"
-          optionalNumber
-          initialValue={initialSellable?.usedPrice ? String(initialSellable.usedPrice) : undefined}
+          initialValue={initialPrice?.buyUsedPrice ? String(initialPrice.buyUsedPrice) : undefined}
         />
       </Grid>
       <Spacer grid mt={5} />

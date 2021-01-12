@@ -9,7 +9,7 @@ import { VariantEditQuery_productVariant } from "generated/VariantEditQuery"
 import { GET_VARIANT_SKUS_AND_SIZE_TYPES } from "../queries"
 import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection"
 import { VariantSizeSection } from "./VariantSizeSection"
-import { VariantSellableSection } from "./VariantSellableSection"
+import { VariantPriceSection } from "./VariantPriceSection"
 import { getFormSelectChoices, getEnumValues } from "utils/form"
 
 export interface VariantsProps {
@@ -52,7 +52,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
     variantsData = variants.map(variant => ({
       sku: variant.sku,
       size: variant.internalSize?.display,
-      sellable: variant.sellable,
+      price: variant.price,
     }))
   } else {
     return null
@@ -122,7 +122,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
               manufacturerSizes={manufacturerSizes}
               bottomSizes={data?.bottomSizes}
             />
-            <VariantSellableSection isEditing={isEditing} size={variant.size} sellable={variant.sellable} />
+            <VariantPriceSection isEditing={isEditing} size={variant.size} price={variant.price} />
           </>
         ))}
         {isEditing && (

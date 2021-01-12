@@ -8,14 +8,14 @@
 // ====================================================
 
 export interface ResetPassword_resetPassword {
-  __typename: "ResetPasswordPayload"
-  message: string
+  __typename: "ResetPasswordPayload";
+  message: string;
 }
 
 export interface ResetPassword {
-  resetPassword: ResetPassword_resetPassword
+  resetPassword: ResetPassword_resetPassword;
 }
 
 export interface ResetPasswordVariables {
-  email: string
+  email: string;
 }

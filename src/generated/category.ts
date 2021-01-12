@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface category {
-  __typename: "Category"
-  id: string
-  name: string
+  __typename: "Category";
+  id: string;
+  name: string;
 }
