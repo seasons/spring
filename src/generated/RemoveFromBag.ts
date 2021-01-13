@@ -8,16 +8,16 @@
 // ====================================================
 
 export interface RemoveFromBag_removeFromBag {
-  __typename: "BagItem";
-  id: string;
+  __typename: "BagItem"
+  id: string
 }
 
 export interface RemoveFromBag {
-  removeFromBag: RemoveFromBag_removeFromBag;
+  removeFromBag: RemoveFromBag_removeFromBag
 }
 
 export interface RemoveFromBagVariables {
-  id: string;
-  saved: boolean;
-  customer?: string | null;
+  id: string
+  saved: boolean
+  customer?: string | null
 }

@@ -8,12 +8,12 @@
 // ====================================================
 
 export interface getAllBrands_brands {
-  __typename: "Brand";
-  id: string;
-  name: string;
-  slug: string;
+  __typename: "Brand"
+  id: string
+  name: string
+  slug: string
 }
 
 export interface getAllBrands {
-  brands: (getAllBrands_brands | null)[];
+  brands: (getAllBrands_brands | null)[]
 }

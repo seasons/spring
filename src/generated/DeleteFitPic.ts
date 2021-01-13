@@ -8,9 +8,9 @@
 // ====================================================
 
 export interface DeleteFitPic {
-  deleteFitPic: boolean;
+  deleteFitPic: boolean
 }
 
 export interface DeleteFitPicVariables {
-  id: string;
+  id: string
 }
