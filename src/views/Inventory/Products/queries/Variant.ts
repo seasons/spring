@@ -43,6 +43,10 @@ export const UpdateVariantFragment = gql`
       buyUsedEnabled
       buyUsedPrice
     }
+    shopifyProductVariant {
+      id
+      externalId
+    }
     physicalProducts {
       id
       seasonsUID

@@ -60,6 +60,12 @@ export interface VariantEditQuery_productVariant_price {
   buyUsedPrice: number | null;
 }
 
+export interface VariantEditQuery_productVariant_shopifyProductVariant {
+  __typename: "ShopifyProductVariant";
+  id: string;
+  externalId: string | null;
+}
+
 export interface VariantEditQuery_productVariant_physicalProducts_price {
   __typename: "PhysicalProductPrice";
   id: string;
@@ -86,6 +92,7 @@ export interface VariantEditQuery_productVariant {
   product: VariantEditQuery_productVariant_product;
   internalSize: VariantEditQuery_productVariant_internalSize | null;
   price: VariantEditQuery_productVariant_price;
+  shopifyProductVariant: VariantEditQuery_productVariant_shopifyProductVariant | null;
   physicalProducts: VariantEditQuery_productVariant_physicalProducts[] | null;
 }
 

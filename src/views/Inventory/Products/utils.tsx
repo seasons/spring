@@ -240,9 +240,13 @@ export const getProductUpsertData = (values: any) => {
 
     // Get the relevant size values for the productType, i.e. shoulder, chest, etc. for Top
     const variantSizeData = extractVariantSizeFields({ values, productType, size, isEdit: false })
+    const shopifyProductVariantData = values[`${size}_shopifyProductVariantExternalId`]
+      ? { shopifyProductVariant: { externalId: values[`${size}_shopifyProductVariantExternalId`] } }
+      : {}
 
     return {
       ...variantSizeData,
+      ...shopifyProductVariantData,
       ...variantData,
     }
   })
@@ -424,6 +428,10 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
       }
     })
 
+    const shopifyProductVariantExternalId = values[`${index}_shopifyProductVariantExternalId`]
+      ? { shopifyProductVariant: { externalId: values[`${index}_shopifyProductVariantExternalId`] } }
+      : {}
+
     // Get physical products data
     const seasonsUIDs = values[`${index}_seasonsUIDs`]
     const physicalProducts = seasonsUIDs.map(seasonsUID => {
@@ -451,6 +459,7 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
       bottomSizeType: bottomSizeType ?? "WxL",
       physicalProducts,
       ...measurementData,
+      ...shopifyProductVariantExternalId,
     }
   })
 

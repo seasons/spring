@@ -10,9 +10,10 @@ type Props = {
     buyUsedPrice: number | null
   }
   size: string | null
+  shopifyProductVariantExternalId: string | null
 }
 
-export const VariantPriceSection: React.FC<Props> = ({ isEditing, price, size }) => {
+export const VariantPriceSection: React.FC<Props> = ({ isEditing, price, size, shopifyProductVariantExternalId }) => {
   return (
     <>
       <Grid item xs={3} direction="row" alignItems="center" container>
@@ -37,6 +38,18 @@ export const VariantPriceSection: React.FC<Props> = ({ isEditing, price, size })
           value={price?.buyUsedPrice}
           inputProps={{
             title: "Edit the physical product to update buy used price.",
+          }}
+        />
+      </Grid>
+      <Grid item xs={3}>
+        <Text variant="h5">Shopify External ID</Text>
+        <Spacer mt={1} />
+        <TextField
+          name={`${size}_shopifyProductVariantExternalId`}
+          type="text"
+          initialValue={shopifyProductVariantExternalId || undefined}
+          inputProps={{
+            title: "The ID of the product variant on the brand Shopify instance.",
           }}
         />
       </Grid>
