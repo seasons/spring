@@ -233,6 +233,7 @@ export interface ProductEditQuery_product {
   outerMaterials: string[];
   type: ProductType | null;
   productFit: ProductFit | null;
+  buyNewEnabled: boolean;
   season: ProductEditQuery_product_season | null;
   color: ProductEditQuery_product_color;
   functions: ProductEditQuery_product_functions[] | null;

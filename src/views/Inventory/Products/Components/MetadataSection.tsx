@@ -6,16 +6,17 @@ import { Spacer, Text } from "components"
 import colorsJSON from "data/colors.json"
 import { ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "./ExpandableSection"
-import { SelectField, TextField } from "fields"
+import { SelectField, TextField, CheckboxField } from "fields"
 import { getFormSelectChoices, FormSelectChoice } from "utils/form"
 
 export interface MetadataSectionProps {
   architectures: string[]
   models: ProductUpsertQuery_productModels[]
   sizes: FormSelectChoice[]
+  buyNewEnabled: boolean
 }
 
-export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures, models, sizes }) => {
+export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures, models, sizes, buyNewEnabled }) => {
   const modelChoices = models.map(model => ({
     display: model.name,
     value: model.id,
@@ -88,6 +89,11 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures,
             <Text variant="h6">Fit</Text>
             <Spacer mt={1} />
             <SelectField name="productFit" choices={productFitChoices} />
+          </Grid>
+          <Grid item xs={6}>
+            <Text variant="h6">Buy New Enabled</Text>
+            <Spacer mt={1} />
+            <CheckboxField name="buyNewEnabled" initialValue={buyNewEnabled} />
           </Grid>
         </Grid>
       }
