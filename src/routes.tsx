@@ -24,6 +24,7 @@ import { NotificationsList } from "views/Notifications/NotificationsList"
 import { AnalyticsReport } from "components/AnalyticsReport"
 import { ViewType } from "generated/globalTypes"
 import { CreateFitPicView, FitPicView } from "views/Community"
+import { CollectionsList, CollectionsEdit, CollectionsCreate } from "views/Collections"
 
 export default [
   {
@@ -117,19 +118,36 @@ export default [
         ),
       },
       {
-        path: "/community",
+        path: "/content/community",
         exact: true,
-        component: props => <FitPicList {...props} basePath="/community" resource="FitPic" />,
+        component: props => <FitPicList {...props} basePath="/content/community" resource="FitPic" />,
       },
       {
-        path: "/community/create",
+        path: "/content/community/create",
         exact: true,
-        component: props => <CreateFitPicView {...props} basePath="/community/create" resource="FitPic" />,
+        component: props => <CreateFitPicView {...props} basePath="/content/community/create" resource="FitPic" />,
       },
       {
-        path: "/community/fit-pic/:id",
+        path: "/content/community/fit-pic/:id",
         exact: true,
-        component: props => <FitPicView {...props} basePath="/community/fit-pic" resource="FitPic" />,
+        component: props => <FitPicView {...props} basePath="/content/community/fit-pic" resource="FitPic" />,
+      },
+      {
+        path: "/content/collections",
+        exact: true,
+        component: props => <CollectionsList {...props} basePath="/content/collections" resource="Collection" />,
+      },
+      {
+        path: "/content/collections/create",
+        exact: true,
+        component: props => (
+          <CollectionsCreate {...props} basePath="/content/collections/create" resource="Collection" />
+        ),
+      },
+      {
+        path: "/content/collections/:collectionID",
+        exact: true,
+        component: props => <CollectionsEdit {...props} basePath="/content/collections" resource="Collection" />,
       },
       {
         path: "/inventory/:tab",

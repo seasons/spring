@@ -20,6 +20,7 @@ export const ManageView: React.FC<TabRenderProps> = ({ data, toggleSnackbar }) =
     seasonsUID,
     unitCost,
     warehouseLocation,
+    sellable,
   } = data
 
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
@@ -52,6 +53,12 @@ export const ManageView: React.FC<TabRenderProps> = ({ data, toggleSnackbar }) =
       inventoryStatus: values[`${seasonsUID}_inventoryStatus`],
       productStatus: values[`${seasonsUID}_physicalProductStatus`],
       unitCost: parseFloat(values[`${seasonsUID}_unitCost`]) || null,
+      sellable: {
+        newPrice: parseFloat(values[`${seasonsUID}_sellableNewPrice`]) || null,
+        new: values[`${seasonsUID}_sellableNew`] || false,
+        usedPrice: parseFloat(values[`${seasonsUID}_sellableUsedPrice`]) || null,
+        used: values[`${seasonsUID}_sellableUsed`] || false,
+      },
     }
     await updatePhysicalProduct({
       variables: {
@@ -67,6 +74,10 @@ export const ManageView: React.FC<TabRenderProps> = ({ data, toggleSnackbar }) =
     [`${seasonsUID}_inventoryStatus`]: inventoryStatus,
     [`${seasonsUID}_physicalProductStatus`]: productStatus,
     [`${seasonsUID}_unitCost`]: unitCost || undefined,
+    [`${seasonsUID}_sellableNew`]: sellable?.new || false,
+    [`${seasonsUID}_sellableNewPrice`]: sellable?.newPrice || undefined,
+    [`${seasonsUID}_sellableUsed`]: sellable?.used || false,
+    [`${seasonsUID}_sellableUsedPrice`]: sellable?.usedPrice || undefined,
   }
 
   return (

@@ -18,6 +18,15 @@ import {
 // GraphQL fragment: PhysicalProduct
 // ====================================================
 
+export interface PhysicalProduct_sellable {
+  __typename: "PhysicalProductSellable"
+  id: string
+  newPrice: number | null
+  new: boolean
+  usedPrice: number | null
+  used: boolean
+}
+
 export interface PhysicalProduct_reservations_customer_user {
   __typename: "User"
   id: string
@@ -127,6 +136,7 @@ export interface PhysicalProduct {
   createdAt: any
   barcoded: boolean
   barcode: string
+  sellable: PhysicalProduct_sellable | null
   reservations: PhysicalProduct_reservations[]
   warehouseLocation: PhysicalProduct_warehouseLocation | null
   productVariant: PhysicalProduct_productVariant | null

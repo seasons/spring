@@ -95,6 +95,11 @@ export enum CustomerStatus {
 
 export enum EmailId {
   CompleteAccount = "CompleteAccount",
+  DayFiveAuthorizationFollowup = "DayFiveAuthorizationFollowup",
+  DayFourAuthorizationFollowup = "DayFourAuthorizationFollowup",
+  DaySixAuthorizationFollowup = "DaySixAuthorizationFollowup",
+  DayThreeAuthorizationFollowup = "DayThreeAuthorizationFollowup",
+  DayTwoAuthorizationFollowup = "DayTwoAuthorizationFollowup",
   FreeToReserve = "FreeToReserve",
   Paused = "Paused",
   PriorityAccess = "PriorityAccess",
@@ -1132,6 +1137,21 @@ export interface CategoryWhereUniqueInput {
   name?: string | null
 }
 
+export interface CollectionCreatedescriptionsInput {
+  set?: string[] | null
+}
+
+export interface CollectionUpsertInput {
+  id?: string | null
+  slug?: string | null
+  images?: any[] | null
+  title?: string | null
+  subTitle?: string | null
+  descriptions?: CollectionCreatedescriptionsInput | null
+  productIDs?: (string | null)[] | null
+  published?: boolean | null
+}
+
 export interface ColorCreateInput {
   id?: string | null
   slug: string
@@ -1585,6 +1605,7 @@ export interface CustomerMembershipCreateOneWithoutCustomerInput {
 export interface CustomerMembershipCreateWithoutCustomerInput {
   id?: string | null
   subscriptionId: string
+  giftId?: string | null
   plan?: PaymentPlanCreateOneInput | null
   pauseRequests?: PauseRequestCreateManyWithoutMembershipInput | null
 }
@@ -1600,6 +1621,7 @@ export interface CustomerMembershipUpdateOneWithoutCustomerInput {
 
 export interface CustomerMembershipUpdateWithoutCustomerDataInput {
   subscriptionId?: string | null
+  giftId?: string | null
   plan?: PaymentPlanUpdateOneInput | null
   pauseRequests?: PauseRequestUpdateManyWithoutMembershipInput | null
 }
@@ -3346,10 +3368,10 @@ export interface PhysicalProductCreateInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellable?: boolean | null
   location?: LocationCreateOneWithoutPhysicalProductsInput | null
   productVariant: ProductVariantCreateOneWithoutPhysicalProductsInput
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableCreateOneInput | null
 }
 
 export interface PhysicalProductCreateManyInput {
@@ -3384,9 +3406,9 @@ export interface PhysicalProductCreateWithoutLocationInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellable?: boolean | null
   productVariant: ProductVariantCreateOneWithoutPhysicalProductsInput
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableCreateOneInput | null
 }
 
 export interface PhysicalProductCreateWithoutProductVariantInput {
@@ -3401,9 +3423,9 @@ export interface PhysicalProductCreateWithoutProductVariantInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellable?: boolean | null
   location?: LocationCreateOneWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationCreateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableCreateOneInput | null
 }
 
 export interface PhysicalProductScalarWhereInput {
@@ -3498,8 +3520,6 @@ export interface PhysicalProductScalarWhereInput {
   unitCost_lte?: number | null
   unitCost_gt?: number | null
   unitCost_gte?: number | null
-  sellable?: boolean | null
-  sellable_not?: boolean | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -3529,6 +3549,91 @@ export interface PhysicalProductSeasonsUIDsInput {
   sizes: PhysicalProductSeasonsUIDSizes[]
 }
 
+export interface PhysicalProductSellableCreateInput {
+  id?: string | null
+  new?: boolean | null
+  newPrice?: number | null
+  used?: boolean | null
+  usedPrice?: number | null
+}
+
+export interface PhysicalProductSellableCreateOneInput {
+  create?: PhysicalProductSellableCreateInput | null
+  connect?: PhysicalProductSellableWhereUniqueInput | null
+}
+
+export interface PhysicalProductSellableInput {
+  new: boolean
+  newPrice?: number | null
+  used: boolean
+  usedPrice?: number | null
+}
+
+export interface PhysicalProductSellableUpdateDataInput {
+  new?: boolean | null
+  newPrice?: number | null
+  used?: boolean | null
+  usedPrice?: number | null
+}
+
+export interface PhysicalProductSellableUpdateOneInput {
+  create?: PhysicalProductSellableCreateInput | null
+  connect?: PhysicalProductSellableWhereUniqueInput | null
+  disconnect?: boolean | null
+  delete?: boolean | null
+  update?: PhysicalProductSellableUpdateDataInput | null
+  upsert?: PhysicalProductSellableUpsertNestedInput | null
+}
+
+export interface PhysicalProductSellableUpsertNestedInput {
+  update: PhysicalProductSellableUpdateDataInput
+  create: PhysicalProductSellableCreateInput
+}
+
+export interface PhysicalProductSellableWhereInput {
+  AND?: PhysicalProductSellableWhereInput[] | null
+  OR?: PhysicalProductSellableWhereInput[] | null
+  NOT?: PhysicalProductSellableWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  new?: boolean | null
+  new_not?: boolean | null
+  newPrice?: number | null
+  newPrice_not?: number | null
+  newPrice_in?: number[] | null
+  newPrice_not_in?: number[] | null
+  newPrice_lt?: number | null
+  newPrice_lte?: number | null
+  newPrice_gt?: number | null
+  newPrice_gte?: number | null
+  used?: boolean | null
+  used_not?: boolean | null
+  usedPrice?: number | null
+  usedPrice_not?: number | null
+  usedPrice_in?: number[] | null
+  usedPrice_not_in?: number[] | null
+  usedPrice_lt?: number | null
+  usedPrice_lte?: number | null
+  usedPrice_gt?: number | null
+  usedPrice_gte?: number | null
+}
+
+export interface PhysicalProductSellableWhereUniqueInput {
+  id?: string | null
+}
+
 export interface PhysicalProductUpdateDataInput {
   seasonsUID?: string | null
   inventoryStatus?: InventoryStatus | null
@@ -3540,10 +3645,10 @@ export interface PhysicalProductUpdateDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellable?: boolean | null
   location?: LocationUpdateOneWithoutPhysicalProductsInput | null
   productVariant?: ProductVariantUpdateOneRequiredWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableUpdateOneInput | null
 }
 
 export interface PhysicalProductUpdateInput {
@@ -3561,6 +3666,7 @@ export interface PhysicalProductUpdateInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
+  sellable?: PhysicalProductSellableInput | null
 }
 
 export interface PhysicalProductUpdateManyDataInput {
@@ -3574,7 +3680,6 @@ export interface PhysicalProductUpdateManyDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellable?: boolean | null
 }
 
 export interface PhysicalProductUpdateManyInput {
@@ -3651,9 +3756,9 @@ export interface PhysicalProductUpdateWithoutLocationDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellable?: boolean | null
   productVariant?: ProductVariantUpdateOneRequiredWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableUpdateOneInput | null
 }
 
 export interface PhysicalProductUpdateWithoutProductVariantDataInput {
@@ -3667,9 +3772,9 @@ export interface PhysicalProductUpdateWithoutProductVariantDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
-  sellable?: boolean | null
   location?: LocationUpdateOneWithoutPhysicalProductsInput | null
   warehouseLocation?: WarehouseLocationUpdateOneWithoutPhysicalProductsInput | null
+  sellable?: PhysicalProductSellableUpdateOneInput | null
 }
 
 export interface PhysicalProductUpsertNestedInput {
@@ -3787,8 +3892,6 @@ export interface PhysicalProductWhereInput {
   unitCost_lte?: number | null
   unitCost_gt?: number | null
   unitCost_gte?: number | null
-  sellable?: boolean | null
-  sellable_not?: boolean | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -3808,6 +3911,7 @@ export interface PhysicalProductWhereInput {
   location?: LocationWhereInput | null
   productVariant?: ProductVariantWhereInput | null
   warehouseLocation?: WarehouseLocationWhereInput | null
+  sellable?: PhysicalProductSellableWhereInput | null
 }
 
 export interface PhysicalProductWhereUniqueInput {
@@ -4678,6 +4782,7 @@ export interface ProductUpsertWithoutVariantsInput {
 export interface ProductVariantCreateInput {
   id?: string | null
   sku?: string | null
+  displayShort: string
   weight?: number | null
   height?: number | null
   productID: string
@@ -4718,6 +4823,7 @@ export interface ProductVariantCreateOneWithoutPhysicalProductsInput {
 export interface ProductVariantCreateWithoutColorInput {
   id?: string | null
   sku?: string | null
+  displayShort: string
   weight?: number | null
   height?: number | null
   productID: string
@@ -4737,6 +4843,7 @@ export interface ProductVariantCreateWithoutColorInput {
 export interface ProductVariantCreateWithoutPhysicalProductsInput {
   id?: string | null
   sku?: string | null
+  displayShort: string
   weight?: number | null
   height?: number | null
   productID: string
@@ -4756,6 +4863,7 @@ export interface ProductVariantCreateWithoutPhysicalProductsInput {
 export interface ProductVariantCreateWithoutProductInput {
   id?: string | null
   sku?: string | null
+  displayShort: string
   weight?: number | null
   height?: number | null
   productID: string
@@ -4810,6 +4918,20 @@ export interface ProductVariantScalarWhereInput {
   sku_not_starts_with?: string | null
   sku_ends_with?: string | null
   sku_not_ends_with?: string | null
+  displayShort?: string | null
+  displayShort_not?: string | null
+  displayShort_in?: string[] | null
+  displayShort_not_in?: string[] | null
+  displayShort_lt?: string | null
+  displayShort_lte?: string | null
+  displayShort_gt?: string | null
+  displayShort_gte?: string | null
+  displayShort_contains?: string | null
+  displayShort_not_contains?: string | null
+  displayShort_starts_with?: string | null
+  displayShort_not_starts_with?: string | null
+  displayShort_ends_with?: string | null
+  displayShort_not_ends_with?: string | null
   weight?: number | null
   weight_not?: number | null
   weight_in?: number[] | null
@@ -4914,8 +5036,16 @@ export interface ProductVariantScalarWhereInput {
   updatedAt_gte?: any | null
 }
 
+export interface ProductVariantSellableInput {
+  new: boolean
+  newPrice?: number | null
+  used: boolean
+  usedPrice?: number | null
+}
+
 export interface ProductVariantUpdateDataInput {
   sku?: string | null
+  displayShort?: string | null
   weight?: number | null
   height?: number | null
   productID?: string | null
@@ -4935,6 +5065,7 @@ export interface ProductVariantUpdateDataInput {
 
 export interface ProductVariantUpdateManyDataInput {
   sku?: string | null
+  displayShort?: string | null
   weight?: number | null
   height?: number | null
   productID?: string | null
@@ -5002,6 +5133,7 @@ export interface ProductVariantUpdateWithWhereUniqueWithoutProductInput {
 
 export interface ProductVariantUpdateWithoutColorDataInput {
   sku?: string | null
+  displayShort?: string | null
   weight?: number | null
   height?: number | null
   productID?: string | null
@@ -5020,6 +5152,7 @@ export interface ProductVariantUpdateWithoutColorDataInput {
 
 export interface ProductVariantUpdateWithoutPhysicalProductsDataInput {
   sku?: string | null
+  displayShort?: string | null
   weight?: number | null
   height?: number | null
   productID?: string | null
@@ -5038,6 +5171,7 @@ export interface ProductVariantUpdateWithoutPhysicalProductsDataInput {
 
 export interface ProductVariantUpdateWithoutProductDataInput {
   sku?: string | null
+  displayShort?: string | null
   weight?: number | null
   height?: number | null
   productID?: string | null
@@ -5108,6 +5242,20 @@ export interface ProductVariantWhereInput {
   sku_not_starts_with?: string | null
   sku_ends_with?: string | null
   sku_not_ends_with?: string | null
+  displayShort?: string | null
+  displayShort_not?: string | null
+  displayShort_in?: string[] | null
+  displayShort_not_in?: string[] | null
+  displayShort_lt?: string | null
+  displayShort_lte?: string | null
+  displayShort_gt?: string | null
+  displayShort_gte?: string | null
+  displayShort_contains?: string | null
+  displayShort_not_contains?: string | null
+  displayShort_starts_with?: string | null
+  displayShort_not_starts_with?: string | null
+  displayShort_ends_with?: string | null
+  displayShort_not_ends_with?: string | null
   weight?: number | null
   weight_not?: number | null
   weight_in?: number[] | null
@@ -6792,6 +6940,7 @@ export interface SmsReceiptCreateInput {
   externalId?: string | null
   body: string
   status: SmsStatus
+  smsId?: string | null
   mediaUrls?: SmsReceiptCreatemediaUrlsInput | null
 }
 
@@ -6854,6 +7003,20 @@ export interface SmsReceiptScalarWhereInput {
   status_not?: SmsStatus | null
   status_in?: SmsStatus[] | null
   status_not_in?: SmsStatus[] | null
+  smsId?: string | null
+  smsId_not?: string | null
+  smsId_in?: string[] | null
+  smsId_not_in?: string[] | null
+  smsId_lt?: string | null
+  smsId_lte?: string | null
+  smsId_gt?: string | null
+  smsId_gte?: string | null
+  smsId_contains?: string | null
+  smsId_not_contains?: string | null
+  smsId_starts_with?: string | null
+  smsId_not_starts_with?: string | null
+  smsId_ends_with?: string | null
+  smsId_not_ends_with?: string | null
   sentAt?: any | null
   sentAt_not?: any | null
   sentAt_in?: any[] | null
@@ -6876,6 +7039,7 @@ export interface SmsReceiptUpdateDataInput {
   externalId?: string | null
   body?: string | null
   status?: SmsStatus | null
+  smsId?: string | null
   mediaUrls?: SmsReceiptUpdatemediaUrlsInput | null
 }
 
@@ -6883,6 +7047,7 @@ export interface SmsReceiptUpdateManyDataInput {
   externalId?: string | null
   body?: string | null
   status?: SmsStatus | null
+  smsId?: string | null
   mediaUrls?: SmsReceiptUpdatemediaUrlsInput | null
 }
 
@@ -6968,6 +7133,20 @@ export interface SmsReceiptWhereInput {
   status_not?: SmsStatus | null
   status_in?: SmsStatus[] | null
   status_not_in?: SmsStatus[] | null
+  smsId?: string | null
+  smsId_not?: string | null
+  smsId_in?: string[] | null
+  smsId_not_in?: string[] | null
+  smsId_lt?: string | null
+  smsId_lte?: string | null
+  smsId_gt?: string | null
+  smsId_gte?: string | null
+  smsId_contains?: string | null
+  smsId_not_contains?: string | null
+  smsId_starts_with?: string | null
+  smsId_not_starts_with?: string | null
+  smsId_ends_with?: string | null
+  smsId_not_ends_with?: string | null
   sentAt?: any | null
   sentAt_not?: any | null
   sentAt_in?: any[] | null
@@ -7414,6 +7593,7 @@ export interface UpsertPhysicalProductInput {
   productStatus: PhysicalProductStatus
   seasonsUID: string
   unitCost?: number | null
+  sellable?: PhysicalProductSellableInput | null
 }
 
 export interface UpsertProductInput {
@@ -7468,6 +7648,7 @@ export interface UpsertVariantInput {
   weight?: number | null
   total: number
   physicalProducts: UpsertPhysicalProductInput[]
+  sellable?: ProductVariantSellableInput | null
 }
 
 export interface UserCreateInput {

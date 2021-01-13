@@ -60,12 +60,30 @@ export interface VariantEditQuery_productVariant_internalSize {
   bottom: VariantEditQuery_productVariant_internalSize_bottom | null
 }
 
+export interface VariantEditQuery_productVariant_sellable {
+  __typename: "ProductVariantSellable"
+  new: boolean
+  newPrice: number | null
+  used: boolean
+  usedPrice: number | null
+}
+
+export interface VariantEditQuery_productVariant_physicalProducts_sellable {
+  __typename: "PhysicalProductSellable"
+  id: string
+  new: boolean
+  used: boolean
+  newPrice: number | null
+  usedPrice: number | null
+}
+
 export interface VariantEditQuery_productVariant_physicalProducts {
   __typename: "PhysicalProduct"
   id: string
   seasonsUID: string
   productStatus: PhysicalProductStatus
   inventoryStatus: InventoryStatus
+  sellable: VariantEditQuery_productVariant_physicalProducts_sellable | null
 }
 
 export interface VariantEditQuery_productVariant {
@@ -77,6 +95,7 @@ export interface VariantEditQuery_productVariant {
   manufacturerSizes: VariantEditQuery_productVariant_manufacturerSizes[] | null
   product: VariantEditQuery_productVariant_product
   internalSize: VariantEditQuery_productVariant_internalSize | null
+  sellable: VariantEditQuery_productVariant_sellable
   physicalProducts: VariantEditQuery_productVariant_physicalProducts[] | null
 }
 

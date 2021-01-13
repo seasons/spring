@@ -167,6 +167,10 @@ export const getProductUpsertData = (values: any) => {
     "inventoryStatus",
     "physicalProductStatus",
     "unitCost",
+    "sellableNew",
+    "sellableNewPrice",
+    "sellableUsed",
+    "sellableUsedPrice",
   ]
   const seasonsUIDToData = {}
   Object.keys(values).forEach(key => {
@@ -178,7 +182,7 @@ export const getProductUpsertData = (values: any) => {
       if (["dateOrdered", "dateReceived"].includes(fieldKey)) {
         // Convert date to ISO string format
         fieldValue = getDateISOString(value)
-      } else if (fieldKey === "unitCost") {
+      } else if (["unitCost", "sellableNewPrice", "sellableUsedPrice"].includes(fieldKey)) {
         // Convert to float
         fieldValue = parseFloat(value) || null
       } else {
@@ -207,9 +211,17 @@ export const getProductUpsertData = (values: any) => {
     const physicalProductsData = Object.keys(seasonsUIDToData)
       .map(seasonsUID => {
         if (seasonsUID.includes(sku)) {
-          const { inventoryStatus, physicalProductStatus, dateOrdered, dateReceived, unitCost } = seasonsUIDToData[
-            seasonsUID
-          ]
+          const {
+            inventoryStatus,
+            physicalProductStatus,
+            dateOrdered,
+            dateReceived,
+            unitCost,
+            sellableNew,
+            sellableUsed,
+            sellableNewPrice,
+            sellableUsedPrice,
+          } = seasonsUIDToData[seasonsUID]
           return {
             dateOrdered,
             dateReceived,
@@ -217,6 +229,12 @@ export const getProductUpsertData = (values: any) => {
             productStatus: physicalProductStatus,
             seasonsUID,
             unitCost,
+            sellable: {
+              new: sellableNew || false,
+              used: sellableUsed || false,
+              newPrice: sellableNewPrice,
+              usedPrice: sellableUsedPrice,
+            },
           }
         } else {
           return null
@@ -383,6 +401,10 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     "inventoryStatus",
     "physicalProductStatus",
     "unitCost",
+    "sellableNew",
+    "sellableUsed",
+    "sellableNewPrice",
+    "sellableUsedPrice",
   ]
   const data = Array.from(Array(numVariants).keys()).map(index => {
     // Get internal size
@@ -420,9 +442,9 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
           if (["dateOrdered", "dateReceived"].includes(key)) {
             // Convert date to ISO string format
             physicalProductValue = getDateISOString(physicalProductValue)
-          } else if (key === "unitCost") {
+          } else if (["unitCost", "sellableNewPrice", "sellableUsedPrice"].includes(key)) {
             // Convert to float
-            physicalProductValue = Number(physicalProductValue)
+            physicalProductValue = parseFloat(physicalProductValue) || null
           }
           const dataKey = key === "physicalProductStatus" ? "productStatus" : key
           physicalProductData[dataKey] = physicalProductValue
