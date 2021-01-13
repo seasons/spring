@@ -63,6 +63,8 @@ export const BrandEdit: React.FC = () => {
       designer,
       featured,
       published,
+      externalShopifyIntegrationShopName,
+      externalShopifyIntegrationEnabled,
     } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
     const numImages = 4
@@ -71,6 +73,8 @@ export const BrandEdit: React.FC = () => {
         return values[`image_${index}`]
       })
       .filter(Boolean)
+
+    console.log("updating brand")
 
     await updateBrand({
       variables: {
@@ -88,6 +92,10 @@ export const BrandEdit: React.FC = () => {
           designer,
           featured,
           published,
+          externalShopifyIntegration: {
+            shopName: externalShopifyIntegrationShopName,
+            enabled: externalShopifyIntegrationEnabled,
+          },
         },
       },
     })
@@ -112,6 +120,8 @@ export const BrandEdit: React.FC = () => {
       designer: brand.designer,
       featured: brand.featured,
       published: brand.published,
+      externalShopifyIntegrationShopName: brand?.externalShopifyIntegration?.shopName,
+      externalShopifyIntegrationEnabled: brand?.externalShopifyIntegration?.enabled,
     }
     if (brand.since) {
       initialValues.sinceDate = brand.since
