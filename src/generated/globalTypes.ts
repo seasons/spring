@@ -106,6 +106,7 @@ export enum EmailId {
   ReferralConfirmation = "ReferralConfirmation",
   ReservationConfirmation = "ReservationConfirmation",
   ReservationReturnConfirmation = "ReservationReturnConfirmation",
+  ResumeConfirmation = "ResumeConfirmation",
   ResumeReminder = "ResumeReminder",
   ReturnReminder = "ReturnReminder",
   Rewaitlisted = "Rewaitlisted",
@@ -1518,6 +1519,7 @@ export interface CustomerDetailCreateInput {
   commuteStyle?: string | null
   phoneOS?: string | null
   insureShipment?: boolean | null
+  instagramHandle?: string | null
   weight?: CustomerDetailCreateweightInput | null
   topSizes?: CustomerDetailCreatetopSizesInput | null
   waistSizes?: CustomerDetailCreatewaistSizesInput | null
@@ -1560,6 +1562,7 @@ export interface CustomerDetailUpdateDataInput {
   commuteStyle?: string | null
   phoneOS?: string | null
   insureShipment?: boolean | null
+  instagramHandle?: string | null
   weight?: CustomerDetailUpdateweightInput | null
   topSizes?: CustomerDetailUpdatetopSizesInput | null
   waistSizes?: CustomerDetailUpdatewaistSizesInput | null
@@ -1993,6 +1996,7 @@ export interface FitPicCreateManyWithoutUserInput {
 
 export interface FitPicCreateWithoutUserInput {
   id?: string | null
+  includeInstagramHandle?: boolean | null
   status?: FitPicStatus | null
   image: ImageCreateOneInput
   location?: LocationCreateOneInput | null
@@ -2152,6 +2156,8 @@ export interface FitPicScalarWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  includeInstagramHandle?: boolean | null
+  includeInstagramHandle_not?: boolean | null
   status?: FitPicStatus | null
   status_not?: FitPicStatus | null
   status_in?: FitPicStatus[] | null
@@ -2175,6 +2181,7 @@ export interface FitPicScalarWhereInput {
 }
 
 export interface FitPicUpdateInput {
+  includeInstagramHandle?: boolean | null
   status?: FitPicStatus | null
   image?: ImageUpdateOneRequiredInput | null
   location?: LocationUpdateOneInput | null
@@ -2184,6 +2191,7 @@ export interface FitPicUpdateInput {
 }
 
 export interface FitPicUpdateManyDataInput {
+  includeInstagramHandle?: boolean | null
   status?: FitPicStatus | null
 }
 
@@ -2210,6 +2218,7 @@ export interface FitPicUpdateWithWhereUniqueWithoutUserInput {
 }
 
 export interface FitPicUpdateWithoutUserDataInput {
+  includeInstagramHandle?: boolean | null
   status?: FitPicStatus | null
   image?: ImageUpdateOneRequiredInput | null
   location?: LocationUpdateOneInput | null
@@ -2241,6 +2250,8 @@ export interface FitPicWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  includeInstagramHandle?: boolean | null
+  includeInstagramHandle_not?: boolean | null
   status?: FitPicStatus | null
   status_not?: FitPicStatus | null
   status_in?: FitPicStatus[] | null

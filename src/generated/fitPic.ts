@@ -68,6 +68,7 @@ export interface fitPic_user_customer_reservations_products {
 export interface fitPic_user_customer_reservations {
   __typename: "Reservation"
   id: string
+  createdAt: any
   products: fitPic_user_customer_reservations_products[]
 }
 
