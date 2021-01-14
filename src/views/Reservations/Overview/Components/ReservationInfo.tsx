@@ -115,6 +115,22 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 )}
               </TableCell>
             </TableRow>
+            <TableRow>
+              <TableCell>Sent Package</TableCell>
+              <TableCell>
+                <a href={reservation?.sentPackage?.shippingLabel?.trackingURL} target="_blank">
+                  Track
+                </a>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Return Package</TableCell>
+              <TableCell>
+                <a href={reservation?.returnedPackage?.shippingLabel?.trackingURL} target="_blank">
+                  Track
+                </a>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </Card>
