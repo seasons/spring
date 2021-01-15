@@ -30,6 +30,10 @@ export const BRAND_EDIT_QUERY = gql`
         id
         url
       }
+      externalShopifyIntegration {
+        enabled
+        shopName
+      }
       tier
       websiteUrl
     }

@@ -89,23 +89,13 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
             )}
             <Spacer grid mt={3} />
             <Grid item xs={3} direction="row" alignItems="center" container>
-              <Text variant="h5">Sellable New</Text>
-              <CheckboxField name={`${variantIndex}_sellableNew`} />
+              <Text variant="h5">Buy Used Enabled</Text>
+              <CheckboxField name={`${variantIndex}_priceBuyUsedEnabled`} />
             </Grid>
             <Grid item xs={3}>
-              <Text variant="h5">Sellable New Price</Text>
+              <Text variant="h5">Buy Used Price</Text>
               <Spacer mt={1} />
-              <TextField name={`${variantIndex}_sellableNewPrice`} type="number" optionalNumber />
-            </Grid>
-            <Spacer grid mt={3} />
-            <Grid item xs={3} direction="row" alignItems="center" container>
-              <Text variant="h5">Sellable Used</Text>
-              <CheckboxField name={`${variantIndex}_sellableUsed`} />
-            </Grid>
-            <Grid item xs={3}>
-              <Text variant="h5">Sellable Used Price</Text>
-              <Spacer mt={1} />
-              <TextField name={`${variantIndex}_sellableUsedPrice`} type="number" optionalNumber />
+              <TextField name={`${variantIndex}_priceBuyUsedPrice`} type="number" optionalNumber />
             </Grid>
             <Spacer grid mt={3} />
           </Grid>

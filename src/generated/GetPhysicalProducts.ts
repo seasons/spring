@@ -18,13 +18,11 @@ import {
 // GraphQL query operation: GetPhysicalProducts
 // ====================================================
 
-export interface GetPhysicalProducts_physicalProducts_sellable {
-  __typename: "PhysicalProductSellable"
+export interface GetPhysicalProducts_physicalProducts_price {
+  __typename: "PhysicalProductPrice"
   id: string
-  newPrice: number | null
-  new: boolean
-  usedPrice: number | null
-  used: boolean
+  buyUsedPrice: number | null
+  buyUsedEnabled: boolean
 }
 
 export interface GetPhysicalProducts_physicalProducts_reservations_customer_user {
@@ -136,7 +134,7 @@ export interface GetPhysicalProducts_physicalProducts {
   createdAt: any
   barcoded: boolean
   barcode: string
-  sellable: GetPhysicalProducts_physicalProducts_sellable | null
+  price: GetPhysicalProducts_physicalProducts_price | null
   reservations: GetPhysicalProducts_physicalProducts_reservations[]
   warehouseLocation: GetPhysicalProducts_physicalProducts_warehouseLocation | null
   productVariant: GetPhysicalProducts_physicalProducts_productVariant | null
