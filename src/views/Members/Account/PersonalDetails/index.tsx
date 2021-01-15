@@ -1,21 +1,20 @@
+import { useMutation } from "@apollo/react-hooks"
+import { Box, Card, Chip, Grid, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 import { updateCustomer as updateCustomerAction } from "actions/customerActions"
-import { ActionButtons } from "fields"
 import { CardContent, EditButton, EditModal, Snackbar } from "components"
+import { Indicator } from "components/Indicator"
 import { SnackbarState } from "components/Snackbar"
+import { ActionButtons } from "fields"
+import { CustomerStatus } from "generated/globalTypes"
 import moment from "moment"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { MembershipPlanOptions, MemberStatusOptions } from "../../Member.types"
 import { splitTitleCase } from "utils/strings"
-import { copyToClipboard } from "utils/copyToClipboard"
-import { useMutation } from "@apollo/react-hooks"
-import { Button, Card, Table, TableBody, TableCell, TableRow, Box, Grid, Typography, Chip } from "@material-ui/core"
-import { CustomerStatus } from "generated/globalTypes"
-import { MemberSubViewProps } from "../../interfaces"
-import { MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT } from "../../queries"
-import { AuthorizeMemberModal } from "../../AuthorizeMemberModal"
-import { Indicator } from "components/Indicator"
 import { AuthorizeButton } from "views/Members/AuthorizeButton"
+import { AuthorizeMemberModal } from "../../AuthorizeMemberModal"
+import { MemberSubViewProps } from "../../interfaces"
+import { MembershipPlanOptions, MemberStatusOptions } from "../../Member.types"
+import { MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT } from "../../queries"
 export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
@@ -220,6 +219,12 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
             <TableRow>
               <TableCell>Birthday</TableCell>
               <TableCell>{birthday}</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell>Instagram Handle</TableCell>
+              <TableCell>{member.detail.instagramHandle ?? "n/a"}</TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableBody>
