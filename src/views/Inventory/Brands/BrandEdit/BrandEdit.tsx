@@ -74,8 +74,6 @@ export const BrandEdit: React.FC = () => {
       })
       .filter(Boolean)
 
-    console.log("updating brand")
-
     await updateBrand({
       variables: {
         where: { id: brandID },
