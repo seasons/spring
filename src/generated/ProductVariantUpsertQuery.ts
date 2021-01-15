@@ -202,6 +202,7 @@ export interface ProductVariantUpsertQuery_product {
   outerMaterials: string[]
   type: ProductType | null
   productFit: ProductFit | null
+  buyNewEnabled: boolean
   season: ProductVariantUpsertQuery_product_season | null
   color: ProductVariantUpsertQuery_product_color
   functions: ProductVariantUpsertQuery_product_functions[] | null

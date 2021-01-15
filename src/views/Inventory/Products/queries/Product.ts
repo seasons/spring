@@ -67,6 +67,7 @@ export const ProductFragment = gql`
     status
     type
     productFit
+    buyNewEnabled
     season {
       id
       internalSeason {

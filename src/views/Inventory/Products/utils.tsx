@@ -115,6 +115,7 @@ export const getProductUpsertData = (values: any) => {
     architecture,
     bottomSizeType,
     brand: brandID,
+    buyNewEnabled,
     category: categoryName,
     color: colorCode,
     description,
@@ -167,10 +168,8 @@ export const getProductUpsertData = (values: any) => {
     "inventoryStatus",
     "physicalProductStatus",
     "unitCost",
-    "sellableNew",
-    "sellableNewPrice",
-    "sellableUsed",
-    "sellableUsedPrice",
+    "priceBuyUsedPrice",
+    "priceBuyUsedEnabled",
   ]
   const seasonsUIDToData = {}
   Object.keys(values).forEach(key => {
@@ -182,7 +181,7 @@ export const getProductUpsertData = (values: any) => {
       if (["dateOrdered", "dateReceived"].includes(fieldKey)) {
         // Convert date to ISO string format
         fieldValue = getDateISOString(value)
-      } else if (["unitCost", "sellableNewPrice", "sellableUsedPrice"].includes(fieldKey)) {
+      } else if (["unitCost", "priceBuyUsedPrice"].includes(fieldKey)) {
         // Convert to float
         fieldValue = parseFloat(value) || null
       } else {
@@ -217,10 +216,8 @@ export const getProductUpsertData = (values: any) => {
             dateOrdered,
             dateReceived,
             unitCost,
-            sellableNew,
-            sellableUsed,
-            sellableNewPrice,
-            sellableUsedPrice,
+            priceBuyUsedEnabled,
+            priceBuyUsedPrice,
           } = seasonsUIDToData[seasonsUID]
           return {
             dateOrdered,
@@ -229,11 +226,9 @@ export const getProductUpsertData = (values: any) => {
             productStatus: physicalProductStatus,
             seasonsUID,
             unitCost,
-            sellable: {
-              new: sellableNew || false,
-              used: sellableUsed || false,
-              newPrice: sellableNewPrice,
-              usedPrice: sellableUsedPrice,
+            price: {
+              buyUsedEnabled: priceBuyUsedEnabled || false,
+              buyUsedPrice: priceBuyUsedPrice,
             },
           }
         } else {
@@ -246,9 +241,13 @@ export const getProductUpsertData = (values: any) => {
 
     // Get the relevant size values for the productType, i.e. shoulder, chest, etc. for Top
     const variantSizeData = extractVariantSizeFields({ values, productType, size, isEdit: false })
+    const shopifyProductVariantData = values[`${size}_shopifyProductVariantExternalId`]
+      ? { shopifyProductVariant: { externalId: values[`${size}_shopifyProductVariantExternalId`] } }
+      : {}
 
     return {
       ...variantSizeData,
+      ...shopifyProductVariantData,
       ...variantData,
     }
   })
@@ -269,6 +268,7 @@ export const getProductUpsertData = (values: any) => {
     architecture: architecture,
     bottomSizeType: bottomSizeType ?? "WxL",
     brandID,
+    buyNewEnabled,
     categoryName,
     colorCode,
     description,
@@ -304,6 +304,7 @@ export const getProductUpdateData = (values: any) => {
     architecture,
     bottomSizeType,
     brand: brandID,
+    buyNewEnabled,
     category: categoryName,
     color: colorCode,
     description,
@@ -352,6 +353,7 @@ export const getProductUpdateData = (values: any) => {
     architecture,
     bottomSizeType: bottomSizeType ?? "WxL",
     brand: { connect: { id: brandID } },
+    buyNewEnabled,
     category: { connect: { name: categoryName } },
     color: { connect: { colorCode } },
     description,
@@ -401,10 +403,8 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     "inventoryStatus",
     "physicalProductStatus",
     "unitCost",
-    "sellableNew",
-    "sellableUsed",
-    "sellableNewPrice",
-    "sellableUsedPrice",
+    "priceBuyUsedEnabled",
+    "priceBuyUsedPrice",
   ]
   const data = Array.from(Array(numVariants).keys()).map(index => {
     // Get internal size
@@ -432,6 +432,10 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
       }
     })
 
+    const shopifyProductVariantExternalId = values[`${index}_shopifyProductVariantExternalId`]
+      ? { shopifyProductVariant: { externalId: values[`${index}_shopifyProductVariantExternalId`] } }
+      : {}
+
     // Get physical products data
     const seasonsUIDs = values[`${index}_seasonsUIDs`]
     const physicalProducts = seasonsUIDs.map(seasonsUID => {
@@ -442,7 +446,7 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
           if (["dateOrdered", "dateReceived"].includes(key)) {
             // Convert date to ISO string format
             physicalProductValue = getDateISOString(physicalProductValue)
-          } else if (["unitCost", "sellableNewPrice", "sellableUsedPrice"].includes(key)) {
+          } else if (["unitCost", "priceBuyUsedPrice"].includes(key)) {
             // Convert to float
             physicalProductValue = parseFloat(physicalProductValue) || null
           }
@@ -459,6 +463,7 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
       bottomSizeType: bottomSizeType ?? "WxL",
       physicalProducts,
       ...measurementData,
+      ...shopifyProductVariantExternalId,
     }
   })
 

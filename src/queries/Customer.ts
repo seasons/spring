@@ -1,5 +1,5 @@
-import gql from "graphql-tag"
 import { GET_LIST, GET_ONE } from "@seasons/react-admin"
+import gql from "graphql-tag"
 
 const CustomerFragment = gql`
   fragment customer on Customer {
@@ -201,6 +201,7 @@ const CustomerDetails = gql`
       averageSpend
       style
       commuteStyle
+      instagramHandle
       shippingAddress {
         id
         name

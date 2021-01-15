@@ -174,6 +174,7 @@ export interface ProductFragment {
   outerMaterials: string[]
   type: ProductType | null
   productFit: ProductFit | null
+  buyNewEnabled: boolean
   season: ProductFragment_season | null
   color: ProductFragment_color
   functions: ProductFragment_functions[] | null

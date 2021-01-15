@@ -240,6 +240,7 @@ export interface customer_detail {
   averageSpend: string | null
   style: string | null
   commuteStyle: string | null
+  instagramHandle: string | null
   shippingAddress: customer_detail_shippingAddress | null
 }
 

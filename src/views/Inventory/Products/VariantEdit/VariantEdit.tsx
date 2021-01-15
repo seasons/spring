@@ -80,6 +80,9 @@ export const VariantEdit: React.FC = () => {
     const updateVariantData = {
       id,
       productType: internalSize.productType,
+      shopifyProductVariant: {
+        externalId: values[`${internalSize.display}_shopifyProductVariantExternalId`] || null,
+      },
       ...variantSizeData,
     }
     const result = await updateProductVariant({
