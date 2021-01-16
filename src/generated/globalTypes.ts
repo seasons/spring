@@ -265,6 +265,11 @@ export enum ProductStatus {
   Stored = "Stored",
 }
 
+export enum ProductTierName {
+  Luxury = "Luxury",
+  Standard = "Standard",
+}
+
 export enum ProductType {
   Accessory = "Accessory",
   Bottom = "Bottom",
@@ -4031,33 +4036,34 @@ export interface PhysicalProductWhereUniqueInput {
 
 export interface ProductCreateInput {
   id?: string | null
-  slug: string
-  name: string
-  productFit?: ProductFit | null
-  type?: ProductType | null
+  architecture?: ProductArchitecture | null
   description?: string | null
   externalURL?: string | null
   buyNewEnabled?: boolean | null
   modelHeight?: number | null
-  retailPrice?: number | null
-  status?: ProductStatus | null
-  architecture?: ProductArchitecture | null
+  name: string
   photographyStatus?: PhotographyStatus | null
+  productFit?: ProductFit | null
   publishedAt?: any | null
+  retailPrice?: number | null
+  slug: string
+  status?: ProductStatus | null
+  type?: ProductType | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
   brand: BrandCreateOneWithoutProductsInput
   category: CategoryCreateOneWithoutProductsInput
+  color: ColorCreateOneInput
+  functions?: ProductFunctionCreateManyInput | null
   images?: ImageCreateManyInput | null
+  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   model?: ProductModelCreateOneWithoutProductsInput | null
   modelSize?: SizeCreateOneInput | null
-  color: ColorCreateOneInput
+  season?: ProductSeasonCreateOneInput | null
   secondaryColor?: ColorCreateOneInput | null
   tags?: TagCreateManyWithoutProductsInput | null
-  functions?: ProductFunctionCreateManyInput | null
-  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
+  tier?: ProductTierCreateOneInput | null
   variants?: ProductVariantCreateManyWithoutProductInput | null
-  season?: ProductSeasonCreateOneInput | null
 }
 
 export interface ProductCreateManyInput {
@@ -4082,92 +4088,95 @@ export interface ProductCreateOneWithoutVariantsInput {
 
 export interface ProductCreateWithoutBrandInput {
   id?: string | null
-  slug: string
-  name: string
-  productFit?: ProductFit | null
-  type?: ProductType | null
+  architecture?: ProductArchitecture | null
   description?: string | null
   externalURL?: string | null
   buyNewEnabled?: boolean | null
   modelHeight?: number | null
-  retailPrice?: number | null
-  status?: ProductStatus | null
-  architecture?: ProductArchitecture | null
+  name: string
   photographyStatus?: PhotographyStatus | null
+  productFit?: ProductFit | null
   publishedAt?: any | null
+  retailPrice?: number | null
+  slug: string
+  status?: ProductStatus | null
+  type?: ProductType | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
   category: CategoryCreateOneWithoutProductsInput
+  color: ColorCreateOneInput
+  functions?: ProductFunctionCreateManyInput | null
   images?: ImageCreateManyInput | null
+  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   model?: ProductModelCreateOneWithoutProductsInput | null
   modelSize?: SizeCreateOneInput | null
-  color: ColorCreateOneInput
+  season?: ProductSeasonCreateOneInput | null
   secondaryColor?: ColorCreateOneInput | null
   tags?: TagCreateManyWithoutProductsInput | null
-  functions?: ProductFunctionCreateManyInput | null
-  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
+  tier?: ProductTierCreateOneInput | null
   variants?: ProductVariantCreateManyWithoutProductInput | null
-  season?: ProductSeasonCreateOneInput | null
 }
 
 export interface ProductCreateWithoutCategoryInput {
   id?: string | null
-  slug: string
-  name: string
-  productFit?: ProductFit | null
-  type?: ProductType | null
+  architecture?: ProductArchitecture | null
   description?: string | null
   externalURL?: string | null
   buyNewEnabled?: boolean | null
   modelHeight?: number | null
-  retailPrice?: number | null
-  status?: ProductStatus | null
-  architecture?: ProductArchitecture | null
+  name: string
   photographyStatus?: PhotographyStatus | null
+  productFit?: ProductFit | null
   publishedAt?: any | null
+  retailPrice?: number | null
+  slug: string
+  status?: ProductStatus | null
+  type?: ProductType | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
   brand: BrandCreateOneWithoutProductsInput
+  color: ColorCreateOneInput
+  functions?: ProductFunctionCreateManyInput | null
   images?: ImageCreateManyInput | null
+  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   model?: ProductModelCreateOneWithoutProductsInput | null
   modelSize?: SizeCreateOneInput | null
-  color: ColorCreateOneInput
+  season?: ProductSeasonCreateOneInput | null
   secondaryColor?: ColorCreateOneInput | null
   tags?: TagCreateManyWithoutProductsInput | null
-  functions?: ProductFunctionCreateManyInput | null
-  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
+  tier?: ProductTierCreateOneInput | null
   variants?: ProductVariantCreateManyWithoutProductInput | null
-  season?: ProductSeasonCreateOneInput | null
 }
 
 export interface ProductCreateWithoutVariantsInput {
   id?: string | null
-  slug: string
-  name: string
-  productFit?: ProductFit | null
-  type?: ProductType | null
+  architecture?: ProductArchitecture | null
   description?: string | null
   externalURL?: string | null
   buyNewEnabled?: boolean | null
   modelHeight?: number | null
-  retailPrice?: number | null
-  status?: ProductStatus | null
-  architecture?: ProductArchitecture | null
+  name: string
   photographyStatus?: PhotographyStatus | null
+  productFit?: ProductFit | null
   publishedAt?: any | null
+  retailPrice?: number | null
+  slug: string
+  status?: ProductStatus | null
+  type?: ProductType | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
   brand: BrandCreateOneWithoutProductsInput
   category: CategoryCreateOneWithoutProductsInput
+  color: ColorCreateOneInput
+  functions?: ProductFunctionCreateManyInput | null
   images?: ImageCreateManyInput | null
+  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   model?: ProductModelCreateOneWithoutProductsInput | null
   modelSize?: SizeCreateOneInput | null
-  color: ColorCreateOneInput
+  season?: ProductSeasonCreateOneInput | null
   secondaryColor?: ColorCreateOneInput | null
   tags?: TagCreateManyWithoutProductsInput | null
-  functions?: ProductFunctionCreateManyInput | null
-  materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
-  season?: ProductSeasonCreateOneInput | null
+  tier?: ProductTierCreateOneInput | null
 }
 
 export interface ProductCreateinnerMaterialsInput {
@@ -4478,42 +4487,10 @@ export interface ProductScalarWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
-  slug?: string | null
-  slug_not?: string | null
-  slug_in?: string[] | null
-  slug_not_in?: string[] | null
-  slug_lt?: string | null
-  slug_lte?: string | null
-  slug_gt?: string | null
-  slug_gte?: string | null
-  slug_contains?: string | null
-  slug_not_contains?: string | null
-  slug_starts_with?: string | null
-  slug_not_starts_with?: string | null
-  slug_ends_with?: string | null
-  slug_not_ends_with?: string | null
-  name?: string | null
-  name_not?: string | null
-  name_in?: string[] | null
-  name_not_in?: string[] | null
-  name_lt?: string | null
-  name_lte?: string | null
-  name_gt?: string | null
-  name_gte?: string | null
-  name_contains?: string | null
-  name_not_contains?: string | null
-  name_starts_with?: string | null
-  name_not_starts_with?: string | null
-  name_ends_with?: string | null
-  name_not_ends_with?: string | null
-  productFit?: ProductFit | null
-  productFit_not?: ProductFit | null
-  productFit_in?: ProductFit[] | null
-  productFit_not_in?: ProductFit[] | null
-  type?: ProductType | null
-  type_not?: ProductType | null
-  type_in?: ProductType[] | null
-  type_not_in?: ProductType[] | null
+  architecture?: ProductArchitecture | null
+  architecture_not?: ProductArchitecture | null
+  architecture_in?: ProductArchitecture[] | null
+  architecture_not_in?: ProductArchitecture[] | null
   description?: string | null
   description_not?: string | null
   description_in?: string[] | null
@@ -4552,26 +4529,28 @@ export interface ProductScalarWhereInput {
   modelHeight_lte?: number | null
   modelHeight_gt?: number | null
   modelHeight_gte?: number | null
-  retailPrice?: number | null
-  retailPrice_not?: number | null
-  retailPrice_in?: number[] | null
-  retailPrice_not_in?: number[] | null
-  retailPrice_lt?: number | null
-  retailPrice_lte?: number | null
-  retailPrice_gt?: number | null
-  retailPrice_gte?: number | null
-  status?: ProductStatus | null
-  status_not?: ProductStatus | null
-  status_in?: ProductStatus[] | null
-  status_not_in?: ProductStatus[] | null
-  architecture?: ProductArchitecture | null
-  architecture_not?: ProductArchitecture | null
-  architecture_in?: ProductArchitecture[] | null
-  architecture_not_in?: ProductArchitecture[] | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[] | null
+  name_not_in?: string[] | null
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
   photographyStatus?: PhotographyStatus | null
   photographyStatus_not?: PhotographyStatus | null
   photographyStatus_in?: PhotographyStatus[] | null
   photographyStatus_not_in?: PhotographyStatus[] | null
+  productFit?: ProductFit | null
+  productFit_not?: ProductFit | null
+  productFit_in?: ProductFit[] | null
+  productFit_not_in?: ProductFit[] | null
   publishedAt?: any | null
   publishedAt_not?: any | null
   publishedAt_in?: any[] | null
@@ -4580,6 +4559,36 @@ export interface ProductScalarWhereInput {
   publishedAt_lte?: any | null
   publishedAt_gt?: any | null
   publishedAt_gte?: any | null
+  retailPrice?: number | null
+  retailPrice_not?: number | null
+  retailPrice_in?: number[] | null
+  retailPrice_not_in?: number[] | null
+  retailPrice_lt?: number | null
+  retailPrice_lte?: number | null
+  retailPrice_gt?: number | null
+  retailPrice_gte?: number | null
+  slug?: string | null
+  slug_not?: string | null
+  slug_in?: string[] | null
+  slug_not_in?: string[] | null
+  slug_lt?: string | null
+  slug_lte?: string | null
+  slug_gt?: string | null
+  slug_gte?: string | null
+  slug_contains?: string | null
+  slug_not_contains?: string | null
+  slug_starts_with?: string | null
+  slug_not_starts_with?: string | null
+  slug_ends_with?: string | null
+  slug_not_ends_with?: string | null
+  status?: ProductStatus | null
+  status_not?: ProductStatus | null
+  status_in?: ProductStatus[] | null
+  status_not_in?: ProductStatus[] | null
+  type?: ProductType | null
+  type_not?: ProductType | null
+  type_in?: ProductType[] | null
+  type_not_in?: ProductType[] | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -4671,50 +4680,133 @@ export interface ProductStateInput {
   notes?: string | null
 }
 
+export interface ProductTierCreateInput {
+  id?: string | null
+  tier: ProductTierName
+  price: number
+}
+
+export interface ProductTierCreateOneInput {
+  create?: ProductTierCreateInput | null
+  connect?: ProductTierWhereUniqueInput | null
+}
+
+export interface ProductTierUpdateDataInput {
+  tier?: ProductTierName | null
+  price?: number | null
+}
+
+export interface ProductTierUpdateOneInput {
+  create?: ProductTierCreateInput | null
+  connect?: ProductTierWhereUniqueInput | null
+  disconnect?: boolean | null
+  delete?: boolean | null
+  update?: ProductTierUpdateDataInput | null
+  upsert?: ProductTierUpsertNestedInput | null
+}
+
+export interface ProductTierUpsertNestedInput {
+  update: ProductTierUpdateDataInput
+  create: ProductTierCreateInput
+}
+
+export interface ProductTierWhereInput {
+  AND?: ProductTierWhereInput[] | null
+  OR?: ProductTierWhereInput[] | null
+  NOT?: ProductTierWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  tier?: ProductTierName | null
+  tier_not?: ProductTierName | null
+  tier_in?: ProductTierName[] | null
+  tier_not_in?: ProductTierName[] | null
+  price?: number | null
+  price_not?: number | null
+  price_in?: number[] | null
+  price_not_in?: number[] | null
+  price_lt?: number | null
+  price_lte?: number | null
+  price_gt?: number | null
+  price_gte?: number | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+}
+
+export interface ProductTierWhereUniqueInput {
+  id?: string | null
+}
+
 export interface ProductUpdateDataInput {
-  slug?: string | null
-  name?: string | null
-  productFit?: ProductFit | null
-  type?: ProductType | null
+  architecture?: ProductArchitecture | null
   description?: string | null
   externalURL?: string | null
   buyNewEnabled?: boolean | null
   modelHeight?: number | null
-  retailPrice?: number | null
-  status?: ProductStatus | null
-  architecture?: ProductArchitecture | null
+  name?: string | null
   photographyStatus?: PhotographyStatus | null
+  productFit?: ProductFit | null
   publishedAt?: any | null
+  retailPrice?: number | null
+  slug?: string | null
+  status?: ProductStatus | null
+  type?: ProductType | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
   brand?: BrandUpdateOneRequiredWithoutProductsInput | null
   category?: CategoryUpdateOneRequiredWithoutProductsInput | null
+  color?: ColorUpdateOneRequiredInput | null
+  functions?: ProductFunctionUpdateManyInput | null
   images?: ImageUpdateManyInput | null
+  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   model?: ProductModelUpdateOneWithoutProductsInput | null
   modelSize?: SizeUpdateOneInput | null
-  color?: ColorUpdateOneRequiredInput | null
+  season?: ProductSeasonUpdateOneInput | null
   secondaryColor?: ColorUpdateOneInput | null
   tags?: TagUpdateManyWithoutProductsInput | null
-  functions?: ProductFunctionUpdateManyInput | null
-  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
+  tier?: ProductTierUpdateOneInput | null
   variants?: ProductVariantUpdateManyWithoutProductInput | null
-  season?: ProductSeasonUpdateOneInput | null
 }
 
 export interface ProductUpdateManyDataInput {
-  slug?: string | null
-  name?: string | null
-  productFit?: ProductFit | null
-  type?: ProductType | null
+  architecture?: ProductArchitecture | null
   description?: string | null
   externalURL?: string | null
   buyNewEnabled?: boolean | null
   modelHeight?: number | null
-  retailPrice?: number | null
-  status?: ProductStatus | null
-  architecture?: ProductArchitecture | null
+  name?: string | null
   photographyStatus?: PhotographyStatus | null
+  productFit?: ProductFit | null
   publishedAt?: any | null
+  retailPrice?: number | null
+  slug?: string | null
+  status?: ProductStatus | null
+  type?: ProductType | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
 }
@@ -4783,90 +4875,93 @@ export interface ProductUpdateWithWhereUniqueWithoutCategoryInput {
 }
 
 export interface ProductUpdateWithoutBrandDataInput {
-  slug?: string | null
-  name?: string | null
-  productFit?: ProductFit | null
-  type?: ProductType | null
+  architecture?: ProductArchitecture | null
   description?: string | null
   externalURL?: string | null
   buyNewEnabled?: boolean | null
   modelHeight?: number | null
-  retailPrice?: number | null
-  status?: ProductStatus | null
-  architecture?: ProductArchitecture | null
+  name?: string | null
   photographyStatus?: PhotographyStatus | null
+  productFit?: ProductFit | null
   publishedAt?: any | null
+  retailPrice?: number | null
+  slug?: string | null
+  status?: ProductStatus | null
+  type?: ProductType | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
   category?: CategoryUpdateOneRequiredWithoutProductsInput | null
+  color?: ColorUpdateOneRequiredInput | null
+  functions?: ProductFunctionUpdateManyInput | null
   images?: ImageUpdateManyInput | null
+  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   model?: ProductModelUpdateOneWithoutProductsInput | null
   modelSize?: SizeUpdateOneInput | null
-  color?: ColorUpdateOneRequiredInput | null
+  season?: ProductSeasonUpdateOneInput | null
   secondaryColor?: ColorUpdateOneInput | null
   tags?: TagUpdateManyWithoutProductsInput | null
-  functions?: ProductFunctionUpdateManyInput | null
-  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
+  tier?: ProductTierUpdateOneInput | null
   variants?: ProductVariantUpdateManyWithoutProductInput | null
-  season?: ProductSeasonUpdateOneInput | null
 }
 
 export interface ProductUpdateWithoutCategoryDataInput {
-  slug?: string | null
-  name?: string | null
-  productFit?: ProductFit | null
-  type?: ProductType | null
+  architecture?: ProductArchitecture | null
   description?: string | null
   externalURL?: string | null
   buyNewEnabled?: boolean | null
   modelHeight?: number | null
-  retailPrice?: number | null
-  status?: ProductStatus | null
-  architecture?: ProductArchitecture | null
+  name?: string | null
   photographyStatus?: PhotographyStatus | null
+  productFit?: ProductFit | null
   publishedAt?: any | null
+  retailPrice?: number | null
+  slug?: string | null
+  status?: ProductStatus | null
+  type?: ProductType | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
   brand?: BrandUpdateOneRequiredWithoutProductsInput | null
+  color?: ColorUpdateOneRequiredInput | null
+  functions?: ProductFunctionUpdateManyInput | null
   images?: ImageUpdateManyInput | null
+  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   model?: ProductModelUpdateOneWithoutProductsInput | null
   modelSize?: SizeUpdateOneInput | null
-  color?: ColorUpdateOneRequiredInput | null
+  season?: ProductSeasonUpdateOneInput | null
   secondaryColor?: ColorUpdateOneInput | null
   tags?: TagUpdateManyWithoutProductsInput | null
-  functions?: ProductFunctionUpdateManyInput | null
-  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
+  tier?: ProductTierUpdateOneInput | null
   variants?: ProductVariantUpdateManyWithoutProductInput | null
-  season?: ProductSeasonUpdateOneInput | null
 }
 
 export interface ProductUpdateWithoutVariantsDataInput {
-  slug?: string | null
-  name?: string | null
-  productFit?: ProductFit | null
-  type?: ProductType | null
+  architecture?: ProductArchitecture | null
   description?: string | null
   externalURL?: string | null
   buyNewEnabled?: boolean | null
   modelHeight?: number | null
-  retailPrice?: number | null
-  status?: ProductStatus | null
-  architecture?: ProductArchitecture | null
+  name?: string | null
   photographyStatus?: PhotographyStatus | null
+  productFit?: ProductFit | null
   publishedAt?: any | null
+  retailPrice?: number | null
+  slug?: string | null
+  status?: ProductStatus | null
+  type?: ProductType | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
   brand?: BrandUpdateOneRequiredWithoutProductsInput | null
   category?: CategoryUpdateOneRequiredWithoutProductsInput | null
+  color?: ColorUpdateOneRequiredInput | null
+  functions?: ProductFunctionUpdateManyInput | null
   images?: ImageUpdateManyInput | null
+  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   model?: ProductModelUpdateOneWithoutProductsInput | null
   modelSize?: SizeUpdateOneInput | null
-  color?: ColorUpdateOneRequiredInput | null
+  season?: ProductSeasonUpdateOneInput | null
   secondaryColor?: ColorUpdateOneInput | null
   tags?: TagUpdateManyWithoutProductsInput | null
-  functions?: ProductFunctionUpdateManyInput | null
-  materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
-  season?: ProductSeasonUpdateOneInput | null
+  tier?: ProductTierUpdateOneInput | null
 }
 
 export interface ProductUpdateinnerMaterialsInput {
@@ -5590,42 +5685,10 @@ export interface ProductWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
-  slug?: string | null
-  slug_not?: string | null
-  slug_in?: string[] | null
-  slug_not_in?: string[] | null
-  slug_lt?: string | null
-  slug_lte?: string | null
-  slug_gt?: string | null
-  slug_gte?: string | null
-  slug_contains?: string | null
-  slug_not_contains?: string | null
-  slug_starts_with?: string | null
-  slug_not_starts_with?: string | null
-  slug_ends_with?: string | null
-  slug_not_ends_with?: string | null
-  name?: string | null
-  name_not?: string | null
-  name_in?: string[] | null
-  name_not_in?: string[] | null
-  name_lt?: string | null
-  name_lte?: string | null
-  name_gt?: string | null
-  name_gte?: string | null
-  name_contains?: string | null
-  name_not_contains?: string | null
-  name_starts_with?: string | null
-  name_not_starts_with?: string | null
-  name_ends_with?: string | null
-  name_not_ends_with?: string | null
-  productFit?: ProductFit | null
-  productFit_not?: ProductFit | null
-  productFit_in?: ProductFit[] | null
-  productFit_not_in?: ProductFit[] | null
-  type?: ProductType | null
-  type_not?: ProductType | null
-  type_in?: ProductType[] | null
-  type_not_in?: ProductType[] | null
+  architecture?: ProductArchitecture | null
+  architecture_not?: ProductArchitecture | null
+  architecture_in?: ProductArchitecture[] | null
+  architecture_not_in?: ProductArchitecture[] | null
   description?: string | null
   description_not?: string | null
   description_in?: string[] | null
@@ -5664,26 +5727,28 @@ export interface ProductWhereInput {
   modelHeight_lte?: number | null
   modelHeight_gt?: number | null
   modelHeight_gte?: number | null
-  retailPrice?: number | null
-  retailPrice_not?: number | null
-  retailPrice_in?: number[] | null
-  retailPrice_not_in?: number[] | null
-  retailPrice_lt?: number | null
-  retailPrice_lte?: number | null
-  retailPrice_gt?: number | null
-  retailPrice_gte?: number | null
-  status?: ProductStatus | null
-  status_not?: ProductStatus | null
-  status_in?: ProductStatus[] | null
-  status_not_in?: ProductStatus[] | null
-  architecture?: ProductArchitecture | null
-  architecture_not?: ProductArchitecture | null
-  architecture_in?: ProductArchitecture[] | null
-  architecture_not_in?: ProductArchitecture[] | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[] | null
+  name_not_in?: string[] | null
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
   photographyStatus?: PhotographyStatus | null
   photographyStatus_not?: PhotographyStatus | null
   photographyStatus_in?: PhotographyStatus[] | null
   photographyStatus_not_in?: PhotographyStatus[] | null
+  productFit?: ProductFit | null
+  productFit_not?: ProductFit | null
+  productFit_in?: ProductFit[] | null
+  productFit_not_in?: ProductFit[] | null
   publishedAt?: any | null
   publishedAt_not?: any | null
   publishedAt_in?: any[] | null
@@ -5692,6 +5757,36 @@ export interface ProductWhereInput {
   publishedAt_lte?: any | null
   publishedAt_gt?: any | null
   publishedAt_gte?: any | null
+  retailPrice?: number | null
+  retailPrice_not?: number | null
+  retailPrice_in?: number[] | null
+  retailPrice_not_in?: number[] | null
+  retailPrice_lt?: number | null
+  retailPrice_lte?: number | null
+  retailPrice_gt?: number | null
+  retailPrice_gte?: number | null
+  slug?: string | null
+  slug_not?: string | null
+  slug_in?: string[] | null
+  slug_not_in?: string[] | null
+  slug_lt?: string | null
+  slug_lte?: string | null
+  slug_gt?: string | null
+  slug_gte?: string | null
+  slug_contains?: string | null
+  slug_not_contains?: string | null
+  slug_starts_with?: string | null
+  slug_not_starts_with?: string | null
+  slug_ends_with?: string | null
+  slug_not_ends_with?: string | null
+  status?: ProductStatus | null
+  status_not?: ProductStatus | null
+  status_in?: ProductStatus[] | null
+  status_not_in?: ProductStatus[] | null
+  type?: ProductType | null
+  type_not?: ProductType | null
+  type_in?: ProductType[] | null
+  type_not_in?: ProductType[] | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -5710,24 +5805,25 @@ export interface ProductWhereInput {
   updatedAt_gte?: any | null
   brand?: BrandWhereInput | null
   category?: CategoryWhereInput | null
+  color?: ColorWhereInput | null
+  functions_every?: ProductFunctionWhereInput | null
+  functions_some?: ProductFunctionWhereInput | null
+  functions_none?: ProductFunctionWhereInput | null
   images_every?: ImageWhereInput | null
   images_some?: ImageWhereInput | null
   images_none?: ImageWhereInput | null
+  materialCategory?: ProductMaterialCategoryWhereInput | null
   model?: ProductModelWhereInput | null
   modelSize?: SizeWhereInput | null
-  color?: ColorWhereInput | null
+  season?: ProductSeasonWhereInput | null
   secondaryColor?: ColorWhereInput | null
   tags_every?: TagWhereInput | null
   tags_some?: TagWhereInput | null
   tags_none?: TagWhereInput | null
-  functions_every?: ProductFunctionWhereInput | null
-  functions_some?: ProductFunctionWhereInput | null
-  functions_none?: ProductFunctionWhereInput | null
-  materialCategory?: ProductMaterialCategoryWhereInput | null
+  tier?: ProductTierWhereInput | null
   variants_every?: ProductVariantWhereInput | null
   variants_some?: ProductVariantWhereInput | null
   variants_none?: ProductVariantWhereInput | null
-  season?: ProductSeasonWhereInput | null
 }
 
 export interface ProductWhereUniqueInput {
