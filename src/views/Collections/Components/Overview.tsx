@@ -5,10 +5,18 @@ import { Header, ImageUpload, Spacer, Text } from "components"
 import { ProductSearch } from "components/ProductSearch"
 import { ProductSelects } from "components/ProductSelects"
 import { useLocation } from "react-router-dom"
+import { SelectChoice } from "fields/SelectField"
 
-const trueOrFalseSelectFields = [
+const trueOrFalseSelectFields: SelectChoice[] = [
   { display: "True", value: true },
   { display: "False", value: false },
+]
+
+const placementChoices: SelectChoice[] = [
+  {
+    value: "Homepage",
+    display: "Homepage",
+  },
 ]
 
 export const Overview: React.FC<{
@@ -60,6 +68,7 @@ export const Overview: React.FC<{
               <TextField multiline name="description" placeholder="Description" requiredString />
             </Grid>
           </Grid>
+
           <Spacer mt={3} />
           <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -67,6 +76,15 @@ export const Overview: React.FC<{
               <Spacer mt={1} />
               <SelectField name="published" choices={trueOrFalseSelectFields} />
             </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Placements</Text>
+              <Spacer mt={1} />
+              <SelectField name="placements" choices={placementChoices} multiple />
+            </Grid>
+          </Grid>
+
+          <Spacer mt={3} />
+          <Grid container spacing={2}>
             <Grid item xs={6}>
               <Text variant="h6">Product search</Text>
               <Spacer mt={1} />

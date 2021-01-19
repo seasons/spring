@@ -4,7 +4,7 @@ import { ViewEntityField } from "fields"
 import { Header, Indicator, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { useHistory } from "react-router-dom"
-import { Box } from "@material-ui/core"
+import { Box, Typography } from "@material-ui/core"
 
 export const CollectionsList = props => {
   const history = useHistory()
@@ -49,6 +49,7 @@ export const CollectionsList = props => {
           <DateField source="createdAt" label="CreatedAt" />
           <DateField source="updatedAt" label="UpdatedAt" />
           <PublishedField label="Published" />
+          <LocationsField label="Placements" />
           <ViewEntityField source="id" entityPath="content/collections" label="Actions" />
         </Datagrid>
       </List>
@@ -62,4 +63,21 @@ const PublishedField: React.FC<{ label: string; record?: any }> = ({ label, reco
     return null
   }
   return <Indicator status={record.published ? "True" : "False"} />
+}
+
+const LocationsField: React.FC<{ label: string; record?: any }> = ({ label, record }) => {
+  if (!record) {
+    return null
+  }
+  return (
+    <>
+      {record?.placements.map(l => {
+        return (
+          <Typography variant="body1" color="textPrimary" key={l}>
+            {l}
+          </Typography>
+        )
+      })}
+    </>
+  )
 }

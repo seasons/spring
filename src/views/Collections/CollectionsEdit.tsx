@@ -4,12 +4,12 @@ import { useMutation, useQuery } from "react-apollo"
 import { Spacer, Snackbar, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { useRefresh } from "@seasons/react-admin"
-import { ApolloError } from "apollo-client"
 import { Overview } from "./Components/Overview"
 import { UPSERT_COLLECTION } from "./mutations"
 import { useParams } from "react-router-dom"
 import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
+import { SelectChoice } from "fields/SelectField"
 
 export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   const { collectionID } = useParams()
@@ -71,7 +71,7 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   const onSubmit = async values => {
     const numImages = 4
     const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
-    const { title, subTitle, published, description } = values
+    const { title, subTitle, published, description, placements } = values
     setIsSubmitting(true)
     await upsertCollection({
       variables: {
@@ -83,6 +83,7 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
           published,
           productIDs: selectedProductIDs,
           descriptions: { set: [description] },
+          placements,
         },
       },
     })
@@ -98,6 +99,7 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
       subTitle: data.subTitle,
       published: data.published,
       description: data.descriptions?.[0],
+      placements: data.placements,
     }
     data.images?.forEach((image, index) => {
       initialValues[`image_${index}`] = image.url
