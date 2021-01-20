@@ -17,6 +17,7 @@ import {
   ProductFit,
   SeasonCode,
   SeasonString,
+  ProductTierName,
 } from "./globalTypes"
 
 // ====================================================
@@ -181,6 +182,13 @@ export interface ProductEditQuery_product_season {
   wearableSeasons: SeasonString[]
 }
 
+export interface ProductEditQuery_product_tier {
+  __typename: "ProductTier"
+  id: string
+  tier: ProductTierName
+  price: number
+}
+
 export interface ProductEditQuery_product_color {
   __typename: "Color"
   id: string
@@ -249,6 +257,7 @@ export interface ProductEditQuery_product {
   productFit: ProductFit | null
   buyNewEnabled: boolean
   season: ProductEditQuery_product_season | null
+  tier: ProductEditQuery_product_tier
   color: ProductEditQuery_product_color
   functions: ProductEditQuery_product_functions[] | null
   materialCategory: ProductEditQuery_product_materialCategory | null
