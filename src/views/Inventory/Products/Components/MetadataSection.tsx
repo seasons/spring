@@ -100,7 +100,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={12}>
             <Text variant="h6">Product Tier</Text>
             <Spacer mt={1} />
-            <SelectField disabled name="productTier" choices={productTiers} defaultValue="Luxury" />
+            <SelectField disabled name="productTier" choices={productTiers} defaultValue="Standard" />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Buy New Enabled</Text>
