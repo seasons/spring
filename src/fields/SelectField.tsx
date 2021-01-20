@@ -16,6 +16,7 @@ export type SelectFieldProps = ChildFieldProps & {
   groupedChoices?: { name: string; children: SelectChoice[] }[]
   name: string
   onChange?: (event: any) => void
+  defaultValue?: string
 }
 
 export const SelectField: React.FC<SelectFieldProps> = ({

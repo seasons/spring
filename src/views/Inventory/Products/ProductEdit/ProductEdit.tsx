@@ -84,6 +84,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
       sizes: availableSizes,
       wearableSeasons: product.season?.wearableSeasons,
       tags: product.tags.map(tag => tag.name),
+      productTier: product.tier.tier,
       vendorSeasonSeasonCode: product.season?.vendorSeason?.seasonCode,
       vendorSeasonYear: product.season?.vendorSeason?.year,
       internalSeasonSeasonCode: product.season?.internalSeason?.seasonCode,

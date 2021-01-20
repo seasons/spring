@@ -82,6 +82,11 @@ export const ProductFragment = gql`
       }
       wearableSeasons
     }
+    tier {
+      id
+      tier
+      price
+    }
     color {
       id
       colorCode

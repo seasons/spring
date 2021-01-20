@@ -17,6 +17,7 @@ import {
   ProductFit,
   SeasonCode,
   SeasonString,
+  ProductTierName,
 } from "./globalTypes"
 
 // ====================================================
@@ -136,6 +137,13 @@ export interface ProductVariantUpsertQuery_product_season {
   wearableSeasons: SeasonString[]
 }
 
+export interface ProductVariantUpsertQuery_product_tier {
+  __typename: "ProductTier"
+  id: string
+  tier: ProductTierName
+  price: number
+}
+
 export interface ProductVariantUpsertQuery_product_color {
   __typename: "Color"
   id: string
@@ -204,6 +212,7 @@ export interface ProductVariantUpsertQuery_product {
   productFit: ProductFit | null
   buyNewEnabled: boolean
   season: ProductVariantUpsertQuery_product_season | null
+  tier: ProductVariantUpsertQuery_product_tier
   color: ProductVariantUpsertQuery_product_color
   functions: ProductVariantUpsertQuery_product_functions[] | null
   materialCategory: ProductVariantUpsertQuery_product_materialCategory | null

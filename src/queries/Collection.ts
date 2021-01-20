@@ -13,6 +13,7 @@ const CollectionFragment = gql`
     subTitle
     descriptions
     published
+    placements
     products {
       id
       name

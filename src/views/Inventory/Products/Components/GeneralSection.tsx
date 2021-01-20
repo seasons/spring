@@ -93,21 +93,23 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
               <Spacer mt={3} />
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Text variant="h6">Available status</Text>
-            <Spacer mt={1} />
-            <SelectField
-              name="status"
-              disabled={["Stored", "Offloaded"].includes(currentStatus || "")}
-              choices={availabilityStatuses}
-              requiredString
-            />
-            <Spacer mt={3} />
-          </Grid>
-          <Grid item xs={12}>
-            <Text variant="h6">Photography status *</Text>
-            <Spacer mt={1} />
-            <SelectField name="photographyStatus" choices={photographyStatuses} requiredString />
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Text variant="h6">Available status</Text>
+              <Spacer mt={1} />
+              <SelectField
+                name="status"
+                disabled={["Stored", "Offloaded"].includes(currentStatus || "")}
+                choices={availabilityStatuses}
+                requiredString
+              />
+              <Spacer mt={3} />
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Photography status *</Text>
+              <Spacer mt={1} />
+              <SelectField name="photographyStatus" choices={photographyStatuses} requiredString />
+            </Grid>
           </Grid>
         </>
       }

@@ -152,6 +152,17 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
     },
   ]
 
+  const productTiers: SelectChoice[] = [
+    {
+      value: "Luxury",
+      display: "Luxury",
+    },
+    {
+      value: "Standard",
+      display: "Standard",
+    },
+  ]
+
   // Only show Offload and Stored status if editing product and neither should be selectable
   if (isEditing) {
     availabilityStatuses.push({
@@ -236,6 +247,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
             models={data.productModels as ProductUpsertQuery_productModels[]}
             sizes={sizes}
             buyNewEnabled={buyNewEnabled}
+            productTiers={productTiers}
           />
           <Spacer mt={6} />
           <SeasonsSection
