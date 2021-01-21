@@ -53,6 +53,7 @@ export const PhysicalProductFragment = gql`
       type
     }
     reports {
+      id
       damageType
       createdAt
       notes

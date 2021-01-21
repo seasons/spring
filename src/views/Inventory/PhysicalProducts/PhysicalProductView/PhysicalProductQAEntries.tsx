@@ -2,11 +2,9 @@ import { Button } from "@material-ui/core"
 import { Box, TableHead, TableCell, Card, Table, TableRow, TableBody, Typography } from "@material-ui/core"
 import { ProductQAModal } from "components/ProductQAModal"
 import { SinceDateField } from "fields"
-import { PhysicalProductDamageType } from "generated/globalTypes"
 import React, { useState } from "react"
 
 export const PhysicalProductQAView = ({ data }) => {
-  console.log(data)
   const [openModal, setOpenModal] = useState(false)
 
   const damageTypeToReadableText = damageType => {
@@ -54,11 +52,9 @@ export const PhysicalProductQAView = ({ data }) => {
                 damageType,
                 user: { fullName },
                 notes,
-                createdAt,
               } = report
               return (
                 <TableRow>
-                  {/* What happened */}
                   <TableCell>
                     <Box>
                       <Typography variant="h6" style={{ fontWeight: "bold" }}>
@@ -67,14 +63,12 @@ export const PhysicalProductQAView = ({ data }) => {
                     </Box>
                   </TableCell>
 
-                  {/*Detail on what happened */}
                   <TableCell>
                     <Box>
                       <Typography variant="h6">{notes}</Typography>
                     </Box>
                   </TableCell>
 
-                  {/* Who did it */}
                   <TableCell>
                     <Box>
                       <Box>
@@ -83,7 +77,6 @@ export const PhysicalProductQAView = ({ data }) => {
                     </Box>
                   </TableCell>
 
-                  {/* When did it happen */}
                   <TableCell>
                     <SinceDateField record={report} source="createdAt"></SinceDateField>
                   </TableCell>
