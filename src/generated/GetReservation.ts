@@ -190,7 +190,7 @@ export interface GetReservation_products {
   barcode: string
   location: GetReservation_products_location | null
   warehouseLocation: GetReservation_products_warehouseLocation | null
-  productVariant: GetReservation_products_productVariant
+  productVariant: GetReservation_products_productVariant | null
 }
 
 export interface GetReservation_images {

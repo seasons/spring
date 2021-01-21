@@ -12,6 +12,7 @@ import {
   ProductArchitecture,
   PhotographyStatus,
   ProductStatus,
+  PhysicalProductDamageType,
 } from "./globalTypes"
 
 // ====================================================
@@ -114,6 +115,19 @@ export interface GetPhysicalProducts_physicalProducts_productVariant {
   product: GetPhysicalProducts_physicalProducts_productVariant_product
 }
 
+export interface GetPhysicalProducts_physicalProducts_reports_user {
+  __typename: "User"
+  id: string
+}
+
+export interface GetPhysicalProducts_physicalProducts_reports {
+  __typename: "PhysicalProductQualityReport"
+  id: string
+  damageType: PhysicalProductDamageType | null
+  notes: string | null
+  user: GetPhysicalProducts_physicalProducts_reports_user
+}
+
 export interface GetPhysicalProducts_physicalProducts {
   __typename: "PhysicalProduct"
   id: string
@@ -129,7 +143,8 @@ export interface GetPhysicalProducts_physicalProducts {
   barcode: string
   reservations: GetPhysicalProducts_physicalProducts_reservations[]
   warehouseLocation: GetPhysicalProducts_physicalProducts_warehouseLocation | null
-  productVariant: GetPhysicalProducts_physicalProducts_productVariant
+  productVariant: GetPhysicalProducts_physicalProducts_productVariant | null
+  reports: GetPhysicalProducts_physicalProducts_reports[] | null
 }
 
 export interface GetPhysicalProducts {
