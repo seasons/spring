@@ -9,6 +9,7 @@
 
 export interface LogIn_login_user {
   __typename: "User"
+  id: string
   email: string
   firstName: string
   lastName: string

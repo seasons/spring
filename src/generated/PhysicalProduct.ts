@@ -9,6 +9,7 @@ import {
   ReservationStatus,
   ReservationPhase,
   WarehouseLocationType,
+  PhysicalProductDamageType,
   ProductArchitecture,
   PhotographyStatus,
   ProductStatus,
@@ -74,6 +75,20 @@ export interface PhysicalProduct_warehouseLocation {
   type: WarehouseLocationType
 }
 
+export interface PhysicalProduct_reports_user {
+  __typename: "User"
+  id: string
+  fullName: string
+}
+
+export interface PhysicalProduct_reports {
+  __typename: "PhysicalProductQualityReport"
+  damageType: PhysicalProductDamageType | null
+  createdAt: any
+  notes: string | null
+  user: PhysicalProduct_reports_user
+}
+
 export interface PhysicalProduct_productVariant_internalSize {
   __typename: "Size"
   id: string
@@ -137,5 +152,6 @@ export interface PhysicalProduct {
   price: PhysicalProduct_price | null
   reservations: PhysicalProduct_reservations[]
   warehouseLocation: PhysicalProduct_warehouseLocation | null
+  reports: PhysicalProduct_reports[] | null
   productVariant: PhysicalProduct_productVariant | null
 }
