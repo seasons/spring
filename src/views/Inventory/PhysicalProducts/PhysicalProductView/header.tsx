@@ -66,7 +66,7 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct, toggleS
   return (
     <>
       <Header
-        title="Physical product edit"
+        title={seasonsUID}
         subtitle="Edit physical product data"
         breadcrumbs={breadcrumbs}
         menuItems={menuItems}

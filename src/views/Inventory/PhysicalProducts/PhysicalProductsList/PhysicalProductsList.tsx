@@ -22,6 +22,14 @@ const GET_PHYSICAL_PRODUCTS = gql`
   query GetPhysicalProducts {
     physicalProducts {
       ...PhysicalProduct
+      reports {
+        id
+        damageType
+        notes
+        user {
+          id
+        }
+      }
     }
   }
 
