@@ -19,6 +19,11 @@ export const UpdatePhysicalProductFragment = gql`
     unitCost
     offloadMethod
     offloadNotes
+    price {
+      id
+      buyUsedEnabled
+      buyUsedPrice
+    }
     warehouseLocation {
       id
       barcode

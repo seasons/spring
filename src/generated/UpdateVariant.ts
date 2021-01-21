@@ -53,12 +53,33 @@ export interface UpdateVariant_internalSize {
   bottom: UpdateVariant_internalSize_bottom | null
 }
 
+export interface UpdateVariant_price {
+  __typename: "ProductVariantPrice"
+  id: string
+  buyUsedEnabled: boolean
+  buyUsedPrice: number | null
+}
+
+export interface UpdateVariant_shopifyProductVariant {
+  __typename: "ShopifyProductVariant"
+  id: string
+  externalId: string | null
+}
+
+export interface UpdateVariant_physicalProducts_price {
+  __typename: "PhysicalProductPrice"
+  id: string
+  buyUsedEnabled: boolean
+  buyUsedPrice: number | null
+}
+
 export interface UpdateVariant_physicalProducts {
   __typename: "PhysicalProduct"
   id: string
   seasonsUID: string
   productStatus: PhysicalProductStatus
   inventoryStatus: InventoryStatus
+  price: UpdateVariant_physicalProducts_price | null
 }
 
 export interface UpdateVariant {
@@ -70,5 +91,7 @@ export interface UpdateVariant {
   manufacturerSizes: UpdateVariant_manufacturerSizes[] | null
   product: UpdateVariant_product
   internalSize: UpdateVariant_internalSize | null
+  price: UpdateVariant_price
+  shopifyProductVariant: UpdateVariant_shopifyProductVariant | null
   physicalProducts: UpdateVariant_physicalProducts[] | null
 }

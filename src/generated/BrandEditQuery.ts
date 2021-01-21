@@ -15,6 +15,12 @@ export interface BrandEditQuery_brand_images {
   url: string | null
 }
 
+export interface BrandEditQuery_brand_externalShopifyIntegration {
+  __typename: "ExternalShopifyIntegration"
+  enabled: boolean
+  shopName: string
+}
+
 export interface BrandEditQuery_brand {
   __typename: "Brand"
   id: string
@@ -27,6 +33,7 @@ export interface BrandEditQuery_brand {
   designer: string | null
   basedIn: string | null
   images: BrandEditQuery_brand_images[] | null
+  externalShopifyIntegration: BrandEditQuery_brand_externalShopifyIntegration | null
   tier: BrandTier
   websiteUrl: string | null
 }

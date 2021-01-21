@@ -10,7 +10,7 @@ export const SearchResultCard = ({ result }) => {
     case "Product":
       return (
         <>
-          <Box display="flex" flexDirection="row">
+          <Box display="flex" flexDirection="row" mt={1}>
             <Box>
               <Image url={data.image} size="medium" />
             </Box>
@@ -23,7 +23,7 @@ export const SearchResultCard = ({ result }) => {
               </Typography>
             </Box>
           </Box>
-          <Box my={1}>
+          <Box mt={1}>
             <Divider />
           </Box>
         </>

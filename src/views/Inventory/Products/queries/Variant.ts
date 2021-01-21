@@ -38,11 +38,25 @@ export const UpdateVariantFragment = gql`
         inseam
       }
     }
+    price {
+      id
+      buyUsedEnabled
+      buyUsedPrice
+    }
+    shopifyProductVariant {
+      id
+      externalId
+    }
     physicalProducts {
       id
       seasonsUID
       productStatus
       inventoryStatus
+      price {
+        id
+        buyUsedEnabled
+        buyUsedPrice
+      }
     }
   }
 `

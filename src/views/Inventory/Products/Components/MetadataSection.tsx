@@ -6,16 +6,24 @@ import { Spacer, Text } from "components"
 import colorsJSON from "data/colors.json"
 import { ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "./ExpandableSection"
-import { SelectField, TextField } from "fields"
+import { SelectField, TextField, CheckboxField } from "fields"
 import { getFormSelectChoices, FormSelectChoice } from "utils/form"
 
 export interface MetadataSectionProps {
   architectures: string[]
   models: ProductUpsertQuery_productModels[]
   sizes: FormSelectChoice[]
+  buyNewEnabled: boolean
+  productTiers: FormSelectChoice[]
 }
 
-export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures, models, sizes }) => {
+export const MetadataSection: React.FC<MetadataSectionProps> = ({
+  architectures,
+  models,
+  sizes,
+  buyNewEnabled,
+  productTiers,
+}) => {
   const modelChoices = models.map(model => ({
     display: model.name,
     value: model.id,
@@ -32,6 +40,13 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures,
     ),
     value: color.colorCode,
   }))
+
+  const productFitChoices = [
+    { display: "Runs small", value: "RunsSmall" },
+    { display: "True to size", value: "TrueToSize" },
+    { display: "Runs big", value: "RunsBig" },
+  ]
+
   return (
     <ExpandableSection
       title="Metadata"
@@ -76,6 +91,21 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({ architectures,
             <Text variant="h6">External URL</Text>
             <Spacer mt={1} />
             <TextField name="externalURL" type="url" />
+          </Grid>
+          <Grid item xs={6}>
+            <Text variant="h6">Fit</Text>
+            <Spacer mt={1} />
+            <SelectField name="productFit" choices={productFitChoices} />
+          </Grid>
+          <Grid item xs={12}>
+            <Text variant="h6">Product Tier</Text>
+            <Spacer mt={1} />
+            <SelectField disabled name="productTier" choices={productTiers} defaultValue="Standard" />
+          </Grid>
+          <Grid item xs={6}>
+            <Text variant="h6">Buy New Enabled</Text>
+            <Spacer mt={1} />
+            <CheckboxField name="buyNewEnabled" initialValue={buyNewEnabled} />
           </Grid>
         </Grid>
       }

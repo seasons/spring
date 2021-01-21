@@ -13,11 +13,11 @@ export const Overview: React.FC = () => {
         breadcrumbs={[
           {
             title: "Community",
-            url: "/community",
+            url: "/content/community",
           },
           {
             title: "New post",
-            url: "/community/create",
+            url: "/content/community/create",
           },
         ]}
       />

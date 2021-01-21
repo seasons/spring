@@ -15,6 +15,13 @@ import {
 // GraphQL fragment: UpdatePhysicalProduct
 // ====================================================
 
+export interface UpdatePhysicalProduct_price {
+  __typename: "PhysicalProductPrice"
+  id: string
+  buyUsedEnabled: boolean
+  buyUsedPrice: number | null
+}
+
 export interface UpdatePhysicalProduct_warehouseLocation {
   __typename: "WarehouseLocation"
   id: string
@@ -53,6 +60,7 @@ export interface UpdatePhysicalProduct {
   unitCost: number | null
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
+  price: UpdatePhysicalProduct_price | null
   warehouseLocation: UpdatePhysicalProduct_warehouseLocation | null
   productVariant: UpdatePhysicalProduct_productVariant | null
 }

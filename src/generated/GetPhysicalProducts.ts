@@ -9,15 +9,22 @@ import {
   ReservationStatus,
   ReservationPhase,
   WarehouseLocationType,
+  PhysicalProductDamageType,
   ProductArchitecture,
   PhotographyStatus,
   ProductStatus,
-  PhysicalProductDamageType,
 } from "./globalTypes"
 
 // ====================================================
 // GraphQL query operation: GetPhysicalProducts
 // ====================================================
+
+export interface GetPhysicalProducts_physicalProducts_price {
+  __typename: "PhysicalProductPrice"
+  id: string
+  buyUsedPrice: number | null
+  buyUsedEnabled: boolean
+}
 
 export interface GetPhysicalProducts_physicalProducts_reservations_customer_user {
   __typename: "User"
@@ -68,6 +75,21 @@ export interface GetPhysicalProducts_physicalProducts_warehouseLocation {
   type: WarehouseLocationType
 }
 
+export interface GetPhysicalProducts_physicalProducts_reports_user {
+  __typename: "User"
+  id: string
+  fullName: string
+}
+
+export interface GetPhysicalProducts_physicalProducts_reports {
+  __typename: "PhysicalProductQualityReport"
+  damageType: PhysicalProductDamageType | null
+  createdAt: any
+  notes: string | null
+  user: GetPhysicalProducts_physicalProducts_reports_user
+  id: string
+}
+
 export interface GetPhysicalProducts_physicalProducts_productVariant_internalSize {
   __typename: "Size"
   id: string
@@ -115,19 +137,6 @@ export interface GetPhysicalProducts_physicalProducts_productVariant {
   product: GetPhysicalProducts_physicalProducts_productVariant_product
 }
 
-export interface GetPhysicalProducts_physicalProducts_reports_user {
-  __typename: "User"
-  id: string
-}
-
-export interface GetPhysicalProducts_physicalProducts_reports {
-  __typename: "PhysicalProductQualityReport"
-  id: string
-  damageType: PhysicalProductDamageType | null
-  notes: string | null
-  user: GetPhysicalProducts_physicalProducts_reports_user
-}
-
 export interface GetPhysicalProducts_physicalProducts {
   __typename: "PhysicalProduct"
   id: string
@@ -141,10 +150,11 @@ export interface GetPhysicalProducts_physicalProducts {
   createdAt: any
   barcoded: boolean
   barcode: string
+  price: GetPhysicalProducts_physicalProducts_price | null
   reservations: GetPhysicalProducts_physicalProducts_reservations[]
   warehouseLocation: GetPhysicalProducts_physicalProducts_warehouseLocation | null
-  productVariant: GetPhysicalProducts_physicalProducts_productVariant | null
   reports: GetPhysicalProducts_physicalProducts_reports[] | null
+  productVariant: GetPhysicalProducts_physicalProducts_productVariant | null
 }
 
 export interface GetPhysicalProducts {

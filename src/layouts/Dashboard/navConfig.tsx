@@ -82,9 +82,19 @@ export default [
         ],
       },
       {
-        title: "Community",
-        href: "/community",
-        icon: PeopleIcon,
+        title: "Content",
+        href: "/content/community",
+        icon: ListIcon,
+        items: [
+          {
+            title: "Community",
+            href: "/content/community",
+          },
+          {
+            title: "Collections",
+            href: "/content/collections",
+          },
+        ],
       },
     ],
   },

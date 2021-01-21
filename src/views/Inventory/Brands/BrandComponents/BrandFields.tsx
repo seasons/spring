@@ -1,6 +1,6 @@
 import React from "react"
 import { Grid, Box } from "@material-ui/core"
-import { DatePickerField, SelectField, TextField } from "fields"
+import { DatePickerField, SelectField, TextField, CheckboxField } from "fields"
 import { Spacer, Text, ImageUpload, Header } from "components"
 import { useLocation } from "react-router-dom"
 
@@ -112,6 +112,18 @@ export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) 
               <TextField name="basedIn" />
             </Grid>
 
+            <Spacer mt={3} />
+
+            <Grid item xs={6}>
+              <Text variant="h6">Shopify Integration Enabled</Text>
+              <Spacer mt={1} />
+              <CheckboxField name="externalShopifyIntegrationEnabled" />
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Shopify Integration Shop Name</Text>
+              <Spacer mt={1} />
+              <TextField name="externalShopifyIntegrationShopName" />
+            </Grid>
             <Spacer mt={10} />
           </Grid>
         </Grid>

@@ -115,6 +115,7 @@ export const getProductUpsertData = (values: any) => {
     architecture,
     bottomSizeType,
     brand: brandID,
+    buyNewEnabled,
     category: categoryName,
     color: colorCode,
     description,
@@ -125,6 +126,7 @@ export const getProductUpsertData = (values: any) => {
     modelSize: modelSizeName,
     name,
     outerMaterials,
+    productFit,
     productType,
     photographyStatus,
     retailPrice,
@@ -166,6 +168,8 @@ export const getProductUpsertData = (values: any) => {
     "inventoryStatus",
     "physicalProductStatus",
     "unitCost",
+    "priceBuyUsedPrice",
+    "priceBuyUsedEnabled",
   ]
   const seasonsUIDToData = {}
   Object.keys(values).forEach(key => {
@@ -177,7 +181,7 @@ export const getProductUpsertData = (values: any) => {
       if (["dateOrdered", "dateReceived"].includes(fieldKey)) {
         // Convert date to ISO string format
         fieldValue = getDateISOString(value)
-      } else if (fieldKey === "unitCost") {
+      } else if (["unitCost", "priceBuyUsedPrice"].includes(fieldKey)) {
         // Convert to float
         fieldValue = parseFloat(value) || null
       } else {
@@ -206,9 +210,15 @@ export const getProductUpsertData = (values: any) => {
     const physicalProductsData = Object.keys(seasonsUIDToData)
       .map(seasonsUID => {
         if (seasonsUID.includes(sku)) {
-          const { inventoryStatus, physicalProductStatus, dateOrdered, dateReceived, unitCost } = seasonsUIDToData[
-            seasonsUID
-          ]
+          const {
+            inventoryStatus,
+            physicalProductStatus,
+            dateOrdered,
+            dateReceived,
+            unitCost,
+            priceBuyUsedEnabled,
+            priceBuyUsedPrice,
+          } = seasonsUIDToData[seasonsUID]
           return {
             dateOrdered,
             dateReceived,
@@ -216,6 +226,10 @@ export const getProductUpsertData = (values: any) => {
             productStatus: physicalProductStatus,
             seasonsUID,
             unitCost,
+            price: {
+              buyUsedEnabled: priceBuyUsedEnabled || false,
+              buyUsedPrice: priceBuyUsedPrice,
+            },
           }
         } else {
           return null
@@ -227,9 +241,13 @@ export const getProductUpsertData = (values: any) => {
 
     // Get the relevant size values for the productType, i.e. shoulder, chest, etc. for Top
     const variantSizeData = extractVariantSizeFields({ values, productType, size, isEdit: false })
+    const shopifyProductVariantData = values[`${size}_shopifyProductVariantExternalId`]
+      ? { shopifyProductVariant: { externalId: values[`${size}_shopifyProductVariantExternalId`] } }
+      : {}
 
     return {
       ...variantSizeData,
+      ...shopifyProductVariantData,
       ...variantData,
     }
   })
@@ -250,6 +268,7 @@ export const getProductUpsertData = (values: any) => {
     architecture: architecture,
     bottomSizeType: bottomSizeType ?? "WxL",
     brandID,
+    buyNewEnabled,
     categoryName,
     colorCode,
     description,
@@ -262,6 +281,7 @@ export const getProductUpsertData = (values: any) => {
     modelSizeName,
     name,
     outerMaterials: outerMaterials || [],
+    productFit,
     photographyStatus,
     retailPrice: parseInt(retailPrice),
     secondaryColorCode,
@@ -284,6 +304,7 @@ export const getProductUpdateData = (values: any) => {
     architecture,
     bottomSizeType,
     brand: brandID,
+    buyNewEnabled,
     category: categoryName,
     color: colorCode,
     description,
@@ -296,6 +317,7 @@ export const getProductUpdateData = (values: any) => {
     name,
     outerMaterials,
     photographyStatus,
+    productFit,
     productType,
     retailPrice,
     secondaryColor: secondaryColorCode,
@@ -331,6 +353,7 @@ export const getProductUpdateData = (values: any) => {
     architecture,
     bottomSizeType: bottomSizeType ?? "WxL",
     brand: { connect: { id: brandID } },
+    buyNewEnabled,
     category: { connect: { name: categoryName } },
     color: { connect: { colorCode } },
     description,
@@ -345,6 +368,7 @@ export const getProductUpdateData = (values: any) => {
     name,
     outerMaterials: { set: outerMaterials },
     photographyStatus,
+    productFit,
     retailPrice: parseInt(retailPrice),
     secondaryColor: secondaryColorCode && { connect: { colorCode: secondaryColorCode } },
     status,
@@ -379,6 +403,8 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     "inventoryStatus",
     "physicalProductStatus",
     "unitCost",
+    "priceBuyUsedEnabled",
+    "priceBuyUsedPrice",
   ]
   const data = Array.from(Array(numVariants).keys()).map(index => {
     // Get internal size
@@ -406,6 +432,10 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
       }
     })
 
+    const shopifyProductVariantExternalId = values[`${index}_shopifyProductVariantExternalId`]
+      ? { shopifyProductVariant: { externalId: values[`${index}_shopifyProductVariantExternalId`] } }
+      : {}
+
     // Get physical products data
     const seasonsUIDs = values[`${index}_seasonsUIDs`]
     const physicalProducts = seasonsUIDs.map(seasonsUID => {
@@ -416,9 +446,9 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
           if (["dateOrdered", "dateReceived"].includes(key)) {
             // Convert date to ISO string format
             physicalProductValue = getDateISOString(physicalProductValue)
-          } else if (key === "unitCost") {
+          } else if (["unitCost", "priceBuyUsedPrice"].includes(key)) {
             // Convert to float
-            physicalProductValue = Number(physicalProductValue)
+            physicalProductValue = parseFloat(physicalProductValue) || null
           }
           const dataKey = key === "physicalProductStatus" ? "productStatus" : key
           physicalProductData[dataKey] = physicalProductValue
@@ -433,6 +463,7 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
       bottomSizeType: bottomSizeType ?? "WxL",
       physicalProducts,
       ...measurementData,
+      ...shopifyProductVariantExternalId,
     }
   })
 
