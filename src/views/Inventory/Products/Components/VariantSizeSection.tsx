@@ -33,9 +33,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
 
   const getManufacturerSizes = manufacturerSize => {
     const baseBottomSizes: string[] = uniq(
-      bottomSizes
-        ?.filter(size => size?.type === manufacturerSize)
-        .map(size => `${size.type || ""} ${size?.value || ""}`)
+      bottomSizes?.filter(size => size?.type === manufacturerSize).map(size => size?.value)
     )
     baseBottomSizes.sort((a, b) => {
       const aSplit = a.split("x")
