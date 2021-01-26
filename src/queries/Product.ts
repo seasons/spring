@@ -35,7 +35,7 @@ export default {
       slug
       description
       photographyStatus
-      images(size: Small, options: { retina: false }) {
+      images(size: XSmall, options: { retina: false }) {
         url
       }
       retailPrice
