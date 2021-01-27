@@ -90,10 +90,13 @@ export const BrandEdit: React.FC = () => {
           designer,
           featured,
           published,
-          externalShopifyIntegration: {
-            shopName: externalShopifyIntegrationShopName,
-            enabled: externalShopifyIntegrationEnabled,
-          },
+          externalShopifyIntegration:
+            externalShopifyIntegrationShopName || externalShopifyIntegrationEnabled
+              ? {
+                  shopName: externalShopifyIntegrationShopName,
+                  enabled: externalShopifyIntegrationEnabled,
+                }
+              : null,
         },
       },
     })
