@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { CollectionPlacement } from "./globalTypes"
+
 // ====================================================
 // GraphQL fragment: CollectionFragment
 // ====================================================
@@ -41,6 +43,7 @@ export interface CollectionFragment {
   subTitle: string | null
   descriptions: string[]
   published: boolean
+  placements: CollectionPlacement[]
   products: CollectionFragment_products[] | null
   createdAt: any
   updatedAt: any | null

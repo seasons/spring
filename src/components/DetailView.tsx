@@ -46,7 +46,7 @@ export interface DetailViewProps {
   tabs: Array<{
     value: string
     label: string
-    render: (props: TabRenderProps) => React.Component
+    render: (props: TabRenderProps) => React.Component | JSX.Element
   }>
 }
 

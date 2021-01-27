@@ -8,7 +8,7 @@ const FitPicList = gql`
     status
     createdAt
     updatedAt
-    image {
+    image(size: XSmall, options: { retina: false }) {
       id
       url
     }

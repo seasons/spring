@@ -52,6 +52,16 @@ export const PhysicalProductFragment = gql`
       itemCode
       type
     }
+    reports {
+      id
+      damageType
+      createdAt
+      notes
+      user {
+        id
+        fullName
+      }
+    }
     productVariant {
       id
       sku

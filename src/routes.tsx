@@ -44,7 +44,7 @@ export default [
       {
         path: "/overview",
         exact: true,
-        component: OverviewView,
+        component: () => <AnalyticsReport title="Overview" url={"/overview"} type={ViewType.Dashboard} index={24} />,
       },
       {
         path: "/analytics",
@@ -66,40 +66,28 @@ export default [
         ),
       },
       ...[
-        { month: "Nov", index: 9 },
-        { month: "Dec", index: 10 },
+        { month: "Jan", index: 23, year: "21" },
+        { month: "Dec", index: 22, year: "20" },
+        { month: "Nov", index: 21, year: "20" },
+        { month: "Oct", index: 20, year: "20" },
+        { month: "Sep", index: 19, year: "20" },
+        { month: "Aug", index: 18, year: "20" },
+        { month: "Jul", index: 17, year: "20" },
+        { month: "Jun", index: 16, year: "20" },
+        { month: "May", index: 15, year: "20" },
+        { month: "Apr", index: 14, year: "20" },
+        { month: "Mar", index: 13, year: "20" },
+        { month: "Feb", index: 12, year: "20" },
+        { month: "Jan", index: 11, year: "20" },
+        { month: "Dec", index: 10, year: "19" },
+        { month: "Nov", index: 9, year: "19" },
       ].map(a => ({
-        path: `/sales/${a.month.toLowerCase()}19`,
+        path: `/sales/${a.month.toLowerCase()}${a.year}`,
         exact: true,
         component: () => (
           <AnalyticsReport
-            title={`${a.month} 19 Sales`}
-            url={`/${a.month.toLowerCase}19`}
-            type={ViewType.Dashboard}
-            index={a.index}
-          />
-        ),
-      })),
-      ...[
-        { month: "Jan", index: 11 },
-        { month: "Feb", index: 12 },
-        { month: "Mar", index: 13 },
-        { month: "Apr", index: 14 },
-        { month: "May", index: 15 },
-        { month: "Jun", index: 16 },
-        { month: "Jul", index: 17 },
-        { month: "Aug", index: 18 },
-        { month: "Sep", index: 19 },
-        { month: "Oct", index: 20 },
-        { month: "Nov", index: 21 },
-        { month: "Dec", index: 22 },
-      ].map(a => ({
-        path: `/sales/${a.month.toLowerCase()}20`,
-        exact: true,
-        component: () => (
-          <AnalyticsReport
-            title={`${a.month} 20 Sales`}
-            url={`/${a.month.toLowerCase}20`}
+            title={`${a.month} ${a.year} Sales`}
+            url={`/${a.month.toLowerCase}${a.year}`}
             type={ViewType.Dashboard}
             index={a.index}
           />

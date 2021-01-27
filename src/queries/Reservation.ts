@@ -14,7 +14,7 @@ export default {
           email
         }
       }
-      images(size: Thumb) {
+      images(size: XSmall) {
         url
       }
       phase
