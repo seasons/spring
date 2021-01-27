@@ -38,13 +38,17 @@ export default [
             title: "Reactivations",
             href: "/sales/reactivations",
           },
-          ...["Nov", "Dec"].map(a => ({
-            title: `${a} 19`,
-            href: `/sales/${a.toLowerCase()}19`,
+          ...["Jan"].map(a => ({
+            title: `${a} 21`,
+            href: `/sales/${a.toLowerCase()}21`,
           })),
-          ...["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map(a => ({
+          ...["Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan"].map(a => ({
             title: `${a} 20`,
             href: `/sales/${a.toLowerCase()}20`,
+          })),
+          ...["Dec", "Nov"].map(a => ({
+            title: `${a} 19`,
+            href: `/sales/${a.toLowerCase()}19`,
           })),
         ],
       },
