@@ -19,9 +19,11 @@ export const NOTIFY_INTEREST = gql`
 export const GET_USERS = gql`
   query users {
     users {
+      id
       fullName
       email
       customer {
+        id
         status
       }
     }
