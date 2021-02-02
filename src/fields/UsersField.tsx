@@ -10,13 +10,13 @@ interface UserFieldProps {
 }
 
 export const UsersField: React.FC<UserFieldProps> = ({ record }) => {
-  const users = [...record?.users]
-  const numRemainingUsers = users.splice(3)?.length
+  const users = record?.users ?? []
+  const numRemainingUsers = users?.splice(3)?.length
   const firstThreeUsers = users
   return (
     <>
-      {firstThreeUsers?.map(u => (
-        <>
+      {firstThreeUsers?.map((u, i) => (
+        <div key={i}>
           <Link
             component={RouterLink}
             to={`/members/${u?.customer?.id}/notifs`}
@@ -26,7 +26,7 @@ export const UsersField: React.FC<UserFieldProps> = ({ record }) => {
             {u.fullName}
           </Link>
           <br />
-        </>
+        </div>
       ))}
       {numRemainingUsers > 0 && (
         <Text variant="body2" color={colors.black50}>
