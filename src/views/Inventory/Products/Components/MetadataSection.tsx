@@ -30,16 +30,22 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
   }))
   const architectureChoices = getFormSelectChoices(architectures)
 
-  const colorChoices = colorsJSON.colors.map(color => ({
-    display: (
-      <Box display="flex" alignItems="center">
-        <Text>{color.name}</Text>
-        <Spacer ml={1} />
-        <Box bgcolor={color.hexCode} width={16} height={16} borderRadius={4} />
-      </Box>
-    ),
-    value: color.colorCode,
-  }))
+  const ColorChoiceDisplay = ({ name, hexCode }) => (
+    <Box display="flex" alignItems="center">
+      <Text>{name}</Text>
+      <Spacer ml={1} />
+      <Box bgcolor={hexCode} width={16} height={16} borderRadius={4} />
+    </Box>
+  )
+
+  const primaryColors = colorsJSON.colors.filter(a => a.type === "primary")
+  const secondaryColors = colorsJSON.colors.filter(b => b.type === "secondary")
+  const createColorChoice = a => ({
+    display: <ColorChoiceDisplay name={a.name} hexCode={a.hexCode} />,
+    value: a.colorCode,
+  })
+  const primaryColorChoices = primaryColors.map(createColorChoice)
+  const secondaryColorChoices = secondaryColors.map(createColorChoice)
 
   const productFitChoices = [
     { display: "Runs small", value: "RunsSmall" },
@@ -80,12 +86,12 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Color *</Text>
             <Spacer mt={1} />
-            <SelectField name="color" choices={colorChoices} requiredString />
+            <SelectField name="color" choices={primaryColorChoices} requiredString />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Secondary color</Text>
             <Spacer mt={1} />
-            <SelectField name="secondaryColor" choices={colorChoices} />
+            <SelectField name="secondaryColor" choices={secondaryColorChoices} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">External URL</Text>
