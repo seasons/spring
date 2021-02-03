@@ -23,7 +23,7 @@ export const NumberWidget: React.FC<NumberWidgetProps> = ({ data, icon }) => {
         <Box my={2}>
           <Typography
             component="h2"
-            style={{ color: colors.white100, letterSpacing: 1 }}
+            style={{ color: theme.palette.primary.contrastText, letterSpacing: 1 }}
             gutterBottom
             variant="overline"
           >
@@ -31,7 +31,7 @@ export const NumberWidget: React.FC<NumberWidgetProps> = ({ data, icon }) => {
           </Typography>
         </Box>
         <Box display="flex" alignItems="center" flexWrap="wrap">
-          <Typography variant="h1" style={{ color: colors.white100, fontSize: "56px" }}>
+          <Typography variant="h1" style={{ color: theme.palette.primary.contrastText, fontSize: "56px" }}>
             {value}
           </Typography>
         </Box>
@@ -48,9 +48,9 @@ const Avatar = muiStyled(MuiAvatar)({
 })
 
 const Card = muiStyled(MuiCard)({
-  backgroundColor: "black",
+  backgroundColor: theme.palette.primary.main,
   borderRadius: 4,
-  color: "white",
+  color: theme.palette.primary.contrastText,
   height: 200,
   padding: theme.spacing(3),
   display: "flex",

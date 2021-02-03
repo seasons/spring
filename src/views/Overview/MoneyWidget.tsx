@@ -13,33 +13,40 @@ export interface MoneyWidgetProps {
 }
 
 export const MoneyWidget: React.FC<MoneyWidgetProps> = ({ data }) => {
-  const displayData = {
+  const displayData: { value: string; currency: string; difference: number | null } = {
     value: Object.values(data.result)[0].toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
       minimumFractionDigits: 0,
     }),
     currency: "$",
-    difference: -4,
+    difference: null,
   }
 
   return (
     <Card>
       <Box flexGrow={1}>
-        <Typography component="h3" style={{ color: colors.white100 }} gutterBottom variant="overline">
+        <Typography
+          component="h3"
+          style={{ color: theme.palette.primary.contrastText }}
+          gutterBottom
+          variant="overline"
+        >
           {data.title}
         </Typography>
         <Box display="flex" alignItems="center" flexWrap="wrap">
-          <Typography variant="h3" style={{ color: colors.white100 }}>
+          <Typography variant="h3" style={{ color: theme.palette.primary.contrastText }}>
             {displayData.value}
           </Typography>
-          <Label
-            color={displayData.difference > 0 ? theme.palette.primary.main : theme.palette.error.main}
-            style={{ height: 10, backgroundColor: fade(theme.palette.error.main, 0.8), marginLeft: theme.spacing(1) }}
-          >
-            {displayData.difference > 0 ? "+" : ""}
-            {displayData.difference}%
-          </Label>
+          {displayData.difference && (
+            <Label
+              color={displayData.difference > 0 ? theme.palette.primary.contrastText : theme.palette.error.main}
+              style={{ height: 10, backgroundColor: fade(theme.palette.error.main, 0.8), marginLeft: theme.spacing(1) }}
+            >
+              {displayData.difference > 0 ? "+" : ""}
+              {displayData.difference}%
+            </Label>
+          )}
         </Box>
       </Box>
       <Avatar>
@@ -57,7 +64,7 @@ const Avatar = muiStyled(MuiAvatar)({
 })
 
 const Card = muiStyled(MuiCard)({
-  backgroundColor: "black",
+  backgroundColor: theme.palette.primary.main,
   borderRadius: 4,
   color: "white",
   height: 40,
