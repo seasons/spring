@@ -44,7 +44,8 @@ export default [
       {
         path: "/overview",
         exact: true,
-        component: () => <AnalyticsReport title="Overview" url={"/overview"} type={ViewType.Dashboard} index={24} />,
+        // component: () => <AnalyticsReport title="Overview" url={"/overview"} type={ViewType.Dashboard} index={24} />,
+        component: () => <OverviewView />,
       },
       {
         path: "/analytics",
