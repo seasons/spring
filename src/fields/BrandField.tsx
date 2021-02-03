@@ -17,7 +17,11 @@ export const BrandField: React.FC<BrandFieldProps> = ({ label, record, source = 
       component={RouterLink}
       to={`/brands/${id}`}
       variant="body1"
+      color="primary"
       onClick={e => e.stopPropagation()}
-    >{`${name}`}</Link>
+      style={{ color: "black" }}
+    >
+      {name}
+    </Link>
   )
 }
