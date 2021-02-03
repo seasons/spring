@@ -100,11 +100,10 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
         {productType === "Bottom" && (
           <Grid container spacing={2}>
             <Grid item xs={3}>
-              <Text variant="h5">Manufacturer size types</Text>
+              <Text variant="h5">Manufacturer size type</Text>
               <Spacer mt={1} />
               <SelectField
-                onChange={e => setManufacturerSizes(e.target.value)}
-                multiple
+                onChange={e => setManufacturerSizes([e.target.value])}
                 name="bottomSizeTypes"
                 choices={bottomSizeTypeChoices}
               />
