@@ -5,11 +5,20 @@ import React from "react"
 import { colors } from "theme"
 import { theme } from "theme/theme"
 
-export interface TodaysMoneyProps {}
+export interface MoneyWidgetProps {
+  data: {
+    title: string
+    result: any[]
+  }
+}
 
-export const TodaysMoney: React.FC<TodaysMoneyProps> = () => {
-  const data = {
-    value: "24,000",
+export const MoneyWidget: React.FC<MoneyWidgetProps> = ({ data }) => {
+  const displayData = {
+    value: Object.values(data.result)[0].toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+    }),
     currency: "$",
     difference: -4,
   }
@@ -18,19 +27,18 @@ export const TodaysMoney: React.FC<TodaysMoneyProps> = () => {
     <Card>
       <Box flexGrow={1}>
         <Typography component="h3" style={{ color: colors.white100 }} gutterBottom variant="overline">
-          Todays money
+          {data.title}
         </Typography>
         <Box display="flex" alignItems="center" flexWrap="wrap">
           <Typography variant="h3" style={{ color: colors.white100 }}>
-            {data.currency}
-            {data.value}
+            {displayData.value}
           </Typography>
           <Label
-            color={data.difference > 0 ? theme.palette.primary.main : theme.palette.error.main}
+            color={displayData.difference > 0 ? theme.palette.primary.main : theme.palette.error.main}
             style={{ height: 10, backgroundColor: fade(theme.palette.error.main, 0.8), marginLeft: theme.spacing(1) }}
           >
-            {data.difference > 0 ? "+" : ""}
-            {data.difference}%
+            {displayData.difference > 0 ? "+" : ""}
+            {displayData.difference}%
           </Label>
         </Box>
       </Box>

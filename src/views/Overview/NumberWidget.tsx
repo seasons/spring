@@ -5,36 +5,37 @@ import React from "react"
 import { colors } from "theme/colors"
 import { theme } from "theme/theme"
 
-export interface NewProjectsProps {}
-
-export const NewProjects: React.FC<NewProjectsProps> = () => {
-  const data = {
-    value: 12,
-    difference: 10,
+export interface NumberWidgetProps {
+  data: {
+    title: string
+    result: any[]
   }
+  icon?: JSX.Element
+}
+
+export const NumberWidget: React.FC<NumberWidgetProps> = ({ data, icon }) => {
+  const value = Object.values(data.result)[0].toLocaleString("en-US")
 
   return (
     <Card>
-      <Box flexGrow={1}>
-        <Typography component="h3" style={{ color: colors.white100 }} gutterBottom variant="overline">
-          New projects
-        </Typography>
-        <Box display="flex" alignItems="center" flexWrap="wrap">
-          <Typography variant="h3" style={{ color: colors.white100 }}>
-            {data.value}
-          </Typography>
-          <Label
-            color={data.difference > 0 ? theme.palette.primary.main : theme.palette.error.main}
-            style={{ height: 10, backgroundColor: fade(theme.palette.error.main, 0.8), marginLeft: theme.spacing(1) }}
+      <Box display="flex" flexDirection="column" alignItems="center" flexGrow={1}>
+        <Avatar>{icon}</Avatar>
+        <Box my={2}>
+          <Typography
+            component="h2"
+            style={{ color: colors.white100, letterSpacing: 1 }}
+            gutterBottom
+            variant="overline"
           >
-            {data.difference > 0 ? "+" : ""}
-            {data.difference}%
-          </Label>
+            {data.title}
+          </Typography>
+        </Box>
+        <Box display="flex" alignItems="center" flexWrap="wrap">
+          <Typography variant="h1" style={{ color: colors.white100, fontSize: "56px" }}>
+            {value}
+          </Typography>
         </Box>
       </Box>
-      <Avatar>
-        <FolderOpenIcon />
-      </Avatar>
     </Card>
   )
 }
@@ -50,7 +51,7 @@ const Card = muiStyled(MuiCard)({
   backgroundColor: "black",
   borderRadius: 4,
   color: "white",
-  height: 40,
+  height: 200,
   padding: theme.spacing(3),
   display: "flex",
   alignItems: "center",

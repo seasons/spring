@@ -20,9 +20,9 @@ import PerfectScrollbar from "react-perfect-scrollbar"
 import { Link as RouterLink } from "react-router-dom"
 import { theme } from "theme/theme"
 
-export interface LatestProjectsProps {}
+export interface LatestSignupsProps {}
 
-export const LatestProjects: React.FC<LatestProjectsProps> = () => {
+export const LatestSignups: React.FC<LatestSignupsProps> = () => {
   const projects = [
     {
       id: 1,
@@ -83,7 +83,7 @@ export const LatestProjects: React.FC<LatestProjectsProps> = () => {
 
   return (
     <Card>
-      <CardHeader title="Latest Projects" />
+      <CardHeader title="Latest Signups" />
       <Divider />
       <PerfectScrollbar>
         <Box minWidth={900}>
