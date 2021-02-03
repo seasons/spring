@@ -5,6 +5,7 @@ import { SnackbarState } from "components/Snackbar"
 import { Snackbar, Header } from "components"
 import { Container, makeStyles, Theme, colors } from "@material-ui/core"
 import Iframe from "react-iframe"
+import { Loading } from "@seasons/react-admin"
 import { CREATE_EMBED_URL } from "./mutations"
 import { ViewType } from "generated/globalTypes"
 
@@ -31,6 +32,7 @@ export const AnalyticsReport: React.FC<AnalyticsReportProps> = ({ title, url, ty
     status: "success",
   })
   const classes = useStyles()
+  const [loading, setLoading] = useState(false)
 
   const [createEmbedURL] = useMutation(CREATE_EMBED_URL, {
     onCompleted: data => {
@@ -48,21 +50,24 @@ export const AnalyticsReport: React.FC<AnalyticsReportProps> = ({ title, url, ty
   })
   useEffect(() => {
     createEmbedURL({ variables: { input: { type, index } } })
-  }, [])
+  }, [index, type, createEmbedURL])
+
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <>
       <Container maxWidth={false} style={{ height: "85%" }}>
-        <Header
-          title={title}
-          breadcrumbs={[
-            {
-              title,
-              url,
-            },
-          ]}
+        <Iframe
+          url={embedURL}
+          width="100%"
+          height="100%"
+          className={classes.iframe}
+          onLoad={() => {
+            setLoading(false) //
+          }}
         />
-        <Iframe url={embedURL} width="100%" height="100%" className={classes.iframe} />
         <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
       </Container>
     </>
