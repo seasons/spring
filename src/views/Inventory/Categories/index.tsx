@@ -4,16 +4,7 @@ import { Header } from "components/Header"
 
 export const CategoryList = props => (
   <>
-    <Header
-      title="Categories"
-      primaryButton={{ text: "New Category" }}
-      breadcrumbs={[
-        {
-          title: "Categories",
-          url: "/categories",
-        },
-      ]}
-    />
+    <Header title="Categories" primaryButton={{ text: "New Category" }} />
     <List
       {...props}
       perPage={25}
