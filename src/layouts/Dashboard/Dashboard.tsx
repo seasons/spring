@@ -2,16 +2,16 @@ import React, { Suspense } from "react"
 import { renderRoutes } from "react-router-config"
 import { Error, DataProviderContext, Loading } from "@seasons/react-admin"
 import styled from "styled-components"
-import { colors } from "theme"
 
 import { LinearProgress } from "@material-ui/core"
 
 import { NavBar } from "./NavBar"
 import { TopBar } from "./TopBar"
+import { theme } from "theme/theme"
 
 const Container = styled.div`
   min-height: 100vh;
-  background: ${colors.black100};
+  background: ${theme.palette.primary.main};
   display: flex;
 `
 
@@ -20,7 +20,7 @@ const Content = styled.div`
   flex-grow: 1;
   max-width: 100%;
   overflow: hidden;
-  background-color: rgb(252, 252, 252);
+  background-color: ${theme.palette.primary.light};
 
   ${theme.breakpoints.up("lg")} {
     margin-left: 256px;

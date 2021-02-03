@@ -1,15 +1,9 @@
 import React, { useState } from "react"
-import { Datagrid, DateField, Filter, List, TextField, TextInput } from "@seasons/react-admin"
+import { Datagrid, DateField, List, TextField } from "@seasons/react-admin"
 import { Header, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { useHistory } from "react-router-dom"
 import { ViewEntityField } from "fields"
-
-export const BrandFilter = props => (
-  <Filter {...props}>
-    <TextInput label="Search by name" source="name_contains" options={{ variant: "outlined" }} alwaysOn />
-  </Filter>
-)
 
 export const BrandList = props => {
   const history = useHistory()
@@ -26,16 +20,9 @@ export const BrandList = props => {
           text: "New Brand",
           action: () => history.push("/inventory/brands/new"),
         }}
-        breadcrumbs={[
-          {
-            title: "Brands",
-            url: "/brands",
-          },
-        ]}
       />
       <List
         {...props}
-        filters={<BrandFilter />}
         exporter={false}
         perPage={25}
         hasCreate={false}

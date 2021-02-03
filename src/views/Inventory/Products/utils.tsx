@@ -113,9 +113,9 @@ export const getLocaleDateString = (date?: string) => {
 export const getProductUpsertData = (values: any) => {
   const {
     architecture,
-    bottomSizeType,
     brand: brandID,
     buyNewEnabled,
+    bottomSizeTypes: bottomSizeType,
     category: categoryName,
     color: colorCode,
     description,

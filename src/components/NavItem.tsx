@@ -6,19 +6,33 @@ import { colors } from "theme"
 import { Box, Button as MuiButton, ListItem as MuiListItem, Collapse, makeStyles } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import ExpandLessIcon from "@material-ui/icons/ExpandLess"
+import { theme } from "theme/theme"
 
 const Button = styled(MuiButton)`
-  padding: 10px 8px;
+  padding: 10px 10px;
   justify-content: flex-start;
   text-transform: none;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0;
   width: 100%;
-  color: ${colors.black50};
+  color: #8b8b8d;
+
+  &:hover {
+    background: none;
+    color: ${theme.palette.primary.contrastText};
+  }
 
   &.active {
-    color: ${colors.white100};
-    font-weight: medium;
+    color: ${theme.palette.primary.contrastText};
+    font-weight: bold;
+
+    .active-indicator {
+      margin-left: -25px;
+      margin-right: 5px;
+      width: 20px;
+      height: 2px;
+      background: black;
+    }
   }
 `
 
@@ -105,6 +119,7 @@ export const NavItem: React.FunctionComponent<NavItemProps> = ({
   return (
     <ListItem {...rest} disableGutters key={title} px={2}>
       <Btn component={RouterLink} to={href} style={style} disableRipple>
+        <div className="active-indicator"></div>
         <span className={classes.title}>{title}</span>
       </Btn>
       {Info && <Info />}

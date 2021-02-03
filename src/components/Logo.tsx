@@ -3,6 +3,7 @@ import React from "react"
 import styled from "styled-components"
 import { Typography, Box, BoxProps } from "@material-ui/core"
 import { colors } from "theme"
+import { SeasonsLogo } from "icons/SeasonsLogo"
 
 const Mark = styled(LogoMark)`
   display: inline-block;
@@ -21,7 +22,6 @@ const Container = styled(Box)`
   flex-direction: row;
   align-content: flex-top;
   align-items: center;
-  height: 45px;
 `
 
 interface LogoProps extends BoxProps {
@@ -31,13 +31,7 @@ interface LogoProps extends BoxProps {
 export const Logo: React.FC<LogoProps> = ({ color = "black", ...rest }) => {
   return (
     <Container {...rest}>
-      <Mark />
-      <LogoText
-        variant="h4"
-        style={{ display: "inline-block", color: color === "white" ? colors.white100 : colors.black100 }}
-      >
-        SEASONS
-      </LogoText>
+      <SeasonsLogo color={color} size="80" />
     </Container>
   )
 }
