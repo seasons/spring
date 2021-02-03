@@ -50,16 +50,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
 
   return (
     <>
-      <Header
-        title="Products"
-        primaryButton={{ text: "New Product", action: onNewProductBtnPressed }}
-        breadcrumbs={[
-          {
-            title: "Products",
-            url: "/products",
-          },
-        ]}
-      />
+      <Header title="Products" primaryButton={{ text: "New Product", action: onNewProductBtnPressed }} />
       <List
         {...rest}
         filters={<ProductFilter />}

@@ -71,19 +71,7 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
 
   return (
     <Container maxWidth={false}>
-      <Header
-        title="Overview"
-        breadcrumbs={[
-          {
-            title: "Overview",
-            url: "/Overview",
-          },
-        ]}
-      />
-      <Box>
-        <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
-          <Typography variant="h3">Customer Distribution</Typography>
-        </Box>
+      <Box mt={6}>
         <Grid container spacing={3}>
           <Grid item lg={4} sm={6} xs={12}>
             <NumberWidget data={getElementForSlug("active-subscribers")} icon={<PeopleIcon />} />

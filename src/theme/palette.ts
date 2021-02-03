@@ -2,15 +2,15 @@ import { colors } from "./colors"
 
 export default {
   primary: {
-    contrastText: colors.white100,
-    dark: colors.black100,
-    main: colors.black85,
-    light: colors.black50,
+    contrastText: colors.black100,
+    dark: "#E9E9EB",
+    main: "#E9E9EB",
+    light: colors.white100,
   },
   secondary: {
     contrastText: colors.white100,
-    dark: colors.black100,
-    main: colors.black85,
+    dark: colors.black85,
+    main: "#BABABC",
     light: colors.black50,
   },
   error: {

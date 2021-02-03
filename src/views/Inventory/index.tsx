@@ -1,6 +1,6 @@
 import React from "react"
 import { Redirect } from "react-router-dom"
-import { colors, Container, Theme } from "@material-ui/core"
+import { colors, Container, Theme, Tab, Tabs } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
@@ -8,6 +8,7 @@ import { ProductList } from "./Products"
 import { SizeList } from "./Sizes"
 import { TagList } from "./Tags"
 import { PhysicalProductsList } from "./PhysicalProducts"
+import { SearchBar } from "layouts/Dashboard/SearchBar"
 
 const useStyles = makeStyles<Theme>(theme => ({
   tabs: {
@@ -42,8 +43,27 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
     return <Redirect to={`/inventory/products`} />
   }
 
+  const tabs = {
+    products: "Products",
+    brands: "Brands",
+    categories: "Categories",
+    "physical-products": "Physical Products",
+  }
+
   return (
     <Container maxWidth={false}>
+      <SearchBar value={null} setValue={null} handleSearch={() => {}} />
+      <Tabs
+        value={currentTab}
+        onChange={(e: any) => {
+          history.push("/inventory/" + e.currentTarget.id)
+        }}
+        aria-label="simple tabs example"
+      >
+        {Object.keys(tabs).map(tabKey => {
+          return <Tab label={tabs[tabKey]} id={tabKey} value={tabKey} />
+        })}
+      </Tabs>
       <div className={classes.content}>
         {currentTab === "products" && (
           <ProductList

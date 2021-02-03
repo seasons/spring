@@ -2,7 +2,6 @@ import { logout as logoutAction } from "actions/sessionActions"
 import { NavItem, Logo } from "components"
 
 import React, { useEffect } from "react"
-import PerfectScrollbar from "react-perfect-scrollbar"
 import { useDispatch, useSelector } from "react-redux"
 import { useLocation, matchPath } from "react-router"
 import styled from "styled-components"
@@ -22,8 +21,8 @@ const useStyles = makeStyles<Theme>(theme => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    background: colors.black100,
-    textColor: colors.white100,
+    background: theme.palette.primary.main,
+    textColor: theme.palette.primary.contrastText,
   },
   mobileDrawer: {
     width: 256,
@@ -41,9 +40,12 @@ const useStyles = makeStyles<Theme>(theme => ({
     overflow: "auto",
     padding: theme.spacing(2, 0, 2, 0),
     flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
   },
   divider: {
-    backgroundColor: colors.black85,
+    backgroundColor: "#BABABC",
   },
 }))
 
@@ -51,16 +53,11 @@ const UserInfo = styled(Typography)`
   font-size: 16px;
   font-weight: bold;
   line-height: 1.5;
-  color: ${colors.white90};
 `
 
 const UserLogOut = styled(Button)`
   margin-top: 10px;
   cursor: pointer;
-  color: ${colors.white90};
-  &:hover {
-    color: ${colors.black50};
-  }
 `
 
 function renderNavItems({ items, ...rest }) {
@@ -122,28 +119,20 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, openSearch, .
     <div {...rest} className={classes.root}>
       <Hidden mdDown>
         <Box display="flex" m={2} mt={4} flexDirection="horizontal">
-          <Logo color="white" />
+          <Logo color="black" />
         </Box>
         <Divider className={classes.divider} />
       </Hidden>
 
       <nav className={classes.navigation}>
-        <PerfectScrollbar options={{ suppressScrollX: true }}>
+        <Box width="100%">
           {navConfig.map((config, i) => (
-            <Box key={`globalnav-${i}`}>
-              {renderNavItems({ items: config.items, pathname: location.pathname })}
-              <Box my={2}>
-                <Divider style={{ backgroundColor: colors.black85 }} />
-              </Box>
-            </Box>
+            <Box key={`globalnav-${i}`}>{renderNavItems({ items: config.items, pathname: location.pathname })}</Box>
           ))}
-        </PerfectScrollbar>
+        </Box>
       </nav>
 
       <div className={classes.profile}>
-        <Box>
-          <Search />
-        </Box>
         <Divider className={classes.divider} />
         <Box m={2}>
           <UserInfo variant="h6">{`${user?.firstName} ${user?.lastName}`}</UserInfo>

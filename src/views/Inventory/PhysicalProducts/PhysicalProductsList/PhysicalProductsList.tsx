@@ -68,15 +68,7 @@ export const PhysicalProductsList: React.FC<PhysicalProductsListInterface> = ({ 
 
   return (
     <>
-      <Header
-        title="Physical Products"
-        breadcrumbs={[
-          {
-            title: "Physical Products",
-            url: "/physical-products",
-          },
-        ]}
-      />
+      <Header title="Physical Products" />
       <List
         {...rest}
         perPage={25}
