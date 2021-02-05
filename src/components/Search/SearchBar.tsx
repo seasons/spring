@@ -1,5 +1,5 @@
 import { Box, Button, TextField, styled } from "@material-ui/core"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 import { connectAutoComplete } from "react-instantsearch-dom"
 import Autocomplete from "@material-ui/lab/Autocomplete"
@@ -42,28 +42,18 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
   const [query] = useQueryParam("q", StringParam)
   const [value, setValue] = useState(query)
 
-  useEffect(() => {
-    if (currentRefinement.length > 0) {
-      setValue(currentRefinement)
-    }
-  }, [currentRefinement])
-
-  useEffect(() => {
-    if (query) {
-      setValue(query)
-    }
-  })
-
-  console.log("value: ", value, " currentRefinement: ", currentRefinement)
-
   return (
     <Box m={2} width="100%">
       <StyledAutocomplete
         options={[
-          {
-            kindOf: "Search",
-            query: currentRefinement,
-          },
+          ...(currentRefinement.length > 0
+            ? [
+                {
+                  kindOf: "Search",
+                  query: value,
+                },
+              ]
+            : []),
           ...hits,
         ]}
         fullWidth
@@ -103,7 +93,7 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
               url = `/inventory/brands/${result.objectID}`
               break
             case "Search":
-              url = `/search?q=${currentRefinement}`
+              url = `/search?q=${value}`
               break
           }
 
@@ -120,14 +110,22 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
         renderInput={params => (
           <SearchContainer>
             <StyledTextField
-              {...params}
-              onChange={(event: any) => {
-                refine(event.currentTarget.value)
-              }}
-              value={value}
-              defaultValue={value}
               placeholder="Search products, brands & users"
               variant="outlined"
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                onChange: e => {
+                  const val = e.currentTarget.value
+
+                  refine(val)
+                  setValue(val)
+                },
+              }}
+              inputProps={{
+                ...params.inputProps,
+                value,
+              }}
             />
             <StyledButton
               color="primary"
@@ -154,7 +152,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ handleSearch }) => {
 
   return (
     <Box mt={2} display="flex" flexDirection="row">
-      <SearchProvider autocomplete>
+      <SearchProvider>
         <CustomAutocomplete />
       </SearchProvider>
     </Box>

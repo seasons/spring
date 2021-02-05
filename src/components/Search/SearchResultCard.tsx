@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Divider, Link, Typography } from "@material-ui/core"
+import { Box, Link, Typography } from "@material-ui/core"
 import { Link as RouterLink } from "react-router-dom"
 import { Image } from "components"
 import { StatusField } from "fields"
@@ -36,7 +36,7 @@ export const SearchResultCard = ({ result }) => {
     case "Brand":
       return (
         <Box>
-          <Link variant="h4" color="textPrimary" component={RouterLink} to={`/brand/${data.objectID}`}>
+          <Link variant="h4" color="textPrimary" component={RouterLink} to={`/inventory/brands//${data.objectID}`}>
             {`${data.name}`}
           </Link>
           <Typography variant="body2" color="textPrimary">
