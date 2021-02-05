@@ -1,5 +1,5 @@
 import { Box, Button, TextField, styled } from "@material-ui/core"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 import { connectAutoComplete } from "react-instantsearch-dom"
 import Autocomplete from "@material-ui/lab/Autocomplete"
@@ -7,7 +7,6 @@ import { SearchResultCard } from "./SearchResultCard"
 import { useHistory } from "react-router-dom"
 import { SearchProvider } from "./SearchProvider"
 import { StringParam, useQueryParam } from "use-query-params"
-import { PartyModeTwoTone } from "@material-ui/icons"
 
 const StyledTextField = styled(TextField)({
   [`& fieldset`]: {
