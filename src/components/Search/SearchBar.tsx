@@ -60,10 +60,14 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
     <Box m={2} width="100%">
       <StyledAutocomplete
         options={[
-          {
-            kindOf: "Search",
-            query: currentRefinement,
-          },
+          ...(currentRefinement.length > 0
+            ? [
+                {
+                  kindOf: "Search",
+                  query: currentRefinement,
+                },
+              ]
+            : []),
           ...hits,
         ]}
         fullWidth
@@ -123,6 +127,7 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
               {...params}
               onChange={(event: any) => {
                 refine(event.currentTarget.value)
+                setValue(event.currentTarget.value)
               }}
               value={value}
               defaultValue={value}
@@ -154,7 +159,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ handleSearch }) => {
 
   return (
     <Box mt={2} display="flex" flexDirection="row">
-      <SearchProvider autocomplete>
+      <SearchProvider>
         <CustomAutocomplete />
       </SearchProvider>
     </Box>
