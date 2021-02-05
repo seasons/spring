@@ -7,6 +7,7 @@ import { SearchResultCard } from "./SearchResultCard"
 import { useHistory } from "react-router-dom"
 import { SearchProvider } from "./SearchProvider"
 import { StringParam, useQueryParam } from "use-query-params"
+import { PartyModeTwoTone } from "@material-ui/icons"
 
 const StyledTextField = styled(TextField)({
   [`& fieldset`]: {
@@ -42,20 +43,6 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
   const [query] = useQueryParam("q", StringParam)
   const [value, setValue] = useState(query)
 
-  useEffect(() => {
-    if (currentRefinement.length > 0) {
-      setValue(currentRefinement)
-    }
-  }, [currentRefinement])
-
-  useEffect(() => {
-    if (query) {
-      setValue(query)
-    }
-  })
-
-  console.log("value: ", value, " currentRefinement: ", currentRefinement)
-
   return (
     <Box m={2} width="100%">
       <StyledAutocomplete
@@ -64,7 +51,7 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
             ? [
                 {
                   kindOf: "Search",
-                  query: currentRefinement,
+                  query: value,
                 },
               ]
             : []),
@@ -107,7 +94,7 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
               url = `/inventory/brands/${result.objectID}`
               break
             case "Search":
-              url = `/search?q=${currentRefinement}`
+              url = `/search?q=${value}`
               break
           }
 
@@ -124,15 +111,22 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
         renderInput={params => (
           <SearchContainer>
             <StyledTextField
-              {...params}
-              onChange={(event: any) => {
-                refine(event.currentTarget.value)
-                setValue(event.currentTarget.value)
-              }}
-              value={value}
-              defaultValue={value}
               placeholder="Search products, brands & users"
               variant="outlined"
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                onChange: e => {
+                  const val = e.currentTarget.value
+
+                  refine(val)
+                  setValue(val)
+                },
+              }}
+              inputProps={{
+                ...params.inputProps,
+                value,
+              }}
             />
             <StyledButton
               color="primary"
