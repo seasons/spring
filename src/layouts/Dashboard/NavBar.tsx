@@ -14,7 +14,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 
 import "react-perfect-scrollbar/dist/css/styles.css"
 import navConfig from "./navConfig"
-import Search from "./Search"
+import Search from "components/Search/Search"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -121,7 +121,6 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, openSearch, .
         <Box display="flex" m={2} mt={4} flexDirection="horizontal">
           <Logo color="black" />
         </Box>
-        <Divider className={classes.divider} />
       </Hidden>
 
       <nav className={classes.navigation}>
@@ -133,7 +132,6 @@ export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, openSearch, .
       </nav>
 
       <div className={classes.profile}>
-        <Divider className={classes.divider} />
         <Box m={2}>
           <UserInfo variant="h6">{`${user?.firstName} ${user?.lastName}`}</UserInfo>
           <UserLogOut startIcon={<ExitToAppIcon />} onClick={signOut}>

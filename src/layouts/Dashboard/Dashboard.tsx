@@ -2,6 +2,7 @@ import React, { Suspense } from "react"
 import { renderRoutes } from "react-router-config"
 import { Error, DataProviderContext, Loading } from "@seasons/react-admin"
 import styled from "styled-components"
+import { SearchBar } from "components/Search/SearchBar"
 
 import { LinearProgress } from "@material-ui/core"
 
@@ -81,7 +82,10 @@ export class Dashboard extends React.Component<DashboardProps> {
                   {hasError ? (
                     <Error title="Seasons" error={errorMessage} errorInfo={errorInfo} />
                   ) : dataProvider ? (
-                    renderRoutes(route.routes)
+                    <>
+                      <SearchBar />
+                      {renderRoutes(route.routes)}
+                    </>
                   ) : (
                     <Loading />
                   )}

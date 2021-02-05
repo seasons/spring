@@ -22,7 +22,7 @@ export default {
   text: {
     primary: colors.black100,
     secondary: colors.black85,
-    link: colors.black50,
+    link: colors.black100,
   },
   link: colors.blue[800],
   icon: colors.black85,

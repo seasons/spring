@@ -6,13 +6,13 @@ import { convertLegacyDataProvider, DataProviderContext, Resource, TranslationPr
 import { ApolloProvider } from "react-apollo"
 import { Provider as StoreProvider } from "react-redux"
 import { renderRoutes } from "react-router-config"
-import { Router } from "react-router-dom"
+import { Router, Route } from "react-router-dom"
 import { ThemeProvider as SCThemeProvider } from "styled-components"
 
 import { ThemeProvider } from "@material-ui/core"
 import { StylesProvider } from "@material-ui/core/styles"
 import { MuiPickersUtilsProvider } from "@material-ui/pickers"
-
+import { SearchProvider } from "components/Search/SearchProvider"
 import englishMessages from "./i18n/en"
 
 import routes from "./routes"
@@ -20,6 +20,7 @@ import configureStore from "./store/adminStore"
 import { theme } from "./theme/theme"
 import { buildProvider } from "dataProvider"
 import { client } from "./apollo"
+import { QueryParamProvider } from "use-query-params"
 
 const history = createBrowserHistory()
 
@@ -58,23 +59,27 @@ class App extends React.Component {
             <ApolloProvider client={client}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <StylesProvider injectFirst>
-                  <SCThemeProvider theme={theme}>
-                    <ThemeProvider theme={theme}>
-                      <Resource name="Product" intent="registration" />
-                      <Resource name="Collection" intent="registration" />
-                      <Resource name="PhysicalProduct" intent="registration" />
-                      <Resource name="FitPic" intent="registration" />
-                      <Resource name="Customer" intent="registration" />
-                      <Resource name="Category" intent="registration" />
-                      <Resource name="Brand" intent="registration" />
-                      <Resource name="User" intent="registration" />
-                      <Resource name="Reservation" intent="registration" />
-                      <Resource name="Size" intent="registration" />
-                      <Resource name="Tag" intent="registration" />
-                      <Resource name="PushNotificationReceipt" intent="registration" />
-                      <Router history={history}>{renderRoutes(routes)}</Router>
-                    </ThemeProvider>
-                  </SCThemeProvider>
+                  <SearchProvider>
+                    <SCThemeProvider theme={theme}>
+                      <ThemeProvider theme={theme}>
+                        <Resource name="Product" intent="registration" />
+                        <Resource name="Collection" intent="registration" />
+                        <Resource name="PhysicalProduct" intent="registration" />
+                        <Resource name="FitPic" intent="registration" />
+                        <Resource name="Customer" intent="registration" />
+                        <Resource name="Category" intent="registration" />
+                        <Resource name="Brand" intent="registration" />
+                        <Resource name="User" intent="registration" />
+                        <Resource name="Reservation" intent="registration" />
+                        <Resource name="Size" intent="registration" />
+                        <Resource name="Tag" intent="registration" />
+                        <Resource name="PushNotificationReceipt" intent="registration" />
+                        <Router history={history}>
+                          <QueryParamProvider ReactRouterRoute={Route}>{renderRoutes(routes)}</QueryParamProvider>
+                        </Router>
+                      </ThemeProvider>
+                    </SCThemeProvider>
+                  </SearchProvider>
                 </StylesProvider>
               </MuiPickersUtilsProvider>
             </ApolloProvider>

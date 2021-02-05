@@ -19,10 +19,9 @@ import {
   VariantEdit,
   BrandCreate,
   BrandEdit,
+  SearchView,
 } from "./views"
 import { NotificationsList } from "views/Notifications/NotificationsList"
-import { AnalyticsReport } from "components/AnalyticsReport"
-import { ViewType } from "generated/globalTypes"
 import { CreateFitPicView, FitPicView } from "views/Community"
 import { CollectionsList, CollectionsEdit, CollectionsCreate } from "views/Collections"
 
@@ -45,6 +44,11 @@ export default [
         path: "/overview",
         exact: true,
         component: () => <OverviewView />,
+      },
+      {
+        path: "/search",
+        exact: true,
+        component: () => <SearchView />,
       },
       {
         path: "/analytics",
