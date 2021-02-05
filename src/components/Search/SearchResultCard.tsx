@@ -24,7 +24,7 @@ export const SearchResultCard = ({ result }) => {
       const { user } = data
       return (
         <Box>
-          <Link variant="h4" color="textPrimary" component={RouterLink} to={`/members/${data.id}/account`}>
+          <Link variant="h4" color="textPrimary" component={RouterLink} to={`/members/${data.objectID}/account`}>
             {`${user?.firstName} ${user.lastName}`}
           </Link>
           <Typography variant="body2" color="textPrimary">
@@ -36,7 +36,7 @@ export const SearchResultCard = ({ result }) => {
     case "Brand":
       return (
         <Box>
-          <Link variant="h4" color="textPrimary" component={RouterLink} to={`/brand/${data.id}`}>
+          <Link variant="h4" color="textPrimary" component={RouterLink} to={`/brand/${data.objectID}`}>
             {`${data.name}`}
           </Link>
           <Typography variant="body2" color="textPrimary">
@@ -51,7 +51,7 @@ export const SearchResultCard = ({ result }) => {
             <Image url={data.image} size="medium" />
           </Box>
           <Box ml={1} mb={2} flex={1}>
-            <Link variant="h4" color="textPrimary" component={RouterLink} to={`/inventory/products/${data.id}`}>
+            <Link variant="h4" color="textPrimary" component={RouterLink} to={`/inventory/products/${data.objectID}`}>
               {data?.name}
             </Link>
             <Typography variant="body2" color="textPrimary">
@@ -67,7 +67,7 @@ export const SearchResultCard = ({ result }) => {
             variant="h4"
             color="textPrimary"
             component={RouterLink}
-            to={`/inventory/product/variant/physicalProduct/${data.id}/manage`}
+            to={`/inventory/product/variant/physicalProduct/${data.objectID}/manage`}
           >
             {data?.seasonsUID}
           </Link>
