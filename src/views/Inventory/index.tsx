@@ -8,7 +8,6 @@ import { ProductList } from "./Products"
 import { SizeList } from "./Sizes"
 import { TagList } from "./Tags"
 import { PhysicalProductsList } from "./PhysicalProducts"
-import { SearchBar } from "layouts/Dashboard/SearchBar"
 
 const useStyles = makeStyles<Theme>(theme => ({
   tabs: {
@@ -52,7 +51,6 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
 
   return (
     <Container maxWidth={false}>
-      <SearchBar value={null} setValue={null} handleSearch={() => {}} />
       <Tabs
         value={currentTab}
         onChange={(e: any) => {
@@ -77,7 +75,7 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
         {currentTab === "categories" && <CategoryList {...props} basePath="/inventory/products" resource="Category" />}
         {currentTab === "sizes" && <SizeList {...props} basePath="/inventory/sizes" resource="Size" />}
         {currentTab === "tags" && <TagList {...props} basePath="/inventory/tags" resource="Tag" />}
-        {currentTab == "physical-products" && (
+        {currentTab === "physical-products" && (
           <PhysicalProductsList {...props} basePath="/inventory/physical-products" resource="PhysicalProduct" />
         )}
       </div>

@@ -1,23 +1,10 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import PerfectScrollbar from "react-perfect-scrollbar"
-import {
-  Box,
-  Button as MuiButton,
-  CircularProgress,
-  Drawer,
-  IconButton,
-  SvgIcon,
-  Tooltip,
-  Typography,
-  makeStyles,
-  TextField,
-  Divider,
-} from "@material-ui/core"
-import styled from "styled-components"
-import { Search as SearchIcon, XCircle as XIcon } from "react-feather"
+import { Box, CircularProgress, Drawer, IconButton, SvgIcon, Typography, makeStyles } from "@material-ui/core"
+
+import { XCircle as XIcon } from "react-feather"
 import { useLazyQuery } from "react-apollo"
 import gql from "graphql-tag"
-import { colors } from "theme/colors"
 import { SearchResultCard } from "./SearchResultCard"
 
 const useStyles = makeStyles(() => ({
@@ -56,43 +43,20 @@ const SEARCH = gql`
   }
 `
 
-const Button = styled(MuiButton)`
-  padding: 10px 8px;
-  justify-content: flex-start;
-  text-transform: none;
-  font-size: 18px;
-  letter-spacing: 0;
-  width: 100%;
-  color: ${colors.black50};
-
-  &.active {
-    color: ${colors.white100};
-    font-weight: medium;
-  }
-`
-
-function Search() {
+function Search({ open, query }) {
   const classes = useStyles()
   const [value, setValue] = useState("")
   const [isOpen, setOpen] = useState(false)
   const [isLoading, setLoading] = useState(false)
   const [search, { loading, data }] = useLazyQuery(SEARCH)
 
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const handleSearch = async () => {
+  const handleSearch = async searchQuery => {
     try {
       setLoading(true)
 
       search({
         variables: {
-          query: value,
+          query: searchQuery,
         },
       })
     } catch (error) {
@@ -102,13 +66,23 @@ function Search() {
     }
   }
 
+  useEffect(() => {
+    setOpen(open)
+  }, [open])
+
+  useEffect(() => {
+    setValue(query)
+    handleSearch(query)
+  }, [query, handleSearch])
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   const results = data?.search
 
   return (
     <>
-      <Button color="primary" onClick={handleOpen} startIcon={<SearchIcon />}>
-        Search
-      </Button>
       <Drawer
         anchor="right"
         classes={{ paper: classes.drawer }}
@@ -128,22 +102,6 @@ function Search() {
                   <XIcon />
                 </SvgIcon>
               </IconButton>
-            </Box>
-            <Box mt={2} display="flex" flexDirection="row">
-              <Box flex={1}>
-                <TextField
-                  fullWidth
-                  onChange={event => setValue(event.target.value)}
-                  placeholder="Search products, brands &amp; users"
-                  value={value}
-                  variant="outlined"
-                />
-              </Box>
-              <Box display="flex" justifyContent="flex-end">
-                <MuiButton color="primary" size="small" onClick={handleSearch}>
-                  Search
-                </MuiButton>
-              </Box>
             </Box>
 
             <Box mt={4}>

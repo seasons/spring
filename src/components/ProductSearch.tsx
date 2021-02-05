@@ -6,7 +6,7 @@ import styled from "styled-components"
 import { useState } from "react"
 import { useLazyQuery } from "react-apollo"
 import CloseIcon from "@material-ui/icons/Close"
-import { SearchResultCard } from "layouts/Dashboard/SearchResultCard"
+import { SearchResultCard } from "components/Search/SearchResultCard"
 
 const PRODUCT_SEARCH = gql`
   query ProductSearch($query: String!) {

@@ -7,10 +7,10 @@ export default {
   },
   contained: {
     boxShadow: "none",
-    backgroundColor: colors.grey[100],
+    backgroundColor: "#E9E9EB",
     "&:hover": {
       boxShadow: "none",
-      backgroundColor: colors.grey[300],
+      // backgroundColor: colors.grey[300],
     },
   },
   containedSecondary: {

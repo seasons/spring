@@ -39,8 +39,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
     pollInterval: 10000,
   })
 
-  console.log(data)
-
   const elements = data?.dashboard?.elements || []
 
   const getElementForSlug = slug => elements.find(e => e.slug === slug)
