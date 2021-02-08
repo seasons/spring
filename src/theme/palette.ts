@@ -3,8 +3,8 @@ import { colors } from "./colors"
 export default {
   primary: {
     contrastText: colors.black100,
-    dark: "#E9E9EB",
-    main: "#E9E9EB",
+    dark: colors.white80,
+    main: colors.white80,
     light: colors.white100,
   },
   secondary: {

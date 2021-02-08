@@ -4,13 +4,17 @@ export default {
   root: {
     textTransform: "none",
     borderRadius: "10em",
+    color: colors.black85,
+  },
+  textPrimary: {
+    color: colors.black65,
   },
   contained: {
     boxShadow: "none",
     backgroundColor: "#E9E9EB",
+    color: colors.black85,
     "&:hover": {
       boxShadow: "none",
-      // backgroundColor: colors.grey[300],
     },
   },
   containedSecondary: {
