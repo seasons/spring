@@ -5,6 +5,7 @@ import MuiCardHeader from "./MuiCardHeader"
 import MuiChip from "./MuiChip"
 import MuiIconButton from "./MuiIconButton"
 import MuiInputBase from "./MuiInputBase"
+import MuiLink from "./MuiLink"
 import MuiLinearProgress from "./MuiLinearProgress"
 import MuiListItem from "./MuiListItem"
 import MuiListItemIcon from "./MuiListItemIcon"
@@ -25,6 +26,7 @@ export default {
   MuiChip,
   MuiIconButton,
   MuiInputBase,
+  MuiLink,
   MuiLinearProgress,
   MuiListItem,
   MuiListItemIcon,

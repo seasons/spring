@@ -22,8 +22,6 @@ const Hit = ({ hit }) => {
 export const SearchView = () => {
   const [query] = useQueryParam("q", StringParam)
 
-  console.log("query", query)
-
   return (
     <Box>
       <SearchProvider>

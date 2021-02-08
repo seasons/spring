@@ -16,7 +16,6 @@ export const MemberField: React.FC<MemberFieldProps> = ({ label, record }) => {
     <Link
       component={RouterLink}
       to={`/members/${customerId}/account`}
-      variant="body1"
       onClick={e => e.stopPropagation()}
     >{`${firstName} ${lastName}`}</Link>
   )
