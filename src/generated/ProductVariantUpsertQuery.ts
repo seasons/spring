@@ -211,6 +211,8 @@ export interface ProductVariantUpsertQuery_product {
   type: ProductType | null
   productFit: ProductFit | null
   buyNewEnabled: boolean
+  buyUsedEnabled: boolean
+  buyUsedPrice: number | null
   season: ProductVariantUpsertQuery_product_season | null
   tier: ProductVariantUpsertQuery_product_tier
   color: ProductVariantUpsertQuery_product_color

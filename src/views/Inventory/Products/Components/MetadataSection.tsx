@@ -14,6 +14,8 @@ export interface MetadataSectionProps {
   models: ProductUpsertQuery_productModels[]
   sizes: FormSelectChoice[]
   buyNewEnabled: boolean
+  buyUsedEnabled: boolean
+  buyUsedPrice: number | null | undefined
   productTiers: FormSelectChoice[]
 }
 
@@ -22,6 +24,8 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
   models,
   sizes,
   buyNewEnabled,
+  buyUsedEnabled,
+  buyUsedPrice,
   productTiers,
 }) => {
   const modelChoices = models.map(model => ({
@@ -112,6 +116,21 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <Text variant="h6">Buy New Enabled</Text>
             <Spacer mt={1} />
             <CheckboxField name="buyNewEnabled" initialValue={buyNewEnabled} />
+          </Grid>
+          <Grid item xs={6}>
+            <Text variant="h6">Buy Used Enabled</Text>
+            <Spacer mt={1} />
+            <CheckboxField name="buyUsedEnabled" initialValue={buyUsedEnabled} />
+          </Grid>
+          <Grid item xs={6}>
+            <Text variant="h6">Buy Used Price</Text>
+            <Spacer mt={1} />
+            <TextField
+              name="buyUsedPrice"
+              type="number"
+              minValue={0}
+              initialValue={buyUsedPrice ? String(buyUsedEnabled) : undefined}
+            />
           </Grid>
         </Grid>
       }

@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { Box, Container, MenuItem } from "@material-ui/core"
 import { Select } from "@material-ui/core"
 import { AnalyticsReport } from "components/AnalyticsReport"
-import { ViewType } from "generated/globalTypes"
+import { AnalyticsViewType } from "generated/globalTypes"
 
 export const AnalyticsView: React.FC = props => {
   const items = [
@@ -55,7 +55,7 @@ export const AnalyticsView: React.FC = props => {
       <AnalyticsReport
         title={currentMenuItem.title}
         url={currentMenuItem.value}
-        type={ViewType.Dashboard}
+        type={AnalyticsViewType.Dashboard}
         index={currentMenuItem.index}
       />
     </Box>

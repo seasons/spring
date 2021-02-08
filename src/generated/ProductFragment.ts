@@ -183,6 +183,8 @@ export interface ProductFragment {
   type: ProductType | null
   productFit: ProductFit | null
   buyNewEnabled: boolean
+  buyUsedEnabled: boolean
+  buyUsedPrice: number | null
   season: ProductFragment_season | null
   tier: ProductFragment_tier
   color: ProductFragment_color

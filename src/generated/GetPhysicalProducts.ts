@@ -83,11 +83,11 @@ export interface GetPhysicalProducts_physicalProducts_reports_user {
 
 export interface GetPhysicalProducts_physicalProducts_reports {
   __typename: "PhysicalProductQualityReport"
+  id: string
   damageType: PhysicalProductDamageType | null
   createdAt: any
   notes: string | null
   user: GetPhysicalProducts_physicalProducts_reports_user
-  id: string
 }
 
 export interface GetPhysicalProducts_physicalProducts_productVariant_internalSize {
