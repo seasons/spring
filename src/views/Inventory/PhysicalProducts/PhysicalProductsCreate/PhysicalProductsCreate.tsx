@@ -18,11 +18,6 @@ export interface PhysicalProductsCreateProps {
   physicalProducts?: PhysicalProductEditQuery_physicalProduct[] // Passed in when editing physical products
 }
 
-type InitialPrice = {
-  buyUsedEnabled: boolean
-  buyUsedPrice: number
-}
-
 export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
   newProductCreateData,
   newVariantsCreateData,
@@ -39,7 +34,6 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
   // Sizes data here is used to get generated seasons UIDs in
   // the create new variants flow
   const sizes: { sizeName: string; count: number }[] = []
-  const initialPrices: InitialPrice[] = []
   if (newVariantsCreateData) {
     const { values: formValues, product } = newVariantsCreateData
 
@@ -70,25 +64,6 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
         default:
           break
       }
-
-      // Get sellable data for each variant
-      const variantPrice = {
-        buyUsedEnabled: formValues[`${index}_priceBuyUsedEnabled`],
-        buyUsedPrice: formValues[`${index}_priceBuyUsedPrice`],
-      }
-      initialPrices.push.apply(initialPrices, Array(count).fill(variantPrice))
-    })
-  } else if (newProductCreateData) {
-    const sizes = newProductCreateData?.sizes || []
-
-    // Get sellable data for each variant
-    sizes.forEach((size: string) => {
-      const count = parseInt(newProductCreateData[`${size}_totalcount`] || "0")
-      const variantPrice = {
-        buyUsedEnabled: newProductCreateData[`${size}_priceBuyUsedEnabled`],
-        buyUsedPrice: newProductCreateData[`${size}_priceBuyUsedPrice`],
-      }
-      initialPrices.push.apply(initialPrices, Array(count).fill(variantPrice))
     })
   }
 
@@ -198,14 +173,7 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
           <ExpandableSection
             title={uid}
             key={index}
-            content={
-              <PhysicalProductForm
-                inventoryStatuses={inventoryStatuses}
-                statuses={statuses}
-                uid={uid}
-                initialPrice={index < initialPrices.length ? initialPrices[index] : undefined}
-              />
-            }
+            content={<PhysicalProductForm inventoryStatuses={inventoryStatuses} statuses={statuses} uid={uid} />}
           />
         ))}
         <Spacer mt={2} />

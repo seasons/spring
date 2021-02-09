@@ -88,16 +88,6 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
               </Grid>
             )}
             <Spacer grid mt={3} />
-            <Grid item xs={3} direction="row" alignItems="center" container>
-              <Text variant="h5">Buy Used Enabled</Text>
-              <CheckboxField name={`${variantIndex}_priceBuyUsedEnabled`} />
-            </Grid>
-            <Grid item xs={3}>
-              <Text variant="h5">Buy Used Price</Text>
-              <Spacer mt={1} />
-              <TextField name={`${variantIndex}_priceBuyUsedPrice`} type="number" optionalNumber />
-            </Grid>
-            <Spacer grid mt={3} />
           </Grid>
         </>
       }
