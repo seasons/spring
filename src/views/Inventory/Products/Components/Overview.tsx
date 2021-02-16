@@ -115,6 +115,8 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
   const productTypes = getEnumValues(data.productTypes)
   const tags = data.tags.map(tag => tag?.name || "").sort()
   const buyNewEnabled = product?.buyNewEnabled || false
+  const buyUsedEnabled = product?.buyUsedEnabled || false
+  const buyUsedPrice = product?.buyUsedPrice
 
   const isEditing = !!product?.variants
 
@@ -247,6 +249,8 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
             models={data.productModels as ProductUpsertQuery_productModels[]}
             sizes={sizes}
             buyNewEnabled={buyNewEnabled}
+            buyUsedEnabled={buyUsedEnabled}
+            buyUsedPrice={buyUsedPrice}
             productTiers={productTiers}
           />
           <Spacer mt={6} />

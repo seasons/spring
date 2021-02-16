@@ -1,8 +1,8 @@
 import React from "react"
-import { Grid, Box } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
 import { styled as muiStyled } from "@material-ui/core/styles"
 import { Spacer, Text, ComponentError } from "components"
-import { DatePickerField, SelectField, TextField, CheckboxField } from "fields"
+import { DatePickerField, SelectField, TextField } from "fields"
 import { getFormSelectChoices } from "utils/form"
 import { useQuery } from "react-apollo"
 import { PHYSICAL_PRODUCT_STATUSES_QUERY } from "views/Inventory/Products/queries/Product"
@@ -14,10 +14,6 @@ export interface PhysicalProductFormProps {
   uid: string
   inventoryStatuses?: any[]
   currentInventoryStatus?: InventoryStatus
-  initialPrice?: {
-    buyUsedEnabled: boolean
-    buyUsedPrice: number
-  }
 }
 
 export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
@@ -25,7 +21,6 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
   uid,
   inventoryStatuses = [],
   currentInventoryStatus = "",
-  initialPrice,
 }) => {
   const receivedStatusesFromParent = statuses.length > 0 && inventoryStatuses.length > 0
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_STATUSES_QUERY, {
@@ -77,21 +72,6 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
           disabled={["Offloaded", "Stored"].includes(currentInventoryStatus)}
           requiredString
           initialValue="NonReservable"
-        />
-      </Grid>
-      <Spacer grid mt={5} />
-      <Grid item xs={6} direction="row" alignItems="center" container>
-        <Text variant="h5">Buy Used Enabled</Text>
-        <CheckboxField name={`${uid}_priceBuyUsedEnabled`} initialValue={initialPrice?.buyUsedEnabled} />
-      </Grid>
-      <Grid item xs={6}>
-        <Text variant="h5">Buy Used Price</Text>
-        <Spacer mt={1} />
-        <TextField
-          name={`${uid}_priceBuyUsedPrice`}
-          type="number"
-          optionalNumber
-          initialValue={initialPrice?.buyUsedPrice ? String(initialPrice.buyUsedPrice) : undefined}
         />
       </Grid>
       <Spacer grid mt={5} />

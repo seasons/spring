@@ -123,9 +123,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
               bottomSizes={data?.bottomSizes}
             />
             <VariantPriceSection
-              isEditing={isEditing}
               size={variant.size}
-              price={variant.price}
               shopifyProductVariantExternalId={variant.shopifyProductVariantExternalId}
             />
           </>

@@ -68,6 +68,8 @@ export const ProductFragment = gql`
     type
     productFit
     buyNewEnabled
+    buyUsedEnabled
+    buyUsedPrice
     season {
       id
       internalSeason {

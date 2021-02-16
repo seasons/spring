@@ -11,11 +11,13 @@ import { CustomerStatus } from "./globalTypes"
 
 export interface users_users_customer {
   __typename: "Customer"
+  id: string
   status: CustomerStatus | null
 }
 
 export interface users_users {
   __typename: "User"
+  id: string
   fullName: string
   email: string
   customer: users_users_customer | null
