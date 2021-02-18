@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 
 import {
   Button,
@@ -17,10 +17,17 @@ import { gql } from "apollo-boost"
 import { useSelector } from "react-redux"
 import { useMutation } from "react-apollo"
 
-const SUBMIT_QA_ENTRY = gql`
-  mutation SubmitQAEntry($notes: String!, $type: PhysicalProductDamageType!, $physicalProductID: ID!, $userID: ID!) {
+export const SUBMIT_QA_ENTRY = gql`
+  mutation SubmitQAEntry(
+    $notes: String!
+    $type: PhysicalProductDamageType!
+    $damageTypes: [PhysicalProductDamageType!]
+    $physicalProductID: ID!
+    $userID: ID!
+  ) {
     createPhysicalProductQualityReport(
       data: {
+        damageTypes: { set: $damageTypes }
         damageType: $type
         notes: $notes
         physicalProduct: { connect: { id: $physicalProductID } }
@@ -39,16 +46,19 @@ export const ProductQAModal = ({ data, open, onSave, onClose }) => {
     status: "success",
   })
   const session = useSelector(state => state.session)
-  const [submitQAEntry] = useMutation(SUBMIT_QA_ENTRY)
+  const [submitQAEntry] = useMutation(SUBMIT_QA_ENTRY, {
+    onCompleted: onSave,
+  })
 
-  const [type, setType] = useState("Other")
+  const [type, setType] = useState<string[]>([])
   const [notes, setNotes] = useState("")
 
   const handleSave = () => {
     submitQAEntry({
       variables: {
         notes,
-        type,
+        type: type?.[0],
+        damageTypes: type,
         physicalProductID: data.id,
         userID: session.user.id,
       },
@@ -75,8 +85,9 @@ export const ProductQAModal = ({ data, open, onSave, onClose }) => {
                 value={type}
                 variant="outlined"
                 onChange={event => {
-                  setType(event.target.value as string)
+                  setType(event.target.value as string[])
                 }}
+                multiple
                 fullWidth
               >
                 <MenuItem value="BarcodeMissing">Barcode Missing</MenuItem>

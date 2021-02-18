@@ -11,6 +11,8 @@ import { MARK_RESERVATION_PICKED, UPDATE_RESERVATION, PROCESS_RESERVATION } from
 import { PickingModal } from "./Components/PickingModal/PickingModal"
 import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessReturnModal"
 import { UpdateStatusModal } from "./Components/UpdateStatusModal/UpdateStatusModal"
+import { SUBMIT_QA_ENTRY } from "components/ProductQAModal"
+import { useSelector } from "react-redux"
 
 export const ReservationHeader = ({ data }) => {
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
@@ -27,6 +29,8 @@ export const ReservationHeader = ({ data }) => {
   const [showModal, toggleModal] = useState(false)
 
   const [isMutating, setIsMutating] = useState(false)
+
+  const session = useSelector(state => state.session)
 
   const mutationConfig = {
     onCompleted: () => {
@@ -57,6 +61,8 @@ export const ReservationHeader = ({ data }) => {
       })
     },
   })
+
+  const [submitQAEntry] = useMutation(SUBMIT_QA_ENTRY)
 
   let primaryButton = () => {
     if (isReservationUnfulfilled) {
@@ -129,6 +135,19 @@ export const ReservationHeader = ({ data }) => {
                   reservationNumber: data.reservationNumber,
                   productStates: Object.values(productStates),
                 },
+              }
+
+              // Create PhysicalProductQualityEntry records
+              for (let productState of Object.values(productStates) as any[]) {
+                await submitQAEntry({
+                  variables: {
+                    notes: productState.notes,
+                    type: productState.damageType?.[0],
+                    damageTypes: productState.damageType,
+                    physicalProductID: data.id,
+                    userID: session.user.id,
+                  },
+                })
               }
 
               result = await processReservation({ variables: mutationData })

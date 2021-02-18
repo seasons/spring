@@ -14,7 +14,11 @@ export interface NumberWidgetProps {
 }
 
 export const NumberWidget: React.FC<NumberWidgetProps> = ({ data, icon }) => {
-  const value = Object.values(data.result)[0].toLocaleString("en-US")
+  if (!data) {
+    return <></>
+  }
+
+  const value = Object.values(data?.result)[0].toLocaleString("en-US")
 
   return (
     <Card>

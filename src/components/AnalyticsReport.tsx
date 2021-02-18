@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react"
 
 import { useMutation } from "react-apollo"
 import { SnackbarState } from "components/Snackbar"
-import { Snackbar, Header } from "components"
+import { Snackbar } from "components"
 import { Container, makeStyles, Theme, colors } from "@material-ui/core"
 import Iframe from "react-iframe"
 import { Loading } from "@seasons/react-admin"
 import { CREATE_EMBED_URL } from "./mutations"
-import { ViewType } from "generated/globalTypes"
+import { AnalyticsViewType } from "generated/globalTypes"
 
 export interface AnalyticsReportProps {
   title: string
   url: string
   // The view type of the report we wish to embed
-  type: ViewType
+  type: AnalyticsViewType
   // The index of the report we wish to embed
   index: number
 }
