@@ -2,9 +2,11 @@ import { Button } from "@material-ui/core"
 import { Box, TableHead, TableCell, Card, Table, TableRow, TableBody, Typography } from "@material-ui/core"
 import { ProductQAModal } from "components/ProductQAModal"
 import { SinceDateField } from "fields"
+import { useRefresh } from "@seasons/react-admin"
 import React, { useState } from "react"
 
 export const PhysicalProductQAView = ({ data }) => {
+  const refresh = useRefresh()
   const [openModal, setOpenModal] = useState(false)
 
   const damageTypeToReadableText = damageType => {
@@ -92,6 +94,7 @@ export const PhysicalProductQAView = ({ data }) => {
         open={openModal}
         onSave={() => {
           setOpenModal(false)
+          refresh()
         }}
         onClose={() => {
           setOpenModal(false)

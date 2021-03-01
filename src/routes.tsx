@@ -24,6 +24,7 @@ import {
 import { NotificationsList } from "views/Notifications/NotificationsList"
 import { CreateFitPicView, FitPicView } from "views/Community"
 import { CollectionsList, CollectionsEdit, CollectionsCreate } from "views/Collections"
+import { OrderView } from "views/Inventory/Orders/OrderView"
 
 export default [
   {
@@ -130,6 +131,11 @@ export default [
         component: props => (
           <ProductVariantCreate {...props} basePath="/inventory/product/variant/new" resource="Product" />
         ),
+      },
+      {
+        path: "/inventory/orders/:orderID",
+        exact: true,
+        component: props => <OrderView {...props} basePath="/inventory/orders" resource="Order" />,
       },
       {
         path: "/members",

@@ -74,6 +74,7 @@ class App extends React.Component {
                         <Resource name="Size" intent="registration" />
                         <Resource name="Tag" intent="registration" />
                         <Resource name="PushNotificationReceipt" intent="registration" />
+                        <Resource name="Order" intent="registration" />
                         <Router history={history}>
                           <QueryParamProvider ReactRouterRoute={Route}>{renderRoutes(routes)}</QueryParamProvider>
                         </Router>

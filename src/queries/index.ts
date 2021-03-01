@@ -12,6 +12,7 @@ import PhysicalProduct from "./PhysicalProduct"
 import Size from "./Size"
 import PushNotificationReceipt from "./PushNotificationReceipt"
 import FitPic from "./FitPic"
+import Order from "./Order"
 
 export default {
   Product,
@@ -25,6 +26,7 @@ export default {
   Size,
   PushNotificationReceipt,
   FitPic,
+  Order,
   Category: {
     [GET_LIST]: gql`
       fragment category on Category {
