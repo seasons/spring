@@ -24,6 +24,12 @@ export default {
     secondary: colors.black85,
     link: colors.black100,
   },
+  button: {
+    primary: colors.black100,
+    secondary: colors.black85,
+    link: colors.black100,
+    main: colors.black85,
+  },
   link: colors.blue[800],
   icon: colors.black85,
   background: {
