@@ -66,13 +66,18 @@ export enum CollectionPlacement {
 }
 
 export enum CreditNoteReasonCode {
+  Chargeback = "Chargeback",
+  Fraudulent = "Fraudulent",
   OrderCancellation = "OrderCancellation",
   OrderChange = "OrderChange",
   Other = "Other",
   ProductUnsatisfactory = "ProductUnsatisfactory",
   ServiceUnsatisfactory = "ServiceUnsatisfactory",
+  SubscriptionCancellation = "SubscriptionCancellation",
   SubscriptionChange = "SubscriptionChange",
+  SubscriptionPause = "SubscriptionPause",
   Waiver = "Waiver",
+  WriteOff = "WriteOff",
 }
 
 export enum CreditNoteReasonCodeInput {
@@ -118,6 +123,7 @@ export enum ElementType {
 }
 
 export enum EmailId {
+  BuyUsedOrderConfirmation = "BuyUsedOrderConfirmation",
   CompleteAccount = "CompleteAccount",
   DayFiveAuthorizationFollowup = "DayFiveAuthorizationFollowup",
   DayFourAuthorizationFollowup = "DayFourAuthorizationFollowup",
@@ -196,6 +202,27 @@ export enum LocationType {
   Warehouse = "Warehouse",
 }
 
+export enum OrderLineItemRecordType {
+  ExternalProduct = "ExternalProduct",
+  Package = "Package",
+  PhysicalProduct = "PhysicalProduct",
+  ProductVariant = "ProductVariant",
+}
+
+export enum OrderStatus {
+  Cancelled = "Cancelled",
+  Drafted = "Drafted",
+  Fulfilled = "Fulfilled",
+  Returned = "Returned",
+  Submitted = "Submitted",
+}
+
+export enum OrderType {
+  External = "External",
+  New = "New",
+  Used = "Used",
+}
+
 export enum PackageStatus {
   Blocked = "Blocked",
   Cancelled = "Cancelled",
@@ -244,9 +271,15 @@ export enum PackageTransitEventSubStatus {
   ReturnToSender = "ReturnToSender",
 }
 
+export enum PauseType {
+  WithItems = "WithItems",
+  WithoutItems = "WithoutItems",
+}
+
 export enum PaymentPlanTier {
   AllAccess = "AllAccess",
   Essential = "Essential",
+  Pause = "Pause",
 }
 
 export enum PhotographyStatus {
@@ -281,6 +314,7 @@ export enum PhysicalProductStatus {
   Lost = "Lost",
   New = "New",
   PermanentlyDamaged = "PermanentlyDamaged",
+  Sold = "Sold",
   Used = "Used",
 }
 
@@ -1454,6 +1488,8 @@ export interface CustomProductUpdateInput {
   modelSizeName?: string | null
   tags?: string[] | null
   buyNewEnabled?: boolean | null
+  buyUsedEnabled?: boolean | null
+  buyUsedPrice?: number | null
 }
 
 export interface CustomerAdmissionsDataCreateOneWithoutCustomerInput {
@@ -1691,8 +1727,53 @@ export interface CustomerMembershipCreateWithoutCustomerInput {
   id?: string | null
   plan?: PaymentPlanCreateOneInput | null
   subscriptionId: string
+  subscription?: CustomerMembershipSubscriptionDataCreateOneInput | null
   pauseRequests?: PauseRequestCreateManyWithoutMembershipInput | null
   giftId?: string | null
+}
+
+export interface CustomerMembershipSubscriptionDataCreateInput {
+  id?: string | null
+  planID: string
+  subscriptionId: string
+  currentTermStart: any
+  currentTermEnd: any
+  nextBillingAt?: any | null
+  status: string
+  planPrice: number
+}
+
+export interface CustomerMembershipSubscriptionDataCreateOneInput {
+  create?: CustomerMembershipSubscriptionDataCreateInput | null
+  connect?: CustomerMembershipSubscriptionDataWhereUniqueInput | null
+}
+
+export interface CustomerMembershipSubscriptionDataUpdateDataInput {
+  planID?: string | null
+  subscriptionId?: string | null
+  currentTermStart?: any | null
+  currentTermEnd?: any | null
+  nextBillingAt?: any | null
+  status?: string | null
+  planPrice?: number | null
+}
+
+export interface CustomerMembershipSubscriptionDataUpdateOneInput {
+  create?: CustomerMembershipSubscriptionDataCreateInput | null
+  update?: CustomerMembershipSubscriptionDataUpdateDataInput | null
+  upsert?: CustomerMembershipSubscriptionDataUpsertNestedInput | null
+  delete?: boolean | null
+  disconnect?: boolean | null
+  connect?: CustomerMembershipSubscriptionDataWhereUniqueInput | null
+}
+
+export interface CustomerMembershipSubscriptionDataUpsertNestedInput {
+  update: CustomerMembershipSubscriptionDataUpdateDataInput
+  create: CustomerMembershipSubscriptionDataCreateInput
+}
+
+export interface CustomerMembershipSubscriptionDataWhereUniqueInput {
+  id?: string | null
 }
 
 export interface CustomerMembershipUpdateOneWithoutCustomerInput {
@@ -1707,6 +1788,7 @@ export interface CustomerMembershipUpdateOneWithoutCustomerInput {
 export interface CustomerMembershipUpdateWithoutCustomerDataInput {
   plan?: PaymentPlanUpdateOneInput | null
   subscriptionId?: string | null
+  subscription?: CustomerMembershipSubscriptionDataUpdateOneInput | null
   pauseRequests?: PauseRequestUpdateManyWithoutMembershipInput | null
   giftId?: string | null
 }
@@ -3408,6 +3490,7 @@ export interface PauseRequestCreateManyWithoutMembershipInput {
 export interface PauseRequestCreateWithoutMembershipInput {
   id?: string | null
   pausePending: boolean
+  pauseType?: PauseType | null
   pauseDate?: any | null
   resumeDate?: any | null
   notified?: boolean | null
@@ -3446,6 +3529,10 @@ export interface PauseRequestScalarWhereInput {
   updatedAt_gte?: any | null
   pausePending?: boolean | null
   pausePending_not?: boolean | null
+  pauseType?: PauseType | null
+  pauseType_not?: PauseType | null
+  pauseType_in?: PauseType[] | null
+  pauseType_not_in?: PauseType[] | null
   pauseDate?: any | null
   pauseDate_not?: any | null
   pauseDate_in?: any[] | null
@@ -3471,6 +3558,7 @@ export interface PauseRequestScalarWhereInput {
 
 export interface PauseRequestUpdateManyDataInput {
   pausePending?: boolean | null
+  pauseType?: PauseType | null
   pauseDate?: any | null
   resumeDate?: any | null
   notified?: boolean | null
@@ -3500,6 +3588,7 @@ export interface PauseRequestUpdateWithWhereUniqueWithoutMembershipInput {
 
 export interface PauseRequestUpdateWithoutMembershipDataInput {
   pausePending?: boolean | null
+  pauseType?: PauseType | null
   pauseDate?: any | null
   resumeDate?: any | null
   notified?: boolean | null
@@ -4308,7 +4397,6 @@ export interface ProductCreateInput {
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   model?: ProductModelCreateOneWithoutProductsInput | null
-  modelHeight?: number | null
   modelSize?: SizeCreateOneInput | null
   name: string
   outerMaterials?: ProductCreateouterMaterialsInput | null
@@ -4359,7 +4447,6 @@ export interface ProductCreateWithoutBrandInput {
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   model?: ProductModelCreateOneWithoutProductsInput | null
-  modelHeight?: number | null
   modelSize?: SizeCreateOneInput | null
   name: string
   outerMaterials?: ProductCreateouterMaterialsInput | null
@@ -4390,7 +4477,6 @@ export interface ProductCreateWithoutCategoryInput {
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   model?: ProductModelCreateOneWithoutProductsInput | null
-  modelHeight?: number | null
   modelSize?: SizeCreateOneInput | null
   name: string
   outerMaterials?: ProductCreateouterMaterialsInput | null
@@ -4422,7 +4508,6 @@ export interface ProductCreateWithoutVariantsInput {
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   materialCategory?: ProductMaterialCategoryCreateOneWithoutProductsInput | null
   model?: ProductModelCreateOneWithoutProductsInput | null
-  modelHeight?: number | null
   modelSize?: SizeCreateOneInput | null
   name: string
   outerMaterials?: ProductCreateouterMaterialsInput | null
@@ -4778,14 +4863,6 @@ export interface ProductScalarWhereInput {
   externalURL_not_ends_with?: string | null
   buyNewEnabled?: boolean | null
   buyNewEnabled_not?: boolean | null
-  modelHeight?: number | null
-  modelHeight_not?: number | null
-  modelHeight_in?: number[] | null
-  modelHeight_not_in?: number[] | null
-  modelHeight_lt?: number | null
-  modelHeight_lte?: number | null
-  modelHeight_gt?: number | null
-  modelHeight_gte?: number | null
   name?: string | null
   name_not?: string | null
   name_in?: string[] | null
@@ -5035,7 +5112,6 @@ export interface ProductUpdateDataInput {
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   model?: ProductModelUpdateOneWithoutProductsInput | null
-  modelHeight?: number | null
   modelSize?: SizeUpdateOneInput | null
   name?: string | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
@@ -5059,7 +5135,6 @@ export interface ProductUpdateManyDataInput {
   externalURL?: string | null
   buyNewEnabled?: boolean | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
-  modelHeight?: number | null
   name?: string | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
   photographyStatus?: PhotographyStatus | null
@@ -5146,7 +5221,6 @@ export interface ProductUpdateWithoutBrandDataInput {
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   model?: ProductModelUpdateOneWithoutProductsInput | null
-  modelHeight?: number | null
   modelSize?: SizeUpdateOneInput | null
   name?: string | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
@@ -5176,7 +5250,6 @@ export interface ProductUpdateWithoutCategoryDataInput {
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   model?: ProductModelUpdateOneWithoutProductsInput | null
-  modelHeight?: number | null
   modelSize?: SizeUpdateOneInput | null
   name?: string | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
@@ -5207,7 +5280,6 @@ export interface ProductUpdateWithoutVariantsDataInput {
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   materialCategory?: ProductMaterialCategoryUpdateOneWithoutProductsInput | null
   model?: ProductModelUpdateOneWithoutProductsInput | null
-  modelHeight?: number | null
   modelSize?: SizeUpdateOneInput | null
   name?: string | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
@@ -5987,14 +6059,6 @@ export interface ProductWhereInput {
   images_none?: ImageWhereInput | null
   materialCategory?: ProductMaterialCategoryWhereInput | null
   model?: ProductModelWhereInput | null
-  modelHeight?: number | null
-  modelHeight_not?: number | null
-  modelHeight_in?: number[] | null
-  modelHeight_not_in?: number[] | null
-  modelHeight_lt?: number | null
-  modelHeight_lte?: number | null
-  modelHeight_gt?: number | null
-  modelHeight_gte?: number | null
   modelSize?: SizeWhereInput | null
   name?: string | null
   name_not?: string | null
@@ -8254,6 +8318,8 @@ export interface UpsertProductInput {
   bottomSizeType?: BottomSizeType | null
   brandID: string
   buyNewEnabled?: boolean | null
+  buyUsedEnabled: boolean
+  buyUsedPrice: number
   categoryName: string
   colorCode: string
   description: string
@@ -8275,6 +8341,7 @@ export interface UpsertProductInput {
   tags: string[]
   type: ProductType
   variants: UpsertVariantInput[]
+  createNew: boolean
 }
 
 export interface UpsertSeasonInput {

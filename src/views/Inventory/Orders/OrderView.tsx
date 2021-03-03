@@ -10,6 +10,7 @@ import { useRefresh } from "@seasons/react-admin"
 import { gql } from "apollo-boost"
 import { useMutation } from "react-apollo"
 import { Snackbar, SnackbarState } from "components/Snackbar"
+import { Order } from "generated/Order"
 
 const UPDATE_ORDER_STATUS = gql`
   mutation UpdateOrderStatus($orderID: ID!, $status: OrderStatus!) {
@@ -29,7 +30,7 @@ export const OrderView = ({ match }) => {
     status: "success",
   })
 
-  const { data, loading, loaded, error } = useQueryWithStore({
+  const { data, loading, loaded, error } = useQueryWithStore<Order>({
     type: "getOne",
     resource: "Order",
     payload: { id: orderID },
@@ -54,15 +55,15 @@ export const OrderView = ({ match }) => {
   if (!loaded || loading) return <Loading />
   if (error || !data) return <ComponentError />
 
-  const isOrderFulfilled = data.status === "Fullfilled"
+  const isOrderFulfilled = data.status === "Fulfilled"
 
   let primaryButton = () => {
     if (!isOrderFulfilled && data.status !== "Drafted") {
       return {
-        text: "Mark as Fullfilled",
+        text: "Mark as Fulfilled",
         action: async () => {
           await updateOrderStatus({
-            variables: { orderID, status: "Fullfilled" },
+            variables: { orderID, status: "Fulfilled" },
           })
           refresh()
         },
