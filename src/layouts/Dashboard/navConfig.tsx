@@ -18,6 +18,10 @@ export default [
         href: "/reservations",
       },
       {
+        title: "Orders",
+        href: "/orders",
+      },
+      {
         title: "Inventory",
         href: "/inventory/products",
       },

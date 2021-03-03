@@ -14,6 +14,11 @@ export enum AdminAction {
   Update = "Update",
 }
 
+export enum AnalyticsViewType {
+  Dashboard = "Dashboard",
+  Look = "Look",
+}
+
 export enum AppRoute {
   Account = "Account",
   BagStack = "BagStack",
@@ -97,10 +102,26 @@ export enum CustomerStatus {
   Waitlisted = "Waitlisted",
 }
 
+export enum CustomerStyle {
+  AvantGarde = "AvantGarde",
+  Bold = "Bold",
+  Classic = "Classic",
+  Minimalist = "Minimalist",
+  Streetwear = "Streetwear",
+  Techwear = "Techwear",
+}
+
+export enum ElementType {
+  Basic = "Basic",
+  Count = "Count",
+  Money = "Money",
+}
+
 export enum EmailId {
   CompleteAccount = "CompleteAccount",
   DayFiveAuthorizationFollowup = "DayFiveAuthorizationFollowup",
   DayFourAuthorizationFollowup = "DayFourAuthorizationFollowup",
+  DaySevenAuthorizationFollowup = "DaySevenAuthorizationFollowup",
   DaySixAuthorizationFollowup = "DaySixAuthorizationFollowup",
   DayThreeAuthorizationFollowup = "DayThreeAuthorizationFollowup",
   DayTwoAuthorizationFollowup = "DayTwoAuthorizationFollowup",
@@ -173,6 +194,15 @@ export enum LocationType {
   Customer = "Customer",
   Office = "Office",
   Warehouse = "Warehouse",
+}
+
+export enum PackageStatus {
+  Blocked = "Blocked",
+  Cancelled = "Cancelled",
+  Delivered = "Delivered",
+  Queued = "Queued",
+  Received = "Received",
+  Shipped = "Shipped",
 }
 
 export enum PackageTransitEventStatus {
@@ -319,6 +349,7 @@ export enum ReservationStatus {
 
 export enum SearchResultType {
   Brand = "Brand",
+  Customer = "Customer",
   PhysicalProduct = "PhysicalProduct",
   Product = "Product",
 }
@@ -384,11 +415,6 @@ export enum UserVerificationStatus {
   Approved = "Approved",
   Denied = "Denied",
   Pending = "Pending",
-}
-
-export enum ViewType {
-  Dashboard = "Dashboard",
-  Look = "Look",
 }
 
 export enum WarehouseLocationType {
@@ -1355,7 +1381,7 @@ export interface ColorWhereUniqueInput {
 }
 
 export interface CreateEmbedURLInput {
-  type?: ViewType | null
+  type?: AnalyticsViewType | null
   index?: number | null
 }
 
@@ -1563,17 +1589,23 @@ export interface CustomerDetailCreateInput {
   shoppingFrequency?: string | null
   averageSpend?: string | null
   style?: string | null
+  styles?: CustomerDetailCreatestylesInput | null
   commuteStyle?: string | null
   stylePreferences?: StylePreferencesCreateOneInput | null
   shippingAddress?: LocationCreateOneInput | null
   phoneOS?: string | null
   insureShipment?: boolean | null
   instagramHandle?: string | null
+  impactId?: string | null
 }
 
 export interface CustomerDetailCreateOneInput {
   create?: CustomerDetailCreateInput | null
   connect?: CustomerDetailWhereUniqueInput | null
+}
+
+export interface CustomerDetailCreatestylesInput {
+  set?: CustomerStyle[] | null
 }
 
 export interface CustomerDetailCreatetopSizesInput {
@@ -1606,12 +1638,14 @@ export interface CustomerDetailUpdateDataInput {
   shoppingFrequency?: string | null
   averageSpend?: string | null
   style?: string | null
+  styles?: CustomerDetailUpdatestylesInput | null
   commuteStyle?: string | null
   stylePreferences?: StylePreferencesUpdateOneInput | null
   shippingAddress?: LocationUpdateOneInput | null
   phoneOS?: string | null
   insureShipment?: boolean | null
   instagramHandle?: string | null
+  impactId?: string | null
 }
 
 export interface CustomerDetailUpdateOneInput {
@@ -1621,6 +1655,10 @@ export interface CustomerDetailUpdateOneInput {
   delete?: boolean | null
   disconnect?: boolean | null
   connect?: CustomerDetailWhereUniqueInput | null
+}
+
+export interface CustomerDetailUpdatestylesInput {
+  set?: CustomerStyle[] | null
 }
 
 export interface CustomerDetailUpdatetopSizesInput {
@@ -3139,6 +3177,7 @@ export interface PackageCreateInput {
   weight?: number | null
   cost?: number | null
   events?: PackageTransitEventCreateManyWithoutPackageInput | null
+  status?: PackageStatus | null
 }
 
 export interface PackageCreateOneInput {
@@ -3160,6 +3199,7 @@ export interface PackageCreateWithoutEventsInput {
   toAddress: LocationCreateOneInput
   weight?: number | null
   cost?: number | null
+  status?: PackageStatus | null
 }
 
 export interface PackageTransitEventCreateManyWithoutPackageInput {
@@ -3316,6 +3356,7 @@ export interface PackageUpdateDataInput {
   weight?: number | null
   cost?: number | null
   events?: PackageTransitEventUpdateManyWithoutPackageInput | null
+  status?: PackageStatus | null
 }
 
 export interface PackageUpdateOneInput {
@@ -3342,6 +3383,7 @@ export interface PackageUpdateWithoutEventsDataInput {
   toAddress?: LocationUpdateOneRequiredInput | null
   weight?: number | null
   cost?: number | null
+  status?: PackageStatus | null
 }
 
 export interface PackageUpsertNestedInput {
@@ -3673,7 +3715,12 @@ export interface PhysicalProductQualityReportCreateWithoutPhysicalProductInput {
   id?: string | null
   user: UserCreateOneInput
   damageType?: PhysicalProductDamageType | null
+  damageTypes?: PhysicalProductQualityReportCreatedamageTypesInput | null
   notes?: string | null
+}
+
+export interface PhysicalProductQualityReportCreatedamageTypesInput {
+  set?: PhysicalProductDamageType[] | null
 }
 
 export interface PhysicalProductQualityReportScalarWhereInput {
@@ -3732,6 +3779,7 @@ export interface PhysicalProductQualityReportScalarWhereInput {
 
 export interface PhysicalProductQualityReportUpdateManyDataInput {
   damageType?: PhysicalProductDamageType | null
+  damageTypes?: PhysicalProductQualityReportUpdatedamageTypesInput | null
   notes?: string | null
 }
 
@@ -3760,7 +3808,12 @@ export interface PhysicalProductQualityReportUpdateWithWhereUniqueWithoutPhysica
 export interface PhysicalProductQualityReportUpdateWithoutPhysicalProductDataInput {
   user?: UserUpdateOneRequiredInput | null
   damageType?: PhysicalProductDamageType | null
+  damageTypes?: PhysicalProductQualityReportUpdatedamageTypesInput | null
   notes?: string | null
+}
+
+export interface PhysicalProductQualityReportUpdatedamageTypesInput {
+  set?: PhysicalProductDamageType[] | null
 }
 
 export interface PhysicalProductQualityReportUpsertWithWhereUniqueWithoutPhysicalProductInput {
@@ -8264,6 +8317,7 @@ export interface UserCreateInput {
   pushNotificationStatus?: PushNotificationStatus | null
   pushNotifications?: PushNotificationReceiptCreateManyWithoutUsersInput | null
   emails?: EmailReceiptCreateManyWithoutUserInput | null
+  sendSystemEmails?: boolean | null
   pushNotification?: UserPushNotificationCreateOneInput | null
   verificationStatus?: UserVerificationStatus | null
   verificationMethod?: UserVerificationMethod | null
@@ -8292,6 +8346,7 @@ export interface UserCreateWithoutFitPicsInput {
   pushNotificationStatus?: PushNotificationStatus | null
   pushNotifications?: PushNotificationReceiptCreateManyWithoutUsersInput | null
   emails?: EmailReceiptCreateManyWithoutUserInput | null
+  sendSystemEmails?: boolean | null
   pushNotification?: UserPushNotificationCreateOneInput | null
   verificationStatus?: UserVerificationStatus | null
   verificationMethod?: UserVerificationMethod | null
@@ -8308,6 +8363,7 @@ export interface UserCreateWithoutPushNotificationsInput {
   roles?: UserCreaterolesInput | null
   pushNotificationStatus?: PushNotificationStatus | null
   emails?: EmailReceiptCreateManyWithoutUserInput | null
+  sendSystemEmails?: boolean | null
   pushNotification?: UserPushNotificationCreateOneInput | null
   verificationStatus?: UserVerificationStatus | null
   verificationMethod?: UserVerificationMethod | null
@@ -8601,6 +8657,8 @@ export interface UserScalarWhereInput {
   pushNotificationStatus_not?: PushNotificationStatus | null
   pushNotificationStatus_in?: PushNotificationStatus[] | null
   pushNotificationStatus_not_in?: PushNotificationStatus[] | null
+  sendSystemEmails?: boolean | null
+  sendSystemEmails_not?: boolean | null
   verificationStatus?: UserVerificationStatus | null
   verificationStatus_not?: UserVerificationStatus | null
   verificationStatus_in?: UserVerificationStatus[] | null
@@ -8640,6 +8698,7 @@ export interface UserUpdateDataInput {
   pushNotificationStatus?: PushNotificationStatus | null
   pushNotifications?: PushNotificationReceiptUpdateManyWithoutUsersInput | null
   emails?: EmailReceiptUpdateManyWithoutUserInput | null
+  sendSystemEmails?: boolean | null
   pushNotification?: UserPushNotificationUpdateOneInput | null
   verificationStatus?: UserVerificationStatus | null
   verificationMethod?: UserVerificationMethod | null
@@ -8657,6 +8716,7 @@ export interface UserUpdateInput {
   pushNotificationStatus?: PushNotificationStatus | null
   pushNotifications?: PushNotificationReceiptUpdateManyWithoutUsersInput | null
   emails?: EmailReceiptUpdateManyWithoutUserInput | null
+  sendSystemEmails?: boolean | null
   pushNotification?: UserPushNotificationUpdateOneInput | null
   verificationStatus?: UserVerificationStatus | null
   verificationMethod?: UserVerificationMethod | null
@@ -8672,6 +8732,7 @@ export interface UserUpdateManyDataInput {
   role?: UserRole | null
   roles?: UserUpdaterolesInput | null
   pushNotificationStatus?: PushNotificationStatus | null
+  sendSystemEmails?: boolean | null
   verificationStatus?: UserVerificationStatus | null
   verificationMethod?: UserVerificationMethod | null
 }
@@ -8731,6 +8792,7 @@ export interface UserUpdateWithoutFitPicsDataInput {
   pushNotificationStatus?: PushNotificationStatus | null
   pushNotifications?: PushNotificationReceiptUpdateManyWithoutUsersInput | null
   emails?: EmailReceiptUpdateManyWithoutUserInput | null
+  sendSystemEmails?: boolean | null
   pushNotification?: UserPushNotificationUpdateOneInput | null
   verificationStatus?: UserVerificationStatus | null
   verificationMethod?: UserVerificationMethod | null
@@ -8746,6 +8808,7 @@ export interface UserUpdateWithoutPushNotificationsDataInput {
   roles?: UserUpdaterolesInput | null
   pushNotificationStatus?: PushNotificationStatus | null
   emails?: EmailReceiptUpdateManyWithoutUserInput | null
+  sendSystemEmails?: boolean | null
   pushNotification?: UserPushNotificationUpdateOneInput | null
   verificationStatus?: UserVerificationStatus | null
   verificationMethod?: UserVerificationMethod | null
@@ -8858,6 +8921,8 @@ export interface UserWhereInput {
   emails_every?: EmailReceiptWhereInput | null
   emails_some?: EmailReceiptWhereInput | null
   emails_none?: EmailReceiptWhereInput | null
+  sendSystemEmails?: boolean | null
+  sendSystemEmails_not?: boolean | null
   pushNotification?: UserPushNotificationWhereInput | null
   verificationStatus?: UserVerificationStatus | null
   verificationStatus_not?: UserVerificationStatus | null
