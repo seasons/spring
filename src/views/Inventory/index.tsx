@@ -48,7 +48,6 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
     brands: "Brands",
     categories: "Categories",
     "physical-products": "Physical Products",
-    orders: "Orders",
   }
 
   return (
@@ -80,7 +79,6 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
         {currentTab === "physical-products" && (
           <PhysicalProductsList {...props} basePath="/inventory/physical-products" resource="PhysicalProduct" />
         )}
-        {currentTab === "orders" && <OrderList {...props} basePath="/inventory/orders" resource="Order" />}
       </div>
     </Container>
   )

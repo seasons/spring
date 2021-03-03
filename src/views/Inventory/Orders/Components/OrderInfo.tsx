@@ -1,21 +1,10 @@
 import React from "react"
 import { Link as RouterLink } from "react-router-dom"
 import { DateTime } from "luxon"
-import {
-  Button,
-  Card,
-  Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-  Box,
-  Grid,
-  Chip,
-} from "@material-ui/core"
+import { Button, Card, Link, Table, TableBody, TableCell, TableRow, Typography, Box, Chip } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { Spacer } from "components"
+import { formatPrice } from "utils/price"
 
 export const OrderInfo = ({ order, ...rest }) => {
   const { orderNumber } = order
@@ -24,12 +13,6 @@ export const OrderInfo = ({ order, ...rest }) => {
   const { fullName } = customer?.user
 
   const { shippingLabel } = order?.sentPackage || {}
-
-  const formatPrice = price =>
-    (price || 0).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    })
 
   const Address = ({ address }) => {
     if (!address) {
@@ -124,9 +107,14 @@ export const OrderInfo = ({ order, ...rest }) => {
             <TableRow>
               <TableCell>Sent Package</TableCell>
               <TableCell>
-                <a href={order?.sentPackage?.shippingLabel?.trackingURL} target="_blank">
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    window.open(order?.sentPackage?.shippingLabel?.trackingURL, "_blank")
+                  }}
+                >
                   Track
-                </a>
+                </Button>
               </TableCell>
             </TableRow>
           </TableBody>
