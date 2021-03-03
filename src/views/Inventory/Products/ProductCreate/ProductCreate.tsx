@@ -9,6 +9,7 @@ import { Overview, Variants } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
 import { getProductUpsertData } from "../utils"
+import { useLocation } from "react-router"
 import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
 import { PhysicalProductsCreate } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
 
@@ -17,6 +18,7 @@ export const ProductCreate: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
   const { data, loading, error } = useQuery(PRODUCT_UPSERT_QUERY)
+  const location = useLocation()
   const [upsertProduct] = useMutation(UPSERT_PRODUCT, {
     onCompleted: result => {
       setIsSubmitting(false)
@@ -67,6 +69,7 @@ export const ProductCreate: React.FC = () => {
     setIsSubmitting(true)
     // Extract appropriate values from the WizardForm
     const productUpsertData = getProductUpsertData(values)
+    productUpsertData.createNew = location.pathname.includes("new")
     await upsertProduct({
       variables: {
         input: productUpsertData,
