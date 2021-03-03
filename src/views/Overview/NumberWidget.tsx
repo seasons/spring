@@ -5,20 +5,26 @@ import React from "react"
 import { colors } from "theme/colors"
 import { theme } from "theme/theme"
 
+export interface WidgetData {
+  title: string
+  result: any[]
+}
 export interface NumberWidgetProps {
-  data: {
-    title: string
-    result: any[]
-  }
+  data: WidgetData
   icon?: JSX.Element
+  getValue?: (WidgetData) => string
 }
 
-export const NumberWidget: React.FC<NumberWidgetProps> = ({ data, icon }) => {
+export const NumberWidget: React.FC<NumberWidgetProps> = ({
+  data,
+  icon,
+  getValue = (data: WidgetData) => Object.values(data?.result)[0].toLocaleString("en-US"),
+}) => {
   if (!data) {
     return <></>
   }
 
-  const value = Object.values(data?.result)[0].toLocaleString("en-US")
+  const value = getValue(data)
 
   return (
     <Card>
