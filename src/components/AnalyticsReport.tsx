@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 import { useMutation } from "react-apollo"
 import { SnackbarState } from "components/Snackbar"
-import { Snackbar, Header } from "components"
+import { Snackbar } from "components"
 import { Container, makeStyles, Theme, colors } from "@material-ui/core"
 import Iframe from "react-iframe"
 import { Loading } from "@seasons/react-admin"

@@ -15,12 +15,12 @@ export interface NumberWidgetProps {
   getValue?: (WidgetData) => string
 }
 
-export const NumberWidget: React.FC<NumberWidgetProps> = ({
-  data,
-  icon,
-  getValue = (data: WidgetData) => Object.values(data.result)[0].toLocaleString("en-US"),
-}) => {
-  const value = getValue(data)
+export const NumberWidget: React.FC<NumberWidgetProps> = ({ data, icon }) => {
+  if (!data) {
+    return <></>
+  }
+
+  const value = Object.values(data?.result)[0].toLocaleString("en-US")
 
   return (
     <Card>
