@@ -89,6 +89,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
       vendorSeasonYear: product.season?.vendorSeason?.year,
       internalSeasonSeasonCode: product.season?.internalSeason?.seasonCode,
       internalSeasonYear: product.season?.internalSeason?.year,
+      buyUsedPrice: product.buyUsedPrice ? product.buyUsedPrice / 100 : 0,
       ...pick(product, [
         "description",
         "externalURL",
@@ -99,6 +100,8 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
         "retailPrice",
         "status",
         "photographyStatus",
+        "buyNewEnabled",
+        "buyUsedEnabled",
       ]),
     }
     product.images.forEach((image, index) => {

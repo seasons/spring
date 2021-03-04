@@ -110,12 +110,14 @@ export const getLocaleDateString = (date?: string) => {
  * inside the New product flow.
  * @param values: set of values retrieved from the Product Create form
  */
-export const getProductUpsertData = (values: any) => {
+export const getProductUpsertData: any = (values: any) => {
   const {
     architecture,
-    bottomSizeType,
     brand: brandID,
     buyNewEnabled,
+    buyUsedEnabled,
+    buyUsedPrice,
+    bottomSizeTypes: bottomSizeType,
     category: categoryName,
     color: colorCode,
     description,
@@ -168,8 +170,6 @@ export const getProductUpsertData = (values: any) => {
     "inventoryStatus",
     "physicalProductStatus",
     "unitCost",
-    "priceBuyUsedPrice",
-    "priceBuyUsedEnabled",
   ]
   const seasonsUIDToData = {}
   Object.keys(values).forEach(key => {
@@ -181,7 +181,7 @@ export const getProductUpsertData = (values: any) => {
       if (["dateOrdered", "dateReceived"].includes(fieldKey)) {
         // Convert date to ISO string format
         fieldValue = getDateISOString(value)
-      } else if (["unitCost", "priceBuyUsedPrice"].includes(fieldKey)) {
+      } else if (["unitCost"].includes(fieldKey)) {
         // Convert to float
         fieldValue = parseFloat(value) || null
       } else {
@@ -210,15 +210,9 @@ export const getProductUpsertData = (values: any) => {
     const physicalProductsData = Object.keys(seasonsUIDToData)
       .map(seasonsUID => {
         if (seasonsUID.includes(sku)) {
-          const {
-            inventoryStatus,
-            physicalProductStatus,
-            dateOrdered,
-            dateReceived,
-            unitCost,
-            priceBuyUsedEnabled,
-            priceBuyUsedPrice,
-          } = seasonsUIDToData[seasonsUID]
+          const { inventoryStatus, physicalProductStatus, dateOrdered, dateReceived, unitCost } = seasonsUIDToData[
+            seasonsUID
+          ]
           return {
             dateOrdered,
             dateReceived,
@@ -226,10 +220,6 @@ export const getProductUpsertData = (values: any) => {
             productStatus: physicalProductStatus,
             seasonsUID,
             unitCost,
-            price: {
-              buyUsedEnabled: priceBuyUsedEnabled || false,
-              buyUsedPrice: priceBuyUsedPrice,
-            },
           }
         } else {
           return null
@@ -269,6 +259,8 @@ export const getProductUpsertData = (values: any) => {
     bottomSizeType: bottomSizeType ?? "WxL",
     brandID,
     buyNewEnabled,
+    buyUsedEnabled,
+    buyUsedPrice: parseFloat(buyUsedPrice) * 100,
     categoryName,
     colorCode,
     description,
@@ -305,6 +297,8 @@ export const getProductUpdateData = (values: any) => {
     bottomSizeType,
     brand: brandID,
     buyNewEnabled,
+    buyUsedEnabled,
+    buyUsedPrice,
     category: categoryName,
     color: colorCode,
     description,
@@ -354,6 +348,8 @@ export const getProductUpdateData = (values: any) => {
     bottomSizeType: bottomSizeType ?? "WxL",
     brand: { connect: { id: brandID } },
     buyNewEnabled,
+    buyUsedPrice: parseFloat(buyUsedPrice) * 100,
+    buyUsedEnabled,
     category: { connect: { name: categoryName } },
     color: { connect: { colorCode } },
     description,
@@ -403,8 +399,6 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     "inventoryStatus",
     "physicalProductStatus",
     "unitCost",
-    "priceBuyUsedEnabled",
-    "priceBuyUsedPrice",
   ]
   const data = Array.from(Array(numVariants).keys()).map(index => {
     // Get internal size
@@ -446,7 +440,7 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
           if (["dateOrdered", "dateReceived"].includes(key)) {
             // Convert date to ISO string format
             physicalProductValue = getDateISOString(physicalProductValue)
-          } else if (["unitCost", "priceBuyUsedPrice"].includes(key)) {
+          } else if (["unitCost"].includes(key)) {
             // Convert to float
             physicalProductValue = parseFloat(physicalProductValue) || null
           }

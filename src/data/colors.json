@@ -3,157 +3,188 @@
     {
       "colorCode": "AQU",
       "hexCode": "#00FFFF",
-      "name": "Aqua"
+      "name": "Aqua",
+      "type": "secondary"
     },
     {
       "colorCode": "BGE",
       "hexCode": "#F5F5DC",
-      "name": "Beige"
+      "name": "Beige",
+      "type": "secondary"
     },
     {
       "colorCode": "BLK",
       "hexCode": "#000000",
-      "name": "Black"
+      "name": "Black",
+      "type": "primary"
     },
     {
       "colorCode": "BLU",
       "hexCode": "#0000FF",
-      "name": "Blue"
+      "name": "Blue",
+      "type": "primary"
     },
     {
       "colorCode": "BWN",
       "hexCode": "#A52A2A",
-      "name": "Brown"
+      "name": "Brown",
+      "type": "primary"
     },
     {
       "colorCode": "DGR",
       "hexCode": "#A9A9A9",
-      "name": "Dark Gray"
+      "name": "Dark Gray",
+      "type": "secondary"
     },
     {
       "colorCode": "GLD",
       "hexCode": "#FFD700",
-      "name": "Gold"
+      "name": "Gold",
+      "type": "secondary"
     },
     {
       "colorCode": "GRY",
       "hexCode": "#808080",
-      "name": "Gray"
+      "name": "Gray",
+      "type": "primary"
     },
     {
       "colorCode": "GRN",
       "hexCode": "#008000",
-      "name": "Green"
+      "name": "Green",
+      "type": "primary"
     },
     {
       "colorCode": "HPK",
       "hexCode": "#FF69B4",
-      "name": "Hot Pink"
+      "name": "Hot Pink",
+      "type": "secondary"
     },
     {
       "colorCode": "IVY",
       "hexCode": "#FFFFF0",
-      "name": "Ivory"
+      "name": "Ivory",
+      "type": "secondary"
     },
     {
       "colorCode": "LAV",
       "hexCode": "#E6E6FA",
-      "name": "Lavender"
+      "name": "Lavender",
+      "type": "secondary"
     },
     {
       "colorCode": "LBL",
       "hexCode": "#ADD8E6",
-      "name": "Light Blue"
+      "name": "Light Blue",
+      "type": "secondary"
     },
     {
       "colorCode": "LIM",
       "hexCode": "#00FF00",
-      "name": "Lime"
+      "name": "Lime",
+      "type": "secondary"
     },
     {
       "colorCode": "MAG",
       "hexCode": "#FF00FF",
-      "name": "Magenta"
+      "name": "Magenta",
+      "type": "secondary"
     },
     {
       "colorCode": "MAR",
       "hexCode": "#800000",
-      "name": "Maroon"
+      "name": "Maroon",
+      "type": "secondary"
     },
     {
       "colorCode": "MNT",
       "hexCode": "#F5FFFA",
-      "name": "Mint Cream"
+      "name": "Mint Cream",
+      "type": "secondary"
     },
     {
       "colorCode": "NVY",
       "hexCode": "#000080",
-      "name": "Navy"
+      "name": "Navy",
+      "type": "secondary"
     },
     {
       "colorCode": "OLI",
       "hexCode": "#808000",
-      "name": "Olive"
+      "name": "Olive",
+      "type": "secondary"
     },
     {
       "colorCode": "ORG",
       "hexCode": "#FFA500",
-      "name": "Orange"
+      "name": "Orange",
+      "type": "primary"
     },
     {
       "colorCode": "PNK",
       "hexCode": "#FFC0CB",
-      "name": "Pink"
+      "name": "Pink",
+      "type": "primary"
     },
     {
       "colorCode": "PRP",
       "hexCode": "#800080",
-      "name": "Purple"
+      "name": "Purple",
+      "type": "primary"
     },
     {
       "colorCode": "RED",
       "hexCode": "#FF3333",
-      "name": "Red"
+      "name": "Red",
+      "type": "primary"
     },
     {
       "colorCode": "RYL",
       "hexCode": "#4169E1",
-      "name": "Royal Blue"
+      "name": "Royal Blue",
+      "type": "secondary"
     },
     {
       "colorCode": "SLM",
       "hexCode": "#FA8072",
-      "name": "Salmon"
+      "name": "Salmon",
+      "type": "secondary"
     },
     {
       "colorCode": "SLV",
       "hexCode": "#C0C0C0",
-      "name": "Silver"
+      "name": "Silver",
+      "type": "secondary"
     },
     {
       "colorCode": "TAN",
       "hexCode": "#D2B48C",
-      "name": "Tan"
+      "name": "Tan",
+      "type": "secondary"
     },
     {
       "colorCode": "TEA",
       "hexCode": "#008080",
-      "name": "Teal"
+      "name": "Teal",
+      "type": "secondary"
     },
     {
       "colorCode": "TRQ",
       "hexCode": "#40E0D0",
-      "name": "Turquoise"
+      "name": "Turquoise",
+      "type": "secondary"
     },
     {
       "colorCode": "WTE",
       "hexCode": "#FFFFFF",
-      "name": "White"
+      "name": "White",
+      "type": "primary"
     },
     {
       "colorCode": "YLW",
       "hexCode": "#FFFF00",
-      "name": "Yellow"
+      "name": "Yellow",
+      "type": "primary"
     }
   ]
 }

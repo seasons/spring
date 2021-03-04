@@ -1,12 +1,7 @@
 import { Container, Grid, Typography } from "@material-ui/core"
 import React from "react"
-import { HistogramChart } from "./HistogramChart"
-import { LatestSignups } from "./LatestSignups"
 import { NumberWidget } from "./NumberWidget"
-import { RealTimeChart } from "./RealTimeChart"
-import { TeamTasks } from "./TeamTasks"
 import { MoneyWidget } from "./MoneyWidget"
-import { Header } from "components"
 import { gql } from "apollo-boost"
 import { Loading } from "@seasons/react-admin"
 import { useQuery } from "react-apollo"
@@ -67,6 +62,10 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
     return <Loading />
   }
 
+  const getPercentageOfRefferingCustomersValue = data =>
+    `${(parseFloat(data.result.percentage_of_customers_with_successful_referral) * 100).toFixed(2)}%`
+  const getAverageReferralsPerReferringCustomerValue = data =>
+    `${parseFloat(data.result.average_referrals_per_referring_customers).toFixed(2)}`
   return (
     <Container maxWidth={false}>
       <Box mt={6}>
@@ -81,6 +80,26 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
 
           <Grid item lg={4} sm={6} xs={12}>
             <NumberWidget data={getElementForSlug("waitlisted-and-admissable-users")} icon={<GroupAddIcon />} />
+          </Grid>
+        </Grid>
+        <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
+          <Typography variant="h3">Virality</Typography>
+        </Box>
+        <Grid container spacing={3}>
+          <Grid item lg={4} sm={6} xs={12}>
+            <NumberWidget
+              data={getElementForSlug("percentage-of-referring-customers")}
+              icon={<GroupAddIcon />}
+              getValue={getPercentageOfRefferingCustomersValue}
+            />
+          </Grid>
+
+          <Grid item lg={4} sm={6} xs={12}>
+            <NumberWidget
+              data={getElementForSlug("avg-referrals-per-referring-customer")}
+              icon={<GroupAddIcon />}
+              getValue={getAverageReferralsPerReferringCustomerValue}
+            />
           </Grid>
         </Grid>
 

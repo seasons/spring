@@ -256,6 +256,8 @@ export interface ProductEditQuery_product {
   type: ProductType | null
   productFit: ProductFit | null
   buyNewEnabled: boolean
+  buyUsedEnabled: boolean
+  buyUsedPrice: number | null
   season: ProductEditQuery_product_season | null
   tier: ProductEditQuery_product_tier
   color: ProductEditQuery_product_color
