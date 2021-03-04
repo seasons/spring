@@ -134,7 +134,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <Button
                   variant="outlined"
                   onClick={() => {
-                    window.open(reservation?.returnedPackage?.shippingLabel?.trackingURLL, "_blank")
+                    window.open(reservation?.returnedPackage?.shippingLabel?.trackingURL, "_blank")
                   }}
                 >
                   Track
