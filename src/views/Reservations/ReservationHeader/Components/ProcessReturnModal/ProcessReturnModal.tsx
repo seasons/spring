@@ -38,7 +38,6 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
     barcodeMaps[product.barcode] = {
       productUID: product.seasonsUID,
       returned: false,
-      type: "",
       damageType: [],
       productStatus: "Dirty",
       notes: "",
