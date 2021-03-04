@@ -20,7 +20,7 @@ import { useMutation } from "react-apollo"
 export const SUBMIT_QA_ENTRY = gql`
   mutation SubmitQAEntry(
     $notes: String!
-    $type: PhysicalProductDamageType!
+    $type: PhysicalProductDamageType
     $damageTypes: [PhysicalProductDamageType!]
     $physicalProductID: ID!
     $userID: ID!

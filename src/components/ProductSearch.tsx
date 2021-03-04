@@ -10,7 +10,7 @@ import { SearchResultCard } from "components/Search/SearchResultCard"
 
 const PRODUCT_SEARCH = gql`
   query ProductSearch($query: String!) {
-    search(query: $query) {
+    search(query: $query, options: { includeTypes: [Product] }) {
       kindOf
       __typename
       data {
