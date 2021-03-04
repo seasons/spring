@@ -10,12 +10,13 @@ import IconButton from "@material-ui/core/IconButton"
 import Typography from "@material-ui/core/Typography"
 import ColorIcon from "@material-ui/icons/Brightness1"
 import { red } from "@material-ui/core/colors"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import { Box, Table, TableBody, TableCell, TableRow, Chip, Divider, Button } from "@material-ui/core"
+import NavigateNextIcon from "@material-ui/icons/NavigateNext"
+import { useHistory } from "react-router-dom"
+import { Box, Table, TableBody, TableCell, TableRow, Chip, Divider } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { WarehouseLocationPopover } from "components/WarehouseLocationPopover"
 
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 export const ProductCard = props => {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
-  const [showModal, toggleModal] = useState(false)
+  const router = useHistory()
 
   const { product: physicalProduct } = props
   const { product } = physicalProduct?.productVariant
@@ -63,12 +64,17 @@ export const ProductCard = props => {
           title={name}
           subheader={brand.name}
           action={
-            <IconButton aria-label="settings">
-              <MoreHorizIcon />
+            <IconButton
+              aria-label="settings"
+              onClick={() => {
+                router.push(`/inventory/product/variant/physicalProduct/${physicalProduct.id}/manage`)
+              }}
+            >
+              <NavigateNextIcon />
             </IconButton>
           }
         />
-        <CardMedia className={classes.media} image={image.url} title="Paella dish" />
+        <CardMedia className={classes.media} image={image.url} />
         <Divider />
         <Table>
           <TableBody>
