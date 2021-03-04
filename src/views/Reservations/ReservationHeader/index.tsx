@@ -13,6 +13,8 @@ import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessRetur
 import { UpdateStatusModal } from "./Components/UpdateStatusModal/UpdateStatusModal"
 import { SUBMIT_QA_ENTRY } from "components/ProductQAModal"
 import { useSelector } from "react-redux"
+import { omit } from "lodash"
+import { ProductStateInput } from "generated/globalTypes"
 
 export const ReservationHeader = ({ data }) => {
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
@@ -133,7 +135,9 @@ export const ReservationHeader = ({ data }) => {
               const mutationData: ProcessReservationMutationVariables = {
                 data: {
                   reservationNumber: data.reservationNumber,
-                  productStates: Object.values(productStates),
+                  productStates: Object.values(productStates).map((productState: any) =>
+                    omit(productState, "damageType")
+                  ) as ProductStateInput[],
                 },
               }
 
