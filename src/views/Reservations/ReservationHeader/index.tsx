@@ -138,13 +138,17 @@ export const ReservationHeader = ({ data }) => {
               }
 
               // Create PhysicalProductQualityEntry records
-              for (let productState of Object.values(productStates) as any[]) {
+              const productStateArr = Object.values(productStates) as any[]
+
+              for (let i = 0; i < productStateArr.length; i++) {
+                const productState = productStateArr[i]
+                const product = data.products?.[i]
                 await submitQAEntry({
                   variables: {
                     notes: productState.notes,
                     type: productState.damageType?.[0],
                     damageTypes: productState.damageType,
-                    physicalProductID: data.id,
+                    physicalProductID: product.id,
                     userID: session.user.id,
                   },
                 })
