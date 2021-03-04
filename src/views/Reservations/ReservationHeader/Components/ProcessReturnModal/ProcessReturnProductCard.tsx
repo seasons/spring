@@ -16,7 +16,9 @@ const ProductImage = ({ product }: { product: GetReservation_products }) => {
 }
 
 export const ProcessReturnProductCard = ({ product, productState, onStateChange }) => {
-  const [values, setValues] = useState(productState ?? { productStatus: "Dirty", returned: false, notes: "" })
+  const [values, setValues] = useState(
+    productState ?? { productStatus: "Dirty", damageType: [], returned: false, notes: "" }
+  )
 
   useEffect(() => {
     setValues({
@@ -71,6 +73,37 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
                   <MenuItem value={"Dirty"}>Dirty</MenuItem>
                   <MenuItem value={"Damaged"}>Damaged</MenuItem>
                   <MenuItem value={"PermanentlyDamaged"}>Permanently Damaged</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Box mb={1}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel id="process-return-damage-type">Damage Types</InputLabel>
+                <Select
+                  id="process-return-damage-type"
+                  label="Damage Type"
+                  variant="outlined"
+                  value={values.damageType}
+                  disabled={!productState.returned}
+                  onChange={e => {
+                    const newValue = e.target.value
+                    const updatedState = {
+                      ...values,
+                      damageType: newValue,
+                    }
+
+                    setValues(updatedState)
+                    onStateChange(values)
+                  }}
+                  multiple
+                  fullWidth
+                >
+                  <MenuItem value="BarcodeMissing">Barcode Missing</MenuItem>
+                  <MenuItem value="ButtonMissing">Button Missing</MenuItem>
+                  <MenuItem value="Stain">Stain</MenuItem>
+                  <MenuItem value="Smell">Smell</MenuItem>
+                  <MenuItem value="Tear">Tear</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
                 </Select>
               </FormControl>
             </Box>

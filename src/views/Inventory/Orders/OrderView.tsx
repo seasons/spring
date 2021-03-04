@@ -1,22 +1,77 @@
 import { ComponentError } from "components"
-import React from "react"
+import React, { useState } from "react"
 import { Loading, useQueryWithStore } from "@seasons/react-admin"
 
 import { Header } from "components"
 import { Container, Box, Typography, Grid } from "@material-ui/core"
 import { OrderInfo } from "./Components/OrderInfo"
 import { OrderLineItemGrid } from "./Components/OrderLineItemGrid"
+import { useRefresh } from "@seasons/react-admin"
+import { gql } from "apollo-boost"
+import { useMutation } from "react-apollo"
+import { Snackbar, SnackbarState } from "components/Snackbar"
+import { Order } from "generated/Order"
+
+const UPDATE_ORDER_STATUS = gql`
+  mutation UpdateOrderStatus($orderID: ID!, $status: OrderStatus!) {
+    updateOrderStatus(orderID: $orderID, status: $status) {
+      id
+      status
+    }
+  }
+`
 
 export const OrderView = ({ match }) => {
   const { orderID } = match.params
-  // Get the data
-  const { data, loading, loaded, error } = useQueryWithStore({
+  const refresh = useRefresh()
+  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
+    show: false,
+    message: "",
+    status: "success",
+  })
+
+  const { data, loading, loaded, error } = useQueryWithStore<Order>({
     type: "getOne",
     resource: "Order",
     payload: { id: orderID },
   })
+  const [updateOrderStatus] = useMutation(UPDATE_ORDER_STATUS, {
+    onCompleted: () => {
+      toggleSnackbar({
+        show: true,
+        message: "Order status updated",
+        status: "success",
+      })
+    },
+    onError: error => {
+      toggleSnackbar({
+        show: true,
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
+
   if (!loaded || loading) return <Loading />
   if (error || !data) return <ComponentError />
+
+  const isOrderFulfilled = data.status === "Fulfilled"
+
+  let primaryButton = () => {
+    if (!isOrderFulfilled && data.status !== "Drafted") {
+      return {
+        text: "Mark as Fulfilled",
+        action: async () => {
+          await updateOrderStatus({
+            variables: { orderID, status: "Fulfilled" },
+          })
+          refresh()
+        },
+      }
+    }
+
+    return null
+  }
 
   return (
     <Container maxWidth={false}>
@@ -25,21 +80,14 @@ export const OrderView = ({ match }) => {
         breadcrumbs={[
           {
             title: "Orders",
-            url: "/inventory/orders",
+            url: "/orders",
           },
           {
             title: `Order: ${data.orderNumber}`,
-            url: `/inventory/orders/${data.id}`,
+            url: `/orders/${data.id}`,
           },
         ]}
-        menuItems={[
-          {
-            text: "Update status",
-            action: () => {
-              // toggleUpdateStatusModal(true)
-            },
-          },
-        ]}
+        primaryButton={primaryButton()}
       />
       <Box>
         <Grid container spacing={3}>
@@ -61,6 +109,7 @@ export const OrderView = ({ match }) => {
           </Grid>
         </Grid>
       </Box>
+      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

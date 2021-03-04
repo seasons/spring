@@ -118,17 +118,27 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
             <TableRow>
               <TableCell>Sent Package</TableCell>
               <TableCell>
-                <a href={reservation?.sentPackage?.shippingLabel?.trackingURL} target="_blank">
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    window.open(reservation?.sentPackage?.shippingLabel?.trackingURL, "_blank")
+                  }}
+                >
                   Track
-                </a>
+                </Button>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Return Package</TableCell>
               <TableCell>
-                <a href={reservation?.returnedPackage?.shippingLabel?.trackingURL} target="_blank">
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    window.open(reservation?.returnedPackage?.shippingLabel?.trackingURLL, "_blank")
+                  }}
+                >
                   Track
-                </a>
+                </Button>
               </TableCell>
             </TableRow>
           </TableBody>

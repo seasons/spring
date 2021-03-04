@@ -38,6 +38,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
     barcodeMaps[product.barcode] = {
       productUID: product.seasonsUID,
       returned: false,
+      damageType: [],
       productStatus: "Dirty",
       notes: "",
     }
@@ -135,9 +136,9 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
           <Box mt={1} mb={2}>
             {reservation.products.map(product => (
               <ProcessReturnProductCard
+                key={product.id}
                 product={product}
                 productState={productStates[product.barcode]}
-                key={product.id}
                 onStateChange={state => {
                   setProductStates({
                     ...productStates,

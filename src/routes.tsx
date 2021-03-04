@@ -24,7 +24,7 @@ import {
 import { NotificationsList } from "views/Notifications/NotificationsList"
 import { CreateFitPicView, FitPicView } from "views/Community"
 import { CollectionsList, CollectionsEdit, CollectionsCreate } from "views/Collections"
-import { OrderView } from "views/Inventory/Orders/OrderView"
+import { OrderList, OrderView } from "views/Inventory/Orders"
 
 export default [
   {
@@ -133,11 +133,6 @@ export default [
         ),
       },
       {
-        path: "/inventory/orders/:orderID",
-        exact: true,
-        component: props => <OrderView {...props} basePath="/inventory/orders" resource="Order" />,
-      },
-      {
         path: "/members",
         exact: true,
         component: props => <MemberList {...props} basePath="/members" resource="Customer" />,
@@ -156,6 +151,16 @@ export default [
         path: "/reservation/:id/:tab?",
         exact: true,
         component: props => <ReservationView {...props} basePath="/reservation" resource="Reservation" />,
+      },
+      {
+        path: "/orders",
+        exact: true,
+        component: props => <OrderList {...props} basePath="/orders" resource="Order" />,
+      },
+      {
+        path: "/orders/:orderID",
+        exact: true,
+        component: props => <OrderView {...props} basePath="/orders" resource="Order" />,
       },
       {
         path: "/notifications",

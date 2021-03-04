@@ -202,6 +202,27 @@ export enum LocationType {
   Warehouse = "Warehouse",
 }
 
+export enum OrderLineItemRecordType {
+  ExternalProduct = "ExternalProduct",
+  Package = "Package",
+  PhysicalProduct = "PhysicalProduct",
+  ProductVariant = "ProductVariant",
+}
+
+export enum OrderStatus {
+  Cancelled = "Cancelled",
+  Drafted = "Drafted",
+  Fulfilled = "Fulfilled",
+  Returned = "Returned",
+  Submitted = "Submitted",
+}
+
+export enum OrderType {
+  External = "External",
+  New = "New",
+  Used = "Used",
+}
+
 export enum PackageStatus {
   Blocked = "Blocked",
   Cancelled = "Cancelled",
@@ -3783,7 +3804,12 @@ export interface PhysicalProductQualityReportCreateWithoutPhysicalProductInput {
   id?: string | null
   user: UserCreateOneInput
   damageType?: PhysicalProductDamageType | null
+  damageTypes?: PhysicalProductQualityReportCreatedamageTypesInput | null
   notes?: string | null
+}
+
+export interface PhysicalProductQualityReportCreatedamageTypesInput {
+  set?: PhysicalProductDamageType[] | null
 }
 
 export interface PhysicalProductQualityReportScalarWhereInput {
@@ -3842,6 +3868,7 @@ export interface PhysicalProductQualityReportScalarWhereInput {
 
 export interface PhysicalProductQualityReportUpdateManyDataInput {
   damageType?: PhysicalProductDamageType | null
+  damageTypes?: PhysicalProductQualityReportUpdatedamageTypesInput | null
   notes?: string | null
 }
 
@@ -3870,7 +3897,12 @@ export interface PhysicalProductQualityReportUpdateWithWhereUniqueWithoutPhysica
 export interface PhysicalProductQualityReportUpdateWithoutPhysicalProductDataInput {
   user?: UserUpdateOneRequiredInput | null
   damageType?: PhysicalProductDamageType | null
+  damageTypes?: PhysicalProductQualityReportUpdatedamageTypesInput | null
   notes?: string | null
+}
+
+export interface PhysicalProductQualityReportUpdatedamageTypesInput {
+  set?: PhysicalProductDamageType[] | null
 }
 
 export interface PhysicalProductQualityReportUpsertWithWhereUniqueWithoutPhysicalProductInput {
