@@ -48,8 +48,6 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
     ...barcodeMaps,
   })
 
-  console.log(reservation.products)
-
   const [barcode, setBarcode] = useState("")
   const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
     show: false,
