@@ -5,7 +5,7 @@ import gql from "graphql-tag"
 import { useRefresh } from "@seasons/react-admin"
 
 const PUBLISH_PRODUCTS = gql`
-  mutation PublishProducts($productIDs: [String!]) {
+  mutation PublishProducts($productIDs: [ID!]) {
     publishProducts(productIDs: $productIDs) {
       message
       validatedIDs

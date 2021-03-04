@@ -12,7 +12,7 @@ export const AuthorizeButton: React.FC<ActionButtonProps & { buttonProps?: Butto
         <Button
           size="small"
           variant="outlined"
-          color="primary"
+          color="secondary"
           onClick={() => props.action(props.record)}
           {...props.buttonProps}
         >

@@ -166,7 +166,10 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
                   <Grid item>
                     <ActionButtons record={member}>
                       <EditButton onClick={handleEditOpen} />
-                      <AuthorizeButton action={openConfirmInviteModal} />
+                      <AuthorizeButton
+                        action={openConfirmInviteModal}
+                        buttonProps={{ variant: "contained", color: "secondary" }}
+                      />
                     </ActionButtons>
                   </Grid>
                 </Grid>

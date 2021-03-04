@@ -110,7 +110,7 @@ export const getLocaleDateString = (date?: string) => {
  * inside the New product flow.
  * @param values: set of values retrieved from the Product Create form
  */
-export const getProductUpsertData = (values: any) => {
+export const getProductUpsertData: any = (values: any) => {
   const {
     architecture,
     brand: brandID,

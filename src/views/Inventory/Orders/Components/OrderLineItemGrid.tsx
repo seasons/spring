@@ -1,7 +1,8 @@
 import React from "react"
-import { Table, TableHead, TableCell, TableBody, TableRow, Card, Box, Typography, Checkbox } from "@material-ui/core"
+import { Table, TableHead, TableCell, TableBody, TableRow, Card, Box, Checkbox } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { Image } from "components/Image"
+import { formatPrice } from "utils/price"
 
 export const OrderLineItemRow = ({ lineItem }) => {
   const { productVariant, recordType, status, taxPrice, price, needShipping } = lineItem
@@ -18,12 +19,6 @@ export const OrderLineItemRow = ({ lineItem }) => {
       name = "Shipping"
       break
   }
-
-  const formatPrice = price =>
-    (price || 0).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    })
 
   return (
     <TableRow>

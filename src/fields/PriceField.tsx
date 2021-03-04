@@ -1,6 +1,7 @@
 import React from "react"
 import get from "lodash/get"
 import { Typography } from "@material-ui/core"
+import { formatPrice } from "utils/price"
 
 interface PriceFieldProps {
   record?: any
@@ -13,10 +14,7 @@ export const PriceField: React.FC<PriceFieldProps> = ({ record, source }) => {
 
   return (
     <Typography component="span" variant="body2">
-      {value.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      })}
+      {formatPrice(value)}
     </Typography>
   )
 }

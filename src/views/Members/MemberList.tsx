@@ -18,7 +18,7 @@ const ViewButton = (props: ActionButtonProps) => {
   const id = props.record?.id
   const entityLink = `/members/${id}/account`
   return (
-    <Button component={RouterLink} size="small" to={entityLink} variant="contained" color="secondary">
+    <Button component={RouterLink} size="small" to={entityLink} variant="contained" color="primary">
       View
     </Button>
   )
