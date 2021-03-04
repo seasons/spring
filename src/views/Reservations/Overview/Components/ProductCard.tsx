@@ -124,6 +124,14 @@ export const ProductCard = props => {
           <Divider />
           <Table>
             <TableRow>
+              <TableCell style={{ paddingRight: 0 }}>Barcode</TableCell>
+              <TableCell align="right" style={{ paddingLeft: 0 }}>
+                <Typography variant="body1" color="textSecondary">
+                  {physicalProduct.barcode}
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
               <TableCell style={{ paddingRight: 0 }}>SUID</TableCell>
               <TableCell align="right" style={{ paddingLeft: 0 }}>
                 <Typography variant="body1" color="textSecondary">

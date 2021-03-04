@@ -28,7 +28,6 @@ export const WarehouseLocationPopover = props => {
   return (
     <div>
       <Typography
-        color="secondary"
         style={{ letterSpacing: 1 }}
         aria-owns={open ? "mouse-over-popover" : undefined}
         aria-haspopup="true"
