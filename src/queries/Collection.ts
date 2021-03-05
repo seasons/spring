@@ -10,6 +10,8 @@ const CollectionFragment = gql`
       url
     }
     title
+    displayTextOverlay
+    textOverlayColor
     subTitle
     descriptions
     published

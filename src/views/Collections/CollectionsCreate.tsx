@@ -50,7 +50,7 @@ export const CollectionsCreate: React.FC = () => {
   const onSubmit = async values => {
     const numImages = 4
     const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
-    const { title, subTitle, published, description, placements } = values
+    const { title, subTitle, published, description, placements, displayTextOverlay, textOverlayColor } = values
     setIsSubmitting(true)
     const result = await upsertCollection({
       variables: {
@@ -59,6 +59,8 @@ export const CollectionsCreate: React.FC = () => {
           title,
           subTitle,
           published,
+          displayTextOverlay,
+          textOverlayColor,
           placements,
           productIDs: selectedProductIDs,
           descriptions: { set: [description] },
@@ -81,6 +83,8 @@ export const CollectionsCreate: React.FC = () => {
     title: "",
     subTitle: "",
     description: "",
+    textOverlayColor: "",
+    displayTextOverlay: false,
     published: false,
   }
 

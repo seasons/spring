@@ -14,7 +14,7 @@ export interface MoneyWidgetProps {
 
 export const MoneyWidget: React.FC<MoneyWidgetProps> = ({ data }) => {
   const displayData: { value: string; currency: string; difference: number | null } = {
-    value: Object.values(data.result)[0].toLocaleString("en-US", {
+    value: Object.values(data?.result ?? [""])[0].toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
       minimumFractionDigits: 0,
@@ -32,7 +32,7 @@ export const MoneyWidget: React.FC<MoneyWidgetProps> = ({ data }) => {
           gutterBottom
           variant="overline"
         >
-          {data.title}
+          {data?.title}
         </Typography>
         <Box display="flex" alignItems="center" flexWrap="wrap">
           <Typography variant="h3" style={{ color: theme.palette.primary.contrastText }}>

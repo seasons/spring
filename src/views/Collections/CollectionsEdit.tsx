@@ -9,7 +9,6 @@ import { UPSERT_COLLECTION } from "./mutations"
 import { useParams } from "react-router-dom"
 import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
-import { SelectChoice } from "fields/SelectField"
 
 export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   const { collectionID } = useParams()
@@ -71,13 +70,15 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   const onSubmit = async values => {
     const numImages = 4
     const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
-    const { title, subTitle, published, description, placements } = values
+    const { title, subTitle, published, description, placements, displayTextOverlay, textOverlayColor } = values
     setIsSubmitting(true)
     await upsertCollection({
       variables: {
         data: {
           id: collectionID,
           images,
+          displayTextOverlay,
+          textOverlayColor,
           title,
           subTitle,
           published,
@@ -93,6 +94,7 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   let initialValues = {} as any
 
   if (data) {
+    console.log("data", data)
     initialValues = {
       images: data.images,
       title: data.title,
@@ -100,6 +102,8 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
       published: data.published,
       description: data.descriptions?.[0],
       placements: data.placements,
+      displayTextOverlay: data.displayTextOverlay,
+      textOverlayColor: data.textOverlayColor,
     }
     data.images?.forEach((image, index) => {
       initialValues[`image_${index}`] = image.url
