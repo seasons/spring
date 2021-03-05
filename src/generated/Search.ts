@@ -9,6 +9,10 @@ import { SearchResultType, InventoryStatus } from "./globalTypes"
 // GraphQL query operation: Search
 // ====================================================
 
+export interface Search_search_data_BrandSearchResultData {
+  __typename: "BrandSearchResultData" | "CustomerSearchResultData"
+}
+
 export interface Search_search_data_PhysicalProductSearchResultData {
   __typename: "PhysicalProductSearchResultData"
   id: string
@@ -31,6 +35,7 @@ export interface Search_search_data_ProductSearchResultData {
 }
 
 export type Search_search_data =
+  | Search_search_data_BrandSearchResultData
   | Search_search_data_PhysicalProductSearchResultData
   | Search_search_data_ProductSearchResultData
 
