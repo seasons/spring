@@ -9,8 +9,8 @@ import { SearchResultType } from "./globalTypes"
 // GraphQL query operation: ProductSearch
 // ====================================================
 
-export interface ProductSearch_search_data_PhysicalProductSearchResultData {
-  __typename: "PhysicalProductSearchResultData"
+export interface ProductSearch_search_data_BrandSearchResultData {
+  __typename: "BrandSearchResultData" | "CustomerSearchResultData" | "PhysicalProductSearchResultData"
 }
 
 export interface ProductSearch_search_data_ProductSearchResultData {
@@ -23,7 +23,7 @@ export interface ProductSearch_search_data_ProductSearchResultData {
 }
 
 export type ProductSearch_search_data =
-  | ProductSearch_search_data_PhysicalProductSearchResultData
+  | ProductSearch_search_data_BrandSearchResultData
   | ProductSearch_search_data_ProductSearchResultData
 
 export interface ProductSearch_search {

@@ -86,6 +86,20 @@ export const Overview: React.FC<{
           <Spacer mt={3} />
           <Grid container spacing={2}>
             <Grid item xs={6}>
+              <Text variant="h6">Display overlay text</Text>
+              <Spacer mt={1} />
+              <SelectField name="displayTextOverlay" choices={trueOrFalseSelectFields} />
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Overlay color</Text>
+              <Spacer mt={1} />
+              <TextField name="textOverlayColor" placeholder="Optional, defaults #FFFFFF" />
+            </Grid>
+          </Grid>
+
+          <Spacer mt={3} />
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
               <Text variant="h6">Product search</Text>
               <Spacer mt={1} />
               <ProductSearch selectedProductIDs={selectedProductIDs} setSelectedProductIDs={setSelectedProductIDs} />

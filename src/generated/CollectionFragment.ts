@@ -40,6 +40,8 @@ export interface CollectionFragment {
   slug: string
   images: CollectionFragment_images[] | null
   title: string | null
+  displayTextOverlay: boolean
+  textOverlayColor: string | null
   subTitle: string | null
   descriptions: string[]
   published: boolean

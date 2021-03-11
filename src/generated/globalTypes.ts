@@ -1252,6 +1252,8 @@ export interface CollectionUpsertInput {
   productIDs?: (string | null)[] | null
   published?: boolean | null
   placements?: (CollectionPlacement | null)[] | null
+  displayTextOverlay?: boolean | null
+  textOverlayColor?: string | null
 }
 
 export interface ColorCreateInput {

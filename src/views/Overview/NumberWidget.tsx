@@ -37,7 +37,7 @@ export const NumberWidget: React.FC<NumberWidgetProps> = ({
             gutterBottom
             variant="overline"
           >
-            {data.title}
+            {data?.title}
           </Typography>
         </Box>
         <Box display="flex" alignItems="center" flexWrap="wrap">
