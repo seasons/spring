@@ -3,17 +3,20 @@ import { Table, TableHead, TableCell, TableBody, TableRow, Card, Box, Checkbox }
 import { Indicator } from "components/Indicator"
 import { Image } from "components/Image"
 import { formatPrice } from "utils/price"
+import Typography from "material-ui/styles/typography"
 
 export const OrderLineItemRow = ({ lineItem }) => {
   const { productVariant, recordType, status, taxPrice, price, needShipping } = lineItem
 
   let name = ""
   let image = { url: "" }
+  let physicalProducts = []
   switch (recordType) {
     case "PhysicalProduct":
       const product = productVariant.product
       name = product?.name
       image = product?.images?.[0]
+      physicalProducts = productVariant.physicalProducts
       break
     case "Package":
       name = "Shipping"
@@ -29,6 +32,16 @@ export const OrderLineItemRow = ({ lineItem }) => {
         <Box ml={1} style={{ display: "inline-block" }}>
           {status}
         </Box>
+      </TableCell>
+      <TableCell>
+        {physicalProducts.map((physicalProduct: any) => {
+          return <Box>{physicalProduct?.seasonsUID}</Box>
+        })}
+      </TableCell>
+      <TableCell>
+        {physicalProducts.map((physicalProduct: any) => {
+          return <Box>{physicalProduct?.warehouseLocation?.barcode}</Box>
+        })}
       </TableCell>
       <TableCell>
         <Checkbox checked={needShipping} />
@@ -54,6 +67,8 @@ export const OrderLineItemGrid: React.FC<ProductGridProps> = props => {
             <TableCell>Image</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Status</TableCell>
+            <TableCell>SUIDs</TableCell>
+            <TableCell>Locations</TableCell>
             <TableCell>Needs Shipping</TableCell>
             <TableCell>Tax</TableCell>
             <TableCell>Price</TableCell>

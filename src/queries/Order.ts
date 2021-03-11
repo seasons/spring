@@ -78,6 +78,13 @@ const OrderView = gql`
           id
           name
         }
+        physicalProducts {
+          seasonsUID
+          warehouseLocation {
+            id
+            barcode
+          }
+        }
         product {
           id
           name
