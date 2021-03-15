@@ -1,7 +1,7 @@
 import React from "react"
 import { Text, Spacer } from "components"
 import { Grid } from "@material-ui/core"
-import { TextField, CheckboxField } from "fields"
+import { TextField } from "fields"
 
 type Props = {
   size: string | null
@@ -26,3 +26,7 @@ export const VariantPriceSection: React.FC<Props> = ({ size, shopifyProductVaria
     </>
   )
 }
+
+const ShopifyProductVariantSelect: React.FC<{ onClick: (shopifyProductVariantExternalId: string) => void }> = ({ onClick }) => (
+
+)
