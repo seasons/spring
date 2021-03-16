@@ -53,7 +53,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
       sku: variant.sku,
       size: variant.internalSize?.display,
       price: variant.price,
-      shopifyProductVariantExternalId: variant?.shopifyProductVariant?.externalId,
+      shopifyProductVariant: variant?.shopifyProductVariant,
     }))
   } else {
     return null
@@ -122,10 +122,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
               manufacturerSizes={manufacturerSizes}
               bottomSizes={data?.bottomSizes}
             />
-            <VariantPriceSection
-              size={variant.size}
-              shopifyProductVariantExternalId={variant.shopifyProductVariantExternalId}
-            />
+            <VariantPriceSection size={variant.size} shopifyProductVariant={variant.shopifyProductVariant} />
           </>
         ))}
         {isEditing && (

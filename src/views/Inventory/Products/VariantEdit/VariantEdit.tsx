@@ -81,7 +81,7 @@ export const VariantEdit: React.FC = () => {
       id,
       productType: internalSize.productType,
       shopifyProductVariant: {
-        externalId: values[`${internalSize.display}_shopifyProductVariantExternalId`] || null,
+        externalId: values[`${internalSize.display}_shopifyProductVariant`]?.externalID || null,
       },
       ...variantSizeData,
     }

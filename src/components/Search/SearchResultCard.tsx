@@ -60,6 +60,25 @@ export const SearchResultCard = ({ result }) => {
           </Box>
         </Box>
       )
+    case "ShopifyProductVariant":
+      return (
+        <Box display="flex" flexDirection="row" pt={1} width="100%">
+          <Box>
+            <Image url={data.image} size="medium" />
+          </Box>
+          <Box ml={1} mb={2} flex={1}>
+            <Typography variant="body2" color="textPrimary">
+              {data?.displayName}
+            </Typography>
+            <Typography variant="body2" color="textPrimary">
+              {data?.title}
+            </Typography>
+            <Typography variant="body2" color="textPrimary">
+              {data?.externalId}
+            </Typography>
+          </Box>
+        </Box>
+      )
     case "PhysicalProduct":
       return (
         <Box width="100%">
