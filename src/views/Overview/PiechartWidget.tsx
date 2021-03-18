@@ -1,7 +1,6 @@
 import React from "react"
-import { Avatar as MuiAvatar, Box, Card as MuiCard, fade, styled as muiStyled, Typography } from "@material-ui/core"
+import { Box, Card as MuiCard, styled as muiStyled, Typography } from "@material-ui/core"
 import Chart from "react-apexcharts"
-import { CardContent, useTheme } from "@material-ui/core"
 import { theme } from "theme/theme"
 import { upperFirst } from "lodash"
 
