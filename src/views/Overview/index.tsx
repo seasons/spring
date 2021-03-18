@@ -5,10 +5,12 @@ import { MoneyWidget } from "./MoneyWidget"
 import { gql } from "apollo-boost"
 import { Loading } from "@seasons/react-admin"
 import { useQuery } from "react-apollo"
+import { Spacer } from "components"
 
 import PeopleIcon from "@material-ui/icons/People"
 import GroupAddIcon from "@material-ui/icons/GroupAdd"
 import { Box } from "@material-ui/core"
+import { PiechartWidget } from "./PiechartWidget"
 
 export interface OverviewViewProps {}
 
@@ -66,6 +68,8 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
     `${(parseFloat(data.result.percentage_of_customers_with_successful_referral) * 100).toFixed(2)}%`
   const getAverageReferralsPerReferringCustomerValue = data =>
     `${parseFloat(data.result.average_referrals_per_referring_customers).toFixed(2)}`
+  console.log(data)
+  console.log(getElementForSlug("account-creations-by-platform"))
   return (
     <Container maxWidth={false}>
       <Box mt={6}>
@@ -80,6 +84,18 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
 
           <Grid item lg={4} sm={6} xs={12}>
             <NumberWidget data={getElementForSlug("waitlisted-and-admissable-users")} icon={<GroupAddIcon />} />
+          </Grid>
+        </Grid>
+        <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
+          <Typography variant="h3">Financials</Typography>
+        </Box>
+        <Grid container spacing={3}>
+          <Grid item lg={6} sm={6} xs={12}>
+            <MoneyWidget data={getElementForSlug("mrr-(dollar)")} />
+          </Grid>
+
+          <Grid item lg={6} sm={6} xs={12}>
+            <MoneyWidget data={getElementForSlug("arr-(dollar)")} />
           </Grid>
         </Grid>
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
@@ -102,20 +118,20 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             />
           </Grid>
         </Grid>
-
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
-          <Typography variant="h3">Financials</Typography>
+          <Typography variant="h3">Key Actions by Platform</Typography>
         </Box>
         <Grid container spacing={3}>
-          <Grid item lg={6} sm={6} xs={12}>
-            <MoneyWidget data={getElementForSlug("mrr-(dollar)")} />
+          <Grid item lg={4} sm={6} xs={12}>
+            <PiechartWidget
+              data={{ ...getElementForSlug("account-creations-by-platform"), subtitle: "Last 30 Days" }}
+            />
           </Grid>
-
-          <Grid item lg={6} sm={6} xs={12}>
-            <MoneyWidget data={getElementForSlug("arr-(dollar)")} />
+          <Grid item lg={4} sm={6} xs={12}>
+            <PiechartWidget data={{ ...getElementForSlug("reservations-by-platform"), subtitle: "Last 30 days" }} />
           </Grid>
         </Grid>
-
+        <Spacer mb={2} />
         {/* <Grid container spacing={3}>
           <Grid item lg={3} xs={12}>
             <RealTimeChart />
