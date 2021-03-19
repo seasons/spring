@@ -11,6 +11,7 @@ import PeopleIcon from "@material-ui/icons/People"
 import GroupAddIcon from "@material-ui/icons/GroupAdd"
 import { Box } from "@material-ui/core"
 import { PiechartWidget } from "./PiechartWidget"
+import { FunnelWidget } from "./FunnelWidget"
 
 export interface OverviewViewProps {}
 
@@ -85,6 +86,28 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
           <Grid item lg={4} sm={6} xs={12}>
             <NumberWidget data={getElementForSlug("waitlisted-and-admissable-users")} icon={<GroupAddIcon />} />
           </Grid>
+        </Grid>
+        <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
+          <Typography variant="h3">Acquisition</Typography>
+        </Box>
+        <Grid container spacing={3}>
+          <Grid item lg={4} sm={6} xs={12}>
+            <FunnelWidget
+              data={{
+                ...getElementForSlug("web-acquisition-funnel"),
+                subtitle: "Last 30 Days",
+                title: "Web Acquisition",
+              }}
+            />
+          </Grid>
+
+          {/* <Grid item lg={4} sm={6} xs={12}>
+            <NumberWidget data={getElementForSlug("paused-members")} />
+          </Grid>
+
+          <Grid item lg={4} sm={6} xs={12}>
+            <NumberWidget data={getElementForSlug("waitlisted-and-admissable-users")} icon={<GroupAddIcon />} />
+          </Grid> */}
         </Grid>
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
           <Typography variant="h3">Financials</Typography>
