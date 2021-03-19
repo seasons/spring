@@ -26,7 +26,7 @@ export const FunnelWidget = ({ data }) => {
         bar: {
           borderRadius: 4,
           dataLabels: {
-            position: "center", // top, center, bottom
+            position: "top", // top, center, bottom
           },
         },
       },

@@ -88,28 +88,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
           </Grid>
         </Grid>
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
-          <Typography variant="h3">Acquisition</Typography>
-        </Box>
-        <Grid container spacing={3}>
-          <Grid item lg={4} sm={6} xs={12}>
-            <FunnelWidget
-              data={{
-                ...getElementForSlug("web-acquisition-funnel"),
-                subtitle: "Last 30 Days",
-                title: "Web Acquisition",
-              }}
-            />
-          </Grid>
-
-          {/* <Grid item lg={4} sm={6} xs={12}>
-            <NumberWidget data={getElementForSlug("paused-members")} />
-          </Grid>
-
-          <Grid item lg={4} sm={6} xs={12}>
-            <NumberWidget data={getElementForSlug("waitlisted-and-admissable-users")} icon={<GroupAddIcon />} />
-          </Grid> */}
-        </Grid>
-        <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
           <Typography variant="h3">Financials</Typography>
         </Box>
         <Grid container spacing={3}>
@@ -121,6 +99,39 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             <MoneyWidget data={getElementForSlug("arr-(dollar)")} />
           </Grid>
         </Grid>
+        <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
+          <Typography variant="h3">Acquisition</Typography>
+        </Box>
+        <Grid container spacing={3}>
+          <Grid item lg={4} sm={6} xs={12}>
+            <FunnelWidget
+              data={{
+                ...getElementForSlug("overall-acquisition-funnel"),
+                subtitle: "Last 30 Days",
+                title: "Acquisition",
+              }}
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <FunnelWidget
+              data={{
+                ...getElementForSlug("web-acquisition-funnel"),
+                subtitle: "Last 30 Days",
+                title: "Web Acquisition",
+              }}
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <FunnelWidget
+              data={{
+                ...getElementForSlug("ios-acquisition-funnel"),
+                subtitle: "Last 30 Days",
+                title: "iOS Acquisition",
+              }}
+            />
+          </Grid>
+        </Grid>
+
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
           <Typography variant="h3">Virality</Typography>
         </Box>
