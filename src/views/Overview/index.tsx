@@ -12,6 +12,7 @@ import GroupAddIcon from "@material-ui/icons/GroupAdd"
 import { Box } from "@material-ui/core"
 import { PiechartWidget } from "./PiechartWidget"
 import { FunnelWidget } from "./FunnelWidget"
+import { LinechartWidget } from "./LinechartWidget"
 
 export interface OverviewViewProps {}
 
@@ -41,26 +42,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
 
   const getElementForSlug = slug => elements.find(e => e.slug === slug)
 
-  const defaultRender = elements =>
-    elements.map(element => {
-      switch (element.type) {
-        case "Count":
-          return (
-            <Grid item lg={3} sm={6} xs={12}>
-              <NumberWidget data={element} />
-            </Grid>
-          )
-        case "Money":
-          return (
-            <Grid item lg={3} sm={6} xs={12}>
-              <MoneyWidget data={element} />
-            </Grid>
-          )
-        default:
-          return null
-      }
-    })
-
   if (loading) {
     return <Loading />
   }
@@ -69,8 +50,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
     `${(parseFloat(data.result.percentage_of_customers_with_successful_referral) * 100).toFixed(2)}%`
   const getAverageReferralsPerReferringCustomerValue = data =>
     `${parseFloat(data.result.average_referrals_per_referring_customers).toFixed(2)}`
-  console.log(data)
-  console.log(getElementForSlug("account-creations-by-platform"))
   return (
     <Container maxWidth={false}>
       <Box mt={6}>
@@ -103,6 +82,14 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
           <Typography variant="h3">Acquisition</Typography>
         </Box>
         <Grid container spacing={3}>
+          <Grid item lg={12} sm={12} xs={12}>
+            <LinechartWidget
+              data={{
+                ...getElementForSlug("accounts-created-per-month"),
+                title: "Accounts Created",
+              }}
+            />
+          </Grid>
           <Grid item lg={4} sm={6} xs={12}>
             <FunnelWidget
               data={{
@@ -112,6 +99,7 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
               }}
             />
           </Grid>
+
           <Grid item lg={4} sm={6} xs={12}>
             <FunnelWidget
               data={{
@@ -166,20 +154,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
           </Grid>
         </Grid>
         <Spacer mb={2} />
-        {/* <Grid container spacing={3}>
-          <Grid item lg={3} xs={12}>
-            <RealTimeChart />
-          </Grid>
-          <Grid item lg={9} xs={12}>
-            <HistogramChart />
-          </Grid>
-          <Grid item lg={5} xl={4} xs={12}>
-            <TeamTasks />
-          </Grid>
-          <Grid item lg={7} xl={8} xs={12}>
-            <LatestSignups />
-          </Grid>
-        </Grid> */}
       </Box>
     </Container>
   )
