@@ -13,6 +13,7 @@ import { Box } from "@material-ui/core"
 import { PiechartWidget } from "./PiechartWidget"
 import { FunnelWidget } from "./FunnelWidget"
 import { LinechartWidget } from "./LinechartWidget"
+import { MapchartWidget } from "./MapchartWidget"
 
 export interface OverviewViewProps {}
 
@@ -64,6 +65,9 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
 
           <Grid item lg={4} sm={6} xs={12}>
             <NumberWidget data={getElementForSlug("waitlisted-and-admissable-users")} icon={<GroupAddIcon />} />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <MapchartWidget />
           </Grid>
         </Grid>
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
