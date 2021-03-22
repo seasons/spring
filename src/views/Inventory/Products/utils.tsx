@@ -73,7 +73,7 @@ export const extractVariantSizeFields = ({
 }) => {
   const sizeData = {} as any
   // We don't include the total count when editing a variant
-  const genericMeasurementKeys = isEdit ? ["weight"] : ["weight", "totalcount"]
+  const genericMeasurementKeys = ["weight", "totalcount"]
   let measurementKeys
   switch (productType) {
     case "Top":

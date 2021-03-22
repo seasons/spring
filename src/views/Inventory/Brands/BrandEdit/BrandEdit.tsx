@@ -9,6 +9,7 @@ import { UPDATE_BRAND } from "../mutations"
 import { useHistory, useParams } from "react-router-dom"
 import { BRAND_EDIT_QUERY } from "queries/Brand"
 import { BrandFields } from "../BrandComponents"
+import { BrandProductTable } from "./BrandProductTable"
 
 export const BrandEdit: React.FC = () => {
   const history = useHistory()
@@ -137,7 +138,9 @@ export const BrandEdit: React.FC = () => {
       <Wizard initialValues={initialValues} onSubmit={onSubmit} submitting={isSubmitting}>
         <BrandFields headerTitle="Edit brand" />
       </Wizard>
-      <Spacer mt={9} />
+      <Spacer mt={4} />
+      <BrandProductTable brand={data?.brand} />
+      <Spacer mt={12} />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )

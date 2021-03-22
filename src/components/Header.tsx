@@ -41,7 +41,7 @@ export const Header: React.FC<HeaderProps> = ({
   }
 
   return (
-    <Box display="flex" mt={4} mb={3}>
+    <Box display="flex" mt={4} mb={3} flex={1}>
       <Box flexGrow={1}>
         {breadcrumbs && (
           <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">

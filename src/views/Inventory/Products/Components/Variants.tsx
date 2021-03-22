@@ -11,21 +11,23 @@ import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection
 import { VariantSizeSection } from "./VariantSizeSection"
 import { VariantPriceSection } from "./VariantPriceSection"
 import { getFormSelectChoices, getEnumValues } from "utils/form"
+import { AddPhysicalProductModal } from "views/Inventory/ProductVariants/AddPhysicalProductModal"
 
 export interface VariantsProps {
   initialBottomSizeTypes?: string[] | null
   createData?: any // Passed in when creating new variants
   variants?: VariantEditQuery_productVariant[] // Passed in when editing variants
+  refetch?: () => void
 }
 
-export const Variants: React.FC<VariantsProps> = ({ createData, variants, initialBottomSizeTypes }) => {
+export const Variants: React.FC<VariantsProps> = ({ createData, variants, initialBottomSizeTypes, refetch }) => {
   const location = useLocation()
   const [manufacturerSizes, setManufacturerSizes] = useState(initialBottomSizeTypes || [])
   const brandID = createData?.brand || ""
   const colorCode = createData?.color || ""
   const sizeNames = createData?.sizes || []
   const productType = createData?.productType || variants?.[0]?.internalSize?.productType
-
+  const [openModal, toggleModal] = useState(false)
   const { data, loading, error } = useQuery(GET_VARIANT_SKUS_AND_SIZE_TYPES, {
     variables: {
       input: {
@@ -96,7 +98,17 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
   return (
     <Box>
       <ContainerGrid container spacing={2}>
-        <Header title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} />
+        <Header
+          title={title}
+          subtitle={subtitle}
+          breadcrumbs={breadcrumbs}
+          primaryButton={{
+            text: "Add physical products",
+            action: () => {
+              toggleModal(true)
+            },
+          }}
+        />
         {productType === "Bottom" && (
           <Grid container spacing={2}>
             <Grid item xs={3}>
@@ -139,6 +151,13 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
           </>
         )}
       </ContainerGrid>
+      <AddPhysicalProductModal
+        open={openModal}
+        productVariant={variants?.[0]}
+        onSuccess={() => {
+          refetch?.()
+        }}
+      />
     </Box>
   )
 }
