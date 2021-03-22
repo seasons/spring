@@ -86,8 +86,6 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
     })
   }
 
-  console.log(productVariant, productVariant?.physicalProducts)
-
   return (
     <>
       <Dialog maxWidth="md" aria-labelledby="customized-dialog-title" open={isOpen}>
