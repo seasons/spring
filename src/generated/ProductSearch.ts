@@ -10,7 +10,11 @@ import { SearchResultType } from "./globalTypes"
 // ====================================================
 
 export interface ProductSearch_search_data_BrandSearchResultData {
-  __typename: "BrandSearchResultData" | "CustomerSearchResultData" | "PhysicalProductSearchResultData"
+  __typename:
+    | "BrandSearchResultData"
+    | "CustomerSearchResultData"
+    | "PhysicalProductSearchResultData"
+    | "ShopifyProductVariantSearchResultData"
 }
 
 export interface ProductSearch_search_data_ProductSearchResultData {

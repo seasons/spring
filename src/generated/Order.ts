@@ -60,6 +60,18 @@ export interface Order_lineItems_productVariant_color {
   name: string
 }
 
+export interface Order_lineItems_productVariant_physicalProducts_warehouseLocation {
+  __typename: "WarehouseLocation"
+  id: string
+  barcode: string
+}
+
+export interface Order_lineItems_productVariant_physicalProducts {
+  __typename: "PhysicalProduct"
+  seasonsUID: string
+  warehouseLocation: Order_lineItems_productVariant_physicalProducts_warehouseLocation | null
+}
+
 export interface Order_lineItems_productVariant_product_images {
   __typename: "Image"
   url: string | null
@@ -86,6 +98,7 @@ export interface Order_lineItems_productVariant {
   sku: string | null
   displayLong: string | null
   color: Order_lineItems_productVariant_color
+  physicalProducts: Order_lineItems_productVariant_physicalProducts[] | null
   product: Order_lineItems_productVariant_product
 }
 
