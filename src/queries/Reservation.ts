@@ -7,6 +7,7 @@ export default {
       id
       customer {
         id
+        status
         user {
           id
           firstName
@@ -38,6 +39,7 @@ export default {
       }
       customer {
         id
+        status
         user {
           id
           firstName
