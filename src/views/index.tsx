@@ -12,3 +12,4 @@ export { PhysicalProductsList } from "views/Inventory/PhysicalProducts/PhysicalP
 export { BrandCreate } from "./Inventory/Brands/BrandCreate"
 export { BrandEdit } from "./Inventory/Brands/BrandEdit"
 export { SearchView } from "./Search"
+export { LaunchEdit, LaunchCreate } from "./Inventory/Launches"

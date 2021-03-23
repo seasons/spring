@@ -19,6 +19,8 @@ import {
   VariantEdit,
   BrandCreate,
   BrandEdit,
+  LaunchEdit,
+  LaunchCreate,
   SearchView,
 } from "./views"
 import { NotificationsList } from "views/Notifications/NotificationsList"
@@ -124,6 +126,16 @@ export default [
         path: "/inventory/brands/:brandID",
         exact: true,
         component: props => <BrandEdit {...props} basePath="/inventory/brands" resource="Brand" />,
+      },
+      {
+        path: "/inventory/launches/new",
+        exact: true,
+        component: props => <LaunchCreate {...props} basePath="/inventory/launches/new" resource="Launch" />,
+      },
+      {
+        path: "/inventory/launches/:launchID",
+        exact: true,
+        component: props => <LaunchEdit {...props} basePath="/inventory/launches" resource="Launch" />,
       },
       {
         path: "/inventory/product/:productID/variant/new",
