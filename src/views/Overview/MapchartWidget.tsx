@@ -58,8 +58,22 @@ export const MapchartWidget = ({ data }) => {
   const [showPaused, setShowPaused] = useState(false)
   const [showAdmissable, setShowAdmissable] = useState(false)
 
+  // To keep the data on the wire compact, we merge duplicate
+  // points into singletons with a count value. To render though,
+  // we need to unfurl those.
+  const unfurledData = React.useMemo(() => {
+    const features = data?.result?.reduce((acc, curVal) => {
+      const count = curVal.properties.count
+      for (let i = 0; i < count; i++) {
+        acc.push(curVal)
+      }
+      return acc
+    }, [])
+    return features
+  }, [])
+
   const renderData = React.useMemo(() => {
-    const features = data?.result?.filter(a => {
+    const features = unfurledData.filter(a => {
       const { customerStatus, subscriptionStatus, admissable } = a.properties
       if (showActive && subscriptionStatus === "active") {
         return true
@@ -146,6 +160,6 @@ const Card = muiStyled(MuiCard)({
   padding: theme.spacing(2),
   position: "absolute",
   top: 10,
-  right: 10,
+  left: 10,
   background: theme.palette.primary.main,
 })
