@@ -1,12 +1,13 @@
 import * as React from "react"
 import { Box, Card as MuiCard, Typography, styled as muiStyled } from "@material-ui/core"
-import { Spacer, Text, ImageUpload, Header } from "components"
+import { Text } from "components"
 
 import { useState } from "react"
-import ReactMapGL, { Source, Layer, FullscreenControl } from "react-map-gl"
+import ReactMapGL, { Source, Layer } from "react-map-gl"
 import { theme } from "theme/theme"
-import { Checkbox, CheckboxProps } from "@material-ui/core"
+import { Checkbox } from "@material-ui/core"
 
+// heatmapLayer is from https://github.com/visgl/react-map-gl/tree/6.1-release/examples/heatmap
 const MAX_ZOOM_LEVEL = 9
 const heatmapLayer = {
   maxzoom: MAX_ZOOM_LEVEL,
@@ -48,6 +49,7 @@ export const MapchartWidget = ({ data }) => {
   const [viewport, setViewport] = useState({
     width: "100%",
     height: 400,
+    // center it on the USA
     latitude: 39.0977,
     longitude: -97.5786,
     zoom: 3,
@@ -55,18 +57,18 @@ export const MapchartWidget = ({ data }) => {
   const [showActive, setShowActive] = useState(true)
   const [showPaused, setShowPaused] = useState(false)
   const [showAdmissable, setShowAdmissable] = useState(false)
-  console.log(data?.result)
+
   const renderData = React.useMemo(() => {
     const features = data?.result?.filter(a => {
-      const props = a.properties
-      if (showActive && props.subscriptionStatus === "active") {
+      const { customerStatus, subscriptionStatus, admissable } = a.properties
+      if (showActive && subscriptionStatus === "active") {
         return true
       }
-      if (showPaused && props.subscriptionStatus === "paused") {
+      if (showPaused && subscriptionStatus === "paused") {
         return true
       }
       if (showAdmissable) {
-        if (props.customerStatus === "Waitlisted" && props.admissable === "Yes") {
+        if (customerStatus === "Waitlisted" && admissable === "Yes") {
           return true
         }
       }
@@ -75,9 +77,8 @@ export const MapchartWidget = ({ data }) => {
     return { type: "FeatureCollection", features } as any
   }, [showActive, showPaused, showAdmissable])
 
-  console.log(renderData)
   return (
-    <Box style={{ position: "relative" }}>
+    <Container>
       <ReactMapGL
         {...viewport}
         onViewportChange={nextViewport => setViewport(nextViewport)}
@@ -86,7 +87,6 @@ export const MapchartWidget = ({ data }) => {
         <Source id="my-data" type="geojson" data={renderData}>
           <Layer {...heatmapLayer} />
         </Source>
-        <FullscreenControl style={{ left: 10, top: 10 }} />
       </ReactMapGL>
       <Card>
         <Typography
@@ -104,7 +104,7 @@ export const MapchartWidget = ({ data }) => {
             color="secondary"
             name={"Active"}
           />
-          <Text variant="body1">Active</Text>
+          <ControlPanelText>Active</ControlPanelText>
         </CheckFlexbox>
         <CheckFlexbox>
           <Checkbox
@@ -113,7 +113,7 @@ export const MapchartWidget = ({ data }) => {
             color="secondary"
             name={"Paused"}
           />
-          <Text variant="body1">Paused</Text>
+          <ControlPanelText>Paused</ControlPanelText>
         </CheckFlexbox>
         <CheckFlexbox>
           <Checkbox
@@ -122,13 +122,17 @@ export const MapchartWidget = ({ data }) => {
             color="secondary"
             name={"Admissable"}
           />
-          <Text variant="body1">Admissable</Text>
+          <ControlPanelText>Admissable</ControlPanelText>
         </CheckFlexbox>
       </Card>
-    </Box>
+    </Container>
   )
 }
 
+const ControlPanelText = ({ children }) => <Text variant="body1">{children}</Text>
+const Container = muiStyled(Box)({
+  position: "relative",
+})
 const CheckFlexbox = muiStyled(Box)({
   display: "flex",
   flexDirection: "row",
@@ -137,15 +141,11 @@ const CheckFlexbox = muiStyled(Box)({
 })
 
 const Card = muiStyled(MuiCard)({
-  // backgroundColor: theme.palette.primary.main,
   borderRadius: 4,
   color: theme.palette.primary.contrastText,
-  // height: 250,
   padding: theme.spacing(2),
   position: "absolute",
   top: 10,
   right: 10,
   background: theme.palette.primary.main,
-  // padding: theme.spacing(2),
-  // borderRadius: 4,
 })
