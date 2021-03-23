@@ -14,17 +14,16 @@ export const LaunchList = props => {
       />
       <List
         {...props}
-        exporter={false}
         perPage={25}
         hasCreate={false}
         hasEdit={false}
         hasList={true}
         hasShow={true}
+        sort={{ field: "launchAt", order: "DESC" }}
         resource="Launch"
         title="Launches"
       >
         <Datagrid>
-          <TextField source="id" label="ID" />
           <TextField source="brand.name" label="Brand" />
           <TextField source="collection.title" label="Collection" />
           <DateField source="launchAt" label="launchAt" />
