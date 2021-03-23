@@ -106,7 +106,6 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
                 }
 
                 setPhysicalProducts([...physicalProducts, newPhysicalProduct])
-                console.log(newPhysicalProduct)
               }}
             >
               Add
