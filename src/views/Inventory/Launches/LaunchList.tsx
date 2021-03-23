@@ -6,6 +6,7 @@ import { ViewEntityField } from "fields"
 
 export const LaunchList = props => {
   const history = useHistory()
+  console.log("props", props)
   return (
     <>
       <Header

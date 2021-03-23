@@ -13,10 +13,12 @@ import Size from "./Size"
 import PushNotificationReceipt from "./PushNotificationReceipt"
 import FitPic from "./FitPic"
 import Order from "./Order"
+import Launch from "./Launch"
 
 export default {
   Product,
   Brand,
+  Launch,
   Collection,
   Reservation,
   User,
