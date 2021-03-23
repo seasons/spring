@@ -12,7 +12,7 @@ import { extractVariantSizeFields } from "../utils"
 
 export const VariantEdit: React.FC = () => {
   const history = useHistory()
-  const { variantID } = useParams()
+  const { variantID } = useParams() as any
   const { data, loading, error } = useQuery(VARIANT_EDIT_QUERY, {
     variables: { where: { id: variantID } },
   })

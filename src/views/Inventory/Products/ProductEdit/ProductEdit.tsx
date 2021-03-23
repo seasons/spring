@@ -20,7 +20,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
     message: "",
     status: "success",
   })
-  const { productID } = useParams()
+  const { productID } = useParams() as any
   const { data, loading, error } = useQuery(PRODUCT_EDIT_QUERY, {
     variables: { input: { id: productID } },
   })

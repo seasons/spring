@@ -12,7 +12,7 @@ import { BrandFields } from "../BrandComponents"
 
 export const BrandEdit: React.FC = () => {
   const history = useHistory()
-  const { brandID } = useParams()
+  const { brandID } = useParams() as any
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { data } = useQuery(BRAND_EDIT_QUERY, {
     variables: { input: { id: brandID } },
