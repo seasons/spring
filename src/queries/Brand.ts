@@ -24,6 +24,10 @@ export const BRAND_EDIT_QUERY = gql`
       since
       published
       featured
+      logo {
+        id
+        url
+      }
       designer
       basedIn
       images {
