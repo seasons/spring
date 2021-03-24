@@ -59,7 +59,7 @@ export const LaunchCreate: React.FC = () => {
 
   const initialValues = {
     launchAt: "",
-    published: true,
+    published: false,
   }
 
   return (
