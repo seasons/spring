@@ -93,6 +93,9 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
           <Grid item lg={6} sm={6} xs={12}>
             <IOSVersionsWidget data={{ ...getElementForSlug("ios-version-table"), title: "iOS Versions" }} />
           </Grid>
+          <Grid item lg={6} sm={6} xs={12}>
+            <PiechartWidget data={{ ...getElementForSlug("subscribe-speed"), subtitle: "Last 30 days" }} />
+          </Grid>
         </Grid>
 
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">

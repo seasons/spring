@@ -38,7 +38,7 @@ export const PiechartWidget = ({ data }) => {
         >
           {!!data?.subtitle && `(${data?.subtitle})`}
         </Typography>
-        <Chart options={renderData.options} series={renderData.series} type="pie" height="100%" width="100%" />
+        <Chart options={renderData.options} series={renderData.series} type="pie" />
       </Box>
     </Card>
   )
