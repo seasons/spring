@@ -11,6 +11,11 @@ export const LaunchFields: React.FC<{ headerTitle: string; data: any }> = ({ hea
   const collections = data?.collections
   const brands = data?.brands
 
+  const trueOrFalseSelectFields: SelectChoice[] = [
+    { display: "True", value: true },
+    { display: "False", value: false },
+  ]
+
   const collectionSelections: SelectChoice[] = collections?.map(c => {
     return {
       value: c.id,
@@ -60,6 +65,11 @@ export const LaunchFields: React.FC<{ headerTitle: string; data: any }> = ({ hea
               <Text variant="h6">Launch date</Text>
               <Spacer mt={1} />
               <DatePickerField name="launchAt" />
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Published</Text>
+              <Spacer mt={1} />
+              <SelectField name="published" choices={trueOrFalseSelectFields} />
             </Grid>
           </Grid>
         </Grid>

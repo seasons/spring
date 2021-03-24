@@ -51,7 +51,7 @@ export const LaunchEdit: React.FC = () => {
       return
     }
     setIsSubmitting(true)
-    const { brandID, launchAt, collectionID } = values
+    const { brandID, launchAt, collectionID, published } = values
     await upsertLaunch({
       variables: {
         where: { id: launchID },
@@ -59,6 +59,7 @@ export const LaunchEdit: React.FC = () => {
           launchAt,
           brandID,
           collectionID,
+          published,
         },
       },
     })
@@ -77,6 +78,7 @@ export const LaunchEdit: React.FC = () => {
       launchAt: launch.launchAt,
       brandID: launch.brand?.id,
       collectionID: launch?.collection?.id,
+      published: launch.published,
     }
   }
 

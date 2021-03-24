@@ -41,7 +41,7 @@ export const LaunchCreate: React.FC = () => {
       return
     }
     setIsSubmitting(true)
-    const { brandID, launchAt, collectionID } = values
+    const { brandID, launchAt, collectionID, published } = values
 
     await upsertLaunch({
       variables: {
@@ -50,6 +50,7 @@ export const LaunchCreate: React.FC = () => {
           launchAt,
           brandID,
           collectionID,
+          published,
         },
       },
     })
@@ -58,8 +59,9 @@ export const LaunchCreate: React.FC = () => {
 
   const initialValues = {
     launchAt: "",
+    published: true,
   }
-  console.log("true")
+
   return (
     <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onSubmit={onSubmit} submitting={isSubmitting}>

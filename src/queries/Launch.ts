@@ -5,6 +5,7 @@ const LaunchFragment = gql`
   fragment LaunchFragment on Launch {
     id
     launchAt
+    published
     brand {
       id
       name
