@@ -11,7 +11,7 @@ import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
 
 export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
-  const { collectionID } = useParams() as any
+  const { collectionID } = useParams<{ collectionID: string }>()
   const refresh = useRefresh()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedProductIDs, setSelectedProductIDs] = useState([] as any[])
