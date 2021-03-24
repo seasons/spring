@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom"
 import { Datagrid, List, TextField, DateField } from "@seasons/react-admin"
 import { Header } from "components/Header"
 import { ViewEntityField } from "fields"
+import { Indicator } from "components"
 
 export const LaunchList = props => {
   const history = useHistory()
@@ -25,6 +26,7 @@ export const LaunchList = props => {
         title="Launches"
       >
         <Datagrid>
+          <PublishedField label="Published" />
           <TextField source="brand.name" label="Brand" />
           <TextField source="collection.title" label="Collection" />
           <DateField source="launchAt" label="launchAt" />
@@ -33,4 +35,11 @@ export const LaunchList = props => {
       </List>
     </>
   )
+}
+
+const PublishedField: React.FC<{ label: string; record?: any }> = ({ label, record }) => {
+  if (!record) {
+    return null
+  }
+  return <Indicator status={record.published ? "True" : "False"} />
 }
