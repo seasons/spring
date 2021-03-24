@@ -1,16 +1,18 @@
 import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
-import { Box, Grid } from "@material-ui/core"
+import { Box, Button, Grid } from "@material-ui/core"
 import { styled as muiStyled } from "@material-ui/core/styles"
 import { Separator, Spacer, Text } from "components"
 import {
   ProductEditQuery_product_variants,
   ProductEditQuery_product_variants_physicalProducts,
 } from "generated/ProductEditQuery"
+import { useRefresh } from "@seasons/react-admin"
 import { colors } from "theme/colors"
 import { SnackbarState } from "components/Snackbar"
 import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Components"
-
+import { AddPhysicalProductModal } from "views/Inventory/ProductVariants/AddPhysicalProductModal"
+import PlusOneRoundedIcon from "@material-ui/icons/PlusOneRounded"
 export interface VariantSummaryProps {
   variant: ProductEditQuery_product_variants
   toggleSnackbar?: (state: SnackbarState) => void
@@ -18,7 +20,9 @@ export interface VariantSummaryProps {
 
 export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant, toggleSnackbar }) => {
   const history = useHistory()
+  const refresh = useRefresh()
   const [openOffloadPhysicalProductModal, setOpenOffloadPhysicalProductModal] = useState(false)
+  const [openAddPhysicalProductModal, setOpenAddPhysicalProductModal] = useState(false)
   const [offloadPhysicalProduct, setOffloadPhysicalProduct] = useState<
     ProductEditQuery_product_variants_physicalProducts
   >()
@@ -50,9 +54,21 @@ export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant, toggleS
               Total count: {variant.physicalProducts?.length}
             </Text>
           </Box>
-          <ActionBox px={2} py={0.5} bgcolor={colors.white95} onClick={onClickView}>
-            <Text variant="h6">View</Text>
-          </ActionBox>
+          <Box display="flex" flexDirection="row">
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<PlusOneRoundedIcon />}
+              onClick={() => {
+                setOpenAddPhysicalProductModal(true)
+              }}
+            >
+              Add
+            </Button>
+            <ActionBox ml={1} px={2} py={0.5} bgcolor={colors.white95} onClick={onClickView}>
+              <Text variant="h6">View</Text>
+            </ActionBox>
+          </Box>
         </Box>
         <Spacer mt={3} />
         <Separator />
@@ -88,12 +104,10 @@ export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant, toggleS
                           <ActionBox
                             px={2}
                             py={1}
-                            bgcolor={colors.black100}
+                            bgcolor={colors.white95}
                             onClick={() => onClickOffloadPhysicalProduct(physicalProduct)}
                           >
-                            <Text variant="h6" color={colors.white100}>
-                              Offload
-                            </Text>
+                            <Text variant="h6">Offload</Text>
                           </ActionBox>
                         </>
                       )}
@@ -112,6 +126,13 @@ export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant, toggleS
             toggleSnackbar={toggleSnackbar}
           />
         )}
+        <AddPhysicalProductModal
+          open={openAddPhysicalProductModal}
+          productVariant={variant}
+          onSuccess={() => {
+            refresh()
+          }}
+        />
       </Container>
     </Grid>
   )

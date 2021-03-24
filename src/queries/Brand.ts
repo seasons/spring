@@ -8,6 +8,11 @@ export default {
       name
       tier
       brandCode
+      productsConnection {
+        aggregate {
+          count
+        }
+      }
       createdAt
       updatedAt
     }
@@ -29,6 +34,11 @@ export const BRAND_EDIT_QUERY = gql`
       images {
         id
         url
+      }
+      productsConnection {
+        aggregate {
+          count
+        }
       }
       externalShopifyIntegration {
         enabled

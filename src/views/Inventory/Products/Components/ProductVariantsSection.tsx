@@ -25,7 +25,7 @@ export const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({
     <ExpandableSection
       title="Product variants"
       primaryButton={{
-        text: "Create new product variants",
+        text: "Create new",
         icon: <AddIcon />,
         action: () => redirect(`/inventory/product/${productID}/variant/new`),
       }}

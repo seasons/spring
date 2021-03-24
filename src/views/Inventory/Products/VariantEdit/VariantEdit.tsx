@@ -13,7 +13,7 @@ import { extractVariantSizeFields } from "../utils"
 export const VariantEdit: React.FC = () => {
   const history = useHistory()
   const { variantID } = useParams()
-  const { data, loading, error } = useQuery(VARIANT_EDIT_QUERY, {
+  const { data, loading, error, refetch } = useQuery(VARIANT_EDIT_QUERY, {
     variables: { where: { id: variantID } },
   })
   const [updateProductVariant] = useMutation(UPDATE_VARIANT)
@@ -96,7 +96,11 @@ export const VariantEdit: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
-        <Variants variants={[productVariant]} initialBottomSizeTypes={initialValues.bottomSizeTypes} />
+        <Variants
+          variants={[productVariant]}
+          initialBottomSizeTypes={initialValues.bottomSizeTypes}
+          refetch={refetch}
+        />
       </Wizard>
       <Spacer mt={9} />
     </Container>
