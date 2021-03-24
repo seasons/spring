@@ -29,6 +29,8 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
       </Box>
     )
   }
+
+  const billingStatus = customer?.status === "PaymentFailed" ? "Delinquent" : "Paid"
   return (
     <>
       <Card {...rest}>
@@ -41,6 +43,19 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                   {name}
                 </Link>
                 <Address address={customer?.detail?.shippingAddress} />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Billing Status</TableCell>
+              <TableCell>
+                <Chip
+                  label={billingStatus}
+                  icon={
+                    <Box pl={1}>
+                      <Indicator status={billingStatus} />
+                    </Box>
+                  }
+                />
               </TableCell>
             </TableRow>
             <TableRow>

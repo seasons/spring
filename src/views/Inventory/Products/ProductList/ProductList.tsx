@@ -1,4 +1,4 @@
-import { Snackbar, Header } from "components"
+import { Snackbar, Header, Spacer } from "components"
 import { BrandField, CheckField, ImagesField, SinceDateField, ViewEntityField } from "fields"
 import { SnackbarState } from "components/Snackbar"
 import React, { useState } from "react"
@@ -88,6 +88,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
           <ViewEntityField source="id" entityPath="inventory/products" label="Actions" />
         </Datagrid>
       </List>
+      <Spacer mt={6} />
 
       <PrintBarcodesModal
         open={openPrintBarcodesModal}

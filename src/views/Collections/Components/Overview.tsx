@@ -2,7 +2,7 @@ import React from "react"
 import { Grid } from "@material-ui/core"
 import { SelectField, TextField } from "fields"
 import { Header, ImageUpload, Spacer, Text } from "components"
-import { ProductSearch } from "components/ProductSearch"
+import { SearchInput, SearchType } from "components/SearchInput"
 import { ProductSelects } from "components/ProductSelects"
 import { useLocation } from "react-router-dom"
 import { SelectChoice } from "fields/SelectField"
@@ -102,7 +102,16 @@ export const Overview: React.FC<{
             <Grid item xs={6}>
               <Text variant="h6">Product search</Text>
               <Spacer mt={1} />
-              <ProductSearch selectedProductIDs={selectedProductIDs} setSelectedProductIDs={setSelectedProductIDs} />
+              <SearchInput
+                placeholder="Search products or brands"
+                searchType={SearchType.PRODUCT}
+                onResultItemClicked={(result: any) => {
+                  const alreadyIncluded = !!selectedProductIDs.find((id: string) => id === result?.data?.id)
+                  if (!alreadyIncluded) {
+                    setSelectedProductIDs([result.data.id, ...selectedProductIDs])
+                  }
+                }}
+              />
             </Grid>
           </Grid>
           <Spacer mt={3} />

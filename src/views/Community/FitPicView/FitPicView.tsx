@@ -12,7 +12,7 @@ import { UPDATE_FIT_PIC, DELETE_FIT_PIC } from "../mutations"
 import { colors } from "theme/colors"
 import { ApolloError } from "apollo-client"
 import { FitPicStatus } from "generated/globalTypes"
-import { ProductSearch } from "components/ProductSearch"
+import { SearchInput, SearchType } from "components/SearchInput"
 import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
 import { ProductSelects } from "components/ProductSelects"
 
@@ -155,9 +155,15 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
                 <Grid item xs={6}>
                   <Text variant="h6">Search Products</Text>
                   <Spacer mt={1} />
-                  <ProductSearch
-                    selectedProductIDs={selectedProductIDs}
-                    setSelectedProductIDs={setSelectedProductIDs}
+                  <SearchInput
+                    placeholder="Search products or brands"
+                    searchType={SearchType.PRODUCT}
+                    onResultItemClicked={(result: any) => {
+                      const alreadyIncluded = !!selectedProductIDs.find((id: string) => id === result?.data?.id)
+                      if (!alreadyIncluded) {
+                        setSelectedProductIDs([result.data.id, ...selectedProductIDs])
+                      }
+                    }}
                   />
                 </Grid>
               </Grid>

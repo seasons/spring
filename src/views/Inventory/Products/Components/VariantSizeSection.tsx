@@ -27,8 +27,8 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
   const typeSpecificFields = getTypeSpecificVariantFields(productType)
   const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 2) : []
   const typeSpecificSecondRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(2) : []
-  const firstRowFields = ["SKU", "Weight", ...typeSpecificFirstRowFields]
-  const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
+  const firstRowFields = ["Total count", "SKU", ...typeSpecificFirstRowFields]
+  const secondRowFields = ["Weight", ...typeSpecificSecondRowFields]
   const requiredFields = ["Total count"]
 
   const getManufacturerSizes = manufacturerSize => {
@@ -61,11 +61,12 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
                   </Text>
                   <Spacer mt={1} />
                   <TextField
-                    disabled={field === "SKU"}
+                    disabled={field === "SKU" || field === "Total count"}
                     type={field === "SKU" ? "text" : "number"}
-                    name={`${size}_${field.toLowerCase()}`}
+                    name={`${size}_${field.toLowerCase().replace(" ", "")}`}
                     initialValue={field === "SKU" ? sku : undefined}
                     requiredNumber={isRequired}
+                    maxValue={field === "Total count" ? 99 : undefined}
                   />
                 </Grid>
               )
@@ -81,11 +82,10 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
                   </Text>
                   <Spacer mt={1} />
                   <TextField
-                    disabled={isEditing && field === "Total count"}
+                    disabled={isEditing}
                     type="number"
                     name={`${size}_${field.toLowerCase().replace(" ", "")}`}
                     requiredNumber={isRequired}
-                    maxValue={field === "Total count" ? 99 : undefined}
                   />
                 </Grid>
               )
