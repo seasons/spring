@@ -75,7 +75,7 @@ export const IOSVersionsWidget = ({ data }) => {
     },
   }
 
-  return x3(
+  return (
     <Card>
       <Box width="100%" height="100%" position="relative">
         <ReactApexChart
