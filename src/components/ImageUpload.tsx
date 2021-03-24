@@ -1,9 +1,7 @@
 import React, { useState } from "react"
 import Carousel from "react-images"
 import { useForm, useFormState } from "react-final-form"
-
 import { Box, Grid } from "@material-ui/core"
-
 import { Spacer, Text } from "components"
 import { DropzoneField } from "fields"
 import { colors } from "theme/colors"
@@ -11,9 +9,11 @@ import { colors } from "theme/colors"
 export interface ImageUploadProps {
   numImages: number
   title?: string
+  height?: number
+  name?: string
 }
 
-export const ImageUpload: React.FC<ImageUploadProps> = ({ numImages, title }) => {
+export const ImageUpload: React.FC<ImageUploadProps> = ({ numImages, title, name = "image", height = 400 }) => {
   const {
     mutators: { setValue },
   } = useForm()
@@ -22,7 +22,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ numImages, title }) =>
     // Read the image files stored inside the form state by checking the keys
     // image_0, image_1, etc and if file exists, convert it to a URL
     [...Array(numImages)].map((_, index) => {
-      const imageURL = values[`image_${index}`]
+      const imageURL = values[`${name}_${index}`]
       if (!imageURL) {
         return null
       }
@@ -38,7 +38,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ numImages, title }) =>
     const newImagePreviews = [...imagePreviews]
     images.forEach((image, index) => {
       const imageIndex = offset + index
-      setValue(`image_${imageIndex}`, image)
+      setValue(`${name}_${imageIndex}`, image)
       newImagePreviews[imageIndex] = URL.createObjectURL(image)
     })
     setImagePreviews(newImagePreviews)
@@ -61,7 +61,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ numImages, title }) =>
           />
         ) : (
           <>
-            <Box display="flex" justifyContent="center" alignItems="center" bgcolor={colors.white95} height={400}>
+            <Box display="flex" justifyContent="center" alignItems="center" bgcolor={colors.white95} height={height}>
               <Text variant="h6" opacity={0.5}>
                 No images uploaded yet
               </Text>
@@ -79,7 +79,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ numImages, title }) =>
               <DropzoneField
                 index={index}
                 imagePreview={imagePreviews[index]}
-                name={`image_${index}`}
+                name={`${name}_${index}`}
                 onReceivedImages={onReceivedImages}
               />
             </Grid>
