@@ -69,6 +69,7 @@ class App extends React.Component {
                         <Resource name="Customer" intent="registration" />
                         <Resource name="Category" intent="registration" />
                         <Resource name="Brand" intent="registration" />
+                        <Resource name="Launch" intent="registration" />
                         <Resource name="User" intent="registration" />
                         <Resource name="Reservation" intent="registration" />
                         <Resource name="Size" intent="registration" />

@@ -394,6 +394,7 @@ export enum SearchResultType {
   Customer = "Customer",
   PhysicalProduct = "PhysicalProduct",
   Product = "Product",
+  ShopifyProductVariant = "ShopifyProductVariant",
 }
 
 export enum SeasonCode {
@@ -1505,6 +1506,13 @@ export interface CustomBrandUpdateInput {
   websiteUrl?: string | null
   images?: any[] | null
   externalShopifyIntegration?: ExternalShopifyIntegrationInput | null
+}
+
+export interface CustomLaunchUpsertInput {
+  id?: string | null
+  launchAt?: any | null
+  collectionID?: string | null
+  brandID?: string | null
 }
 
 export interface CustomProductUpdateInput {
@@ -3038,6 +3046,10 @@ export interface LabelUpsertNestedInput {
 }
 
 export interface LabelWhereUniqueInput {
+  id?: string | null
+}
+
+export interface LaunchWhereUniqueInput {
   id?: string | null
 }
 
