@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Text } from "components"
+import { ControlPanel, Text } from "components"
 import ReactApexChart from "react-apexcharts"
 import { Box, Card as MuiCard, styled as muiStyled, Typography, Checkbox } from "@material-ui/core"
 import { theme } from "theme/theme"
@@ -75,7 +75,7 @@ export const IOSVersionsWidget = ({ data }) => {
     },
   }
 
-  return (
+  return x3(
     <Card>
       <Box width="100%" height="100%" position="relative">
         <ReactApexChart
@@ -85,43 +85,16 @@ export const IOSVersionsWidget = ({ data }) => {
           height={"100%"}
           width="100%"
         />
-        <ControlPanelCard>
-          <Typography
-            component="h2"
-            style={{ color: theme.palette.primary.contrastText, letterSpacing: 1 }}
-            gutterBottom
-            variant="overline"
-          >
-            {data?.title}
-          </Typography>
-          <CheckFlexbox>
-            <Checkbox
-              checked={showActive}
-              onChange={event => setShowActive(event.target.checked)}
-              color="secondary"
-              name={"Active"}
-            />
-            <ControlPanelText>Active</ControlPanelText>
-          </CheckFlexbox>
-          <CheckFlexbox>
-            <Checkbox
-              checked={showPaused}
-              onChange={event => setShowPaused(event.target.checked)}
-              color="secondary"
-              name={"Paused"}
-            />
-            <ControlPanelText>Paused</ControlPanelText>
-          </CheckFlexbox>
-          <CheckFlexbox>
-            <Checkbox
-              checked={showAdmissable}
-              onChange={event => setShowAdmissable(event.target.checked)}
-              color="secondary"
-              name={"Admissable"}
-            />
-            <ControlPanelText>Admissable</ControlPanelText>
-          </CheckFlexbox>
-        </ControlPanelCard>
+        <ControlPanel
+          title={data?.title}
+          showActive={showActive}
+          setShowActive={setShowActive}
+          showPaused={showPaused}
+          setShowPaused={setShowPaused}
+          showAdmissable={showAdmissable}
+          setShowAdmissable={setShowAdmissable}
+          containerProps={{ style: { right: 10, left: "unset" } }}
+        />
       </Box>
     </Card>
   )

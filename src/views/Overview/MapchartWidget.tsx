@@ -1,11 +1,9 @@
 import * as React from "react"
-import { Box, Card as MuiCard, Typography, styled as muiStyled } from "@material-ui/core"
-import { Text } from "components"
+import { Box, Card as MuiCard, styled as muiStyled } from "@material-ui/core"
+import { ControlPanel } from "components"
 
 import { useState } from "react"
 import ReactMapGL, { Source, Layer } from "react-map-gl"
-import { theme } from "theme/theme"
-import { Checkbox } from "@material-ui/core"
 
 // heatmapLayer is from https://github.com/visgl/react-map-gl/tree/6.1-release/examples/heatmap
 const MAX_ZOOM_LEVEL = 9
@@ -102,64 +100,18 @@ export const MapchartWidget = ({ data }) => {
           <Layer {...heatmapLayer} />
         </Source>
       </ReactMapGL>
-      <Card>
-        <Typography
-          component="h2"
-          style={{ color: theme.palette.primary.contrastText, letterSpacing: 1 }}
-          gutterBottom
-          variant="overline"
-        >
-          {data?.title}
-        </Typography>
-        <CheckFlexbox>
-          <Checkbox
-            checked={showActive}
-            onChange={event => setShowActive(event.target.checked)}
-            color="secondary"
-            name={"Active"}
-          />
-          <ControlPanelText>Active</ControlPanelText>
-        </CheckFlexbox>
-        <CheckFlexbox>
-          <Checkbox
-            checked={showPaused}
-            onChange={event => setShowPaused(event.target.checked)}
-            color="secondary"
-            name={"Paused"}
-          />
-          <ControlPanelText>Paused</ControlPanelText>
-        </CheckFlexbox>
-        <CheckFlexbox>
-          <Checkbox
-            checked={showAdmissable}
-            onChange={event => setShowAdmissable(event.target.checked)}
-            color="secondary"
-            name={"Admissable"}
-          />
-          <ControlPanelText>Admissable</ControlPanelText>
-        </CheckFlexbox>
-      </Card>
+      <ControlPanel
+        title={data?.title}
+        showActive={showActive}
+        setShowActive={setShowActive}
+        showPaused={showPaused}
+        setShowPaused={setShowPaused}
+        showAdmissable={showAdmissable}
+        setShowAdmissable={setShowAdmissable}
+      />
     </Container>
   )
 }
-
-const ControlPanelText = ({ children }) => <Text variant="body1">{children}</Text>
 const Container = muiStyled(Box)({
   position: "relative",
-})
-const CheckFlexbox = muiStyled(Box)({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "flex-start",
-})
-
-const Card = muiStyled(MuiCard)({
-  borderRadius: 4,
-  color: theme.palette.primary.contrastText,
-  padding: theme.spacing(2),
-  position: "absolute",
-  top: 10,
-  left: 10,
-  background: theme.palette.primary.main,
 })
