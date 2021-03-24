@@ -167,6 +167,11 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             />
           </Grid>
           <Grid item lg={4} sm={6} xs={12}>
+            <PiechartWidget
+              data={{ ...getElementForSlug("subscribed-events-by-platform"), subtitle: "Last 30 days" }}
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
             <PiechartWidget data={{ ...getElementForSlug("reservations-by-platform"), subtitle: "Last 30 days" }} />
           </Grid>
         </Grid>
