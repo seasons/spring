@@ -11,7 +11,7 @@ import { UPSERT_LAUNCH } from "./mutations"
 
 export const LaunchEdit: React.FC = () => {
   const history = useHistory()
-  const { launchID } = useParams()
+  const { launchID } = useParams<{ launchID: string }>()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { data } = useQuery(LAUNCH_EDIT_QUERY, {
     variables: { input: { id: launchID } },
