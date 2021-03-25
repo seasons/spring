@@ -135,6 +135,9 @@ export const ProductFragment = gql`
           value
         }
       }
+      product {
+        id
+      }
       physicalProducts {
         id
         seasonsUID

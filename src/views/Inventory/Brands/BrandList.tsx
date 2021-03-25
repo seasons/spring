@@ -4,6 +4,13 @@ import { Header, Snackbar } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { useHistory } from "react-router-dom"
 import { ViewEntityField } from "fields"
+import { Typography } from "@material-ui/core"
+import { brand } from "generated/brand"
+
+const ProductsCountField = ({ record, label }: { record?: brand; label?: string }) => {
+  const productCount = record?.productsConnection?.aggregate?.count || 0
+  return <Typography variant="body1" color="textPrimary">{`${productCount} products`}</Typography>
+}
 
 export const BrandList = props => {
   const history = useHistory()
@@ -36,6 +43,7 @@ export const BrandList = props => {
           <TextField source="name" label="Name" />
           <TextField source="brandCode" label="Code" />
           <TextField source="tier" label="Tier" />
+          <ProductsCountField label="Products" />
           <DateField source="createdAt" label="CreatedAt" />
           <DateField source="updatedAt" label="UpdatedAt" />
           <ViewEntityField source="id" entityPath="inventory/brands" label="Actions" />

@@ -1,42 +1,73 @@
-import React, { useEffect } from "react"
-import { Box, CircularProgress, IconButton } from "@material-ui/core"
-import { Button as MuiButton, TextField } from "@material-ui/core"
-import { gql } from "apollo-boost"
-import styled from "styled-components"
-import { useState } from "react"
+import React from "react"
 import { useLazyQuery } from "react-apollo"
-import CloseIcon from "@material-ui/icons/Close"
-import { SearchResultCard } from "components/Search/SearchResultCard"
+import styled from "styled-components"
+import { gql } from "apollo-boost"
 
-const PRODUCT_SEARCH = gql`
-  query ProductSearch($query: String!) {
-    search(query: $query, options: { includeTypes: [Product] }) {
-      kindOf
-      __typename
-      data {
+import { Box, CircularProgress, IconButton, Button as MuiButton, TextField } from "@material-ui/core"
+import { SearchResultCard } from "components/Search/SearchResultCard"
+import CloseIcon from "@material-ui/icons/Close"
+
+export enum SearchType {
+  PRODUCT,
+  SHOPIFY_PRODUCT_VARIANT,
+}
+
+type Props<R> = {
+  onResultItemClicked: (result: R) => void
+  searchType: SearchType
+  placeholder: string
+}
+
+// TODO: refactor to share query, and select fragment on SearchType
+const QUERIES = {
+  [SearchType.PRODUCT]: gql`
+    query ProductSearch($query: String!) {
+      search(query: $query, options: { includeTypes: [Product] }) {
+        kindOf
         __typename
-        ... on ProductSearchResultData {
-          id
-          slug
-          name
-          brandName
-          image
+        data {
+          __typename
+          ... on ProductSearchResultData {
+            id
+            slug
+            name
+            brandName
+            image
+          }
         }
       }
     }
-  }
-`
-
-export interface ProductSearchProps {
-  selectedProductIDs: string[]
-  setSelectedProductIDs: (IDs: string[]) => void
+  `,
+  [SearchType.SHOPIFY_PRODUCT_VARIANT]: gql`
+    query ShopifyProductVariantSearch($query: String!) {
+      search(query: $query, options: { includeTypes: [ShopifyProductVariant] }) {
+        kindOf
+        __typename
+        data {
+          __typename
+          ... on ShopifyProductVariantSearchResultData {
+            id
+            brandID
+            externalID
+            displayName
+            selectedOptions {
+              name
+              value
+            }
+            title
+            image
+          }
+        }
+      }
+    }
+  `,
 }
 
-export const ProductSearch: React.FC<ProductSearchProps> = ({ selectedProductIDs, setSelectedProductIDs }) => {
-  const [isLoading, setLoading] = useState(false)
-  const [value, setValue] = useState("")
-  const [openSearch, setOpenSearch] = useState(false)
-  const [search, { data }] = useLazyQuery(PRODUCT_SEARCH)
+export const SearchInput = ({ onResultItemClicked, searchType, placeholder }: Props<any>) => {
+  const [isLoading, setLoading] = React.useState(false)
+  const [inputValue, setInputValue] = React.useState("")
+  const [openSearch, setOpenSearch] = React.useState(false)
+  const [search, { data }] = useLazyQuery(QUERIES[searchType])
 
   const handleSearch = async () => {
     try {
@@ -44,7 +75,7 @@ export const ProductSearch: React.FC<ProductSearchProps> = ({ selectedProductIDs
       setOpenSearch(true)
       search({
         variables: {
-          query: value,
+          query: inputValue,
         },
       })
     } catch (error) {
@@ -55,7 +86,7 @@ export const ProductSearch: React.FC<ProductSearchProps> = ({ selectedProductIDs
   }
 
   const results = data?.search
-  useEffect(() => {
+  React.useEffect(() => {
     if (results) {
       setOpenSearch(true)
     }
@@ -66,9 +97,9 @@ export const ProductSearch: React.FC<ProductSearchProps> = ({ selectedProductIDs
       <Box flex={1}>
         <TextField
           fullWidth
-          onChange={event => setValue(event.target.value)}
-          placeholder="Search products or brands"
-          value={value}
+          onChange={event => setInputValue(event.target.value)}
+          placeholder={placeholder}
+          value={inputValue}
           variant="outlined"
         />
       </Box>
@@ -92,16 +123,13 @@ export const ProductSearch: React.FC<ProductSearchProps> = ({ selectedProductIDs
                 </Box>
               ) : (
                 <>
-                  {results?.map((result: any, index) => {
-                    const alreadyIncluded = !!selectedProductIDs.find((id: string) => id === result?.data?.id)
+                  {results?.map((result: any, index: number) => {
                     return (
                       <Box
                         key={(result?.data?.id || "") + index}
                         style={{ cursor: "pointer", backgroundColor: "white" }}
                         onClick={() => {
-                          if (!alreadyIncluded) {
-                            setSelectedProductIDs([result.data.id, ...selectedProductIDs])
-                          }
+                          onResultItemClicked(result)
                         }}
                       >
                         <Box style={{ pointerEvents: "none" }}>

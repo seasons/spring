@@ -73,7 +73,7 @@ export const extractVariantSizeFields = ({
 }) => {
   const sizeData = {} as any
   // We don't include the total count when editing a variant
-  const genericMeasurementKeys = isEdit ? ["weight"] : ["weight", "totalcount"]
+  const genericMeasurementKeys = ["weight", "totalcount"]
   let measurementKeys
   switch (productType) {
     case "Top":
@@ -231,8 +231,8 @@ export const getProductUpsertData: any = (values: any) => {
 
     // Get the relevant size values for the productType, i.e. shoulder, chest, etc. for Top
     const variantSizeData = extractVariantSizeFields({ values, productType, size, isEdit: false })
-    const shopifyProductVariantData = values[`${size}_shopifyProductVariantExternalId`]
-      ? { shopifyProductVariant: { externalId: values[`${size}_shopifyProductVariantExternalId`] } }
+    const shopifyProductVariantData = values[`${size}_shopifyProductVariant`]
+      ? { shopifyProductVariant: { externalId: values[`${size}_shopifyProductVariant`]?.externalID } }
       : {}
 
     return {
@@ -426,8 +426,8 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
       }
     })
 
-    const shopifyProductVariantExternalId = values[`${index}_shopifyProductVariantExternalId`]
-      ? { shopifyProductVariant: { externalId: values[`${index}_shopifyProductVariantExternalId`] } }
+    const shopifyProductVariantExternalId = values[`${index}_shopifyProductVariant`]
+      ? { shopifyProductVariant: { externalId: values[`${index}_shopifyProductVariant`]?.externalID } }
       : {}
 
     // Get physical products data

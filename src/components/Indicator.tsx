@@ -44,6 +44,8 @@ export const IndicatorMap = {
   Submitted: colors.blue[500],
   True: colors.green[500],
   False: colors.black15,
+  Delinquent: colors.red[500],
+  Paid: colors.green[100],
 }
 
 export interface IndicatorProps {

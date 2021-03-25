@@ -16,7 +16,7 @@ import { PhysicalProductsCreate } from "views/Inventory/PhysicalProducts/Physica
 export const ProductVariantCreate: React.FC = () => {
   const history = useHistory()
   const refresh = useRefresh()
-  const { productID } = useParams()
+  const { productID } = useParams() as any
   const [values, setValues] = useState({})
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,

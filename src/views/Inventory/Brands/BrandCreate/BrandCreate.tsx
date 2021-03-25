@@ -56,6 +56,7 @@ export const BrandCreate: React.FC = () => {
     } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
     const numImages = 4
+    const logo = values[`logo_0`]
     const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
     await createBrand({
       variables: {
@@ -64,6 +65,7 @@ export const BrandCreate: React.FC = () => {
           description,
           basedIn,
           designer,
+          logo,
           featured,
           published,
           name,

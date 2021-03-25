@@ -10,7 +10,7 @@ import { SearchResultType, InventoryStatus } from "./globalTypes"
 // ====================================================
 
 export interface Search_search_data_BrandSearchResultData {
-  __typename: "BrandSearchResultData" | "CustomerSearchResultData"
+  __typename: "BrandSearchResultData" | "CustomerSearchResultData" | "ShopifyProductVariantSearchResultData"
 }
 
 export interface Search_search_data_PhysicalProductSearchResultData {

@@ -18,6 +18,10 @@ export default {
     },
   },
   containedSecondary: {
+    backgroundColor: colors.black100,
+    color: colors.white100,
+  },
+  containedPrimary: {
     backgroundColor: colors.black04,
     color: colors.black100,
     "&:hover": {

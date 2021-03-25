@@ -13,9 +13,11 @@ export const VariantPhysicalProductsSection: React.FC<VariantPhysicalProductsSec
     <ExpandableSection
       title="Physical products"
       content={
-        <Grid container>
+        <Grid container spacing={2}>
           {physicalProducts.map((physProd, index) => (
-            <PhysicalProductSummary physicalProduct={physProd} key={index} />
+            <Grid item xs={6}>
+              <PhysicalProductSummary physicalProduct={physProd} key={index} />
+            </Grid>
           ))}
         </Grid>
       }

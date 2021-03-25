@@ -5,10 +5,16 @@ import { MoneyWidget } from "./MoneyWidget"
 import { gql } from "apollo-boost"
 import { Loading } from "@seasons/react-admin"
 import { useQuery } from "react-apollo"
+import { Spacer } from "components"
 
 import PeopleIcon from "@material-ui/icons/People"
 import GroupAddIcon from "@material-ui/icons/GroupAdd"
 import { Box } from "@material-ui/core"
+import { PiechartWidget } from "./PiechartWidget"
+import { FunnelWidget } from "./FunnelWidget"
+import { LinechartWidget } from "./LinechartWidget"
+import { MapchartWidget } from "./MapchartWidget"
+import { IOSVersionsWidget } from "./iosVersions"
 
 export interface OverviewViewProps {}
 
@@ -38,26 +44,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
 
   const getElementForSlug = slug => elements.find(e => e.slug === slug)
 
-  const defaultRender = elements =>
-    elements.map(element => {
-      switch (element.type) {
-        case "Count":
-          return (
-            <Grid item lg={3} sm={6} xs={12}>
-              <NumberWidget data={element} />
-            </Grid>
-          )
-        case "Money":
-          return (
-            <Grid item lg={3} sm={6} xs={12}>
-              <MoneyWidget data={element} />
-            </Grid>
-          )
-        default:
-          return null
-      }
-    })
-
   if (loading) {
     return <Loading />
   }
@@ -70,6 +56,21 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
     <Container maxWidth={false}>
       <Box mt={6}>
         <Grid container spacing={3}>
+          <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
+            <Typography variant="h3">Financials</Typography>
+          </Box>
+          <Grid container spacing={3}>
+            <Grid item lg={6} sm={6} xs={12}>
+              <MoneyWidget data={getElementForSlug("mrr-(dollar)")} />
+            </Grid>
+
+            <Grid item lg={6} sm={6} xs={12}>
+              <MoneyWidget data={getElementForSlug("arr-(dollar)")} />
+            </Grid>
+          </Grid>
+          <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
+            <Typography variant="h3">Customers</Typography>
+          </Box>
           <Grid item lg={4} sm={6} xs={12}>
             <NumberWidget data={getElementForSlug("active-subscribers")} icon={<PeopleIcon />} />
           </Grid>
@@ -81,7 +82,70 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
           <Grid item lg={4} sm={6} xs={12}>
             <NumberWidget data={getElementForSlug("waitlisted-and-admissable-users")} icon={<GroupAddIcon />} />
           </Grid>
+          <Grid item lg={12} sm={12} xs={12}>
+            <MapchartWidget
+              data={{
+                ...getElementForSlug("active-paused-or-admissable-customers-by-latlng"),
+                title: "Customer Heatmap",
+              }}
+            />
+          </Grid>
+          <Grid item lg={6} sm={6} xs={12}>
+            <IOSVersionsWidget data={{ ...getElementForSlug("ios-version-table"), title: "iOS Versions" }} />
+          </Grid>
+          <Grid item lg={6} sm={6} xs={12}>
+            <PiechartWidget
+              data={{
+                ...getElementForSlug("subscribe-speed"),
+                title: "Subscribe Speed (days)",
+                subtitle: "Last 30 days",
+              }}
+            />
+          </Grid>
         </Grid>
+
+        <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
+          <Typography variant="h3">Acquisition</Typography>
+        </Box>
+        <Grid container spacing={3}>
+          <Grid item lg={12} sm={12} xs={12}>
+            <LinechartWidget
+              data={{
+                ...getElementForSlug("accounts-created-per-month"),
+                title: "Accounts Created",
+              }}
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <FunnelWidget
+              data={{
+                ...getElementForSlug("overall-acquisition-funnel"),
+                subtitle: "Last 30 Days",
+                title: "Acquisition",
+              }}
+            />
+          </Grid>
+
+          <Grid item lg={4} sm={6} xs={12}>
+            <FunnelWidget
+              data={{
+                ...getElementForSlug("web-acquisition-funnel"),
+                subtitle: "Last 30 Days",
+                title: "Web Acquisition",
+              }}
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <FunnelWidget
+              data={{
+                ...getElementForSlug("ios-acquisition-funnel"),
+                subtitle: "Last 30 Days",
+                title: "iOS Acquisition",
+              }}
+            />
+          </Grid>
+        </Grid>
+
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
           <Typography variant="h3">Virality</Typography>
         </Box>
@@ -102,34 +166,26 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             />
           </Grid>
         </Grid>
-
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
-          <Typography variant="h3">Financials</Typography>
+          <Typography variant="h3">Key Actions by Platform</Typography>
         </Box>
         <Grid container spacing={3}>
-          <Grid item lg={6} sm={6} xs={12}>
-            <MoneyWidget data={getElementForSlug("mrr-(dollar)")} />
+          <Grid item lg={4} sm={6} xs={12}>
+            <PiechartWidget
+              data={{ ...getElementForSlug("account-creations-by-platform"), subtitle: "Last 30 Days" }}
+            />
           </Grid>
-
-          <Grid item lg={6} sm={6} xs={12}>
-            <MoneyWidget data={getElementForSlug("arr-(dollar)")} />
+          <Grid item lg={4} sm={6} xs={12}>
+            <PiechartWidget
+              data={{ ...getElementForSlug("subscribed-events-by-platform"), subtitle: "Last 30 days" }}
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <PiechartWidget data={{ ...getElementForSlug("reservations-by-platform"), subtitle: "Last 30 days" }} />
           </Grid>
         </Grid>
 
-        {/* <Grid container spacing={3}>
-          <Grid item lg={3} xs={12}>
-            <RealTimeChart />
-          </Grid>
-          <Grid item lg={9} xs={12}>
-            <HistogramChart />
-          </Grid>
-          <Grid item lg={5} xl={4} xs={12}>
-            <TeamTasks />
-          </Grid>
-          <Grid item lg={7} xl={8} xs={12}>
-            <LatestSignups />
-          </Grid>
-        </Grid> */}
+        <Spacer mb={2} />
       </Box>
     </Container>
   )

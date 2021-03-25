@@ -9,10 +9,11 @@ import { UPDATE_BRAND } from "../mutations"
 import { useHistory, useParams } from "react-router-dom"
 import { BRAND_EDIT_QUERY } from "queries/Brand"
 import { BrandFields } from "../BrandComponents"
+import { BrandProductTable } from "./BrandProductTable"
 
 export const BrandEdit: React.FC = () => {
   const history = useHistory()
-  const { brandID } = useParams()
+  const { brandID } = useParams<{ brandID: string }>()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { data } = useQuery(BRAND_EDIT_QUERY, {
     variables: { input: { id: brandID } },
@@ -68,6 +69,7 @@ export const BrandEdit: React.FC = () => {
     } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
     const numImages = 4
+    const logo = values[`logo_0`]
     const images = [...Array(numImages).keys()]
       .map(index => {
         return values[`image_${index}`]
@@ -81,6 +83,7 @@ export const BrandEdit: React.FC = () => {
           brandCode: brandCode.toUpperCase(),
           description,
           name,
+          logo,
           images,
           since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
           slug: slugify(name).toLowerCase(),
@@ -120,10 +123,12 @@ export const BrandEdit: React.FC = () => {
       basedIn: brand.basedIn,
       designer: brand.designer,
       featured: brand.featured,
+      logo: brand.logo?.url,
       published: brand.published,
       externalShopifyIntegrationShopName: brand?.externalShopifyIntegration?.shopName,
       externalShopifyIntegrationEnabled: brand?.externalShopifyIntegration?.enabled,
     }
+    initialValues[`logo_0`] = brand.logo?.url
     if (brand.since) {
       initialValues.sinceDate = brand.since
     }
@@ -137,7 +142,9 @@ export const BrandEdit: React.FC = () => {
       <Wizard initialValues={initialValues} onSubmit={onSubmit} submitting={isSubmitting}>
         <BrandFields headerTitle="Edit brand" />
       </Wizard>
-      <Spacer mt={9} />
+      <Spacer mt={4} />
+      <BrandProductTable brand={data?.brand} />
+      <Spacer mt={12} />
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )

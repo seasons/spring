@@ -5,10 +5,10 @@ import { makeStyles } from "@material-ui/styles"
 import { BrandList } from "./Brands"
 import { CategoryList } from "./Categories"
 import { ProductList } from "./Products"
+import { LaunchList } from "./Launches"
 import { SizeList } from "./Sizes"
 import { TagList } from "./Tags"
 import { PhysicalProductsList } from "./PhysicalProducts"
-import { OrderList } from "./Orders"
 
 const useStyles = makeStyles<Theme>(theme => ({
   tabs: {
@@ -48,6 +48,7 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
     brands: "Brands",
     categories: "Categories",
     "physical-products": "Physical Products",
+    launches: "Launches",
   }
 
   return (
@@ -79,6 +80,7 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
         {currentTab === "physical-products" && (
           <PhysicalProductsList {...props} basePath="/inventory/physical-products" resource="PhysicalProduct" />
         )}
+        {currentTab === "launches" && <LaunchList {...props} basePath="/inventory/launches" resource="Launch" />}
       </div>
     </Container>
   )
