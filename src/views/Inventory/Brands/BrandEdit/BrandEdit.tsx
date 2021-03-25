@@ -13,7 +13,7 @@ import { BrandProductTable } from "./BrandProductTable"
 
 export const BrandEdit: React.FC = () => {
   const history = useHistory()
-  const { brandID } = useParams()
+  const { brandID } = useParams<{ brandID: string }>()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { data } = useQuery(BRAND_EDIT_QUERY, {
     variables: { input: { id: brandID } },

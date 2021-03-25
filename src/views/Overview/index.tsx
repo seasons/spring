@@ -13,6 +13,8 @@ import { Box } from "@material-ui/core"
 import { PiechartWidget } from "./PiechartWidget"
 import { FunnelWidget } from "./FunnelWidget"
 import { LinechartWidget } from "./LinechartWidget"
+import { MapchartWidget } from "./MapchartWidget"
+import { IOSVersionsWidget } from "./iosVersions"
 
 export interface OverviewViewProps {}
 
@@ -54,6 +56,21 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
     <Container maxWidth={false}>
       <Box mt={6}>
         <Grid container spacing={3}>
+          <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
+            <Typography variant="h3">Financials</Typography>
+          </Box>
+          <Grid container spacing={3}>
+            <Grid item lg={6} sm={6} xs={12}>
+              <MoneyWidget data={getElementForSlug("mrr-(dollar)")} />
+            </Grid>
+
+            <Grid item lg={6} sm={6} xs={12}>
+              <MoneyWidget data={getElementForSlug("arr-(dollar)")} />
+            </Grid>
+          </Grid>
+          <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
+            <Typography variant="h3">Customers</Typography>
+          </Box>
           <Grid item lg={4} sm={6} xs={12}>
             <NumberWidget data={getElementForSlug("active-subscribers")} icon={<PeopleIcon />} />
           </Grid>
@@ -65,19 +82,28 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
           <Grid item lg={4} sm={6} xs={12}>
             <NumberWidget data={getElementForSlug("waitlisted-and-admissable-users")} icon={<GroupAddIcon />} />
           </Grid>
-        </Grid>
-        <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
-          <Typography variant="h3">Financials</Typography>
-        </Box>
-        <Grid container spacing={3}>
-          <Grid item lg={6} sm={6} xs={12}>
-            <MoneyWidget data={getElementForSlug("mrr-(dollar)")} />
+          <Grid item lg={12} sm={12} xs={12}>
+            <MapchartWidget
+              data={{
+                ...getElementForSlug("active-paused-or-admissable-customers-by-latlng"),
+                title: "Customer Heatmap",
+              }}
+            />
           </Grid>
+          <Grid item lg={6} sm={6} xs={12}>
+            <IOSVersionsWidget data={{ ...getElementForSlug("ios-version-table"), title: "iOS Versions" }} />
+          </Grid>
+          <Grid item lg={6} sm={6} xs={12}>
+            <PiechartWidget
+              data={{
+                ...getElementForSlug("subscribe-speed"),
+                title: "Subscribe Speed (days)",
+                subtitle: "Last 30 days",
+              }}
+            />
+          </Grid>
+        </Grid>
 
-          <Grid item lg={6} sm={6} xs={12}>
-            <MoneyWidget data={getElementForSlug("arr-(dollar)")} />
-          </Grid>
-        </Grid>
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
           <Typography variant="h3">Acquisition</Typography>
         </Box>
@@ -150,9 +176,15 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             />
           </Grid>
           <Grid item lg={4} sm={6} xs={12}>
+            <PiechartWidget
+              data={{ ...getElementForSlug("subscribed-events-by-platform"), subtitle: "Last 30 days" }}
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
             <PiechartWidget data={{ ...getElementForSlug("reservations-by-platform"), subtitle: "Last 30 days" }} />
           </Grid>
         </Grid>
+
         <Spacer mb={2} />
       </Box>
     </Container>

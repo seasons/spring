@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Box, Card as MuiCard, styled as muiStyled, Typography } from "@material-ui/core"
 import Chart from "react-apexcharts"
 import { theme } from "theme/theme"
@@ -6,11 +6,12 @@ import { upperFirst } from "lodash"
 
 export const PiechartWidget = ({ data }) => {
   const alphabetizedLabels = Object.keys(data?.result).sort()
+
+  let series = alphabetizedLabels.map(a => data?.result?.[a])
+
   const renderData = {
-    series: alphabetizedLabels.map(a => data?.result?.[a]),
+    series: series,
     options: {
-      plotOptions: { pie: { customScale: 1.1 } },
-      colors: ["#27c6db", "#AA79BC"],
       labels: alphabetizedLabels.map(a => upperFirst(a)),
       legend: {
         show: true,
@@ -20,7 +21,7 @@ export const PiechartWidget = ({ data }) => {
   }
   return (
     <Card>
-      <Box display="flex" flexDirection="column" alignItems="center" flexGrow={1}>
+      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
         <Typography
           component="h2"
           style={{ color: theme.palette.primary.contrastText, letterSpacing: 1 }}
@@ -52,4 +53,5 @@ const Card = muiStyled(MuiCard)({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
+  position: "relative",
 })
