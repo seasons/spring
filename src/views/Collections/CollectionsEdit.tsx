@@ -94,7 +94,6 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   let initialValues = {} as any
 
   if (data) {
-    console.log("data", data)
     initialValues = {
       images: data.images,
       title: data.title,
