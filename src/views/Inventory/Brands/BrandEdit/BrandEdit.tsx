@@ -42,8 +42,6 @@ export const BrandEdit: React.FC = () => {
     },
   })
 
-  console.log("data", data)
-
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
