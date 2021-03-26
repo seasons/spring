@@ -42,6 +42,8 @@ export const BrandEdit: React.FC = () => {
     },
   })
 
+  console.log("data", data)
+
   const [snackbar, toggleSnackbar] = useState<SnackbarState>({
     show: false,
     message: "",
@@ -69,7 +71,7 @@ export const BrandEdit: React.FC = () => {
     } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
     const numImages = 4
-    const logo = values[`logo_0`]
+    const logoImage = values[`logoImage_0`]
     const images = [...Array(numImages).keys()]
       .map(index => {
         return values[`image_${index}`]
@@ -83,7 +85,7 @@ export const BrandEdit: React.FC = () => {
           brandCode: brandCode.toUpperCase(),
           description,
           name,
-          logo,
+          logoImage,
           images,
           since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
           slug: slugify(name).toLowerCase(),
@@ -123,12 +125,11 @@ export const BrandEdit: React.FC = () => {
       basedIn: brand.basedIn,
       designer: brand.designer,
       featured: brand.featured,
-      logo: brand.logo?.url,
       published: brand.published,
       externalShopifyIntegrationShopName: brand?.externalShopifyIntegration?.shopName,
       externalShopifyIntegrationEnabled: brand?.externalShopifyIntegration?.enabled,
     }
-    initialValues[`logo_0`] = brand.logo?.url
+    initialValues[`logoImage_0`] = brand.logoImage?.url
     if (brand.since) {
       initialValues.sinceDate = brand.since
     }
