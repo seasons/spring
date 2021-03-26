@@ -42,7 +42,7 @@ export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) 
       />
       <Grid container spacing={5}>
         <Grid item xs={4}>
-          <ImageUpload numImages={1} title="Logo" height={200} name="logo" />
+          <ImageUpload numImages={1} title="Logo" height={200} name="logoImage" />
           <Spacer mt={1} />
           <ImageUpload numImages={4} />
         </Grid>

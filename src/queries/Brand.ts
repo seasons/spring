@@ -29,7 +29,7 @@ export const BRAND_EDIT_QUERY = gql`
       since
       published
       featured
-      logo {
+      logoImage {
         id
         url
       }
