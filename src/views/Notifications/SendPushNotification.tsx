@@ -1,27 +1,26 @@
 import React, { useState } from "react"
 import { DialogTitle, Loader, Spacer, Text } from "components"
-import { Dialog, DialogContent, DialogActions, Button, makeStyles } from "@material-ui/core"
+import { Dialog, DialogContent, DialogActions, Button, makeStyles, Box } from "@material-ui/core"
 import { Form } from "react-final-form"
 import { TextField } from "fields"
-import { NOTIFY_INTEREST, NOTIFY_USER, GET_USERS } from "./queries"
+import { NOTIFY_INTEREST, NOTIFY_USER } from "./queries"
 import { useMutation } from "@apollo/react-hooks"
 import { interests, routes } from "../../data/pushNotifications.json"
 import { AutocompleteField } from "fields"
-import { useQuery } from "react-apollo"
 import { SnackbarState, Snackbar } from "components/Snackbar"
 import { useRefresh } from "@seasons/react-admin"
 import { Alert } from "@material-ui/lab"
-import { Loading } from "@seasons/react-admin"
-
-const createUserOption = u => ({ label: `${u.fullName} (${u.email})`, value: u.email })
+import { SearchProvider } from "components/Search/SearchProvider"
+import { connectAutoComplete } from "react-instantsearch-dom"
 
 export const SendPushNotificationModal = ({ onClose, open }) => {
   // Set up select data
-  const { data } = useQuery(GET_USERS)
-  const userOptions = data?.users?.map(createUserOption)
+  // const { data } = useQuery(GET_USERS)
+  // const userOptions = data?.users?.map(createUserOption)
   const userGroups = ["Active", "Waitlisted", "Authorized", "Created", "Paused"].map(a => ({
     label: `All ${a} Users`,
-    value: data?.users?.filter(b => b?.customer?.status === a).map(c => c.email),
+    value: [],
+    // value: data?.users?.filter(b => b?.customer?.status === a).map(c => c.email),
   }))
   const interestOptions = interests.map(a => ({ label: a.value, description: a.description, value: a.value }))
 
@@ -119,71 +118,66 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
                     <Text variant="h6" style={{ marginLeft: "5px" }}>
                       Send To
                     </Text>
-                    {!data ? (
+                    {/* {!data ? (
                       <Loading />
-                    ) : (
-                      <>
-                        <Spacer mt={1} />
-                        {showUsers && <AutocompleteField label="User(s)" name="users" options={userOptions} />}
-                        <Spacer mt={1} />
-                        {showInterest && (
-                          <AutocompleteField
-                            label="Interest"
-                            name="interest"
-                            options={interestOptions}
-                            multiple={false}
-                          />
-                        )}
-                        {!!interest && (
-                          <>
-                            <Spacer mt={1} />
-                            <Text variant="body1" style={{ marginLeft: "6px" }}>
-                              ({interest.description})
-                            </Text>
-                          </>
-                        )}
-                        <Spacer mt={1} />
-                        {showUserGroups && (
-                          <AutocompleteField
-                            label="User Group"
-                            name="userGroup"
-                            options={userGroups}
-                            multiple={false}
-                          />
-                        )}
-                        <Spacer mt={2} />
-                        <Text variant="h6" style={{ marginLeft: "5px" }}>
-                          Content
-                        </Text>
-                        <Spacer mt={1} />
-                        <TextField
-                          label="Title"
-                          name="title"
-                          autoFocus
-                          maxLength={50}
-                          asterisk
-                          placeholder={"max 50 chars"}
+                    ) : ( */}
+                    <>
+                      <Spacer mt={1} />
+                      {showUsers && <SearchUserField />}
+                      <Spacer mt={1} />
+                      {showInterest && (
+                        <AutocompleteField
+                          label="Interest"
+                          name="interest"
+                          options={interestOptions}
+                          multiple={false}
                         />
-                        <Spacer mt={1} />
-                        <TextField
-                          label="Body"
-                          name="body"
-                          maxLength={110}
-                          multiline
-                          rows={3}
-                          asterisk
-                          placeholder={"max 110 chars"}
-                        />
-                        <Spacer mt={1} />
-                        <AutocompleteField label="Route" name="route" multiple={false} options={routes} />
-                        {route === "Webview" && (
-                          <>
-                            <Spacer mt={2} />
-                            <TextField label="URI" name="uri" asterisk />
-                          </>
-                        )}
-                      </>
-                    )}
+                      )}
+                      {!!interest && (
+                        <>
+                          <Spacer mt={1} />
+                          <Text variant="body1" style={{ marginLeft: "6px" }}>
+                            ({interest.description})
+                          </Text>
+                        </>
+                      )}
+                      <Spacer mt={1} />
+                      {showUserGroups && (
+                        <AutocompleteField label="User Group" name="userGroup" options={userGroups} multiple={false} />
+                      )}
+                      <Spacer mt={2} />
+                      <Text variant="h6" style={{ marginLeft: "5px" }}>
+                        Content
+                      </Text>
+                      <Spacer mt={1} />
+                      <TextField
+                        label="Title"
+                        name="title"
+                        autoFocus
+                        maxLength={50}
+                        asterisk
+                        placeholder={"max 50 chars"}
+                      />
+                      <Spacer mt={1} />
+                      <TextField
+                        label="Body"
+                        name="body"
+                        maxLength={110}
+                        multiline
+                        rows={3}
+                        asterisk
+                        placeholder={"max 110 chars"}
+                      />
+                      <Spacer mt={1} />
+                      <AutocompleteField label="Route" name="route" multiple={false} options={routes} />
+                      {route === "Webview" && (
+                        <>
+                          <Spacer mt={2} />
+                          <TextField label="URI" name="uri" asterisk />
+                        </>
+                      )}
+                    </>
+                    {/* )} */}
                   </DialogContent>
                   <DialogActions>
                     <Button autoFocus color="primary" type="submit" size="large" variant="contained">
@@ -198,5 +192,31 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
       </Dialog>
       <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
+  )
+}
+
+const AutocompleteSearchBox = connectAutoComplete(({ hits, refine }) => {
+  const options = hits
+    .filter(a => a?.kindOf === "Customer")
+    .map(a => ({ label: `${a?.user?.firstName} ${a?.user?.lastName} (${a.email})`, value: a.email }))
+
+  return (
+    <AutocompleteField
+      options={options}
+      name="users"
+      label="Users"
+      onInputChange={event => refine(event.target.value)}
+      getOptionSelected={(option, value) => option.value === value.value || option === value}
+    />
+  )
+})
+
+const SearchUserField = () => {
+  return (
+    <Box>
+      <SearchProvider>
+        <AutocompleteSearchBox defaultRefinement="Regy" />
+      </SearchProvider>
+    </Box>
   )
 }
