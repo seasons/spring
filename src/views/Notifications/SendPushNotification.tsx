@@ -2,25 +2,21 @@ import React, { useState } from "react"
 import { DialogTitle, Loader, Spacer, Text } from "components"
 import { Dialog, DialogContent, DialogActions, Button, makeStyles, Box } from "@material-ui/core"
 import { Form } from "react-final-form"
+import { useMutation } from "react-apollo"
 import { TextField } from "fields"
-import { NOTIFY_INTEREST, NOTIFY_USER } from "./queries"
-import { useMutation } from "@apollo/react-hooks"
+import { NOTIFY_INTEREST, NOTIFY_USERS } from "./queries"
 import { interests, routes } from "../../data/pushNotifications.json"
 import { AutocompleteField } from "fields"
 import { SnackbarState, Snackbar } from "components/Snackbar"
-import { useRefresh } from "@seasons/react-admin"
 import { Alert } from "@material-ui/lab"
 import { SearchProvider } from "components/Search/SearchProvider"
 import { connectAutoComplete } from "react-instantsearch-dom"
 
 export const SendPushNotificationModal = ({ onClose, open }) => {
   // Set up select data
-  // const { data } = useQuery(GET_USERS)
-  // const userOptions = data?.users?.map(createUserOption)
   const userGroups = ["Active", "Waitlisted", "Authorized", "Created", "Paused"].map(a => ({
     label: `All ${a} Users`,
-    value: [],
-    // value: data?.users?.filter(b => b?.customer?.status === a).map(c => c.email),
+    value: a,
   }))
   const interestOptions = interests.map(a => ({ label: a.value, description: a.description, value: a.value }))
 
@@ -35,37 +31,43 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
   })
 
   // Set up submission handler
-  const [notifyUser] = useMutation(NOTIFY_USER)
-  const [notifyInterest] = useMutation(NOTIFY_INTEREST)
-  const refresh = useRefresh()
+  const mutationOptions = {
+    onCompleted: () => toggleSnackbar({ show: true, message: "Push Notif(s) sent!", status: "success" }),
+    onError: err => toggleSnackbar({ show: true, message: err?.message, status: "error" }),
+  }
+  const [notifyInterest] = useMutation(NOTIFY_INTEREST, mutationOptions)
+  const [pushNotifyUsers] = useMutation(NOTIFY_USERS, mutationOptions)
   const handleSubmit = async ({ title, body, users, interest, userGroup, route, uri }) => {
-    try {
-      setSubmitting(true)
-      const data = { title, body, route, uri }
-      const sendPushNotifToEmail = email => notifyUser({ variables: { data, email } })
+    setSubmitting(true)
+    const data = { title, body, route, uri }
 
-      if (users?.length > 0) {
-        await Promise.all(users.map(a => a.value).map(email => sendPushNotifToEmail(email)))
-      }
-
-      if (!!interest) {
-        await notifyInterest({
-          variables: {
-            data,
-            interest: interest.value,
-          },
-        })
-      }
-
-      if (!!userGroup) {
-        await Promise.all(userGroup.value.map(email => sendPushNotifToEmail(email)))
-      }
-
-      toggleSnackbar({ show: true, message: "Push Notif(s) sent!", status: "success" })
-      refresh()
-    } catch (err) {
-      toggleSnackbar({ show: true, message: err?.message, status: "error" })
+    if (users?.length > 0) {
+      await pushNotifyUsers({
+        variables: {
+          where: { user: { email_in: users.map(a => a.value) } },
+          data,
+        },
+      })
     }
+
+    if (!!interest) {
+      await notifyInterest({
+        variables: {
+          data,
+          interest: interest.value,
+        },
+      })
+    }
+
+    if (!!userGroup) {
+      await pushNotifyUsers({
+        variables: {
+          where: { status: userGroup.value },
+          data,
+        },
+      })
+    }
+
     setSubmitting(false)
     onClose()
   }
@@ -118,66 +120,55 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
                     <Text variant="h6" style={{ marginLeft: "5px" }}>
                       Send To
                     </Text>
-                    {/* {!data ? (
-                      <Loading />
-                    ) : ( */}
-                    <>
-                      <Spacer mt={1} />
-                      {showUsers && <SearchUserField />}
-                      <Spacer mt={1} />
-                      {showInterest && (
-                        <AutocompleteField
-                          label="Interest"
-                          name="interest"
-                          options={interestOptions}
-                          multiple={false}
-                        />
-                      )}
-                      {!!interest && (
-                        <>
-                          <Spacer mt={1} />
-                          <Text variant="body1" style={{ marginLeft: "6px" }}>
-                            ({interest.description})
-                          </Text>
-                        </>
-                      )}
-                      <Spacer mt={1} />
-                      {showUserGroups && (
-                        <AutocompleteField label="User Group" name="userGroup" options={userGroups} multiple={false} />
-                      )}
-                      <Spacer mt={2} />
-                      <Text variant="h6" style={{ marginLeft: "5px" }}>
-                        Content
-                      </Text>
-                      <Spacer mt={1} />
-                      <TextField
-                        label="Title"
-                        name="title"
-                        autoFocus
-                        maxLength={50}
-                        asterisk
-                        placeholder={"max 50 chars"}
-                      />
-                      <Spacer mt={1} />
-                      <TextField
-                        label="Body"
-                        name="body"
-                        maxLength={110}
-                        multiline
-                        rows={3}
-                        asterisk
-                        placeholder={"max 110 chars"}
-                      />
-                      <Spacer mt={1} />
-                      <AutocompleteField label="Route" name="route" multiple={false} options={routes} />
-                      {route === "Webview" && (
-                        <>
-                          <Spacer mt={2} />
-                          <TextField label="URI" name="uri" asterisk />
-                        </>
-                      )}
-                    </>
-                    {/* )} */}
+                    <Spacer mt={1} />
+                    {showUsers && <SearchUserField />}
+                    <Spacer mt={1} />
+                    {showInterest && (
+                      <AutocompleteField label="Interest" name="interest" options={interestOptions} multiple={false} />
+                    )}
+                    {!!interest && (
+                      <>
+                        <Spacer mt={1} />
+                        <Text variant="body1" style={{ marginLeft: "6px" }}>
+                          ({interest.description})
+                        </Text>
+                      </>
+                    )}
+                    <Spacer mt={1} />
+                    {showUserGroups && (
+                      <AutocompleteField label="User Group" name="userGroup" options={userGroups} multiple={false} />
+                    )}
+                    <Spacer mt={2} />
+                    <Text variant="h6" style={{ marginLeft: "5px" }}>
+                      Content
+                    </Text>
+                    <Spacer mt={1} />
+                    <TextField
+                      label="Title"
+                      name="title"
+                      autoFocus
+                      maxLength={50}
+                      asterisk
+                      placeholder={"max 50 chars"}
+                    />
+                    <Spacer mt={1} />
+                    <TextField
+                      label="Body"
+                      name="body"
+                      maxLength={110}
+                      multiline
+                      rows={3}
+                      asterisk
+                      placeholder={"max 110 chars"}
+                    />
+                    <Spacer mt={1} />
+                    <AutocompleteField label="Route" name="route" multiple={false} options={routes} />
+                    {route === "Webview" && (
+                      <>
+                        <Spacer mt={2} />
+                        <TextField label="URI" name="uri" asterisk />
+                      </>
+                    )}
                   </DialogContent>
                   <DialogActions>
                     <Button autoFocus color="primary" type="submit" size="large" variant="contained">
