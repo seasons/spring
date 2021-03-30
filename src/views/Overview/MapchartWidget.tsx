@@ -3,7 +3,12 @@ import { Box, Card as MuiCard, styled as muiStyled } from "@material-ui/core"
 import { ControlPanel } from "components"
 
 import { useState } from "react"
+import mapboxgl from "mapbox-gl"
 import ReactMapGL, { Source, Layer } from "react-map-gl"
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default
 
 // heatmapLayer is from https://github.com/visgl/react-map-gl/tree/6.1-release/examples/heatmap
 const MAX_ZOOM_LEVEL = 9
