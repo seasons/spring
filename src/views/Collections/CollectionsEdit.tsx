@@ -1,14 +1,14 @@
 import { Box, Container } from "@material-ui/core"
 import React, { useEffect, useState } from "react"
 import { useMutation, useQuery } from "react-apollo"
-import { Spacer, Snackbar, Wizard } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Spacer, Wizard } from "components"
 import { useRefresh } from "@seasons/react-admin"
 import { Overview } from "./Components/Overview"
 import { UPSERT_COLLECTION } from "./mutations"
 import { useParams } from "react-router-dom"
 import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
   const { collectionID } = useParams<{ collectionID: string }>()
@@ -32,6 +32,8 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
     }
   }, [selectedProductIDs, products, refetch])
 
+  const { showSnackbar } = useSnackbarContext()
+
   const [upsertCollection] = useMutation(UPSERT_COLLECTION, {
     refetchQueries: [
       {
@@ -40,15 +42,13 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
       },
     ],
     onCompleted: result => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Collection updated",
         status: "success",
       })
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
@@ -60,12 +60,6 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
       setSelectedProductIDs(data.products.map(p => p.id))
     }
   }, [data, selectedProductIDs])
-
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
 
   const onSubmit = async values => {
     const numImages = 4
@@ -123,7 +117,6 @@ export const CollectionsEdit: React.FC<{ match: any }> = ({ match }) => {
         />
       </Wizard>
       <Spacer mt={18} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

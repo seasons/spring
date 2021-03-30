@@ -5,7 +5,7 @@ import { useRefresh } from "@seasons/react-admin"
 import { OffloadPhysicalProductModal, PickPhysicalProductModal } from "../Components"
 import { PrintBarcodeModal } from "../Components/PrintBarcodeModal"
 
-export const PhysicalProductDetailViewHeader = ({ data: physicalProduct, toggleSnackbar }: HeaderRenderProps) => {
+export const PhysicalProductDetailViewHeader = ({ data: physicalProduct }: HeaderRenderProps) => {
   const { productVariant, seasonsUID } = physicalProduct
   const refresh = useRefresh()
 
@@ -76,7 +76,6 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct, toggleS
           open={openOffloadModal}
           onClose={onCloseOffloadModal}
           physicalProduct={physicalProduct as any}
-          toggleSnackbar={toggleSnackbar}
         />
       )}
       {openPickModal && (
@@ -84,13 +83,11 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct, toggleS
           open={openPickModal}
           setOpen={setOpenPickModal}
           physicalProduct={physicalProduct as any}
-          toggleSnackbar={toggleSnackbar}
         />
       )}
       {openPrintBarcodeModal && (
         <PrintBarcodeModal
           physicalProduct={physicalProduct}
-          toggleSnackbar={toggleSnackbar}
           open={openPrintBarcodeModal}
           setOpen={setOpenPrintBarcodeModal}
         />

@@ -3,8 +3,7 @@ import React, { useState } from "react"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
-import { ConfirmationDialog, Snackbar, Spacer, Wizard } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { ConfirmationDialog, Spacer, Wizard } from "components"
 import { Overview, Variants } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
@@ -12,6 +11,7 @@ import { getProductUpsertData } from "../utils"
 import { useLocation } from "react-router"
 import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
 import { PhysicalProductsCreate } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const ProductCreate: React.FC = () => {
   const history = useHistory()
@@ -19,6 +19,7 @@ export const ProductCreate: React.FC = () => {
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
   const { data, loading, error } = useQuery(PRODUCT_UPSERT_QUERY)
   const location = useLocation()
+  const { showSnackbar } = useSnackbarContext()
   const [upsertProduct] = useMutation(UPSERT_PRODUCT, {
     onCompleted: result => {
       setIsSubmitting(false)
@@ -26,10 +27,13 @@ export const ProductCreate: React.FC = () => {
       // Redirect to product edit page for this product
       const { upsertProduct } = result
       history.push(`/inventory/products/${upsertProduct.id}`)
+      showSnackbar({
+        message: "Success!",
+        status: "success",
+      })
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
@@ -37,11 +41,6 @@ export const ProductCreate: React.FC = () => {
     },
   })
   const [values, setValues] = useState({})
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
 
   if (loading || error || !data) {
     return <Loading />
@@ -96,7 +95,6 @@ export const ProductCreate: React.FC = () => {
         />
       </Wizard>
       <Spacer mt={18} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
       <ConfirmationDialog
         title="By not specifying any available sizes, a new product will be created without any variants. Are you sure you want to submit?"
         body="Make sure all the values provided are correct before submitting."

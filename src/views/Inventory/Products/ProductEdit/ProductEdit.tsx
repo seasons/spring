@@ -1,40 +1,34 @@
-import React, { useState } from "react"
+import React from "react"
 import { Container } from "@material-ui/core"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useParams } from "react-router-dom"
 import { pick } from "lodash"
-import { Snackbar, Spacer, Wizard } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Spacer, Wizard } from "components"
 import { Overview } from "../Components"
 import { ProductEditQuery } from "generated/ProductEditQuery"
 import { PRODUCT_EDIT_QUERY } from "../queries"
 import { UPDATE_PRODUCT } from "../mutations"
 import { getProductUpdateData } from "../utils"
+import { useSnackbarContext } from "components/Snackbar"
 
 export interface ProductEditProps {}
 
 export const ProductEdit: React.FC<ProductEditProps> = props => {
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
   const { productID } = useParams() as any
   const { data, loading, error } = useQuery(PRODUCT_EDIT_QUERY, {
     variables: { input: { id: productID } },
   })
+  const { showSnackbar } = useSnackbarContext()
   const [updateProduct] = useMutation(UPDATE_PRODUCT, {
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
     },
     onCompleted: data => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Product updated!",
         status: "success",
       })
@@ -114,10 +108,9 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   return (
     <Container maxWidth={false}>
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
-        <Overview data={data} product={data.product} toggleSnackbar={toggleSnackbar} />
+        <Overview data={data} product={data.product} />
       </Wizard>
       <Spacer mt={9} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

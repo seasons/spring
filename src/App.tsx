@@ -21,6 +21,7 @@ import { theme } from "./theme/theme"
 import { buildProvider } from "dataProvider"
 import { client } from "./apollo"
 import { QueryParamProvider } from "use-query-params"
+import { SnackbarProvider, Snackbar } from "components/Snackbar"
 
 const history = createBrowserHistory()
 
@@ -62,23 +63,26 @@ class App extends React.Component {
                   <SearchProvider>
                     <SCThemeProvider theme={theme}>
                       <ThemeProvider theme={theme}>
-                        <Resource name="Product" intent="registration" />
-                        <Resource name="Collection" intent="registration" />
-                        <Resource name="PhysicalProduct" intent="registration" />
-                        <Resource name="FitPic" intent="registration" />
-                        <Resource name="Customer" intent="registration" />
-                        <Resource name="Category" intent="registration" />
-                        <Resource name="Brand" intent="registration" />
-                        <Resource name="Launch" intent="registration" />
-                        <Resource name="User" intent="registration" />
-                        <Resource name="Reservation" intent="registration" />
-                        <Resource name="Size" intent="registration" />
-                        <Resource name="Tag" intent="registration" />
-                        <Resource name="PushNotificationReceipt" intent="registration" />
-                        <Resource name="Order" intent="registration" />
-                        <Router history={history}>
-                          <QueryParamProvider ReactRouterRoute={Route}>{renderRoutes(routes)}</QueryParamProvider>
-                        </Router>
+                        <SnackbarProvider>
+                          <Resource name="Product" intent="registration" />
+                          <Resource name="Collection" intent="registration" />
+                          <Resource name="PhysicalProduct" intent="registration" />
+                          <Resource name="FitPic" intent="registration" />
+                          <Resource name="Customer" intent="registration" />
+                          <Resource name="Category" intent="registration" />
+                          <Resource name="Brand" intent="registration" />
+                          <Resource name="Launch" intent="registration" />
+                          <Resource name="User" intent="registration" />
+                          <Resource name="Reservation" intent="registration" />
+                          <Resource name="Size" intent="registration" />
+                          <Resource name="Tag" intent="registration" />
+                          <Resource name="PushNotificationReceipt" intent="registration" />
+                          <Resource name="Order" intent="registration" />
+                          <Router history={history}>
+                            <QueryParamProvider ReactRouterRoute={Route}>{renderRoutes(routes)}</QueryParamProvider>
+                          </Router>
+                          <Snackbar />
+                        </SnackbarProvider>
                       </ThemeProvider>
                     </SCThemeProvider>
                   </SearchProvider>

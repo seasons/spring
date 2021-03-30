@@ -2,14 +2,13 @@ import React from "react"
 import { useMutation } from "react-apollo"
 
 import { ConfirmationDialog } from "components"
-import { SnackbarState } from "components/Snackbar"
 import { ProductEditQuery_product_variants_physicalProducts } from "generated/ProductEditQuery"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { useRefresh } from "@seasons/react-admin"
+import { useSnackbarContext } from "components/Snackbar"
 
 interface PickPhysicalProductModalProps {
   physicalProduct: ProductEditQuery_product_variants_physicalProducts
-  toggleSnackbar?: (state: SnackbarState) => void
   open: boolean
   setOpen: (boolean) => void
 }
@@ -17,22 +16,20 @@ interface PickPhysicalProductModalProps {
 export const PickPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = ({
   open,
   setOpen,
-  toggleSnackbar,
   physicalProduct,
 }) => {
   const refresh = useRefresh()
 
   const extraSuccessText = physicalProduct.inventoryStatus === "Stored" ? "" : "and marked as NonReservable"
+  const { showSnackbar } = useSnackbarContext()
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onError: error =>
-      toggleSnackbar?.({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       }),
     onCompleted: data => {
-      toggleSnackbar?.({
-        show: true,
+      showSnackbar({
         message: `Successfully detached warehouse location ${extraSuccessText}.`,
         status: "success",
       })

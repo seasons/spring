@@ -1,12 +1,10 @@
 import { ComponentError, Spacer } from "components"
-import React, { useState } from "react"
+import React from "react"
 import { Loading, useQueryWithStore } from "@seasons/react-admin"
 import { Redirect, useHistory } from "react-router-dom"
 
 import { Box, colors, Container, Divider, Tab, Tabs, Theme } from "@material-ui/core"
-import { Snackbar, Header as BaseHeader } from "components"
 import { makeStyles } from "@material-ui/styles"
-import { SnackbarState } from "./Snackbar"
 
 const useStyles = makeStyles<Theme>(theme => ({
   tabs: {
@@ -31,12 +29,10 @@ export interface TabRenderProps {
   adminKey: string
   recordID: string
   match: DetailViewMatch
-  toggleSnackbar: (state: SnackbarState) => void
 }
 
 export interface HeaderRenderProps {
   data: any
-  toggleSnackbar: (state: SnackbarState) => void
 }
 
 export interface DetailViewProps {
@@ -62,12 +58,6 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
 
   const history = useHistory()
 
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
-
   // Get the data
   const { data, loading, loaded, error } = useQueryWithStore({
     type: "getOne",
@@ -88,11 +78,11 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
   const renderCurrentTab = () => {
     const activeTab = tabs.find(t => t.value === currentTab)
     const adminStoreKey = JSON.stringify({ type: "GET_ONE", resource, payload: { id: data.id } })
-    return activeTab?.render({ data, adminKey: adminStoreKey, match, recordID: match.params.id, toggleSnackbar })
+    return activeTab?.render({ data, adminKey: adminStoreKey, match, recordID: match.params.id })
   }
   return (
     <Container maxWidth={false}>
-      {renderHeader({ data, toggleSnackbar })}
+      {renderHeader({ data })}
       <Spacer mt={2} />
       <Tabs
         indicatorColor={"primary"}
@@ -109,7 +99,6 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
       </Tabs>
       <Divider className={classes.divider} />
       <Box mt={2}>{renderCurrentTab()}</Box>
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

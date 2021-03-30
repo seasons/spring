@@ -5,7 +5,7 @@ import { Grid } from "@material-ui/core"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "../../Components"
 import { getTypeSpecificVariantFields } from "../../utils"
-import { GroupedAutocompleteField, TextField, CheckboxField } from "fields"
+import { GroupedAutocompleteField, TextField } from "fields"
 
 export interface VariantCreateSectionProps {
   productType: string

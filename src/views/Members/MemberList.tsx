@@ -2,8 +2,6 @@ import React, { useState } from "react"
 import { Datagrid, List, TextField, useRefresh } from "@seasons/react-admin"
 import { Link as RouterLink } from "react-router-dom"
 import { Button, Container } from "@material-ui/core"
-import { Indicator, Snackbar } from "components"
-import { SnackbarState } from "components/Snackbar"
 import { Header } from "components/Header"
 import { EntityCountField, FullNameField, StatusField, ActionButtons, ResumeDateField, CheckField } from "fields"
 import { MemberFilter } from "./MemberFilter"
@@ -13,6 +11,7 @@ import { MemberViewProps, ActionButtonProps } from "./interfaces"
 import { AuthorizeButton } from "./AuthorizeButton"
 import { ExpandedRow } from "./ExpandedRow"
 import { get } from "lodash"
+import { useSnackbarContext } from "components/Snackbar"
 
 const ViewButton = (props: ActionButtonProps) => {
   const id = props.record?.id
@@ -28,19 +27,18 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
   const [openEdit, setOpenEdit] = useState(false)
   const refresh = useRefresh()
 
+  const { showSnackbar } = useSnackbarContext()
   const onAuthorizeMemberComplete = () => {
     setMemberToInvite({ id: "" })
     setConfirmInviteModal(false)
-    toggleSnackbar({
-      show: true,
+    showSnackbar({
       message: "Member Authorized",
       status: "success",
     })
     refresh()
   }
   const onAuthorizeMemberError = error => {
-    toggleSnackbar({
-      show: true,
+    showSnackbar({
       message: `Error authorizing member: ${error?.message}`,
       status: "error",
     })
@@ -49,12 +47,6 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
   const [confirmInviteModalIsOpen, setConfirmInviteModal] = useState(false)
   const [memberToInvite, setMemberToInvite] = useState({
     id: "",
-  })
-
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
   })
 
   const openNewMemberModal = () => {
@@ -134,7 +126,6 @@ export const MemberList: React.FC<MemberViewProps> = ({ match, history, props })
         onCompleted={onAuthorizeMemberComplete}
         onError={onAuthorizeMemberError}
       />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }
