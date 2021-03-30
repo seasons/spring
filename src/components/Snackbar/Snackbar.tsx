@@ -10,12 +10,7 @@ export type SnackbarState = {
   status: Color
 }
 
-export interface SnackbarProps {
-  state?: SnackbarState
-  showSnackbar?: (state: SnackbarState) => void
-}
-
-export const Snackbar: React.FC<SnackbarProps> = () => {
+export const Snackbar: React.FC = () => {
   const { snackbarState, hideSnackbar } = useSnackbarContext()
   return (
     <MuiSnackbar
