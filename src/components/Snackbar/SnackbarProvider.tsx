@@ -20,6 +20,7 @@ export const SnackbarProvider = ({ children }) => {
       switch (action.type) {
         case SnackbarAction.Show:
           return {
+            show: true,
             ...action.data,
           }
         case SnackbarAction.Close:
@@ -40,9 +41,12 @@ export const SnackbarProvider = ({ children }) => {
   const snackbarContext = {
     showSnackbar: (data: Omit<SnackbarState, "show">) => {
       dispatch({ type: SnackbarAction.Show, data })
-      setTimeout(() => dispatch({ type: SnackbarAction.Close }), 2000)
+      setTimeout(() => dispatch({ type: SnackbarAction.Close }), 6000)
     },
     snackbarState,
+    hideSnackbar: () => {
+      dispatch({ type: SnackbarAction.Close })
+    },
   }
 
   //@ts-ignore

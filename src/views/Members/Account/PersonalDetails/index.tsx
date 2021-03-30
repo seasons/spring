@@ -23,7 +23,17 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
   const { showSnackbar } = useSnackbarContext()
   const [openEdit, setOpenEdit] = useState(false)
   const [member, updateMember] = useState(memberFromStore)
-  const [updateDetails] = useMutation(MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT)
+  const [updateDetails] = useMutation(MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT, {
+    onError: error => {
+      showSnackbar({
+        message: "Error updating member",
+        status: "error",
+      })
+    },
+    onCompleted: data => {
+      showSnackbar({ message: "Updated Member", status: "error" })
+    },
+  })
   const [confirmInviteModalIsOpen, setConfirmInviteModal] = useState(false)
   const [memberToInvite, setMemberToInvite] = useState({
     id: "",
@@ -63,17 +73,10 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
         id: values.id.value,
         data: customer,
       },
+    }).then(() => {
+      // (1) update state so card reflects latest data optimistically
+      updateMember(memberData)
     })
-      .then(() => {
-        // (1) update state so card reflects latest data optimistically
-        updateMember(memberData)
-      })
-      .catch(error => {
-        showSnackbar({
-          message: "Error updating member",
-          status: "error",
-        })
-      })
   }
 
   const openConfirmInviteModal = id => {

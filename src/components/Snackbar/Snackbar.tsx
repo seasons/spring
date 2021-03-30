@@ -16,10 +16,16 @@ export interface SnackbarProps {
 }
 
 export const Snackbar: React.FC<SnackbarProps> = () => {
-  const { snackbarState } = useSnackbarContext()
+  const { snackbarState, hideSnackbar } = useSnackbarContext()
   return (
-    <MuiSnackbar open={snackbarState.show} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
-      <Alert severity={snackbarState.status as Color}>{snackbarState.message}</Alert>
+    <MuiSnackbar
+      open={snackbarState.show}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      onClose={hideSnackbar}
+    >
+      <Alert severity={snackbarState.status as Color} onClose={hideSnackbar}>
+        {snackbarState.message}
+      </Alert>
     </MuiSnackbar>
   )
 }

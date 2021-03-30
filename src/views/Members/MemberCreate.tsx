@@ -67,7 +67,13 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
     onError: onNetworkError,
   })
   const [updateMember] = useMutation(MEMBER_DETAIL_UPDATE, {
-    onCompleted: resp => history.push(`/members/${resp.updateCustomer.id}/account`),
+    onCompleted: resp => {
+      history.push(`/members/${resp.updateCustomer.id}/account`)
+      showSnackbar({
+        message: `Member created`,
+        status: "success",
+      })
+    },
     onError: onNetworkError,
   })
 
