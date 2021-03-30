@@ -3,7 +3,6 @@ import { useMutation } from "react-apollo"
 import { useLocation } from "react-router-dom"
 import { Grid } from "@material-ui/core"
 import { ConfirmationDialog, Header, Spacer, ImageUpload } from "components"
-import { SnackbarState } from "components/Snackbar"
 import materialsJSON from "data/materials.json"
 import { SelectChoice } from "fields/SelectField"
 import { GeneralSection } from "./GeneralSection"
@@ -22,18 +21,19 @@ import { DateTime } from "luxon"
 import { PRODUCT_EDIT_QUERY } from "../queries"
 import { uniq } from "lodash"
 import { SeasonsSection } from "."
+import { useSnackbarContext } from "components/Snackbar"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
   product?: ProductEditQuery_product
-  toggleSnackbar?: (state: SnackbarState) => void
 }
 
-export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackbar }) => {
+export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
   const location = useLocation()
   const [productType, setProductType] = useState(product?.type || "Top")
   const [isLongTermStorageDialogOpen, setIsLongTermStorageDialogOpen] = useState(false)
   const [isRestoreFromLongTermStorageDialogOpen, setIsRestoreFromLongTermStorageDialogOpen] = useState(false)
+  const { showSnackbar } = useSnackbarContext()
   const [updateProduct] = useMutation(UPDATE_PRODUCT, {
     refetchQueries: [
       {
@@ -42,15 +42,13 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
       },
     ],
     onError: error => {
-      toggleSnackbar?.({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
     },
     onCompleted: data => {
-      toggleSnackbar?.({
-        show: true,
+      showSnackbar({
         message: "Success!",
         status: "success",
       })
@@ -264,11 +262,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product, toggleSnackba
           {isEditing && product && (
             <>
               <Spacer mt={6} />
-              <ProductVariantsSection
-                productID={product.id}
-                variants={product?.variants || []}
-                toggleSnackbar={toggleSnackbar}
-              />
+              <ProductVariantsSection productID={product.id} variants={product?.variants || []} />
               <Spacer mt={6} />
             </>
           )}

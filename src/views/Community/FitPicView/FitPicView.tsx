@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react"
 import { useMutation, useQuery } from "react-apollo"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
 import { useRefresh } from "@seasons/react-admin"
-import { Header, Spacer, Snackbar, Text, Wizard } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Header, Spacer, Text, Wizard } from "components"
 import { fitPic } from "generated/fitPic"
 import { SelectField, TextField } from "fields"
 import { DateTime } from "luxon"
@@ -15,6 +14,7 @@ import { FitPicStatus } from "generated/globalTypes"
 import { SearchInput, SearchType } from "components/SearchInput"
 import { COLLECTION_PRODUCTS_QUERY } from "queries/Collection"
 import { ProductSelects } from "components/ProductSelects"
+import { useSnackbarContext } from "components/Snackbar"
 
 const publishedChoices = [
   { value: FitPicStatus.Submitted, display: "Submitted", disabled: true },
@@ -27,16 +27,15 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
   const refresh = useRefresh()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedProductIDs, setSelectedProductIDs] = useState([] as string[])
+  const { showSnackbar } = useSnackbarContext()
   const onMutationError = (error: ApolloError) =>
-    toggleSnackbar({
-      show: true,
+    showSnackbar({
       message: error?.message,
       status: "error",
     })
   const [updateFitPic] = useMutation(UPDATE_FIT_PIC, {
     onCompleted: () => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Success!",
         status: "success",
       })
@@ -52,11 +51,7 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
     variables: { productIDs: selectedProductIDs },
   })
   const selectedProducts = productsQueryData?.products
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
+
   const { data, loading, loaded, error } = useQueryWithStore({
     type: "getOne",
     resource: "FitPic",
@@ -195,7 +190,6 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
         </>
       </Wizard>
       <Spacer mt={18} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

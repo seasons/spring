@@ -2,12 +2,12 @@ import React, { useState } from "react"
 import { useMutation, useQuery } from "react-apollo"
 import { Loading } from "@seasons/react-admin"
 import { Container } from "@material-ui/core"
-import { Spacer, Wizard, Snackbar } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Spacer, Wizard } from "components"
 import { useHistory, useParams } from "react-router-dom"
 import { LaunchFields } from "./Components/LaunchFields"
 import { LAUNCH_EDIT_QUERY } from "queries/Launch"
 import { UPSERT_LAUNCH } from "./mutations"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const LaunchEdit: React.FC = () => {
   const history = useHistory()
@@ -16,6 +16,7 @@ export const LaunchEdit: React.FC = () => {
   const { data } = useQuery(LAUNCH_EDIT_QUERY, {
     variables: { input: { id: launchID } },
   })
+  const { showSnackbar } = useSnackbarContext()
   const [upsertLaunch] = useMutation(UPSERT_LAUNCH, {
     refetchQueries: [
       {
@@ -24,26 +25,18 @@ export const LaunchEdit: React.FC = () => {
       },
     ],
     onCompleted: result => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Launch updated",
         status: "success",
       })
       history.push(`/inventory/launches/${result.upsertLaunch.id}`)
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
     },
-  })
-
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
   })
 
   const onSubmit = async values => {
@@ -88,7 +81,6 @@ export const LaunchEdit: React.FC = () => {
         <LaunchFields headerTitle="Edit launch" data={data} />
       </Wizard>
       <Spacer mt={9} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

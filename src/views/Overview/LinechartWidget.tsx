@@ -44,7 +44,6 @@ export const LinechartWidget = ({ data }) => {
       xaxis: {
         categories: formattedLabels,
         labels: {
-          show: true,
           rotate: -45,
           rotateAlways: true,
         },

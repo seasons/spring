@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Snackbar } from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, TextField } from "@material-ui/core"
 import { DialogTitle } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
-import { Alert, Color } from "@material-ui/lab"
 import { PhysicalProductStatus } from "generated/globalTypes"
 import { filter, values, trim } from "lodash"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
+import { useSnackbarContext } from "components/Snackbar"
 
 interface ProductState {
   productUID: string
@@ -49,11 +49,6 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
   })
 
   const [barcode, setBarcode] = useState("")
-  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
-    show: false,
-    message: "",
-    status: "success",
-  })
 
   const inputRef = useRef()
   const shouldAllowSave = filter(values(productStates), a => a.returned).length > 0
@@ -67,13 +62,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
     onSave?.(productStates)
   }
 
-  const hideSnackbar = () => {
-    toggleSnackbar({
-      show: false,
-      message: "",
-      status: "success",
-    })
-  }
+  const { showSnackbar } = useSnackbarContext()
 
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
@@ -81,8 +70,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
       const productState = productStates[input]
       if (productState) {
         setBarcode("")
-        toggleSnackbar({
-          show: true,
+        showSnackbar({
           message: `Found barcode: ${input}`,
           status: "success",
         })
@@ -94,8 +82,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
           },
         })
       } else {
-        toggleSnackbar({
-          show: true,
+        showSnackbar({
           message: `Barcode not found`,
           status: "error",
         })
@@ -161,16 +148,6 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={snackbar.show}
-        autoHideDuration={6000}
-        onClose={hideSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={hideSnackbar} severity={snackbar.status}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </>
   )
 }

@@ -3,13 +3,13 @@ import { useMutation, useQuery } from "react-apollo"
 import slugify from "slugify"
 import { Loading } from "@seasons/react-admin"
 import { Container } from "@material-ui/core"
-import { Spacer, Wizard, Snackbar } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Spacer, Wizard } from "components"
 import { UPDATE_BRAND } from "../mutations"
 import { useHistory, useParams } from "react-router-dom"
 import { BRAND_EDIT_QUERY } from "queries/Brand"
 import { BrandFields } from "../BrandComponents"
 import { BrandProductTable } from "./BrandProductTable"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const BrandEdit: React.FC = () => {
   const history = useHistory()
@@ -18,6 +18,7 @@ export const BrandEdit: React.FC = () => {
   const { data } = useQuery(BRAND_EDIT_QUERY, {
     variables: { input: { id: brandID } },
   })
+  const { showSnackbar } = useSnackbarContext()
   const [updateBrand] = useMutation(UPDATE_BRAND, {
     refetchQueries: [
       {
@@ -26,26 +27,18 @@ export const BrandEdit: React.FC = () => {
       },
     ],
     onCompleted: result => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Brand updated",
         status: "success",
       })
       history.push(`/inventory/brands/${result.updateBrand.id}`)
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
     },
-  })
-
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
   })
 
   const onSubmit = async values => {
@@ -144,7 +137,6 @@ export const BrandEdit: React.FC = () => {
       <Spacer mt={4} />
       <BrandProductTable brand={data?.brand} />
       <Spacer mt={12} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

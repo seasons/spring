@@ -1,9 +1,9 @@
 import { useMutation } from "@apollo/react-hooks"
 import { Box, Card, Chip, Grid, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 import { updateCustomer as updateCustomerAction } from "actions/customerActions"
-import { CardContent, EditButton, EditModal, Snackbar } from "components"
+import { CardContent, EditButton, EditModal } from "components"
 import { Indicator } from "components/Indicator"
-import { SnackbarState } from "components/Snackbar"
+import { useSnackbarContext } from "components/Snackbar"
 import { ActionButtons } from "fields"
 import { CustomerStatus } from "generated/globalTypes"
 import moment from "moment"
@@ -15,23 +15,30 @@ import { AuthorizeMemberModal } from "../../AuthorizeMemberModal"
 import { MemberSubViewProps } from "../../interfaces"
 import { MembershipPlanOptions, MemberStatusOptions } from "../../Member.types"
 import { MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT } from "../../queries"
+
 export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
 
+  const { showSnackbar } = useSnackbarContext()
   const [openEdit, setOpenEdit] = useState(false)
   const [member, updateMember] = useState(memberFromStore)
-  const [updateDetails] = useMutation(MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT)
+  const [updateDetails] = useMutation(MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT, {
+    onError: error => {
+      showSnackbar({
+        message: "Error updating member",
+        status: "error",
+      })
+    },
+    onCompleted: data => {
+      showSnackbar({ message: "Updated Member", status: "error" })
+    },
+  })
   const [confirmInviteModalIsOpen, setConfirmInviteModal] = useState(false)
   const [memberToInvite, setMemberToInvite] = useState({
     id: "",
   })
 
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
   const dispatch = useDispatch()
 
   const handleEditOpen = () => {
@@ -66,18 +73,10 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
         id: values.id.value,
         data: customer,
       },
+    }).then(() => {
+      // (1) update state so card reflects latest data optimistically
+      updateMember(memberData)
     })
-      .then(() => {
-        // (1) update state so card reflects latest data optimistically
-        updateMember(memberData)
-      })
-      .catch(error => {
-        toggleSnackbar({
-          show: true,
-          message: "Error updating member",
-          status: "error",
-        })
-      })
   }
 
   const openConfirmInviteModal = id => {
@@ -98,15 +97,13 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
 
     setMemberToInvite({ id: "" })
     setConfirmInviteModal(false)
-    toggleSnackbar({
-      show: true,
+    showSnackbar({
       message: "Member Authorized",
       status: "success",
     })
   }
   const onAuthorizeMemberError = error => {
-    toggleSnackbar({
-      show: true,
+    showSnackbar({
       message: `Error authorizing member: ${error?.message}`,
       status: "error",
     })
@@ -247,7 +244,6 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
         onClose={closeConfirmInviteModal}
         open={confirmInviteModalIsOpen}
       />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Card>
   )
 }

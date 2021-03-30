@@ -1,6 +1,5 @@
-import { Snackbar, Header, Spacer } from "components"
+import { Header, Spacer } from "components"
 import { BrandField, CheckField, ImagesField, SinceDateField, ViewEntityField } from "fields"
-import { SnackbarState } from "components/Snackbar"
 import React, { useState } from "react"
 import { Datagrid, List, TextField, useRefresh } from "@seasons/react-admin"
 import { ProductListActions } from "./ProductListActions"
@@ -13,6 +12,7 @@ import { StowProductModal } from "../Components"
 import { BulkPublishButton } from "./BulkPublishButton"
 import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Components"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/PhysicalProducts/mutations"
+import { useSnackbarContext } from "components/Snackbar"
 
 export interface ProductListInterface {
   onNewProductBtnPressed: () => void
@@ -25,23 +25,17 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
   const [updatingStatusForPhysicalProduct, setUpdatingStatusForPhysicalProduct] = useState<any>(null)
   const [offloadingPhysicalProduct, setOffloadingPhysicalProduct] = useState<any>(null)
   const [isMutating, setIsMutating] = useState(false)
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
 
+  const { showSnackbar } = useSnackbarContext()
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onCompleted: result => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: `Successfully updated status for physical product ${result.updatePhysicalProduct.seasonsUID}.`,
         status: "success",
       })
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
@@ -61,7 +55,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
           />
         }
         sort={{ field: "publishedAt", order: "DESC" }}
-        bulkActionButtons={<BulkPublishButton toggleSnackbar={toggleSnackbar} />}
+        bulkActionButtons={<BulkPublishButton />}
         perPage={25}
         hasCreate={false}
         hasEdit={false}
@@ -112,7 +106,6 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
 
       <UpdatePhysicalProductStatusModal
         open={!!updatingStatusForPhysicalProduct}
-        toggleSnackbar={toggleSnackbar}
         physicalProduct={updatingStatusForPhysicalProduct}
         isMutating={isMutating}
         onSubmit={async values => {
@@ -140,8 +133,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         open={!!offloadingPhysicalProduct}
         onClose={() => setOffloadingPhysicalProduct(null)}
         onSave={() => {
-          toggleSnackbar({
-            show: true,
+          showSnackbar({
             message: `Successfully offloaded physical product ${offloadingPhysicalProduct.seasonsUID}.`,
             status: "success",
           })
@@ -149,10 +141,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
           refresh()
         }}
         physicalProduct={offloadingPhysicalProduct}
-        toggleSnackbar={toggleSnackbar}
       />
-
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )
 }

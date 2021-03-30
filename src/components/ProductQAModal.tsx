@@ -7,12 +7,10 @@ import {
   DialogActions,
   Box,
   TextField,
-  Snackbar,
   DialogTitle,
   Select,
   MenuItem,
 } from "@material-ui/core"
-import { Alert } from "@material-ui/lab"
 import { gql } from "apollo-boost"
 import { useSelector } from "react-redux"
 import { useMutation } from "react-apollo"
@@ -40,11 +38,6 @@ export const SUBMIT_QA_ENTRY = gql`
 `
 
 export const ProductQAModal = ({ data, open, onSave, onClose }) => {
-  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status }>({
-    show: false,
-    message: "",
-    status: "success",
-  })
   const session = useSelector(state => state.session)
   const [submitQAEntry] = useMutation(SUBMIT_QA_ENTRY, {
     onCompleted: onSave,
@@ -62,14 +55,6 @@ export const ProductQAModal = ({ data, open, onSave, onClose }) => {
         physicalProductID: data.id,
         userID: session.user.id,
       },
-    })
-  }
-
-  const hideSnackbar = () => {
-    toggleSnackbar({
-      show: false,
-      message: "",
-      status: "success",
     })
   }
 
@@ -118,16 +103,6 @@ export const ProductQAModal = ({ data, open, onSave, onClose }) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={snackbar.show}
-        autoHideDuration={6000}
-        onClose={hideSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={hideSnackbar} severity={snackbar.status}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </>
   )
 }

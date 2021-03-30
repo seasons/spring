@@ -3,8 +3,7 @@ import React, { useState } from "react"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
-import { Snackbar, Spacer, Wizard } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Spacer, Wizard } from "components"
 import { VariantsCreate } from "./Components"
 import { useRefresh } from "@seasons/react-admin"
 import { PRODUCT_EDIT_QUERY, PRODUCT_VARIANT_UPSERT_QUERY } from "../queries"
@@ -12,19 +11,17 @@ import { UPSERT_VARIANTS } from "../mutations"
 import { getProductVariantUpsertData } from "../utils"
 import { ProductVariantUpsertQuery } from "generated/ProductVariantUpsertQuery"
 import { PhysicalProductsCreate } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const ProductVariantCreate: React.FC = () => {
   const history = useHistory()
   const refresh = useRefresh()
   const { productID } = useParams() as any
   const [values, setValues] = useState({})
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
+
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  const { showSnackbar } = useSnackbarContext()
   const [upsertVariants] = useMutation(UPSERT_VARIANTS, {
     onCompleted: () => {
       setIsSubmitting(false)
@@ -33,8 +30,7 @@ export const ProductVariantCreate: React.FC = () => {
       history.push(`/inventory/products/${productID}`)
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
@@ -92,7 +88,6 @@ export const ProductVariantCreate: React.FC = () => {
         />
       </Wizard>
       <Spacer mt={18} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

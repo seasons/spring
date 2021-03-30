@@ -33,13 +33,13 @@ export const IOSVersionsWidget = ({ data }) => {
       const labelCountsByStatus = data?.result?.[a]
       let overallLabelCount = 0
       if (showActive) {
-        overallLabelCount += labelCountsByStatus["active"] || 0
+        overallLabelCount += labelCountsByStatus?.["active"] || 0
       }
       if (showPaused) {
-        overallLabelCount += labelCountsByStatus["paused"] || 0
+        overallLabelCount += labelCountsByStatus?.["paused"] || 0
       }
       if (showAdmissable) {
-        overallLabelCount += labelCountsByStatus["admissable"] || 0
+        overallLabelCount += labelCountsByStatus?.["admissable"] || 0
       }
       return overallLabelCount
     })

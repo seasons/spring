@@ -9,8 +9,9 @@ import { getLocaleDateString, getDateISOString } from "views/Inventory/Products/
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import { PhysicalProductForm } from "../Components"
 import { TabRenderProps } from "components/DetailView"
+import { useSnackbarContext } from "components/Snackbar"
 
-export const ManageView: React.FC<TabRenderProps> = ({ data, toggleSnackbar }) => {
+export const ManageView: React.FC<TabRenderProps> = ({ data }) => {
   const {
     id: physicalProductID,
     dateOrdered,
@@ -23,6 +24,7 @@ export const ManageView: React.FC<TabRenderProps> = ({ data, toggleSnackbar }) =
     price,
   } = data
 
+  const { showSnackbar } = useSnackbarContext()
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     refetchQueries: [
       {
@@ -31,15 +33,13 @@ export const ManageView: React.FC<TabRenderProps> = ({ data, toggleSnackbar }) =
       },
     ],
     onCompleted: () => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Physical Product updated",
         status: "success",
       })
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })

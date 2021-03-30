@@ -1,39 +1,32 @@
 import React, { useState } from "react"
 import { useMutation, useQuery } from "react-apollo"
 import { Box, Container } from "@material-ui/core"
-import { Spacer, Wizard, Snackbar } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Spacer, Wizard } from "components"
 import { LaunchFields } from "./Components/LaunchFields"
 import { UPSERT_LAUNCH } from "./mutations"
 import { useHistory } from "react-router-dom"
 import { LAUNCH_CREATE_QUERY } from "queries/Launch"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const LaunchCreate: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { data } = useQuery(LAUNCH_CREATE_QUERY)
+  const { showSnackbar } = useSnackbarContext()
   const [upsertLaunch] = useMutation(UPSERT_LAUNCH, {
     onCompleted: result => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Launch created",
         status: "success",
       })
       history.push(`/inventory/launches/${result.upsertLaunch.id}`)
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
     },
-  })
-
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
   })
 
   const onSubmit = async values => {
@@ -70,7 +63,6 @@ export const LaunchCreate: React.FC = () => {
         </Box>
       </Wizard>
       <Spacer mt={18} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

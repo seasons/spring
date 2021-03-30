@@ -2,8 +2,8 @@ import React, { useState } from "react"
 import { useMutation } from "react-apollo"
 import slugify from "slugify"
 import { Box, Container } from "@material-ui/core"
-import { Spacer, Wizard, Snackbar } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Spacer, Wizard } from "components"
+import { useSnackbarContext } from "components/Snackbar"
 import { CREATE_BRAND } from "../mutations"
 import { useHistory } from "react-router-dom"
 import { BrandFields } from "../BrandComponents"
@@ -11,28 +11,21 @@ import { BrandFields } from "../BrandComponents"
 export const BrandCreate: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { showSnackbar } = useSnackbarContext()
   const [createBrand] = useMutation(CREATE_BRAND, {
     onCompleted: result => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Brand created",
         status: "success",
       })
       history.push(`/inventory/brands/${result.createBrand.id}`)
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
     },
-  })
-
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
   })
 
   const onSubmit = async values => {
@@ -106,7 +99,6 @@ export const BrandCreate: React.FC = () => {
         </Box>
       </Wizard>
       <Spacer mt={18} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

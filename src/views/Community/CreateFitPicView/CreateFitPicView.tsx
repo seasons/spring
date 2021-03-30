@@ -3,21 +3,21 @@ import React, { useState } from "react"
 import { useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
 
-import { Snackbar, Spacer, Wizard } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Spacer, Wizard } from "components"
 import { Overview } from "./Components"
 import { SUBMIT_FIT_PIC, UPDATE_FIT_PIC } from "../mutations"
 import { ApolloError } from "apollo-client"
 import { FitPicStatus } from "generated/globalTypes"
+import { useSnackbarContext } from "components/Snackbar"
 
 type FormValues = { status?: FitPicStatus; image?: File; city?: string; state?: string; zipCode?: string }
 
 export const CreateFitPicView: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { showSnackbar } = useSnackbarContext()
   const onMutationError = (error: ApolloError) => {
-    toggleSnackbar({
-      show: true,
+    showSnackbar({
       message: error?.message,
       status: "error",
     })
@@ -28,16 +28,9 @@ export const CreateFitPicView: React.FC = () => {
     onError: onMutationError,
   })
 
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
-
   const onSubmit = async ({ status, city, image, state, zipCode }: FormValues) => {
     if (!image) {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "An image is required.",
         status: "error",
       })
@@ -75,7 +68,6 @@ export const CreateFitPicView: React.FC = () => {
         <Overview />
       </Wizard>
       <Spacer mt={18} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }
