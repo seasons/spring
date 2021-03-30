@@ -16,7 +16,6 @@ export const SearchProvider: React.FC<SearchProviderProps> = props => {
   const baseName = props.indexName || process.env.REACT_APP_ALGOLIA_INDEX || "admin_staging"
 
   const index = baseName + (autocomplete ? "_query_suggestions" : "")
-  console.log("Index: ", index)
   return (
     <InstantSearch searchClient={searchClient} indexName={index}>
       {children}

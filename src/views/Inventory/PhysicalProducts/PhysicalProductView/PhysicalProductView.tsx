@@ -16,20 +16,18 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = ({ match 
       match={match}
       resource={"PhysicalProduct"}
       //@ts-ignore
-      renderHeader={({ data, toggleSnackbar }) => (
-        <PhysicalProductDetailViewHeader data={data} toggleSnackbar={toggleSnackbar} />
-      )}
+      renderHeader={({ data }) => <PhysicalProductDetailViewHeader data={data} />}
       tabs={[
         {
           value: "manage",
           label: "Manage",
           //@ts-ignore
-          render: ({ data, toggleSnackbar }) => <ManageView data={data} toggleSnackbar={toggleSnackbar} />,
+          render: ({ data }) => <ManageView data={data} />,
         },
         {
           value: "quality",
           label: "QA Entries",
-          render: ({ data, toggleSnackbar }) => <PhysicalProductQAView data={data} />,
+          render: ({ data }) => <PhysicalProductQAView data={data} />,
         },
         {
           value: "history",

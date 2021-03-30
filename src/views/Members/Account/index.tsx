@@ -14,11 +14,10 @@ import styled from "styled-components"
 import { MEMBER_INVOICE_REFUND } from "../queries"
 import { useMutation } from "@apollo/react-hooks"
 import { RefundInvoiceModal } from "./RefundInvoice"
-import { Snackbar } from "components"
-import { SnackbarState } from "components/Snackbar"
 import { SummaryCard } from "components/SummaryCard"
 import { get } from "lodash"
 import { customer } from "generated/customer"
+import { useSnackbarContext } from "components/Snackbar"
 
 const STATUS_REFUNDED = "Refunded"
 
@@ -74,16 +73,11 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
   const [refundModalIsOpen, setRefundModalOpen] = useState(false)
   const classes = useStyles()
 
+  const { showSnackbar } = useSnackbarContext()
   const [invoiceToRefund, setInvoiceToRefund] = useState({
     id: "",
     amount: 0,
     amountNormalized: "",
-  })
-
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
   })
 
   const defaultSort = { field: "id", order: "ASC" }
@@ -148,16 +142,14 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
         }))
 
         // display success notification
-        toggleSnackbar({
-          show: true,
+        showSnackbar({
           message: "Refund Processed",
           status: "success",
         })
       })
       .catch(error => {
         console.error("error refunding invoice:", error)
-        toggleSnackbar({
-          show: true,
+        showSnackbar({
           message: "Error processing refund",
           status: "error",
         })
@@ -285,7 +277,6 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
         onClose={handleRefundModalClose}
         open={refundModalIsOpen}
       />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )
 }

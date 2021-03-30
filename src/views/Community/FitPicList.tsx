@@ -1,12 +1,12 @@
 import { Header } from "components/Header"
 import { SinceDateField, ImageField, ViewEntityField } from "fields"
-import React, { useState } from "react"
+import React from "react"
 import { Datagrid, List } from "@seasons/react-admin"
 
 import { Container, Box, Button, colors } from "@material-ui/core"
 import CloseIcon from "@material-ui/icons/Close"
 import { fitPic } from "generated/fitPic"
-import { Indicator, Snackbar } from "components"
+import { Indicator } from "components"
 import { FitPicReportStatus, FitPicStatus } from "generated/globalTypes"
 
 import { useRefresh } from "@seasons/react-admin"
@@ -14,27 +14,22 @@ import { useMutation } from "react-apollo"
 import { UPDATE_FIT_PIC } from "./mutations"
 import { get } from "lodash"
 import { FitPicFilter } from "./CreateFitPicView/Components"
-import { SnackbarState } from "components/Snackbar"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const FitPicList: React.FC<{ history: any }> = props => {
   const refresh = useRefresh()
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
+
+  const { showSnackbar } = useSnackbarContext()
   const [updateFitPic] = useMutation(UPDATE_FIT_PIC, {
     onCompleted: () => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Fit pic published",
         status: "success",
       })
       refresh()
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
@@ -78,7 +73,6 @@ export const FitPicList: React.FC<{ history: any }> = props => {
           />
         </Datagrid>
       </List>
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

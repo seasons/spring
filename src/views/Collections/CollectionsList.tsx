@@ -1,18 +1,12 @@
-import React, { useState } from "react"
+import React from "react"
 import { Datagrid, DateField, List, TextField } from "@seasons/react-admin"
 import { ViewEntityField } from "fields"
-import { Header, Indicator, Snackbar } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Header, Indicator } from "components"
 import { useHistory } from "react-router-dom"
 import { Box, Typography } from "@material-ui/core"
 
 export const CollectionsList = props => {
   const history = useHistory()
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
 
   return (
     <Box px={2}>
@@ -53,7 +47,6 @@ export const CollectionsList = props => {
           <ViewEntityField source="id" entityPath="content/collections" label="Actions" />
         </Datagrid>
       </List>
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Box>
   )
 }

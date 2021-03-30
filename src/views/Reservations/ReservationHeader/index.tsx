@@ -1,12 +1,11 @@
 import React, { useState } from "react"
 
-import { Header, Snackbar } from "components"
+import { Header } from "components"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
 import ArchiveIcon from "@material-ui/icons/Archive"
 import { useMutation, ExecutionResult } from "react-apollo"
 import { useRefresh } from "@seasons/react-admin"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
-import { SnackbarState } from "components/Snackbar"
 import { MARK_RESERVATION_PICKED, UPDATE_RESERVATION, PROCESS_RESERVATION } from "../mutations"
 import { PickingModal } from "./Components/PickingModal/PickingModal"
 import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessReturnModal"
@@ -15,14 +14,9 @@ import { SUBMIT_QA_ENTRY } from "components/ProductQAModal"
 import { useSelector } from "react-redux"
 import { omit } from "lodash"
 import { ProductStateInput } from "generated/globalTypes"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const ReservationHeader = ({ data }) => {
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
-
   const [showUpdateStatusModal, toggleUpdateStatusModal] = useState(false)
 
   const isReservationUnfulfilled = ["Queued", "Packed"].includes(data?.status)
@@ -47,17 +41,17 @@ export const ReservationHeader = ({ data }) => {
 
   const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED, mutationConfig)
 
+  const { showSnackbar } = useSnackbarContext()
+
   const [updateReservation] = useMutation(UPDATE_RESERVATION, {
     onCompleted: () => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Reservation status updated",
         status: "success",
       })
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
@@ -166,15 +160,13 @@ export const ReservationHeader = ({ data }) => {
             // TODO: check result to see if there are any backend errors
             refresh()
             toggleModal(false)
-            toggleSnackbar({
-              show: true,
+            showSnackbar({
               message,
               status: "success",
             })
           } catch (e) {
             console.error(e)
-            toggleSnackbar({
-              show: true,
+            showSnackbar({
               message: `Error: ${e.message}`,
               status: "error",
             })
@@ -183,7 +175,6 @@ export const ReservationHeader = ({ data }) => {
       />
       <UpdateStatusModal
         open={showUpdateStatusModal}
-        toggleSnackbar={toggleSnackbar}
         reservation={data}
         isMutating={isMutating}
         onSubmit={async values => {
@@ -202,7 +193,6 @@ export const ReservationHeader = ({ data }) => {
           toggleUpdateStatusModal(false)
         }}
       />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )
 }

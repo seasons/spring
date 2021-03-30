@@ -4,10 +4,9 @@ import { Header as BaseHeader, ConfirmationDialog } from "components"
 import { MemberSubViewProps } from "./interfaces"
 import { AssignRolesModal } from "./AssignRolesModal"
 import { useMutation } from "@apollo/react-hooks"
-import { Snackbar } from "components"
-import { SnackbarState } from "components/Snackbar"
 import { MEMBER_ASSIGN_ROLE } from "./queries"
 import gql from "graphql-tag"
+import { useSnackbarContext } from "components/Snackbar"
 
 const RESET_PASSWORD = gql`
   mutation ResetPassword($email: String!) {
@@ -19,19 +18,18 @@ const RESET_PASSWORD = gql`
 
 export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) => {
   const [showResetPasswordConfirmation, setShowResetPasswordConfirmation] = useState(false)
+  const { showSnackbar } = useSnackbarContext()
   const [assignMemberRoles] = useMutation<any, any>(MEMBER_ASSIGN_ROLE, {
     onCompleted: () => {
       closeAssignRolesModal()
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Member roles updated",
         status: "success",
       })
     },
     onError: () => {
       closeAssignRolesModal()
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Error updating member roles",
         status: "error",
       })
@@ -40,15 +38,13 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
 
   const [resetPassword] = useMutation(RESET_PASSWORD, {
     onCompleted: () => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Reset password email sent to user",
         status: "success",
       })
     },
     onError: () => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Error sending reset password email",
         status: "error",
       })
@@ -56,11 +52,6 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
   })
 
   const [assignRolesModalIsOpen, setAssignRolesModal] = useState(false)
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
 
   const openAssignRolesModal = () => {
     setAssignRolesModal(true)
@@ -135,7 +126,6 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
         setOpen={setShowResetPasswordConfirmation}
         onClose={onCloseResetPasswordConfirmationDialog}
       />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )
 }

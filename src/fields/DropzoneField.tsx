@@ -1,5 +1,5 @@
 import React, { useCallback } from "react"
-import { Box, styled } from "@material-ui/core"
+import { Box } from "@material-ui/core"
 import { useDropzone } from "react-dropzone"
 
 import { FormControl, Spacer, Text } from "components"

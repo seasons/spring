@@ -5,12 +5,12 @@ import { makeStyles } from "@material-ui/styles"
 import InputMask from "react-input-mask"
 import * as Yup from "yup"
 import { DialogTitle } from "components"
-import { Button, Box, Dialog, DialogContent, DialogActions, Grid, TextField, Snackbar, Theme } from "@material-ui/core"
+import { Button, Box, Dialog, DialogContent, DialogActions, Grid, TextField, Theme } from "@material-ui/core"
 import { MEMBER_CREATE, MEMBER_DETAIL_UPDATE } from "./queries"
 import { useMutation } from "@apollo/react-hooks"
-import { Alert, Color } from "@material-ui/lab"
 import { Loader } from "components"
 import { colors } from "theme"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, onClose }) => {
   const memberValues = {
@@ -53,11 +53,11 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
 
   const [values, setValues] = useState<NewMemberProps>(memberValues)
   const [isSubmitting, setSubmitting] = useState(false)
+  const { showSnackbar } = useSnackbarContext()
   const onNetworkError = error => {
     setSubmitting(false)
     console.log("error saving member:", error)
-    toggleSnackbar({
-      show: true,
+    showSnackbar({
       message: `Error creating member: ${error?.message}`,
       status: "error",
     })
@@ -67,14 +67,14 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
     onError: onNetworkError,
   })
   const [updateMember] = useMutation(MEMBER_DETAIL_UPDATE, {
-    onCompleted: resp => history.push(`/members/${resp.updateCustomer.id}/account`),
+    onCompleted: resp => {
+      history.push(`/members/${resp.updateCustomer.id}/account`)
+      showSnackbar({
+        message: `Member created`,
+        status: "success",
+      })
+    },
     onError: onNetworkError,
-  })
-
-  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
-    show: false,
-    message: "",
-    status: "success",
   })
 
   const createMember = values => {
@@ -201,14 +201,6 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
     }
   }
 
-  const hideSnackbar = () => {
-    toggleSnackbar({
-      show: false,
-      message: "",
-      status: "success",
-    })
-  }
-
   const classes = useStyles()
 
   if (!open) {
@@ -284,16 +276,6 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
           </Box>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={snackbar.show}
-        autoHideDuration={6000}
-        onClose={hideSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={hideSnackbar} severity={snackbar.status}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </>
   )
 }

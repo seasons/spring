@@ -9,16 +9,14 @@ import {
 } from "generated/ProductEditQuery"
 import { useRefresh } from "@seasons/react-admin"
 import { colors } from "theme/colors"
-import { SnackbarState } from "components/Snackbar"
 import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Components"
 import { AddPhysicalProductModal } from "views/Inventory/ProductVariants/AddPhysicalProductModal"
 import PlusOneRoundedIcon from "@material-ui/icons/PlusOneRounded"
 export interface VariantSummaryProps {
   variant: ProductEditQuery_product_variants
-  toggleSnackbar?: (state: SnackbarState) => void
 }
 
-export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant, toggleSnackbar }) => {
+export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant }) => {
   const history = useHistory()
   const refresh = useRefresh()
   const [openOffloadPhysicalProductModal, setOpenOffloadPhysicalProductModal] = useState(false)
@@ -123,7 +121,6 @@ export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant, toggleS
             open={openOffloadPhysicalProductModal}
             onClose={onCloseOffloadPhysicalProductModal}
             physicalProduct={offloadPhysicalProduct}
-            toggleSnackbar={toggleSnackbar}
           />
         )}
         <AddPhysicalProductModal

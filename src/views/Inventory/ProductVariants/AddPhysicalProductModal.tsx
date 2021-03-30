@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 
-import { Snackbar, SnackbarState } from "components/Snackbar"
 import { Box, DialogContent, DialogActions, Button, Dialog, Typography } from "@material-ui/core"
 import { PhysicalProductSummary } from "../PhysicalProducts/Components"
 import PlusOneRoundedIcon from "@material-ui/icons/PlusOneRounded"
@@ -10,9 +9,9 @@ import { gql } from "apollo-boost"
 import { useMutation } from "react-apollo"
 import { colors } from "theme/colors"
 import { PRODUCT_EDIT_QUERY, VARIANT_EDIT_QUERY } from "../Products/queries"
+import { useSnackbarContext } from "components/Snackbar"
 
 interface PickPhysicalProductModalProps {
-  toggleSnackbar?: (state: SnackbarState) => void
   open: boolean
   setOpen?: (boolean) => void
   productVariant: any
@@ -34,15 +33,11 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
 }) => {
   const [isOpen, toggleOpen] = useState(open)
   const [isMutating, setIsMutating] = useState(false)
-  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status }>({
-    show: false,
-    message: "",
-    status: "success",
-  })
+
+  const { showSnackbar } = useSnackbarContext()
   const [addPhysicalProductsToVariant] = useMutation(ADD_PHYSICAL_PRODUCTS, {
     onCompleted: () => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: `Successfully added ${physicalProducts.length -
           productVariant?.physicalProducts.length} physical products`,
         status: "success",
@@ -53,8 +48,7 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
     },
     onError: err => {
       setIsMutating(false)
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: err.message,
         status: "error",
       })
@@ -115,7 +109,7 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
 
         <DialogContent dividers>
           <Content>
-            {physicalProducts.map((physProd, index) => (
+            {physicalProducts?.map((physProd, index) => (
               <>
                 <PhysicalProductSummary physicalProduct={physProd} key={index} />
                 <Spacer mt={2} />
@@ -139,7 +133,6 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar}></Snackbar>
     </>
   )
 }
