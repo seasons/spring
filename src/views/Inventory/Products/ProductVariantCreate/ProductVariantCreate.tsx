@@ -7,7 +7,7 @@ import { Snackbar, Spacer, Wizard } from "components"
 import { SnackbarState } from "components/Snackbar"
 import { VariantsCreate } from "./Components"
 import { useRefresh } from "@seasons/react-admin"
-import { PRODUCT_VARIANT_UPSERT_QUERY } from "../queries"
+import { PRODUCT_EDIT_QUERY, PRODUCT_VARIANT_UPSERT_QUERY } from "../queries"
 import { UPSERT_VARIANTS } from "../mutations"
 import { getProductVariantUpsertData } from "../utils"
 import { ProductVariantUpsertQuery } from "generated/ProductVariantUpsertQuery"
@@ -40,6 +40,12 @@ export const ProductVariantCreate: React.FC = () => {
       })
       setIsSubmitting(false)
     },
+    refetchQueries: [
+      {
+        query: PRODUCT_EDIT_QUERY,
+        variables: { input: { id: productID } },
+      },
+    ],
   })
   const { data, loading, error } = useQuery(PRODUCT_VARIANT_UPSERT_QUERY, {
     variables: { input: { id: productID } },
