@@ -17,12 +17,12 @@ export const PrintBarcodeModal: React.FC<PrintBarcodeModalProps> = ({ physicalPr
   const { showSnackbar } = useSnackbarContext()
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onError: error =>
-      showSnackbar?.({
+      showSnackbar({
         message: error?.message,
         status: "error",
       }),
     onCompleted: data =>
-      showSnackbar?.({
+      showSnackbar({
         message: "Barcode exported!",
         status: "success",
       }),

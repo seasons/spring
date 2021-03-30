@@ -26,13 +26,13 @@ export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalPr
   const [isMutating, setIsMutating] = useState(false)
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onError: error => {
-      showSnackbar?.({
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
     },
     onCompleted: data => {
-      showSnackbar?.({
+      showSnackbar({
         message: "Physical Product offloaded!",
         status: "success",
       })
