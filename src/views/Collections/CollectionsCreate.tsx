@@ -2,8 +2,8 @@ import { Container } from "@material-ui/core"
 import React, { useState } from "react"
 import { useMutation, useQuery } from "react-apollo"
 import { useHistory } from "react-router-dom"
-import { Snackbar, Spacer, Wizard } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Spacer, Wizard } from "components"
+import { useSnackbarContext } from "components/Snackbar"
 import { ApolloError } from "apollo-client"
 import { Overview } from "./Components/Overview"
 import { UPSERT_COLLECTION } from "./mutations"
@@ -22,9 +22,9 @@ export const CollectionsCreate: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedProductIDs, setSelectedProductIDs] = useState([] as string[])
+  const { showSnackbar } = useSnackbarContext()
   const onMutationError = (error: ApolloError) => {
-    toggleSnackbar({
-      show: true,
+    showSnackbar({
       message: error?.message,
       status: "error",
     })
@@ -40,12 +40,6 @@ export const CollectionsCreate: React.FC = () => {
       refetch()
     }
   }, [selectedProductIDs, products, refetch])
-
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
 
   const onSubmit = async values => {
     const numImages = 4
@@ -71,8 +65,7 @@ export const CollectionsCreate: React.FC = () => {
     if (id) {
       history.push(`/content/collections/${id}`)
     } else {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Error saving your collection",
         status: "error",
       })
@@ -99,7 +92,6 @@ export const CollectionsCreate: React.FC = () => {
         />
       </Wizard>
       <Spacer mt={18} />
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

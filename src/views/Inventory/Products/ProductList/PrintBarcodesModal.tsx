@@ -10,7 +10,6 @@ import {
   DialogContent,
   DialogActions,
   Box,
-  Snackbar,
   Table,
   TableHead,
   TableRow,
@@ -20,9 +19,9 @@ import {
   FormControlLabel,
 } from "@material-ui/core"
 import { DialogTitle } from "components"
-import { Alert, Color } from "@material-ui/lab"
 import { filter, values } from "lodash"
 import { UPDATE_PHYSICAL_PRODUCTS } from "views/Inventory/PhysicalProducts/mutations"
+import { useSnackbarContext } from "components/Snackbar"
 
 interface ProcessReturnModalProps {
   open: boolean
@@ -48,17 +47,16 @@ export const PrintBarcodesModal: React.FC<ProcessReturnModalProps> = ({ disableB
       barcoded: false,
     }
   })
+  const { showSnackbar } = useSnackbarContext()
   const [updateManyPhysicalProducts] = useMutation(UPDATE_PHYSICAL_PRODUCTS, {
     onCompleted: () => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Physical products updated",
         status: "success",
       })
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
@@ -69,11 +67,6 @@ export const PrintBarcodesModal: React.FC<ProcessReturnModalProps> = ({ disableB
     refetch()
   }, [open])
 
-  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
-    show: false,
-    message: "",
-    status: "success",
-  })
   const [checkAll, setCheckAll] = useState(false)
   const [barcodeStates, setBarcodeStates] = useState<BarcodeStates>({
     ...barcodeMaps,
@@ -116,14 +109,6 @@ export const PrintBarcodesModal: React.FC<ProcessReturnModalProps> = ({ disableB
       },
     })
     onSave?.(barcodeProducts)
-  }
-
-  const hideSnackbar = () => {
-    toggleSnackbar({
-      show: false,
-      message: "",
-      status: "success",
-    })
   }
 
   const handleCheckAll = e => {
@@ -221,16 +206,6 @@ export const PrintBarcodesModal: React.FC<ProcessReturnModalProps> = ({ disableB
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={snackbar.show}
-        autoHideDuration={6000}
-        onClose={hideSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={hideSnackbar} severity={snackbar.status}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </>
   )
 }

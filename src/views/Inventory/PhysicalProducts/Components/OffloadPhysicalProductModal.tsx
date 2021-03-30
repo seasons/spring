@@ -3,38 +3,36 @@ import { useMutation } from "react-apollo"
 import { Form } from "react-final-form"
 import { Button, Dialog, DialogContent, DialogActions, Box, Typography } from "@material-ui/core"
 import { DialogTitle, Loader, Spacer } from "components"
-import { SnackbarState } from "components/Snackbar"
 import { SelectField, TextField } from "fields"
 import { ProductEditQuery_product_variants_physicalProducts } from "generated/ProductEditQuery"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
+import { useSnackbarContext } from "components/Snackbar"
 
 interface OffloadPhysicalProductModalProps {
   open: boolean
   physicalProduct: ProductEditQuery_product_variants_physicalProducts
   onClose?: () => void
   onSave?: () => void
-  toggleSnackbar?: (state: SnackbarState) => void
 }
 
 export const OffloadPhysicalProductModal: React.FC<OffloadPhysicalProductModalProps> = ({
   open,
   onClose,
   onSave,
-  toggleSnackbar,
   physicalProduct,
 }) => {
+  const { showSnackbar } = useSnackbarContext()
+
   const [isMutating, setIsMutating] = useState(false)
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onError: error => {
-      toggleSnackbar?.({
-        show: true,
+      showSnackbar?.({
         message: error?.message,
         status: "error",
       })
     },
     onCompleted: data => {
-      toggleSnackbar?.({
-        show: true,
+      showSnackbar?.({
         message: "Physical Product offloaded!",
         status: "success",
       })

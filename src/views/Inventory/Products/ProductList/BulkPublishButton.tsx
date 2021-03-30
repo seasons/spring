@@ -3,6 +3,7 @@ import { Button } from "@material-ui/core"
 import { useMutation } from "react-apollo"
 import gql from "graphql-tag"
 import { useRefresh } from "@seasons/react-admin"
+import { useSnackbarContext } from "components/Snackbar"
 
 const PUBLISH_PRODUCTS = gql`
   mutation PublishProducts($productIDs: [ID!]) {
@@ -18,11 +19,11 @@ const PUBLISH_PRODUCTS = gql`
 export const BulkPublishButton = props => {
   const refresh = useRefresh()
   const [isMutating, setIsMutating] = useState(false)
-  const { toggleSnackbar } = props
+  const { showSnackbar } = useSnackbarContext()
+
   const [publishProducts] = useMutation(PUBLISH_PRODUCTS, {
     onCompleted: result => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: result?.publishProducts?.message,
         status: result?.publishProducts?.status,
       })
@@ -30,8 +31,7 @@ export const BulkPublishButton = props => {
       refresh()
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: `There was an error publishing the products. ${error?.graphQLErrors?.[0]?.message}`,
         status: "error",
       })

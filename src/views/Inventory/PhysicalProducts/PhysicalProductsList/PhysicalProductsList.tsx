@@ -1,6 +1,5 @@
-import { Snackbar, Header } from "components"
+import { Header } from "components"
 import { ViewEntityField } from "fields"
-import { SnackbarState } from "components/Snackbar"
 import React, { useState } from "react"
 import { Datagrid, List, TextField, downloadCSV } from "@seasons/react-admin"
 import { ExpandedRow } from "./ExpandedRow"
@@ -13,6 +12,7 @@ import jsonExport from "jsonexport/dist"
 import moment from "moment"
 import { OffloadPhysicalProductModal } from "../Components"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
+import { useSnackbarContext } from "components/Snackbar"
 
 export interface PhysicalProductsListInterface {
   onNewProductBtnPressed: () => void
@@ -42,24 +42,19 @@ export const PhysicalProductsList: React.FC<PhysicalProductsListInterface> = ({ 
   const [offloadingPhysicalProduct, setOffloadingPhysicalProduct] = useState<any>(null)
   const [isMutating, setIsMutating] = useState(false)
   const [isExporting, setIsExporting] = useState(false)
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
+
   const client = useApolloClient()
 
+  const { showSnackbar } = useSnackbarContext()
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onCompleted: result => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: `Successfully updated status for physical product ${result.updatePhysicalProduct.seasonsUID}.`,
         status: "success",
       })
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
@@ -136,7 +131,6 @@ export const PhysicalProductsList: React.FC<PhysicalProductsListInterface> = ({ 
 
       <UpdatePhysicalProductStatusModal
         open={!!updatingStatusForPhysicalProduct}
-        toggleSnackbar={toggleSnackbar}
         physicalProduct={updatingStatusForPhysicalProduct}
         isMutating={isMutating}
         onSubmit={async values => {
@@ -164,8 +158,7 @@ export const PhysicalProductsList: React.FC<PhysicalProductsListInterface> = ({ 
         open={!!offloadingPhysicalProduct}
         onClose={() => setOffloadingPhysicalProduct(null)}
         onSave={() => {
-          toggleSnackbar({
-            show: true,
+          showSnackbar({
             message: `Successfully offloaded physical product ${offloadingPhysicalProduct.seasonsUID}.`,
             status: "success",
           })
@@ -173,10 +166,7 @@ export const PhysicalProductsList: React.FC<PhysicalProductsListInterface> = ({ 
           refresh()
         }}
         physicalProduct={offloadingPhysicalProduct}
-        toggleSnackbar={toggleSnackbar}
       />
-
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )
 }

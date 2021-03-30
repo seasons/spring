@@ -1,7 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import { Datagrid, DateField, List, TextField } from "@seasons/react-admin"
-import { Header, Snackbar } from "components"
-import { SnackbarState } from "components/Snackbar"
+import { Header } from "components"
 import { useHistory } from "react-router-dom"
 import { ViewEntityField } from "fields"
 import { Typography } from "@material-ui/core"
@@ -14,11 +13,7 @@ const ProductsCountField = ({ record, label }: { record?: brand; label?: string 
 
 export const BrandList = props => {
   const history = useHistory()
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
+
   return (
     <>
       <Header
@@ -49,7 +44,6 @@ export const BrandList = props => {
           <ViewEntityField source="id" entityPath="inventory/brands" label="Actions" />
         </Datagrid>
       </List>
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )
 }

@@ -3,7 +3,6 @@ import { Table, TableHead, TableCell, TableBody, TableRow, Card, Box, Checkbox }
 import { Indicator } from "components/Indicator"
 import { Image } from "components/Image"
 import { formatPrice } from "utils/price"
-import Typography from "material-ui/styles/typography"
 
 export const OrderLineItemRow = ({ lineItem }) => {
   const { productVariant, recordType, status, taxPrice, price, needShipping } = lineItem

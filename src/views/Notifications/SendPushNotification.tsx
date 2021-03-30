@@ -7,9 +7,9 @@ import { TextField } from "fields"
 import { NOTIFY_INTEREST, NOTIFY_USERS } from "./queries"
 import { interests, routes } from "../../data/pushNotifications.json"
 import { AutocompleteField } from "fields"
-import { SnackbarState, Snackbar } from "components/Snackbar"
 import { Alert } from "@material-ui/lab"
 import { SearchProvider } from "components/Search/SearchProvider"
+import { useSnackbarContext } from "components/Snackbar"
 import { connectAutoComplete } from "react-instantsearch-dom"
 
 export const SendPushNotificationModal = ({ onClose, open }) => {
@@ -24,16 +24,12 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
   const [isSubmitting, setSubmitting] = useState(false)
 
   // Set up snackbar
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
+  const { showSnackbar } = useSnackbarContext()
 
   // Set up submission handler
   const mutationOptions = {
-    onCompleted: () => toggleSnackbar({ show: true, message: "Push Notif(s) sent!", status: "success" }),
-    onError: err => toggleSnackbar({ show: true, message: err?.message, status: "error" }),
+    onCompleted: () => showSnackbar({ message: "Push Notif(s) sent!", status: "success" }),
+    onError: err => showSnackbar({ message: err?.message, status: "error" }),
   }
   const [notifyInterest] = useMutation(NOTIFY_INTEREST, mutationOptions)
   const [pushNotifyUsers] = useMutation(NOTIFY_USERS, mutationOptions)
@@ -181,7 +177,6 @@ export const SendPushNotificationModal = ({ onClose, open }) => {
           }}
         />
       </Dialog>
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </>
   )
 }

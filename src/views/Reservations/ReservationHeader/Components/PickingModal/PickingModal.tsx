@@ -1,22 +1,13 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Box,
-  TextField,
-  Snackbar,
-  Typography,
-  Card,
-} from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typography, Card } from "@material-ui/core"
 import { DialogTitle, Spacer } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { PickingProductCard } from "./PickingProductCard"
-import { Alert, Color } from "@material-ui/lab"
+import { Alert } from "@material-ui/lab"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { trim } from "lodash"
+import { useSnackbarContext } from "components/Snackbar"
 
 interface ProductState {
   productUID: string
@@ -50,11 +41,6 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
   const { shippingLabel } = reservation?.sentPackage!
 
   const [barcode, setBarcode] = useState("")
-  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
-    show: false,
-    message: "",
-    status: "success",
-  })
   const [shouldAllowSave, setShouldAllowSave] = useState(false)
 
   const alreadyPicked = reservation.status === "Packed"
@@ -69,22 +55,14 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
     onSave?.(productStates)
   }
 
-  const hideSnackbar = () => {
-    toggleSnackbar({
-      show: false,
-      message: "",
-      status: "success",
-    })
-  }
-
+  const { showSnackbar } = useSnackbarContext()
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
     if (input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
       const productState = productStates[input]
       if (productState) {
         setBarcode("")
-        toggleSnackbar({
-          show: true,
+        showSnackbar({
           message: `Found barcode: ${input}`,
           status: "success",
         })
@@ -100,8 +78,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
         const pickedCount = Object.values(updatedProductStates).filter((a: any) => !!a.picked).length
         setShouldAllowSave(pickedCount === availableProducts.length)
       } else {
-        toggleSnackbar({
-          show: true,
+        showSnackbar({
           message: `Barcode not found`,
           status: "error",
         })
@@ -198,16 +175,6 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={snackbar.show}
-        autoHideDuration={6000}
-        onClose={hideSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={hideSnackbar} severity={snackbar.status}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </>
   )
 }

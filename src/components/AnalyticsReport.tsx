@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react"
 
 import { useMutation } from "react-apollo"
-import { SnackbarState } from "components/Snackbar"
-import { Snackbar } from "components"
 import { Container, makeStyles, Theme, colors } from "@material-ui/core"
 import Iframe from "react-iframe"
 import { Loading } from "@seasons/react-admin"
 import { CREATE_EMBED_URL } from "./mutations"
 import { AnalyticsViewType } from "generated/globalTypes"
+import { useSnackbarContext } from "./Snackbar"
 
 export interface AnalyticsReportProps {
   title: string
@@ -26,13 +25,11 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 export const AnalyticsReport: React.FC<AnalyticsReportProps> = ({ title, url, type, index }) => {
   const [embedURL, setEmbedURL] = useState("")
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
+
   const classes = useStyles()
   const [loading, setLoading] = useState(false)
+
+  const { showSnackbar } = useSnackbarContext()
 
   const [createEmbedURL] = useMutation(CREATE_EMBED_URL, {
     onCompleted: data => {
@@ -41,8 +38,7 @@ export const AnalyticsReport: React.FC<AnalyticsReportProps> = ({ title, url, ty
     },
     onError: error => {
       console.log(error)
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: `Unable to render report. Please contact the tech team.`,
         status: "error",
       })
@@ -68,7 +64,6 @@ export const AnalyticsReport: React.FC<AnalyticsReportProps> = ({ title, url, ty
             setLoading(false) //
           }}
         />
-        <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
       </Container>
     </>
   )

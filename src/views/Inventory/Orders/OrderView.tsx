@@ -1,5 +1,5 @@
 import { ComponentError } from "components"
-import React, { useState } from "react"
+import React from "react"
 import { Loading, useQueryWithStore } from "@seasons/react-admin"
 
 import { Header } from "components"
@@ -9,7 +9,7 @@ import { OrderLineItemGrid } from "./Components/OrderLineItemGrid"
 import { useRefresh } from "@seasons/react-admin"
 import { gql } from "apollo-boost"
 import { useMutation } from "react-apollo"
-import { Snackbar, SnackbarState } from "components/Snackbar"
+import { useSnackbarContext } from "components/Snackbar"
 import { Order } from "generated/Order"
 
 const UPDATE_ORDER_STATUS = gql`
@@ -24,28 +24,22 @@ const UPDATE_ORDER_STATUS = gql`
 export const OrderView = ({ match }) => {
   const { orderID } = match.params
   const refresh = useRefresh()
-  const [snackbar, toggleSnackbar] = useState<SnackbarState>({
-    show: false,
-    message: "",
-    status: "success",
-  })
 
   const { data, loading, loaded, error } = useQueryWithStore<Order>({
     type: "getOne",
     resource: "Order",
     payload: { id: orderID },
   })
+  const { showSnackbar } = useSnackbarContext()
   const [updateOrderStatus] = useMutation(UPDATE_ORDER_STATUS, {
     onCompleted: () => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: "Order status updated",
         status: "success",
       })
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
@@ -109,7 +103,6 @@ export const OrderView = ({ match }) => {
           </Grid>
         </Grid>
       </Box>
-      <Snackbar state={snackbar} toggleSnackbar={toggleSnackbar} />
     </Container>
   )
 }

@@ -2,12 +2,10 @@ import React from "react"
 import { Box, Button, Dialog, DialogContent, DialogActions } from "@material-ui/core"
 import { DialogTitle, Spacer, Text, Loader } from "components"
 import { SelectField } from "fields"
-import { SnackbarState } from "components/Snackbar"
 import { Form } from "react-final-form"
 
 interface UpdatePhysicalProductStatusModalProps {
   open: boolean
-  toggleSnackbar: (state: SnackbarState) => void
   onClose?: () => void
   onSubmit: (values) => void
   physicalProduct?: any

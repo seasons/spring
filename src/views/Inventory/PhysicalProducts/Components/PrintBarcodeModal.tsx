@@ -1,35 +1,28 @@
 import { ConfirmationDialog } from "components"
-import { SnackbarState } from "components/Snackbar"
 import React from "react"
 import { useMutation } from "react-apollo"
 import { UPDATE_PHYSICAL_PRODUCT } from "../mutations"
 import jsonExport from "jsonexport/dist"
 import { downloadCSV } from "@seasons/react-admin"
+import { useSnackbarContext } from "components/Snackbar"
 
 interface PrintBarcodeModalProps {
   physicalProduct: any
-  toggleSnackbar: (state: SnackbarState) => void
   open: boolean
   setOpen: (boolean) => void
 }
 
-export const PrintBarcodeModal: React.FC<PrintBarcodeModalProps> = ({
-  physicalProduct,
-  open,
-  toggleSnackbar,
-  setOpen,
-}) => {
+export const PrintBarcodeModal: React.FC<PrintBarcodeModalProps> = ({ physicalProduct, open, setOpen }) => {
   const { id: physicalProductID, barcoded, barcode, seasonsUID } = physicalProduct
+  const { showSnackbar } = useSnackbarContext()
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onError: error =>
-      toggleSnackbar?.({
-        show: true,
+      showSnackbar?.({
         message: error?.message,
         status: "error",
       }),
     onCompleted: data =>
-      toggleSnackbar?.({
-        show: true,
+      showSnackbar?.({
         message: "Barcode exported!",
         status: "success",
       }),

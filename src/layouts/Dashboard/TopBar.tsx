@@ -10,19 +10,21 @@ const Bar = styled(AppBar)`
 
 export function TopBar({ onMobileNavOpen, ...rest }) {
   return (
-    <Hidden lgUp>
-      <Bar {...rest}>
-        <Toolbar>
-          <IconButton color="inherit" onClick={onMobileNavOpen}>
-            <SvgIcon>
-              <MenuIcon />
-            </SvgIcon>
-          </IconButton>
-          <Box ml={2}></Box>
-          <Logo color="white" />
-          <Box ml={2} flexGrow={1}></Box>
-        </Toolbar>
-      </Bar>
-    </Hidden>
+    <>
+      <Hidden lgUp>
+        <Bar {...rest}>
+          <Toolbar>
+            <IconButton color="inherit" onClick={onMobileNavOpen}>
+              <SvgIcon>
+                <MenuIcon />
+              </SvgIcon>
+            </IconButton>
+            <Box ml={2}></Box>
+            <Logo color="white" />
+            <Box ml={2} flexGrow={1}></Box>
+          </Toolbar>
+        </Bar>
+      </Hidden>
+    </>
   )
 }

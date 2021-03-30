@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Snackbar, Typography } from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typography } from "@material-ui/core"
 import { DialogTitle } from "components"
-import { Alert, Color } from "@material-ui/lab"
 import { head, trim, groupBy } from "lodash"
 import { PhysicalProduct } from "generated/PhysicalProduct"
 import { useQuery, useMutation } from "react-apollo"
@@ -9,6 +8,7 @@ import { StowProductInfo } from "./StowProductInfo"
 import { WAREHOUSE_LOCATION_BARCODE_REGEX, PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/PhysicalProducts/mutations"
 import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/PhysicalProducts/queries"
+import { useSnackbarContext } from "components/Snackbar"
 
 interface StowProductModalProps {
   open: boolean
@@ -20,17 +20,16 @@ interface StowProductModalProps {
 export const StowProductModal: React.FC<StowProductModalProps> = ({ disableButton, open, onSave, onClose }) => {
   const { data, loading } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
 
+  const { showSnackbar } = useSnackbarContext()
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
     onCompleted: () => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: `Physical product stowed at ${location}`,
         status: "success",
       })
     },
     onError: error => {
-      toggleSnackbar({
-        show: true,
+      showSnackbar({
         message: error?.message,
         status: "error",
       })
@@ -39,11 +38,6 @@ export const StowProductModal: React.FC<StowProductModalProps> = ({ disableButto
   const [barcode, setBarcode] = useState("")
   const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState<PhysicalProduct | undefined>(undefined)
   const [location, setLocation] = useState(selectedPhysicalProduct?.warehouseLocation?.barcode || "")
-  const [snackbar, toggleSnackbar] = useState<{ show: boolean; message: string; status: Color }>({
-    show: false,
-    message: "",
-    status: "success",
-  })
   const [physicalProductsByBarcode, setPhysicalProductsByBarcode] = useState({})
   const [validWarehouseLocationBarcodes, setValidWarehouseLocationBarcodes] = useState<string[]>([])
 
@@ -79,14 +73,6 @@ export const StowProductModal: React.FC<StowProductModalProps> = ({ disableButto
     setSelectedPhysicalProduct(undefined)
     setLocation("")
     onSave?.()
-  }
-
-  const hideSnackbar = () => {
-    toggleSnackbar({
-      show: false,
-      message: "",
-      status: "success",
-    })
   }
 
   const handleBarcodeChange = e => {
@@ -172,16 +158,6 @@ export const StowProductModal: React.FC<StowProductModalProps> = ({ disableButto
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={snackbar.show}
-        autoHideDuration={6000}
-        onClose={hideSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={hideSnackbar} severity={snackbar.status}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </>
   )
 }
