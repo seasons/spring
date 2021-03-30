@@ -115,7 +115,7 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
 
         <DialogContent dividers>
           <Content>
-            {physicalProducts.map((physProd, index) => (
+            {physicalProducts?.map((physProd, index) => (
               <>
                 <PhysicalProductSummary physicalProduct={physProd} key={index} />
                 <Spacer mt={2} />

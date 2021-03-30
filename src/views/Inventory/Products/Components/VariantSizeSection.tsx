@@ -61,7 +61,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
                   </Text>
                   <Spacer mt={1} />
                   <TextField
-                    disabled={field === "SKU" || field === "Total count"}
+                    disabled={field === "SKU" || (isEditing && field === "Total count")}
                     type={field === "SKU" ? "text" : "number"}
                     name={`${size}_${field.toLowerCase().replace(" ", "")}`}
                     initialValue={field === "SKU" ? sku : undefined}
