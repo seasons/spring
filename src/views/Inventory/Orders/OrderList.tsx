@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 import { Datagrid, DataProviderContext, Loading, List, TextField } from "@seasons/react-admin"
 import { Header } from "components/Header"
+import { OrderFilter } from "./Components/OrderFilter"
 import { MemberField, PriceField, SinceDateField, StatusField, ViewEntityField } from "fields"
 import { Container } from "@material-ui/core"
 
@@ -24,6 +25,8 @@ export const OrderList = props => {
       />
       <List
         {...props}
+        sort={{ field: "createdAt", order: "DESC" }}
+        filters={<OrderFilter />}
         perPage={25}
         hasCreate={false}
         hasEdit={false}
@@ -38,6 +41,7 @@ export const OrderList = props => {
           <MemberField label="Member" />
           <PriceField label="Total" source="total" />
           <StatusField label="Status" />
+          <TextField source="type" label="Type" />
           <ViewEntityField entityPath="orders" source="id" label="Actions" />
         </Datagrid>
       </List>
