@@ -40,6 +40,5 @@ const PublishedField: React.FC<{ label: string; record?: any }> = ({ label, reco
   if (!record) {
     return null
   }
-  console.log("record", record)
   return <Indicator status={record.published ? "True" : "False"} />
 }
