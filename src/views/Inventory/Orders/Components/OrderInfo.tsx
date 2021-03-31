@@ -65,6 +65,10 @@ export const OrderInfo = ({ order, ...rest }) => {
               </TableCell>
             </TableRow>
             <TableRow>
+              <TableCell>Type</TableCell>
+              <TableCell>{order.type}</TableCell>
+            </TableRow>
+            <TableRow>
               <TableCell>Created At</TableCell>
               <TableCell>{DateTime.fromISO(order.createdAt).toLocaleString(DateTime.DATETIME_MED)}</TableCell>
             </TableRow>
