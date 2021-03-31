@@ -8,6 +8,8 @@ export default {
       name
       tier
       brandCode
+      published
+      featured
       productsConnection {
         aggregate {
           count

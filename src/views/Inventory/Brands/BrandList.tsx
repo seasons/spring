@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom"
 import { ViewEntityField } from "fields"
 import { Typography } from "@material-ui/core"
 import { brand } from "generated/brand"
+import { Indicator } from "components"
 
 const ProductsCountField = ({ record, label }: { record?: brand; label?: string }) => {
   const productCount = record?.productsConnection?.aggregate?.count || 0
@@ -36,6 +37,8 @@ export const BrandList = props => {
       >
         <Datagrid>
           <TextField source="name" label="Name" />
+          <PublishedField label="Published" field="published" />
+          <PublishedField label="Featured" field="featured" />
           <TextField source="brandCode" label="Code" />
           <TextField source="tier" label="Tier" />
           <ProductsCountField label="Products" />
@@ -46,4 +49,15 @@ export const BrandList = props => {
       </List>
     </>
   )
+}
+
+const PublishedField: React.FC<{ label: string; record?: any; field: "published" | "featured" }> = ({
+  label,
+  record,
+  field,
+}) => {
+  if (!record) {
+    return null
+  }
+  return <Indicator status={record[field] ? "True" : "False"} />
 }
