@@ -51,11 +51,11 @@ const heatmapLayer = {
 export const MapchartWidget = ({ data }) => {
   const [viewport, setViewport] = useState({
     width: "100%",
-    height: 400,
+    height: 700,
     // center it on the USA
     latitude: 39.0977,
     longitude: -97.5786,
-    zoom: 3,
+    zoom: 4,
   })
   const [showActive, setShowActive] = useState(true)
   const [showPaused, setShowPaused] = useState(false)

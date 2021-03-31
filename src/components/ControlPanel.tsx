@@ -67,7 +67,7 @@ const Card = muiStyled(MuiCard)({
   color: theme.palette.primary.contrastText,
   padding: theme.spacing(2),
   position: "absolute",
-  top: 10,
+  bottom: 10,
   left: 10,
   background: theme.palette.primary.main,
 })
