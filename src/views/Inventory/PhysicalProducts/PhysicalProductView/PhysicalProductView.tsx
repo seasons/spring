@@ -39,10 +39,7 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = ({ match 
         {
           value: "logs",
           label: "Admin Logs",
-          render: ({ data }) => {
-            console.log(data)
-            return <AdminLogsView logs={data.adminLogs} />
-          },
+          render: ({ data }) => <AdminLogsView logs={data.adminLogs} />,
         },
       ]}
     />
