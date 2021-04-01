@@ -25,6 +25,7 @@ export interface LaunchEditQuery_launch {
   __typename: "Launch"
   id: string
   launchAt: any
+  published: boolean
   brand: LaunchEditQuery_launch_brand | null
   collection: LaunchEditQuery_launch_collection | null
 }

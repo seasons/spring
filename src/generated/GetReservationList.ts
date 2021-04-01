@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ReservationPhase, ReservationStatus } from "./globalTypes"
+import { CustomerStatus, ReservationPhase, ReservationStatus } from "./globalTypes"
 
 // ====================================================
 // GraphQL fragment: GetReservationList
@@ -20,6 +20,7 @@ export interface GetReservationList_customer_user {
 export interface GetReservationList_customer {
   __typename: "Customer"
   id: string
+  status: CustomerStatus | null
   user: GetReservationList_customer_user
 }
 
