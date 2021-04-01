@@ -9,10 +9,26 @@ import { BrandWhereUniqueInput, BrandTier } from "./globalTypes"
 // GraphQL query operation: BrandEditQuery
 // ====================================================
 
+export interface BrandEditQuery_brand_logoImage {
+  __typename: "Image"
+  id: string
+  url: string | null
+}
+
 export interface BrandEditQuery_brand_images {
   __typename: "Image"
   id: string
   url: string | null
+}
+
+export interface BrandEditQuery_brand_productsConnection_aggregate {
+  __typename: "AggregateProduct"
+  count: number
+}
+
+export interface BrandEditQuery_brand_productsConnection {
+  __typename: "ProductConnection"
+  aggregate: BrandEditQuery_brand_productsConnection_aggregate
 }
 
 export interface BrandEditQuery_brand_externalShopifyIntegration {
@@ -30,9 +46,11 @@ export interface BrandEditQuery_brand {
   since: any | null
   published: boolean
   featured: boolean
+  logoImage: BrandEditQuery_brand_logoImage | null
   designer: string | null
   basedIn: string | null
   images: BrandEditQuery_brand_images[] | null
+  productsConnection: BrandEditQuery_brand_productsConnection
   externalShopifyIntegration: BrandEditQuery_brand_externalShopifyIntegration | null
   tier: BrandTier
   websiteUrl: string | null
