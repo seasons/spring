@@ -4,7 +4,7 @@ import { Spacer, Text } from "components"
 import { ExpandableSection } from "./ExpandableSection"
 import { TextField, SelectField } from "fields"
 import { getTypeSpecificVariantFields } from "../utils"
-import { uniq } from "lodash"
+import { ManufacturerSizeType, getManufacturerSizes } from "utils/sizes"
 import { getFormSelectChoices } from "utils/form"
 
 export interface VariantSizeSectionProps {
@@ -13,16 +13,15 @@ export interface VariantSizeSectionProps {
   size: string
   sku: string
   bottomSizes: any[]
-  manufacturerSizes: any[]
+  manufacturerSizeType: ManufacturerSizeType | null
 }
 
 export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
-  manufacturerSizes,
+  manufacturerSizeType,
   isEditing,
   productType,
   size,
   sku,
-  bottomSizes,
 }) => {
   const typeSpecificFields = getTypeSpecificVariantFields(productType)
   const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 2) : []
@@ -31,19 +30,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
   const secondRowFields = ["Weight", ...typeSpecificSecondRowFields]
   const requiredFields = ["Total count"]
 
-  const getManufacturerSizes = manufacturerSize => {
-    const baseBottomSizes: string[] = uniq(
-      bottomSizes?.filter(size => size?.type === manufacturerSize).map(size => size?.value)
-    )
-    baseBottomSizes.sort((a, b) => {
-      const aSplit = a.split("x")
-      const bSplit = b.split("x")
-      return Number(aSplit?.[1]) - Number(bSplit?.[1])
-    })
-    baseBottomSizes.sort()
-    const sizes = getFormSelectChoices(baseBottomSizes)
-    return sizes
-  }
+  const manufacturerSizes = getManufacturerSizes(manufacturerSizeType).map(x => x.toString())
 
   return (
     <ExpandableSection
@@ -91,20 +78,17 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
               )
             })}
             <Spacer grid mt={2} />
-            {!!manufacturerSizes?.length &&
-              manufacturerSizes.map((sizeType, index) => {
-                return (
-                  <Grid item key={index} xs={3}>
-                    <Text variant="h5">{`Manufacturer size ${sizeType}`}</Text>
-                    <Spacer mt={1} />
-                    <SelectField
-                      name={`${size}_manufacturerSize_${sizeType}`}
-                      choices={getManufacturerSizes(sizeType)}
-                    />
-                    <Spacer grid mt={2} />
-                  </Grid>
-                )
-              })}
+            {productType === "Bottom" && (
+              <Grid item xs={3}>
+                <Text variant="h5">Manufacturer sizes</Text>
+                <Spacer mt={1} />
+                <SelectField
+                  name={`${size}_manufacturerSize_${manufacturerSizeType}`}
+                  choices={getFormSelectChoices(manufacturerSizes)}
+                />
+                <Spacer grid mt={2} />
+              </Grid>
+            )}
           </Grid>
         </>
       }

@@ -19,9 +19,9 @@ import { ProductVariantsSection } from "./ProductVariantsSection"
 import { UPDATE_PRODUCT } from "../mutations"
 import { DateTime } from "luxon"
 import { PRODUCT_EDIT_QUERY } from "../queries"
-import { uniq } from "lodash"
 import { SeasonsSection } from "."
 import { useSnackbarContext } from "components/Snackbar"
+import { internalBottomSizes, US_LETTER_SIZES } from "utils/sizes"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -85,23 +85,13 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
   }
 
   let sizes: any[] = []
-  const baseSizes = ["XS", "S", "M", "L", "XL", "XXL"]
   switch (productType) {
     case "Top":
-      const topSizes: string[] = baseSizes
+      const topSizes: string[] = US_LETTER_SIZES
       sizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
-      const baseBottomSizes: string[] = uniq(
-        data?.bottomSizes?.filter(size => size?.type === "WxL").map(size => size?.value || "")
-      )
-      baseBottomSizes.sort((a, b) => {
-        const aSplit = a.split("x")
-        const bSplit = b.split("x")
-        return Number(aSplit?.[1]) - Number(bSplit?.[1])
-      })
-      baseBottomSizes.sort()
-      sizes = getFormSelectChoices(baseBottomSizes)
+      sizes = getFormSelectChoices(internalBottomSizes())
       break
   }
 

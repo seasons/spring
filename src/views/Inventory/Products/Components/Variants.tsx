@@ -12,6 +12,7 @@ import { VariantSizeSection } from "./VariantSizeSection"
 import { VariantPriceSection } from "./VariantPriceSection"
 import { getFormSelectChoices, getEnumValues } from "utils/form"
 import { AddPhysicalProductModal } from "views/Inventory/ProductVariants/AddPhysicalProductModal"
+import { MANUFACTURER_SIZE_TYPES } from "utils/sizes"
 
 export interface VariantsProps {
   initialBottomSizeTypes?: string[] | null
@@ -22,7 +23,7 @@ export interface VariantsProps {
 
 export const Variants: React.FC<VariantsProps> = ({ createData, variants, initialBottomSizeTypes, refetch }) => {
   const location = useLocation()
-  const [manufacturerSizes, setManufacturerSizes] = useState(initialBottomSizeTypes || [])
+  const [manufacturerSizeType, setManufacturerSizeType] = useState(null)
   const brandID = createData?.brand || ""
   const colorCode = createData?.color || ""
   const sizeNames = createData?.sizes || []
@@ -88,12 +89,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
     url: location.pathname,
   })
 
-  const bottomSizeTypeChoices =
-    (!!data?.bottomSizeTypes && [
-      ...getFormSelectChoices(getEnumValues(data.bottomSizeTypes)),
-      { display: "", value: null },
-    ]) ||
-    []
+  const bottomSizeTypeChoices = getFormSelectChoices(MANUFACTURER_SIZE_TYPES)
 
   return (
     <Box>
@@ -115,7 +111,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
               <Text variant="h5">Manufacturer size type</Text>
               <Spacer mt={1} />
               <SelectField
-                onChange={e => setManufacturerSizes([e.target.value])}
+                onChange={e => setManufacturerSizeType(e.target.value)}
                 name="bottomSizeTypes"
                 choices={bottomSizeTypeChoices}
               />
@@ -131,7 +127,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
               sku={variant.sku}
               productType={productType}
               key={index}
-              manufacturerSizes={manufacturerSizes}
+              manufacturerSizeType={manufacturerSizeType}
               bottomSizes={data?.bottomSizes}
             />
             <VariantPriceSection size={variant.size} shopifyProductVariant={variant.shopifyProductVariant} />
