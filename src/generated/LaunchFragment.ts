@@ -23,7 +23,6 @@ export interface LaunchFragment {
   __typename: "Launch"
   id: string
   launchAt: any
-  published: boolean
   brand: LaunchFragment_brand | null
   collection: LaunchFragment_collection | null
 }

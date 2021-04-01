@@ -152,18 +152,12 @@ export interface ProductEditQuery_product_variants_physicalProducts {
   warehouseLocation: ProductEditQuery_product_variants_physicalProducts_warehouseLocation | null
 }
 
-export interface ProductEditQuery_product_variants_product {
-  __typename: "Product"
-  id: string
-}
-
 export interface ProductEditQuery_product_variants {
   __typename: "ProductVariant"
   id: string
   sku: string | null
   internalSize: ProductEditQuery_product_variants_internalSize | null
   physicalProducts: ProductEditQuery_product_variants_physicalProducts[] | null
-  product: ProductEditQuery_product_variants_product
 }
 
 export interface ProductEditQuery_product_season_internalSeason {

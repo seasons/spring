@@ -570,58 +570,6 @@ export interface BagItemUpsertWithWhereUniqueWithoutCustomerInput {
   create: BagItemCreateWithoutCustomerInput
 }
 
-export interface BagItemWhereInput {
-  AND?: BagItemWhereInput[] | null
-  OR?: BagItemWhereInput[] | null
-  NOT?: BagItemWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  position?: number | null
-  position_not?: number | null
-  position_in?: number[] | null
-  position_not_in?: number[] | null
-  position_lt?: number | null
-  position_lte?: number | null
-  position_gt?: number | null
-  position_gte?: number | null
-  saved?: boolean | null
-  saved_not?: boolean | null
-  status?: BagItemStatus | null
-  status_not?: BagItemStatus | null
-  status_in?: BagItemStatus[] | null
-  status_not_in?: BagItemStatus[] | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  customer?: CustomerWhereInput | null
-  productVariant?: ProductVariantWhereInput | null
-}
-
 export interface BagItemWhereUniqueInput {
   id?: string | null
 }
@@ -672,184 +620,6 @@ export interface BillingInfoUpdateOneInput {
 export interface BillingInfoUpsertNestedInput {
   update: BillingInfoUpdateDataInput
   create: BillingInfoCreateInput
-}
-
-export interface BillingInfoWhereInput {
-  AND?: BillingInfoWhereInput[] | null
-  OR?: BillingInfoWhereInput[] | null
-  NOT?: BillingInfoWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  brand?: string | null
-  brand_not?: string | null
-  brand_in?: string[] | null
-  brand_not_in?: string[] | null
-  brand_lt?: string | null
-  brand_lte?: string | null
-  brand_gt?: string | null
-  brand_gte?: string | null
-  brand_contains?: string | null
-  brand_not_contains?: string | null
-  brand_starts_with?: string | null
-  brand_not_starts_with?: string | null
-  brand_ends_with?: string | null
-  brand_not_ends_with?: string | null
-  name?: string | null
-  name_not?: string | null
-  name_in?: string[] | null
-  name_not_in?: string[] | null
-  name_lt?: string | null
-  name_lte?: string | null
-  name_gt?: string | null
-  name_gte?: string | null
-  name_contains?: string | null
-  name_not_contains?: string | null
-  name_starts_with?: string | null
-  name_not_starts_with?: string | null
-  name_ends_with?: string | null
-  name_not_ends_with?: string | null
-  last_digits?: string | null
-  last_digits_not?: string | null
-  last_digits_in?: string[] | null
-  last_digits_not_in?: string[] | null
-  last_digits_lt?: string | null
-  last_digits_lte?: string | null
-  last_digits_gt?: string | null
-  last_digits_gte?: string | null
-  last_digits_contains?: string | null
-  last_digits_not_contains?: string | null
-  last_digits_starts_with?: string | null
-  last_digits_not_starts_with?: string | null
-  last_digits_ends_with?: string | null
-  last_digits_not_ends_with?: string | null
-  expiration_month?: number | null
-  expiration_month_not?: number | null
-  expiration_month_in?: number[] | null
-  expiration_month_not_in?: number[] | null
-  expiration_month_lt?: number | null
-  expiration_month_lte?: number | null
-  expiration_month_gt?: number | null
-  expiration_month_gte?: number | null
-  expiration_year?: number | null
-  expiration_year_not?: number | null
-  expiration_year_in?: number[] | null
-  expiration_year_not_in?: number[] | null
-  expiration_year_lt?: number | null
-  expiration_year_lte?: number | null
-  expiration_year_gt?: number | null
-  expiration_year_gte?: number | null
-  street1?: string | null
-  street1_not?: string | null
-  street1_in?: string[] | null
-  street1_not_in?: string[] | null
-  street1_lt?: string | null
-  street1_lte?: string | null
-  street1_gt?: string | null
-  street1_gte?: string | null
-  street1_contains?: string | null
-  street1_not_contains?: string | null
-  street1_starts_with?: string | null
-  street1_not_starts_with?: string | null
-  street1_ends_with?: string | null
-  street1_not_ends_with?: string | null
-  street2?: string | null
-  street2_not?: string | null
-  street2_in?: string[] | null
-  street2_not_in?: string[] | null
-  street2_lt?: string | null
-  street2_lte?: string | null
-  street2_gt?: string | null
-  street2_gte?: string | null
-  street2_contains?: string | null
-  street2_not_contains?: string | null
-  street2_starts_with?: string | null
-  street2_not_starts_with?: string | null
-  street2_ends_with?: string | null
-  street2_not_ends_with?: string | null
-  city?: string | null
-  city_not?: string | null
-  city_in?: string[] | null
-  city_not_in?: string[] | null
-  city_lt?: string | null
-  city_lte?: string | null
-  city_gt?: string | null
-  city_gte?: string | null
-  city_contains?: string | null
-  city_not_contains?: string | null
-  city_starts_with?: string | null
-  city_not_starts_with?: string | null
-  city_ends_with?: string | null
-  city_not_ends_with?: string | null
-  state?: string | null
-  state_not?: string | null
-  state_in?: string[] | null
-  state_not_in?: string[] | null
-  state_lt?: string | null
-  state_lte?: string | null
-  state_gt?: string | null
-  state_gte?: string | null
-  state_contains?: string | null
-  state_not_contains?: string | null
-  state_starts_with?: string | null
-  state_not_starts_with?: string | null
-  state_ends_with?: string | null
-  state_not_ends_with?: string | null
-  country?: string | null
-  country_not?: string | null
-  country_in?: string[] | null
-  country_not_in?: string[] | null
-  country_lt?: string | null
-  country_lte?: string | null
-  country_gt?: string | null
-  country_gte?: string | null
-  country_contains?: string | null
-  country_not_contains?: string | null
-  country_starts_with?: string | null
-  country_not_starts_with?: string | null
-  country_ends_with?: string | null
-  country_not_ends_with?: string | null
-  postal_code?: string | null
-  postal_code_not?: string | null
-  postal_code_in?: string[] | null
-  postal_code_not_in?: string[] | null
-  postal_code_lt?: string | null
-  postal_code_lte?: string | null
-  postal_code_gt?: string | null
-  postal_code_gte?: string | null
-  postal_code_contains?: string | null
-  postal_code_not_contains?: string | null
-  postal_code_starts_with?: string | null
-  postal_code_not_starts_with?: string | null
-  postal_code_ends_with?: string | null
-  postal_code_not_ends_with?: string | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
 }
 
 export interface BillingInfoWhereUniqueInput {
@@ -983,7 +753,6 @@ export interface BrandCreateInput {
   published?: boolean | null
   featured?: boolean | null
   websiteUrl?: string | null
-  logoImage?: ImageCreateOneInput | null
   products?: ProductCreateManyWithoutBrandInput | null
   images?: ImageCreateManyInput | null
   externalShopifyIntegration?: ExternalShopifyIntegrationCreateOneInput | null
@@ -1014,7 +783,6 @@ export interface BrandCreateWithoutProductsInput {
   published?: boolean | null
   featured?: boolean | null
   websiteUrl?: string | null
-  logoImage?: ImageCreateOneInput | null
   images?: ImageCreateManyInput | null
   externalShopifyIntegration?: ExternalShopifyIntegrationCreateOneInput | null
 }
@@ -1033,7 +801,6 @@ export interface BrandUpdateDataInput {
   published?: boolean | null
   featured?: boolean | null
   websiteUrl?: string | null
-  logoImage?: ImageUpdateOneInput | null
   products?: ProductUpdateManyWithoutBrandInput | null
   images?: ImageUpdateManyInput | null
   externalShopifyIntegration?: ExternalShopifyIntegrationUpdateOneInput | null
@@ -1069,7 +836,6 @@ export interface BrandUpdateWithoutProductsDataInput {
   published?: boolean | null
   featured?: boolean | null
   websiteUrl?: string | null
-  logoImage?: ImageUpdateOneInput | null
   images?: ImageUpdateManyInput | null
   externalShopifyIntegration?: ExternalShopifyIntegrationUpdateOneInput | null
 }
@@ -1234,7 +1000,6 @@ export interface BrandWhereInput {
   updatedAt_lte?: any | null
   updatedAt_gt?: any | null
   updatedAt_gte?: any | null
-  logoImage?: ImageWhereInput | null
   products_every?: ProductWhereInput | null
   products_some?: ProductWhereInput | null
   products_none?: ProductWhereInput | null
@@ -1713,13 +1478,13 @@ export interface CustomBrandCreateInput {
   brandCode: string
   description?: string | null
   isPrimaryBrand?: boolean | null
+  logo?: any | null
   name: string
   basedIn?: string | null
   since?: any | null
   tier: BrandTier
   websiteUrl?: string | null
   products?: ProductCreateManyWithoutBrandInput | null
-  logoImage?: any | null
   images?: any[] | null
   externalShopifyIntegration?: ExternalShopifyIntegrationInput | null
 }
@@ -1732,13 +1497,13 @@ export interface CustomBrandUpdateInput {
   brandCode?: string | null
   description?: string | null
   isPrimaryBrand?: boolean | null
+  logo?: any | null
   name?: string | null
   basedIn?: string | null
   products?: ProductUpdateManyWithoutBrandInput | null
   since?: any | null
   tier?: BrandTier | null
   websiteUrl?: string | null
-  logoImage?: any | null
   images?: any[] | null
   externalShopifyIntegration?: ExternalShopifyIntegrationInput | null
 }
@@ -1746,7 +1511,6 @@ export interface CustomBrandUpdateInput {
 export interface CustomLaunchUpsertInput {
   id?: string | null
   launchAt?: any | null
-  published?: boolean | null
   collectionID?: string | null
   brandID?: string | null
 }
@@ -1821,69 +1585,6 @@ export interface CustomerAdmissionsDataUpdateWithoutCustomerDataInput {
 export interface CustomerAdmissionsDataUpsertWithoutCustomerInput {
   update: CustomerAdmissionsDataUpdateWithoutCustomerDataInput
   create: CustomerAdmissionsDataCreateWithoutCustomerInput
-}
-
-export interface CustomerAdmissionsDataWhereInput {
-  AND?: CustomerAdmissionsDataWhereInput[] | null
-  OR?: CustomerAdmissionsDataWhereInput[] | null
-  NOT?: CustomerAdmissionsDataWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  inServiceableZipcode?: boolean | null
-  inServiceableZipcode_not?: boolean | null
-  admissable?: boolean | null
-  admissable_not?: boolean | null
-  inAdmissableReason?: InAdmissableReason | null
-  inAdmissableReason_not?: InAdmissableReason | null
-  inAdmissableReason_in?: InAdmissableReason[] | null
-  inAdmissableReason_not_in?: InAdmissableReason[] | null
-  allAccessEnabled?: boolean | null
-  allAccessEnabled_not?: boolean | null
-  authorizationsCount?: number | null
-  authorizationsCount_not?: number | null
-  authorizationsCount_in?: number[] | null
-  authorizationsCount_not_in?: number[] | null
-  authorizationsCount_lt?: number | null
-  authorizationsCount_lte?: number | null
-  authorizationsCount_gt?: number | null
-  authorizationsCount_gte?: number | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  authorizationWindowClosesAt?: any | null
-  authorizationWindowClosesAt_not?: any | null
-  authorizationWindowClosesAt_in?: any[] | null
-  authorizationWindowClosesAt_not_in?: any[] | null
-  authorizationWindowClosesAt_lt?: any | null
-  authorizationWindowClosesAt_lte?: any | null
-  authorizationWindowClosesAt_gt?: any | null
-  authorizationWindowClosesAt_gte?: any | null
-  customer?: CustomerWhereInput | null
 }
 
 export interface CustomerAdmissionsDataWhereUniqueInput {
@@ -2073,286 +1774,6 @@ export interface CustomerDetailUpsertNestedInput {
   create: CustomerDetailCreateInput
 }
 
-export interface CustomerDetailWhereInput {
-  AND?: CustomerDetailWhereInput[] | null
-  OR?: CustomerDetailWhereInput[] | null
-  NOT?: CustomerDetailWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  phoneNumber?: string | null
-  phoneNumber_not?: string | null
-  phoneNumber_in?: string[] | null
-  phoneNumber_not_in?: string[] | null
-  phoneNumber_lt?: string | null
-  phoneNumber_lte?: string | null
-  phoneNumber_gt?: string | null
-  phoneNumber_gte?: string | null
-  phoneNumber_contains?: string | null
-  phoneNumber_not_contains?: string | null
-  phoneNumber_starts_with?: string | null
-  phoneNumber_not_starts_with?: string | null
-  phoneNumber_ends_with?: string | null
-  phoneNumber_not_ends_with?: string | null
-  birthday?: any | null
-  birthday_not?: any | null
-  birthday_in?: any[] | null
-  birthday_not_in?: any[] | null
-  birthday_lt?: any | null
-  birthday_lte?: any | null
-  birthday_gt?: any | null
-  birthday_gte?: any | null
-  height?: number | null
-  height_not?: number | null
-  height_in?: number[] | null
-  height_not_in?: number[] | null
-  height_lt?: number | null
-  height_lte?: number | null
-  height_gt?: number | null
-  height_gte?: number | null
-  bodyType?: string | null
-  bodyType_not?: string | null
-  bodyType_in?: string[] | null
-  bodyType_not_in?: string[] | null
-  bodyType_lt?: string | null
-  bodyType_lte?: string | null
-  bodyType_gt?: string | null
-  bodyType_gte?: string | null
-  bodyType_contains?: string | null
-  bodyType_not_contains?: string | null
-  bodyType_starts_with?: string | null
-  bodyType_not_starts_with?: string | null
-  bodyType_ends_with?: string | null
-  bodyType_not_ends_with?: string | null
-  averageTopSize?: string | null
-  averageTopSize_not?: string | null
-  averageTopSize_in?: string[] | null
-  averageTopSize_not_in?: string[] | null
-  averageTopSize_lt?: string | null
-  averageTopSize_lte?: string | null
-  averageTopSize_gt?: string | null
-  averageTopSize_gte?: string | null
-  averageTopSize_contains?: string | null
-  averageTopSize_not_contains?: string | null
-  averageTopSize_starts_with?: string | null
-  averageTopSize_not_starts_with?: string | null
-  averageTopSize_ends_with?: string | null
-  averageTopSize_not_ends_with?: string | null
-  averageWaistSize?: string | null
-  averageWaistSize_not?: string | null
-  averageWaistSize_in?: string[] | null
-  averageWaistSize_not_in?: string[] | null
-  averageWaistSize_lt?: string | null
-  averageWaistSize_lte?: string | null
-  averageWaistSize_gt?: string | null
-  averageWaistSize_gte?: string | null
-  averageWaistSize_contains?: string | null
-  averageWaistSize_not_contains?: string | null
-  averageWaistSize_starts_with?: string | null
-  averageWaistSize_not_starts_with?: string | null
-  averageWaistSize_ends_with?: string | null
-  averageWaistSize_not_ends_with?: string | null
-  averagePantLength?: string | null
-  averagePantLength_not?: string | null
-  averagePantLength_in?: string[] | null
-  averagePantLength_not_in?: string[] | null
-  averagePantLength_lt?: string | null
-  averagePantLength_lte?: string | null
-  averagePantLength_gt?: string | null
-  averagePantLength_gte?: string | null
-  averagePantLength_contains?: string | null
-  averagePantLength_not_contains?: string | null
-  averagePantLength_starts_with?: string | null
-  averagePantLength_not_starts_with?: string | null
-  averagePantLength_ends_with?: string | null
-  averagePantLength_not_ends_with?: string | null
-  preferredPronouns?: string | null
-  preferredPronouns_not?: string | null
-  preferredPronouns_in?: string[] | null
-  preferredPronouns_not_in?: string[] | null
-  preferredPronouns_lt?: string | null
-  preferredPronouns_lte?: string | null
-  preferredPronouns_gt?: string | null
-  preferredPronouns_gte?: string | null
-  preferredPronouns_contains?: string | null
-  preferredPronouns_not_contains?: string | null
-  preferredPronouns_starts_with?: string | null
-  preferredPronouns_not_starts_with?: string | null
-  preferredPronouns_ends_with?: string | null
-  preferredPronouns_not_ends_with?: string | null
-  profession?: string | null
-  profession_not?: string | null
-  profession_in?: string[] | null
-  profession_not_in?: string[] | null
-  profession_lt?: string | null
-  profession_lte?: string | null
-  profession_gt?: string | null
-  profession_gte?: string | null
-  profession_contains?: string | null
-  profession_not_contains?: string | null
-  profession_starts_with?: string | null
-  profession_not_starts_with?: string | null
-  profession_ends_with?: string | null
-  profession_not_ends_with?: string | null
-  partyFrequency?: string | null
-  partyFrequency_not?: string | null
-  partyFrequency_in?: string[] | null
-  partyFrequency_not_in?: string[] | null
-  partyFrequency_lt?: string | null
-  partyFrequency_lte?: string | null
-  partyFrequency_gt?: string | null
-  partyFrequency_gte?: string | null
-  partyFrequency_contains?: string | null
-  partyFrequency_not_contains?: string | null
-  partyFrequency_starts_with?: string | null
-  partyFrequency_not_starts_with?: string | null
-  partyFrequency_ends_with?: string | null
-  partyFrequency_not_ends_with?: string | null
-  travelFrequency?: string | null
-  travelFrequency_not?: string | null
-  travelFrequency_in?: string[] | null
-  travelFrequency_not_in?: string[] | null
-  travelFrequency_lt?: string | null
-  travelFrequency_lte?: string | null
-  travelFrequency_gt?: string | null
-  travelFrequency_gte?: string | null
-  travelFrequency_contains?: string | null
-  travelFrequency_not_contains?: string | null
-  travelFrequency_starts_with?: string | null
-  travelFrequency_not_starts_with?: string | null
-  travelFrequency_ends_with?: string | null
-  travelFrequency_not_ends_with?: string | null
-  shoppingFrequency?: string | null
-  shoppingFrequency_not?: string | null
-  shoppingFrequency_in?: string[] | null
-  shoppingFrequency_not_in?: string[] | null
-  shoppingFrequency_lt?: string | null
-  shoppingFrequency_lte?: string | null
-  shoppingFrequency_gt?: string | null
-  shoppingFrequency_gte?: string | null
-  shoppingFrequency_contains?: string | null
-  shoppingFrequency_not_contains?: string | null
-  shoppingFrequency_starts_with?: string | null
-  shoppingFrequency_not_starts_with?: string | null
-  shoppingFrequency_ends_with?: string | null
-  shoppingFrequency_not_ends_with?: string | null
-  averageSpend?: string | null
-  averageSpend_not?: string | null
-  averageSpend_in?: string[] | null
-  averageSpend_not_in?: string[] | null
-  averageSpend_lt?: string | null
-  averageSpend_lte?: string | null
-  averageSpend_gt?: string | null
-  averageSpend_gte?: string | null
-  averageSpend_contains?: string | null
-  averageSpend_not_contains?: string | null
-  averageSpend_starts_with?: string | null
-  averageSpend_not_starts_with?: string | null
-  averageSpend_ends_with?: string | null
-  averageSpend_not_ends_with?: string | null
-  style?: string | null
-  style_not?: string | null
-  style_in?: string[] | null
-  style_not_in?: string[] | null
-  style_lt?: string | null
-  style_lte?: string | null
-  style_gt?: string | null
-  style_gte?: string | null
-  style_contains?: string | null
-  style_not_contains?: string | null
-  style_starts_with?: string | null
-  style_not_starts_with?: string | null
-  style_ends_with?: string | null
-  style_not_ends_with?: string | null
-  commuteStyle?: string | null
-  commuteStyle_not?: string | null
-  commuteStyle_in?: string[] | null
-  commuteStyle_not_in?: string[] | null
-  commuteStyle_lt?: string | null
-  commuteStyle_lte?: string | null
-  commuteStyle_gt?: string | null
-  commuteStyle_gte?: string | null
-  commuteStyle_contains?: string | null
-  commuteStyle_not_contains?: string | null
-  commuteStyle_starts_with?: string | null
-  commuteStyle_not_starts_with?: string | null
-  commuteStyle_ends_with?: string | null
-  commuteStyle_not_ends_with?: string | null
-  phoneOS?: string | null
-  phoneOS_not?: string | null
-  phoneOS_in?: string[] | null
-  phoneOS_not_in?: string[] | null
-  phoneOS_lt?: string | null
-  phoneOS_lte?: string | null
-  phoneOS_gt?: string | null
-  phoneOS_gte?: string | null
-  phoneOS_contains?: string | null
-  phoneOS_not_contains?: string | null
-  phoneOS_starts_with?: string | null
-  phoneOS_not_starts_with?: string | null
-  phoneOS_ends_with?: string | null
-  phoneOS_not_ends_with?: string | null
-  insureShipment?: boolean | null
-  insureShipment_not?: boolean | null
-  instagramHandle?: string | null
-  instagramHandle_not?: string | null
-  instagramHandle_in?: string[] | null
-  instagramHandle_not_in?: string[] | null
-  instagramHandle_lt?: string | null
-  instagramHandle_lte?: string | null
-  instagramHandle_gt?: string | null
-  instagramHandle_gte?: string | null
-  instagramHandle_contains?: string | null
-  instagramHandle_not_contains?: string | null
-  instagramHandle_starts_with?: string | null
-  instagramHandle_not_starts_with?: string | null
-  instagramHandle_ends_with?: string | null
-  instagramHandle_not_ends_with?: string | null
-  impactId?: string | null
-  impactId_not?: string | null
-  impactId_in?: string[] | null
-  impactId_not_in?: string[] | null
-  impactId_lt?: string | null
-  impactId_lte?: string | null
-  impactId_gt?: string | null
-  impactId_gte?: string | null
-  impactId_contains?: string | null
-  impactId_not_contains?: string | null
-  impactId_starts_with?: string | null
-  impactId_not_starts_with?: string | null
-  impactId_ends_with?: string | null
-  impactId_not_ends_with?: string | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  stylePreferences?: StylePreferencesWhereInput | null
-  shippingAddress?: LocationWhereInput | null
-}
-
 export interface CustomerDetailWhereUniqueInput {
   id?: string | null
 }
@@ -2411,116 +1832,6 @@ export interface CustomerMembershipSubscriptionDataUpsertNestedInput {
   create: CustomerMembershipSubscriptionDataCreateInput
 }
 
-export interface CustomerMembershipSubscriptionDataWhereInput {
-  AND?: CustomerMembershipSubscriptionDataWhereInput[] | null
-  OR?: CustomerMembershipSubscriptionDataWhereInput[] | null
-  NOT?: CustomerMembershipSubscriptionDataWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  planID?: string | null
-  planID_not?: string | null
-  planID_in?: string[] | null
-  planID_not_in?: string[] | null
-  planID_lt?: string | null
-  planID_lte?: string | null
-  planID_gt?: string | null
-  planID_gte?: string | null
-  planID_contains?: string | null
-  planID_not_contains?: string | null
-  planID_starts_with?: string | null
-  planID_not_starts_with?: string | null
-  planID_ends_with?: string | null
-  planID_not_ends_with?: string | null
-  subscriptionId?: string | null
-  subscriptionId_not?: string | null
-  subscriptionId_in?: string[] | null
-  subscriptionId_not_in?: string[] | null
-  subscriptionId_lt?: string | null
-  subscriptionId_lte?: string | null
-  subscriptionId_gt?: string | null
-  subscriptionId_gte?: string | null
-  subscriptionId_contains?: string | null
-  subscriptionId_not_contains?: string | null
-  subscriptionId_starts_with?: string | null
-  subscriptionId_not_starts_with?: string | null
-  subscriptionId_ends_with?: string | null
-  subscriptionId_not_ends_with?: string | null
-  currentTermStart?: any | null
-  currentTermStart_not?: any | null
-  currentTermStart_in?: any[] | null
-  currentTermStart_not_in?: any[] | null
-  currentTermStart_lt?: any | null
-  currentTermStart_lte?: any | null
-  currentTermStart_gt?: any | null
-  currentTermStart_gte?: any | null
-  currentTermEnd?: any | null
-  currentTermEnd_not?: any | null
-  currentTermEnd_in?: any[] | null
-  currentTermEnd_not_in?: any[] | null
-  currentTermEnd_lt?: any | null
-  currentTermEnd_lte?: any | null
-  currentTermEnd_gt?: any | null
-  currentTermEnd_gte?: any | null
-  nextBillingAt?: any | null
-  nextBillingAt_not?: any | null
-  nextBillingAt_in?: any[] | null
-  nextBillingAt_not_in?: any[] | null
-  nextBillingAt_lt?: any | null
-  nextBillingAt_lte?: any | null
-  nextBillingAt_gt?: any | null
-  nextBillingAt_gte?: any | null
-  status?: string | null
-  status_not?: string | null
-  status_in?: string[] | null
-  status_not_in?: string[] | null
-  status_lt?: string | null
-  status_lte?: string | null
-  status_gt?: string | null
-  status_gte?: string | null
-  status_contains?: string | null
-  status_not_contains?: string | null
-  status_starts_with?: string | null
-  status_not_starts_with?: string | null
-  status_ends_with?: string | null
-  status_not_ends_with?: string | null
-  planPrice?: number | null
-  planPrice_not?: number | null
-  planPrice_in?: number[] | null
-  planPrice_not_in?: number[] | null
-  planPrice_lt?: number | null
-  planPrice_lte?: number | null
-  planPrice_gt?: number | null
-  planPrice_gte?: number | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-}
-
 export interface CustomerMembershipSubscriptionDataWhereUniqueInput {
   id?: string | null
 }
@@ -2545,60 +1856,6 @@ export interface CustomerMembershipUpdateWithoutCustomerDataInput {
 export interface CustomerMembershipUpsertWithoutCustomerInput {
   update: CustomerMembershipUpdateWithoutCustomerDataInput
   create: CustomerMembershipCreateWithoutCustomerInput
-}
-
-export interface CustomerMembershipWhereInput {
-  AND?: CustomerMembershipWhereInput[] | null
-  OR?: CustomerMembershipWhereInput[] | null
-  NOT?: CustomerMembershipWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  subscriptionId?: string | null
-  subscriptionId_not?: string | null
-  subscriptionId_in?: string[] | null
-  subscriptionId_not_in?: string[] | null
-  subscriptionId_lt?: string | null
-  subscriptionId_lte?: string | null
-  subscriptionId_gt?: string | null
-  subscriptionId_gte?: string | null
-  subscriptionId_contains?: string | null
-  subscriptionId_not_contains?: string | null
-  subscriptionId_starts_with?: string | null
-  subscriptionId_not_starts_with?: string | null
-  subscriptionId_ends_with?: string | null
-  subscriptionId_not_ends_with?: string | null
-  giftId?: string | null
-  giftId_not?: string | null
-  giftId_in?: string[] | null
-  giftId_not_in?: string[] | null
-  giftId_lt?: string | null
-  giftId_lte?: string | null
-  giftId_gt?: string | null
-  giftId_gte?: string | null
-  giftId_contains?: string | null
-  giftId_not_contains?: string | null
-  giftId_starts_with?: string | null
-  giftId_not_starts_with?: string | null
-  giftId_ends_with?: string | null
-  giftId_not_ends_with?: string | null
-  plan?: PaymentPlanWhereInput | null
-  subscription?: CustomerMembershipSubscriptionDataWhereInput | null
-  customer?: CustomerWhereInput | null
-  pauseRequests_every?: PauseRequestWhereInput | null
-  pauseRequests_some?: PauseRequestWhereInput | null
-  pauseRequests_none?: PauseRequestWhereInput | null
 }
 
 export interface CustomerMembershipWhereUniqueInput {
@@ -2711,63 +1968,6 @@ export interface CustomerNotificationBarReceiptUpsertWithWhereUniqueWithoutCusto
   where: CustomerNotificationBarReceiptWhereUniqueInput
   update: CustomerNotificationBarReceiptUpdateWithoutCustomerDataInput
   create: CustomerNotificationBarReceiptCreateWithoutCustomerInput
-}
-
-export interface CustomerNotificationBarReceiptWhereInput {
-  AND?: CustomerNotificationBarReceiptWhereInput[] | null
-  OR?: CustomerNotificationBarReceiptWhereInput[] | null
-  NOT?: CustomerNotificationBarReceiptWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  notificationBarId?: NotificationBarID | null
-  notificationBarId_not?: NotificationBarID | null
-  notificationBarId_in?: NotificationBarID[] | null
-  notificationBarId_not_in?: NotificationBarID[] | null
-  viewCount?: number | null
-  viewCount_not?: number | null
-  viewCount_in?: number[] | null
-  viewCount_not_in?: number[] | null
-  viewCount_lt?: number | null
-  viewCount_lte?: number | null
-  viewCount_gt?: number | null
-  viewCount_gte?: number | null
-  clickCount?: number | null
-  clickCount_not?: number | null
-  clickCount_in?: number[] | null
-  clickCount_not_in?: number[] | null
-  clickCount_lt?: number | null
-  clickCount_lte?: number | null
-  clickCount_gt?: number | null
-  clickCount_gte?: number | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  customer?: CustomerWhereInput | null
 }
 
 export interface CustomerNotificationBarReceiptWhereUniqueInput {
@@ -2993,108 +2193,6 @@ export interface CustomerUpsertWithoutReservationsInput {
   create: CustomerCreateWithoutReservationsInput
 }
 
-export interface CustomerWhereInput {
-  AND?: CustomerWhereInput[] | null
-  OR?: CustomerWhereInput[] | null
-  NOT?: CustomerWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  status?: CustomerStatus | null
-  status_not?: CustomerStatus | null
-  status_in?: CustomerStatus[] | null
-  status_not_in?: CustomerStatus[] | null
-  plan?: Plan | null
-  plan_not?: Plan | null
-  plan_in?: Plan[] | null
-  plan_not_in?: Plan[] | null
-  referralLink?: string | null
-  referralLink_not?: string | null
-  referralLink_in?: string[] | null
-  referralLink_not_in?: string[] | null
-  referralLink_lt?: string | null
-  referralLink_lte?: string | null
-  referralLink_gt?: string | null
-  referralLink_gte?: string | null
-  referralLink_contains?: string | null
-  referralLink_not_contains?: string | null
-  referralLink_starts_with?: string | null
-  referralLink_not_starts_with?: string | null
-  referralLink_ends_with?: string | null
-  referralLink_not_ends_with?: string | null
-  referrerId?: string | null
-  referrerId_not?: string | null
-  referrerId_in?: string[] | null
-  referrerId_not_in?: string[] | null
-  referrerId_lt?: string | null
-  referrerId_lte?: string | null
-  referrerId_gt?: string | null
-  referrerId_gte?: string | null
-  referrerId_contains?: string | null
-  referrerId_not_contains?: string | null
-  referrerId_starts_with?: string | null
-  referrerId_not_starts_with?: string | null
-  referrerId_ends_with?: string | null
-  referrerId_not_ends_with?: string | null
-  authorizedAt?: any | null
-  authorizedAt_not?: any | null
-  authorizedAt_in?: any[] | null
-  authorizedAt_not_in?: any[] | null
-  authorizedAt_lt?: any | null
-  authorizedAt_lte?: any | null
-  authorizedAt_gt?: any | null
-  authorizedAt_gte?: any | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  user?: UserWhereInput | null
-  detail?: CustomerDetailWhereInput | null
-  billingInfo?: BillingInfoWhereInput | null
-  membership?: CustomerMembershipWhereInput | null
-  bagItems_every?: BagItemWhereInput | null
-  bagItems_some?: BagItemWhereInput | null
-  bagItems_none?: BagItemWhereInput | null
-  reservations_every?: ReservationWhereInput | null
-  reservations_some?: ReservationWhereInput | null
-  reservations_none?: ReservationWhereInput | null
-  referrer?: CustomerWhereInput | null
-  referrees_every?: CustomerWhereInput | null
-  referrees_some?: CustomerWhereInput | null
-  referrees_none?: CustomerWhereInput | null
-  emailedProducts_every?: ProductWhereInput | null
-  emailedProducts_some?: ProductWhereInput | null
-  emailedProducts_none?: ProductWhereInput | null
-  admissions?: CustomerAdmissionsDataWhereInput | null
-  utm?: UTMDataWhereInput | null
-  notificationBarReceipts_every?: CustomerNotificationBarReceiptWhereInput | null
-  notificationBarReceipts_some?: CustomerNotificationBarReceiptWhereInput | null
-  notificationBarReceipts_none?: CustomerNotificationBarReceiptWhereInput | null
-}
-
 export interface CustomerWhereUniqueInput {
   id?: string | null
   referralLink?: string | null
@@ -3236,16 +2334,12 @@ export interface ExternalShopifyIntegrationCreateInput {
   shopName: string
   enabled: boolean
   accessToken?: string | null
-  scope?: ExternalShopifyIntegrationCreatescopeInput | null
+  nonce?: string | null
 }
 
 export interface ExternalShopifyIntegrationCreateOneInput {
   create?: ExternalShopifyIntegrationCreateInput | null
   connect?: ExternalShopifyIntegrationWhereUniqueInput | null
-}
-
-export interface ExternalShopifyIntegrationCreatescopeInput {
-  set?: string[] | null
 }
 
 export interface ExternalShopifyIntegrationInput {
@@ -3258,7 +2352,7 @@ export interface ExternalShopifyIntegrationUpdateDataInput {
   shopName?: string | null
   enabled?: boolean | null
   accessToken?: string | null
-  scope?: ExternalShopifyIntegrationUpdatescopeInput | null
+  nonce?: string | null
 }
 
 export interface ExternalShopifyIntegrationUpdateOneInput {
@@ -3268,10 +2362,6 @@ export interface ExternalShopifyIntegrationUpdateOneInput {
   delete?: boolean | null
   update?: ExternalShopifyIntegrationUpdateDataInput | null
   upsert?: ExternalShopifyIntegrationUpsertNestedInput | null
-}
-
-export interface ExternalShopifyIntegrationUpdatescopeInput {
-  set?: string[] | null
 }
 
 export interface ExternalShopifyIntegrationUpsertNestedInput {
@@ -3327,22 +2417,20 @@ export interface ExternalShopifyIntegrationWhereInput {
   accessToken_not_starts_with?: string | null
   accessToken_ends_with?: string | null
   accessToken_not_ends_with?: string | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
+  nonce?: string | null
+  nonce_not?: string | null
+  nonce_in?: string[] | null
+  nonce_not_in?: string[] | null
+  nonce_lt?: string | null
+  nonce_lte?: string | null
+  nonce_gt?: string | null
+  nonce_gte?: string | null
+  nonce_contains?: string | null
+  nonce_not_contains?: string | null
+  nonce_starts_with?: string | null
+  nonce_not_starts_with?: string | null
+  nonce_ends_with?: string | null
+  nonce_not_ends_with?: string | null
 }
 
 export interface ExternalShopifyIntegrationWhereUniqueInput {
@@ -3957,82 +3045,6 @@ export interface LabelUpsertNestedInput {
   create: LabelCreateInput
 }
 
-export interface LabelWhereInput {
-  AND?: LabelWhereInput[] | null
-  OR?: LabelWhereInput[] | null
-  NOT?: LabelWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  name?: string | null
-  name_not?: string | null
-  name_in?: string[] | null
-  name_not_in?: string[] | null
-  name_lt?: string | null
-  name_lte?: string | null
-  name_gt?: string | null
-  name_gte?: string | null
-  name_contains?: string | null
-  name_not_contains?: string | null
-  name_starts_with?: string | null
-  name_not_starts_with?: string | null
-  name_ends_with?: string | null
-  name_not_ends_with?: string | null
-  image?: string | null
-  image_not?: string | null
-  image_in?: string[] | null
-  image_not_in?: string[] | null
-  image_lt?: string | null
-  image_lte?: string | null
-  image_gt?: string | null
-  image_gte?: string | null
-  image_contains?: string | null
-  image_not_contains?: string | null
-  image_starts_with?: string | null
-  image_not_starts_with?: string | null
-  image_ends_with?: string | null
-  image_not_ends_with?: string | null
-  trackingNumber?: string | null
-  trackingNumber_not?: string | null
-  trackingNumber_in?: string[] | null
-  trackingNumber_not_in?: string[] | null
-  trackingNumber_lt?: string | null
-  trackingNumber_lte?: string | null
-  trackingNumber_gt?: string | null
-  trackingNumber_gte?: string | null
-  trackingNumber_contains?: string | null
-  trackingNumber_not_contains?: string | null
-  trackingNumber_starts_with?: string | null
-  trackingNumber_not_starts_with?: string | null
-  trackingNumber_ends_with?: string | null
-  trackingNumber_not_ends_with?: string | null
-  trackingURL?: string | null
-  trackingURL_not?: string | null
-  trackingURL_in?: string[] | null
-  trackingURL_not_in?: string[] | null
-  trackingURL_lt?: string | null
-  trackingURL_lte?: string | null
-  trackingURL_gt?: string | null
-  trackingURL_gte?: string | null
-  trackingURL_contains?: string | null
-  trackingURL_not_contains?: string | null
-  trackingURL_starts_with?: string | null
-  trackingURL_not_starts_with?: string | null
-  trackingURL_ends_with?: string | null
-  trackingURL_not_ends_with?: string | null
-}
-
 export interface LabelWhereUniqueInput {
   id?: string | null
 }
@@ -4602,52 +3614,6 @@ export interface PackageTransitEventUpsertWithWhereUniqueWithoutReservationInput
   create: PackageTransitEventCreateWithoutReservationInput
 }
 
-export interface PackageTransitEventWhereInput {
-  AND?: PackageTransitEventWhereInput[] | null
-  OR?: PackageTransitEventWhereInput[] | null
-  NOT?: PackageTransitEventWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  status?: PackageTransitEventStatus | null
-  status_not?: PackageTransitEventStatus | null
-  status_in?: PackageTransitEventStatus[] | null
-  status_not_in?: PackageTransitEventStatus[] | null
-  subStatus?: PackageTransitEventSubStatus | null
-  subStatus_not?: PackageTransitEventSubStatus | null
-  subStatus_in?: PackageTransitEventSubStatus[] | null
-  subStatus_not_in?: PackageTransitEventSubStatus[] | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  package?: PackageWhereInput | null
-  reservation?: ReservationWhereInput | null
-}
-
 export interface PackageTransitEventWhereUniqueInput {
   id?: string | null
 }
@@ -4699,85 +3665,6 @@ export interface PackageUpsertNestedInput {
 export interface PackageUpsertWithoutEventsInput {
   update: PackageUpdateWithoutEventsDataInput
   create: PackageCreateWithoutEventsInput
-}
-
-export interface PackageWhereInput {
-  AND?: PackageWhereInput[] | null
-  OR?: PackageWhereInput[] | null
-  NOT?: PackageWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  transactionID?: string | null
-  transactionID_not?: string | null
-  transactionID_in?: string[] | null
-  transactionID_not_in?: string[] | null
-  transactionID_lt?: string | null
-  transactionID_lte?: string | null
-  transactionID_gt?: string | null
-  transactionID_gte?: string | null
-  transactionID_contains?: string | null
-  transactionID_not_contains?: string | null
-  transactionID_starts_with?: string | null
-  transactionID_not_starts_with?: string | null
-  transactionID_ends_with?: string | null
-  transactionID_not_ends_with?: string | null
-  weight?: number | null
-  weight_not?: number | null
-  weight_in?: number[] | null
-  weight_not_in?: number[] | null
-  weight_lt?: number | null
-  weight_lte?: number | null
-  weight_gt?: number | null
-  weight_gte?: number | null
-  cost?: number | null
-  cost_not?: number | null
-  cost_in?: number[] | null
-  cost_not_in?: number[] | null
-  cost_lt?: number | null
-  cost_lte?: number | null
-  cost_gt?: number | null
-  cost_gte?: number | null
-  status?: PackageStatus | null
-  status_not?: PackageStatus | null
-  status_in?: PackageStatus[] | null
-  status_not_in?: PackageStatus[] | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  items_every?: PhysicalProductWhereInput | null
-  items_some?: PhysicalProductWhereInput | null
-  items_none?: PhysicalProductWhereInput | null
-  shippingLabel?: LabelWhereInput | null
-  fromAddress?: LocationWhereInput | null
-  toAddress?: LocationWhereInput | null
-  events_every?: PackageTransitEventWhereInput | null
-  events_some?: PackageTransitEventWhereInput | null
-  events_none?: PackageTransitEventWhereInput | null
 }
 
 export interface PackageWhereUniqueInput {
@@ -4902,67 +3789,6 @@ export interface PauseRequestUpsertWithWhereUniqueWithoutMembershipInput {
   create: PauseRequestCreateWithoutMembershipInput
 }
 
-export interface PauseRequestWhereInput {
-  AND?: PauseRequestWhereInput[] | null
-  OR?: PauseRequestWhereInput[] | null
-  NOT?: PauseRequestWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  pausePending?: boolean | null
-  pausePending_not?: boolean | null
-  pauseType?: PauseType | null
-  pauseType_not?: PauseType | null
-  pauseType_in?: PauseType[] | null
-  pauseType_not_in?: PauseType[] | null
-  pauseDate?: any | null
-  pauseDate_not?: any | null
-  pauseDate_in?: any[] | null
-  pauseDate_not_in?: any[] | null
-  pauseDate_lt?: any | null
-  pauseDate_lte?: any | null
-  pauseDate_gt?: any | null
-  pauseDate_gte?: any | null
-  resumeDate?: any | null
-  resumeDate_not?: any | null
-  resumeDate_in?: any[] | null
-  resumeDate_not_in?: any[] | null
-  resumeDate_lt?: any | null
-  resumeDate_lte?: any | null
-  resumeDate_gt?: any | null
-  resumeDate_gte?: any | null
-  notified?: boolean | null
-  notified_not?: boolean | null
-  membership?: CustomerMembershipWhereInput | null
-}
-
 export interface PauseRequestWhereUniqueInput {
   id?: string | null
 }
@@ -5007,132 +3833,6 @@ export interface PaymentPlanUpdateOneInput {
 export interface PaymentPlanUpsertNestedInput {
   update: PaymentPlanUpdateDataInput
   create: PaymentPlanCreateInput
-}
-
-export interface PaymentPlanWhereInput {
-  AND?: PaymentPlanWhereInput[] | null
-  OR?: PaymentPlanWhereInput[] | null
-  NOT?: PaymentPlanWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  description?: string | null
-  description_not?: string | null
-  description_in?: string[] | null
-  description_not_in?: string[] | null
-  description_lt?: string | null
-  description_lte?: string | null
-  description_gt?: string | null
-  description_gte?: string | null
-  description_contains?: string | null
-  description_not_contains?: string | null
-  description_starts_with?: string | null
-  description_not_starts_with?: string | null
-  description_ends_with?: string | null
-  description_not_ends_with?: string | null
-  planID?: string | null
-  planID_not?: string | null
-  planID_in?: string[] | null
-  planID_not_in?: string[] | null
-  planID_lt?: string | null
-  planID_lte?: string | null
-  planID_gt?: string | null
-  planID_gte?: string | null
-  planID_contains?: string | null
-  planID_not_contains?: string | null
-  planID_starts_with?: string | null
-  planID_not_starts_with?: string | null
-  planID_ends_with?: string | null
-  planID_not_ends_with?: string | null
-  status?: string | null
-  status_not?: string | null
-  status_in?: string[] | null
-  status_not_in?: string[] | null
-  status_lt?: string | null
-  status_lte?: string | null
-  status_gt?: string | null
-  status_gte?: string | null
-  status_contains?: string | null
-  status_not_contains?: string | null
-  status_starts_with?: string | null
-  status_not_starts_with?: string | null
-  status_ends_with?: string | null
-  status_not_ends_with?: string | null
-  name?: string | null
-  name_not?: string | null
-  name_in?: string[] | null
-  name_not_in?: string[] | null
-  name_lt?: string | null
-  name_lte?: string | null
-  name_gt?: string | null
-  name_gte?: string | null
-  name_contains?: string | null
-  name_not_contains?: string | null
-  name_starts_with?: string | null
-  name_not_starts_with?: string | null
-  name_ends_with?: string | null
-  name_not_ends_with?: string | null
-  price?: number | null
-  price_not?: number | null
-  price_in?: number[] | null
-  price_not_in?: number[] | null
-  price_lt?: number | null
-  price_lte?: number | null
-  price_gt?: number | null
-  price_gte?: number | null
-  itemCount?: number | null
-  itemCount_not?: number | null
-  itemCount_in?: number[] | null
-  itemCount_not_in?: number[] | null
-  itemCount_lt?: number | null
-  itemCount_lte?: number | null
-  itemCount_gt?: number | null
-  itemCount_gte?: number | null
-  tagline?: string | null
-  tagline_not?: string | null
-  tagline_in?: string[] | null
-  tagline_not_in?: string[] | null
-  tagline_lt?: string | null
-  tagline_lte?: string | null
-  tagline_gt?: string | null
-  tagline_gte?: string | null
-  tagline_contains?: string | null
-  tagline_not_contains?: string | null
-  tagline_starts_with?: string | null
-  tagline_not_starts_with?: string | null
-  tagline_ends_with?: string | null
-  tagline_not_ends_with?: string | null
-  tier?: PaymentPlanTier | null
-  tier_not?: PaymentPlanTier | null
-  tier_in?: PaymentPlanTier[] | null
-  tier_not_in?: PaymentPlanTier[] | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
 }
 
 export interface PaymentPlanWhereUniqueInput {
@@ -6835,7 +5535,7 @@ export interface ProductVariantCreateInput {
   manufacturerSizes?: SizeCreateManyInput | null
   product: ProductCreateOneWithoutVariantsInput
   price?: ProductVariantPriceCreateOneInput | null
-  shopifyProductVariant?: ShopifyProductVariantCreateOneWithoutProductVariantInput | null
+  shopifyProductVariant?: ShopifyProductVariantCreateOneInput | null
   physicalProducts?: PhysicalProductCreateManyWithoutProductVariantInput | null
 }
 
@@ -6877,7 +5577,7 @@ export interface ProductVariantCreateWithoutColorInput {
   manufacturerSizes?: SizeCreateManyInput | null
   product: ProductCreateOneWithoutVariantsInput
   price?: ProductVariantPriceCreateOneInput | null
-  shopifyProductVariant?: ShopifyProductVariantCreateOneWithoutProductVariantInput | null
+  shopifyProductVariant?: ShopifyProductVariantCreateOneInput | null
   physicalProducts?: PhysicalProductCreateManyWithoutProductVariantInput | null
 }
 
@@ -6900,7 +5600,7 @@ export interface ProductVariantCreateWithoutPhysicalProductsInput {
   manufacturerSizes?: SizeCreateManyInput | null
   product: ProductCreateOneWithoutVariantsInput
   price?: ProductVariantPriceCreateOneInput | null
-  shopifyProductVariant?: ShopifyProductVariantCreateOneWithoutProductVariantInput | null
+  shopifyProductVariant?: ShopifyProductVariantCreateOneInput | null
 }
 
 export interface ProductVariantCreateWithoutProductInput {
@@ -6921,7 +5621,7 @@ export interface ProductVariantCreateWithoutProductInput {
   internalSize?: SizeCreateOneInput | null
   manufacturerSizes?: SizeCreateManyInput | null
   price?: ProductVariantPriceCreateOneInput | null
-  shopifyProductVariant?: ShopifyProductVariantCreateOneWithoutProductVariantInput | null
+  shopifyProductVariant?: ShopifyProductVariantCreateOneInput | null
   physicalProducts?: PhysicalProductCreateManyWithoutProductVariantInput | null
 }
 
@@ -7165,7 +5865,7 @@ export interface ProductVariantUpdateDataInput {
   manufacturerSizes?: SizeUpdateManyInput | null
   product?: ProductUpdateOneRequiredWithoutVariantsInput | null
   price?: ProductVariantPriceUpdateOneInput | null
-  shopifyProductVariant?: ShopifyProductVariantUpdateOneWithoutProductVariantInput | null
+  shopifyProductVariant?: ShopifyProductVariantUpdateOneInput | null
   physicalProducts?: PhysicalProductUpdateManyWithoutProductVariantInput | null
 }
 
@@ -7254,7 +5954,7 @@ export interface ProductVariantUpdateWithoutColorDataInput {
   manufacturerSizes?: SizeUpdateManyInput | null
   product?: ProductUpdateOneRequiredWithoutVariantsInput | null
   price?: ProductVariantPriceUpdateOneInput | null
-  shopifyProductVariant?: ShopifyProductVariantUpdateOneWithoutProductVariantInput | null
+  shopifyProductVariant?: ShopifyProductVariantUpdateOneInput | null
   physicalProducts?: PhysicalProductUpdateManyWithoutProductVariantInput | null
 }
 
@@ -7276,7 +5976,7 @@ export interface ProductVariantUpdateWithoutPhysicalProductsDataInput {
   manufacturerSizes?: SizeUpdateManyInput | null
   product?: ProductUpdateOneRequiredWithoutVariantsInput | null
   price?: ProductVariantPriceUpdateOneInput | null
-  shopifyProductVariant?: ShopifyProductVariantUpdateOneWithoutProductVariantInput | null
+  shopifyProductVariant?: ShopifyProductVariantUpdateOneInput | null
 }
 
 export interface ProductVariantUpdateWithoutProductDataInput {
@@ -7296,7 +5996,7 @@ export interface ProductVariantUpdateWithoutProductDataInput {
   internalSize?: SizeUpdateOneInput | null
   manufacturerSizes?: SizeUpdateManyInput | null
   price?: ProductVariantPriceUpdateOneInput | null
-  shopifyProductVariant?: ShopifyProductVariantUpdateOneWithoutProductVariantInput | null
+  shopifyProductVariant?: ShopifyProductVariantUpdateOneInput | null
   physicalProducts?: PhysicalProductUpdateManyWithoutProductVariantInput | null
 }
 
@@ -8296,45 +6996,6 @@ export interface ReservationReceiptItemUpsertWithWhereUniqueNestedInput {
   create: ReservationReceiptItemCreateInput
 }
 
-export interface ReservationReceiptItemWhereInput {
-  AND?: ReservationReceiptItemWhereInput[] | null
-  OR?: ReservationReceiptItemWhereInput[] | null
-  NOT?: ReservationReceiptItemWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  productStatus?: PhysicalProductStatus | null
-  productStatus_not?: PhysicalProductStatus | null
-  productStatus_in?: PhysicalProductStatus[] | null
-  productStatus_not_in?: PhysicalProductStatus[] | null
-  notes?: string | null
-  notes_not?: string | null
-  notes_in?: string[] | null
-  notes_not_in?: string[] | null
-  notes_lt?: string | null
-  notes_lte?: string | null
-  notes_gt?: string | null
-  notes_gte?: string | null
-  notes_contains?: string | null
-  notes_not_contains?: string | null
-  notes_starts_with?: string | null
-  notes_not_starts_with?: string | null
-  notes_ends_with?: string | null
-  notes_not_ends_with?: string | null
-  product?: PhysicalProductWhereInput | null
-}
-
 export interface ReservationReceiptItemWhereUniqueInput {
   id?: string | null
 }
@@ -8355,46 +7016,6 @@ export interface ReservationReceiptUpdateWithoutReservationDataInput {
 export interface ReservationReceiptUpsertWithoutReservationInput {
   update: ReservationReceiptUpdateWithoutReservationDataInput
   create: ReservationReceiptCreateWithoutReservationInput
-}
-
-export interface ReservationReceiptWhereInput {
-  AND?: ReservationReceiptWhereInput[] | null
-  OR?: ReservationReceiptWhereInput[] | null
-  NOT?: ReservationReceiptWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  reservation?: ReservationWhereInput | null
-  items_every?: ReservationReceiptItemWhereInput | null
-  items_some?: ReservationReceiptItemWhereInput | null
-  items_none?: ReservationReceiptItemWhereInput | null
 }
 
 export interface ReservationReceiptWhereUniqueInput {
@@ -8576,105 +7197,6 @@ export interface ReservationUpsertWithWhereUniqueWithoutCustomerInput {
 export interface ReservationUpsertWithoutPackageEventsInput {
   update: ReservationUpdateWithoutPackageEventsDataInput
   create: ReservationCreateWithoutPackageEventsInput
-}
-
-export interface ReservationWhereInput {
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  user?: UserWhereInput | null
-  customer?: CustomerWhereInput | null
-  sentPackage?: PackageWhereInput | null
-  returnedPackage?: PackageWhereInput | null
-  products_every?: PhysicalProductWhereInput | null
-  products_some?: PhysicalProductWhereInput | null
-  products_none?: PhysicalProductWhereInput | null
-  packageEvents_every?: PackageTransitEventWhereInput | null
-  packageEvents_some?: PackageTransitEventWhereInput | null
-  packageEvents_none?: PackageTransitEventWhereInput | null
-  reservationNumber?: number | null
-  reservationNumber_not?: number | null
-  reservationNumber_in?: number[] | null
-  reservationNumber_not_in?: number[] | null
-  reservationNumber_lt?: number | null
-  reservationNumber_lte?: number | null
-  reservationNumber_gt?: number | null
-  reservationNumber_gte?: number | null
-  phase?: ReservationPhase | null
-  phase_not?: ReservationPhase | null
-  phase_in?: ReservationPhase[] | null
-  phase_not_in?: ReservationPhase[] | null
-  shipped?: boolean | null
-  shipped_not?: boolean | null
-  status?: ReservationStatus | null
-  status_not?: ReservationStatus | null
-  status_in?: ReservationStatus[] | null
-  status_not_in?: ReservationStatus[] | null
-  shippedAt?: any | null
-  shippedAt_not?: any | null
-  shippedAt_in?: any[] | null
-  shippedAt_not_in?: any[] | null
-  shippedAt_lt?: any | null
-  shippedAt_lte?: any | null
-  shippedAt_gt?: any | null
-  shippedAt_gte?: any | null
-  receivedAt?: any | null
-  receivedAt_not?: any | null
-  receivedAt_in?: any[] | null
-  receivedAt_not_in?: any[] | null
-  receivedAt_lt?: any | null
-  receivedAt_lte?: any | null
-  receivedAt_gt?: any | null
-  receivedAt_gte?: any | null
-  reminderSentAt?: any | null
-  reminderSentAt_not?: any | null
-  reminderSentAt_in?: any[] | null
-  reminderSentAt_not_in?: any[] | null
-  reminderSentAt_lt?: any | null
-  reminderSentAt_lte?: any | null
-  reminderSentAt_gt?: any | null
-  reminderSentAt_gte?: any | null
-  statusUpdatedAt?: any | null
-  statusUpdatedAt_not?: any | null
-  statusUpdatedAt_in?: any[] | null
-  statusUpdatedAt_not_in?: any[] | null
-  statusUpdatedAt_lt?: any | null
-  statusUpdatedAt_lte?: any | null
-  statusUpdatedAt_gt?: any | null
-  statusUpdatedAt_gte?: any | null
-  receipt?: ReservationReceiptWhereInput | null
-  lastLocation?: LocationWhereInput | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  AND?: ReservationWhereInput[] | null
-  OR?: ReservationWhereInput[] | null
-  NOT?: ReservationWhereInput[] | null
-  q?: string | null
 }
 
 export interface ReservationWhereUniqueInput {
@@ -9036,12 +7558,7 @@ export interface ShippingOptionWhereUniqueInput {
   id?: string | null
 }
 
-export interface ShopifyProductVariantCreateOneWithoutProductVariantInput {
-  create?: ShopifyProductVariantCreateWithoutProductVariantInput | null
-  connect?: ShopifyProductVariantWhereUniqueInput | null
-}
-
-export interface ShopifyProductVariantCreateWithoutProductVariantInput {
+export interface ShopifyProductVariantCreateInput {
   id?: string | null
   externalId?: string | null
   displayName?: string | null
@@ -9050,9 +7567,13 @@ export interface ShopifyProductVariantCreateWithoutProductVariantInput {
   cachedAvailableForSale?: boolean | null
   cacheExpiresAt?: any | null
   selectedOptions?: ShopifyProductVariantSelectedOptionCreateManyInput | null
-  shop?: ExternalShopifyIntegrationCreateOneInput | null
   brand?: BrandCreateOneInput | null
   image?: ImageCreateOneInput | null
+}
+
+export interface ShopifyProductVariantCreateOneInput {
+  create?: ShopifyProductVariantCreateInput | null
+  connect?: ShopifyProductVariantWhereUniqueInput | null
 }
 
 export interface ShopifyProductVariantInput {
@@ -9208,16 +7729,7 @@ export interface ShopifyProductVariantSelectedOptionWhereUniqueInput {
   id?: string | null
 }
 
-export interface ShopifyProductVariantUpdateOneWithoutProductVariantInput {
-  create?: ShopifyProductVariantCreateWithoutProductVariantInput | null
-  connect?: ShopifyProductVariantWhereUniqueInput | null
-  disconnect?: boolean | null
-  delete?: boolean | null
-  update?: ShopifyProductVariantUpdateWithoutProductVariantDataInput | null
-  upsert?: ShopifyProductVariantUpsertWithoutProductVariantInput | null
-}
-
-export interface ShopifyProductVariantUpdateWithoutProductVariantDataInput {
+export interface ShopifyProductVariantUpdateDataInput {
   externalId?: string | null
   displayName?: string | null
   title?: string | null
@@ -9225,14 +7737,22 @@ export interface ShopifyProductVariantUpdateWithoutProductVariantDataInput {
   cachedAvailableForSale?: boolean | null
   cacheExpiresAt?: any | null
   selectedOptions?: ShopifyProductVariantSelectedOptionUpdateManyInput | null
-  shop?: ExternalShopifyIntegrationUpdateOneInput | null
   brand?: BrandUpdateOneInput | null
   image?: ImageUpdateOneInput | null
 }
 
-export interface ShopifyProductVariantUpsertWithoutProductVariantInput {
-  update: ShopifyProductVariantUpdateWithoutProductVariantDataInput
-  create: ShopifyProductVariantCreateWithoutProductVariantInput
+export interface ShopifyProductVariantUpdateOneInput {
+  create?: ShopifyProductVariantCreateInput | null
+  connect?: ShopifyProductVariantWhereUniqueInput | null
+  disconnect?: boolean | null
+  delete?: boolean | null
+  update?: ShopifyProductVariantUpdateDataInput | null
+  upsert?: ShopifyProductVariantUpsertNestedInput | null
+}
+
+export interface ShopifyProductVariantUpsertNestedInput {
+  update: ShopifyProductVariantUpdateDataInput
+  create: ShopifyProductVariantCreateInput
 }
 
 export interface ShopifyProductVariantWhereInput {
@@ -9316,8 +7836,6 @@ export interface ShopifyProductVariantWhereInput {
   selectedOptions_every?: ShopifyProductVariantSelectedOptionWhereInput | null
   selectedOptions_some?: ShopifyProductVariantSelectedOptionWhereInput | null
   selectedOptions_none?: ShopifyProductVariantSelectedOptionWhereInput | null
-  productVariant?: ProductVariantWhereInput | null
-  shop?: ExternalShopifyIntegrationWhereInput | null
   brand?: BrandWhereInput | null
   image?: ImageWhereInput | null
 }
@@ -9813,26 +8331,6 @@ export interface StylePreferencesUpsertNestedInput {
   create: StylePreferencesCreateInput
 }
 
-export interface StylePreferencesWhereInput {
-  AND?: StylePreferencesWhereInput[] | null
-  OR?: StylePreferencesWhereInput[] | null
-  NOT?: StylePreferencesWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-}
-
 export interface StylePreferencesWhereUniqueInput {
   id?: string | null
 }
@@ -10162,113 +8660,6 @@ export interface UTMDataUpdateWithoutCustomerDataInput {
 export interface UTMDataUpsertWithoutCustomerInput {
   update: UTMDataUpdateWithoutCustomerDataInput
   create: UTMDataCreateWithoutCustomerInput
-}
-
-export interface UTMDataWhereInput {
-  AND?: UTMDataWhereInput[] | null
-  OR?: UTMDataWhereInput[] | null
-  NOT?: UTMDataWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  source?: string | null
-  source_not?: string | null
-  source_in?: string[] | null
-  source_not_in?: string[] | null
-  source_lt?: string | null
-  source_lte?: string | null
-  source_gt?: string | null
-  source_gte?: string | null
-  source_contains?: string | null
-  source_not_contains?: string | null
-  source_starts_with?: string | null
-  source_not_starts_with?: string | null
-  source_ends_with?: string | null
-  source_not_ends_with?: string | null
-  medium?: string | null
-  medium_not?: string | null
-  medium_in?: string[] | null
-  medium_not_in?: string[] | null
-  medium_lt?: string | null
-  medium_lte?: string | null
-  medium_gt?: string | null
-  medium_gte?: string | null
-  medium_contains?: string | null
-  medium_not_contains?: string | null
-  medium_starts_with?: string | null
-  medium_not_starts_with?: string | null
-  medium_ends_with?: string | null
-  medium_not_ends_with?: string | null
-  campaign?: string | null
-  campaign_not?: string | null
-  campaign_in?: string[] | null
-  campaign_not_in?: string[] | null
-  campaign_lt?: string | null
-  campaign_lte?: string | null
-  campaign_gt?: string | null
-  campaign_gte?: string | null
-  campaign_contains?: string | null
-  campaign_not_contains?: string | null
-  campaign_starts_with?: string | null
-  campaign_not_starts_with?: string | null
-  campaign_ends_with?: string | null
-  campaign_not_ends_with?: string | null
-  term?: string | null
-  term_not?: string | null
-  term_in?: string[] | null
-  term_not_in?: string[] | null
-  term_lt?: string | null
-  term_lte?: string | null
-  term_gt?: string | null
-  term_gte?: string | null
-  term_contains?: string | null
-  term_not_contains?: string | null
-  term_starts_with?: string | null
-  term_not_starts_with?: string | null
-  term_ends_with?: string | null
-  term_not_ends_with?: string | null
-  content?: string | null
-  content_not?: string | null
-  content_in?: string[] | null
-  content_not_in?: string[] | null
-  content_lt?: string | null
-  content_lte?: string | null
-  content_gt?: string | null
-  content_gte?: string | null
-  content_contains?: string | null
-  content_not_contains?: string | null
-  content_starts_with?: string | null
-  content_not_starts_with?: string | null
-  content_ends_with?: string | null
-  content_not_ends_with?: string | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-  customer?: CustomerWhereInput | null
 }
 
 export interface UTMDataWhereUniqueInput {

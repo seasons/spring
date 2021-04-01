@@ -4,7 +4,6 @@
 // This file was automatically generated and should not be edited.
 
 import {
-  CustomerStatus,
   PackageTransitEventStatus,
   AdminAction,
   InventoryStatus,
@@ -54,7 +53,6 @@ export interface GetReservation_customer_detail {
 export interface GetReservation_customer {
   __typename: "Customer"
   id: string
-  status: CustomerStatus | null
   user: GetReservation_customer_user
   detail: GetReservation_customer_detail | null
 }
