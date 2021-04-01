@@ -5,7 +5,6 @@ import { PhysicalProductDetailViewHeader } from "./header"
 import { ManageView } from "../Components/ManageView"
 import { ReservationHistoryView } from "../Components/ReservationHistoryView"
 import { PhysicalProductQAView } from "./PhysicalProductQAEntries"
-import { AdminLogsView } from "components/AdminLogsView"
 
 export interface PhysicalProductViewProps {
   match: any
@@ -35,11 +34,6 @@ export const PhysicalProductView: React.FC<PhysicalProductViewProps> = ({ match 
           label: "History",
           //@ts-ignore
           render: ({ data }) => <ReservationHistoryView data={data} />,
-        },
-        {
-          value: "logs",
-          label: "Admin Logs",
-          render: ({ data }) => <AdminLogsView logs={data.adminLogs} />,
         },
       ]}
     />

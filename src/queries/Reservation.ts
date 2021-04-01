@@ -90,8 +90,6 @@ export default {
         triggeredAt
         changedFields
         rowData
-        entityId
-        interpretation
         activeAdminUser {
           id
           fullName

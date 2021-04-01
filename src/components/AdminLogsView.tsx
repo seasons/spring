@@ -65,7 +65,11 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ logs }) => {
 
                   {/*Detail on what happened */}
                   <TableCell>
-                    <Box>{renderChangedFields(log)}</Box>
+                    <Box>
+                      <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                        {renderChangedFields(log)}
+                      </Typography>
+                    </Box>
                   </TableCell>
                 </TableRow>
               )
@@ -77,23 +81,13 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ logs }) => {
   )
 }
 
-const renderChangedFields = ({ rowData, changedFields, action, interpretation }) => {
-  if (!!interpretation) {
-    return (
-      <Typography variant="h6" style={{ fontWeight: "bold" }}>
-        {interpretation}
-      </Typography>
-    )
-  }
-
+const renderChangedFields = ({ rowData, changedFields, action }) => {
   let returnString = ``
   if (action === "Update") {
-    return Object.keys(changedFields).map(key => (
-      <Typography variant="h6" style={{ fontWeight: "bold" }}>
-        {`\n${upperFirst(key)}: ${rowData?.[key]} > ${changedFields[key]}`}
-      </Typography>
-    ))
+    for (const key of Object.keys(changedFields)) {
+      returnString = returnString + `\n${upperFirst(key)}: ${rowData?.[key]} > ${changedFields[key]}`
+    }
   }
 
-  return null
+  return returnString
 }

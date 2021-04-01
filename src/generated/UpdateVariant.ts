@@ -60,18 +60,10 @@ export interface UpdateVariant_price {
   buyUsedPrice: number | null
 }
 
-export interface UpdateVariant_shopifyProductVariant_image {
-  __typename: "Image"
-  url: string | null
-}
-
 export interface UpdateVariant_shopifyProductVariant {
   __typename: "ShopifyProductVariant"
   id: string
-  externalID: string | null
-  displayName: string | null
-  image: UpdateVariant_shopifyProductVariant_image | null
-  title: string | null
+  externalId: string | null
 }
 
 export interface UpdateVariant_physicalProducts_price {

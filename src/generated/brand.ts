@@ -25,8 +25,6 @@ export interface brand {
   name: string
   tier: BrandTier
   brandCode: string
-  published: boolean
-  featured: boolean
   productsConnection: brand_productsConnection
   createdAt: any
   updatedAt: any
