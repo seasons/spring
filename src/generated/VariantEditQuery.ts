@@ -67,10 +67,18 @@ export interface VariantEditQuery_productVariant_price {
   buyUsedPrice: number | null
 }
 
+export interface VariantEditQuery_productVariant_shopifyProductVariant_image {
+  __typename: "Image"
+  url: string | null
+}
+
 export interface VariantEditQuery_productVariant_shopifyProductVariant {
   __typename: "ShopifyProductVariant"
   id: string
-  externalId: string | null
+  externalID: string | null
+  displayName: string | null
+  image: VariantEditQuery_productVariant_shopifyProductVariant_image | null
+  title: string | null
 }
 
 export interface VariantEditQuery_productVariant_physicalProducts_price {

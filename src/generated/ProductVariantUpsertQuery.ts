@@ -107,12 +107,18 @@ export interface ProductVariantUpsertQuery_product_variants_physicalProducts {
   warehouseLocation: ProductVariantUpsertQuery_product_variants_physicalProducts_warehouseLocation | null
 }
 
+export interface ProductVariantUpsertQuery_product_variants_product {
+  __typename: "Product"
+  id: string
+}
+
 export interface ProductVariantUpsertQuery_product_variants {
   __typename: "ProductVariant"
   id: string
   sku: string | null
   internalSize: ProductVariantUpsertQuery_product_variants_internalSize | null
   physicalProducts: ProductVariantUpsertQuery_product_variants_physicalProducts[] | null
+  product: ProductVariantUpsertQuery_product_variants_product
 }
 
 export interface ProductVariantUpsertQuery_product_season_internalSeason {
