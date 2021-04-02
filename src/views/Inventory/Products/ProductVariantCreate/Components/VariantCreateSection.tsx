@@ -79,7 +79,7 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
                   <Spacer mt={1} />
                   <SelectField
                     onChange={e => setManufacturerSizeType(e.target.value)}
-                    name="bottomSizeTypes"
+                    name={`${variantIndex}_bottomSizeType`}
                     choices={getFormSelectChoices(MANUFACTURER_SIZE_TYPES)}
                   />
                   <Spacer mt={2} />

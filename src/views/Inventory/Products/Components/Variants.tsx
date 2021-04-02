@@ -10,20 +10,21 @@ import { GET_VARIANT_SKUS_AND_SIZE_TYPES } from "../queries"
 import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection"
 import { VariantSizeSection } from "./VariantSizeSection"
 import { VariantPriceSection } from "./VariantPriceSection"
-import { getFormSelectChoices, getEnumValues } from "utils/form"
+import { getFormSelectChoices } from "utils/form"
 import { AddPhysicalProductModal } from "views/Inventory/ProductVariants/AddPhysicalProductModal"
 import { MANUFACTURER_SIZE_TYPES } from "utils/sizes"
 
 export interface VariantsProps {
-  initialBottomSizeTypes?: string[] | null
   createData?: any // Passed in when creating new variants
   variants?: VariantEditQuery_productVariant[] // Passed in when editing variants
   refetch?: () => void
 }
 
-export const Variants: React.FC<VariantsProps> = ({ createData, variants, initialBottomSizeTypes, refetch }) => {
+export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetch }) => {
   const location = useLocation()
-  const [manufacturerSizeType, setManufacturerSizeType] = useState(null)
+  const [manufacturerSizeType, setManufacturerSizeType] = useState(
+    variants?.[0]?.manufacturerSizes?.[0]?.bottom?.type ?? null
+  )
   const brandID = createData?.brand || ""
   const colorCode = createData?.color || ""
   const sizeNames = createData?.sizes || []
@@ -112,7 +113,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
               <Spacer mt={1} />
               <SelectField
                 onChange={e => setManufacturerSizeType(e.target.value)}
-                name="bottomSizeTypes"
+                name="bottomSizeType"
                 choices={bottomSizeTypeChoices}
               />
               <Spacer mt={2} />
@@ -120,7 +121,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
           </Grid>
         )}
         {variantsData.map((variant, index) => (
-          <>
+          <Box key={index}>
             <VariantSizeSection
               isEditing={isEditing}
               size={variant.size}
@@ -131,14 +132,12 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, initia
               bottomSizes={data?.bottomSizes}
             />
             <VariantPriceSection size={variant.size} shopifyProductVariant={variant.shopifyProductVariant} />
-          </>
+          </Box>
         ))}
         {isEditing && (
           <>
             {variants?.map((variant, index) => (
-              <>
-                <VariantPhysicalProductsSection key={index} physicalProducts={variant.physicalProducts || []} />
-              </>
+              <VariantPhysicalProductsSection key={index} physicalProducts={variant.physicalProducts || []} />
             ))}
             <Spacer grid mt={6} />
           </>

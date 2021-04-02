@@ -53,9 +53,11 @@ export const VariantEdit: React.FC = () => {
         if (!!productVariant.manufacturerSizes.length) {
           const types: any[] = []
           productVariant.manufacturerSizes.forEach(size => {
+            const type = size.bottom?.type
+            initialValues["bottomSizeType"] = type
             const sizeType = size.display.split(" ")
             !!sizeType && types.push(sizeType?.[0])
-            initialValues[`${internalSize.display}_manufacturerSize_${sizeType?.[0]}`] = size.display
+            initialValues[`${internalSize.display}_manufacturerSize_${type}`] = size.display
           })
           if (types?.length) {
             initialValues.bottomSizeTypes = types
@@ -96,11 +98,7 @@ export const VariantEdit: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
-        <Variants
-          variants={[productVariant]}
-          initialBottomSizeTypes={initialValues.bottomSizeTypes}
-          refetch={refetch}
-        />
+        <Variants variants={[productVariant]} refetch={refetch} />
       </Wizard>
       <Spacer mt={9} />
     </Container>
