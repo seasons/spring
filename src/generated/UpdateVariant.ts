@@ -3,17 +3,24 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductType, LetterSize, BottomSizeType, PhysicalProductStatus, InventoryStatus } from "./globalTypes"
+import { ProductType, BottomSizeType, LetterSize, PhysicalProductStatus, InventoryStatus } from "./globalTypes"
 
 // ====================================================
 // GraphQL fragment: UpdateVariant
 // ====================================================
+
+export interface UpdateVariant_manufacturerSizes_bottom {
+  __typename: "BottomSize"
+  id: string
+  type: BottomSizeType | null
+}
 
 export interface UpdateVariant_manufacturerSizes {
   __typename: "Size"
   id: string
   display: string
   productType: ProductType | null
+  bottom: UpdateVariant_manufacturerSizes_bottom | null
 }
 
 export interface UpdateVariant_product {
