@@ -65,7 +65,6 @@ export const ProductCreate: React.FC = () => {
   }
 
   const onSubmit = async values => {
-    console.log("values", values)
     setIsSubmitting(true)
     // Extract appropriate values from the WizardForm
     const productUpsertData = getProductUpsertData(values)

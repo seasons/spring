@@ -120,7 +120,6 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
                   if (e.target.value !== manufacturerSizeType) {
                     variants?.forEach(v => {
                       const fieldName = `${v.internalSize?.display}_manufacturerSize_${manufacturerSizeType}`
-                      console.log("remove", fieldName)
                       form.change(fieldName, undefined)
                     })
                   }

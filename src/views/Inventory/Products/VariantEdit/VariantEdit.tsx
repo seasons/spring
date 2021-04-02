@@ -85,7 +85,6 @@ export const VariantEdit: React.FC = () => {
     if (shopifyExternalID) {
       updateVariantData["shopifyProductVariant"].externalId = shopifyExternalID
     }
-    console.log("updateVariantData", updateVariantData)
     const result = await updateProductVariant({
       variables: { input: updateVariantData },
     })
