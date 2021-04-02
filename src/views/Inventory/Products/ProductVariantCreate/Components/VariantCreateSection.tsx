@@ -1,7 +1,6 @@
 import React, { useState } from "react"
-
 import { Grid } from "@material-ui/core"
-
+import { useForm } from "react-final-form"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "../../Components"
 import { getTypeSpecificVariantFields } from "../../utils"
@@ -20,6 +19,7 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
   sizeOptions,
   variantIndex,
 }) => {
+  const form = useForm()
   const [manufacturerSizeType, setManufacturerSizeType] = useState(null)
   const typeSpecificFields = getTypeSpecificVariantFields(productType)
   const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 3) : []
@@ -28,6 +28,8 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
   const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
   const requiredFields = productType === "Bottom" ? ["Total count", "Waist", "Inseam"] : ["Total count"]
   const manufacturerSizes = getManufacturerSizes(manufacturerSizeType).map(x => x.toString())
+
+  const manufacturerSizeFieldName = `${variantIndex}_${"Manufacturer sizes".toLowerCase().replace(" ", "")}`
 
   return (
     <ExpandableSection
@@ -78,7 +80,13 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
                   <Text variant="h5">Manufacturer size type</Text>
                   <Spacer mt={1} />
                   <SelectField
-                    onChange={e => setManufacturerSizeType(e.target.value)}
+                    onChange={e => {
+                      // Cleanup variant sizes of previous type
+                      if (e.target.value !== manufacturerSizeType) {
+                        form.change(manufacturerSizeFieldName, undefined)
+                      }
+                      setManufacturerSizeType(e.target.value)
+                    }}
                     name={`${variantIndex}_bottomSizeType`}
                     choices={getFormSelectChoices(MANUFACTURER_SIZE_TYPES)}
                   />
@@ -87,10 +95,7 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
                 <Grid item xs={3}>
                   <Text variant="h5">Manufacturer sizes</Text>
                   <Spacer mt={1} />
-                  <SelectField
-                    name={`${variantIndex}_${"Manufacturer sizes".toLowerCase().replace(" ", "")}`}
-                    choices={getFormSelectChoices(manufacturerSizes)}
-                  />
+                  <SelectField name={manufacturerSizeFieldName} choices={getFormSelectChoices(manufacturerSizes)} />
                 </Grid>
               </>
             )}

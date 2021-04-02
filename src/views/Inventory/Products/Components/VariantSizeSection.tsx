@@ -29,8 +29,8 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
   const firstRowFields = ["Total count", "SKU", ...typeSpecificFirstRowFields]
   const secondRowFields = ["Weight", ...typeSpecificSecondRowFields]
   const requiredFields = ["Total count"]
-
   const manufacturerSizes = getManufacturerSizes(manufacturerSizeType).map(x => x.toString())
+
   return (
     <ExpandableSection
       title={size}
@@ -82,8 +82,10 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
                 <Text variant="h5">Manufacturer sizes</Text>
                 <Spacer mt={1} />
                 <SelectField
+                  key={`${size}_manufacturerSize_${manufacturerSizeType}`}
                   name={`${size}_manufacturerSize_${manufacturerSizeType}`}
                   choices={getFormSelectChoices(manufacturerSizes)}
+                  multiple={false}
                 />
                 <Spacer grid mt={2} />
               </Grid>

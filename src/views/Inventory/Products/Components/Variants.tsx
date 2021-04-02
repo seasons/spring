@@ -13,6 +13,7 @@ import { VariantPriceSection } from "./VariantPriceSection"
 import { getFormSelectChoices } from "utils/form"
 import { AddPhysicalProductModal } from "views/Inventory/ProductVariants/AddPhysicalProductModal"
 import { MANUFACTURER_SIZE_TYPES } from "utils/sizes"
+import { useForm, useFormState } from "react-final-form"
 
 export interface VariantsProps {
   createData?: any // Passed in when creating new variants
@@ -22,6 +23,8 @@ export interface VariantsProps {
 
 export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetch }) => {
   const location = useLocation()
+  const form = useForm()
+  const formState = useFormState()
   const [manufacturerSizeType, setManufacturerSizeType] = useState(
     variants?.[0]?.manufacturerSizes?.[0]?.bottom?.type ?? null
   )
@@ -112,8 +115,18 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
               <Text variant="h5">Manufacturer size type</Text>
               <Spacer mt={1} />
               <SelectField
-                onChange={e => setManufacturerSizeType(e.target.value)}
-                name="bottomSizeType"
+                onChange={e => {
+                  // Cleanup variant sizes of previous type
+                  if (e.target.value !== manufacturerSizeType) {
+                    variants?.forEach(v => {
+                      const fieldName = `${v.internalSize?.display}_manufacturerSize_${manufacturerSizeType}`
+                      console.log("remove", fieldName)
+                      form.change(fieldName, undefined)
+                    })
+                  }
+                  setManufacturerSizeType(e.target.value)
+                }}
+                name="manufacturerBottomSizeType"
                 choices={bottomSizeTypeChoices}
               />
               <Spacer mt={2} />
