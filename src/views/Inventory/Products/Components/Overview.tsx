@@ -21,7 +21,7 @@ import { DateTime } from "luxon"
 import { PRODUCT_EDIT_QUERY } from "../queries"
 import { SeasonsSection } from "."
 import { useSnackbarContext } from "components/Snackbar"
-import { internalBottomSizes, US_LETTER_SIZES } from "utils/sizes"
+import { wxlBottomSizes, US_LETTER_SIZES } from "utils/sizes"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -91,7 +91,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
       sizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
-      sizes = getFormSelectChoices(internalBottomSizes())
+      sizes = getFormSelectChoices(wxlBottomSizes())
       break
   }
 

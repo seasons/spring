@@ -11,7 +11,7 @@ const euSizes = [44, 46, 48, 50, 52, 54]
 export const US_LETTER_SIZES = ["XS", "S", "M", "L", "XL", "XXL"]
 export const MANUFACTURER_SIZE_TYPES: ManufacturerSizeType[] = ["EU", "JP", "US", "WxL", "Letter"]
 
-export const internalBottomSizes = () => {
+export const wxlBottomSizes = () => {
   return usWaistSizes.flatMap(waistSize => {
     return [...usShortLengthSizes, ...usPantLengthSizes].flatMap(lengthSize => {
       return `${waistSize}x${lengthSize}`
@@ -28,7 +28,7 @@ export const getManufacturerSizes = (sizeType: ManufacturerSizeType | null) => {
     case "US":
       return usWaistSizes
     case "WxL":
-      return internalBottomSizes()
+      return wxlBottomSizes()
     case "Letter":
       return US_LETTER_SIZES
     default:
