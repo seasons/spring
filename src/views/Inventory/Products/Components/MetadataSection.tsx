@@ -125,13 +125,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Buy used price (dollars)</Text>
             <Spacer mt={1} />
-            <TextField
-              name="buyUsedPrice"
-              type="number"
-              required={false}
-              minValue={0}
-              initialValue={buyUsedPrice ? String(buyUsedEnabled) : undefined}
-            />
+            <TextField name="buyUsedPrice" type="number" minValue={0} />
           </Grid>
         </Grid>
       }
