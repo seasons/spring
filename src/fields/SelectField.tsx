@@ -35,6 +35,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({
       render={({ input, meta }) => (
         <FormControl error={meta.touched && meta.error}>
           <Select
+            key={name}
             id={input.name}
             defaultValue=""
             disabled={disabled}

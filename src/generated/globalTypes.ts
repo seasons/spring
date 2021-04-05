@@ -226,7 +226,6 @@ export enum OrderStatus {
 }
 
 export enum OrderType {
-  External = "External",
   New = "New",
   Used = "Used",
 }
@@ -1985,6 +1984,7 @@ export interface CustomerDetailCreateInput {
   phoneOS?: string | null
   insureShipment?: boolean | null
   instagramHandle?: string | null
+  discoveryReference?: string | null
   impactId?: string | null
   weight?: CustomerDetailCreateweightInput | null
   topSizes?: CustomerDetailCreatetopSizesInput | null
@@ -2034,6 +2034,7 @@ export interface CustomerDetailUpdateDataInput {
   phoneOS?: string | null
   insureShipment?: boolean | null
   instagramHandle?: string | null
+  discoveryReference?: string | null
   impactId?: string | null
   weight?: CustomerDetailUpdateweightInput | null
   topSizes?: CustomerDetailUpdatetopSizesInput | null
@@ -2319,6 +2320,20 @@ export interface CustomerDetailWhereInput {
   instagramHandle_not_starts_with?: string | null
   instagramHandle_ends_with?: string | null
   instagramHandle_not_ends_with?: string | null
+  discoveryReference?: string | null
+  discoveryReference_not?: string | null
+  discoveryReference_in?: string[] | null
+  discoveryReference_not_in?: string[] | null
+  discoveryReference_lt?: string | null
+  discoveryReference_lte?: string | null
+  discoveryReference_gt?: string | null
+  discoveryReference_gte?: string | null
+  discoveryReference_contains?: string | null
+  discoveryReference_not_contains?: string | null
+  discoveryReference_starts_with?: string | null
+  discoveryReference_not_starts_with?: string | null
+  discoveryReference_ends_with?: string | null
+  discoveryReference_not_ends_with?: string | null
   impactId?: string | null
   impactId_not?: string | null
   impactId_in?: string[] | null

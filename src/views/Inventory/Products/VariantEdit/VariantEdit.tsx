@@ -3,7 +3,7 @@ import { Container } from "@material-ui/core"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
-
+import { omit } from "lodash"
 import { Spacer, Wizard } from "components"
 import { Variants } from "../Components"
 import { VARIANT_EDIT_QUERY } from "../queries"
@@ -53,13 +53,12 @@ export const VariantEdit: React.FC = () => {
         if (!!productVariant.manufacturerSizes.length) {
           const types: any[] = []
           productVariant.manufacturerSizes.forEach(size => {
+            const type = size.bottom?.type
+            initialValues["manufacturerBottomSizeType"] = type
             const sizeType = size.display.split(" ")
             !!sizeType && types.push(sizeType?.[0])
-            initialValues[`${internalSize.display}_manufacturerSize_${sizeType?.[0]}`] = size.display
+            initialValues[`${internalSize.display}_manufacturerSize_${type}`] = size.display
           })
-          if (types?.length) {
-            initialValues.bottomSizeTypes = types
-          }
         }
         break
       default:
@@ -72,18 +71,19 @@ export const VariantEdit: React.FC = () => {
       return
     }
     const variantSizeData = extractVariantSizeFields({
-      isEdit: true,
       productType: internalSize.productType,
       size: internalSize.display,
       values,
     })
+    const cleanedVariantData = omit(variantSizeData, ["total"])
+    const shopifyExternalID = values[`${internalSize.display}_shopifyProductVariant`]?.externalID
     const updateVariantData = {
       id,
       productType: internalSize.productType,
-      shopifyProductVariant: {
-        externalId: values[`${internalSize.display}_shopifyProductVariant`]?.externalID || null,
-      },
-      ...variantSizeData,
+      ...cleanedVariantData,
+    }
+    if (shopifyExternalID) {
+      updateVariantData["shopifyProductVariant"].externalId = shopifyExternalID
     }
     const result = await updateProductVariant({
       variables: { input: updateVariantData },
@@ -96,11 +96,7 @@ export const VariantEdit: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
-        <Variants
-          variants={[productVariant]}
-          initialBottomSizeTypes={initialValues.bottomSizeTypes}
-          refetch={refetch}
-        />
+        <Variants variants={[productVariant]} refetch={refetch} />
       </Wizard>
       <Spacer mt={9} />
     </Container>

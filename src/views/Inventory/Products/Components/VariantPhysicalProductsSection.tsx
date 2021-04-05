@@ -15,7 +15,7 @@ export const VariantPhysicalProductsSection: React.FC<VariantPhysicalProductsSec
       content={
         <Grid container spacing={2}>
           {physicalProducts.map((physProd, index) => (
-            <Grid item xs={6}>
+            <Grid item xs={6} key={index}>
               <PhysicalProductSummary physicalProduct={physProd} key={index} />
             </Grid>
           ))}

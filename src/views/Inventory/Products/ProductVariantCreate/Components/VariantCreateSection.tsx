@@ -1,11 +1,12 @@
-import React from "react"
-
+import React, { useState } from "react"
 import { Grid } from "@material-ui/core"
-
+import { useForm } from "react-final-form"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "../../Components"
 import { getTypeSpecificVariantFields } from "../../utils"
-import { GroupedAutocompleteField, TextField } from "fields"
+import { GroupedAutocompleteField, TextField, SelectField } from "fields"
+import { getManufacturerSizes, MANUFACTURER_SIZE_TYPES } from "utils/sizes"
+import { getFormSelectChoices } from "utils/form"
 
 export interface VariantCreateSectionProps {
   productType: string
@@ -18,12 +19,18 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
   sizeOptions,
   variantIndex,
 }) => {
+  const form = useForm()
+  const [manufacturerSizeType, setManufacturerSizeType] = useState(null)
   const typeSpecificFields = getTypeSpecificVariantFields(productType)
   const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 3) : []
   const typeSpecificSecondRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(3) : []
   const firstRowFields = ["Weight", ...typeSpecificFirstRowFields]
   const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
   const requiredFields = productType === "Bottom" ? ["Total count", "Waist", "Inseam"] : ["Total count"]
+  const manufacturerSizes = getManufacturerSizes(manufacturerSizeType)
+
+  const manufacturerSizeFieldName = `${variantIndex}_${"Manufacturer sizes".toLowerCase().replace(" ", "")}`
+
   return (
     <ExpandableSection
       title={`#${variantIndex + 1}`}
@@ -67,14 +74,31 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
               )
             })}
             <Spacer grid mt={3} />
-            <Grid item xs={3}>
-              <Text variant="h5">Manufacturer sizes</Text>
-              <Spacer mt={1} />
-              <GroupedAutocompleteField
-                name={`${variantIndex}_${"Manufacturer sizes".toLowerCase().replace(" ", "")}`}
-                groupedOptions={sizeOptions}
-              />
-            </Grid>
+            {productType === "Bottom" && (
+              <>
+                <Grid item xs={3}>
+                  <Text variant="h5">Manufacturer size type</Text>
+                  <Spacer mt={1} />
+                  <SelectField
+                    onChange={e => {
+                      // Cleanup variant sizes of previous type
+                      if (e.target.value !== manufacturerSizeType) {
+                        form.change(manufacturerSizeFieldName, undefined)
+                      }
+                      setManufacturerSizeType(e.target.value)
+                    }}
+                    name={`${variantIndex}_bottomSizeType`}
+                    choices={getFormSelectChoices(MANUFACTURER_SIZE_TYPES)}
+                  />
+                  <Spacer mt={2} />
+                </Grid>
+                <Grid item xs={3}>
+                  <Text variant="h5">Manufacturer sizes</Text>
+                  <Spacer mt={1} />
+                  <SelectField name={manufacturerSizeFieldName} choices={getFormSelectChoices(manufacturerSizes)} />
+                </Grid>
+              </>
+            )}
             {productType === "Top" && (
               <Grid item xs={3}>
                 <Text variant="h5">Letter size *</Text>

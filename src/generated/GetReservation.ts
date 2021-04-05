@@ -110,6 +110,8 @@ export interface GetReservation_adminLogs {
   triggeredAt: any
   changedFields: any | null
   rowData: any
+  entityId: string
+  interpretation: string | null
   activeAdminUser: GetReservation_adminLogs_activeAdminUser
 }
 

@@ -17,7 +17,7 @@ export const getSizes = ({ productType, bottomSizes }: { productType: string; bo
   }))
 }
 
-export const getModelSizeDisplay = (productType: string, modelSizeName: string, bottomSizeType: string) => {
+export const getModelSizeDisplay = (productType: string, modelSizeName: string) => {
   // Get the modelSizeDisplay which is usually just the modelSizeName except
   // for when it is a bottom whose type is not Letter.
   let modelSizeDisplay
@@ -26,7 +26,7 @@ export const getModelSizeDisplay = (productType: string, modelSizeName: string, 
       modelSizeDisplay = modelSizeName
       break
     case "Bottom":
-      modelSizeDisplay = bottomSizeType === "Letter" ? modelSizeName : `${bottomSizeType || "WxL"} ${modelSizeName}`
+      modelSizeDisplay = `WxL ${modelSizeName}`
   }
   return modelSizeDisplay
 }
@@ -61,12 +61,10 @@ const getManufacturerSizeNames = (values, size) => {
 }
 
 export const extractVariantSizeFields = ({
-  isEdit,
   productType,
   size,
   values,
 }: {
-  isEdit: boolean
   productType: string
   size: string
   values: any
@@ -92,6 +90,7 @@ export const extractVariantSizeFields = ({
 
   if (manufacturerSizeNames.length) {
     sizeData.manufacturerSizeNames = manufacturerSizeNames
+    sizeData.manufacturerBottomSizeType = values.manufacturerBottomSizeType
   }
 
   return sizeData
@@ -117,7 +116,6 @@ export const getProductUpsertData: any = (values: any) => {
     buyNewEnabled,
     buyUsedEnabled,
     buyUsedPrice,
-    bottomSizeTypes: bottomSizeType,
     category: categoryName,
     color: colorCode,
     description,
@@ -148,7 +146,7 @@ export const getProductUpsertData: any = (values: any) => {
 
   let modelSizeDisplay
   if (modelSizeName) {
-    modelSizeDisplay = getModelSizeDisplay(productType, modelSizeName, bottomSizeType)
+    modelSizeDisplay = getModelSizeDisplay(productType, modelSizeName)
   }
 
   // Get dictionary of product variant SKUs to their sizes
@@ -201,7 +199,6 @@ export const getProductUpsertData: any = (values: any) => {
     const variantData = {
       sku,
       internalSizeName: size,
-      bottomSizeType,
     }
     // Loop through the seasonsUIDs and extract the data for the physical products
     // that belong to this variant.
@@ -230,7 +227,7 @@ export const getProductUpsertData: any = (values: any) => {
     variantData["physicalProducts"] = physicalProductsData
 
     // Get the relevant size values for the productType, i.e. shoulder, chest, etc. for Top
-    const variantSizeData = extractVariantSizeFields({ values, productType, size, isEdit: false })
+    const variantSizeData = extractVariantSizeFields({ values, productType, size })
     const shopifyProductVariantData = values[`${size}_shopifyProductVariant`]
       ? { shopifyProductVariant: { externalId: values[`${size}_shopifyProductVariant`]?.externalID } }
       : {}
@@ -256,7 +253,7 @@ export const getProductUpsertData: any = (values: any) => {
   // Piece all the data together
   const productsData = {
     architecture: architecture,
-    bottomSizeType: bottomSizeType ?? "WxL",
+    internalBottomSizeType: "WxL",
     brandID,
     buyNewEnabled,
     buyUsedEnabled,
@@ -324,7 +321,7 @@ export const getProductUpdateData = (values: any) => {
     vendorSeasonYear,
   } = values
 
-  const modelSizeDisplay = modelSizeName ? getModelSizeDisplay(productType, modelSizeName, bottomSizeType) : null
+  const modelSizeDisplay = modelSizeName ? getModelSizeDisplay(productType, modelSizeName) : null
   const numImages = 4
   const images = [...Array(numImages).keys()]
     .map(index => {
@@ -345,7 +342,6 @@ export const getProductUpdateData = (values: any) => {
 
   const updateProductData = {
     architecture,
-    bottomSizeType: bottomSizeType ?? "WxL",
     brand: { connect: { id: brandID } },
     buyNewEnabled,
     buyUsedPrice: parseFloat(buyUsedPrice) * 100,
@@ -403,7 +399,6 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
   const data = Array.from(Array(numVariants).keys()).map(index => {
     // Get internal size
     let internalSizeName = ""
-    let bottomSizeType
     switch (productType) {
       case "Top":
         internalSizeName = values[`${index}_lettersize`].value
@@ -412,7 +407,6 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
         const waist = Math.floor(Number(values[`${index}_waist`]))
         const inseam = Math.floor(Number(values[`${index}_inseam`]))
         internalSizeName = `${waist}x${inseam}`
-        bottomSizeType = "WxL"
         break
     }
 
@@ -454,7 +448,6 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     return {
       sku: values[`${index}_sku`],
       internalSizeName,
-      bottomSizeType: bottomSizeType ?? "WxL",
       physicalProducts,
       ...measurementData,
       ...shopifyProductVariantExternalId,
