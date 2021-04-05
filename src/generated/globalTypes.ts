@@ -10292,7 +10292,6 @@ export interface UTMDataWhereUniqueInput {
 
 export interface UpdateVariantInput {
   id: string
-  manufacturerSizeNames?: string[] | null
   productType: ProductType
   weight?: number | null
   sleeve?: number | null
@@ -10300,6 +10299,8 @@ export interface UpdateVariantInput {
   chest?: number | null
   neck?: number | null
   length?: number | null
+  manufacturerSizeNames?: string[] | null
+  manufacturerBottomSizeType?: BottomSizeType | null
   waist?: number | null
   rise?: number | null
   hem?: number | null
@@ -10320,7 +10321,7 @@ export interface UpsertPhysicalProductInput {
 
 export interface UpsertProductInput {
   architecture?: string | null
-  bottomSizeType?: BottomSizeType | null
+  internalBottomSizeType?: BottomSizeType | null
   brandID: string
   buyNewEnabled?: boolean | null
   buyUsedEnabled: boolean
@@ -10359,14 +10360,15 @@ export interface UpsertSeasonInput {
 
 export interface UpsertVariantInput {
   sku: string
-  internalSizeName: string
-  manufacturerSizeNames?: string[] | null
   sleeve?: number | null
   shoulder?: number | null
   chest?: number | null
   neck?: number | null
   length?: number | null
-  bottomSizeType?: BottomSizeType | null
+  internalSizeName: string
+  internalBottomSizeType?: BottomSizeType | null
+  manufacturerSizeNames?: string[] | null
+  manufacturerBottomSizeType?: BottomSizeType | null
   waist?: number | null
   rise?: number | null
   hem?: number | null

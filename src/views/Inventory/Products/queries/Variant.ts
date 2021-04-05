@@ -18,6 +18,9 @@ export const UpdateVariantFragment = gql`
     product {
       id
       name
+      brand {
+        id
+      }
     }
     internalSize {
       id

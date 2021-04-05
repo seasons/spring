@@ -76,15 +76,16 @@ export const VariantEdit: React.FC = () => {
       values,
     })
     const cleanedVariantData = omit(variantSizeData, ["total"])
-    const shopifyExternalID = values[`${internalSize.display}_shopifyProductVariant`]?.externalID
+    const shopifyProductVariant = values[`${internalSize.display}_shopifyProductVariant`]
     const updateVariantData = {
       id,
       productType: internalSize.productType,
       ...cleanedVariantData,
+    } as any
+    if (shopifyProductVariant) {
+      updateVariantData.shopifyProductVariant = shopifyProductVariant
     }
-    if (shopifyExternalID) {
-      updateVariantData["shopifyProductVariant"].externalId = shopifyExternalID
-    }
+
     const result = await updateProductVariant({
       variables: { input: updateVariantData },
     })

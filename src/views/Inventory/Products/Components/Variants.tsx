@@ -28,7 +28,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
   const [manufacturerSizeType, setManufacturerSizeType] = useState(
     variants?.[0]?.manufacturerSizes?.[0]?.bottom?.type ?? null
   )
-  const brandID = createData?.brand || ""
+  const brandID = createData?.brand || variants?.[0]?.product?.brand?.id
   const colorCode = createData?.color || ""
   const sizeNames = createData?.sizes || []
   const productType = createData?.productType || variants?.[0]?.internalSize?.productType
@@ -143,7 +143,11 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
               manufacturerSizeType={manufacturerSizeType}
               bottomSizes={data?.bottomSizes}
             />
-            <VariantPriceSection size={variant.size} shopifyProductVariant={variant.shopifyProductVariant} />
+            <VariantPriceSection
+              size={variant.size}
+              shopifyProductVariant={variant.shopifyProductVariant}
+              brandID={brandID}
+            />
           </Box>
         ))}
         {isEditing && (
