@@ -30,10 +30,7 @@ export const ReservationView: React.FunctionComponent<{ match: any }> = ({ match
           value: "logs",
           label: "Admin Logs",
           //@ts-ignore
-          render: ({ data }) => {
-            console.log(data)
-            return <AdminLogsView logs={data.adminLogs} />
-          },
+          render: ({ data }) => <AdminLogsView logs={data.adminLogs} />,
         },
       ]}
     />
