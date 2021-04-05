@@ -27,7 +27,7 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
   const firstRowFields = ["Weight", ...typeSpecificFirstRowFields]
   const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
   const requiredFields = productType === "Bottom" ? ["Total count", "Waist", "Inseam"] : ["Total count"]
-  const manufacturerSizes = getManufacturerSizes(manufacturerSizeType).map(x => x.toString())
+  const manufacturerSizes = getManufacturerSizes(manufacturerSizeType)
 
   const manufacturerSizeFieldName = `${variantIndex}_${"Manufacturer sizes".toLowerCase().replace(" ", "")}`
 

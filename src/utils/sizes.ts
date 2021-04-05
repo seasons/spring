@@ -19,14 +19,14 @@ export const wxlBottomSizes = () => {
   })
 }
 
-export const getManufacturerSizes = (sizeType: ManufacturerSizeType | null) => {
+export const getManufacturerSizes = (sizeType: ManufacturerSizeType | null): string[] => {
   switch (sizeType) {
     case "EU":
-      return euSizes
+      return euSizes.map(x => x.toString())
     case "JP":
-      return jpSizes
+      return jpSizes.map(x => x.toString())
     case "US":
-      return usWaistSizes
+      return usWaistSizes.map(x => x.toString())
     case "WxL":
       return wxlBottomSizes()
     case "Letter":

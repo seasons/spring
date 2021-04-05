@@ -29,7 +29,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
   const firstRowFields = ["Total count", "SKU", ...typeSpecificFirstRowFields]
   const secondRowFields = ["Weight", ...typeSpecificSecondRowFields]
   const requiredFields = ["Total count"]
-  const manufacturerSizes = getManufacturerSizes(manufacturerSizeType).map(x => x.toString())
+  const manufacturerSizes = getManufacturerSizes(manufacturerSizeType)
 
   return (
     <ExpandableSection
