@@ -30,10 +30,16 @@ export interface VariantEditQuery_productVariant_manufacturerSizes {
   bottom: VariantEditQuery_productVariant_manufacturerSizes_bottom | null
 }
 
+export interface VariantEditQuery_productVariant_product_brand {
+  __typename: "Brand"
+  id: string
+}
+
 export interface VariantEditQuery_productVariant_product {
   __typename: "Product"
   id: string
   name: string
+  brand: VariantEditQuery_productVariant_product_brand
 }
 
 export interface VariantEditQuery_productVariant_internalSize_top {

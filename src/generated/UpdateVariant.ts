@@ -23,10 +23,16 @@ export interface UpdateVariant_manufacturerSizes {
   bottom: UpdateVariant_manufacturerSizes_bottom | null
 }
 
+export interface UpdateVariant_product_brand {
+  __typename: "Brand"
+  id: string
+}
+
 export interface UpdateVariant_product {
   __typename: "Product"
   id: string
   name: string
+  brand: UpdateVariant_product_brand
 }
 
 export interface UpdateVariant_internalSize_top {

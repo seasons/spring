@@ -421,7 +421,7 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     })
 
     const shopifyProductVariantExternalId = values[`${index}_shopifyProductVariant`]
-      ? { shopifyProductVariant: { externalId: values[`${index}_shopifyProductVariant`]?.externalID } }
+      ? { shopifyProductVariant: { externalId: values[`${index}_shopifyProductVariant`]?.externalId } }
       : {}
 
     // Get physical products data
