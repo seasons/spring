@@ -14,6 +14,7 @@ export enum SearchType {
 
 type Props<R> = {
   onResultItemClicked: (result: R) => void
+  onFilterResults?: (results: R[] | null) => R[] | undefined | null
   searchType: SearchType
   placeholder: string
 }
@@ -63,7 +64,7 @@ const QUERIES = {
   `,
 }
 
-export const SearchInput = ({ onResultItemClicked, searchType, placeholder }: Props<any>) => {
+export const SearchInput = ({ onResultItemClicked, searchType, placeholder, onFilterResults }: Props<any>) => {
   const [isLoading, setLoading] = React.useState(false)
   const [inputValue, setInputValue] = React.useState("")
   const [openSearch, setOpenSearch] = React.useState(false)
@@ -86,6 +87,7 @@ export const SearchInput = ({ onResultItemClicked, searchType, placeholder }: Pr
   }
 
   const results = data?.search
+
   React.useEffect(() => {
     if (results) {
       setOpenSearch(true)
@@ -123,7 +125,7 @@ export const SearchInput = ({ onResultItemClicked, searchType, placeholder }: Pr
                 </Box>
               ) : (
                 <>
-                  {results?.map((result: any, index: number) => {
+                  {(onFilterResults ? onFilterResults(results) : results)?.map((result: any, index: number) => {
                     return (
                       <Box
                         key={(result?.data?.id || "") + index}

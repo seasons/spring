@@ -58,7 +58,12 @@ export const VariantsCreate: React.FC<VariantsCreateProps> = ({ bottomSizes, pro
       />
       <ContainerGrid container spacing={2}>
         {[...Array(numVariants).keys()].map(index => (
-          <VariantCreateSection productType={product?.type || ""} sizeOptions={sizeOptions} variantIndex={index} />
+          <VariantCreateSection
+            productType={product?.type || ""}
+            key={index}
+            sizeOptions={sizeOptions}
+            variantIndex={index}
+          />
         ))}
       </ContainerGrid>
     </Box>

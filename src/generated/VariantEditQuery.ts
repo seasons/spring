@@ -6,8 +6,8 @@
 import {
   ProductVariantWhereUniqueInput,
   ProductType,
-  LetterSize,
   BottomSizeType,
+  LetterSize,
   PhysicalProductStatus,
   InventoryStatus,
 } from "./globalTypes"
@@ -16,17 +16,30 @@ import {
 // GraphQL query operation: VariantEditQuery
 // ====================================================
 
+export interface VariantEditQuery_productVariant_manufacturerSizes_bottom {
+  __typename: "BottomSize"
+  id: string
+  type: BottomSizeType | null
+}
+
 export interface VariantEditQuery_productVariant_manufacturerSizes {
   __typename: "Size"
   id: string
   display: string
   productType: ProductType | null
+  bottom: VariantEditQuery_productVariant_manufacturerSizes_bottom | null
+}
+
+export interface VariantEditQuery_productVariant_product_brand {
+  __typename: "Brand"
+  id: string
 }
 
 export interface VariantEditQuery_productVariant_product {
   __typename: "Product"
   id: string
   name: string
+  brand: VariantEditQuery_productVariant_product_brand
 }
 
 export interface VariantEditQuery_productVariant_internalSize_top {
