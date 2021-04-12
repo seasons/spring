@@ -6,7 +6,6 @@
 import {
   PhotographyStatus,
   ProductType,
-  LetterSize,
   PhysicalProductStatus,
   InventoryStatus,
   PhysicalProductOffloadMethod,
@@ -34,25 +33,11 @@ export interface product_category {
   name: string
 }
 
-export interface product_variants_internalSize_top {
-  __typename: "TopSize"
-  id: string
-  letter: LetterSize | null
-}
-
-export interface product_variants_internalSize_bottom {
-  __typename: "BottomSize"
-  id: string
-  value: string | null
-}
-
 export interface product_variants_internalSize {
   __typename: "Size"
   id: string
   display: string
   productType: ProductType | null
-  top: product_variants_internalSize_top | null
-  bottom: product_variants_internalSize_bottom | null
 }
 
 export interface product_variants_physicalProducts_warehouseLocation {
