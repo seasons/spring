@@ -19,6 +19,17 @@ export const wxlBottomSizes = () => {
   })
 }
 
+export const getInternalSizes = (productType): string[] => {
+  switch (productType) {
+    case "Top":
+      return US_LETTER_SIZES
+    case "Bottom":
+      return wxlBottomSizes()
+    default:
+      return []
+  }
+}
+
 export const getManufacturerSizes = (sizeType: ManufacturerSizeType | null): string[] => {
   switch (sizeType) {
     case "EU":
