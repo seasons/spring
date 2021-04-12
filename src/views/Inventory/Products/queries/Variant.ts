@@ -52,7 +52,7 @@ export const UpdateVariantFragment = gql`
     }
     shopifyProductVariant {
       id
-      externalID: externalId
+      externalId
       displayName
       image {
         url
