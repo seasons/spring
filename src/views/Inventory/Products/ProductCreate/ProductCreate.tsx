@@ -77,12 +77,15 @@ export const ProductCreate: React.FC = () => {
   }
 
   const initialValues = {
+    manufacturerSizeType: "Letter",
     productType: "Top",
     retailPrice: 0,
     status: "NotAvailable",
   }
 
   const productUpsertQueryData: ProductUpsertQuery = data
+
+  console.log("1")
 
   return (
     <Container maxWidth={false}>

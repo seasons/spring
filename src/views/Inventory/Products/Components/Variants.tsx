@@ -2,18 +2,15 @@ import React, { useState } from "react"
 import { useQuery } from "react-apollo"
 import { useLocation } from "react-router-dom"
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
-import { SelectField } from "fields"
-import { Header, Loader, Spacer, Text } from "components"
+import { Header, Loader, Spacer } from "components"
 import { GetGeneratedVariantSkus } from "generated/GetGeneratedVariantSkus"
 import { VariantEditQuery_productVariant } from "generated/VariantEditQuery"
 import { GET_VARIANT_SKUS_AND_SIZE_TYPES } from "../queries"
 import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection"
 import { VariantSizeSection } from "./VariantSizeSection"
 import { VariantPriceSection } from "./VariantPriceSection"
-import { getFormSelectChoices } from "utils/form"
 import { AddPhysicalProductModal } from "views/Inventory/ProductVariants/AddPhysicalProductModal"
-import { MANUFACTURER_SIZE_TYPES } from "utils/sizes"
-import { useForm, useFormState } from "react-final-form"
+import { useField } from "react-final-form"
 
 export interface VariantsProps {
   createData?: any // Passed in when creating new variants
@@ -23,11 +20,7 @@ export interface VariantsProps {
 
 export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetch }) => {
   const location = useLocation()
-  const form = useForm()
-  const formState = useFormState()
-  const [manufacturerSizeType, setManufacturerSizeType] = useState(
-    variants?.[0]?.manufacturerSizes?.[0]?.bottom?.type ?? null
-  )
+  const manufacturerSizeTypeField = useField("manufacturerSizeType")
   const brandID = createData?.brand || variants?.[0]?.product?.brand?.id
   const colorCode = createData?.color || ""
   const sizeNames = createData?.sizes || []
@@ -43,18 +36,25 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
     },
   })
 
+  console.log("2")
+
   if (createData && (loading || !data || error)) {
     return <Loader />
   }
   const generatedSKUsData: GetGeneratedVariantSkus = data
   let variantsData
+  let manufacturerSizeType
   if (createData && generatedSKUsData.generatedVariantSKUs) {
+    // Data for VariantCreate
     // Get variants data from createData and query response
     variantsData = generatedSKUsData.generatedVariantSKUs.map((sku, index) => ({
       sku,
       size: sizeNames[index],
     }))
+    manufacturerSizeType = manufacturerSizeTypeField?.input?.value
+    console.log("variantsData 2", variantsData)
   } else if (variants) {
+    // Data for VariantEdit
     // Get variants data from the already existing variants
     variantsData = variants.map(variant => ({
       sku: variant.sku,
@@ -62,9 +62,12 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
       price: variant.price,
       shopifyProductVariant: variant?.shopifyProductVariant,
     }))
+    manufacturerSizeType = variants?.[0].manufacturerSizes?.[0]?.type
+    console.log("variantsData 1")
   } else {
     return null
   }
+  console.log("manufacturerSizeType", manufacturerSizeType)
 
   if (!variantsData || !productType) {
     return null
@@ -93,8 +96,6 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
     url: location.pathname,
   })
 
-  const bottomSizeTypeChoices = getFormSelectChoices(MANUFACTURER_SIZE_TYPES)
-
   return (
     <Box>
       <ContainerGrid container spacing={2}>
@@ -109,29 +110,6 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
             },
           }}
         />
-        {productType === "Bottom" && (
-          <Grid container spacing={2}>
-            <Grid item xs={3}>
-              <Text variant="h5">Manufacturer size type</Text>
-              <Spacer mt={1} />
-              <SelectField
-                onChange={e => {
-                  // Cleanup variant sizes of previous type
-                  if (e.target.value !== manufacturerSizeType) {
-                    variants?.forEach(v => {
-                      const fieldName = `${v.internalSize?.display}_manufacturerSize_${manufacturerSizeType}`
-                      form.change(fieldName, undefined)
-                    })
-                  }
-                  setManufacturerSizeType(e.target.value)
-                }}
-                name="manufacturerBottomSizeType"
-                choices={bottomSizeTypeChoices}
-              />
-              <Spacer mt={2} />
-            </Grid>
-          </Grid>
-        )}
         {variantsData.map((variant, index) => (
           <Box key={index}>
             <VariantSizeSection
@@ -141,7 +119,6 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
               productType={productType}
               key={index}
               manufacturerSizeType={manufacturerSizeType}
-              bottomSizes={data?.bottomSizes}
             />
             <VariantPriceSection
               size={variant.size}

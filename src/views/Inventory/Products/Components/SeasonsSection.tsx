@@ -4,12 +4,10 @@ import { Spacer, Text } from "components"
 import { ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
-import { FormSelectChoice } from "utils/form"
 
 interface SeasonsSectionProps {
   architectures: string[]
   models: ProductUpsertQuery_productModels[]
-  sizes: FormSelectChoice[]
 }
 
 export const SeasonsSection: React.FC<SeasonsSectionProps> = () => {

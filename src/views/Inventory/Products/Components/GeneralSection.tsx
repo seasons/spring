@@ -7,29 +7,32 @@ import { ExpandableSection } from "./ExpandableSection"
 import { SelectField, TextField } from "fields"
 import { FormSelectChoice, getFormSelectChoices } from "utils/form"
 import { ProductUpsertQuery_brands } from "generated/ProductUpsertQuery"
-import { ProductStatus } from "generated/globalTypes"
+import { MANUFACTURER_SIZE_TYPES } from "utils/sizes"
+import { ProductEditQuery_product } from "generated/ProductEditQuery"
 
 export interface GeneralSectionProps {
   brands: ProductUpsertQuery_brands[]
   isEditing: boolean
-  sizes: FormSelectChoice[]
+  internalSizes: FormSelectChoice[]
   availabilityStatuses: FormSelectChoice[]
   photographyStatuses: FormSelectChoice[]
   types: string[]
   setProductType: (string) => void
-  currentStatus?: ProductStatus | null | undefined
+  product: ProductEditQuery_product | undefined
 }
 
 export const GeneralSection: React.FC<GeneralSectionProps> = ({
   brands,
   isEditing,
-  sizes,
+  internalSizes,
   availabilityStatuses,
   photographyStatuses,
   types,
   setProductType,
-  currentStatus,
+  product,
 }) => {
+  console.log("product", product)
+  const currentStatus = product?.status
   const brandChoices = brands.map(brand => ({
     display: brand.name,
     value: brand.id,
@@ -43,6 +46,9 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
       value: child,
     })),
   }))
+
+  const manufacturerSizeType = product?.variants?.[0]?.manufacturerSizes?.[0]?.type
+  const manufacturerSizeTypeChoices = getFormSelectChoices(MANUFACTURER_SIZE_TYPES)
 
   return (
     <ExpandableSection
@@ -68,12 +74,28 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <TextField multiline name="description" placeholder="Enter a description" requiredString />
             <Spacer mt={3} />
           </Grid>
-          <Grid item xs={12}>
-            <Text variant="h6">Category *</Text>
-            <Spacer mt={1} />
-            <SelectField name="category" groupedChoices={groupedCategoryChoices} requiredString />
-            <Spacer mt={3} />
+
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Text variant="h6">Category *</Text>
+              <Spacer mt={1} />
+              <SelectField name="category" groupedChoices={groupedCategoryChoices} requiredString />
+              <Spacer mt={3} />
+            </Grid>
+
+            <Grid item xs={6}>
+              <Text variant="h6">Manufacturer size type *</Text>
+              <Spacer mt={1} />
+              <SelectField
+                disabled={isEditing && !!manufacturerSizeType}
+                name="manufacturerSizeType"
+                choices={manufacturerSizeTypeChoices}
+                requiredString
+              />
+              <Spacer mt={3} />
+            </Grid>
           </Grid>
+
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Text variant="h6">Type</Text>
@@ -87,12 +109,13 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
               />
             </Grid>
             <Grid item xs={6}>
-              <Text variant="h6">Available sizes</Text>
+              <Text variant="h6">Internal sizes</Text>
               <Spacer mt={1} />
-              <SelectField disabled={isEditing} multiple name="sizes" choices={sizes} />
+              <SelectField disabled={isEditing} multiple name="sizes" choices={internalSizes} />
               <Spacer mt={3} />
             </Grid>
           </Grid>
+
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Text variant="h6">Available status</Text>

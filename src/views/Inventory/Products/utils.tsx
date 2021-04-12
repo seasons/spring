@@ -1,22 +1,3 @@
-export const getSizes = ({ productType, bottomSizes }: { productType: string; bottomSizes: any[] }) => {
-  const sizes = {
-    Letter: ["XS", "S", "M", "L", "XL", "XXL"],
-  }
-  if (productType === "Bottom") {
-    bottomSizes.forEach(({ type: bottomType, value }) => {
-      if (bottomType !== "Letter") {
-        const sizeValue = `${bottomType} ${value}`
-        bottomType in sizes ? sizes[bottomType].push(sizeValue) : (sizes[bottomType] = [sizeValue])
-      }
-    })
-  }
-  const sortedKeys = Object.keys(sizes).sort()
-  return sortedKeys.map(key => ({
-    sizeType: key,
-    values: key === "Letter" ? sizes[key] : Array.from(new Set(sizes[key])).sort(),
-  }))
-}
-
 export const getModelSizeDisplay = (productType: string, modelSizeName: string) => {
   // Get the modelSizeDisplay which is usually just the modelSizeName except
   // for when it is a bottom whose type is not Letter.
@@ -90,7 +71,7 @@ export const extractVariantSizeFields = ({
 
   if (manufacturerSizeNames.length) {
     sizeData.manufacturerSizeNames = manufacturerSizeNames
-    sizeData.manufacturerBottomSizeType = values.manufacturerBottomSizeType
+    sizeData.manufacturerSizeType = values.manufacturerSizeType
   }
 
   return sizeData
@@ -401,7 +382,7 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     let internalSizeName = ""
     switch (productType) {
       case "Top":
-        internalSizeName = values[`${index}_lettersize`].value
+        internalSizeName = values[`${index}_internalSize`].value
         break
       case "Bottom":
         const waist = Math.floor(Number(values[`${index}_waist`]))

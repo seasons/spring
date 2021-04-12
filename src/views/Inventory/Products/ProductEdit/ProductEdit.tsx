@@ -84,6 +84,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
       internalSeasonSeasonCode: product.season?.internalSeason?.seasonCode,
       internalSeasonYear: product.season?.internalSeason?.year,
       buyUsedPrice: product.buyUsedPrice ? product.buyUsedPrice / 100 : 0,
+      manufacturerSizeType: product?.variants?.[0]?.manufacturerSizes?.[0]?.type,
       ...pick(product, [
         "description",
         "externalURL",

@@ -52,7 +52,7 @@ export const ProductVariantCreate: React.FC = () => {
   }
 
   const productVariantUpsertQueryData: ProductVariantUpsertQuery = data
-  const { bottomSizes, inventoryStatuses, physicalProductStatuses, product } = productVariantUpsertQueryData
+  const { inventoryStatuses, product } = productVariantUpsertQueryData
 
   if (!product) {
     return null
@@ -81,7 +81,7 @@ export const ProductVariantCreate: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
-        <VariantsCreate product={product} bottomSizes={bottomSizes} />
+        <VariantsCreate product={product} />
         <PhysicalProductsCreate
           newVariantsCreateData={{ product, values }}
           inventoryStatuses={inventoryStatuses?.enumValues || []}
