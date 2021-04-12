@@ -3,11 +3,6 @@ import { ProductFragment as AdminProductFragment } from "queries/Product"
 
 export const ProductUpsertFragment = gql`
   fragment ProductUpsert on Query {
-    bottomSizes {
-      type
-      value
-    }
-
     brands(orderBy: name_ASC) {
       id
       brandCode
@@ -122,6 +117,11 @@ export const ProductFragment = gql`
     variants {
       id
       sku
+      manufacturerSizes {
+        id
+        type
+        productType
+      }
       internalSize {
         id
         display
@@ -157,18 +157,7 @@ export const ProductFragment = gql`
 
 export const PRODUCT_VARIANT_UPSERT_QUERY = gql`
   query ProductVariantUpsertQuery($input: ProductWhereUniqueInput!) {
-    bottomSizes {
-      type
-      value
-    }
-
     inventoryStatuses: __type(name: "InventoryStatus") {
-      enumValues {
-        name
-      }
-    }
-
-    physicalProductStatuses: __type(name: "PhysicalProductStatus") {
       enumValues {
         name
       }
