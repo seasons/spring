@@ -24,7 +24,7 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({ prod
   const manufacturerSizeType = product?.variants?.[0]?.manufacturerSizes?.[0]?.type
   const manufacturerSizes = getManufacturerSizes(manufacturerSizeType)
   const internalSizes = getInternalSizes(productType)
-  console.log("product", product)
+
   return (
     <ExpandableSection
       title={`#${variantIndex + 1}`}

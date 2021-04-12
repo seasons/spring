@@ -31,7 +31,6 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   setProductType,
   product,
 }) => {
-  console.log("product", product)
   const currentStatus = product?.status
   const brandChoices = brands.map(brand => ({
     display: brand.name,

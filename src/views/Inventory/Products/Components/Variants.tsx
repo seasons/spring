@@ -36,8 +36,6 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
     },
   })
 
-  console.log("2")
-
   if (createData && (loading || !data || error)) {
     return <Loader />
   }
@@ -52,7 +50,6 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
       size: sizeNames[index],
     }))
     manufacturerSizeType = manufacturerSizeTypeField?.input?.value
-    console.log("variantsData 2", variantsData)
   } else if (variants) {
     // Data for VariantEdit
     // Get variants data from the already existing variants
@@ -63,11 +60,9 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
       shopifyProductVariant: variant?.shopifyProductVariant,
     }))
     manufacturerSizeType = variants?.[0].manufacturerSizes?.[0]?.type
-    console.log("variantsData 1")
   } else {
     return null
   }
-  console.log("manufacturerSizeType", manufacturerSizeType)
 
   if (!variantsData || !productType) {
     return null

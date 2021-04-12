@@ -85,8 +85,6 @@ export const ProductCreate: React.FC = () => {
 
   const productUpsertQueryData: ProductUpsertQuery = data
 
-  console.log("1")
-
   return (
     <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>

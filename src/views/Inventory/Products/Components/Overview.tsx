@@ -88,8 +88,6 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
     })
   }
 
-  console.log("4", product)
-
   const manufacturerSizes: any[] = getFormSelectChoices(getManufacturerSizes(manufacturerSizeType))
 
   let internalSizes: any[] = []
