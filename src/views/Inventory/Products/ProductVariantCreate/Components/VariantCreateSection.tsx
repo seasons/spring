@@ -4,8 +4,9 @@ import { Spacer, Text } from "components"
 import { ExpandableSection } from "../../Components"
 import { getTypeSpecificVariantFields } from "../../utils"
 import { TextField, SelectField } from "fields"
-import { getInternalSizes, getManufacturerSizes } from "utils/sizes"
+import { getInternalSizes, getManufacturerSizes, MANUFACTURER_SIZE_TYPES } from "utils/sizes"
 import { getFormSelectChoices } from "utils/form"
+import { useField } from "react-final-form"
 
 export interface VariantCreateSectionProps {
   product: any
@@ -21,9 +22,16 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({ prod
   const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
   const requiredFields = productType === "Bottom" ? ["Total count", "Waist", "Inseam"] : ["Total count"]
 
-  const manufacturerSizeType = product?.variants?.[0]?.manufacturerSizes?.[0]?.type
+  // Edge case where the product was created with zero variants we need to show manufacturer type choice here
+  const manufacturerSizeTypeFromSibling = product?.variants?.[0]?.manufacturerSizes?.[0]?.type
+  const manufacturerSizeTypeField = useField(`${variantIndex}_manufacturerSizeType`)
+  const manufacturerSizeType = manufacturerSizeTypeFromSibling
+    ? manufacturerSizeTypeFromSibling
+    : manufacturerSizeTypeField?.input?.value
   const manufacturerSizes = getManufacturerSizes(manufacturerSizeType)
   const internalSizes = getInternalSizes(productType)
+
+  const manufacturerSizeTypeChoices = getFormSelectChoices(MANUFACTURER_SIZE_TYPES)
 
   return (
     <ExpandableSection
@@ -68,11 +76,18 @@ export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({ prod
               )
             })}
             <Spacer grid mt={3} />
+            {!manufacturerSizeTypeFromSibling && (
+              <Grid item xs={3}>
+                <Text variant="h5">Manufacturer size type</Text>
+                <Spacer mt={1} />
+                <SelectField name={`${variantIndex}_manufacturerSizeType`} choices={manufacturerSizeTypeChoices} />
+              </Grid>
+            )}
             <Grid item xs={3}>
               <Text variant="h5">Manufacturer size *</Text>
               <Spacer mt={1} />
               <SelectField
-                name={`${variantIndex}_manufacturerSize"`}
+                name={`${variantIndex}_manufacturerSize`}
                 choices={getFormSelectChoices(manufacturerSizes)}
                 requiredString
               />

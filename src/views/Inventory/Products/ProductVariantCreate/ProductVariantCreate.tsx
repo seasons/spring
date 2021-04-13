@@ -66,7 +66,7 @@ export const ProductVariantCreate: React.FC = () => {
   const onSubmit = async values => {
     const variantUpsertData = getProductVariantUpsertData({
       values,
-      productType: product.type,
+      product,
     })
     await upsertVariants({
       variables: {

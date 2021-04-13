@@ -358,7 +358,8 @@ export const getProductUpdateData = (values: any) => {
  * inside the New variants flow.
  * @param values: set of values retrieved from the New variants form
  */
-export const getProductVariantUpsertData = ({ values, productType }) => {
+export const getProductVariantUpsertData = ({ values, product }) => {
+  const productType = product?.type
   let maxVariantIndex = -1
   Object.keys(values).forEach(key => {
     if (key.includes("_sku")) {
@@ -377,19 +378,19 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     "physicalProductStatus",
     "unitCost",
   ]
+
+  console.log("values", values)
+
+  // We will show a manufacturerSizeType field in the create view if no variants
+
   const data = Array.from(Array(numVariants).keys()).map(index => {
+    const manufacturerSizeType = values[`${index}_manufacturerSizeType`]
+      ? values[`${index}_manufacturerSizeType`]
+      : product?.variants?.[0]?.manufacturerSizes?.[0]?.type
+
     // Get internal size
-    let internalSizeName = ""
-    switch (productType) {
-      case "Top":
-        internalSizeName = values[`${index}_internalSize`].value
-        break
-      case "Bottom":
-        const waist = Math.floor(Number(values[`${index}_waist`]))
-        const inseam = Math.floor(Number(values[`${index}_inseam`]))
-        internalSizeName = `${waist}x${inseam}`
-        break
-    }
+    const internalSize = values[`${index}_internalSize`]
+    const manufacturerSize = values[`${index}_manufacturerSize`]
 
     // Get measurement values
     const measurementData = {}
@@ -428,7 +429,9 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
 
     return {
       sku: values[`${index}_sku`],
-      internalSizeName,
+      internalSizeName: internalSize,
+      manufacturerSizeNames: [manufacturerSize],
+      manufacturerSizeType,
       physicalProducts,
       ...measurementData,
       ...shopifyProductVariantExternalId,
