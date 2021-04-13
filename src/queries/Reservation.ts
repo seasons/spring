@@ -151,6 +151,11 @@ export default {
           }
         }
       }
+      newProducts {
+        id
+        seasonsUID
+        barcode
+      }
       images(size: Large) {
         url
       }

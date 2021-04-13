@@ -81,7 +81,7 @@ export interface UpdateVariant_shopifyProductVariant_image {
 export interface UpdateVariant_shopifyProductVariant {
   __typename: "ShopifyProductVariant"
   id: string
-  externalID: string | null
+  externalId: string | null
   displayName: string | null
   image: UpdateVariant_shopifyProductVariant_image | null
   title: string | null
