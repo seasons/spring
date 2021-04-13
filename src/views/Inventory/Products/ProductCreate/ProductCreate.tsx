@@ -55,7 +55,6 @@ export const ProductCreate: React.FC = () => {
   }
 
   const onNext = async values => {
-    console.log("onasd ae1", values)
     setValues(values)
     const { sizes } = values
     if (!sizes || sizes.length === 0) {
@@ -67,7 +66,6 @@ export const ProductCreate: React.FC = () => {
 
   const onSubmit = async values => {
     setIsSubmitting(true)
-    console.log("on submity asda", values)
     // Extract appropriate values from the WizardForm
     const productUpsertData = getProductUpsertData(values)
     productUpsertData.createNew = location.pathname.includes("new")
