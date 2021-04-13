@@ -379,16 +379,12 @@ export const getProductVariantUpsertData = ({ values, product }) => {
     "unitCost",
   ]
 
-  console.log("values", values)
-
-  // We will show a manufacturerSizeType field in the create view if no variants
-
   const data = Array.from(Array(numVariants).keys()).map(index => {
+    // We will show a manufacturerSizeType field in the create view if no variants
     const manufacturerSizeType = values[`${index}_manufacturerSizeType`]
       ? values[`${index}_manufacturerSizeType`]
       : product?.variants?.[0]?.manufacturerSizes?.[0]?.type
 
-    // Get internal size
     const internalSize = values[`${index}_internalSize`]
     const manufacturerSize = values[`${index}_manufacturerSize`]
 
