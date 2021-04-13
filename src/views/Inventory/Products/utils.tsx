@@ -231,10 +231,17 @@ export const getProductUpsertData: any = (values: any) => {
     }
   }
 
+  let internalSizeType
+  if (productType === "Top") {
+    internalSizeType = "Letter"
+  } else if (productType === "Bottom") {
+    internalSizeType = "WxL"
+  }
+
   // Piece all the data together
   const productsData = {
     architecture: architecture,
-    internalBottomSizeType: "WxL",
+    internalSizeType,
     brandID,
     buyNewEnabled,
     buyUsedEnabled,
