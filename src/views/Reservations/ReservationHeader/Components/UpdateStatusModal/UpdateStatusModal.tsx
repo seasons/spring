@@ -19,10 +19,12 @@ export const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({
   reservation,
   isMutating = false,
 }) => {
-  const choices = ["Queued", "Packed", "Shipped", "Delivered", "Blocked", "Completed", "Cancelled"].map(choice => ({
-    display: choice,
-    value: choice,
-  }))
+  const choices = ["Queued", "Picked", "Packed", "Shipped", "Delivered", "Blocked", "Completed", "Cancelled"].map(
+    choice => ({
+      display: choice,
+      value: choice,
+    })
+  )
 
   return (
     <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
