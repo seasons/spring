@@ -54,11 +54,14 @@ export const extractVariantSizeFields = ({
   // We don't include the total count when editing a variant
   const genericMeasurementKeys = ["weight", "totalcount"]
   let measurementKeys
+  let internalSizeType
   switch (productType) {
     case "Top":
       measurementKeys = ["sleeve", "shoulder", "chest", "neck", "length", ...genericMeasurementKeys]
+      internalSizeType = "Letter"
       break
     case "Bottom":
+      internalSizeType = "WxL"
       measurementKeys = ["waist", "rise", "hem", "inseam", ...genericMeasurementKeys]
       break
   }
@@ -72,6 +75,7 @@ export const extractVariantSizeFields = ({
   if (manufacturerSizeNames.length) {
     sizeData.manufacturerSizeNames = manufacturerSizeNames
     sizeData.manufacturerSizeType = values.manufacturerSizeType
+    sizeData.internalSizeType = internalSizeType
   }
 
   return sizeData
@@ -231,17 +235,9 @@ export const getProductUpsertData: any = (values: any) => {
     }
   }
 
-  let internalSizeType
-  if (productType === "Top") {
-    internalSizeType = "Letter"
-  } else if (productType === "Bottom") {
-    internalSizeType = "WxL"
-  }
-
   // Piece all the data together
   const productsData = {
     architecture: architecture,
-    internalSizeType,
     brandID,
     buyNewEnabled,
     buyUsedEnabled,
