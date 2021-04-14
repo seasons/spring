@@ -197,6 +197,13 @@ export interface GetReservation_products {
   productVariant: GetReservation_products_productVariant | null
 }
 
+export interface GetReservation_newProducts {
+  __typename: "PhysicalProduct"
+  id: string
+  seasonsUID: string
+  barcode: string
+}
+
 export interface GetReservation_images {
   __typename: "Image"
   url: string | null
@@ -213,6 +220,7 @@ export interface GetReservation {
   adminLogs: GetReservation_adminLogs[]
   lastLocation: GetReservation_lastLocation | null
   products: GetReservation_products[]
+  newProducts: GetReservation_newProducts[]
   images: GetReservation_images[]
   reservationNumber: number
   shipped: boolean

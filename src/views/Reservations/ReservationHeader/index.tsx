@@ -6,8 +6,8 @@ import ArchiveIcon from "@material-ui/icons/Archive"
 import { useMutation, ExecutionResult } from "react-apollo"
 import { useRefresh } from "@seasons/react-admin"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
-import { MARK_RESERVATION_PICKED, UPDATE_RESERVATION, PROCESS_RESERVATION } from "../mutations"
-import { PickingModal } from "./Components/PickingModal/PickingModal"
+import { MARK_RESERVATION_PICKED, UPDATE_RESERVATION, PROCESS_RESERVATION, MARK_RESERVATION_PACKED } from "../mutations"
+import { PickingPackingModal } from "./Components/PickingPackingModal/PickingPackingModal"
 import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessReturnModal"
 import { UpdateStatusModal } from "./Components/UpdateStatusModal/UpdateStatusModal"
 import { SUBMIT_QA_ENTRY } from "components/ProductQAModal"
@@ -19,8 +19,8 @@ import { useSnackbarContext } from "components/Snackbar"
 export const ReservationHeader = ({ data }) => {
   const [showUpdateStatusModal, toggleUpdateStatusModal] = useState(false)
 
-  const isReservationUnfulfilled = ["Queued", "Packed"].includes(data?.status)
-  const Modal = isReservationUnfulfilled ? PickingModal : ProcessReturnModal
+  const isReservationUnfulfilled = ["Queued", "Picked", "Packed"].includes(data?.status)
+  const Modal = isReservationUnfulfilled ? PickingPackingModal : ProcessReturnModal
 
   const [showModal, toggleModal] = useState(false)
 
@@ -40,6 +40,7 @@ export const ReservationHeader = ({ data }) => {
   }
 
   const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED, mutationConfig)
+  const [markReservationPacked] = useMutation(MARK_RESERVATION_PACKED, mutationConfig)
 
   const { showSnackbar } = useSnackbarContext()
 
@@ -62,8 +63,9 @@ export const ReservationHeader = ({ data }) => {
 
   let primaryButton = () => {
     if (isReservationUnfulfilled) {
+      const whatToStart = data?.status === "Queued" ? "Picking" : "Packing"
       return {
-        text: "Start Picking",
+        text: `Start ${whatToStart}`,
         action: () => toggleModal(true),
         icon: <ArchiveIcon />,
       }
@@ -116,15 +118,19 @@ export const ReservationHeader = ({ data }) => {
         onClose={() => toggleModal(false)}
         reservation={data}
         disableButton={isMutating}
-        onSave={async productStates => {
+        onSave={async (productStates, params = {}) => {
           setIsMutating(true)
           try {
             let result: ExecutionResult<any> | null = null
             let message = ``
             if (isReservationUnfulfilled) {
-              result = await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
+              if (params["status"] === "Picked") {
+                result = await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
+              } else if ((params["status"] = "Packed")) {
+                result = await markReservationPacked({ variables: { reservationNumber: data.reservationNumber } })
+              }
               setIsMutating(false)
-              message = "Reservation status successfully set to Picked"
+              message = `Reservation status successfully set to ${params["status"]}`
             } else {
               const mutationData: ProcessReservationMutationVariables = {
                 data: {

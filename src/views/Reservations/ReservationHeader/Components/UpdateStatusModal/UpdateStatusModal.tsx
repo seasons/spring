@@ -19,7 +19,17 @@ export const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({
   reservation,
   isMutating = false,
 }) => {
-  const choices = ["Queued", "Packed", "Shipped", "Delivered", "Blocked", "Completed", "Cancelled"].map(choice => ({
+  const choices = [
+    "Queued",
+    "Picked",
+    "Packed",
+    "Shipped",
+    "Delivered",
+    "Blocked",
+    "Hold",
+    "Completed",
+    "Cancelled",
+  ].map(choice => ({
     display: choice,
     value: choice,
   }))
