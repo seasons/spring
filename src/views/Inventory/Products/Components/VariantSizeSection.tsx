@@ -77,7 +77,7 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
             })}
             <Spacer grid mt={2} />
             <Grid item xs={3}>
-              <Text variant="h5">Manufacturer sizes *</Text>
+              <Text variant="h5">Manufacturer size *</Text>
               <Spacer mt={1} />
               <SelectField
                 key={`${size}_manufacturerSize_${manufacturerSizeType}`}
