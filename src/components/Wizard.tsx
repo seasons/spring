@@ -88,6 +88,7 @@ export const Wizard: React.FC<WizardProps> = ({
         values: formValues,
         errors,
       }) => {
+        console.log(formValues)
         return (
           <>
             <form onSubmit={handleSubmit}>
