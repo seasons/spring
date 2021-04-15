@@ -275,7 +275,6 @@ export const getProductUpsertData: any = (values: any) => {
 export const getProductUpdateData = (values: any) => {
   const {
     architecture,
-    bottomSizeType,
     brand: brandID,
     buyNewEnabled,
     buyUsedEnabled,
@@ -428,6 +427,7 @@ export const getProductVariantUpsertData = ({ values, product }) => {
 
     return {
       sku: values[`${index}_sku`],
+      internalSizeType: productType === "Top" ? "Letter" : "WxL",
       internalSizeName: internalSize,
       manufacturerSizeNames: [manufacturerSize],
       manufacturerSizeType,
