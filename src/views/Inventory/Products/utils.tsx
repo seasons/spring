@@ -1,22 +1,3 @@
-export const getSizes = ({ productType, bottomSizes }: { productType: string; bottomSizes: any[] }) => {
-  const sizes = {
-    Letter: ["XS", "S", "M", "L", "XL", "XXL"],
-  }
-  if (productType === "Bottom") {
-    bottomSizes.forEach(({ type: bottomType, value }) => {
-      if (bottomType !== "Letter") {
-        const sizeValue = `${bottomType} ${value}`
-        bottomType in sizes ? sizes[bottomType].push(sizeValue) : (sizes[bottomType] = [sizeValue])
-      }
-    })
-  }
-  const sortedKeys = Object.keys(sizes).sort()
-  return sortedKeys.map(key => ({
-    sizeType: key,
-    values: key === "Letter" ? sizes[key] : Array.from(new Set(sizes[key])).sort(),
-  }))
-}
-
 export const getModelSizeDisplay = (productType: string, modelSizeName: string) => {
   // Get the modelSizeDisplay which is usually just the modelSizeName except
   // for when it is a bottom whose type is not Letter.
@@ -73,11 +54,14 @@ export const extractVariantSizeFields = ({
   // We don't include the total count when editing a variant
   const genericMeasurementKeys = ["weight", "totalcount"]
   let measurementKeys
+  let internalSizeType
   switch (productType) {
     case "Top":
       measurementKeys = ["sleeve", "shoulder", "chest", "neck", "length", ...genericMeasurementKeys]
+      internalSizeType = "Letter"
       break
     case "Bottom":
+      internalSizeType = "WxL"
       measurementKeys = ["waist", "rise", "hem", "inseam", ...genericMeasurementKeys]
       break
   }
@@ -90,7 +74,8 @@ export const extractVariantSizeFields = ({
 
   if (manufacturerSizeNames.length) {
     sizeData.manufacturerSizeNames = manufacturerSizeNames
-    sizeData.manufacturerBottomSizeType = values.manufacturerBottomSizeType
+    sizeData.manufacturerSizeType = values.manufacturerSizeType
+    sizeData.internalSizeType = internalSizeType
   }
 
   return sizeData
@@ -253,7 +238,6 @@ export const getProductUpsertData: any = (values: any) => {
   // Piece all the data together
   const productsData = {
     architecture: architecture,
-    internalBottomSizeType: "WxL",
     brandID,
     buyNewEnabled,
     buyUsedEnabled,
@@ -291,7 +275,6 @@ export const getProductUpsertData: any = (values: any) => {
 export const getProductUpdateData = (values: any) => {
   const {
     architecture,
-    bottomSizeType,
     brand: brandID,
     buyNewEnabled,
     buyUsedEnabled,
@@ -377,7 +360,8 @@ export const getProductUpdateData = (values: any) => {
  * inside the New variants flow.
  * @param values: set of values retrieved from the New variants form
  */
-export const getProductVariantUpsertData = ({ values, productType }) => {
+export const getProductVariantUpsertData = ({ values, product }) => {
+  const productType = product?.type
   let maxVariantIndex = -1
   Object.keys(values).forEach(key => {
     if (key.includes("_sku")) {
@@ -396,19 +380,15 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
     "physicalProductStatus",
     "unitCost",
   ]
+
   const data = Array.from(Array(numVariants).keys()).map(index => {
-    // Get internal size
-    let internalSizeName = ""
-    switch (productType) {
-      case "Top":
-        internalSizeName = values[`${index}_lettersize`].value
-        break
-      case "Bottom":
-        const waist = Math.floor(Number(values[`${index}_waist`]))
-        const inseam = Math.floor(Number(values[`${index}_inseam`]))
-        internalSizeName = `${waist}x${inseam}`
-        break
-    }
+    // We will show a manufacturerSizeType field in the create view if no variants
+    const manufacturerSizeType = values[`${index}_manufacturerSizeType`]
+      ? values[`${index}_manufacturerSizeType`]
+      : product?.variants?.[0]?.manufacturerSizes?.[0]?.type
+
+    const internalSize = values[`${index}_internalSize`]
+    const manufacturerSize = values[`${index}_manufacturerSize`]
 
     // Get measurement values
     const measurementData = {}
@@ -447,7 +427,10 @@ export const getProductVariantUpsertData = ({ values, productType }) => {
 
     return {
       sku: values[`${index}_sku`],
-      internalSizeName,
+      internalSizeType: productType === "Top" ? "Letter" : "WxL",
+      internalSizeName: internalSize,
+      manufacturerSizeNames: [manufacturerSize],
+      manufacturerSizeType,
       physicalProducts,
       ...measurementData,
       ...shopifyProductVariantExternalId,

@@ -73,6 +73,7 @@ export const Wizard: React.FC<WizardProps> = ({
 
   const activePage = React.Children.toArray(children)[pageIndex]
   const isLastPage = pageIndex === React.Children.count(children) - 1
+
   return (
     <Form
       initialValues={values}

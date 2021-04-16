@@ -4,7 +4,7 @@ import { Spacer, Text } from "components"
 import { ExpandableSection } from "./ExpandableSection"
 import { TextField, SelectField } from "fields"
 import { getTypeSpecificVariantFields } from "../utils"
-import { ManufacturerSizeType, getManufacturerSizes } from "utils/sizes"
+import { getManufacturerSizes, ManufacturerSizeType } from "utils/sizes"
 import { getFormSelectChoices } from "utils/form"
 
 export interface VariantSizeSectionProps {
@@ -12,16 +12,15 @@ export interface VariantSizeSectionProps {
   productType: string
   size: string
   sku: string
-  bottomSizes: any[]
   manufacturerSizeType: ManufacturerSizeType | null
 }
 
 export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
-  manufacturerSizeType,
   isEditing,
   productType,
   size,
   sku,
+  manufacturerSizeType,
 }) => {
   const typeSpecificFields = getTypeSpecificVariantFields(productType)
   const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 2) : []
@@ -77,19 +76,18 @@ export const VariantSizeSection: React.FC<VariantSizeSectionProps> = ({
               )
             })}
             <Spacer grid mt={2} />
-            {productType === "Bottom" && (
-              <Grid item xs={3}>
-                <Text variant="h5">Manufacturer sizes</Text>
-                <Spacer mt={1} />
-                <SelectField
-                  key={`${size}_manufacturerSize_${manufacturerSizeType}`}
-                  name={`${size}_manufacturerSize_${manufacturerSizeType}`}
-                  choices={getFormSelectChoices(manufacturerSizes)}
-                  multiple={false}
-                />
-                <Spacer grid mt={2} />
-              </Grid>
-            )}
+            <Grid item xs={3}>
+              <Text variant="h5">Manufacturer size *</Text>
+              <Spacer mt={1} />
+              <SelectField
+                key={`${size}_manufacturerSize_${manufacturerSizeType}`}
+                name={`${size}_manufacturerSize_${manufacturerSizeType}`}
+                choices={getFormSelectChoices(manufacturerSizes)}
+                multiple={false}
+                requiredString
+              />
+              <Spacer grid mt={2} />
+            </Grid>
           </Grid>
         </>
       }
