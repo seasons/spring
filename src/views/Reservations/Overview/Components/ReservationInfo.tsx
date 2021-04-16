@@ -76,8 +76,8 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Amount</TableCell>
-              <TableCell>$12.00</TableCell>
+              <TableCell>Reservations</TableCell>
+              <TableCell>{reservation?.customer?.reservations.length}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Created At</TableCell>
