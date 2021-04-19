@@ -52,12 +52,17 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
     })
   }
 
+  const locationElements = location.pathname.split("/")
+  const indexOfProductInPathname = locationElements.indexOf("product")
+  const newProductOrExistingProductId = locationElements[indexOfProductInPathname + 1]
+  const productID = newProductOrExistingProductId === "new" ? null : newProductOrExistingProductId
   const { data, loading, error } = useQuery(GET_GENERATED_SEASONS_UIDS, {
     variables: {
       input: {
         brandID: newVariantsCreateData?.product.brand.id || "",
         colorCode: newVariantsCreateData?.product?.color.colorCode || "",
         sizes,
+        productID,
       },
     },
   })

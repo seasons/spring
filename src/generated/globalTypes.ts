@@ -5637,6 +5637,7 @@ export interface PhysicalProductSeasonsUIDsInput {
   brandID: string
   colorCode: string
   sizes: PhysicalProductSeasonsUIDSizes[]
+  productID?: string | null
 }
 
 export interface PhysicalProductUpdateDataInput {
