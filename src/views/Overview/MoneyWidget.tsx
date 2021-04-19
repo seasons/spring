@@ -2,7 +2,6 @@ import { Avatar as MuiAvatar, Box, Card as MuiCard, fade, styled as muiStyled, T
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney"
 import { Label } from "components"
 import React from "react"
-import { colors } from "theme"
 import { theme } from "theme/theme"
 
 export interface MoneyWidgetProps {

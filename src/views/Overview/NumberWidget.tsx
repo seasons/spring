@@ -1,8 +1,5 @@
-import { Avatar as MuiAvatar, Box, Card as MuiCard, fade, styled as muiStyled, Typography } from "@material-ui/core"
-import FolderOpenIcon from "@material-ui/icons/FolderOpenOutlined"
-import { Label } from "components"
+import { Avatar as MuiAvatar, Box, Card as MuiCard, styled as muiStyled, Typography } from "@material-ui/core"
 import React from "react"
-import { colors } from "theme/colors"
 import { theme } from "theme/theme"
 
 export interface WidgetData {

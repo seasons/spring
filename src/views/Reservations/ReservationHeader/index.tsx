@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { Header } from "components"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
 import ArchiveIcon from "@material-ui/icons/Archive"
-import { useMutation, ExecutionResult } from "react-apollo"
+import { useMutation } from "react-apollo"
 import { useRefresh } from "@seasons/react-admin"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
 import { MARK_RESERVATION_PICKED, UPDATE_RESERVATION, PROCESS_RESERVATION, MARK_RESERVATION_PACKED } from "../mutations"
@@ -121,13 +121,12 @@ export const ReservationHeader = ({ data }) => {
         onSave={async (productStates, params = {}) => {
           setIsMutating(true)
           try {
-            let result: ExecutionResult<any> | null = null
             let message = ``
             if (isReservationUnfulfilled) {
               if (params["status"] === "Picked") {
-                result = await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
+                await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
               } else if ((params["status"] = "Packed")) {
-                result = await markReservationPacked({ variables: { reservationNumber: data.reservationNumber } })
+                await markReservationPacked({ variables: { reservationNumber: data.reservationNumber } })
               }
               setIsMutating(false)
               message = `Reservation status successfully set to ${params["status"]}`
@@ -158,7 +157,7 @@ export const ReservationHeader = ({ data }) => {
                 })
               }
 
-              result = await processReservation({ variables: mutationData })
+              await processReservation({ variables: mutationData })
               setIsMutating(false)
               message = "Returned items successfully processed"
             }
@@ -185,7 +184,7 @@ export const ReservationHeader = ({ data }) => {
         isMutating={isMutating}
         onSubmit={async values => {
           setIsMutating(true)
-          const result = await updateReservation({
+          await updateReservation({
             variables: {
               reservationNumber: data.reservationNumber,
               status: values.reservationStatus,

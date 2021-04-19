@@ -3,18 +3,16 @@ import { NavItem, Logo } from "components"
 
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useLocation, matchPath } from "react-router"
+import { useLocation } from "react-router"
 import styled from "styled-components"
-import { colors } from "theme"
 
-import { Box, Drawer, List, Theme, Typography, Hidden, Divider, Button } from "@material-ui/core"
+import { Box, Drawer, List, Theme, Typography, Hidden, Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 
 import "react-perfect-scrollbar/dist/css/styles.css"
 import navConfig from "./navConfig"
-import Search from "components/Search/Search"
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
