@@ -5,7 +5,7 @@ const usWaistSizes = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 38]
 const usPantLengthSizes = [26, 27, 28, 29, 30, 31, 32, 33, 34]
 const usShortLengthSizes = [5, 6, 7, 8, 9, 10]
 
-const jpSizes = [1, 2, 3, 4, 5, 6]
+const jpSizes = [0, 1, 2, 3, 4, 5]
 const euSizes = [44, 46, 48, 50, 52, 54]
 
 export const US_LETTER_SIZES = ["XS", "S", "M", "L", "XL", "XXL"]
