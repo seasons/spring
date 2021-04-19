@@ -12,7 +12,7 @@ import { getFormSelectChoices, FormSelectChoice } from "utils/form"
 export interface MetadataSectionProps {
   architectures: string[]
   models: ProductUpsertQuery_productModels[]
-  sizes: FormSelectChoice[]
+  manufacturerSizes: FormSelectChoice[]
   buyNewEnabled: boolean
   buyUsedEnabled: boolean
   buyUsedPrice: number | null | undefined
@@ -22,7 +22,7 @@ export interface MetadataSectionProps {
 export const MetadataSection: React.FC<MetadataSectionProps> = ({
   architectures,
   models,
-  sizes,
+  manufacturerSizes,
   buyNewEnabled,
   buyUsedEnabled,
   buyUsedPrice,
@@ -70,7 +70,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Model size</Text>
             <Spacer mt={1} />
-            <SelectField name="modelSize" choices={sizes} />
+            <SelectField name="modelSize" choices={manufacturerSizes} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Retail price</Text>

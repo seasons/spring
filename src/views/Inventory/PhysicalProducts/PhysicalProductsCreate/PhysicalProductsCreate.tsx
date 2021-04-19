@@ -33,9 +33,9 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
 
   // Sizes data here is used to get generated seasons UIDs in
   // the create new variants flow
-  const sizes: { sizeName: string; count: number }[] = []
+  const sizes: { manufacturerSize: string; internalSize: string; count: number }[] = []
   if (newVariantsCreateData) {
-    const { values: formValues, product } = newVariantsCreateData
+    const { values: formValues } = newVariantsCreateData
 
     // Figure out number of variants we are creating
     const maxVariantIndex = Object.keys(formValues).reduce((maxVariantIndex, formKey) => {
@@ -46,24 +46,9 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
 
     Array.from(Array(numVariants).keys()).forEach(index => {
       const count = Number(formValues[`${index}_totalcount`])
-      // Get size data for each variant by looking at values
-      //
-      // All size options are of the form { key: string, value: string }
-      // where [key] is the size type (i.e. Letter, WxL, etc.) and
-      // [value] is the size name (i.e. XS, S, 32x30, etc.)
-      switch (product.type) {
-        case "Top":
-          const sizeOption = formValues[`${index}_lettersize`]
-          sizes.push({ sizeName: sizeOption.value, count })
-          break
-        case "Bottom":
-          const waist = formValues[`${index}_waist`]
-          const inseam = formValues[`${index}_inseam`]
-          sizes.push({ sizeName: `${Math.floor(waist)}x${Math.floor(inseam)}`, count })
-          break
-        default:
-          break
-      }
+      const internalSize = formValues[`${index}_internalSize`]
+      const manufacturerSize = formValues[`${index}_manufacturerSize`]
+      sizes.push({ manufacturerSize, internalSize, count })
     })
   }
 

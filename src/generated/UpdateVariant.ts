@@ -3,24 +3,18 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductType, BottomSizeType, LetterSize, PhysicalProductStatus, InventoryStatus } from "./globalTypes"
+import { SizeType, ProductType, PhysicalProductStatus, InventoryStatus } from "./globalTypes"
 
 // ====================================================
 // GraphQL fragment: UpdateVariant
 // ====================================================
 
-export interface UpdateVariant_manufacturerSizes_bottom {
-  __typename: "BottomSize"
-  id: string
-  type: BottomSizeType | null
-}
-
 export interface UpdateVariant_manufacturerSizes {
   __typename: "Size"
   id: string
   display: string
+  type: SizeType | null
   productType: ProductType | null
-  bottom: UpdateVariant_manufacturerSizes_bottom | null
 }
 
 export interface UpdateVariant_product_brand {
@@ -38,7 +32,6 @@ export interface UpdateVariant_product {
 export interface UpdateVariant_internalSize_top {
   __typename: "TopSize"
   id: string
-  letter: LetterSize | null
   sleeve: number | null
   shoulder: number | null
   chest: number | null
@@ -49,8 +42,6 @@ export interface UpdateVariant_internalSize_top {
 export interface UpdateVariant_internalSize_bottom {
   __typename: "BottomSize"
   id: string
-  type: BottomSizeType | null
-  value: string | null
   waist: number | null
   rise: number | null
   hem: number | null

@@ -68,6 +68,8 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
               return `${option.user.firstName} ${option.user.lastName}`
             case "Search":
               return option.query
+            case "ShopifyProductVariant":
+              return option.displayName
           }
 
           return option.name
@@ -94,6 +96,9 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
               break
             case "Search":
               url = `/search?q=${value}`
+              break
+            case "ShopifyProductVariant":
+              url = ""
               break
           }
 

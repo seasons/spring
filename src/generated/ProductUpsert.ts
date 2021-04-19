@@ -3,17 +3,9 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { BottomSizeType } from "./globalTypes"
-
 // ====================================================
 // GraphQL fragment: ProductUpsert
 // ====================================================
-
-export interface ProductUpsert_bottomSizes {
-  __typename: "BottomSize"
-  type: BottomSizeType | null
-  value: string | null
-}
 
 export interface ProductUpsert_brands {
   __typename: "Brand"
@@ -82,7 +74,6 @@ export interface ProductUpsert_tags {
 
 export interface ProductUpsert {
   __typename: "Query"
-  bottomSizes: (ProductUpsert_bottomSizes | null)[]
   brands: (ProductUpsert_brands | null)[]
   inventoryStatuses: ProductUpsert_inventoryStatuses | null
   physicalProductStatuses: ProductUpsert_physicalProductStatuses | null

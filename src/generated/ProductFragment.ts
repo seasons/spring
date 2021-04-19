@@ -6,7 +6,6 @@
 import {
   PhotographyStatus,
   ProductType,
-  LetterSize,
   PhysicalProductStatus,
   InventoryStatus,
   PhysicalProductOffloadMethod,
@@ -16,6 +15,8 @@ import {
   SeasonCode,
   SeasonString,
   ProductTierName,
+  SizeType,
+  LetterSize,
 } from "./globalTypes"
 
 // ====================================================
@@ -79,6 +80,13 @@ export interface ProductFragment_variants_physicalProducts {
   warehouseLocation: ProductFragment_variants_physicalProducts_warehouseLocation | null
 }
 
+export interface ProductFragment_variants_manufacturerSizes {
+  __typename: "Size"
+  id: string
+  type: SizeType | null
+  productType: ProductType | null
+}
+
 export interface ProductFragment_variants_product {
   __typename: "Product"
   id: string
@@ -90,6 +98,7 @@ export interface ProductFragment_variants {
   sku: string | null
   internalSize: ProductFragment_variants_internalSize | null
   physicalProducts: ProductFragment_variants_physicalProducts[] | null
+  manufacturerSizes: ProductFragment_variants_manufacturerSizes[] | null
   product: ProductFragment_variants_product
 }
 

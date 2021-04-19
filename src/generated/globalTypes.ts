@@ -421,6 +421,14 @@ export enum ShippingCode {
   UPSSelect = "UPSSelect",
 }
 
+export enum SizeType {
+  EU = "EU",
+  JP = "JP",
+  Letter = "Letter",
+  US = "US",
+  WxL = "WxL",
+}
+
 export enum SmsStatus {
   Accepted = "Accepted",
   Delivered = "Delivered",
@@ -9387,6 +9395,7 @@ export interface SizeCreateInput {
   slug: string
   productType?: ProductType | null
   display: string
+  type?: SizeType | null
   top?: TopSizeCreateOneInput | null
   bottom?: BottomSizeCreateOneInput | null
 }
@@ -9451,12 +9460,17 @@ export interface SizeScalarWhereInput {
   display_not_starts_with?: string | null
   display_ends_with?: string | null
   display_not_ends_with?: string | null
+  type?: SizeType | null
+  type_not?: SizeType | null
+  type_in?: SizeType[] | null
+  type_not_in?: SizeType[] | null
 }
 
 export interface SizeUpdateDataInput {
   slug?: string | null
   productType?: ProductType | null
   display?: string | null
+  type?: SizeType | null
   top?: TopSizeUpdateOneInput | null
   bottom?: BottomSizeUpdateOneInput | null
 }
@@ -9465,6 +9479,7 @@ export interface SizeUpdateManyDataInput {
   slug?: string | null
   productType?: ProductType | null
   display?: string | null
+  type?: SizeType | null
 }
 
 export interface SizeUpdateManyInput {
@@ -9559,6 +9574,10 @@ export interface SizeWhereInput {
   display_not_starts_with?: string | null
   display_ends_with?: string | null
   display_not_ends_with?: string | null
+  type?: SizeType | null
+  type_not?: SizeType | null
+  type_in?: SizeType[] | null
+  type_not_in?: SizeType[] | null
   top?: TopSizeWhereInput | null
   bottom?: BottomSizeWhereInput | null
 }
@@ -10340,7 +10359,7 @@ export interface UpdateVariantInput {
   neck?: number | null
   length?: number | null
   manufacturerSizeNames?: string[] | null
-  manufacturerBottomSizeType?: BottomSizeType | null
+  manufacturerSizeType?: SizeType | null
   waist?: number | null
   rise?: number | null
   hem?: number | null
@@ -10408,7 +10427,7 @@ export interface UpsertVariantInput {
   internalSizeName: string
   internalBottomSizeType?: BottomSizeType | null
   manufacturerSizeNames?: string[] | null
-  manufacturerBottomSizeType?: BottomSizeType | null
+  manufacturerSizeType?: SizeType | null
   waist?: number | null
   rise?: number | null
   hem?: number | null

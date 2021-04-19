@@ -21,7 +21,8 @@ import { DateTime } from "luxon"
 import { PRODUCT_EDIT_QUERY } from "../queries"
 import { SeasonsSection } from "."
 import { useSnackbarContext } from "components/Snackbar"
-import { wxlBottomSizes, US_LETTER_SIZES } from "utils/sizes"
+import { wxlBottomSizes, US_LETTER_SIZES, getManufacturerSizes } from "utils/sizes"
+import { useField } from "react-final-form"
 
 export interface OverviewProps {
   data: ProductUpsertQuery
@@ -31,6 +32,9 @@ export interface OverviewProps {
 export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
   const location = useLocation()
   const [productType, setProductType] = useState(product?.type || "Top")
+  const manufacturerSizeTypeField = useField("manufacturerSizeType")
+  const manufacturerSizeType = manufacturerSizeTypeField?.input?.value
+
   const [isLongTermStorageDialogOpen, setIsLongTermStorageDialogOpen] = useState(false)
   const [isRestoreFromLongTermStorageDialogOpen, setIsRestoreFromLongTermStorageDialogOpen] = useState(false)
   const { showSnackbar } = useSnackbarContext()
@@ -84,14 +88,16 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
     })
   }
 
-  let sizes: any[] = []
+  const manufacturerSizes: any[] = getFormSelectChoices(getManufacturerSizes(manufacturerSizeType))
+
+  let internalSizes: any[] = []
   switch (productType) {
     case "Top":
       const topSizes: string[] = US_LETTER_SIZES
-      sizes = getFormSelectChoices(topSizes)
+      internalSizes = getFormSelectChoices(topSizes)
       break
     case "Bottom":
-      sizes = getFormSelectChoices(wxlBottomSizes())
+      internalSizes = getFormSelectChoices(wxlBottomSizes())
       break
   }
 
@@ -224,18 +230,18 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
           <GeneralSection
             brands={data.brands.filter(Boolean) as ProductUpsertQuery_brands[]}
             isEditing={isEditing}
-            sizes={sizes}
+            internalSizes={internalSizes}
             availabilityStatuses={availabilityStatuses}
             photographyStatuses={photographyStatuses}
             types={productTypes}
             setProductType={setProductType}
-            currentStatus={product?.status}
+            product={product}
           />
           <Spacer mt={6} />
           <MetadataSection
             architectures={productArchitectures}
             models={data.productModels as ProductUpsertQuery_productModels[]}
-            sizes={sizes}
+            manufacturerSizes={manufacturerSizes}
             buyNewEnabled={buyNewEnabled}
             buyUsedEnabled={buyUsedEnabled}
             buyUsedPrice={buyUsedPrice}
@@ -245,7 +251,6 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
           <SeasonsSection
             architectures={productArchitectures}
             models={data.productModels as ProductUpsertQuery_productModels[]}
-            sizes={sizes}
           />
           <Spacer mt={6} />
           <TagsSection materials={materials} materialCategoryChoices={materialCategoryChoices} tags={tags} />

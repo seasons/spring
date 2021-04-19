@@ -5,10 +5,8 @@
 
 import {
   ProductWhereUniqueInput,
-  BottomSizeType,
   PhotographyStatus,
   ProductType,
-  LetterSize,
   PhysicalProductStatus,
   InventoryStatus,
   PhysicalProductOffloadMethod,
@@ -18,17 +16,13 @@ import {
   SeasonCode,
   SeasonString,
   ProductTierName,
+  SizeType,
+  LetterSize,
 } from "./globalTypes"
 
 // ====================================================
 // GraphQL query operation: ProductEditQuery
 // ====================================================
-
-export interface ProductEditQuery_bottomSizes {
-  __typename: "BottomSize"
-  type: BottomSizeType | null
-  value: string | null
-}
 
 export interface ProductEditQuery_brands {
   __typename: "Brand"
@@ -152,6 +146,13 @@ export interface ProductEditQuery_product_variants_physicalProducts {
   warehouseLocation: ProductEditQuery_product_variants_physicalProducts_warehouseLocation | null
 }
 
+export interface ProductEditQuery_product_variants_manufacturerSizes {
+  __typename: "Size"
+  id: string
+  type: SizeType | null
+  productType: ProductType | null
+}
+
 export interface ProductEditQuery_product_variants_product {
   __typename: "Product"
   id: string
@@ -163,6 +164,7 @@ export interface ProductEditQuery_product_variants {
   sku: string | null
   internalSize: ProductEditQuery_product_variants_internalSize | null
   physicalProducts: ProductEditQuery_product_variants_physicalProducts[] | null
+  manufacturerSizes: ProductEditQuery_product_variants_manufacturerSizes[] | null
   product: ProductEditQuery_product_variants_product
 }
 
@@ -277,7 +279,6 @@ export interface ProductEditQuery_product {
 
 export interface ProductEditQuery {
   __typename: "Query"
-  bottomSizes: (ProductEditQuery_bottomSizes | null)[]
   brands: (ProductEditQuery_brands | null)[]
   inventoryStatuses: ProductEditQuery_inventoryStatuses | null
   physicalProductStatuses: ProductEditQuery_physicalProductStatuses | null

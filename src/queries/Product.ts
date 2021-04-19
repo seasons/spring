@@ -57,14 +57,6 @@ export default {
           id
           display
           productType
-          top {
-            id
-            letter
-          }
-          bottom {
-            id
-            value
-          }
         }
         physicalProducts {
           id
