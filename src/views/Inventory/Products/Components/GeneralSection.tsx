@@ -89,7 +89,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <Grid item xs={6}>
               <Text variant="h6">Available sizes</Text>
               <Spacer mt={1} />
-              <SelectField disabled={isEditing} multiple name="sizes" choices={sizes} />
+              <SelectField disabled={isEditing} multiple name="sizes" choices={internalSizes} required />
               <Spacer mt={3} />
             </Grid>
           </Grid>

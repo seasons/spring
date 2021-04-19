@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
-import { ConfirmationDialog, Spacer, Wizard } from "components"
+import { Spacer, Wizard } from "components"
 import { Overview, Variants } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
@@ -16,7 +16,6 @@ import { useSnackbarContext } from "components/Snackbar"
 export const ProductCreate: React.FC = () => {
   const history = useHistory()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false)
   const { data, loading, error } = useQuery(PRODUCT_UPSERT_QUERY)
   const location = useLocation()
   const { showSnackbar } = useSnackbarContext()
@@ -46,21 +45,8 @@ export const ProductCreate: React.FC = () => {
     return <Loading />
   }
 
-  const onCloseConfirmationDialog = async (agreed: boolean) => {
-    // Make sure user has confirmed submission
-    if (!agreed) {
-      return
-    }
-    await onSubmit(values)
-  }
-
   const onNext = async values => {
     setValues(values)
-    const { sizes } = values
-    if (!sizes || sizes.length === 0) {
-      setIsConfirmationDialogOpen(true)
-      return false
-    }
     return true
   }
 
@@ -95,13 +81,6 @@ export const ProductCreate: React.FC = () => {
         />
       </Wizard>
       <Spacer mt={18} />
-      <ConfirmationDialog
-        title="By not specifying any available sizes, a new product will be created without any variants. Are you sure you want to submit?"
-        body="Make sure all the values provided are correct before submitting."
-        open={isConfirmationDialogOpen}
-        setOpen={setIsConfirmationDialogOpen}
-        onClose={onCloseConfirmationDialog}
-      />
     </Container>
   )
 }
