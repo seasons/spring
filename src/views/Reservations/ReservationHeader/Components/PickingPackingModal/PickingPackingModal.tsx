@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typography, Card } from "@material-ui/core"
 import { DialogTitle, Spacer } from "components"
 import { GetReservation } from "generated/GetReservation"
-import { PickingProductCard } from "./PickingProductCard"
+import { PickingPackingProductCard } from "./PickingPackingProductCard"
 import { Alert } from "@material-ui/lab"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { trim } from "lodash"
@@ -14,20 +14,25 @@ interface ProductState {
   picked: boolean
 }
 
-interface PickingModalProps {
+interface PickingPackingModalProps {
   open: boolean
   onClose?: () => void
-  onSave?(values: ProductStates): void
+  onSave?: (values: ProductStates, params?: any) => void
   disableButton?: boolean
   reservation: GetReservation
 }
 
 type ProductStates = { [key: string]: ProductState }
 
-export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open, onSave, onClose, reservation }) => {
+export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
+  disableButton,
+  open,
+  onSave,
+  onClose,
+  reservation,
+}) => {
   const barcodeMaps = {}
-  const availableProducts = reservation?.products.filter(product => !!product?.warehouseLocation?.id)
-  availableProducts.forEach(product => {
+  reservation?.newProducts.forEach(product => {
     barcodeMaps[product.barcode] = {
       productUID: product.seasonsUID,
       picked: false,
@@ -43,7 +48,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
   const [barcode, setBarcode] = useState("")
   const [shouldAllowSave, setShouldAllowSave] = useState(false)
 
-  const alreadyPicked = reservation.status === "Packed"
+  const alreadyPacked = reservation.status === "Packed"
   const inputRef = useRef()
 
   const focusOnInput = () => {
@@ -51,8 +56,8 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
     target?.focus()
   }
 
-  const handleSave = () => {
-    onSave?.(productStates)
+  const handleSave = status => {
+    onSave?.(productStates, { status })
   }
 
   const { showSnackbar } = useSnackbarContext()
@@ -76,7 +81,7 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
         setProductStates(updatedProductStates)
 
         const pickedCount = Object.values(updatedProductStates).filter((a: any) => !!a.picked).length
-        setShouldAllowSave(pickedCount === availableProducts.length)
+        setShouldAllowSave(pickedCount === reservation?.newProducts?.length)
       } else {
         showSnackbar({
           message: `Barcode not found`,
@@ -96,16 +101,23 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
     }
   }, [open])
 
+  const mode = reservation?.status === "Queued" ? "Pick" : "Pack"
+
+  const title = mode === "Pick" ? "Pick items" : "Pack items"
+  const listItemOneTitle = mode === "Pick" ? "Picking items" : "Packing items"
+  const newProductsWithData = reservation?.products.filter(a =>
+    reservation?.newProducts.map(b => b.seasonsUID).includes(a.seasonsUID)
+  )
   return (
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
-          Pick Items
+          {title}
         </DialogTitle>
         <DialogContent dividers>
-          {alreadyPicked ? (
+          {alreadyPacked ? (
             <Box mb={1}>
-              <Alert severity="info">Items were already picked. You can proceed to packing.</Alert>
+              <Alert severity="info">Items were already packed.</Alert>
             </Box>
           ) : (
             <Box my={2} width={["400px"]}>
@@ -118,19 +130,19 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
                 onChange={handleBarcodeChange}
                 value={barcode}
                 inputRef={inputRef}
-                disabled={alreadyPicked}
+                disabled={alreadyPacked}
                 fullWidth
               />
             </Box>
           )}
           <Box mt={2} mb={2}>
-            <Typography variant="subtitle1">1. Picking items</Typography>
-            {availableProducts.map(product => (
+            <Typography variant="subtitle1">{`1. ${listItemOneTitle}`}</Typography>
+            {newProductsWithData.map(product => (
               <Box mb={2} key={`product-card-${product.id}`}>
-                <PickingProductCard
+                <PickingPackingProductCard
                   product={product}
                   productState={productStates[product.barcode]}
-                  donePicking={alreadyPicked}
+                  donePicking={alreadyPacked}
                   onStateChange={state => {
                     setProductStates({
                       ...productStates,
@@ -166,13 +178,25 @@ export const PickingModal: React.FC<PickingModalProps> = ({ disableButton, open,
         <DialogActions>
           <Button
             autoFocus
-            onClick={handleSave}
-            color="primary"
+            onClick={() => handleSave("Packed")}
+            color="secondary"
             variant="contained"
             disabled={!shouldAllowSave || disableButton}
           >
-            Mark as picked
+            Mark as packed
           </Button>
+
+          {mode === "Pick" && (
+            <Button
+              autoFocus
+              onClick={() => handleSave("Picked")}
+              color="primary"
+              variant="contained"
+              disabled={!shouldAllowSave || disableButton}
+            >
+              Mark as picked
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </>

@@ -27,6 +27,7 @@ export enum AppRoute {
   CurrentRotation = "CurrentRotation",
   Faq = "Faq",
   Home = "Home",
+  Modal = "Modal",
   PaymentAndShipping = "PaymentAndShipping",
   PersonalPreferences = "PersonalPreferences",
   Product = "Product",
@@ -206,6 +207,7 @@ export enum LocationType {
 }
 
 export enum NotificationBarID {
+  AuthorizedReminder = "AuthorizedReminder",
   PastDueInvoice = "PastDueInvoice",
   TestDismissable = "TestDismissable",
 }
@@ -381,7 +383,9 @@ export enum ReservationStatus {
   Cancelled = "Cancelled",
   Completed = "Completed",
   Delivered = "Delivered",
+  Hold = "Hold",
   Packed = "Packed",
+  Picked = "Picked",
   Queued = "Queued",
   Received = "Received",
   Shipped = "Shipped",
@@ -415,6 +419,14 @@ export enum SeasonString {
 export enum ShippingCode {
   UPSGround = "UPSGround",
   UPSSelect = "UPSSelect",
+}
+
+export enum SizeType {
+  EU = "EU",
+  JP = "JP",
+  Letter = "Letter",
+  US = "US",
+  WxL = "WxL",
 }
 
 export enum SmsStatus {
@@ -3667,6 +3679,7 @@ export interface ImageCreateInput {
   id?: string | null
   caption?: string | null
   url: string
+  alt?: string | null
   height?: number | null
   width?: number | null
   title?: string | null
@@ -3728,6 +3741,20 @@ export interface ImageScalarWhereInput {
   url_not_starts_with?: string | null
   url_ends_with?: string | null
   url_not_ends_with?: string | null
+  alt?: string | null
+  alt_not?: string | null
+  alt_in?: string[] | null
+  alt_not_in?: string[] | null
+  alt_lt?: string | null
+  alt_lte?: string | null
+  alt_gt?: string | null
+  alt_gte?: string | null
+  alt_contains?: string | null
+  alt_not_contains?: string | null
+  alt_starts_with?: string | null
+  alt_not_starts_with?: string | null
+  alt_ends_with?: string | null
+  alt_not_ends_with?: string | null
   height?: number | null
   height_not?: number | null
   height_in?: number[] | null
@@ -3779,6 +3806,7 @@ export interface ImageScalarWhereInput {
 export interface ImageUpdateDataInput {
   caption?: string | null
   url?: string | null
+  alt?: string | null
   height?: number | null
   width?: number | null
   title?: string | null
@@ -3787,6 +3815,7 @@ export interface ImageUpdateDataInput {
 export interface ImageUpdateManyDataInput {
   caption?: string | null
   url?: string | null
+  alt?: string | null
   height?: number | null
   width?: number | null
   title?: string | null
@@ -3887,6 +3916,20 @@ export interface ImageWhereInput {
   url_not_starts_with?: string | null
   url_ends_with?: string | null
   url_not_ends_with?: string | null
+  alt?: string | null
+  alt_not?: string | null
+  alt_in?: string[] | null
+  alt_not_in?: string[] | null
+  alt_lt?: string | null
+  alt_lte?: string | null
+  alt_gt?: string | null
+  alt_gte?: string | null
+  alt_contains?: string | null
+  alt_not_contains?: string | null
+  alt_starts_with?: string | null
+  alt_not_starts_with?: string | null
+  alt_ends_with?: string | null
+  alt_not_ends_with?: string | null
   height?: number | null
   height_not?: number | null
   height_in?: number[] | null
@@ -8181,6 +8224,7 @@ export interface ReservationCreateWithoutCustomerInput {
   sentPackage?: PackageCreateOneInput | null
   returnedPackage?: PackageCreateOneInput | null
   products?: PhysicalProductCreateManyInput | null
+  newProducts?: PhysicalProductCreateManyInput | null
   packageEvents?: PackageTransitEventCreateManyWithoutReservationInput | null
   receipt?: ReservationReceiptCreateOneWithoutReservationInput | null
   lastLocation?: LocationCreateOneInput | null
@@ -8202,6 +8246,7 @@ export interface ReservationCreateWithoutPackageEventsInput {
   sentPackage?: PackageCreateOneInput | null
   returnedPackage?: PackageCreateOneInput | null
   products?: PhysicalProductCreateManyInput | null
+  newProducts?: PhysicalProductCreateManyInput | null
   receipt?: ReservationReceiptCreateOneWithoutReservationInput | null
   lastLocation?: LocationCreateOneInput | null
   shippingOption?: ShippingOptionCreateOneInput | null
@@ -8557,6 +8602,7 @@ export interface ReservationUpdateWithoutCustomerDataInput {
   sentPackage?: PackageUpdateOneInput | null
   returnedPackage?: PackageUpdateOneInput | null
   products?: PhysicalProductUpdateManyInput | null
+  newProducts?: PhysicalProductUpdateManyInput | null
   packageEvents?: PackageTransitEventUpdateManyWithoutReservationInput | null
   receipt?: ReservationReceiptUpdateOneWithoutReservationInput | null
   lastLocation?: LocationUpdateOneInput | null
@@ -8577,6 +8623,7 @@ export interface ReservationUpdateWithoutPackageEventsDataInput {
   sentPackage?: PackageUpdateOneInput | null
   returnedPackage?: PackageUpdateOneInput | null
   products?: PhysicalProductUpdateManyInput | null
+  newProducts?: PhysicalProductUpdateManyInput | null
   receipt?: ReservationReceiptUpdateOneWithoutReservationInput | null
   lastLocation?: LocationUpdateOneInput | null
   shippingOption?: ShippingOptionUpdateOneInput | null
@@ -9347,6 +9394,7 @@ export interface SizeCreateInput {
   slug: string
   productType?: ProductType | null
   display: string
+  type?: SizeType | null
   top?: TopSizeCreateOneInput | null
   bottom?: BottomSizeCreateOneInput | null
 }
@@ -9411,12 +9459,17 @@ export interface SizeScalarWhereInput {
   display_not_starts_with?: string | null
   display_ends_with?: string | null
   display_not_ends_with?: string | null
+  type?: SizeType | null
+  type_not?: SizeType | null
+  type_in?: SizeType[] | null
+  type_not_in?: SizeType[] | null
 }
 
 export interface SizeUpdateDataInput {
   slug?: string | null
   productType?: ProductType | null
   display?: string | null
+  type?: SizeType | null
   top?: TopSizeUpdateOneInput | null
   bottom?: BottomSizeUpdateOneInput | null
 }
@@ -9425,6 +9478,7 @@ export interface SizeUpdateManyDataInput {
   slug?: string | null
   productType?: ProductType | null
   display?: string | null
+  type?: SizeType | null
 }
 
 export interface SizeUpdateManyInput {
@@ -9519,6 +9573,10 @@ export interface SizeWhereInput {
   display_not_starts_with?: string | null
   display_ends_with?: string | null
   display_not_ends_with?: string | null
+  type?: SizeType | null
+  type_not?: SizeType | null
+  type_in?: SizeType[] | null
+  type_not_in?: SizeType[] | null
   top?: TopSizeWhereInput | null
   bottom?: BottomSizeWhereInput | null
 }
@@ -10300,7 +10358,7 @@ export interface UpdateVariantInput {
   neck?: number | null
   length?: number | null
   manufacturerSizeNames?: string[] | null
-  manufacturerBottomSizeType?: BottomSizeType | null
+  manufacturerSizeType?: SizeType | null
   waist?: number | null
   rise?: number | null
   hem?: number | null
@@ -10368,7 +10426,7 @@ export interface UpsertVariantInput {
   internalSizeName: string
   internalBottomSizeType?: BottomSizeType | null
   manufacturerSizeNames?: string[] | null
-  manufacturerBottomSizeType?: BottomSizeType | null
+  manufacturerSizeType?: SizeType | null
   waist?: number | null
   rise?: number | null
   hem?: number | null

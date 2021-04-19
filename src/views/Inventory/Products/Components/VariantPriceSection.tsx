@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Text, Spacer, Image } from "components"
+import { omit } from "lodash"
 import { Grid, Typography, Box, IconButton } from "@material-ui/core"
 import { Field, ChildFieldProps } from "fields/Field"
 import CloseIcon from "@material-ui/icons/Close"
@@ -66,10 +67,15 @@ const ShopifyProductVariantSearchField = ({
   brandID,
 }: Omit<ChildFieldProps, "initialValue"> & { initialValue: any; brandID: string }) => {
   const SearchFieldRender = ({ input, meta }) => {
-    const [shopifyProductVariant, setShopifyProductVariant] = React.useState({
-      ...initialValue,
-      image: initialValue?.image?.url,
-    })
+    const [shopifyProductVariant, setShopifyProductVariant] = React.useState(
+      initialValue
+        ? {
+            ...omit(initialValue, ["externalId"]),
+            externalID: initialValue.externalId,
+            image: initialValue?.image?.url,
+          }
+        : undefined
+    )
 
     const handleChange = value => {
       setShopifyProductVariant(value)

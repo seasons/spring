@@ -5,29 +5,18 @@ import { Box, Grid, styled as muiStyled } from "@material-ui/core"
 import AddIcon from "@material-ui/icons/Add"
 
 import { Header } from "components"
-import {
-  ProductVariantUpsertQuery_product,
-  ProductVariantUpsertQuery_bottomSizes,
-} from "generated/ProductVariantUpsertQuery"
+import { ProductVariantUpsertQuery_product } from "generated/ProductVariantUpsertQuery"
 import { VariantCreateSection } from "./VariantCreateSection"
-import { getSizes } from "../../utils"
 
 export interface VariantsCreateProps {
   product?: ProductVariantUpsertQuery_product
-  bottomSizes?: (ProductVariantUpsertQuery_bottomSizes | null)[]
 }
 
-export const VariantsCreate: React.FC<VariantsCreateProps> = ({ bottomSizes, product }) => {
+export const VariantsCreate: React.FC<VariantsCreateProps> = ({ product }) => {
   const location = useLocation()
   const [numVariants, setNumVariants] = useState(1)
 
-  if (!product || !bottomSizes) return null
-  const sizes = getSizes({
-    productType: product.type || "",
-    bottomSizes,
-  })
-  const sizeOptions = sizes.map(({ sizeType, values }) => values.map(value => ({ key: sizeType, value }))).flat()
-
+  if (!product) return null
   const title = "New product variants"
   const breadcrumbs = [
     {
@@ -35,8 +24,8 @@ export const VariantsCreate: React.FC<VariantsCreateProps> = ({ bottomSizes, pro
       url: "/inventory/products",
     },
     {
-      title: product.name,
-      url: `/inventory/products/${product.id}`,
+      title: product?.name,
+      url: `/inventory/products/${product?.id}`,
     },
     {
       title: title,
@@ -58,12 +47,7 @@ export const VariantsCreate: React.FC<VariantsCreateProps> = ({ bottomSizes, pro
       />
       <ContainerGrid container spacing={2}>
         {[...Array(numVariants).keys()].map(index => (
-          <VariantCreateSection
-            productType={product?.type || ""}
-            key={index}
-            sizeOptions={sizeOptions}
-            variantIndex={index}
-          />
+          <VariantCreateSection product={product} key={index} variantIndex={index} />
         ))}
       </ContainerGrid>
     </Box>

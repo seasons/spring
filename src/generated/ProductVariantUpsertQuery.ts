@@ -5,10 +5,8 @@
 
 import {
   ProductWhereUniqueInput,
-  BottomSizeType,
   PhotographyStatus,
   ProductType,
-  LetterSize,
   PhysicalProductStatus,
   InventoryStatus,
   PhysicalProductOffloadMethod,
@@ -18,17 +16,13 @@ import {
   SeasonCode,
   SeasonString,
   ProductTierName,
+  SizeType,
+  LetterSize,
 } from "./globalTypes"
 
 // ====================================================
 // GraphQL query operation: ProductVariantUpsertQuery
 // ====================================================
-
-export interface ProductVariantUpsertQuery_bottomSizes {
-  __typename: "BottomSize"
-  type: BottomSizeType | null
-  value: string | null
-}
 
 export interface ProductVariantUpsertQuery_inventoryStatuses_enumValues {
   __typename: "__EnumValue"
@@ -38,16 +32,6 @@ export interface ProductVariantUpsertQuery_inventoryStatuses_enumValues {
 export interface ProductVariantUpsertQuery_inventoryStatuses {
   __typename: "__Type"
   enumValues: ProductVariantUpsertQuery_inventoryStatuses_enumValues[] | null
-}
-
-export interface ProductVariantUpsertQuery_physicalProductStatuses_enumValues {
-  __typename: "__EnumValue"
-  name: string
-}
-
-export interface ProductVariantUpsertQuery_physicalProductStatuses {
-  __typename: "__Type"
-  enumValues: ProductVariantUpsertQuery_physicalProductStatuses_enumValues[] | null
 }
 
 export interface ProductVariantUpsertQuery_product_images {
@@ -107,6 +91,13 @@ export interface ProductVariantUpsertQuery_product_variants_physicalProducts {
   warehouseLocation: ProductVariantUpsertQuery_product_variants_physicalProducts_warehouseLocation | null
 }
 
+export interface ProductVariantUpsertQuery_product_variants_manufacturerSizes {
+  __typename: "Size"
+  id: string
+  type: SizeType | null
+  productType: ProductType | null
+}
+
 export interface ProductVariantUpsertQuery_product_variants_product {
   __typename: "Product"
   id: string
@@ -118,6 +109,7 @@ export interface ProductVariantUpsertQuery_product_variants {
   sku: string | null
   internalSize: ProductVariantUpsertQuery_product_variants_internalSize | null
   physicalProducts: ProductVariantUpsertQuery_product_variants_physicalProducts[] | null
+  manufacturerSizes: ProductVariantUpsertQuery_product_variants_manufacturerSizes[] | null
   product: ProductVariantUpsertQuery_product_variants_product
 }
 
@@ -231,9 +223,7 @@ export interface ProductVariantUpsertQuery_product {
 }
 
 export interface ProductVariantUpsertQuery {
-  bottomSizes: (ProductVariantUpsertQuery_bottomSizes | null)[]
   inventoryStatuses: ProductVariantUpsertQuery_inventoryStatuses | null
-  physicalProductStatuses: ProductVariantUpsertQuery_physicalProductStatuses | null
   product: ProductVariantUpsertQuery_product | null
 }
 

@@ -5,9 +5,8 @@
 
 import {
   ProductVariantWhereUniqueInput,
+  SizeType,
   ProductType,
-  BottomSizeType,
-  LetterSize,
   PhysicalProductStatus,
   InventoryStatus,
 } from "./globalTypes"
@@ -16,18 +15,12 @@ import {
 // GraphQL query operation: VariantEditQuery
 // ====================================================
 
-export interface VariantEditQuery_productVariant_manufacturerSizes_bottom {
-  __typename: "BottomSize"
-  id: string
-  type: BottomSizeType | null
-}
-
 export interface VariantEditQuery_productVariant_manufacturerSizes {
   __typename: "Size"
   id: string
   display: string
+  type: SizeType | null
   productType: ProductType | null
-  bottom: VariantEditQuery_productVariant_manufacturerSizes_bottom | null
 }
 
 export interface VariantEditQuery_productVariant_product_brand {
@@ -45,7 +38,6 @@ export interface VariantEditQuery_productVariant_product {
 export interface VariantEditQuery_productVariant_internalSize_top {
   __typename: "TopSize"
   id: string
-  letter: LetterSize | null
   sleeve: number | null
   shoulder: number | null
   chest: number | null
@@ -56,8 +48,6 @@ export interface VariantEditQuery_productVariant_internalSize_top {
 export interface VariantEditQuery_productVariant_internalSize_bottom {
   __typename: "BottomSize"
   id: string
-  type: BottomSizeType | null
-  value: string | null
   waist: number | null
   rise: number | null
   hem: number | null
@@ -88,7 +78,7 @@ export interface VariantEditQuery_productVariant_shopifyProductVariant_image {
 export interface VariantEditQuery_productVariant_shopifyProductVariant {
   __typename: "ShopifyProductVariant"
   id: string
-  externalID: string | null
+  externalId: string | null
   displayName: string | null
   image: VariantEditQuery_productVariant_shopifyProductVariant_image | null
   title: string | null

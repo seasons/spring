@@ -50,20 +50,18 @@ export const VariantEdit: React.FC = () => {
           [`${size}_totalcount`]: total,
           [`${size}_weight`]: parseFloat(weight) || undefined,
         }
-        if (!!productVariant.manufacturerSizes.length) {
-          const types: any[] = []
-          productVariant.manufacturerSizes.forEach(size => {
-            const type = size.bottom?.type
-            initialValues["manufacturerBottomSizeType"] = type
-            const sizeType = size.display.split(" ")
-            !!sizeType && types.push(sizeType?.[0])
-            initialValues[`${internalSize.display}_manufacturerSize_${type}`] = size.display
-          })
-        }
         break
       default:
         break
     }
+  }
+
+  if (productVariant?.manufacturerSizes?.length > 0) {
+    productVariant.manufacturerSizes.forEach(size => {
+      const type = size.type
+      initialValues["manufacturerSizeType"] = type
+      initialValues[`${internalSize.display}_manufacturerSize_${type}`] = size.display
+    })
   }
 
   const onSubmit = async values => {

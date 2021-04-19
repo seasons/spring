@@ -9,11 +9,8 @@ export const UpdateVariantFragment = gql`
     manufacturerSizes {
       id
       display
+      type
       productType
-      bottom {
-        id
-        type
-      }
     }
     product {
       id
@@ -28,7 +25,6 @@ export const UpdateVariantFragment = gql`
       productType
       top {
         id
-        letter
         sleeve
         shoulder
         chest
@@ -37,8 +33,6 @@ export const UpdateVariantFragment = gql`
       }
       bottom {
         id
-        type
-        value
         waist
         rise
         hem
@@ -52,7 +46,7 @@ export const UpdateVariantFragment = gql`
     }
     shopifyProductVariant {
       id
-      externalID: externalId
+      externalId
       displayName
       image {
         url
@@ -84,15 +78,6 @@ export const VARIANT_EDIT_QUERY = gql`
 
 export const GET_VARIANT_SKUS_AND_SIZE_TYPES = gql`
   query GetGeneratedVariantSkus($input: ProductVariantSKUsInput!) {
-    bottomSizeTypes: __type(name: "BottomSizeType") {
-      enumValues {
-        name
-      }
-    }
-    bottomSizes {
-      type
-      value
-    }
     generatedVariantSKUs(input: $input)
   }
 `
