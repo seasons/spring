@@ -121,13 +121,12 @@ export const ReservationHeader = ({ data }) => {
         onSave={async (productStates, params = {}) => {
           setIsMutating(true)
           try {
-            let result: ExecutionResult<any> | null = null
             let message = ``
             if (isReservationUnfulfilled) {
               if (params["status"] === "Picked") {
-                result = await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
+                await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
               } else if ((params["status"] = "Packed")) {
-                result = await markReservationPacked({ variables: { reservationNumber: data.reservationNumber } })
+                await markReservationPacked({ variables: { reservationNumber: data.reservationNumber } })
               }
               setIsMutating(false)
               message = `Reservation status successfully set to ${params["status"]}`
@@ -158,7 +157,7 @@ export const ReservationHeader = ({ data }) => {
                 })
               }
 
-              result = await processReservation({ variables: mutationData })
+              await processReservation({ variables: mutationData })
               setIsMutating(false)
               message = "Returned items successfully processed"
             }

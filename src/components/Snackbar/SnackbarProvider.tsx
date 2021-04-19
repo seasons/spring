@@ -25,9 +25,9 @@ export const SnackbarProvider = ({ children }) => {
           }
         case SnackbarAction.Close:
           return {
+            ...prevState,
             show: false,
             message: "",
-            status: "success" as Color,
           }
       }
     },
