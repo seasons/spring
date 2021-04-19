@@ -67,7 +67,6 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
     })
   }
 
-  console.log(location)
   const locationElements = location.pathname.split("/")
   const indexOfProductInPathname = locationElements.indexOf("product")
   const newProductOrExistingProductId = locationElements[indexOfProductInPathname + 1]
