@@ -1,9 +1,8 @@
 import React from "react"
 import { Grid } from "@material-ui/core"
-import { Spacer, Text } from "components"
-import { ExpandableSection } from "./ExpandableSection"
+import { ExpandableSection, Spacer, Text } from "components"
 import { TextField, SelectField } from "fields"
-import { getTypeSpecificVariantFields } from "../utils"
+import { getTypeSpecificVariantFields } from "views/Inventory/Products/utils"
 import { getManufacturerSizes, ManufacturerSizeType } from "utils/sizes"
 import { getFormSelectChoices } from "utils/form"
 

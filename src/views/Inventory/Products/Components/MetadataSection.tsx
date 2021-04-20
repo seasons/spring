@@ -5,7 +5,7 @@ import { Box, Grid, InputAdornment } from "@material-ui/core"
 import { Spacer, Text } from "components"
 import colorsJSON from "data/colors.json"
 import { ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
-import { ExpandableSection } from "./ExpandableSection"
+import { ExpandableSection } from "components/ExpandableSection"
 import { SelectField, TextField, CheckboxField } from "fields"
 import { getFormSelectChoices, FormSelectChoice } from "utils/form"
 

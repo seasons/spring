@@ -9,7 +9,7 @@ import { PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProd
 import { ProductVariantUpsertQuery_product } from "generated/ProductVariantUpsertQuery"
 import { GET_GENERATED_SEASONS_UIDS } from "../queries"
 import { PhysicalProductForm } from "../Components"
-import { ExpandableSection } from "views/Inventory/Products/Components"
+import { ExpandableSection } from "components"
 
 export interface PhysicalProductsCreateProps {
   inventoryStatuses: { name: string }[]

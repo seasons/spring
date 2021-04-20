@@ -4,7 +4,7 @@ import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
 import { Spacer, Wizard } from "components"
-import { Overview, Variants } from "../Components"
+import { Overview } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
 import { getProductUpsertData } from "../utils"
@@ -12,6 +12,7 @@ import { useLocation } from "react-router"
 import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
 import { PhysicalProductsCreate } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
 import { useSnackbarContext } from "components/Snackbar"
+import { Variants } from "views/Inventory/ProductVariants"
 
 export const ProductCreate: React.FC = () => {
   const history = useHistory()
