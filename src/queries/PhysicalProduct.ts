@@ -6,6 +6,7 @@ const GetOneFragment = gql`
     id
     seasonsUID
     inventoryStatus
+    offloadMethod
     sequenceNumber
     unitCost
     dateOrdered
@@ -115,6 +116,7 @@ export const PhysicalProductFragment = gql`
     id
     seasonsUID
     inventoryStatus
+    offloadMethod
     sequenceNumber
     unitCost
     dateOrdered

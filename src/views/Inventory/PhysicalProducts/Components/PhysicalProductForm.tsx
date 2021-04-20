@@ -7,12 +7,13 @@ import { getFormSelectChoices } from "utils/form"
 import { useQuery } from "react-apollo"
 import { PHYSICAL_PRODUCT_STATUSES_QUERY } from "views/Inventory/Products/queries/Product"
 import { Loading } from "@seasons/react-admin"
-import { InventoryStatus } from "generated/globalTypes"
+import { InventoryStatus, PhysicalProductOffloadMethod } from "generated/globalTypes"
 
 export interface PhysicalProductFormProps {
   statuses?: any[]
   uid: string
   inventoryStatuses?: any[]
+  offloadMethods?: any[]
   currentInventoryStatus?: InventoryStatus
 }
 
@@ -20,9 +21,11 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
   statuses = [],
   uid,
   inventoryStatuses = [],
+  offloadMethods = [],
   currentInventoryStatus = "",
 }) => {
-  const receivedStatusesFromParent = statuses.length > 0 && inventoryStatuses.length > 0
+  const receivedStatusesFromParent = statuses.length > 0 && inventoryStatuses.length > 0 && offloadMethods.length > 0
+
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_STATUSES_QUERY, {
     skip: receivedStatusesFromParent,
   })
@@ -31,6 +34,7 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
 
   statuses = receivedStatusesFromParent ? statuses : data?.physicalProductStatuses?.enumValues
   inventoryStatuses = receivedStatusesFromParent ? inventoryStatuses : data?.inventoryStatuses?.enumValues
+  offloadMethods = receivedStatusesFromParent ? offloadMethods : data?.offloadMethods?.enumValues
 
   const inventoryStatusChoices = getFormSelectChoices(inventoryStatuses.map(status => status?.name)).map(a => ({
     ...a,
@@ -38,6 +42,7 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
   }))
 
   const statusChoices = getFormSelectChoices(statuses.map(status => status.name))
+  const offloadMethodChoices = getFormSelectChoices(offloadMethods.map(method => method.name))
 
   return (
     <ContainerGrid container spacing={2}>
@@ -74,6 +79,19 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
           initialValue="NonReservable"
         />
       </Grid>
+      {currentInventoryStatus === "Offloaded" && (
+        <Grid item xs={6}>
+          <Text variant="h5">Offload Method *</Text>
+          <Spacer mt={1} />
+          <SelectField
+            name={`${uid}_offloadMethod`}
+            choices={offloadMethodChoices}
+            disabled={true}
+            requiredString
+            initialValue="Other"
+          />
+        </Grid>
+      )}
       <Spacer grid mt={5} />
     </ContainerGrid>
   )
