@@ -73,10 +73,12 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
 
   const handleSave = () => {
     setIsMutating(true)
+    const numPhysProdsAlreadyExisting = productVariant?.physicalProducts?.length || 0
+
     addPhysicalProductsToVariant({
       variables: {
         variantID: productVariant?.id,
-        count: physicalProducts.length,
+        count: physicalProducts.length - numPhysProdsAlreadyExisting,
       },
     })
   }
