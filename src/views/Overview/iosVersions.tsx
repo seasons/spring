@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { ControlPanel, Text } from "components"
 import ReactApexChart from "react-apexcharts"
-import { Box, Card as MuiCard, styled as muiStyled, Typography, Checkbox } from "@material-ui/core"
+import { Box, Card as MuiCard, styled as muiStyled } from "@material-ui/core"
 import { theme } from "theme/theme"
 
 export const IOSVersionsWidget = ({ data }) => {
@@ -110,22 +110,4 @@ const Card = muiStyled(MuiCard)({
   alignItems: "center",
   justifyContent: "space-between",
   position: "relative",
-})
-const ControlPanelText = ({ children }) => <Text variant="body1">{children}</Text>
-const CheckFlexbox = muiStyled(Box)({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "flex-start",
-})
-
-const ControlPanelCard = muiStyled(MuiCard)({
-  borderRadius: 4,
-  color: theme.palette.primary.contrastText,
-  padding: theme.spacing(2),
-  position: "absolute",
-  top: 10,
-  right: 10,
-  background: theme.palette.primary.main,
-  textAlign: "center",
 })

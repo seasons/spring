@@ -1,7 +1,7 @@
 import { updateCustomer as updateCustomerAction } from "actions/customerActions"
 import { MEMBER_DETAIL_UPDATE } from "../../queries"
 import { useMutation } from "@apollo/react-hooks"
-import { CardContent, ComponentError, EditButton, EditModal, TableHeader } from "components"
+import { CardContent, ComponentError, EditButton, EditModal } from "components"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 

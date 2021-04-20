@@ -91,7 +91,10 @@ export default {
         changedFields
         rowData
         entityId
-        interpretation
+        interpretation {
+          id
+          interpretation
+        }
         activeAdminUser {
           id
           fullName
