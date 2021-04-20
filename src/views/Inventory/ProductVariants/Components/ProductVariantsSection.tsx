@@ -4,7 +4,7 @@ import { useRedirect } from "@seasons/react-admin"
 import { Grid } from "@material-ui/core"
 import AddIcon from "@material-ui/icons/Add"
 
-import { ExpandableSection } from "./ExpandableSection"
+import { ExpandableSection } from "components/ExpandableSection"
 import { ProductEditQuery_product_variants } from "generated/ProductEditQuery"
 import { VariantSummary } from "./VariantSummary"
 

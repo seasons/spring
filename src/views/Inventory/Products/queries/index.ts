@@ -1,2 +1,1 @@
 export { PRODUCT_EDIT_QUERY, PRODUCT_UPSERT_QUERY, PRODUCT_VARIANT_UPSERT_QUERY } from "./Product"
-export { GET_VARIANT_SKUS_AND_SIZE_TYPES, VARIANT_EDIT_QUERY, UpdateVariantFragment } from "./Variant"
