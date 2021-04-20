@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import productFunctionsJSON from "data/productFunctions.json"
-import { ExpandableSection } from "./ExpandableSection"
+import { ExpandableSection } from "components/ExpandableSection"
 import { AutocompleteField, SelectField } from "fields"
 import { FormSelectChoice } from "utils/form"
 

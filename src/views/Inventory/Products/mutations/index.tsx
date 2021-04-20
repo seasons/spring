@@ -1,5 +1,5 @@
 import gql from "graphql-tag"
-import { UpdateVariantFragment } from "../queries"
+import { UpdateVariantFragment } from "views/Inventory/ProductVariants/queries"
 
 export const UPLOAD_FILE = gql`
   mutation UploadImage($image: Upload!) {

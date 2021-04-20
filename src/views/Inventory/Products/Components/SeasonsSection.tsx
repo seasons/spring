@@ -2,7 +2,7 @@ import React from "react"
 import { Grid } from "@material-ui/core"
 import { Spacer, Text } from "components"
 import { ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
-import { ExpandableSection } from "./ExpandableSection"
+import { ExpandableSection } from "components/ExpandableSection"
 import { SelectField, TextField } from "fields"
 
 interface SeasonsSectionProps {

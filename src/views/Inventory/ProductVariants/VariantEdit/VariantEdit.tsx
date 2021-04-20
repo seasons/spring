@@ -5,10 +5,10 @@ import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { omit } from "lodash"
 import { Spacer, Wizard } from "components"
-import { Variants } from "../Components"
+import { Variants } from "../Components/Variants"
 import { VARIANT_EDIT_QUERY } from "../queries"
-import { UPDATE_VARIANT } from "../mutations"
-import { extractVariantSizeFields } from "../utils"
+import { UPDATE_VARIANT } from "../../Products/mutations"
+import { extractVariantSizeFields } from "../../Products/utils"
 
 export const VariantEdit: React.FC = () => {
   const history = useHistory()

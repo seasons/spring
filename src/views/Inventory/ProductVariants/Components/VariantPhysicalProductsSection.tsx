@@ -1,6 +1,6 @@
 import React from "react"
 import { Grid } from "@material-ui/core"
-import { ExpandableSection } from "./ExpandableSection"
+import { ExpandableSection } from "components/ExpandableSection"
 import { VariantEditQuery_productVariant_physicalProducts } from "generated/VariantEditQuery"
 import { PhysicalProductSummary } from "views/Inventory/PhysicalProducts/Components"
 

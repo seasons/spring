@@ -8,7 +8,8 @@ import { Loader, Spacer } from "components"
 import { gql } from "apollo-boost"
 import { useMutation } from "react-apollo"
 import { colors } from "theme/colors"
-import { PRODUCT_EDIT_QUERY, VARIANT_EDIT_QUERY } from "../Products/queries"
+import { PRODUCT_EDIT_QUERY } from "../Products/queries"
+import { VARIANT_EDIT_QUERY } from "./queries"
 import { useSnackbarContext } from "components/Snackbar"
 
 interface PickPhysicalProductModalProps {
