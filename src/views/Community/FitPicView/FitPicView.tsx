@@ -47,7 +47,7 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
     onCompleted: () => setIsSubmitting(true),
     onError: onMutationError,
   })
-  const { data: productsQueryData, refetch } = useQuery(COLLECTION_PRODUCTS_QUERY, {
+  const { data: productsQueryData } = useQuery(COLLECTION_PRODUCTS_QUERY, {
     variables: { productIDs: selectedProductIDs },
   })
   const selectedProducts = productsQueryData?.products

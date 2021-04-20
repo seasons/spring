@@ -36,7 +36,6 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ logs }) => {
               const {
                 action,
                 activeAdminUser: { fullName },
-                changedFields,
               } = log
               return (
                 <TableRow>
@@ -81,12 +80,11 @@ const renderChangedFields = ({ rowData, changedFields, action, interpretation })
   if (!!interpretation) {
     return (
       <Typography variant="h6" style={{ fontWeight: "bold" }}>
-        {interpretation}
+        {interpretation.interpretation}
       </Typography>
     )
   }
 
-  let returnString = ``
   if (action === "Update") {
     return Object.keys(changedFields).map(key => (
       <Typography variant="h6" style={{ fontWeight: "bold" }}>

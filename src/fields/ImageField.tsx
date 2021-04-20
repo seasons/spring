@@ -1,7 +1,7 @@
 import React from "react"
 import { Box } from "@material-ui/core"
 import { Image } from "components/Image"
-import { ImagesField, ImageSize, ImagesFieldProps } from "./ImagesField"
+import { ImagesFieldProps } from "./ImagesField"
 
 export const ImageField: React.FC<ImagesFieldProps> = ({ label, record = {}, source, size = "medium" }) => {
   const url = record[source]?.url

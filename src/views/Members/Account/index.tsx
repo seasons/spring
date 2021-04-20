@@ -282,7 +282,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
 }
 
 const getCreateUserLinkFunc = linkName => rec => (
-  <a href={get(rec, linkName)} target="_blank">
+  <a href={get(rec, linkName)} target="_blank" rel="noopener noreferrer">
     View
   </a>
 )

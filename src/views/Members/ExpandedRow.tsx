@@ -49,17 +49,17 @@ export const ExpandedRow = ({ record: customer }: ExpandedRowProps) => {
                 </>
               )}
               <TableCell>
-                <a target="_blank" href={`${mixpanel}`}>
+                <a target="_blank" rel="noopener noreferrer" href={`${mixpanel}`}>
                   View
                 </a>
               </TableCell>
               <TableCell>
-                <a target="_blank" href={`${sendgrid}`}>
+                <a target="_blank" rel="noopener noreferrer" href={`${sendgrid}`}>
                   View
                 </a>
               </TableCell>
               <TableCell>
-                <a target="_blank" href={`${intercom}`}>
+                <a target="_blank" rel="noopener noreferrer" href={`${intercom}`}>
                   View
                 </a>
               </TableCell>
