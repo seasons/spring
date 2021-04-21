@@ -15,6 +15,8 @@ import { FunnelWidget } from "./FunnelWidget"
 import { LinechartWidget } from "./LinechartWidget"
 import { MapchartWidget } from "./MapchartWidget"
 import { IOSVersionsWidget } from "./iosVersions"
+import Chart from "react-apexcharts"
+import { RetentionWidget } from "./RetentionWidget"
 
 export interface OverviewViewProps {}
 
@@ -52,6 +54,7 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
     `${(parseFloat(data.result.percentage_of_customers_with_successful_referral) * 100).toFixed(2)}%`
   const getAverageReferralsPerReferringCustomerValue = data =>
     `${parseFloat(data.result.average_referrals_per_referring_customers).toFixed(2)}`
+  console.log()
   return (
     <Container maxWidth={false}>
       <Box mt={6}>
@@ -63,7 +66,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             <Grid item lg={6} sm={6} xs={12}>
               <MoneyWidget data={getElementForSlug("mrr-(dollar)")} />
             </Grid>
-
             <Grid item lg={6} sm={6} xs={12}>
               <MoneyWidget data={getElementForSlug("arr-(dollar)")} />
             </Grid>
@@ -105,7 +107,7 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
         </Grid>
 
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
-          <Typography variant="h3">Acquisition</Typography>
+          <Typography variant="h3">Acquisition & Retention</Typography>
         </Box>
         <Grid container spacing={3}>
           <Grid item lg={12} sm={12} xs={12}>
@@ -143,6 +145,9 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
                 title: "iOS Acquisition",
               }}
             />
+          </Grid>
+          <Grid item lg={12} sm={12} xs={12}>
+            <RetentionWidget data={getElementForSlug("customer-retention")} />
           </Grid>
         </Grid>
 
