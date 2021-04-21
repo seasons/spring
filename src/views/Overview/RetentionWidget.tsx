@@ -16,7 +16,9 @@ export const RetentionWidget = ({ data }) => {
       cohort: "2020-04",
       counts: Object.keys(data?.result?.[0]?.counts).reduce((acc, curval) => {
         acc[curval] = null
-        if (new Date(curval) >= new Date("2020-04")) {
+        const thisMonth = new Date(curval)
+        const cohortStartmonth = new Date("2020-04")
+        if (thisMonth >= cohortStartmonth) {
           acc[curval] = 0
         }
         return acc
@@ -32,7 +34,7 @@ export const RetentionWidget = ({ data }) => {
       const retainedCustomersInGivenMonth = a.counts[thisMonth]
 
       let valueToRender
-      if (initialCohortSize === 0) {
+      if (initialCohortSize === 0 && new Date(thisMonth) > new Date(cohortStartMonth)) {
         valueToRender = 0
       } else if (retainedCustomersInGivenMonth === null) {
         valueToRender = null
@@ -48,6 +50,7 @@ export const RetentionWidget = ({ data }) => {
     }),
   }))
 
+  console.log(allData)
   const lastTwelveMonthsData = allData.slice(-12).map(a => {
     const newData = a.data.filter(b => {
       const dataMonth = new Date(b["x"])
