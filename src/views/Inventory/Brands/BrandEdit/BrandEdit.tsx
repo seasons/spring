@@ -57,8 +57,8 @@ export const BrandEdit: React.FC = () => {
       designer,
       featured,
       published,
-      externalShopifyIntegrationShopName,
-      externalShopifyIntegrationEnabled,
+      shopifyShopShopName,
+      shopifyShopEnabled,
     } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
     const numImages = 4
@@ -86,11 +86,11 @@ export const BrandEdit: React.FC = () => {
           designer,
           featured,
           published,
-          externalShopifyIntegration:
-            externalShopifyIntegrationShopName || externalShopifyIntegrationEnabled
+          shopifyShop:
+            shopifyShopShopName || shopifyShopEnabled
               ? {
-                  shopName: externalShopifyIntegrationShopName,
-                  enabled: externalShopifyIntegrationEnabled,
+                  shopName: shopifyShopShopName,
+                  enabled: shopifyShopEnabled,
                 }
               : null,
         },
@@ -117,8 +117,8 @@ export const BrandEdit: React.FC = () => {
       designer: brand.designer,
       featured: brand.featured,
       published: brand.published,
-      externalShopifyIntegrationShopName: brand?.externalShopifyIntegration?.shopName,
-      externalShopifyIntegrationEnabled: brand?.externalShopifyIntegration?.enabled,
+      shopifyShopShopName: brand?.shopifyShop?.shopName,
+      shopifyShopEnabled: brand?.shopifyShop?.enabled,
     }
     initialValues[`logoImage_0`] = brand.logoImage?.url
     if (brand.since) {
