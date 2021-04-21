@@ -117,14 +117,14 @@ export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) 
             <Spacer mt={3} />
 
             <Grid item xs={6}>
-              <Text variant="h6">Shopify Integration Enabled</Text>
+              <Text variant="h6">Shopify Enabled</Text>
               <Spacer mt={1} />
-              <CheckboxField name="externalShopifyIntegrationEnabled" />
+              <CheckboxField name="shopifyShopEnabled" />
             </Grid>
             <Grid item xs={6}>
-              <Text variant="h6">Shopify Integration Shop Name</Text>
+              <Text variant="h6">Shopify Shop Name</Text>
               <Spacer mt={1} />
-              <TextField name="externalShopifyIntegrationShopName" />
+              <TextField name="shopifyShopShopName" />
             </Grid>
             <Spacer mt={10} />
           </Grid>

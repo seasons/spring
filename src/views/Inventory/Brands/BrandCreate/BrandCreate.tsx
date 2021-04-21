@@ -44,8 +44,8 @@ export const BrandCreate: React.FC = () => {
       designer,
       featured,
       published,
-      externalShopifyIntegrationShopName,
-      externalShopifyIntegrationEnabled,
+      shopifyShopShopName,
+      shopifyShopEnabled,
     } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
     const numImages = 4
@@ -67,9 +67,9 @@ export const BrandCreate: React.FC = () => {
           slug: slugify(name).toLowerCase(),
           tier: brandTier,
           websiteUrl: websiteURL,
-          externalShopifyIntegration: {
-            shopName: externalShopifyIntegrationShopName,
-            enabled: externalShopifyIntegrationEnabled,
+          shopifyShop: {
+            shopName: shopifyShopShopName,
+            enabled: shopifyShopEnabled,
           },
         },
       },
@@ -87,8 +87,8 @@ export const BrandCreate: React.FC = () => {
     designer: "",
     published: true,
     featured: false,
-    externalShopifyIntegrationEnabled: false,
-    externalShopifyIntegrationShopName: "",
+    shopifyShopEnabled: false,
+    shopifyShopShopName: "",
   }
 
   return (
