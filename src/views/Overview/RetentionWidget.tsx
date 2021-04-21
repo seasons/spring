@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react"
 import Chart from "react-apexcharts"
-import { Box, Card as MuiCard, styled as muiStyled, Typography } from "@material-ui/core"
+import { Box, Card as MuiCard, styled as muiStyled } from "@material-ui/core"
 import { theme } from "theme/theme"
-import { Checkbox } from "@material-ui/core"
-import { ControlPanel, Text } from "components"
+import { ControlPanel } from "components"
 import { WidgetTitle } from "./Components/WidgetTitle"
 
 export const RetentionWidget = ({ data }) => {
