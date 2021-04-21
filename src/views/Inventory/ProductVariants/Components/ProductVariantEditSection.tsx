@@ -8,7 +8,7 @@ import { getTypeSpecificVariantFields } from "views/Inventory/Products/utils"
 import { ManufacturerSizeField } from "./ManufacturerSizeField"
 import { ProductType } from "generated/globalTypes"
 
-export interface VariantCreateSectionProps {
+export interface ProductVariantEditSectionProps {
   product: any
   variantIndex: number | string
   sku?: string
@@ -18,7 +18,7 @@ export interface VariantCreateSectionProps {
   isEditing?: boolean
 }
 
-export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
+export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps> = ({
   product,
   variantIndex,
   sku,

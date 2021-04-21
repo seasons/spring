@@ -6,13 +6,13 @@ import AddIcon from "@material-ui/icons/Add"
 
 import { Header } from "components"
 import { ProductVariantUpsertQuery_product } from "generated/ProductVariantUpsertQuery"
-import { VariantCreateSection } from "./VariantCreateSection"
+import { ProductVariantEditSection } from "views/Inventory/ProductVariants/Components/ProductVariantEditSection"
 
-export interface VariantsCreateProps {
+export interface ProductVariantCreateStepProps {
   product?: ProductVariantUpsertQuery_product
 }
 
-export const VariantsCreate: React.FC<VariantsCreateProps> = ({ product }) => {
+export const ProductVariantCreateStep: React.FC<ProductVariantCreateStepProps> = ({ product }) => {
   const location = useLocation()
   const [numVariants, setNumVariants] = useState(1)
 
@@ -47,7 +47,7 @@ export const VariantsCreate: React.FC<VariantsCreateProps> = ({ product }) => {
       />
       <ContainerGrid container spacing={2}>
         {[...Array(numVariants).keys()].map(index => (
-          <VariantCreateSection product={product} key={index} variantIndex={index} productType={product.type!} />
+          <ProductVariantEditSection product={product} key={index} variantIndex={index} productType={product.type!} />
         ))}
       </ContainerGrid>
     </Box>

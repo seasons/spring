@@ -1,5 +1,3 @@
 export { ProductEdit } from "./ProductEdit"
 export { ProductList } from "./ProductList/ProductList"
 export { ProductCreate } from "./ProductCreate"
-export { ProductVariantCreate } from "../ProductVariants/ProductVariantCreate"
-export { VariantEdit } from "../ProductVariants/VariantEdit"

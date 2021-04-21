@@ -10,9 +10,9 @@ import { UPSERT_PRODUCT } from "../mutations"
 import { getProductUpsertData } from "../utils"
 import { useLocation } from "react-router"
 import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
-import { PhysicalProductsCreate } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
 import { useSnackbarContext } from "components/Snackbar"
-import { Variants } from "views/Inventory/ProductVariants"
+import { PhysicalProductsCreate as PhysicalProductsCreateStep } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
+import { ProductVariantEditForm as ProductVariantEditFormStep } from "views/Inventory/ProductVariants"
 
 export const ProductCreate: React.FC = () => {
   const history = useHistory()
@@ -76,8 +76,8 @@ export const ProductCreate: React.FC = () => {
     <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
         <ProductOverviewStep data={productUpsertQueryData} />
-        <Variants createData={values} />
-        <PhysicalProductsCreate
+        <ProductVariantEditFormStep createData={values} />
+        <PhysicalProductsCreateStep
           newProductCreateData={values}
           inventoryStatuses={productUpsertQueryData.inventoryStatuses?.enumValues || []}
         />

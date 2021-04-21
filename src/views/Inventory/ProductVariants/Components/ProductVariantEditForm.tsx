@@ -2,24 +2,24 @@ import React, { useState } from "react"
 import { useQuery } from "react-apollo"
 import { useLocation } from "react-router-dom"
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
-import { Header, Spacer, Text } from "components"
+import { ExpandableSection, Header, Spacer, Text } from "components"
 import { Loading } from "@seasons/react-admin"
 import { GetGeneratedVariantSkus } from "generated/GetGeneratedVariantSkus"
 import { VariantEditQuery_productVariant } from "generated/VariantEditQuery"
 import { GET_VARIANT_SKUS_AND_SIZE_TYPES } from "../queries"
-import { VariantPhysicalProductsSection } from "./VariantPhysicalProductsSection"
 import { VariantPriceSection } from "./VariantPriceSection"
 import { AddPhysicalProductModal } from "views/Inventory/ProductVariants/AddPhysicalProductModal"
 import { useField } from "react-final-form"
-import { VariantCreateSection } from "../ProductVariantCreate/Components"
+import { ProductVariantEditSection } from "./ProductVariantEditSection"
+import { PhysicalProductSummary } from "views/Inventory/PhysicalProducts/Components"
 
-export interface VariantsProps {
+export interface ProductVariantEditSectionProps {
   createData?: any // Passed in when creating new variants
   variants?: VariantEditQuery_productVariant[] // Passed in when editing variants
   refetch?: () => void
 }
 
-export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetch }) => {
+export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = ({ createData, variants, refetch }) => {
   const location = useLocation()
   const manufacturerSizeTypeField = useField("manufacturerSizeType")
   const brandID = createData?.brand || variants?.[0]?.product?.brand?.id
@@ -108,7 +108,7 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
       <Box display="flex" flexDirection="column">
         {variantsData.map((variant, index) => (
           <Box key={index}>
-            <VariantCreateSection
+            <ProductVariantEditSection
               variantIndex={variant.size}
               sku={variant.sku}
               size={variant?.size}
@@ -138,7 +138,18 @@ export const Variants: React.FC<VariantsProps> = ({ createData, variants, refetc
       {isEditing && (
         <>
           {variants?.map((variant, index) => (
-            <VariantPhysicalProductsSection key={index} physicalProducts={variant.physicalProducts || []} />
+            <ExpandableSection
+              title="Physical products"
+              content={
+                <Grid container spacing={2}>
+                  {(variant?.physicalProducts || []).map((physProd, index) => (
+                    <Grid item xs={6} key={index}>
+                      <PhysicalProductSummary physicalProduct={physProd} key={index} />
+                    </Grid>
+                  ))}
+                </Grid>
+              }
+            />
           ))}
           <Spacer grid mt={6} />
         </>
