@@ -16,6 +16,7 @@ import { LinechartWidget } from "./LinechartWidget"
 import { MapchartWidget } from "./MapchartWidget"
 import { IOSVersionsWidget } from "./iosVersions"
 import Chart from "react-apexcharts"
+import { RetentionWidget } from "./RetentionWidget"
 
 export interface OverviewViewProps {}
 
@@ -62,16 +63,12 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             <Typography variant="h3">Financials</Typography>
           </Box>
           <Grid container spacing={3}>
-            <Grid item lg={12} sm={12} xs={12}>
-              <HeatMap data={getElementForSlug("customer-retention")} />
-            </Grid>
-
-            {/* <Grid item lg={6} sm={6} xs={12}>
+            <Grid item lg={6} sm={6} xs={12}>
               <MoneyWidget data={getElementForSlug("mrr-(dollar)")} />
             </Grid>
             <Grid item lg={6} sm={6} xs={12}>
               <MoneyWidget data={getElementForSlug("arr-(dollar)")} />
-            </Grid> */}
+            </Grid>
           </Grid>
           <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
             <Typography variant="h3">Customers</Typography>
@@ -110,7 +107,7 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
         </Grid>
 
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
-          <Typography variant="h3">Acquisition</Typography>
+          <Typography variant="h3">Acquisition & Retention</Typography>
         </Box>
         <Grid container spacing={3}>
           <Grid item lg={12} sm={12} xs={12}>
@@ -148,6 +145,9 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
                 title: "iOS Acquisition",
               }}
             />
+          </Grid>
+          <Grid item lg={12} sm={12} xs={12}>
+            <RetentionWidget data={getElementForSlug("customer-retention")} />
           </Grid>
         </Grid>
 
@@ -193,61 +193,5 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
         <Spacer mb={2} />
       </Box>
     </Container>
-  )
-}
-
-const HeatMap = ({ data }) => {
-  const series = data?.result?.map(a => ({
-    name: a.cohort,
-    data: Object.keys(a.counts).map(b => {
-      const initialCohortSize = a.counts[a.cohort]
-      const percentageOfInitialCohortSize = Math.round((a.counts[b] / initialCohortSize) * 100) / 100
-
-      let valueToRender: null | number = percentageOfInitialCohortSize
-      if (b === a.cohort) {
-        valueToRender = a.counts[b]
-      }
-      if (new Date(b) < new Date(a.cohort)) {
-        valueToRender = null
-      }
-      return { x: b, y: valueToRender }
-    }),
-  }))
-  console.log(series)
-  return (
-    <Chart
-      options={{
-        plotOptions: {
-          title: "Customer Retention by Monthly Cohort",
-          heatmap: {
-            radius: 10,
-            dataLabels: { enabled: false },
-            colorScale: {
-              ranges: [
-                { from: null, to: null, color: "#E9E9EB", name: "Empty" },
-                {
-                  from: 1,
-                  to: 10000,
-                  color: "#0000ff",
-                  foreColor: "#000000",
-                  name: "Initial Cohort Size OR 100%",
-                },
-                {
-                  from: 0.01,
-                  to: 0.33,
-                  color: "#e7feff",
-                  foreColor: "#000000",
-                  name: "1/3 Retention or Less",
-                },
-                { from: 0.34, to: 0.66, color: "#ace5ee", foreColor: "#000000", name: "1/3 - 2/3 Retention" },
-                { from: 0.67, to: 0.99, color: "#00bfff", foreColor: "#000000", name: "2/3 Retention or More" },
-              ],
-            },
-          },
-        },
-      }}
-      series={series}
-      type="heatmap"
-    />
   )
 }
