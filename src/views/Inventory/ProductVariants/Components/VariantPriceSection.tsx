@@ -21,17 +21,18 @@ type Props = {
 
 export const VariantPriceSection: React.FC<Props> = ({ size, shopifyProductVariant, brandID }) => {
   return (
-    <>
-      <Grid item xs={6}>
-        <Text variant="h5">Brand Shopify Product</Text>
-        <Spacer mt={1} />
-      </Grid>
-      <ShopifyProductVariantSearchField
-        name={`${size}_shopifyProductVariant`}
-        initialValue={shopifyProductVariant || undefined}
-        brandID={brandID}
-      />
-    </>
+    <Box display="flex" alignContent="center" mb={1}>
+      <Box flex={1} display="flex" alignItems="center">
+        <Text variant="h5">Shopify Product</Text>
+      </Box>
+      <Box flex={1}>
+        <ShopifyProductVariantSearchField
+          name={`${size}_shopifyProductVariant`}
+          initialValue={shopifyProductVariant || undefined}
+          brandID={brandID}
+        />
+      </Box>
+    </Box>
   )
 }
 
@@ -83,10 +84,10 @@ const ShopifyProductVariantSearchField = ({
     }
 
     return (
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
+      <>
+        <Box>
           <SearchInput
-            placeholder="Search Brand Shopify Products"
+            placeholder="Search"
             searchType={SearchType.SHOPIFY_PRODUCT_VARIANT}
             onFilterResults={results =>
               brandID ? results?.filter(result => result.data.brandID === brandID) : results
@@ -95,18 +96,18 @@ const ShopifyProductVariantSearchField = ({
               handleChange(result.data)
             }}
           />
-        </Grid>
+        </Box>
         {shopifyProductVariant && shopifyProductVariant.externalID && (
-          <Grid item xs={3}>
+          <Box>
             <ExternalProductTile
               {...(shopifyProductVariant as any)}
               onRemove={() => {
                 handleChange({ externalID: null })
               }}
             />
-          </Grid>
+          </Box>
         )}
-      </Grid>
+      </>
     )
   }
 

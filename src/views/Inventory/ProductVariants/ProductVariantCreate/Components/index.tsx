@@ -1,2 +1,1 @@
-export { VariantsCreate } from "./VariantsCreate"
-export { VariantCreateSection } from "./VariantCreateSection"
+export { ProductVariantCreateStep } from "./ProductVariantCreateStep"

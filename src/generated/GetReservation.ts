@@ -98,6 +98,12 @@ export interface GetReservation_packageEvents {
   updatedAt: any
 }
 
+export interface GetReservation_adminLogs_interpretation {
+  __typename: "AdminActionLogInterpretation"
+  id: string
+  interpretation: string | null
+}
+
 export interface GetReservation_adminLogs_activeAdminUser {
   __typename: "User"
   id: string
@@ -111,7 +117,7 @@ export interface GetReservation_adminLogs {
   changedFields: any | null
   rowData: any
   entityId: string
-  interpretation: string | null
+  interpretation: GetReservation_adminLogs_interpretation | null
   activeAdminUser: GetReservation_adminLogs_activeAdminUser
 }
 

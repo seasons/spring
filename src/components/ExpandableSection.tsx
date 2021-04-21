@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-
+import { Box } from "@material-ui/core"
 import { SectionHeader } from "./SectionHeader"
 
 export interface ExpandableSectionProps {
@@ -24,7 +24,12 @@ export const ExpandableSection: React.FC<ExpandableSectionProps> = ({
   return (
     <>
       <SectionHeader expanded={isExpanded} title={title} primaryButton={primaryButton} onExpanded={onExpanded} />
-      {isExpanded && content}
+
+      {isExpanded && (
+        <Box m={2} flex={1}>
+          {content}
+        </Box>
+      )}
     </>
   )
 }

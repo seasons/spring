@@ -14,9 +14,9 @@ import {
   ProductCreate,
   ProductEdit,
   ProductVariantCreate,
+  ProductVariantEdit,
   ReservationList,
   ReservationView,
-  VariantEdit,
   BrandCreate,
   BrandEdit,
   LaunchEdit,
@@ -103,7 +103,14 @@ export default [
       {
         path: "/inventory/product/variants/:variantID",
         exact: true,
-        component: props => <VariantEdit {...props} basePath="/inventory/product/variants" resource="Product" />,
+        component: props => <ProductVariantEdit {...props} basePath="/inventory/product/variants" resource="Product" />,
+      },
+      {
+        path: "/inventory/product/:productID/variant/new",
+        exact: true,
+        component: props => (
+          <ProductVariantCreate {...props} basePath="/inventory/product/variant/new" resource="Product" />
+        ),
       },
       {
         path: "/inventory/product/variant/physicalProduct/:id/:tab",
@@ -136,13 +143,6 @@ export default [
         path: "/inventory/launches/:launchID",
         exact: true,
         component: props => <LaunchEdit {...props} basePath="/inventory/launches" resource="Launch" />,
-      },
-      {
-        path: "/inventory/product/:productID/variant/new",
-        exact: true,
-        component: props => (
-          <ProductVariantCreate {...props} basePath="/inventory/product/variant/new" resource="Product" />
-        ),
       },
       {
         path: "/members",

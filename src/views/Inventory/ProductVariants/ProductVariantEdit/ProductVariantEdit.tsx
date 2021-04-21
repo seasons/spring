@@ -5,12 +5,12 @@ import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { omit } from "lodash"
 import { Spacer, Wizard } from "components"
-import { Variants } from "../Components/Variants"
+import { ProductVariantEditForm as ProductVariantEditFormStep } from "../Components/ProductVariantEditForm"
 import { VARIANT_EDIT_QUERY } from "../queries"
 import { UPDATE_VARIANT } from "../../Products/mutations"
 import { extractVariantSizeFields } from "../../Products/utils"
 
-export const VariantEdit: React.FC = () => {
+export const ProductVariantEdit: React.FC = () => {
   const history = useHistory()
   const { variantID } = useParams() as any
   const { data, loading, error, refetch } = useQuery(VARIANT_EDIT_QUERY, {
@@ -59,8 +59,8 @@ export const VariantEdit: React.FC = () => {
   if (productVariant?.manufacturerSizes?.length > 0) {
     productVariant.manufacturerSizes.forEach(size => {
       const type = size.type
-      initialValues["manufacturerSizeType"] = type
-      initialValues[`${internalSize.display}_manufacturerSize_${type}`] = size.display
+      initialValues[`${internalSize.display}_manufacturerSizeType`] = type
+      initialValues[`${internalSize.display}_manufacturerSize`] = size.display
     })
   }
 
@@ -95,7 +95,7 @@ export const VariantEdit: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
-        <Variants variants={[productVariant]} refetch={refetch} />
+        <ProductVariantEditFormStep variants={[productVariant]} refetch={refetch} />
       </Wizard>
       <Spacer mt={9} />
     </Container>
