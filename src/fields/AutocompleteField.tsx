@@ -38,7 +38,6 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
             <Autocomplete
               multiple={multiple}
               onChange={(event: any, value: any) => {
-                console.log(value)
                 input.onChange({ target: { name, value } })
               }}
               getOptionLabel={option => {
@@ -62,7 +61,6 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
                   value={value}
                   onChange={event => {
                     setValue(event.target.value)
-                    // input.onChange(event)
                     onInputChange?.(event)
                   }}
                 />
