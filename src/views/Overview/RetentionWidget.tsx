@@ -5,6 +5,14 @@ import { theme } from "theme/theme"
 import { ControlPanel } from "components"
 import { WidgetTitle } from "./Components/WidgetTitle"
 
+// expects dateString of format yyyy-mm, where mm is 1-indexed. e.g 2020-05 for may 2020
+const dateStringToDate = dateString => {
+  const [year, oneIndexedMonth] = dateString.split("-")
+  const zeroIndexedMonth = Number(oneIndexedMonth) - 1
+  const month = new Date(Number(year), zeroIndexedMonth)
+  return month
+}
+
 export const RetentionWidget = ({ data }) => {
   const [showLast12Months, setShowLast12Months] = useState(true)
 
@@ -16,8 +24,8 @@ export const RetentionWidget = ({ data }) => {
       cohort: "2020-04",
       counts: Object.keys(data?.result?.[0]?.counts).reduce((acc, curval) => {
         acc[curval] = null
-        const thisMonth = new Date(curval)
-        const cohortStartmonth = new Date("2020-04")
+        const thisMonth = dateStringToDate(curval)
+        const cohortStartmonth = dateStringToDate("2020-04")
         if (thisMonth >= cohortStartmonth) {
           acc[curval] = 0
         }
@@ -34,11 +42,13 @@ export const RetentionWidget = ({ data }) => {
       const retainedCustomersInGivenMonth = a.counts[thisMonth]
 
       let valueToRender
-      if (initialCohortSize === 0 && new Date(thisMonth) > new Date(cohortStartMonth)) {
+      const thisMonthDate = dateStringToDate(thisMonth)
+      const cohortStartMonthDate = dateStringToDate(cohortStartMonth)
+      if (initialCohortSize === 0 && thisMonthDate > cohortStartMonthDate) {
         valueToRender = 0
       } else if (retainedCustomersInGivenMonth === null) {
         valueToRender = null
-      } else if (new Date(thisMonth) < new Date(cohortStartMonth)) {
+      } else if (thisMonthDate < cohortStartMonthDate) {
         valueToRender = null
       } else if (thisMonth === cohortStartMonth) {
         valueToRender = initialCohortSize
@@ -51,10 +61,11 @@ export const RetentionWidget = ({ data }) => {
   }))
 
   console.log(allData)
+  // console.log(allData.reverse())
   const lastTwelveMonthsData = allData.slice(-12).map(a => {
     const newData = a.data.filter(b => {
-      const dataMonth = new Date(b["x"])
-      const firstMonthInSeries = new Date(allData.slice(-12, -11)[0].name)
+      const dataMonth = dateStringToDate(b["x"])
+      const firstMonthInSeries = dateStringToDate(allData.slice(-12, -11)[0].name)
       return dataMonth >= firstMonthInSeries
     })
     return { ...a, data: newData }
@@ -70,7 +81,7 @@ export const RetentionWidget = ({ data }) => {
   }, [showLast12Months])
 
   const formatAxisDate = value => {
-    const d = new Date(value)
+    const d = dateStringToDate(value)
     const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(d)
     const year = value?.split("-")?.[0]
     if (month === "Jan") {
@@ -81,6 +92,7 @@ export const RetentionWidget = ({ data }) => {
   }
   const options = {
     yaxis: {
+      reversed: true,
       labels: {
         formatter: function(value, opt) {
           if (typeof value === "string" && value.length > 0) {
