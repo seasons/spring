@@ -5,14 +5,6 @@ import { theme } from "theme/theme"
 import { ControlPanel } from "components"
 import { WidgetTitle } from "./Components/WidgetTitle"
 
-// expects dateString of format yyyy-mm, where mm is 1-indexed. e.g 2020-05 for may 2020
-const dateStringToDate = dateString => {
-  const [year, oneIndexedMonth] = dateString.split("-")
-  const zeroIndexedMonth = Number(oneIndexedMonth) - 1
-  const month = new Date(Number(year), zeroIndexedMonth)
-  return month
-}
-
 export const RetentionWidget = ({ data }) => {
   const [showLast12Months, setShowLast12Months] = useState(true)
 
@@ -60,8 +52,6 @@ export const RetentionWidget = ({ data }) => {
     }),
   }))
 
-  console.log(allData)
-  // console.log(allData.reverse())
   const lastTwelveMonthsData = allData.slice(-12).map(a => {
     const newData = a.data.filter(b => {
       const dataMonth = dateStringToDate(b["x"])
@@ -192,6 +182,14 @@ export const RetentionWidget = ({ data }) => {
       </Box>
     </Card>
   )
+}
+
+// expects dateString of format yyyy-mm, where mm is 1-indexed. e.g 2020-05 for may 2020
+const dateStringToDate = dateString => {
+  const [year, oneIndexedMonth] = dateString.split("-")
+  const zeroIndexedMonth = Number(oneIndexedMonth) - 1
+  const month = new Date(Number(year), zeroIndexedMonth)
+  return month
 }
 
 const Card = muiStyled(MuiCard)({
