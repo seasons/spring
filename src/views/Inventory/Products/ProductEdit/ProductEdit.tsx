@@ -66,7 +66,10 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
     // Extract current values of the product to display
     initialValues = {
       architecture: product.architecture,
-      brand: product.brand.id,
+      brand: {
+        value: product.brand.id,
+        label: product.brand.name,
+      },
       category: product.category.name,
       color: product.color.colorCode,
       functions: product.functions?.map(func => func.name),

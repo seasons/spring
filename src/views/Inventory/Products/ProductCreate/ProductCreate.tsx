@@ -47,7 +47,7 @@ export const ProductCreate: React.FC = () => {
   }
 
   const onNext = async values => {
-    setValues(values)
+    setValues({ ...values, brand: values.brand.value })
     return true
   }
 

@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core"
 import categoriesJSON from "data/categories.json"
 import { Spacer, Text } from "components"
 import { ExpandableSection } from "components/ExpandableSection"
-import { SelectField, TextField } from "fields"
+import { AutocompleteField, SelectField, TextField } from "fields"
 import { FormSelectChoice, getFormSelectChoices } from "utils/form"
 import { ProductUpsertQuery_brands } from "generated/ProductUpsertQuery"
 import { MANUFACTURER_SIZE_TYPES } from "utils/sizes"
@@ -58,7 +58,13 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <Grid item xs={6}>
               <Text variant="h6">Brand *</Text>
               <Spacer mt={1} />
-              <SelectField name="brand" choices={brandChoices} requiredString />
+              <AutocompleteField
+                name="brand"
+                options={brandChoices.map(a => ({ label: a.display, value: a.value }))}
+                requiredString
+                multiple={false}
+                getOptionSelected={(option, value) => option.value === value.value}
+              />
             </Grid>
             <Grid item xs={6}>
               <Text variant="h6">Product name *</Text>
