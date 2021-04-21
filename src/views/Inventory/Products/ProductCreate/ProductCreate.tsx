@@ -4,7 +4,7 @@ import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory } from "react-router-dom"
 import { Spacer, Wizard } from "components"
-import { Overview } from "../Components"
+import { ProductOverviewStep } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { UPSERT_PRODUCT } from "../mutations"
 import { getProductUpsertData } from "../utils"
@@ -75,7 +75,7 @@ export const ProductCreate: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
-        <Overview data={productUpsertQueryData} />
+        <ProductOverviewStep data={productUpsertQueryData} />
         <Variants createData={values} />
         <PhysicalProductsCreate
           newProductCreateData={values}

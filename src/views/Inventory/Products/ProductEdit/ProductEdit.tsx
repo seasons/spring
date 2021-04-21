@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "react-apollo"
 import { useParams } from "react-router-dom"
 import { pick } from "lodash"
 import { Spacer, Wizard } from "components"
-import { Overview } from "../Components"
+import { ProductOverviewStep } from "../Components"
 import { ProductEditQuery } from "generated/ProductEditQuery"
 import { PRODUCT_EDIT_QUERY } from "../queries"
 import { UPDATE_PRODUCT } from "../mutations"
@@ -112,7 +112,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   return (
     <Container maxWidth={false}>
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
-        <Overview data={data} product={data.product} />
+        <ProductOverviewStep data={data} product={data.product} />
       </Wizard>
       <Spacer mt={9} />
     </Container>
