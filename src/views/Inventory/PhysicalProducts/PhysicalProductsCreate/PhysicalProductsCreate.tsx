@@ -167,15 +167,15 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
           />
         ))}
         <Spacer mt={2} />
-        {!isEditing && (
-          <>
-            <Text variant="h5" opacity={0.5}>
-              Note: Submission may take a while so please be patient. You will be redirected upon completion.
-            </Text>
-            <Spacer mt={8} />
-          </>
-        )}
       </ContainerGrid>
+      {!isEditing && (
+        <>
+          <Text variant="h5" opacity={0.5}>
+            Note: Submission may take a while so please be patient. You will be redirected upon completion.
+          </Text>
+          <Spacer mt={8} />
+        </>
+      )}
     </Box>
   )
 }

@@ -81,7 +81,7 @@ export const ProductVariantCreate: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
-        <ProductVariantCreateStep product={product} />
+        <ProductVariantCreateStep product={product} isEditing={false} />
         <PhysicalProductsCreateStep
           newVariantsCreateData={{ product, values }}
           inventoryStatuses={inventoryStatuses?.enumValues || []}

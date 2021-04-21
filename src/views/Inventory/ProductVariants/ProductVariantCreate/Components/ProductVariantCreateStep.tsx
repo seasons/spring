@@ -10,9 +10,10 @@ import { ProductVariantEditSection } from "views/Inventory/ProductVariants/Compo
 
 export interface ProductVariantCreateStepProps {
   product?: ProductVariantUpsertQuery_product
+  isEditing?: boolean
 }
 
-export const ProductVariantCreateStep: React.FC<ProductVariantCreateStepProps> = ({ product }) => {
+export const ProductVariantCreateStep: React.FC<ProductVariantCreateStepProps> = ({ product, isEditing }) => {
   const location = useLocation()
   const [numVariants, setNumVariants] = useState(1)
 
@@ -47,7 +48,13 @@ export const ProductVariantCreateStep: React.FC<ProductVariantCreateStepProps> =
       />
       <ContainerGrid container spacing={2}>
         {[...Array(numVariants).keys()].map(index => (
-          <ProductVariantEditSection product={product} key={index} variantIndex={index} productType={product.type!} />
+          <ProductVariantEditSection
+            product={product}
+            key={index}
+            variantIndex={index}
+            productType={product.type!}
+            isEditing={isEditing}
+          />
         ))}
       </ContainerGrid>
     </Box>
