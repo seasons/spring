@@ -3,7 +3,7 @@ import Chart from "react-apexcharts"
 import { Box, Card as MuiCard, styled as muiStyled, Typography } from "@material-ui/core"
 import { theme } from "theme/theme"
 import { Checkbox } from "@material-ui/core"
-import { Text } from "components"
+import { ControlPanel, Text } from "components"
 import { WidgetTitle } from "./Components/WidgetTitle"
 
 export const RetentionWidget = ({ data }) => {
@@ -169,7 +169,11 @@ export const RetentionWidget = ({ data }) => {
         <WidgetTitle>{data?.title}</WidgetTitle>
         <Box display="flex" flexDirection="row" alignItems="flex-start">
           <Chart options={options} series={series} type="heatmap" height={700} width={1000} />
-          <ControlPanel showLast12Months={showLast12Months} setShowLast12Months={setShowLast12Months} />
+          <ControlPanel
+            title={data?.title}
+            items={[{ setItemChecked: setShowLast12Months, itemChecked: showLast12Months, name: "Last 12 Months" }]}
+            containerProps={{ style: { position: "relative", top: 20 } }}
+          />
         </Box>
       </Box>
     </Card>
@@ -182,41 +186,3 @@ const Card = muiStyled(MuiCard)({
   color: theme.palette.primary.contrastText,
   padding: theme.spacing(3),
 })
-
-const ControlPanel = ({ showLast12Months, setShowLast12Months, containerProps = {} }) => {
-  return (
-    <ControlPanelCard {...containerProps}>
-      <Box display="flex" flexDirection="column" alignItems="center" textAlign="center">
-        <WidgetTitle>Customer Retention</WidgetTitle>
-        <CheckFlexbox>
-          <Checkbox
-            checked={showLast12Months}
-            onChange={event => setShowLast12Months(event.target.checked)}
-            color="secondary"
-            name={"ShowLast12Months"}
-          />
-          <ControlPanelText>Last 12 Months</ControlPanelText>
-        </CheckFlexbox>
-      </Box>
-    </ControlPanelCard>
-  )
-}
-
-const CheckFlexbox = muiStyled(Box)({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "flex-start",
-})
-
-const ControlPanelCard = muiStyled(MuiCard)({
-  borderRadius: 4,
-  color: theme.palette.primary.contrastText,
-  padding: theme.spacing(2),
-  background: theme.palette.primary.main,
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-})
-
-const ControlPanelText = ({ children }) => <Text variant="body1">{children}</Text>
