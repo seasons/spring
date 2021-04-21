@@ -1,11 +1,11 @@
 import React from "react"
 import * as yup from "yup"
 import { validate } from "utils/form"
-import { Field as FinalFormField } from "react-final-form"
+import { Field as FinalFormField, FieldRenderProps } from "react-final-form"
 
 export interface ChildFieldProps {
   name: string
-  initialValue?: string
+  initialValue?: string | number
   multiple?: boolean
 
   required?: boolean
@@ -28,7 +28,7 @@ export interface ChildFieldProps {
 }
 
 export interface FieldProps extends ChildFieldProps {
-  render: ({ input, meta }) => any
+  render: ({ input, meta }: FieldRenderProps<any>) => React.ReactElement
 }
 
 export const Field: React.FC<FieldProps> = ({

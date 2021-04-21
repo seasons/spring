@@ -7,8 +7,11 @@ import { FormControl } from "../components/FormControl"
 
 const filter = createFilterOptions<string>()
 
+type OptionObject = { label: string; value?: string; group?: string }
+type Option = OptionObject | string
+
 export type AutocompleteFieldProps = ChildFieldProps & {
-  options: (string | { label: string; group?: string })[]
+  options: Option[]
   label?: string
   multiple?: boolean
   onInputChange?: (event: any) => void
@@ -23,7 +26,7 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
   onInputChange,
   getOptionSelected = (option, value) => option === value,
 }) => {
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState<Option>(options?.[0] || "")
 
   return (
     <Field
@@ -34,7 +37,8 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
           <FormControl error={meta.touched && meta.error}>
             <Autocomplete
               multiple={multiple}
-              onChange={(event: any, value) => {
+              onChange={(event: any, value: any) => {
+                console.log(value)
                 input.onChange({ target: { name, value } })
               }}
               getOptionLabel={option => {
@@ -47,8 +51,8 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
                 return ""
               }}
               getOptionSelected={getOptionSelected}
-              groupBy={option => option.group}
-              value={input.value || []}
+              groupBy={(option: Option) => (option as OptionObject)?.group || ""}
+              value={input.value || (multiple ? [] : "")}
               options={options}
               renderInput={params => (
                 <TextField
@@ -58,12 +62,13 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
                   value={value}
                   onChange={event => {
                     setValue(event.target.value)
+                    // input.onChange(event)
                     onInputChange?.(event)
                   }}
                 />
               )}
               filterOptions={(options, params) => {
-                const filtered: string[] = filter(options, params)
+                const filtered: string[] = filter((options || []) as string[], params)
                 if (params.inputValue) {
                   filtered.push(params.inputValue)
                 }
