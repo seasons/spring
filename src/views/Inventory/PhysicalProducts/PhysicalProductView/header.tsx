@@ -17,10 +17,6 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct }: Heade
     setOpenOffloadModal(false)
     refresh()
   }
-  const onClosePickModal = () => {
-    setOpenPickModal(false)
-    refresh()
-  }
 
   // Create breadcrumbs
   const breadcrumbs = [

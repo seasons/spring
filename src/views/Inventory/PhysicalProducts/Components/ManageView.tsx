@@ -21,7 +21,6 @@ export const ManageView: React.FC<TabRenderProps> = ({ data }) => {
     seasonsUID,
     unitCost,
     warehouseLocation,
-    price,
   } = data
 
   const { showSnackbar } = useSnackbarContext()

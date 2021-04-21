@@ -20,7 +20,10 @@ const GetOneFragment = gql`
       changedFields
       rowData
       entityId
-      interpretation
+      interpretation {
+        id
+        interpretation
+      }
       activeAdminUser {
         id
         fullName
