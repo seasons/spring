@@ -31,8 +31,8 @@ export interface BrandEditQuery_brand_productsConnection {
   aggregate: BrandEditQuery_brand_productsConnection_aggregate
 }
 
-export interface BrandEditQuery_brand_externalShopifyIntegration {
-  __typename: "ExternalShopifyIntegration"
+export interface BrandEditQuery_brand_shopifyShop {
+  __typename: "ShopifyShop"
   enabled: boolean
   shopName: string
 }
@@ -51,7 +51,7 @@ export interface BrandEditQuery_brand {
   basedIn: string | null
   images: BrandEditQuery_brand_images[] | null
   productsConnection: BrandEditQuery_brand_productsConnection
-  externalShopifyIntegration: BrandEditQuery_brand_externalShopifyIntegration | null
+  shopifyShop: BrandEditQuery_brand_shopifyShop | null
   tier: BrandTier
   websiteUrl: string | null
 }
