@@ -5,31 +5,31 @@ import { Grid } from "@material-ui/core"
 import { ConfirmationDialog, Header, Spacer, ImageUpload } from "components"
 import materialsJSON from "data/materials.json"
 import { SelectChoice } from "fields/SelectField"
-import { GeneralSection } from "./GeneralSection"
+import { GeneralSection } from "./Components/GeneralSection"
 import {
   ProductUpsertQuery,
   ProductUpsertQuery_brands,
   ProductUpsertQuery_productModels,
 } from "generated/ProductUpsertQuery"
 import { ProductEditQuery_product } from "generated/ProductEditQuery"
-import { MetadataSection } from "./MetadataSection"
-import { TagsSection } from "./TagsSection"
+import { MetadataSection } from "./Components/MetadataSection"
+import { TagsSection } from "./Components/TagsSection"
 import { getEnumValues, getFormSelectChoices } from "utils/form"
-import { ProductVariantsSection } from "views/Inventory/ProductVariants/Components/ProductVariantsSection"
-import { UPDATE_PRODUCT } from "../mutations"
+import { ProductOverviewVariantsSection } from "./Components/ProductOverviewVariantsSection"
+import { UPDATE_PRODUCT } from "../../mutations"
 import { DateTime } from "luxon"
-import { PRODUCT_EDIT_QUERY } from "../queries"
-import { SeasonsSection } from "."
+import { PRODUCT_EDIT_QUERY } from "../../queries"
+import { SeasonsSection } from "./Components/SeasonsSection"
 import { useSnackbarContext } from "components/Snackbar"
 import { wxlBottomSizes, US_LETTER_SIZES, getManufacturerSizes } from "utils/sizes"
 import { useField } from "react-final-form"
 
-export interface OverviewProps {
+export interface ProductOverviewStepProps {
   data: ProductUpsertQuery
   product?: ProductEditQuery_product
 }
 
-export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
+export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({ data, product }) => {
   const location = useLocation()
   const [productType, setProductType] = useState(product?.type || "Top")
   const manufacturerSizeTypeField = useField("manufacturerSizeType")
@@ -257,7 +257,7 @@ export const Overview: React.FC<OverviewProps> = ({ data, product }) => {
           {isEditing && product && (
             <>
               <Spacer mt={6} />
-              <ProductVariantsSection productID={product.id} variants={product?.variants || []} />
+              <ProductOverviewVariantsSection productID={product.id} variants={product?.variants || []} />
               <Spacer mt={6} />
             </>
           )}

@@ -12,11 +12,12 @@ import { colors } from "theme/colors"
 import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Components"
 import { AddPhysicalProductModal } from "views/Inventory/ProductVariants/AddPhysicalProductModal"
 import PlusOneRoundedIcon from "@material-ui/icons/PlusOneRounded"
-export interface VariantSummaryProps {
+
+export interface ProductOverviewVariantSummaryProps {
   variant: ProductEditQuery_product_variants
 }
 
-export const VariantSummary: React.FC<VariantSummaryProps> = ({ variant }) => {
+export const ProductOverviewVariantSummary: React.FC<ProductOverviewVariantSummaryProps> = ({ variant }) => {
   const history = useHistory()
   const refresh = useRefresh()
   const [openOffloadPhysicalProductModal, setOpenOffloadPhysicalProductModal] = useState(false)

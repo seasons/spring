@@ -4,13 +4,13 @@ import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
 import { useHistory, useParams } from "react-router-dom"
 import { Spacer, Wizard } from "components"
-import { VariantsCreate } from "./Components"
+import { ProductVariantCreateStep } from "./Components"
 import { useRefresh } from "@seasons/react-admin"
 import { PRODUCT_EDIT_QUERY, PRODUCT_VARIANT_UPSERT_QUERY } from "../../Products/queries"
 import { UPSERT_VARIANTS } from "../../Products/mutations"
 import { getProductVariantUpsertData } from "../../Products/utils"
 import { ProductVariantUpsertQuery } from "generated/ProductVariantUpsertQuery"
-import { PhysicalProductsCreate } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
+import { PhysicalProductsCreate as PhysicalProductsCreateStep } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
 import { useSnackbarContext } from "components/Snackbar"
 
 export const ProductVariantCreate: React.FC = () => {
@@ -81,8 +81,8 @@ export const ProductVariantCreate: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
-        <VariantsCreate product={product} />
-        <PhysicalProductsCreate
+        <ProductVariantCreateStep product={product} isEditing={false} />
+        <PhysicalProductsCreateStep
           newVariantsCreateData={{ product, values }}
           inventoryStatuses={inventoryStatuses?.enumValues || []}
         />

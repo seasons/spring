@@ -123,9 +123,15 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <CheckboxField name="buyUsedEnabled" initialValue={buyUsedEnabled} />
           </Grid>
           <Grid item xs={6}>
-            <Text variant="h6">Buy used price (dollars)</Text>
+            <Text variant="h6">Buy Used Price</Text>
             <Spacer mt={1} />
-            <TextField name="buyUsedPrice" type="number" minValue={0} />
+            <TextField
+              name="buyUsedPrice"
+              type="number"
+              minValue={0}
+              initialValue={0}
+              InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
+            />
           </Grid>
         </Grid>
       }

@@ -25,20 +25,28 @@ export const getTypeSpecificVariantFields = productType => {
   return fields
 }
 
-const getManufacturerSizeNames = (values, size) => {
-  const manufacturerSizeNames: any[] = []
+const extractValuesForKey = (values, searchKey, size) => {
+  const returnValues: string[] = []
 
   Object.keys(values).forEach(key => {
     // We use a single input for each manufacturer size type
     // so here we consolidate them all into one array
-    if (key.includes("_manufacturerSize_")) {
+    if (key.endsWith(searchKey)) {
       const keySize = key.split("_")[0]
       if (keySize === size) {
-        manufacturerSizeNames.push(values[key])
+        returnValues.push(values[key])
       }
     }
   })
-  return manufacturerSizeNames
+  return returnValues
+}
+
+const getManufacturerSizeNames = (values, size) => {
+  return extractValuesForKey(values, "_manufacturerSize", size)
+}
+
+const getManufacturerSizeType = (values, size) => {
+  return extractValuesForKey(values, "_manufacturerSizeType", size)?.[0]
 }
 
 export const extractVariantSizeFields = ({
@@ -73,8 +81,10 @@ export const extractVariantSizeFields = ({
   const manufacturerSizeNames = getManufacturerSizeNames(values, size)
 
   if (manufacturerSizeNames.length) {
+    const manufacturerSizeType = getManufacturerSizeType(values, size)
+
     sizeData.manufacturerSizeNames = manufacturerSizeNames
-    sizeData.manufacturerSizeType = values.manufacturerSizeType
+    sizeData.manufacturerSizeType = values.manufacturerSizeType || manufacturerSizeType
     sizeData.internalSizeType = internalSizeType
   }
 
@@ -97,7 +107,7 @@ export const getLocaleDateString = (date?: string) => {
 export const getProductUpsertData: any = (values: any) => {
   const {
     architecture,
-    brand: brandID,
+    brand,
     buyNewEnabled,
     buyUsedEnabled,
     buyUsedPrice,
@@ -238,7 +248,7 @@ export const getProductUpsertData: any = (values: any) => {
   // Piece all the data together
   const productsData = {
     architecture: architecture,
-    brandID,
+    brandID: brand.value,
     buyNewEnabled,
     buyUsedEnabled,
     buyUsedPrice: parseFloat(buyUsedPrice) * 100,
