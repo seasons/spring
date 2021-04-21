@@ -3,6 +3,7 @@ import { Box, Card as MuiCard, styled as muiStyled, Typography } from "@material
 import Chart from "react-apexcharts"
 import { theme } from "theme/theme"
 import moment from "moment"
+import { WidgetTitle } from "./Components/WidgetTitle"
 
 // Currently over-focused on monthly time series. Would need to generalize for
 // other usecases
@@ -54,22 +55,8 @@ export const LinechartWidget = ({ data }) => {
   return (
     <Card>
       <Box display="flex" flexDirection="column" alignItems="center" flexGrow={1}>
-        <Typography
-          component="h2"
-          style={{ color: theme.palette.primary.contrastText, letterSpacing: 1 }}
-          gutterBottom
-          variant="overline"
-        >
-          {data?.title}
-        </Typography>
-        <Typography
-          component="h2"
-          style={{ color: theme.palette.primary.contrastText, letterSpacing: 1 }}
-          gutterBottom
-          variant="overline"
-        >
-          {!!data?.subtitle && `(${data?.subtitle})`}
-        </Typography>
+        <WidgetTitle>{data?.title}</WidgetTitle>
+        <WidgetTitle>{!!data?.subtitle && `(${data?.subtitle})`}</WidgetTitle>
         <Chart options={renderData.options} series={renderData.series} type="line" width="300%" height={300} />
       </Box>
     </Card>

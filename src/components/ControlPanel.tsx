@@ -3,54 +3,33 @@ import { Box, Card as MuiCard, Typography, styled as muiStyled } from "@material
 import { Text } from "components"
 import { Checkbox } from "@material-ui/core"
 import { theme } from "theme/theme"
+import { WidgetTitle } from "views/Overview/Components/WidgetTitle"
 
-export const ControlPanel = ({
-  title,
-  showActive,
-  setShowActive,
-  showPaused,
-  setShowPaused,
-  showAdmissable,
-  setShowAdmissable,
-  containerProps = {},
-}) => {
+export interface ControlPanelItem {
+  itemChecked: boolean
+  setItemChecked: (boolean) => void
+  name: string
+}
+export interface ControlPanelProps {
+  items: ControlPanelItem[]
+  title: string
+  containerProps?: any
+}
+export const ControlPanel: React.FC<ControlPanelProps> = ({ title, items, containerProps = {} }) => {
   return (
     <Card {...containerProps}>
-      <Typography
-        component="h2"
-        style={{ color: theme.palette.primary.contrastText, letterSpacing: 1 }}
-        gutterBottom
-        variant="overline"
-      >
-        {title}
-      </Typography>
-      <CheckFlexbox>
-        <Checkbox
-          checked={showActive}
-          onChange={event => setShowActive(event.target.checked)}
-          color="secondary"
-          name={"Active"}
-        />
-        <ControlPanelText>Active</ControlPanelText>
-      </CheckFlexbox>
-      <CheckFlexbox>
-        <Checkbox
-          checked={showPaused}
-          onChange={event => setShowPaused(event.target.checked)}
-          color="secondary"
-          name={"Paused"}
-        />
-        <ControlPanelText>Paused</ControlPanelText>
-      </CheckFlexbox>
-      <CheckFlexbox>
-        <Checkbox
-          checked={showAdmissable}
-          onChange={event => setShowAdmissable(event.target.checked)}
-          color="secondary"
-          name={"Admissable"}
-        />
-        <ControlPanelText>Admissable</ControlPanelText>
-      </CheckFlexbox>
+      <WidgetTitle>{title}</WidgetTitle>
+      {items.map(a => (
+        <CheckFlexbox>
+          <Checkbox
+            checked={a.itemChecked}
+            onChange={event => a.setItemChecked(event.target.checked)}
+            color="secondary"
+            name={a.name}
+          />
+          <ControlPanelText>{a.name}</ControlPanelText>
+        </CheckFlexbox>
+      ))}
     </Card>
   )
 }

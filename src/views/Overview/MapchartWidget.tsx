@@ -107,12 +107,12 @@ export const MapchartWidget = ({ data }) => {
       </ReactMapGL>
       <ControlPanel
         title={data?.title}
-        showActive={showActive}
-        setShowActive={setShowActive}
-        showPaused={showPaused}
-        setShowPaused={setShowPaused}
-        showAdmissable={showAdmissable}
-        setShowAdmissable={setShowAdmissable}
+        items={[
+          { setItemChecked: setShowActive, itemChecked: showActive, name: "Active" },
+          { setItemChecked: setShowPaused, itemChecked: showPaused, name: "Paused" },
+          { setItemChecked: setShowAdmissable, itemChecked: showAdmissable, name: "Admissable" },
+        ]}
+        // containerProps={{ style: { right: 10, left: "unset" } }}
       />
     </Container>
   )
