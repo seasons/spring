@@ -4,6 +4,7 @@ import { Box, Card as MuiCard, styled as muiStyled, Typography } from "@material
 import { theme } from "theme/theme"
 import { Checkbox } from "@material-ui/core"
 import { Text } from "components"
+import { WidgetTitle } from "./Components/WidgetTitle"
 
 export const RetentionWidget = ({ data }) => {
   const [showLast12Months, setShowLast12Months] = useState(true)
@@ -79,10 +80,6 @@ export const RetentionWidget = ({ data }) => {
   const options = {
     yaxis: {
       labels: {
-        // offsetX: 7,
-        // style: {
-        //   marginRight: "5px",
-        // },
         formatter: function(value, opt) {
           if (typeof value === "string" && value.length > 0) {
             return formatAxisDate(value)
@@ -135,7 +132,6 @@ export const RetentionWidget = ({ data }) => {
       },
     },
     plotOptions: {
-      title: "Customer Retention by Monthly Cohort",
       heatmap: {
         radius: 10,
         dataLabels: { enabled: false },
@@ -166,15 +162,7 @@ export const RetentionWidget = ({ data }) => {
   return (
     <Card>
       <Box display="flex" flexDirection="column" alignItems="center" flexGrow={1} width="100%">
-        <Typography
-          component="h2"
-          style={{ color: theme.palette.primary.contrastText, letterSpacing: 1 }}
-          gutterBottom
-          variant="overline"
-        >
-          {data?.title}
-        </Typography>
-
+        <WidgetTitle>{data?.title}</WidgetTitle>
         <Box display="flex" flexDirection="row" alignItems="flex-start">
           <Chart options={options} series={series} type="heatmap" height={700} width={1000} />
           <ControlPanel showLast12Months={showLast12Months} setShowLast12Months={setShowLast12Months} />
@@ -188,28 +176,14 @@ const Card = muiStyled(MuiCard)({
   backgroundColor: theme.palette.primary.main,
   borderRadius: 4,
   color: theme.palette.primary.contrastText,
-  // height: 250,
   padding: theme.spacing(3),
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "space-between",
 })
 
 const ControlPanel = ({ showLast12Months, setShowLast12Months, containerProps = {} }) => {
   return (
     <ControlPanelCard {...containerProps}>
       <Box display="flex" flexDirection="column" alignItems="center" textAlign="center">
-        <Typography
-          component="h2"
-          style={{
-            color: theme.palette.primary.contrastText,
-            letterSpacing: 1,
-          }}
-          gutterBottom
-          variant="overline"
-        >
-          Customer Retention
-        </Typography>
+        <WidgetTitle>Customer Retention</WidgetTitle>
         <CheckFlexbox>
           <Checkbox
             checked={showLast12Months}
