@@ -1,110 +1,121 @@
 import React from "react"
-import { Grid } from "@material-ui/core"
+import { Box, Grid } from "@material-ui/core"
 import { ExpandableSection, Spacer, Text } from "components"
-import { getTypeSpecificVariantFields } from "../../../Products/utils"
 import { TextField, SelectField } from "fields"
-import { getInternalSizes, getManufacturerSizes, MANUFACTURER_SIZE_TYPES } from "utils/sizes"
+import { getInternalSizes, ManufacturerSizeType } from "utils/sizes"
 import { getFormSelectChoices } from "utils/form"
-import { useField } from "react-final-form"
+import { getTypeSpecificVariantFields } from "views/Inventory/Products/utils"
+import { ManufacturerSizeField } from "./ManufacturerSizeField"
+import { ProductType } from "generated/globalTypes"
 
 export interface VariantCreateSectionProps {
   product: any
-  variantIndex: number
+  variantIndex: number | string
+  sku?: string
+  size?: string
+  productType: ProductType
+  manufacturerSizeType?: ManufacturerSizeType
+  isEditing?: boolean
 }
 
-export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({ product, variantIndex }) => {
-  const productType = product?.type
+export const VariantCreateSection: React.FC<VariantCreateSectionProps> = ({
+  product,
+  variantIndex,
+  sku,
+  productType,
+  size,
+  isEditing,
+  manufacturerSizeType,
+}) => {
   const typeSpecificFields = getTypeSpecificVariantFields(productType)
-  const typeSpecificFirstRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(0, 3) : []
-  const typeSpecificSecondRowFields = typeSpecificFields.length > 0 ? typeSpecificFields.slice(3) : []
-  const firstRowFields = ["Weight", ...typeSpecificFirstRowFields]
-  const secondRowFields = ["Total count", ...typeSpecificSecondRowFields]
-  const requiredFields = productType === "Bottom" ? ["Total count", "Waist", "Inseam"] : ["Total count"]
 
   // Edge case where the product was created with zero variants we need to show manufacturer type choice here
+  // TODO: read from product manufacturer type
   const manufacturerSizeTypeFromSibling = product?.variants?.[0]?.manufacturerSizes?.[0]?.type
-  const manufacturerSizeTypeField = useField(`${variantIndex}_manufacturerSizeType`)
-  const manufacturerSizeType = manufacturerSizeTypeFromSibling
-    ? manufacturerSizeTypeFromSibling
-    : manufacturerSizeTypeField?.input?.value
-  const manufacturerSizes = getManufacturerSizes(manufacturerSizeType)
   const internalSizes = getInternalSizes(productType)
 
-  const manufacturerSizeTypeChoices = getFormSelectChoices(MANUFACTURER_SIZE_TYPES)
+  const fieldNameToName = fieldName => `${variantIndex}_${fieldName.toLowerCase().replace(" ", "")}`
+
+  const RenderTextField = ({
+    fieldName,
+    isRequired = false,
+    type = "text",
+    initialValue,
+    disabled,
+  }: {
+    fieldName: string
+    isRequired?: boolean
+    type?: "text" | "number"
+    initialValue?: string | number
+    disabled?: boolean
+  }) => {
+    return (
+      <Box display="flex" alignContent="center" mb={1}>
+        <Box flex={1} display="flex" alignItems="center">
+          <Text variant="h5">
+            {fieldName}
+            {isRequired && " *"}
+          </Text>
+        </Box>
+        <Box flex={1}>
+          <TextField
+            type={type}
+            name={fieldNameToName(fieldName)}
+            requiredNumber={isRequired}
+            initialValue={initialValue}
+            disabled={disabled}
+          />
+        </Box>
+      </Box>
+    )
+  }
 
   return (
     <ExpandableSection
-      title={`#${variantIndex + 1}`}
+      title={typeof variantIndex === "string" ? variantIndex : `#${variantIndex + 1}`}
       content={
-        <>
-          <Grid container spacing={2}>
-            {firstRowFields.map((field, index) => {
-              const isRequired = requiredFields.includes(field)
-              return (
-                <Grid item key={index} xs={3}>
-                  <Text variant="h5">
-                    {field}
-                    {isRequired && " *"}
-                  </Text>
-                  <Spacer mt={1} />
-                  <TextField
-                    type="number"
-                    name={`${variantIndex}_${field.toLowerCase()}`}
-                    requiredNumber={isRequired}
-                  />
-                </Grid>
-              )
-            })}
-            <Spacer grid mt={3} />
-            {secondRowFields.map((field, index) => {
-              const isRequired = requiredFields.includes(field)
-              return (
-                <Grid item key={index} xs={3}>
-                  <Text variant="h5">
-                    {field}
-                    {isRequired && " *"}
-                  </Text>
-                  <Spacer mt={1} />
-                  <TextField
-                    type="number"
-                    name={`${variantIndex}_${field.toLowerCase().replace(" ", "")}`}
-                    requiredNumber={isRequired}
-                    maxValue={field === "Total count" ? 99 : undefined}
-                  />
-                </Grid>
-              )
-            })}
-            <Spacer grid mt={3} />
-            {!manufacturerSizeTypeFromSibling && (
-              <Grid item xs={3}>
-                <Text variant="h5">Manufacturer size type</Text>
-                <Spacer mt={1} />
-                <SelectField name={`${variantIndex}_manufacturerSizeType`} choices={manufacturerSizeTypeChoices} />
-              </Grid>
-            )}
-            <Grid item xs={3}>
-              <Text variant="h5">Manufacturer size *</Text>
-              <Spacer mt={1} />
-              <SelectField
-                name={`${variantIndex}_manufacturerSize`}
-                choices={getFormSelectChoices(manufacturerSizes)}
-                requiredString
+        <Grid container spacing={4}>
+          <Grid item xs={8}>
+            <Box mb={8}>
+              <Text variant="h4">General</Text>
+              <Spacer mt={4} />
+              <RenderTextField fieldName="SKU" type="text" disabled initialValue={sku} />
+              <RenderTextField fieldName="Total count" type="number" initialValue={1} isRequired />
+            </Box>
+
+            <Box mb={8}>
+              <Text variant="h4">Sizes</Text>
+              <Spacer mt={4} />
+
+              <ManufacturerSizeField
+                namePrefix={String(variantIndex)}
+                sizeType={manufacturerSizeTypeFromSibling || manufacturerSizeType}
               />
-            </Grid>
-            {productType === "Top" && (
-              <Grid item xs={3}>
-                <Text variant="h5">Internal size *</Text>
-                <Spacer mt={1} />
-                <SelectField
-                  name={`${variantIndex}_internalSize`}
-                  choices={getFormSelectChoices(internalSizes)}
-                  requiredString
-                />
-              </Grid>
-            )}
-            <Spacer grid mt={3} />
+
+              <Box display="flex" mb={1}>
+                <Box flex={1}>
+                  <Text variant="h5">Internal size *</Text>
+                </Box>
+                <Box flex={1} display="flex" alignItems="center">
+                  <SelectField
+                    name={`${variantIndex}_internalSize`}
+                    choices={getFormSelectChoices(internalSizes)}
+                    initialValue={size}
+                    requiredString
+                  />
+                </Box>
+              </Box>
+            </Box>
+
+            <Box mb={8}>
+              <Text variant="h4">Measurements</Text>
+              <Spacer mt={4} />
+              {typeSpecificFields.map((field, index) => (
+                <RenderTextField fieldName={field} type="number" key={field + index} />
+              ))}
+            </Box>
           </Grid>
-        </>
+        </Grid>
       }
     />
   )
