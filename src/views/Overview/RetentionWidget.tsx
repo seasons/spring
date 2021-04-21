@@ -97,6 +97,7 @@ export const RetentionWidget = ({ data }) => {
             }
             return value
           }
+
           return value
         },
       },
@@ -118,6 +119,9 @@ export const RetentionWidget = ({ data }) => {
 
         if (dataPointIndex > seriesIndex) {
           return `${Math.round(val * 100)}%`
+        }
+        if (val === null) {
+          return ""
         }
 
         return val
