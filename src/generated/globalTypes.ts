@@ -5629,7 +5629,8 @@ export interface PhysicalProductScalarWhereInput {
 }
 
 export interface PhysicalProductSeasonsUIDSizes {
-  sizeName: string
+  internalSize: string
+  manufacturerSize: string
   count: number
 }
 
@@ -8221,6 +8222,8 @@ export interface ReservationCreateWithoutCustomerInput {
   receivedAt?: any | null
   reminderSentAt?: any | null
   statusUpdatedAt?: any | null
+  completedAt?: any | null
+  cancelledAt?: any | null
   user: UserCreateOneInput
   sentPackage?: PackageCreateOneInput | null
   returnedPackage?: PackageCreateOneInput | null
@@ -8242,6 +8245,8 @@ export interface ReservationCreateWithoutPackageEventsInput {
   receivedAt?: any | null
   reminderSentAt?: any | null
   statusUpdatedAt?: any | null
+  completedAt?: any | null
+  cancelledAt?: any | null
   user: UserCreateOneInput
   customer: CustomerCreateOneWithoutReservationsInput
   sentPackage?: PackageCreateOneInput | null
@@ -8530,6 +8535,22 @@ export interface ReservationScalarWhereInput {
   statusUpdatedAt_lte?: any | null
   statusUpdatedAt_gt?: any | null
   statusUpdatedAt_gte?: any | null
+  completedAt?: any | null
+  completedAt_not?: any | null
+  completedAt_in?: any[] | null
+  completedAt_not_in?: any[] | null
+  completedAt_lt?: any | null
+  completedAt_lte?: any | null
+  completedAt_gt?: any | null
+  completedAt_gte?: any | null
+  cancelledAt?: any | null
+  cancelledAt_not?: any | null
+  cancelledAt_in?: any[] | null
+  cancelledAt_not_in?: any[] | null
+  cancelledAt_lt?: any | null
+  cancelledAt_lte?: any | null
+  cancelledAt_gt?: any | null
+  cancelledAt_gte?: any | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -8557,6 +8578,8 @@ export interface ReservationUpdateManyDataInput {
   receivedAt?: any | null
   reminderSentAt?: any | null
   statusUpdatedAt?: any | null
+  completedAt?: any | null
+  cancelledAt?: any | null
 }
 
 export interface ReservationUpdateManyWithWhereNestedInput {
@@ -8599,6 +8622,8 @@ export interface ReservationUpdateWithoutCustomerDataInput {
   receivedAt?: any | null
   reminderSentAt?: any | null
   statusUpdatedAt?: any | null
+  completedAt?: any | null
+  cancelledAt?: any | null
   user?: UserUpdateOneRequiredInput | null
   sentPackage?: PackageUpdateOneInput | null
   returnedPackage?: PackageUpdateOneInput | null
@@ -8619,6 +8644,8 @@ export interface ReservationUpdateWithoutPackageEventsDataInput {
   receivedAt?: any | null
   reminderSentAt?: any | null
   statusUpdatedAt?: any | null
+  completedAt?: any | null
+  cancelledAt?: any | null
   user?: UserUpdateOneRequiredInput | null
   customer?: CustomerUpdateOneRequiredWithoutReservationsInput | null
   sentPackage?: PackageUpdateOneInput | null
@@ -10353,13 +10380,14 @@ export interface UpdateVariantInput {
   id: string
   productType: ProductType
   weight?: number | null
+  manufacturerSizeNames?: string[] | null
+  manufacturerSizeType?: SizeType | null
+  internalSizeType?: SizeType | null
   sleeve?: number | null
   shoulder?: number | null
   chest?: number | null
   neck?: number | null
   length?: number | null
-  manufacturerSizeNames?: string[] | null
-  manufacturerSizeType?: SizeType | null
   waist?: number | null
   rise?: number | null
   hem?: number | null
@@ -10380,7 +10408,7 @@ export interface UpsertPhysicalProductInput {
 
 export interface UpsertProductInput {
   architecture?: string | null
-  internalBottomSizeType?: BottomSizeType | null
+  internalSizeType?: SizeType | null
   brandID: string
   buyNewEnabled?: boolean | null
   buyUsedEnabled: boolean
@@ -10425,7 +10453,7 @@ export interface UpsertVariantInput {
   neck?: number | null
   length?: number | null
   internalSizeName: string
-  internalBottomSizeType?: BottomSizeType | null
+  internalSizeType?: SizeType | null
   manufacturerSizeNames?: string[] | null
   manufacturerSizeType?: SizeType | null
   waist?: number | null
