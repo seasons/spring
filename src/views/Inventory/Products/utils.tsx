@@ -22,7 +22,7 @@ export const getTypeSpecificVariantFields = productType => {
       fields = ["Waist", "Rise", "Hem", "Inseam"]
       break
   }
-  return fields
+  return ["Weight", ...fields]
 }
 
 const extractValuesForKey = (values, searchKey, size) => {
