@@ -104,30 +104,32 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
   } else if (newProductCreateData) {
     // Read createData to get SKU's and total count for each SKU
     const sizes = newProductCreateData?.sizes || []
-    const sizesToInternalSize = {}
+    const sizesToSKUs = {}
     const sizesToTotalCounts = {}
     Object.entries(newProductCreateData).forEach(([key, value]) => {
       const components = key.split("_")
-      const size = components[0]
-      switch (components[1]) {
-        case "internalSize":
-          sizesToInternalSize[size] = value
-          break
-        case "totalcount":
-          const valueAsString = value as string
-          sizesToTotalCounts[size] = parseInt(valueAsString) || 0
-          break
-        default:
-          break
+      if (components.length === 2) {
+        const size = components[0]
+        switch (components[1]) {
+          case "sku":
+            sizesToSKUs[size] = value
+            break
+          case "totalcount":
+            const valueAsString = value as string
+            sizesToTotalCounts[size] = parseInt(valueAsString) || 0
+            break
+          default:
+            break
+        }
       }
     })
 
     // Form the seasonsUID using SKU and total count
     sizes.forEach(size => {
-      const internalSize: string = sizesToInternalSize[size]
+      const sku: string = sizesToSKUs[size]
       const totalCount: number = sizesToTotalCounts[size]
       Array.from(Array(totalCount).keys()).forEach((_, index) => {
-        physicalProductUIDs.push(`${internalSize}-${(index + 1).toString().padStart(2, "0")}`)
+        physicalProductUIDs.push(`${sku}-${(index + 1).toString().padStart(2, "0")}`)
       })
     })
   } else if (physicalProducts) {
