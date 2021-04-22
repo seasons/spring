@@ -46,7 +46,7 @@ export const BRAND_EDIT_QUERY = gql`
           count
         }
       }
-      externalShopifyIntegration {
+      shopifyShop {
         enabled
         shopName
       }
