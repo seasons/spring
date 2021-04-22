@@ -227,6 +227,11 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
               <TableCell>{member.detail.instagramHandle ?? "n/a"}</TableCell>
               <TableCell></TableCell>
             </TableRow>
+            <TableRow>
+              <TableCell>Discovery Reference</TableCell>
+              <TableCell>{member.detail.discoveryReference ?? "n/a"}</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </CardContent>
