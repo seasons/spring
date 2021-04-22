@@ -149,7 +149,7 @@ export const getProductUpsertData: any = (values: any) => {
   Object.entries(values).forEach(entry => {
     const key = entry[0]
     const value = entry[1] as string
-    if (key.includes("_sku")) {
+    if (key.includes("_internalSize")) {
       const sku = value
       const size = key.split("_")[0]
       skusToSizes[sku] = size
