@@ -42,23 +42,30 @@ export const PiechartWidget = ({ data, controlPanelProps }: PiechartWidgetProps)
   }
   return (
     <Card controlPanel={!!controlPanelProps}>
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        width="100%"
-        position="relative"
-      >
-        <WidgetTitle>{data?.title}</WidgetTitle>
-        <WidgetTitle>{!!data?.subtitle && `(${data?.subtitle})`}</WidgetTitle>
-        <Chart
-          options={renderData.options}
-          series={renderData.series}
-          type="pie"
-          height={!!controlPanelProps ? "350px" : undefined}
-        />
-        {!!controlPanelProps && <ControlPanel {...controlPanelProps} />}
+      <Box display="flex" flexDirection="row" justifyContent="center" width="100%">
+        {!!controlPanelProps && (
+          <ControlPanel
+            {...controlPanelProps}
+            containerProps={{
+              ...controlPanelProps.containerProps,
+              style: {
+                position: "unset",
+                height: "fit-content",
+                ...(controlPanelProps?.containerProps?.style || {}),
+              },
+            }}
+          />
+        )}
+        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
+          <WidgetTitle>{data?.title}</WidgetTitle>
+          <WidgetTitle>{!!data?.subtitle && `(${data?.subtitle})`}</WidgetTitle>
+          <Chart
+            options={renderData.options}
+            series={renderData.series}
+            type="pie"
+            height={!!controlPanelProps ? "350px" : undefined}
+          />
+        </Box>
       </Box>
     </Card>
   )
