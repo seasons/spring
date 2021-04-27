@@ -15,8 +15,8 @@ import { FunnelWidget } from "./FunnelWidget"
 import { LinechartWidget } from "./LinechartWidget"
 import { MapchartWidget } from "./MapchartWidget"
 import { IOSVersionsWidget } from "./iosVersions"
-import Chart from "react-apexcharts"
 import { RetentionWidget } from "./RetentionWidget"
+import { DiscoveryWidget } from "./DiscoveryWidget"
 
 export interface OverviewViewProps {}
 
@@ -105,7 +105,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             />
           </Grid>
         </Grid>
-
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
           <Typography variant="h3">Acquisition & Retention</Typography>
         </Box>
@@ -149,8 +148,15 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
           <Grid item lg={12} sm={12} xs={12}>
             <RetentionWidget data={getElementForSlug("customer-retention")} />
           </Grid>
+          <Grid item lg={6} sm={6} xs={12}>
+            <DiscoveryWidget
+              data={{
+                last30Days: getElementForSlug("discovery-reference-pivot-last-30-days"),
+                allTime: getElementForSlug('discovery-reference-pivot-"all-time"'),
+              }}
+            />
+          </Grid>
         </Grid>
-
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
           <Typography variant="h3">Virality</Typography>
         </Box>
@@ -189,7 +195,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             <PiechartWidget data={{ ...getElementForSlug("reservations-by-platform"), subtitle: "Last 30 days" }} />
           </Grid>
         </Grid>
-
         <Spacer mb={2} />
       </Box>
     </Container>

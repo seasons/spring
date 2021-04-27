@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useQuery } from "react-apollo"
 import { useLocation } from "react-router-dom"
 import { Box, Grid, styled as muiStyled } from "@material-ui/core"
@@ -19,7 +19,11 @@ export interface ProductVariantEditSectionProps {
   refetch?: () => void
 }
 
-export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = ({ createData, variants, refetch }) => {
+export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = ({
+  createData,
+  variants,
+  refetch: refreshPage,
+}) => {
   const location = useLocation()
   const manufacturerSizeTypeField = useField("manufacturerSizeType")
   const brandID = createData?.brand || variants?.[0]?.product?.brand?.id
@@ -27,7 +31,7 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
   const sizeNames = createData?.sizes || []
   const productType = createData?.productType || variants?.[0]?.internalSize?.productType
   const [openModal, toggleModal] = useState(false)
-  const { data, loading, error } = useQuery(GET_VARIANT_SKUS_AND_SIZE_TYPES, {
+  const { data, loading, error, refetch } = useQuery(GET_VARIANT_SKUS_AND_SIZE_TYPES, {
     variables: {
       input: {
         brandID,
@@ -36,6 +40,12 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
       },
     },
   })
+
+  useEffect(() => {
+    if (!data && !!brandID && sizeNames.length > 0 && !!colorCode) {
+      refetch()
+    }
+  }, [data, brandID, sizeNames, colorCode, refetch])
 
   if (createData && (loading || !data || error)) {
     return <Loading />
@@ -158,7 +168,7 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
         open={openModal}
         productVariant={variants?.[0]}
         onSuccess={() => {
-          refetch?.()
+          refreshPage?.()
         }}
       />
     </Box>

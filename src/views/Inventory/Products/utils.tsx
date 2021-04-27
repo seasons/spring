@@ -22,7 +22,7 @@ export const getTypeSpecificVariantFields = productType => {
       fields = ["Waist", "Rise", "Hem", "Inseam"]
       break
   }
-  return fields
+  return ["Weight", ...fields]
 }
 
 const extractValuesForKey = (values, searchKey, size) => {
@@ -285,7 +285,7 @@ export const getProductUpsertData: any = (values: any) => {
 export const getProductUpdateData = (values: any) => {
   const {
     architecture,
-    brand: brandID,
+    brand,
     buyNewEnabled,
     buyUsedEnabled,
     buyUsedPrice,
@@ -335,7 +335,7 @@ export const getProductUpdateData = (values: any) => {
 
   const updateProductData = {
     architecture,
-    brand: { connect: { id: brandID } },
+    brand: { connect: { id: brand.value } },
     buyNewEnabled,
     buyUsedPrice: parseFloat(buyUsedPrice) * 100,
     buyUsedEnabled,
