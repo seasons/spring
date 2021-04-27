@@ -18,6 +18,7 @@ export const ManageView: React.FC<TabRenderProps> = ({ data }) => {
     dateReceived,
     inventoryStatus,
     productStatus,
+    offloadMethod,
     seasonsUID,
     unitCost,
     warehouseLocation,
@@ -51,6 +52,7 @@ export const ManageView: React.FC<TabRenderProps> = ({ data }) => {
       dateReceived: getDateISOString(values[`${seasonsUID}_dateReceived`]) || null,
       inventoryStatus: values[`${seasonsUID}_inventoryStatus`],
       productStatus: values[`${seasonsUID}_physicalProductStatus`],
+      offloadMethod: values[`${seasonsUID}_offloadMethod`],
       unitCost: parseFloat(values[`${seasonsUID}_unitCost`]) || null,
     }
     await updatePhysicalProduct({
@@ -66,6 +68,7 @@ export const ManageView: React.FC<TabRenderProps> = ({ data }) => {
     [`${seasonsUID}_dateReceived`]: getLocaleDateString(dateReceived) || undefined,
     [`${seasonsUID}_inventoryStatus`]: inventoryStatus,
     [`${seasonsUID}_physicalProductStatus`]: productStatus,
+    [`${seasonsUID}_offloadMethod`]: offloadMethod,
     [`${seasonsUID}_unitCost`]: unitCost || undefined,
   }
 

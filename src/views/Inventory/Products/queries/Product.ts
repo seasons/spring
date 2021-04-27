@@ -184,6 +184,12 @@ export const PHYSICAL_PRODUCT_STATUSES_QUERY = gql`
         name
       }
     }
+
+    offloadMethods: __type(name: "PhysicalProductOffloadMethod") {
+      enumValues {
+        name
+      }
+    }
   }
 `
 export const PRODUCT_EDIT_QUERY = gql`
