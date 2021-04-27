@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Card as MuiCard, Typography, styled as muiStyled } from "@material-ui/core"
+import { Box, Card as MuiCard, styled as muiStyled, Tooltip } from "@material-ui/core"
 import { Text } from "components"
 import { Checkbox } from "@material-ui/core"
 import { theme } from "theme/theme"
@@ -9,27 +9,33 @@ export interface ControlPanelItem {
   itemChecked: boolean
   setItemChecked: (boolean) => void
   name: string
+  tooltip?: string
 }
 export interface ControlPanelProps {
   items: ControlPanelItem[]
   title: string
   containerProps?: any
 }
+
 export const ControlPanel: React.FC<ControlPanelProps> = ({ title, items, containerProps = {} }) => {
   return (
     <Card {...containerProps}>
       <WidgetTitle>{title}</WidgetTitle>
-      {items.map(a => (
-        <CheckFlexbox>
-          <Checkbox
-            checked={a.itemChecked}
-            onChange={event => a.setItemChecked(event.target.checked)}
-            color="secondary"
-            name={a.name}
-          />
-          <ControlPanelText>{a.name}</ControlPanelText>
-        </CheckFlexbox>
-      ))}
+      {items.map(a => {
+        return (
+          <Tooltip title={a.tooltip || ""}>
+            <CheckFlexbox>
+              <Checkbox
+                checked={a.itemChecked}
+                onChange={event => a.setItemChecked(event.target.checked)}
+                color="secondary"
+                name={a.name}
+              />
+              <ControlPanelText>{a.name}</ControlPanelText>
+            </CheckFlexbox>
+          </Tooltip>
+        )
+      })}
     </Card>
   )
 }

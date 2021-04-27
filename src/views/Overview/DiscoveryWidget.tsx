@@ -27,8 +27,19 @@ export const DiscoveryWidget = ({ data }) => {
   const controlPanelProps = {
     title: "Discovery Reference",
     items: [
-      { setItemChecked: setShowLast30Days, itemChecked: showLast30Days, name: "Last 30 Days" },
-      { setItemChecked: setShowConvertedOnly, itemChecked: showConvertedOnly, name: "Subscribed Only" },
+      {
+        setItemChecked: setShowLast30Days,
+        itemChecked: showLast30Days,
+        name: "Last 30 Days",
+        tooltip:
+          "Include only accounts created within last 30 days. If off, show all accounts created since we started collecting a discovery reference (Apr 7, 2021)",
+      },
+      {
+        setItemChecked: setShowConvertedOnly,
+        itemChecked: showConvertedOnly,
+        name: "Subscribed Only",
+        tooltip: "Show only accounts which paid at least 1 month. Otherwise, include all accounts in given time period",
+      },
     ],
   }
   return <PiechartWidget data={piechartData} controlPanelProps={controlPanelProps} />

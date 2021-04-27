@@ -15,7 +15,6 @@ import { FunnelWidget } from "./FunnelWidget"
 import { LinechartWidget } from "./LinechartWidget"
 import { MapchartWidget } from "./MapchartWidget"
 import { IOSVersionsWidget } from "./iosVersions"
-import Chart from "react-apexcharts"
 import { RetentionWidget } from "./RetentionWidget"
 import { DiscoveryWidget } from "./DiscoveryWidget"
 
@@ -59,7 +58,7 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
   return (
     <Container maxWidth={false}>
       <Box mt={6}>
-        {/* <Grid container spacing={3}>
+        <Grid container spacing={3}>
           <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
             <Typography variant="h3">Financials</Typography>
           </Box>
@@ -105,13 +104,12 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
               }}
             />
           </Grid>
-        </Grid> */}
-
+        </Grid>
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
           <Typography variant="h3">Acquisition & Retention</Typography>
         </Box>
         <Grid container spacing={3}>
-          {/* <Grid item lg={12} sm={12} xs={12}>
+          <Grid item lg={12} sm={12} xs={12}>
             <LinechartWidget
               data={{
                 ...getElementForSlug("accounts-created-per-month"),
@@ -149,7 +147,7 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
           </Grid>
           <Grid item lg={12} sm={12} xs={12}>
             <RetentionWidget data={getElementForSlug("customer-retention")} />
-          </Grid> */}
+          </Grid>
           <Grid item lg={6} sm={6} xs={12}>
             <DiscoveryWidget
               data={{
@@ -159,7 +157,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             />
           </Grid>
         </Grid>
-
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
           <Typography variant="h3">Virality</Typography>
         </Box>
@@ -198,7 +195,6 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
             <PiechartWidget data={{ ...getElementForSlug("reservations-by-platform"), subtitle: "Last 30 days" }} />
           </Grid>
         </Grid>
-
         <Spacer mb={2} />
       </Box>
     </Container>
