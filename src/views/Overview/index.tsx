@@ -17,6 +17,7 @@ import { MapchartWidget } from "./MapchartWidget"
 import { IOSVersionsWidget } from "./iosVersions"
 import Chart from "react-apexcharts"
 import { RetentionWidget } from "./RetentionWidget"
+import { DiscoveryWidget } from "./DiscoveryWidget"
 
 export interface OverviewViewProps {}
 
@@ -58,7 +59,7 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
   return (
     <Container maxWidth={false}>
       <Box mt={6}>
-        <Grid container spacing={3}>
+        {/* <Grid container spacing={3}>
           <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
             <Typography variant="h3">Financials</Typography>
           </Box>
@@ -104,13 +105,13 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
               }}
             />
           </Grid>
-        </Grid>
+        </Grid> */}
 
         <Box mt={4} my={2} display="flex" alignItems="center" width="100%">
           <Typography variant="h3">Acquisition & Retention</Typography>
         </Box>
         <Grid container spacing={3}>
-          <Grid item lg={12} sm={12} xs={12}>
+          {/* <Grid item lg={12} sm={12} xs={12}>
             <LinechartWidget
               data={{
                 ...getElementForSlug("accounts-created-per-month"),
@@ -148,6 +149,14 @@ export const OverviewView: React.FC<OverviewViewProps> = () => {
           </Grid>
           <Grid item lg={12} sm={12} xs={12}>
             <RetentionWidget data={getElementForSlug("customer-retention")} />
+          </Grid> */}
+          <Grid item lg={6} sm={6} xs={12}>
+            <DiscoveryWidget
+              data={{
+                last30Days: getElementForSlug("discovery-reference-pivot-last-30-days"),
+                allTime: getElementForSlug('discovery-reference-pivot-"all-time"'),
+              }}
+            />
           </Grid>
         </Grid>
 
