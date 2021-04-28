@@ -192,6 +192,7 @@ const CustomerDetails = gql`
       bodyType
       topSizes
       waistSizes
+      discoveryReference
       averagePantLength
       preferredPronouns
       profession

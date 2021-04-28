@@ -1,11 +1,17 @@
 import React from "react"
-import { Box, Card as MuiCard, styled as muiStyled, Typography } from "@material-ui/core"
+import { Box, Card as MuiCard, styled as muiStyled } from "@material-ui/core"
 import Chart from "react-apexcharts"
 import { theme } from "theme/theme"
 import { upperFirst } from "lodash"
 import { WidgetTitle } from "./Components/WidgetTitle"
+import { ControlPanel, ControlPanelProps } from "components/ControlPanel"
 
-export const PiechartWidget = ({ data }) => {
+export interface PiechartWidgetProps {
+  data: any
+  controlPanelProps?: ControlPanelProps
+}
+
+export const PiechartWidget = ({ data, controlPanelProps }: PiechartWidgetProps) => {
   const alphabetizedLabels = Object.keys(data?.result).sort()
 
   let series = alphabetizedLabels.map(a => data?.result?.[a])
@@ -17,27 +23,63 @@ export const PiechartWidget = ({ data }) => {
       legend: {
         position: "bottom",
       },
+      colors: [
+        "#008FFB",
+        "#00E396",
+        "#FEB019",
+        "#FF4560",
+        "#775DD0",
+        "#4CAF50",
+        "#546E7A",
+        "#A5978B",
+        "#C7F464",
+        "#F9A3A4",
+        "#F9C80E",
+        "#5A2A27",
+        "#2E294E",
+      ],
     },
   }
   return (
-    <Card>
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
-        <WidgetTitle>{data?.title}</WidgetTitle>
-        <WidgetTitle>{!!data?.subtitle && `(${data?.subtitle})`}</WidgetTitle>
-        <Chart options={renderData.options} series={renderData.series} type="pie" />
+    <Card controlPanel={!!controlPanelProps}>
+      <Box display="flex" flexDirection="row" justifyContent="center" width="100%">
+        {!!controlPanelProps && (
+          <ControlPanel
+            {...controlPanelProps}
+            containerProps={{
+              ...controlPanelProps.containerProps,
+              style: {
+                position: "unset",
+                height: "fit-content",
+                ...(controlPanelProps?.containerProps?.style || {}),
+              },
+            }}
+          />
+        )}
+        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
+          <WidgetTitle>{data?.title}</WidgetTitle>
+          <WidgetTitle>{!!data?.subtitle && `(${data?.subtitle})`}</WidgetTitle>
+          <Chart
+            options={renderData.options}
+            series={renderData.series}
+            type="pie"
+            height={!!controlPanelProps ? "350px" : undefined}
+          />
+        </Box>
       </Box>
     </Card>
   )
 }
 
-const Card = muiStyled(MuiCard)({
+const Card = muiStyled(MuiCard)((p: { controlPanel: boolean }) => ({
   backgroundColor: theme.palette.primary.main,
   borderRadius: 4,
   color: theme.palette.primary.contrastText,
-  height: 250,
+  height: p.controlPanel ? 350 : 250,
+  widget: p.controlPanel ? 500 : 250,
   padding: theme.spacing(3),
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   position: "relative",
-})
+}))
