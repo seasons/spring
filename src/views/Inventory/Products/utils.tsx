@@ -268,7 +268,6 @@ export const getProductUpsertData: any = (values: any) => {
  * @param values: set of values retrieved from the Edit product form
  */
 export const getProductUpdateData = (values: any) => {
-  console.log(values)
   const {
     architecture,
     brand,
