@@ -1,17 +1,3 @@
-export const getModelSizeDisplay = (productType: string, modelSizeName: string) => {
-  // Get the modelSizeDisplay which is usually just the modelSizeName except
-  // for when it is a bottom whose type is not Letter.
-  let modelSizeDisplay
-  switch (productType) {
-    case "Top":
-      modelSizeDisplay = modelSizeName
-      break
-    case "Bottom":
-      modelSizeDisplay = `WxL ${modelSizeName}`
-  }
-  return modelSizeDisplay
-}
-
 export const getTypeSpecificVariantFields = productType => {
   let fields: string[] = []
   switch (productType) {
@@ -119,6 +105,7 @@ export const getProductUpsertData: any = (values: any) => {
     materialCategory: materialCategorySlug,
     model: modelID,
     modelSize: modelSizeName,
+    manufacturerSizeType,
     name,
     outerMaterials,
     productFit,
@@ -139,10 +126,7 @@ export const getProductUpsertData: any = (values: any) => {
   const numImages = 4
   const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
 
-  let modelSizeDisplay
-  if (modelSizeName) {
-    modelSizeDisplay = getModelSizeDisplay(productType, modelSizeName)
-  }
+  let modelSizeDisplay = modelSizeName
 
   // Get dictionary of product variant SKUs to their sizes
   const skusToSizes = {}
@@ -262,6 +246,7 @@ export const getProductUpsertData: any = (values: any) => {
     modelID,
     modelSizeDisplay,
     modelSizeName,
+    modelSizeType: manufacturerSizeType,
     name,
     outerMaterials: outerMaterials || [],
     productFit,
@@ -283,6 +268,7 @@ export const getProductUpsertData: any = (values: any) => {
  * @param values: set of values retrieved from the Edit product form
  */
 export const getProductUpdateData = (values: any) => {
+  console.log(values)
   const {
     architecture,
     brand,
@@ -298,6 +284,7 @@ export const getProductUpdateData = (values: any) => {
     materialCategory: materialCategorySlug,
     model: modelID,
     modelSize: modelSizeName,
+    manufacturerSizeType,
     name,
     outerMaterials,
     photographyStatus,
@@ -314,7 +301,7 @@ export const getProductUpdateData = (values: any) => {
     vendorSeasonYear,
   } = values
 
-  const modelSizeDisplay = modelSizeName ? getModelSizeDisplay(productType, modelSizeName) : null
+  const modelSizeDisplay = modelSizeName
   const numImages = 4
   const images = [...Array(numImages).keys()]
     .map(index => {
@@ -350,6 +337,7 @@ export const getProductUpdateData = (values: any) => {
     model: modelID && { connect: { id: modelID } },
     modelSizeDisplay,
     modelSizeName,
+    modelSizeType: manufacturerSizeType,
     name,
     outerMaterials: { set: outerMaterials },
     photographyStatus,
