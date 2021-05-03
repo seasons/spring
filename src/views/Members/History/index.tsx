@@ -10,12 +10,13 @@ export const HistoryView: React.FC<MemberSubViewProps> = ({ member }) => {
   member?.reservations?.forEach(res => (normalizedReservations[res.id] = res))
   const defaultSort = { field: "reservationNumber", order: "ASC" }
 
+  console.log(member?.reservations)
   return (
     <Card>
       <Datagrid ids={member?.reservations?.map(r => r.id)} data={normalizedReservations} currentSort={defaultSort}>
         <TextField source="reservationNumber" label="Order #" />
         <StatusField label="Order Status" />
-        <SinceDateField source="receivedAt" label="Date Placed" />
+        <SinceDateField source="createdAt" label="Date Placed" />
         <SinceDateField source="shippedAt" label="Date Returned" />
         <ProductItemsField source="productVariant.product.images" label="Items" />
         <ViewEntityField entityPath="reservation" source="id" label="Actions" />
