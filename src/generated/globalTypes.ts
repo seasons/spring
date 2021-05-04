@@ -1038,6 +1038,10 @@ export interface BrandCreateWithoutProductsInput {
   shopifyShop?: ShopifyShopCreateOneInput | null
 }
 
+export interface BrandCreatestylesInput {
+  set?: CustomerStyle[] | null
+}
+
 export interface BrandUpdateDataInput {
   slug?: string | null
   brandCode?: string | null
@@ -1093,6 +1097,10 @@ export interface BrandUpdateWithoutProductsDataInput {
   logoImage?: ImageUpdateOneInput | null
   images?: ImageUpdateManyInput | null
   shopifyShop?: ShopifyShopUpdateOneInput | null
+}
+
+export interface BrandUpdatestylesInput {
+  set?: CustomerStyle[] | null
 }
 
 export interface BrandUpsertNestedInput {
