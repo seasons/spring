@@ -14,6 +14,9 @@ export default {
           lastName
           email
         }
+        reservations {
+          id
+        }
       }
       images(size: XSmall) {
         url
@@ -56,6 +59,9 @@ export default {
             city
             state
           }
+        }
+        reservations {
+          id
         }
       }
       sentPackage {

@@ -182,6 +182,7 @@ export interface customer_reservations {
   status: ReservationStatus
   shippedAt: any | null
   receivedAt: any | null
+  createdAt: any
   products: customer_reservations_products[]
 }
 
@@ -231,6 +232,7 @@ export interface customer_detail {
   bodyType: string | null
   topSizes: string[]
   waistSizes: number[]
+  discoveryReference: string | null
   averagePantLength: string | null
   preferredPronouns: string | null
   profession: string | null

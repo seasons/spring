@@ -212,7 +212,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
             record={member.user.links}
             rows={[
               {
-                fieldName: "Source",
+                fieldName: "Mixpanel",
                 fieldValueFunc: getCreateUserLinkFunc("mixpanel"),
               },
               {

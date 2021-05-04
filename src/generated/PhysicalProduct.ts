@@ -5,6 +5,7 @@
 
 import {
   InventoryStatus,
+  PhysicalProductOffloadMethod,
   PhysicalProductStatus,
   ReservationStatus,
   ReservationPhase,
@@ -85,6 +86,7 @@ export interface PhysicalProduct_reports {
   __typename: "PhysicalProductQualityReport"
   id: string
   damageType: PhysicalProductDamageType | null
+  damageTypes: PhysicalProductDamageType[]
   createdAt: any
   notes: string | null
   user: PhysicalProduct_reports_user
@@ -142,6 +144,7 @@ export interface PhysicalProduct {
   id: string
   seasonsUID: string
   inventoryStatus: InventoryStatus
+  offloadMethod: PhysicalProductOffloadMethod | null
   sequenceNumber: number
   unitCost: number | null
   dateOrdered: any | null

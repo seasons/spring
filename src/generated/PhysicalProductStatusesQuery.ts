@@ -27,7 +27,18 @@ export interface PhysicalProductStatusesQuery_physicalProductStatuses {
   enumValues: PhysicalProductStatusesQuery_physicalProductStatuses_enumValues[] | null
 }
 
+export interface PhysicalProductStatusesQuery_offloadMethods_enumValues {
+  __typename: "__EnumValue"
+  name: string
+}
+
+export interface PhysicalProductStatusesQuery_offloadMethods {
+  __typename: "__Type"
+  enumValues: PhysicalProductStatusesQuery_offloadMethods_enumValues[] | null
+}
+
 export interface PhysicalProductStatusesQuery {
   inventoryStatuses: PhysicalProductStatusesQuery_inventoryStatuses | null
   physicalProductStatuses: PhysicalProductStatusesQuery_physicalProductStatuses | null
+  offloadMethods: PhysicalProductStatusesQuery_offloadMethods | null
 }

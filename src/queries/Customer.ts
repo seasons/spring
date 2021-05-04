@@ -149,6 +149,7 @@ const CustomerDetails = gql`
       status
       shippedAt
       receivedAt
+      createdAt
       products {
         id
         productVariant {
@@ -192,6 +193,7 @@ const CustomerDetails = gql`
       bodyType
       topSizes
       waistSizes
+      discoveryReference
       averagePantLength
       preferredPronouns
       profession

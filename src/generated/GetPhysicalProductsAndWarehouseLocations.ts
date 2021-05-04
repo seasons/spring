@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WarehouseLocationType } from "./globalTypes"
+import { PhysicalProductDamageType, WarehouseLocationType } from "./globalTypes"
 
 // ====================================================
 // GraphQL query operation: GetPhysicalProductsAndWarehouseLocations
@@ -15,12 +15,19 @@ export interface GetPhysicalProductsAndWarehouseLocations_physicalProducts_wareh
   barcode: string
 }
 
+export interface GetPhysicalProductsAndWarehouseLocations_physicalProducts_reports {
+  __typename: "PhysicalProductQualityReport"
+  damageTypes: PhysicalProductDamageType[]
+  notes: string | null
+}
+
 export interface GetPhysicalProductsAndWarehouseLocations_physicalProducts {
   __typename: "PhysicalProduct"
   id: string
   seasonsUID: string
   barcode: string
   warehouseLocation: GetPhysicalProductsAndWarehouseLocations_physicalProducts_warehouseLocation | null
+  reports: GetPhysicalProductsAndWarehouseLocations_physicalProducts_reports[] | null
 }
 
 export interface GetPhysicalProductsAndWarehouseLocations_warehouseLocations {

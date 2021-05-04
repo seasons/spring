@@ -5,6 +5,7 @@ import { PhysicalProduct } from "generated/PhysicalProduct"
 import { Autocomplete } from "@material-ui/lab"
 import { useQuery } from "react-apollo"
 import { PHYSICAL_PRODUCT_WITH_IMAGES } from "views/Inventory/PhysicalProducts/queries"
+import { Separator } from "components"
 
 const Image = styled.img`
   margin-right: 5px;
@@ -105,6 +106,35 @@ export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, produ
             </Box>
           </Box>
         </Paper>
+        <Box my={1} mt={2}>
+          {product?.reports?.map(report => {
+            if (!report) {
+              return null
+            }
+            const { damageTypes, notes } = report
+
+            return (
+              <Box>
+                {damageTypes?.length > 0 && (
+                  <>
+                    <Typography variant="overline" color="textSecondary">
+                      Damage Types
+                    </Typography>
+                    <Typography variant="body1">{damageTypes?.join(", ")}</Typography>
+                  </>
+                )}
+                {(notes || "").length > 0 && (
+                  <>
+                    <Typography variant="overline" color="textSecondary">
+                      Notes
+                    </Typography>
+                    <Typography variant="body1">{notes}</Typography>
+                  </>
+                )}
+              </Box>
+            )
+          })}
+        </Box>
         <Box my={1} mt={2}>
           <Box mt={1}>
             <Typography variant="overline" color="textSecondary">
