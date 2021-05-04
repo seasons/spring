@@ -1,6 +1,15 @@
 import gql from "graphql-tag"
 import { ProductFragment as AdminProductFragment } from "queries/Product"
 
+export const productCreateBrand_Query = gql`
+  query productCreateBrand_Query($brandID: ID!) {
+    brand(where: { id: $brandID }) {
+      id
+      styles
+    }
+  }
+`
+
 export const ProductUpsertFragment = gql`
   fragment ProductUpsert on Query {
     brands(orderBy: name_ASC) {
@@ -190,7 +199,13 @@ export const PRODUCT_EDIT_QUERY = gql`
   query ProductEditQuery($input: ProductWhereUniqueInput!) {
     ...ProductUpsert
     product(where: $input) {
+      id
       ...ProductFragment
+      brand {
+        id
+        styles
+      }
+      styles
     }
   }
   ${ProductUpsertFragment}

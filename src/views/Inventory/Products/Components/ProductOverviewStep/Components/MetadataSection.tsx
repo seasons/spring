@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import { Box, Grid, InputAdornment } from "@material-ui/core"
 
@@ -8,6 +8,10 @@ import { ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "components/ExpandableSection"
 import { SelectField, TextField, CheckboxField } from "fields"
 import { getFormSelectChoices, FormSelectChoice } from "utils/form"
+import { CUSTOMER_STYLES } from "utils/styles"
+import { useFormState } from "react-final-form"
+import { productCreateBrand_Query } from "views/Inventory/Products/queries"
+import { useLazyQuery } from "react-apollo"
 
 export interface MetadataSectionProps {
   architectures: string[]
@@ -28,12 +32,24 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
   buyUsedPrice,
   productTiers,
 }) => {
+  const { values: formValues } = useFormState()
+  const formBrand = formValues?.brand?.value
+  const [getBrandStyles, { data: brandData }] = useLazyQuery(productCreateBrand_Query, {
+    variables: {
+      brandID: formBrand,
+    },
+  })
+  useEffect(() => {
+    if (formBrand) {
+      getBrandStyles()
+    }
+  }, [formBrand, getBrandStyles])
+
   const modelChoices = models.map(model => ({
     display: model.name,
     value: model.id,
   }))
   const architectureChoices = getFormSelectChoices(architectures)
-
   const ColorChoiceDisplay = ({ name, hexCode }) => (
     <Box display="flex" alignItems="center">
       <Text>{name}</Text>
@@ -56,6 +72,11 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
     { display: "True to size", value: "TrueToSize" },
     { display: "Runs big", value: "RunsBig" },
   ]
+
+  const styles = CUSTOMER_STYLES.map(choice => ({
+    display: choice,
+    value: choice,
+  }))
 
   return (
     <ExpandableSection
@@ -108,22 +129,22 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <SelectField name="productFit" choices={productFitChoices} />
           </Grid>
           <Grid item xs={12}>
-            <Text variant="h6">Product Tier</Text>
+            <Text variant="h6">Product tier</Text>
             <Spacer mt={1} />
             <SelectField disabled name="productTier" choices={productTiers} defaultValue="Standard" />
           </Grid>
           <Grid item xs={6}>
-            <Text variant="h6">Buy New Enabled</Text>
+            <Text variant="h6">Buy new enabled</Text>
             <Spacer mt={1} />
             <CheckboxField name="buyNewEnabled" initialValue={buyNewEnabled} />
           </Grid>
           <Grid item xs={6}>
-            <Text variant="h6">Buy Used Enabled</Text>
+            <Text variant="h6">Buy used enabled</Text>
             <Spacer mt={1} />
             <CheckboxField name="buyUsedEnabled" initialValue={buyUsedEnabled} />
           </Grid>
           <Grid item xs={6}>
-            <Text variant="h6">Buy Used Price</Text>
+            <Text variant="h6">Buy used price</Text>
             <Spacer mt={1} />
             <TextField
               name="buyUsedPrice"
@@ -132,6 +153,11 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
               initialValue={0}
               InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
             />
+          </Grid>
+          <Grid item xs={6}>
+            <Text variant="h6">Styles</Text>
+            <Spacer mt={1} />
+            <SelectField name="styles" multiple choices={styles} initialValue={brandData?.brand?.styles} />
           </Grid>
         </Grid>
       }

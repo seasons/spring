@@ -54,6 +54,14 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   let initialValues
 
   if (product) {
+    let initialStyles
+    // @ts-ignore
+    if (product?.styles?.length > 0) {
+      initialStyles = product.styles
+      // @ts-ignore
+    } else if (product?.brand?.styles?.length > 0) {
+      initialStyles = product.brand?.styles
+    }
     const availableSizes = product.variants?.map(variant => {
       switch (product.type) {
         case "Top":
@@ -79,6 +87,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
       productType: product.type,
       secondaryColor: product.secondaryColor?.colorCode,
       sizes: availableSizes,
+      styles: initialStyles,
       wearableSeasons: product.season?.wearableSeasons,
       tags: product.tags.map(tag => tag.name),
       productTier: product.tier.tier,
