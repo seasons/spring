@@ -18,6 +18,7 @@ import {
   ProductTierName,
   SizeType,
   LetterSize,
+  CustomerStyle,
 } from "./globalTypes"
 
 // ====================================================
@@ -98,6 +99,7 @@ export interface ProductEditQuery_product_brand {
   __typename: "Brand"
   id: string
   name: string
+  styles: CustomerStyle[] | null
 }
 
 export interface ProductEditQuery_product_category {
@@ -275,6 +277,7 @@ export interface ProductEditQuery_product {
   modelSize: ProductEditQuery_product_modelSize | null
   secondaryColor: ProductEditQuery_product_secondaryColor | null
   tags: ProductEditQuery_product_tags[]
+  styles: CustomerStyle[] | null
 }
 
 export interface ProductEditQuery {

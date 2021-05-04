@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { BrandWhereUniqueInput, BrandTier } from "./globalTypes"
+import { BrandWhereUniqueInput, CustomerStyle, BrandTier } from "./globalTypes"
 
 // ====================================================
 // GraphQL query operation: BrandEditQuery
@@ -31,8 +31,8 @@ export interface BrandEditQuery_brand_productsConnection {
   aggregate: BrandEditQuery_brand_productsConnection_aggregate
 }
 
-export interface BrandEditQuery_brand_externalShopifyIntegration {
-  __typename: "ExternalShopifyIntegration"
+export interface BrandEditQuery_brand_shopifyShop {
+  __typename: "ShopifyShop"
   enabled: boolean
   shopName: string
 }
@@ -41,6 +41,7 @@ export interface BrandEditQuery_brand {
   __typename: "Brand"
   id: string
   name: string
+  styles: CustomerStyle[] | null
   description: string | null
   brandCode: string
   since: any | null
@@ -51,7 +52,7 @@ export interface BrandEditQuery_brand {
   basedIn: string | null
   images: BrandEditQuery_brand_images[] | null
   productsConnection: BrandEditQuery_brand_productsConnection
-  externalShopifyIntegration: BrandEditQuery_brand_externalShopifyIntegration | null
+  shopifyShop: BrandEditQuery_brand_shopifyShop | null
   tier: BrandTier
   websiteUrl: string | null
 }
