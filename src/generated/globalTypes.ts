@@ -444,6 +444,12 @@ export enum SmsStatus {
   Undelivered = "Undelivered",
 }
 
+export enum SyncTimingType {
+  Drip = "Drip",
+  Impact = "Impact",
+  Next = "Next",
+}
+
 export enum UserPushNotificationInterestType {
   Bag = "Bag",
   Blog = "Blog",
@@ -997,7 +1003,7 @@ export interface BrandCreateInput {
   logoImage?: ImageCreateOneInput | null
   products?: ProductCreateManyWithoutBrandInput | null
   images?: ImageCreateManyInput | null
-  externalShopifyIntegration?: ExternalShopifyIntegrationCreateOneInput | null
+  shopifyShop?: ShopifyShopCreateOneInput | null
 }
 
 export interface BrandCreateOneInput {
@@ -1027,7 +1033,7 @@ export interface BrandCreateWithoutProductsInput {
   websiteUrl?: string | null
   logoImage?: ImageCreateOneInput | null
   images?: ImageCreateManyInput | null
-  externalShopifyIntegration?: ExternalShopifyIntegrationCreateOneInput | null
+  shopifyShop?: ShopifyShopCreateOneInput | null
 }
 
 export interface BrandUpdateDataInput {
@@ -1047,7 +1053,7 @@ export interface BrandUpdateDataInput {
   logoImage?: ImageUpdateOneInput | null
   products?: ProductUpdateManyWithoutBrandInput | null
   images?: ImageUpdateManyInput | null
-  externalShopifyIntegration?: ExternalShopifyIntegrationUpdateOneInput | null
+  shopifyShop?: ShopifyShopUpdateOneInput | null
 }
 
 export interface BrandUpdateOneInput {
@@ -1082,7 +1088,7 @@ export interface BrandUpdateWithoutProductsDataInput {
   websiteUrl?: string | null
   logoImage?: ImageUpdateOneInput | null
   images?: ImageUpdateManyInput | null
-  externalShopifyIntegration?: ExternalShopifyIntegrationUpdateOneInput | null
+  shopifyShop?: ShopifyShopUpdateOneInput | null
 }
 
 export interface BrandUpsertNestedInput {
@@ -1252,7 +1258,7 @@ export interface BrandWhereInput {
   images_every?: ImageWhereInput | null
   images_some?: ImageWhereInput | null
   images_none?: ImageWhereInput | null
-  externalShopifyIntegration?: ExternalShopifyIntegrationWhereInput | null
+  shopifyShop?: ShopifyShopWhereInput | null
 }
 
 export interface BrandWhereUniqueInput {
@@ -1732,7 +1738,7 @@ export interface CustomBrandCreateInput {
   products?: ProductCreateManyWithoutBrandInput | null
   logoImage?: any | null
   images?: any[] | null
-  externalShopifyIntegration?: ExternalShopifyIntegrationInput | null
+  shopifyShop?: ShopifyShopInput | null
 }
 
 export interface CustomBrandUpdateInput {
@@ -1751,7 +1757,7 @@ export interface CustomBrandUpdateInput {
   websiteUrl?: string | null
   logoImage?: any | null
   images?: any[] | null
-  externalShopifyIntegration?: ExternalShopifyIntegrationInput | null
+  shopifyShop?: ShopifyShopInput | null
 }
 
 export interface CustomLaunchUpsertInput {
@@ -1809,6 +1815,7 @@ export interface CustomerAdmissionsDataCreateWithoutCustomerInput {
   allAccessEnabled?: boolean | null
   authorizationsCount: number
   authorizationWindowClosesAt?: any | null
+  subscribedAt?: any | null
 }
 
 export interface CustomerAdmissionsDataUpdateOneWithoutCustomerInput {
@@ -1827,6 +1834,7 @@ export interface CustomerAdmissionsDataUpdateWithoutCustomerDataInput {
   allAccessEnabled?: boolean | null
   authorizationsCount?: number | null
   authorizationWindowClosesAt?: any | null
+  subscribedAt?: any | null
 }
 
 export interface CustomerAdmissionsDataUpsertWithoutCustomerInput {
@@ -1894,6 +1902,14 @@ export interface CustomerAdmissionsDataWhereInput {
   authorizationWindowClosesAt_lte?: any | null
   authorizationWindowClosesAt_gt?: any | null
   authorizationWindowClosesAt_gte?: any | null
+  subscribedAt?: any | null
+  subscribedAt_not?: any | null
+  subscribedAt_in?: any[] | null
+  subscribedAt_not_in?: any[] | null
+  subscribedAt_lt?: any | null
+  subscribedAt_lte?: any | null
+  subscribedAt_gt?: any | null
+  subscribedAt_gte?: any | null
   customer?: CustomerWhereInput | null
 }
 
@@ -1934,6 +1950,7 @@ export interface CustomerCreateWithoutReferreesInput {
   admissions?: CustomerAdmissionsDataCreateOneWithoutCustomerInput | null
   utm?: UTMDataCreateOneWithoutCustomerInput | null
   notificationBarReceipts?: CustomerNotificationBarReceiptCreateManyWithoutCustomerInput | null
+  impactSyncTimings?: SyncTimingCreateManyInput | null
 }
 
 export interface CustomerCreateWithoutReferrerInput {
@@ -1954,6 +1971,7 @@ export interface CustomerCreateWithoutReferrerInput {
   admissions?: CustomerAdmissionsDataCreateOneWithoutCustomerInput | null
   utm?: UTMDataCreateOneWithoutCustomerInput | null
   notificationBarReceipts?: CustomerNotificationBarReceiptCreateManyWithoutCustomerInput | null
+  impactSyncTimings?: SyncTimingCreateManyInput | null
 }
 
 export interface CustomerCreateWithoutReservationsInput {
@@ -1974,6 +1992,7 @@ export interface CustomerCreateWithoutReservationsInput {
   admissions?: CustomerAdmissionsDataCreateOneWithoutCustomerInput | null
   utm?: UTMDataCreateOneWithoutCustomerInput | null
   notificationBarReceipts?: CustomerNotificationBarReceiptCreateManyWithoutCustomerInput | null
+  impactSyncTimings?: SyncTimingCreateManyInput | null
 }
 
 export interface CustomerDetailCreateInput {
@@ -2899,6 +2918,7 @@ export interface CustomerUpdateInput {
   admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
   utm?: UTMDataUpdateOneWithoutCustomerInput | null
   notificationBarReceipts?: CustomerNotificationBarReceiptUpdateManyWithoutCustomerInput | null
+  impactSyncTimings?: SyncTimingUpdateManyInput | null
 }
 
 export interface CustomerUpdateManyDataInput {
@@ -2964,6 +2984,7 @@ export interface CustomerUpdateWithoutReferreesDataInput {
   admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
   utm?: UTMDataUpdateOneWithoutCustomerInput | null
   notificationBarReceipts?: CustomerNotificationBarReceiptUpdateManyWithoutCustomerInput | null
+  impactSyncTimings?: SyncTimingUpdateManyInput | null
 }
 
 export interface CustomerUpdateWithoutReferrerDataInput {
@@ -2983,6 +3004,7 @@ export interface CustomerUpdateWithoutReferrerDataInput {
   admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
   utm?: UTMDataUpdateOneWithoutCustomerInput | null
   notificationBarReceipts?: CustomerNotificationBarReceiptUpdateManyWithoutCustomerInput | null
+  impactSyncTimings?: SyncTimingUpdateManyInput | null
 }
 
 export interface CustomerUpdateWithoutReservationsDataInput {
@@ -3002,6 +3024,7 @@ export interface CustomerUpdateWithoutReservationsDataInput {
   admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
   utm?: UTMDataUpdateOneWithoutCustomerInput | null
   notificationBarReceipts?: CustomerNotificationBarReceiptUpdateManyWithoutCustomerInput | null
+  impactSyncTimings?: SyncTimingUpdateManyInput | null
 }
 
 export interface CustomerUpsertWithWhereUniqueWithoutReferrerInput {
@@ -3120,6 +3143,9 @@ export interface CustomerWhereInput {
   notificationBarReceipts_every?: CustomerNotificationBarReceiptWhereInput | null
   notificationBarReceipts_some?: CustomerNotificationBarReceiptWhereInput | null
   notificationBarReceipts_none?: CustomerNotificationBarReceiptWhereInput | null
+  impactSyncTimings_every?: SyncTimingWhereInput | null
+  impactSyncTimings_some?: SyncTimingWhereInput | null
+  impactSyncTimings_none?: SyncTimingWhereInput | null
 }
 
 export interface CustomerWhereUniqueInput {
@@ -3256,125 +3282,6 @@ export interface EmailReceiptWhereInput {
 
 export interface EmailReceiptWhereUniqueInput {
   id?: string | null
-}
-
-export interface ExternalShopifyIntegrationCreateInput {
-  id?: string | null
-  shopName: string
-  enabled: boolean
-  accessToken?: string | null
-  scope?: ExternalShopifyIntegrationCreatescopeInput | null
-}
-
-export interface ExternalShopifyIntegrationCreateOneInput {
-  create?: ExternalShopifyIntegrationCreateInput | null
-  connect?: ExternalShopifyIntegrationWhereUniqueInput | null
-}
-
-export interface ExternalShopifyIntegrationCreatescopeInput {
-  set?: string[] | null
-}
-
-export interface ExternalShopifyIntegrationInput {
-  shopName: string
-  enabled: boolean
-  accessToken?: string | null
-}
-
-export interface ExternalShopifyIntegrationUpdateDataInput {
-  shopName?: string | null
-  enabled?: boolean | null
-  accessToken?: string | null
-  scope?: ExternalShopifyIntegrationUpdatescopeInput | null
-}
-
-export interface ExternalShopifyIntegrationUpdateOneInput {
-  create?: ExternalShopifyIntegrationCreateInput | null
-  connect?: ExternalShopifyIntegrationWhereUniqueInput | null
-  disconnect?: boolean | null
-  delete?: boolean | null
-  update?: ExternalShopifyIntegrationUpdateDataInput | null
-  upsert?: ExternalShopifyIntegrationUpsertNestedInput | null
-}
-
-export interface ExternalShopifyIntegrationUpdatescopeInput {
-  set?: string[] | null
-}
-
-export interface ExternalShopifyIntegrationUpsertNestedInput {
-  update: ExternalShopifyIntegrationUpdateDataInput
-  create: ExternalShopifyIntegrationCreateInput
-}
-
-export interface ExternalShopifyIntegrationWhereInput {
-  AND?: ExternalShopifyIntegrationWhereInput[] | null
-  OR?: ExternalShopifyIntegrationWhereInput[] | null
-  NOT?: ExternalShopifyIntegrationWhereInput[] | null
-  id?: string | null
-  id_not?: string | null
-  id_in?: string[] | null
-  id_not_in?: string[] | null
-  id_lt?: string | null
-  id_lte?: string | null
-  id_gt?: string | null
-  id_gte?: string | null
-  id_contains?: string | null
-  id_not_contains?: string | null
-  id_starts_with?: string | null
-  id_not_starts_with?: string | null
-  id_ends_with?: string | null
-  id_not_ends_with?: string | null
-  shopName?: string | null
-  shopName_not?: string | null
-  shopName_in?: string[] | null
-  shopName_not_in?: string[] | null
-  shopName_lt?: string | null
-  shopName_lte?: string | null
-  shopName_gt?: string | null
-  shopName_gte?: string | null
-  shopName_contains?: string | null
-  shopName_not_contains?: string | null
-  shopName_starts_with?: string | null
-  shopName_not_starts_with?: string | null
-  shopName_ends_with?: string | null
-  shopName_not_ends_with?: string | null
-  enabled?: boolean | null
-  enabled_not?: boolean | null
-  accessToken?: string | null
-  accessToken_not?: string | null
-  accessToken_in?: string[] | null
-  accessToken_not_in?: string[] | null
-  accessToken_lt?: string | null
-  accessToken_lte?: string | null
-  accessToken_gt?: string | null
-  accessToken_gte?: string | null
-  accessToken_contains?: string | null
-  accessToken_not_contains?: string | null
-  accessToken_starts_with?: string | null
-  accessToken_not_starts_with?: string | null
-  accessToken_ends_with?: string | null
-  accessToken_not_ends_with?: string | null
-  createdAt?: any | null
-  createdAt_not?: any | null
-  createdAt_in?: any[] | null
-  createdAt_not_in?: any[] | null
-  createdAt_lt?: any | null
-  createdAt_lte?: any | null
-  createdAt_gt?: any | null
-  createdAt_gte?: any | null
-  updatedAt?: any | null
-  updatedAt_not?: any | null
-  updatedAt_in?: any[] | null
-  updatedAt_not_in?: any[] | null
-  updatedAt_lt?: any | null
-  updatedAt_lte?: any | null
-  updatedAt_gt?: any | null
-  updatedAt_gte?: any | null
-}
-
-export interface ExternalShopifyIntegrationWhereUniqueInput {
-  id?: string | null
-  shopName?: string | null
 }
 
 export interface FitPicCreateManyWithoutUserInput {
@@ -9140,7 +9047,7 @@ export interface ShopifyProductVariantCreateWithoutProductVariantInput {
   cachedAvailableForSale?: boolean | null
   cacheExpiresAt?: any | null
   selectedOptions?: ShopifyProductVariantSelectedOptionCreateManyInput | null
-  shop?: ExternalShopifyIntegrationCreateOneInput | null
+  shop?: ShopifyShopCreateOneInput | null
   brand?: BrandCreateOneInput | null
   image?: ImageCreateOneInput | null
 }
@@ -9315,7 +9222,7 @@ export interface ShopifyProductVariantUpdateWithoutProductVariantDataInput {
   cachedAvailableForSale?: boolean | null
   cacheExpiresAt?: any | null
   selectedOptions?: ShopifyProductVariantSelectedOptionUpdateManyInput | null
-  shop?: ExternalShopifyIntegrationUpdateOneInput | null
+  shop?: ShopifyShopUpdateOneInput | null
   brand?: BrandUpdateOneInput | null
   image?: ImageUpdateOneInput | null
 }
@@ -9407,7 +9314,7 @@ export interface ShopifyProductVariantWhereInput {
   selectedOptions_some?: ShopifyProductVariantSelectedOptionWhereInput | null
   selectedOptions_none?: ShopifyProductVariantSelectedOptionWhereInput | null
   productVariant?: ProductVariantWhereInput | null
-  shop?: ExternalShopifyIntegrationWhereInput | null
+  shop?: ShopifyShopWhereInput | null
   brand?: BrandWhereInput | null
   image?: ImageWhereInput | null
 }
@@ -9415,6 +9322,125 @@ export interface ShopifyProductVariantWhereInput {
 export interface ShopifyProductVariantWhereUniqueInput {
   id?: string | null
   externalId?: string | null
+}
+
+export interface ShopifyShopCreateInput {
+  id?: string | null
+  shopName: string
+  enabled: boolean
+  accessToken?: string | null
+  scope?: ShopifyShopCreatescopeInput | null
+}
+
+export interface ShopifyShopCreateOneInput {
+  create?: ShopifyShopCreateInput | null
+  connect?: ShopifyShopWhereUniqueInput | null
+}
+
+export interface ShopifyShopCreatescopeInput {
+  set?: string[] | null
+}
+
+export interface ShopifyShopInput {
+  shopName: string
+  enabled: boolean
+  accessToken?: string | null
+}
+
+export interface ShopifyShopUpdateDataInput {
+  shopName?: string | null
+  enabled?: boolean | null
+  accessToken?: string | null
+  scope?: ShopifyShopUpdatescopeInput | null
+}
+
+export interface ShopifyShopUpdateOneInput {
+  create?: ShopifyShopCreateInput | null
+  connect?: ShopifyShopWhereUniqueInput | null
+  disconnect?: boolean | null
+  delete?: boolean | null
+  update?: ShopifyShopUpdateDataInput | null
+  upsert?: ShopifyShopUpsertNestedInput | null
+}
+
+export interface ShopifyShopUpdatescopeInput {
+  set?: string[] | null
+}
+
+export interface ShopifyShopUpsertNestedInput {
+  update: ShopifyShopUpdateDataInput
+  create: ShopifyShopCreateInput
+}
+
+export interface ShopifyShopWhereInput {
+  AND?: ShopifyShopWhereInput[] | null
+  OR?: ShopifyShopWhereInput[] | null
+  NOT?: ShopifyShopWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  shopName?: string | null
+  shopName_not?: string | null
+  shopName_in?: string[] | null
+  shopName_not_in?: string[] | null
+  shopName_lt?: string | null
+  shopName_lte?: string | null
+  shopName_gt?: string | null
+  shopName_gte?: string | null
+  shopName_contains?: string | null
+  shopName_not_contains?: string | null
+  shopName_starts_with?: string | null
+  shopName_not_starts_with?: string | null
+  shopName_ends_with?: string | null
+  shopName_not_ends_with?: string | null
+  enabled?: boolean | null
+  enabled_not?: boolean | null
+  accessToken?: string | null
+  accessToken_not?: string | null
+  accessToken_in?: string[] | null
+  accessToken_not_in?: string[] | null
+  accessToken_lt?: string | null
+  accessToken_lte?: string | null
+  accessToken_gt?: string | null
+  accessToken_gte?: string | null
+  accessToken_contains?: string | null
+  accessToken_not_contains?: string | null
+  accessToken_starts_with?: string | null
+  accessToken_not_starts_with?: string | null
+  accessToken_ends_with?: string | null
+  accessToken_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+}
+
+export interface ShopifyShopWhereUniqueInput {
+  id?: string | null
+  shopName?: string | null
 }
 
 export interface SizeCreateInput {
@@ -9935,6 +9961,186 @@ export interface StylePreferencesWhereInput {
 }
 
 export interface StylePreferencesWhereUniqueInput {
+  id?: string | null
+}
+
+export interface SyncTimingCreateInput {
+  id?: string | null
+  type: SyncTimingType
+  syncedAt: any
+  detail?: string | null
+}
+
+export interface SyncTimingCreateManyInput {
+  create?: SyncTimingCreateInput[] | null
+  connect?: SyncTimingWhereUniqueInput[] | null
+}
+
+export interface SyncTimingScalarWhereInput {
+  AND?: SyncTimingScalarWhereInput[] | null
+  OR?: SyncTimingScalarWhereInput[] | null
+  NOT?: SyncTimingScalarWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  type?: SyncTimingType | null
+  type_not?: SyncTimingType | null
+  type_in?: SyncTimingType[] | null
+  type_not_in?: SyncTimingType[] | null
+  syncedAt?: any | null
+  syncedAt_not?: any | null
+  syncedAt_in?: any[] | null
+  syncedAt_not_in?: any[] | null
+  syncedAt_lt?: any | null
+  syncedAt_lte?: any | null
+  syncedAt_gt?: any | null
+  syncedAt_gte?: any | null
+  detail?: string | null
+  detail_not?: string | null
+  detail_in?: string[] | null
+  detail_not_in?: string[] | null
+  detail_lt?: string | null
+  detail_lte?: string | null
+  detail_gt?: string | null
+  detail_gte?: string | null
+  detail_contains?: string | null
+  detail_not_contains?: string | null
+  detail_starts_with?: string | null
+  detail_not_starts_with?: string | null
+  detail_ends_with?: string | null
+  detail_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+}
+
+export interface SyncTimingUpdateDataInput {
+  type?: SyncTimingType | null
+  syncedAt?: any | null
+  detail?: string | null
+}
+
+export interface SyncTimingUpdateManyDataInput {
+  type?: SyncTimingType | null
+  syncedAt?: any | null
+  detail?: string | null
+}
+
+export interface SyncTimingUpdateManyInput {
+  create?: SyncTimingCreateInput[] | null
+  connect?: SyncTimingWhereUniqueInput[] | null
+  set?: SyncTimingWhereUniqueInput[] | null
+  disconnect?: SyncTimingWhereUniqueInput[] | null
+  delete?: SyncTimingWhereUniqueInput[] | null
+  update?: SyncTimingUpdateWithWhereUniqueNestedInput[] | null
+  updateMany?: SyncTimingUpdateManyWithWhereNestedInput[] | null
+  deleteMany?: SyncTimingScalarWhereInput[] | null
+  upsert?: SyncTimingUpsertWithWhereUniqueNestedInput[] | null
+}
+
+export interface SyncTimingUpdateManyWithWhereNestedInput {
+  where: SyncTimingScalarWhereInput
+  data: SyncTimingUpdateManyDataInput
+}
+
+export interface SyncTimingUpdateWithWhereUniqueNestedInput {
+  where: SyncTimingWhereUniqueInput
+  data: SyncTimingUpdateDataInput
+}
+
+export interface SyncTimingUpsertWithWhereUniqueNestedInput {
+  where: SyncTimingWhereUniqueInput
+  update: SyncTimingUpdateDataInput
+  create: SyncTimingCreateInput
+}
+
+export interface SyncTimingWhereInput {
+  AND?: SyncTimingWhereInput[] | null
+  OR?: SyncTimingWhereInput[] | null
+  NOT?: SyncTimingWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  type?: SyncTimingType | null
+  type_not?: SyncTimingType | null
+  type_in?: SyncTimingType[] | null
+  type_not_in?: SyncTimingType[] | null
+  syncedAt?: any | null
+  syncedAt_not?: any | null
+  syncedAt_in?: any[] | null
+  syncedAt_not_in?: any[] | null
+  syncedAt_lt?: any | null
+  syncedAt_lte?: any | null
+  syncedAt_gt?: any | null
+  syncedAt_gte?: any | null
+  detail?: string | null
+  detail_not?: string | null
+  detail_in?: string[] | null
+  detail_not_in?: string[] | null
+  detail_lt?: string | null
+  detail_lte?: string | null
+  detail_gt?: string | null
+  detail_gte?: string | null
+  detail_contains?: string | null
+  detail_not_contains?: string | null
+  detail_starts_with?: string | null
+  detail_not_starts_with?: string | null
+  detail_ends_with?: string | null
+  detail_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+}
+
+export interface SyncTimingWhereUniqueInput {
   id?: string | null
 }
 

@@ -5,6 +5,7 @@
 
 import {
   InventoryStatus,
+  PhysicalProductOffloadMethod,
   PhysicalProductStatus,
   ReservationStatus,
   ReservationPhase,
@@ -142,6 +143,7 @@ export interface GetPhysicalProducts_physicalProducts {
   id: string
   seasonsUID: string
   inventoryStatus: InventoryStatus
+  offloadMethod: PhysicalProductOffloadMethod | null
   sequenceNumber: number
   unitCost: number | null
   dateOrdered: any | null
