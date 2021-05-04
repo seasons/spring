@@ -99,9 +99,6 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         onClose={() => {
           toggleStowProductModal(false)
         }}
-        onSave={() => {
-          toggleStowProductModal(false)
-        }}
       />
 
       <UpdatePhysicalProductStatusModal

@@ -82,6 +82,10 @@ export const PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY = gql`
         id
         barcode
       }
+      reports {
+        damageTypes
+        notes
+      }
     }
 
     warehouseLocations {
