@@ -3,6 +3,7 @@ import { Grid, Box } from "@material-ui/core"
 import { DatePickerField, SelectField, TextField, CheckboxField } from "fields"
 import { Spacer, Text, ImageUpload, Header } from "components"
 import { useLocation } from "react-router-dom"
+import { CUSTOMER_STYLES } from "utils/styles"
 
 export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) => {
   const location = useLocation()
@@ -23,6 +24,11 @@ export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) 
     { display: "True", value: true },
     { display: "False", value: false },
   ]
+
+  const styles = CUSTOMER_STYLES.map(choice => ({
+    display: choice,
+    value: choice,
+  }))
 
   return (
     <Box my={1}>
@@ -113,6 +119,11 @@ export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) 
               <Spacer mt={1} />
               <TextField name="basedIn" />
             </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Styles</Text>
+              <Spacer mt={1} />
+              <SelectField name="styles" multiple choices={styles} />
+            </Grid>
 
             <Spacer mt={3} />
 
@@ -122,7 +133,7 @@ export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) 
               <CheckboxField name="shopifyShopEnabled" />
             </Grid>
             <Grid item xs={6}>
-              <Text variant="h6">Shopify Shop Name</Text>
+              <Text variant="h6">Shopify shop name</Text>
               <Spacer mt={1} />
               <TextField name="shopifyShopShopName" />
             </Grid>
