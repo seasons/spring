@@ -1,5 +1,14 @@
 import React, { useContext } from "react"
-import { Datagrid, Filter, Loading, List, DataProviderContext, SelectInput, TextInput } from "@seasons/react-admin"
+import {
+  Datagrid,
+  Filter,
+  FunctionField,
+  Loading,
+  List,
+  DataProviderContext,
+  SelectInput,
+  TextInput,
+} from "@seasons/react-admin"
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
 import { Box, Container } from "@material-ui/core"
 import { Header, StatusInput } from "components"
@@ -90,6 +99,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
             <MemberField label="Member" />
             <SinceDateField source="statusUpdatedAt" label="Status Last Updated" />
             {/* <SinceDateField source="returnAt" label="Return" /> */}
+            <FunctionField label="Reservations" render={record => record?.customer.reservations.length} />
             <PhaseField source="phase" />
             <ViewEntityField entityPath="reservation" entityTab="overview" source="id" label="Actions" />
           </Datagrid>
