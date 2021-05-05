@@ -73,6 +73,8 @@ const GetOneFragment = gql`
       damageType
       createdAt
       notes
+      score
+      published
       user {
         id
         fullName

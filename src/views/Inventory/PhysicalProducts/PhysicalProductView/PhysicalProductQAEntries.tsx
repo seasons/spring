@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core"
-import { Box, TableHead, TableCell, Card, Table, TableRow, TableBody, Typography } from "@material-ui/core"
+import { Box, TableHead, TableCell, Card, Table, TableRow, TableBody, Typography, Checkbox } from "@material-ui/core"
 import { ProductQAModal } from "components/ProductQAModal"
 import { SinceDateField } from "fields"
 import { useRefresh } from "@seasons/react-admin"
@@ -45,6 +45,8 @@ export const PhysicalProductQAView = ({ data }) => {
               <TableCell>Damage Type</TableCell>
               <TableCell>Notes</TableCell>
               <TableCell>Logger</TableCell>
+              <TableCell>Score</TableCell>
+              <TableCell>Published</TableCell>
               <TableCell>Created At</TableCell>
             </TableRow>
           </TableHead>
@@ -54,6 +56,8 @@ export const PhysicalProductQAView = ({ data }) => {
                 damageType,
                 user: { fullName },
                 notes,
+                score,
+                published,
               } = report
               return (
                 <TableRow>
@@ -77,6 +81,16 @@ export const PhysicalProductQAView = ({ data }) => {
                         <Typography>{fullName}</Typography>
                       </Box>
                     </Box>
+                  </TableCell>
+
+                  <TableCell>
+                    <Box>
+                      <Box>{score && <Typography>{score} / 10 </Typography>}</Box>
+                    </Box>
+                  </TableCell>
+
+                  <TableCell>
+                    <Checkbox checked={published} disabled={true} />
                   </TableCell>
 
                   <TableCell>
