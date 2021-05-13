@@ -194,6 +194,10 @@ export const PHYSICAL_PRODUCT_STATUSES_QUERY = gql`
 `
 export const PRODUCT_EDIT_QUERY = gql`
   query ProductEditQuery($input: ProductWhereUniqueInput!) {
+    categories(childLeavesOnly: true) {
+      id
+      name
+    }
     ...ProductUpsert
     product(where: $input) {
       ...ProductFragment
@@ -205,6 +209,10 @@ export const PRODUCT_EDIT_QUERY = gql`
 
 export const PRODUCT_UPSERT_QUERY = gql`
   query ProductUpsertQuery {
+    categories(childLeavesOnly: true) {
+      id
+      name
+    }
     ...ProductUpsert
   }
   ${ProductUpsertFragment}
