@@ -194,7 +194,7 @@ export const PHYSICAL_PRODUCT_STATUSES_QUERY = gql`
 `
 export const PRODUCT_EDIT_QUERY = gql`
   query ProductEditQuery($input: ProductWhereUniqueInput!) {
-    categories(childLeavesOnly: true) {
+    categories(childLeavesOnly: true, orderBy: name_ASC) {
       id
       name
     }
@@ -209,7 +209,7 @@ export const PRODUCT_EDIT_QUERY = gql`
 
 export const PRODUCT_UPSERT_QUERY = gql`
   query ProductUpsertQuery {
-    categories(childLeavesOnly: true) {
+    categories(childLeavesOnly: true, orderBy: name_ASC) {
       id
       name
     }
