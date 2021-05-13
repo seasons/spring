@@ -51,12 +51,18 @@ export interface GetReservation_customer_detail {
   shippingAddress: GetReservation_customer_detail_shippingAddress | null
 }
 
+export interface GetReservation_customer_reservations {
+  __typename: "Reservation"
+  id: string
+}
+
 export interface GetReservation_customer {
   __typename: "Customer"
   id: string
   status: CustomerStatus | null
   user: GetReservation_customer_user
   detail: GetReservation_customer_detail | null
+  reservations: GetReservation_customer_reservations[] | null
 }
 
 export interface GetReservation_sentPackage_shippingLabel {

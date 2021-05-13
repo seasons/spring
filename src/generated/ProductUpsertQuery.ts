@@ -7,6 +7,12 @@
 // GraphQL query operation: ProductUpsertQuery
 // ====================================================
 
+export interface ProductUpsertQuery_categories {
+  __typename: "Category"
+  id: string
+  name: string
+}
+
 export interface ProductUpsertQuery_brands {
   __typename: "Brand"
   id: string
@@ -73,6 +79,7 @@ export interface ProductUpsertQuery_tags {
 }
 
 export interface ProductUpsertQuery {
+  categories: (ProductUpsertQuery_categories | null)[]
   __typename: "Query"
   brands: (ProductUpsertQuery_brands | null)[]
   inventoryStatuses: ProductUpsertQuery_inventoryStatuses | null
