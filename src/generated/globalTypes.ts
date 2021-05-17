@@ -136,6 +136,7 @@ export enum EmailId {
   FreeToReserve = "FreeToReserve",
   Paused = "Paused",
   PriorityAccess = "PriorityAccess",
+  RecommendedItemsNurture = "RecommendedItemsNurture",
   ReferralConfirmation = "ReferralConfirmation",
   ReservationConfirmation = "ReservationConfirmation",
   ReservationReturnConfirmation = "ReservationReturnConfirmation",
@@ -1000,6 +1001,7 @@ export interface BrandCreateInput {
   published?: boolean | null
   featured?: boolean | null
   websiteUrl?: string | null
+  styles?: BrandCreatestylesInput | null
   logoImage?: ImageCreateOneInput | null
   products?: ProductCreateManyWithoutBrandInput | null
   images?: ImageCreateManyInput | null
@@ -1031,9 +1033,14 @@ export interface BrandCreateWithoutProductsInput {
   published?: boolean | null
   featured?: boolean | null
   websiteUrl?: string | null
+  styles?: BrandCreatestylesInput | null
   logoImage?: ImageCreateOneInput | null
   images?: ImageCreateManyInput | null
   shopifyShop?: ShopifyShopCreateOneInput | null
+}
+
+export interface BrandCreatestylesInput {
+  set?: CustomerStyle[] | null
 }
 
 export interface BrandUpdateDataInput {
@@ -1050,6 +1057,7 @@ export interface BrandUpdateDataInput {
   published?: boolean | null
   featured?: boolean | null
   websiteUrl?: string | null
+  styles?: BrandUpdatestylesInput | null
   logoImage?: ImageUpdateOneInput | null
   products?: ProductUpdateManyWithoutBrandInput | null
   images?: ImageUpdateManyInput | null
@@ -1086,9 +1094,14 @@ export interface BrandUpdateWithoutProductsDataInput {
   published?: boolean | null
   featured?: boolean | null
   websiteUrl?: string | null
+  styles?: BrandUpdatestylesInput | null
   logoImage?: ImageUpdateOneInput | null
   images?: ImageUpdateManyInput | null
   shopifyShop?: ShopifyShopUpdateOneInput | null
+}
+
+export interface BrandUpdatestylesInput {
+  set?: CustomerStyle[] | null
 }
 
 export interface BrandUpsertNestedInput {
@@ -1735,6 +1748,7 @@ export interface CustomBrandCreateInput {
   since?: any | null
   tier: BrandTier
   websiteUrl?: string | null
+  styles?: CustomerStyle[] | null
   products?: ProductCreateManyWithoutBrandInput | null
   logoImage?: any | null
   images?: any[] | null
@@ -1756,6 +1770,7 @@ export interface CustomBrandUpdateInput {
   tier?: BrandTier | null
   websiteUrl?: string | null
   logoImage?: any | null
+  styles?: CustomerStyle[] | null
   images?: any[] | null
   shopifyShop?: ShopifyShopInput | null
 }
@@ -1791,11 +1806,13 @@ export interface CustomProductUpdateInput {
   variants?: ProductVariantUpdateManyWithoutProductInput | null
   publishedAt?: any | null
   photographyStatus?: PhotographyStatus | null
+  styles?: CustomerStyle[] | null
   bottomSizeType?: BottomSizeType | null
   functions?: string[] | null
   images?: any[] | null
   modelSizeDisplay?: string | null
   modelSizeName?: string | null
+  modelSizeType?: SizeType | null
   tags?: string[] | null
   buyNewEnabled?: boolean | null
   buyUsedEnabled?: boolean | null
@@ -5855,6 +5872,7 @@ export interface ProductCreateInput {
   type?: ProductType | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
+  styles?: ProductCreatestylesInput | null
   brand: BrandCreateOneWithoutProductsInput
   category: CategoryCreateOneWithoutProductsInput
   color: ColorCreateOneInput
@@ -5906,6 +5924,7 @@ export interface ProductCreateWithoutBrandInput {
   type?: ProductType | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
+  styles?: ProductCreatestylesInput | null
   category: CategoryCreateOneWithoutProductsInput
   color: ColorCreateOneInput
   functions?: ProductFunctionCreateManyInput | null
@@ -5936,6 +5955,7 @@ export interface ProductCreateWithoutCategoryInput {
   type?: ProductType | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
+  styles?: ProductCreatestylesInput | null
   brand: BrandCreateOneWithoutProductsInput
   color: ColorCreateOneInput
   functions?: ProductFunctionCreateManyInput | null
@@ -5966,6 +5986,7 @@ export interface ProductCreateWithoutVariantsInput {
   type?: ProductType | null
   innerMaterials?: ProductCreateinnerMaterialsInput | null
   outerMaterials?: ProductCreateouterMaterialsInput | null
+  styles?: ProductCreatestylesInput | null
   brand: BrandCreateOneWithoutProductsInput
   category: CategoryCreateOneWithoutProductsInput
   color: ColorCreateOneInput
@@ -5986,6 +6007,10 @@ export interface ProductCreateinnerMaterialsInput {
 
 export interface ProductCreateouterMaterialsInput {
   set?: string[] | null
+}
+
+export interface ProductCreatestylesInput {
+  set?: CustomerStyle[] | null
 }
 
 export interface ProductFunctionCreateInput {
@@ -6570,6 +6595,7 @@ export interface ProductUpdateDataInput {
   type?: ProductType | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
+  styles?: ProductUpdatestylesInput | null
   brand?: BrandUpdateOneRequiredWithoutProductsInput | null
   category?: CategoryUpdateOneRequiredWithoutProductsInput | null
   color?: ColorUpdateOneRequiredInput | null
@@ -6600,6 +6626,7 @@ export interface ProductUpdateManyDataInput {
   type?: ProductType | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
+  styles?: ProductUpdatestylesInput | null
 }
 
 export interface ProductUpdateManyInput {
@@ -6680,6 +6707,7 @@ export interface ProductUpdateWithoutBrandDataInput {
   type?: ProductType | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
+  styles?: ProductUpdatestylesInput | null
   category?: CategoryUpdateOneRequiredWithoutProductsInput | null
   color?: ColorUpdateOneRequiredInput | null
   functions?: ProductFunctionUpdateManyInput | null
@@ -6709,6 +6737,7 @@ export interface ProductUpdateWithoutCategoryDataInput {
   type?: ProductType | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
+  styles?: ProductUpdatestylesInput | null
   brand?: BrandUpdateOneRequiredWithoutProductsInput | null
   color?: ColorUpdateOneRequiredInput | null
   functions?: ProductFunctionUpdateManyInput | null
@@ -6738,6 +6767,7 @@ export interface ProductUpdateWithoutVariantsDataInput {
   type?: ProductType | null
   innerMaterials?: ProductUpdateinnerMaterialsInput | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
+  styles?: ProductUpdatestylesInput | null
   brand?: BrandUpdateOneRequiredWithoutProductsInput | null
   category?: CategoryUpdateOneRequiredWithoutProductsInput | null
   color?: ColorUpdateOneRequiredInput | null
@@ -6758,6 +6788,10 @@ export interface ProductUpdateinnerMaterialsInput {
 
 export interface ProductUpdateouterMaterialsInput {
   set?: string[] | null
+}
+
+export interface ProductUpdatestylesInput {
+  set?: CustomerStyle[] | null
 }
 
 export interface ProductUpsertWithWhereUniqueNestedInput {
@@ -10629,6 +10663,7 @@ export interface UpsertProductInput {
   modelID?: string | null
   modelSizeDisplay?: string | null
   modelSizeName?: string | null
+  modelSizeType?: SizeType | null
   name: string
   outerMaterials: string[]
   productFit?: ProductFit | null
@@ -10640,6 +10675,7 @@ export interface UpsertProductInput {
   tags: string[]
   type: ProductType
   variants: UpsertVariantInput[]
+  styles?: CustomerStyle[] | null
   createNew: boolean
 }
 

@@ -10,16 +10,25 @@ import {
   DialogTitle,
   Select,
   MenuItem,
+  Slider,
+  Typography,
+  FormControlLabel,
+  Checkbox,
 } from "@material-ui/core"
+import { withStyles } from "@material-ui/core/styles"
 import { gql } from "apollo-boost"
 import { useSelector } from "react-redux"
 import { useMutation } from "react-apollo"
 
+const DEFAULT_SCORE = 10
+const MAX_SCORE = 10
 export const SUBMIT_QA_ENTRY = gql`
   mutation SubmitQAEntry(
     $notes: String!
     $type: PhysicalProductDamageType
     $damageTypes: [PhysicalProductDamageType!]
+    $score: Int
+    $published: Boolean!
     $physicalProductID: ID!
     $userID: ID!
   ) {
@@ -28,6 +37,8 @@ export const SUBMIT_QA_ENTRY = gql`
         damageTypes: { set: $damageTypes }
         damageType: $type
         notes: $notes
+        score: $score
+        published: $published
         physicalProduct: { connect: { id: $physicalProductID } }
         user: { connect: { id: $userID } }
       }
@@ -45,6 +56,8 @@ export const ProductQAModal = ({ data, open, onSave, onClose }) => {
 
   const [type, setType] = useState<string[]>([])
   const [notes, setNotes] = useState("")
+  const [score, setScore] = useState(DEFAULT_SCORE)
+  const [published, setPublished] = useState(false)
 
   const handleSave = () => {
     submitQAEntry({
@@ -54,6 +67,8 @@ export const ProductQAModal = ({ data, open, onSave, onClose }) => {
         damageTypes: type,
         physicalProductID: data.id,
         userID: session.user.id,
+        score: score,
+        published: published,
       },
     })
   }
@@ -95,6 +110,29 @@ export const ProductQAModal = ({ data, open, onSave, onClose }) => {
               multiline
               fullWidth
             />
+            <Box mt={4}>
+              <Box mb={5}>
+                <Typography>Score</Typography>
+              </Box>
+              <LightLabelSlider
+                value={score}
+                onChange={(_ev, value) => setScore(Math.min(value as number, MAX_SCORE))}
+                defaultValue={10}
+                valueLabelDisplay="on"
+                marks={true}
+                step={1}
+                min={1}
+                max={MAX_SCORE}
+              />
+            </Box>
+          </Box>
+          <Box mt={2}>
+            <FormControlLabel
+              control={
+                <Checkbox checked={published} onChange={ev => setPublished(ev.target.checked)} name="published" />
+              }
+              label="Published"
+            />
           </Box>
         </DialogContent>
         <DialogActions>
@@ -106,3 +144,9 @@ export const ProductQAModal = ({ data, open, onSave, onClose }) => {
     </>
   )
 }
+
+const LightLabelSlider = withStyles(theme => ({
+  valueLabel: {
+    color: "rgba(0, 0, 0, .5)",
+  },
+}))(Slider)

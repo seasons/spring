@@ -194,6 +194,10 @@ export const PHYSICAL_PRODUCT_STATUSES_QUERY = gql`
 `
 export const PRODUCT_EDIT_QUERY = gql`
   query ProductEditQuery($input: ProductWhereUniqueInput!) {
+    categories(where: { children_every: { id: null } }, orderBy: name_ASC) {
+      id
+      name
+    }
     ...ProductUpsert
     product(where: $input) {
       ...ProductFragment
@@ -205,6 +209,10 @@ export const PRODUCT_EDIT_QUERY = gql`
 
 export const PRODUCT_UPSERT_QUERY = gql`
   query ProductUpsertQuery {
+    categories(where: { children_every: { id: null } }, orderBy: name_ASC) {
+      id
+      name
+    }
     ...ProductUpsert
   }
   ${ProductUpsertFragment}

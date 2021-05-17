@@ -111,6 +111,7 @@ export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, produ
             if (!report) {
               return null
             }
+            // @ts-ignore
             const { damageTypes, notes } = report
 
             return (
