@@ -17,11 +17,17 @@ export interface GetReservationList_customer_user {
   email: string
 }
 
+export interface GetReservationList_customer_reservations {
+  __typename: "Reservation"
+  id: string
+}
+
 export interface GetReservationList_customer {
   __typename: "Customer"
   id: string
   status: CustomerStatus | null
   user: GetReservationList_customer_user
+  reservations: GetReservationList_customer_reservations[] | null
 }
 
 export interface GetReservationList_images {

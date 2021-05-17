@@ -86,7 +86,6 @@ export interface PhysicalProduct_reports {
   __typename: "PhysicalProductQualityReport"
   id: string
   damageType: PhysicalProductDamageType | null
-  damageTypes: PhysicalProductDamageType[]
   createdAt: any
   notes: string | null
   user: PhysicalProduct_reports_user

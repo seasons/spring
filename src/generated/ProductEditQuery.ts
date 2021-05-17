@@ -24,6 +24,12 @@ import {
 // GraphQL query operation: ProductEditQuery
 // ====================================================
 
+export interface ProductEditQuery_categories {
+  __typename: "Category"
+  id: string
+  name: string
+}
+
 export interface ProductEditQuery_brands {
   __typename: "Brand"
   id: string
@@ -278,6 +284,7 @@ export interface ProductEditQuery_product {
 }
 
 export interface ProductEditQuery {
+  categories: (ProductEditQuery_categories | null)[]
   __typename: "Query"
   brands: (ProductEditQuery_brands | null)[]
   inventoryStatuses: ProductEditQuery_inventoryStatuses | null
