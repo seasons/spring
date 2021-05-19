@@ -153,6 +153,7 @@ export const ReservationHeader = ({ data }) => {
                     damageTypes: productState.damageType,
                     physicalProductID: product.id,
                     userID: session.user.id,
+                    published: false,
                   },
                 })
               }
