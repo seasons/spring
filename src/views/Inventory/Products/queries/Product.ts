@@ -126,14 +126,6 @@ export const ProductFragment = gql`
         id
         display
         productType
-        top {
-          id
-          letter
-        }
-        bottom {
-          id
-          value
-        }
       }
       product {
         id

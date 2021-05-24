@@ -55,12 +55,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
 
   if (product) {
     const availableSizes = product.variants?.map(variant => {
-      switch (product.type) {
-        case "Top":
-          return variant?.internalSize?.top?.letter
-        case "Bottom":
-          return variant?.internalSize?.bottom?.value
-      }
+      return variant?.internalSize?.display
     })
 
     // Extract current values of the product to display
