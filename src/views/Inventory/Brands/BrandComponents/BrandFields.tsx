@@ -3,7 +3,7 @@ import { Grid, Box } from "@material-ui/core"
 import { DatePickerField, SelectField, TextField, CheckboxField } from "fields"
 import { Spacer, Text, ImageUpload, Header } from "components"
 import { useLocation } from "react-router-dom"
-import { CUSTOMER_STYLES } from "utils/styles"
+import { CustomerStyle } from "generated/globalTypes"
 
 export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) => {
   const location = useLocation()
@@ -25,7 +25,7 @@ export const BrandFields: React.FC<{ headerTitle: string }> = ({ headerTitle }) 
     { display: "False", value: false },
   ]
 
-  const styles = CUSTOMER_STYLES.map(choice => ({
+  const styles = Object.keys(CustomerStyle).map(choice => ({
     display: choice,
     value: choice,
   }))

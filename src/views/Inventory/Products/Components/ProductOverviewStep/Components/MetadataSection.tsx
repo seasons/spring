@@ -8,10 +8,10 @@ import { ProductUpsertQuery_productModels } from "generated/ProductUpsertQuery"
 import { ExpandableSection } from "components/ExpandableSection"
 import { SelectField, TextField, CheckboxField } from "fields"
 import { getFormSelectChoices, FormSelectChoice } from "utils/form"
-import { CUSTOMER_STYLES } from "utils/styles"
 import { useFormState } from "react-final-form"
 import { productCreateBrand_Query } from "views/Inventory/Products/queries"
 import { useLazyQuery } from "react-apollo"
+import { CustomerStyle } from "generated/globalTypes"
 
 export interface MetadataSectionProps {
   architectures: string[]
@@ -73,7 +73,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
     { display: "Runs big", value: "RunsBig" },
   ]
 
-  const styles = CUSTOMER_STYLES.map(choice => ({
+  const styles = Object.keys(CustomerStyle).map(choice => ({
     display: choice,
     value: choice,
   }))
