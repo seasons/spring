@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 const ReservationStatusMap = {
   Queued: colors.green[100],
-  Picked: colors.orange[200],
+  Picked: colors.yellow[200],
   Packed: colors.orange[200],
   Shipped: colors.orange[500],
   Delivered: colors.blue[500],
