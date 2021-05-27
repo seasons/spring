@@ -102,6 +102,7 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
                     choices={getFormSelectChoices(internalSizes)}
                     initialValue={size}
                     requiredString
+                    disabled={isEditing}
                   />
                 </Box>
               </Box>
