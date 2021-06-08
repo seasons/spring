@@ -44,6 +44,7 @@ export const BrandCreate: React.FC = () => {
       designer,
       featured,
       published,
+      styles,
       shopifyShopShopName,
       shopifyShopEnabled,
     } = values
@@ -63,6 +64,7 @@ export const BrandCreate: React.FC = () => {
           published,
           name,
           images,
+          styles,
           since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
           slug: slugify(name).toLowerCase(),
           tier: brandTier,

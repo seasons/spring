@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { BrandWhereUniqueInput, BrandTier } from "./globalTypes"
+import { BrandWhereUniqueInput, CustomerStyle, BrandTier } from "./globalTypes"
 
 // ====================================================
 // GraphQL query operation: BrandEditQuery
@@ -41,6 +41,7 @@ export interface BrandEditQuery_brand {
   __typename: "Brand"
   id: string
   name: string
+  styles: CustomerStyle[] | null
   description: string | null
   brandCode: string
   since: any | null

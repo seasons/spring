@@ -26,6 +26,7 @@ export const BRAND_EDIT_QUERY = gql`
     brand(where: $input) {
       id
       name
+      styles
       description
       brandCode
       since
