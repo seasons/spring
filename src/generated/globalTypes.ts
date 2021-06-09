@@ -427,6 +427,7 @@ export enum SizeType {
   JP = "JP",
   Letter = "Letter",
   US = "US",
+  Universal = "Universal",
   WxL = "WxL",
 }
 
@@ -482,6 +483,86 @@ export enum WarehouseLocationType {
   Bin = "Bin",
   Conveyor = "Conveyor",
   Rail = "Rail",
+}
+
+export interface AccessorySizeCreateInput {
+  id?: string | null
+  bridge?: number | null
+  length?: number | null
+  width?: number | null
+}
+
+export interface AccessorySizeCreateOneInput {
+  create?: AccessorySizeCreateInput | null
+  connect?: AccessorySizeWhereUniqueInput | null
+}
+
+export interface AccessorySizeUpdateDataInput {
+  bridge?: number | null
+  length?: number | null
+  width?: number | null
+}
+
+export interface AccessorySizeUpdateOneInput {
+  create?: AccessorySizeCreateInput | null
+  connect?: AccessorySizeWhereUniqueInput | null
+  disconnect?: boolean | null
+  delete?: boolean | null
+  update?: AccessorySizeUpdateDataInput | null
+  upsert?: AccessorySizeUpsertNestedInput | null
+}
+
+export interface AccessorySizeUpsertNestedInput {
+  update: AccessorySizeUpdateDataInput
+  create: AccessorySizeCreateInput
+}
+
+export interface AccessorySizeWhereInput {
+  AND?: AccessorySizeWhereInput[] | null
+  OR?: AccessorySizeWhereInput[] | null
+  NOT?: AccessorySizeWhereInput[] | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  bridge?: number | null
+  bridge_not?: number | null
+  bridge_in?: number[] | null
+  bridge_not_in?: number[] | null
+  bridge_lt?: number | null
+  bridge_lte?: number | null
+  bridge_gt?: number | null
+  bridge_gte?: number | null
+  length?: number | null
+  length_not?: number | null
+  length_in?: number[] | null
+  length_not_in?: number[] | null
+  length_lt?: number | null
+  length_lte?: number | null
+  length_gt?: number | null
+  length_gte?: number | null
+  width?: number | null
+  width_not?: number | null
+  width_in?: number[] | null
+  width_not_in?: number[] | null
+  width_lt?: number | null
+  width_lte?: number | null
+  width_gt?: number | null
+  width_gte?: number | null
+}
+
+export interface AccessorySizeWhereUniqueInput {
+  id?: string | null
 }
 
 export interface BagItemCreateManyWithoutCustomerInput {
@@ -1287,6 +1368,7 @@ export interface CategoryCreateInput {
   image?: any | null
   description?: string | null
   visible?: boolean | null
+  productType?: ProductType | null
   products?: ProductCreateManyWithoutCategoryInput | null
   children?: CategoryCreateManyInput | null
 }
@@ -1313,6 +1395,7 @@ export interface CategoryCreateWithoutProductsInput {
   image?: any | null
   description?: string | null
   visible?: boolean | null
+  productType?: ProductType | null
   children?: CategoryCreateManyInput | null
 }
 
@@ -1386,6 +1469,10 @@ export interface CategoryScalarWhereInput {
   updatedAt_lte?: any | null
   updatedAt_gt?: any | null
   updatedAt_gte?: any | null
+  productType?: ProductType | null
+  productType_not?: ProductType | null
+  productType_in?: ProductType[] | null
+  productType_not_in?: ProductType[] | null
 }
 
 export interface CategoryUpdateDataInput {
@@ -1394,6 +1481,7 @@ export interface CategoryUpdateDataInput {
   image?: any | null
   description?: string | null
   visible?: boolean | null
+  productType?: ProductType | null
   products?: ProductUpdateManyWithoutCategoryInput | null
   children?: CategoryUpdateManyInput | null
 }
@@ -1404,6 +1492,7 @@ export interface CategoryUpdateManyDataInput {
   image?: any | null
   description?: string | null
   visible?: boolean | null
+  productType?: ProductType | null
 }
 
 export interface CategoryUpdateManyInput {
@@ -1448,6 +1537,7 @@ export interface CategoryUpdateWithoutProductsDataInput {
   image?: any | null
   description?: string | null
   visible?: boolean | null
+  productType?: ProductType | null
   children?: CategoryUpdateManyInput | null
 }
 
@@ -1537,6 +1627,10 @@ export interface CategoryWhereInput {
   updatedAt_lte?: any | null
   updatedAt_gt?: any | null
   updatedAt_gte?: any | null
+  productType?: ProductType | null
+  productType_not?: ProductType | null
+  productType_in?: ProductType[] | null
+  productType_not_in?: ProductType[] | null
   products_every?: ProductWhereInput | null
   products_some?: ProductWhereInput | null
   products_none?: ProductWhereInput | null
@@ -5275,6 +5369,8 @@ export interface PhysicalProductQualityReportCreateWithoutPhysicalProductInput {
   id?: string | null
   damageType?: PhysicalProductDamageType | null
   notes?: string | null
+  score?: number | null
+  published?: boolean | null
   damageTypes?: PhysicalProductQualityReportCreatedamageTypesInput | null
   user: UserCreateOneInput
 }
@@ -5319,6 +5415,14 @@ export interface PhysicalProductQualityReportScalarWhereInput {
   notes_not_starts_with?: string | null
   notes_ends_with?: string | null
   notes_not_ends_with?: string | null
+  score?: number | null
+  score_not?: number | null
+  score_in?: number[] | null
+  score_not_in?: number[] | null
+  score_lt?: number | null
+  score_lte?: number | null
+  score_gt?: number | null
+  score_gte?: number | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -5335,11 +5439,15 @@ export interface PhysicalProductQualityReportScalarWhereInput {
   updatedAt_lte?: any | null
   updatedAt_gt?: any | null
   updatedAt_gte?: any | null
+  published?: boolean | null
+  published_not?: boolean | null
 }
 
 export interface PhysicalProductQualityReportUpdateManyDataInput {
   damageType?: PhysicalProductDamageType | null
   notes?: string | null
+  score?: number | null
+  published?: boolean | null
   damageTypes?: PhysicalProductQualityReportUpdatedamageTypesInput | null
 }
 
@@ -5368,6 +5476,8 @@ export interface PhysicalProductQualityReportUpdateWithWhereUniqueWithoutPhysica
 export interface PhysicalProductQualityReportUpdateWithoutPhysicalProductDataInput {
   damageType?: PhysicalProductDamageType | null
   notes?: string | null
+  score?: number | null
+  published?: boolean | null
   damageTypes?: PhysicalProductQualityReportUpdatedamageTypesInput | null
   user?: UserUpdateOneRequiredInput | null
 }
@@ -5418,6 +5528,14 @@ export interface PhysicalProductQualityReportWhereInput {
   notes_not_starts_with?: string | null
   notes_ends_with?: string | null
   notes_not_ends_with?: string | null
+  score?: number | null
+  score_not?: number | null
+  score_in?: number[] | null
+  score_not_in?: number[] | null
+  score_lt?: number | null
+  score_lte?: number | null
+  score_gt?: number | null
+  score_gte?: number | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -5434,6 +5552,8 @@ export interface PhysicalProductQualityReportWhereInput {
   updatedAt_lte?: any | null
   updatedAt_gt?: any | null
   updatedAt_gte?: any | null
+  published?: boolean | null
+  published_not?: boolean | null
   user?: UserWhereInput | null
   physicalProduct?: PhysicalProductWhereInput | null
 }
@@ -8159,6 +8279,7 @@ export interface ReservationCreateWithoutCustomerInput {
   phase: ReservationPhase
   shipped: boolean
   status: ReservationStatus
+  returnedAt?: any | null
   shippedAt?: any | null
   receivedAt?: any | null
   reminderSentAt?: any | null
@@ -8170,6 +8291,7 @@ export interface ReservationCreateWithoutCustomerInput {
   returnedPackage?: PackageCreateOneInput | null
   products?: PhysicalProductCreateManyInput | null
   newProducts?: PhysicalProductCreateManyInput | null
+  returnedProducts?: PhysicalProductCreateManyInput | null
   packageEvents?: PackageTransitEventCreateManyWithoutReservationInput | null
   receipt?: ReservationReceiptCreateOneWithoutReservationInput | null
   lastLocation?: LocationCreateOneInput | null
@@ -8182,6 +8304,7 @@ export interface ReservationCreateWithoutPackageEventsInput {
   phase: ReservationPhase
   shipped: boolean
   status: ReservationStatus
+  returnedAt?: any | null
   shippedAt?: any | null
   receivedAt?: any | null
   reminderSentAt?: any | null
@@ -8194,6 +8317,7 @@ export interface ReservationCreateWithoutPackageEventsInput {
   returnedPackage?: PackageCreateOneInput | null
   products?: PhysicalProductCreateManyInput | null
   newProducts?: PhysicalProductCreateManyInput | null
+  returnedProducts?: PhysicalProductCreateManyInput | null
   receipt?: ReservationReceiptCreateOneWithoutReservationInput | null
   lastLocation?: LocationCreateOneInput | null
   shippingOption?: ShippingOptionCreateOneInput | null
@@ -8444,6 +8568,14 @@ export interface ReservationScalarWhereInput {
   status_not?: ReservationStatus | null
   status_in?: ReservationStatus[] | null
   status_not_in?: ReservationStatus[] | null
+  returnedAt?: any | null
+  returnedAt_not?: any | null
+  returnedAt_in?: any[] | null
+  returnedAt_not_in?: any[] | null
+  returnedAt_lt?: any | null
+  returnedAt_lte?: any | null
+  returnedAt_gt?: any | null
+  returnedAt_gte?: any | null
   shippedAt?: any | null
   shippedAt_not?: any | null
   shippedAt_in?: any[] | null
@@ -8515,6 +8647,7 @@ export interface ReservationUpdateManyDataInput {
   phase?: ReservationPhase | null
   shipped?: boolean | null
   status?: ReservationStatus | null
+  returnedAt?: any | null
   shippedAt?: any | null
   receivedAt?: any | null
   reminderSentAt?: any | null
@@ -8559,6 +8692,7 @@ export interface ReservationUpdateWithoutCustomerDataInput {
   phase?: ReservationPhase | null
   shipped?: boolean | null
   status?: ReservationStatus | null
+  returnedAt?: any | null
   shippedAt?: any | null
   receivedAt?: any | null
   reminderSentAt?: any | null
@@ -8570,6 +8704,7 @@ export interface ReservationUpdateWithoutCustomerDataInput {
   returnedPackage?: PackageUpdateOneInput | null
   products?: PhysicalProductUpdateManyInput | null
   newProducts?: PhysicalProductUpdateManyInput | null
+  returnedProducts?: PhysicalProductUpdateManyInput | null
   packageEvents?: PackageTransitEventUpdateManyWithoutReservationInput | null
   receipt?: ReservationReceiptUpdateOneWithoutReservationInput | null
   lastLocation?: LocationUpdateOneInput | null
@@ -8581,6 +8716,7 @@ export interface ReservationUpdateWithoutPackageEventsDataInput {
   phase?: ReservationPhase | null
   shipped?: boolean | null
   status?: ReservationStatus | null
+  returnedAt?: any | null
   shippedAt?: any | null
   receivedAt?: any | null
   reminderSentAt?: any | null
@@ -8593,6 +8729,7 @@ export interface ReservationUpdateWithoutPackageEventsDataInput {
   returnedPackage?: PackageUpdateOneInput | null
   products?: PhysicalProductUpdateManyInput | null
   newProducts?: PhysicalProductUpdateManyInput | null
+  returnedProducts?: PhysicalProductUpdateManyInput | null
   receipt?: ReservationReceiptUpdateOneWithoutReservationInput | null
   lastLocation?: LocationUpdateOneInput | null
   shippingOption?: ShippingOptionUpdateOneInput | null
@@ -9485,6 +9622,7 @@ export interface SizeCreateInput {
   type?: SizeType | null
   top?: TopSizeCreateOneInput | null
   bottom?: BottomSizeCreateOneInput | null
+  accessory?: AccessorySizeCreateOneInput | null
 }
 
 export interface SizeCreateManyInput {
@@ -9560,6 +9698,7 @@ export interface SizeUpdateDataInput {
   type?: SizeType | null
   top?: TopSizeUpdateOneInput | null
   bottom?: BottomSizeUpdateOneInput | null
+  accessory?: AccessorySizeUpdateOneInput | null
 }
 
 export interface SizeUpdateManyDataInput {
@@ -9667,6 +9806,7 @@ export interface SizeWhereInput {
   type_not_in?: SizeType[] | null
   top?: TopSizeWhereInput | null
   bottom?: BottomSizeWhereInput | null
+  accessory?: AccessorySizeWhereInput | null
 }
 
 export interface SizeWhereUniqueInput {
@@ -10653,7 +10793,7 @@ export interface UpsertProductInput {
   buyNewEnabled?: boolean | null
   buyUsedEnabled: boolean
   buyUsedPrice: number
-  categoryName: string
+  categoryID: string
   colorCode: string
   description: string
   functions: string[]
