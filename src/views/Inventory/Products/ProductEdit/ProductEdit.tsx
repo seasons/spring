@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Container } from "@material-ui/core"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
@@ -16,8 +16,9 @@ export interface ProductEditProps {}
 
 export const ProductEdit: React.FC<ProductEditProps> = props => {
   const { productID } = useParams() as any
-  const { data, loading, error } = useQuery(PRODUCT_EDIT_QUERY, {
-    variables: { input: { id: productID } },
+  const [productType, setProductType] = useState("Top")
+  const { data, error } = useQuery(PRODUCT_EDIT_QUERY, {
+    variables: { input: { id: productID }, productType },
   })
   const { showSnackbar } = useSnackbarContext()
   const [updateProduct] = useMutation(UPDATE_PRODUCT, {
@@ -35,7 +36,16 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
     },
   })
 
-  if (loading || error || !data) {
+  const productEditData: ProductEditQuery = data
+  const { product } = productEditData
+
+  useEffect(() => {
+    if (product?.type) {
+      setProductType(product.type)
+    }
+  }, [product, setProductType])
+
+  if (error || !data) {
     return <Loading />
   }
 
@@ -49,8 +59,6 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
     })
   }
 
-  const productEditData: ProductEditQuery = data
-  const { product } = productEditData
   let initialValues
 
   if (product) {
@@ -116,7 +124,12 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   return (
     <Container maxWidth={false}>
       <Wizard submitButtonTitle="Save" initialValues={initialValues} onSubmit={onSubmit}>
-        <ProductOverviewStep data={data} product={data.product} />
+        <ProductOverviewStep
+          data={data}
+          product={data.product}
+          productType={productType}
+          setProductType={setProductType}
+        />
       </Wizard>
       <Spacer mt={9} />
     </Container>

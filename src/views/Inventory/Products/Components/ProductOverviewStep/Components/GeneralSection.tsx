@@ -6,7 +6,7 @@ import { ExpandableSection } from "components/ExpandableSection"
 import { AutocompleteField, SelectField, TextField } from "fields"
 import { FormSelectChoice, getFormSelectChoices } from "utils/form"
 import { ProductUpsertQuery_brands, ProductUpsertQuery_categories } from "generated/ProductUpsertQuery"
-import { MANUFACTURER_SIZE_TYPES } from "utils/sizes"
+import { ACCESSORY_SIZE_TYPES, MANUFACTURER_SIZE_TYPES } from "utils/sizes"
 import { ProductEditQuery_product } from "generated/ProductEditQuery"
 
 export interface GeneralSectionProps {
@@ -17,6 +17,7 @@ export interface GeneralSectionProps {
   photographyStatuses: FormSelectChoice[]
   categories: ProductUpsertQuery_categories[]
   types: string[]
+  productType: string
   setProductType: (string) => void
   product: ProductEditQuery_product | undefined
 }
@@ -28,6 +29,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   availabilityStatuses,
   photographyStatuses,
   types,
+  productType,
   setProductType,
   product,
   categories,
@@ -41,7 +43,17 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   const typeChoices = getFormSelectChoices(types)
 
   const manufacturerSizeType = product?.variants?.[0]?.manufacturerSizes?.[0]?.type
-  const manufacturerSizeTypeChoices = getFormSelectChoices(MANUFACTURER_SIZE_TYPES)
+
+  let manufacturerSizeTypeChoices: any[] = []
+  switch (productType) {
+    case "Top":
+    case "Bottom":
+      manufacturerSizeTypeChoices = getFormSelectChoices(MANUFACTURER_SIZE_TYPES)
+      break
+    case "Accessory":
+      manufacturerSizeTypeChoices = getFormSelectChoices(ACCESSORY_SIZE_TYPES)
+      break
+  }
 
   return (
     <ExpandableSection
@@ -76,12 +88,16 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
 
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <Text variant="h6">Category *</Text>
+              <Text variant="h6">Type</Text>
               <Spacer mt={1} />
-              <SelectField name="category" choices={categoriesChoices} requiredString />
-              <Spacer mt={3} />
+              <SelectField
+                disabled={isEditing}
+                name="productType"
+                choices={typeChoices}
+                onChange={event => setProductType(event.target.value)}
+                requiredString
+              />
             </Grid>
-
             <Grid item xs={6}>
               <Text variant="h6">Manufacturer size type *</Text>
               <Spacer mt={1} />
@@ -97,15 +113,10 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
 
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <Text variant="h6">Type</Text>
+              <Text variant="h6">Category *</Text>
               <Spacer mt={1} />
-              <SelectField
-                disabled={isEditing}
-                name="productType"
-                choices={typeChoices}
-                onChange={event => setProductType(event.target.value)}
-                requiredString
-              />
+              <SelectField name="category" choices={categoriesChoices} requiredString />
+              <Spacer mt={3} />
             </Grid>
             <Grid item xs={6}>
               <Text variant="h6">Internal sizes</Text>

@@ -16,8 +16,11 @@ import { ProductVariantEditForm as ProductVariantEditFormStep } from "views/Inve
 
 export const ProductCreate: React.FC = () => {
   const history = useHistory()
+  const [productType, setProductType] = useState("Top")
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { data, loading, error } = useQuery(PRODUCT_UPSERT_QUERY)
+  const { data, error } = useQuery(PRODUCT_UPSERT_QUERY, {
+    variables: { productType },
+  })
   const location = useLocation()
   const { showSnackbar } = useSnackbarContext()
   const [upsertProduct] = useMutation(UPSERT_PRODUCT, {
@@ -42,7 +45,7 @@ export const ProductCreate: React.FC = () => {
   })
   const [values, setValues] = useState({})
 
-  if (loading || error || !data) {
+  if (error || !data) {
     return <Loading />
   }
 
@@ -75,7 +78,7 @@ export const ProductCreate: React.FC = () => {
   return (
     <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
-        <ProductOverviewStep data={productUpsertQueryData} />
+        <ProductOverviewStep data={productUpsertQueryData} productType={productType} setProductType={setProductType} />
         <ProductVariantEditFormStep createData={values} />
         <PhysicalProductsCreateStep
           newProductCreateData={values}
