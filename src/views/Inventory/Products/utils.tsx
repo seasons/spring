@@ -54,7 +54,6 @@ export const extractVariantSizeFields = ({
   const genericMeasurementKeys = ["weight", "totalcount"]
   let measurementKeys
   let internalSizeType
-  debugger
   switch (productType) {
     case "Top":
       measurementKeys = ["sleeve", "shoulder", "chest", "neck", "length", ...genericMeasurementKeys]
