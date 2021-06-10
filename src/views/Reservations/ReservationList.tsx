@@ -13,6 +13,7 @@ import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField 
 import { Box, Container } from "@material-ui/core"
 import { Header, StatusInput } from "components"
 import { PhaseField } from "fields/PhaseField"
+import { ReservationExpandedRow } from "./ReservationExpandedRow"
 
 const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => {
   return (
@@ -92,7 +93,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
           resource="Reservation"
           title="Reservations"
         >
-          <Datagrid>
+          <Datagrid expand={<ReservationExpandedRow />}>
             <SinceDateField source="createdAt" label="Created" />
             <ImagesField source="images" label="Images" size="medium" />
             <StatusField label="Status" />
