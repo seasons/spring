@@ -120,6 +120,7 @@ export const getProductUpsertData: any = (values: any) => {
     internalSeasonYear,
     vendorSeasonSeasonCode,
     vendorSeasonYear,
+    styles,
   } = values
 
   // Get the image files which are stored as image_0, image_1, etc.
@@ -254,6 +255,7 @@ export const getProductUpsertData: any = (values: any) => {
     retailPrice: parseInt(retailPrice),
     secondaryColorCode,
     status,
+    styles: styles || [],
     tags: tags || [],
     type: productType,
     variants: variantsData,
@@ -339,7 +341,7 @@ export const getProductUpdateData = (values: any) => {
     modelSizeName,
     modelSizeType: manufacturerSizeType,
     name,
-    styles,
+    styles: { set: styles },
     outerMaterials: { set: outerMaterials },
     photographyStatus,
     productFit,
