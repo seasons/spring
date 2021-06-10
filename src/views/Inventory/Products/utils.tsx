@@ -292,6 +292,7 @@ export const getProductUpdateData = (values: any) => {
     retailPrice,
     secondaryColor: secondaryColorCode,
     status,
+    styles,
     tags,
     wearableSeasons,
     internalSeasonSeasonCode,
@@ -319,7 +320,7 @@ export const getProductUpdateData = (values: any) => {
     }
   }
 
-  const updateProductData = {
+  return {
     architecture,
     brand: { connect: { id: brand.value } },
     buyNewEnabled,
@@ -338,6 +339,7 @@ export const getProductUpdateData = (values: any) => {
     modelSizeName,
     modelSizeType: manufacturerSizeType,
     name,
+    styles,
     outerMaterials: { set: outerMaterials },
     photographyStatus,
     productFit,
@@ -348,8 +350,6 @@ export const getProductUpdateData = (values: any) => {
     type: productType,
     season,
   }
-
-  return updateProductData
 }
 
 /**

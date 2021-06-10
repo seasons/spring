@@ -21,6 +21,18 @@ export default {
       images(size: XSmall) {
         url
       }
+      returnedProducts {
+        id
+        productVariant {
+          id
+          product {
+            id
+            images(size: XSmall) {
+              url
+            }
+          }
+        }
+      }
       phase
       reservationNumber
       shipped
@@ -28,6 +40,7 @@ export default {
       shippedAt
       statusUpdatedAt
       returnAt
+      returnedAt
       createdAt
     }
   `,
@@ -83,6 +96,18 @@ export default {
           trackingURL
         }
         weight
+      }
+      returnedProducts {
+        id
+        productVariant {
+          id
+          product {
+            id
+            images(size: XSmall) {
+              url
+            }
+          }
+        }
       }
       packageEvents(orderBy: createdAt_DESC, first: 1) {
         id

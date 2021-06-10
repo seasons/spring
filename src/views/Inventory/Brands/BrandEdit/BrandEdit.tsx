@@ -59,6 +59,7 @@ export const BrandEdit: React.FC = () => {
       published,
       shopifyShopShopName,
       shopifyShopEnabled,
+      styles,
     } = values
     const sinceYear = sinceDate && new Date(sinceDate).getFullYear()
     const numImages = 4
@@ -76,6 +77,7 @@ export const BrandEdit: React.FC = () => {
           brandCode: brandCode.toUpperCase(),
           description,
           name,
+          styles,
           logoImage,
           images,
           since: sinceYear && new Date(sinceYear, 0, 1).toISOString(),
@@ -116,6 +118,7 @@ export const BrandEdit: React.FC = () => {
       basedIn: brand.basedIn,
       designer: brand.designer,
       featured: brand.featured,
+      styles: brand.styles,
       published: brand.published,
       shopifyShopShopName: brand?.shopifyShop?.shopName,
       shopifyShopEnabled: brand?.shopifyShop?.enabled,
