@@ -34,6 +34,8 @@ export const getInternalSizes = (productType): string[] => {
       return US_LETTER_SIZES
     case "Bottom":
       return wxlBottomSizes()
+    case "Accessory":
+      return ACCESSORY_SIZE_TYPES
     default:
       return []
   }

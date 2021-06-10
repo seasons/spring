@@ -17,6 +17,7 @@ interface PickPhysicalProductModalProps {
   setOpen?: (boolean) => void
   productVariant: any
   onSuccess?: () => void
+  productType: string
 }
 
 const ADD_PHYSICAL_PRODUCTS = gql`
@@ -31,6 +32,7 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
   open,
   productVariant,
   onSuccess,
+  productType,
 }) => {
   const [isOpen, toggleOpen] = useState(open)
   const [isMutating, setIsMutating] = useState(false)
@@ -57,7 +59,7 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
     refetchQueries: [
       {
         query: PRODUCT_EDIT_QUERY,
-        variables: { input: { id: productVariant?.product?.id } },
+        variables: { input: { id: productVariant?.product?.id }, productType },
       },
       {
         query: VARIANT_EDIT_QUERY,

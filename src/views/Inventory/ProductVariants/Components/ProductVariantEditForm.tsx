@@ -166,6 +166,7 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
       )}
       <AddPhysicalProductModal
         open={openModal}
+        productType={productType}
         productVariant={variants?.[0]}
         onSuccess={() => {
           refreshPage?.()
@@ -174,7 +175,3 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
     </Box>
   )
 }
-
-const ContainerGrid = muiStyled(Grid)({
-  width: "100%",
-})

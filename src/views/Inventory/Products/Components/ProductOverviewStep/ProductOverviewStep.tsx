@@ -49,7 +49,7 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
     refetchQueries: [
       {
         query: PRODUCT_EDIT_QUERY,
-        variables: { input: { id: product?.id } },
+        variables: { input: { id: product?.id }, productType },
       },
     ],
     onError: error => {
@@ -269,7 +269,11 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
           {isEditing && product && (
             <>
               <Spacer mt={6} />
-              <ProductOverviewVariantsSection productID={product.id} variants={product?.variants || []} />
+              <ProductOverviewVariantsSection
+                productID={product.id}
+                variants={product?.variants || []}
+                productType={productType}
+              />
               <Spacer mt={6} />
             </>
           )}

@@ -7,6 +7,9 @@ export const getTypeSpecificVariantFields = productType => {
     case "Bottom":
       fields = ["Waist", "Rise", "Hem", "Inseam"]
       break
+    case "Accessory":
+      fields = ["Bridge", "Length", "Width"]
+      break
   }
   return ["Weight", ...fields]
 }
@@ -39,9 +42,11 @@ export const extractVariantSizeFields = ({
   productType,
   size,
   values,
+  sizeType,
 }: {
   productType: string
   size: string
+  sizeType: string
   values: any
 }) => {
   const sizeData = {} as any
@@ -49,6 +54,7 @@ export const extractVariantSizeFields = ({
   const genericMeasurementKeys = ["weight", "totalcount"]
   let measurementKeys
   let internalSizeType
+  debugger
   switch (productType) {
     case "Top":
       measurementKeys = ["sleeve", "shoulder", "chest", "neck", "length", ...genericMeasurementKeys]
@@ -57,6 +63,10 @@ export const extractVariantSizeFields = ({
     case "Bottom":
       internalSizeType = "WxL"
       measurementKeys = ["waist", "rise", "hem", "inseam", ...genericMeasurementKeys]
+      break
+    case "Accessory":
+      internalSizeType = sizeType
+      measurementKeys = ["bridge", "length", "width", ...genericMeasurementKeys]
       break
   }
   measurementKeys.forEach(measurementKey => {
@@ -206,7 +216,7 @@ export const getProductUpsertData: any = (values: any) => {
     variantData["physicalProducts"] = physicalProductsData
 
     // Get the relevant size values for the productType, i.e. shoulder, chest, etc. for Top
-    const variantSizeData = extractVariantSizeFields({ values, productType, size })
+    const variantSizeData = extractVariantSizeFields({ values, productType, sizeType: manufacturerSizeType, size })
     const shopifyProductVariantData = values[`${size}_shopifyProductVariant`]
       ? { shopifyProductVariant: { externalId: values[`${size}_shopifyProductVariant`]?.externalID } }
       : {}

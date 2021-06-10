@@ -37,7 +37,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
   })
 
   const productEditData: ProductEditQuery = data
-  const { product } = productEditData
+  const product = productEditData?.product
 
   useEffect(() => {
     if (product?.type) {
@@ -45,7 +45,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
     }
   }, [product, setProductType])
 
-  if (error || !data) {
+  if (error || !data || !product) {
     return <Loading />
   }
 
