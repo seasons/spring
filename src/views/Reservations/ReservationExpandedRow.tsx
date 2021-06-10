@@ -10,8 +10,6 @@ interface ReservationExpandedRowProps {
 }
 
 export const ReservationExpandedRow = ({ record: reservation }: ReservationExpandedRowProps) => {
-  console.log(reservation)
-
   const returnedItemImages = reservation?.returnedProducts?.map(p => p.productVariant?.product?.images?.[0])
 
   return (
