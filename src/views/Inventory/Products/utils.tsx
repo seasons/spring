@@ -95,11 +95,11 @@ export const getLocaleDateString = (date?: string) => {
 }
 
 /**
- * Uses [values] to form the data used in the productUpsert mutation
+ * Uses [values] to form the data used in the createProduct mutation
  * inside the New product flow.
  * @param values: set of values retrieved from the Product Create form
  */
-export const getProductUpsertData: any = (values: any) => {
+export const getProductCreateData: any = (values: any) => {
   const {
     architecture,
     brand,

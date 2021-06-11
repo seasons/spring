@@ -7,9 +7,9 @@ export const UPLOAD_FILE = gql`
   }
 `
 
-export const UPSERT_PRODUCT = gql`
-  mutation UpsertProduct($input: UpsertProductInput!) {
-    upsertProduct(input: $input) {
+export const CREATE_PRODUCT = gql`
+  mutation CreateProduct($input: ProductCreateInput!) {
+    createProduct(input: $input) {
       id
       name
       variants {
