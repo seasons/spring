@@ -45,11 +45,15 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
     }
   }, [formBrand, getBrandStyles])
 
-  const modelChoices = models.map(model => ({
-    display: model.name,
-    value: model.id,
-  }))
+  const modelChoices = [
+    { display: "-", value: "" },
+    ...models.map(model => ({
+      display: model.name,
+      value: model.id,
+    })),
+  ]
   const architectureChoices = getFormSelectChoices(architectures)
+
   const ColorChoiceDisplay = ({ name, hexCode }) => (
     <Box display="flex" alignItems="center">
       <Text>{name}</Text>
@@ -68,6 +72,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
   const secondaryColorChoices = secondaryColors.map(createColorChoice)
 
   const productFitChoices = [
+    { display: "-", value: "" },
     { display: "Runs small", value: "RunsSmall" },
     { display: "True to size", value: "TrueToSize" },
     { display: "Runs big", value: "RunsBig" },
@@ -91,7 +96,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Model size</Text>
             <Spacer mt={1} />
-            <SelectField name="modelSize" choices={manufacturerSizes} />
+            <SelectField name="modelSize" choices={[{ display: "-", value: "" }, ...manufacturerSizes]} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Retail price</Text>
@@ -106,7 +111,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Architecture</Text>
             <Spacer mt={1} />
-            <SelectField name="architecture" choices={architectureChoices} />
+            <SelectField name="architecture" choices={[{ display: "-", value: "" }, ...architectureChoices]} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Color *</Text>
@@ -116,7 +121,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Secondary color</Text>
             <Spacer mt={1} />
-            <SelectField name="secondaryColor" choices={secondaryColorChoices} />
+            <SelectField name="secondaryColor" choices={[{ display: "-", value: "" }, ...secondaryColorChoices]} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">External URL</Text>
@@ -126,12 +131,17 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Fit</Text>
             <Spacer mt={1} />
-            <SelectField name="productFit" choices={productFitChoices} />
+            <SelectField name="productFit" choices={[{ display: "-", value: "" }, ...productFitChoices]} />
           </Grid>
           <Grid item xs={12}>
             <Text variant="h6">Product tier</Text>
             <Spacer mt={1} />
-            <SelectField disabled name="productTier" choices={productTiers} defaultValue="Standard" />
+            <SelectField
+              disabled
+              name="productTier"
+              choices={[{ display: "-", value: "" }, ...productTiers]}
+              defaultValue="Standard"
+            />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Buy new enabled</Text>
@@ -157,7 +167,12 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Styles</Text>
             <Spacer mt={1} />
-            <SelectField name="styles" multiple choices={styles} initialValue={brandData?.brand?.styles} />
+            <SelectField
+              name="styles"
+              multiple
+              choices={[{ display: "-", value: "" }, ...styles]}
+              initialValue={brandData?.brand?.styles}
+            />
           </Grid>
         </Grid>
       }

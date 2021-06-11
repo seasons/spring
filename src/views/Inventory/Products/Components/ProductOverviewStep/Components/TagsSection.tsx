@@ -30,7 +30,7 @@ export const TagsSection: React.FC<TagsSectionProps> = ({ materials, materialCat
           <Grid item xs={12}>
             <Text variant="h6">Material category</Text>
             <Spacer mt={1} />
-            <SelectField name="materialCategory" choices={materialCategoryChoices} />
+            <SelectField name="materialCategory" choices={[{ display: "-", value: "" }, ...materialCategoryChoices]} />
           </Grid>
           <Spacer mt={3} />
           <Grid item xs={12}>
