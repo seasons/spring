@@ -24,7 +24,7 @@ export const ProductVariantEdit: React.FC = () => {
 
   let initialValues = {} as any
   const { productVariant } = data
-  const { id, internalSize, product, total, weight } = productVariant
+  const { id, internalSize, product, total, weight, manufacturerSize } = productVariant
   if (internalSize) {
     const size = internalSize?.display
     switch (internalSize.productType) {
@@ -51,6 +51,16 @@ export const ProductVariantEdit: React.FC = () => {
           [`${size}_weight`]: parseFloat(weight) || undefined,
         }
         break
+      case "Accessory":
+        const { accessory } = internalSize
+        initialValues = {
+          [`${size}_totalcount`]: total,
+          [`${size}_width`]: parseFloat(accessory?.width) || undefined,
+          [`${size}_bridge`]: parseFloat(accessory?.bridge) || undefined,
+          [`${size}_length`]: parseFloat(accessory?.length) || undefined,
+          [`${size}_weight`]: parseFloat(weight) || undefined,
+        }
+        break
       default:
         break
     }
@@ -71,6 +81,7 @@ export const ProductVariantEdit: React.FC = () => {
     const variantSizeData = extractVariantSizeFields({
       productType: internalSize.productType,
       size: internalSize.display,
+      sizeType: manufacturerSize.type,
       values,
     })
     const cleanedVariantData = omit(variantSizeData, ["total"])

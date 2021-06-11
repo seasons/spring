@@ -33,6 +33,7 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
   // TODO: read from product manufacturer type
   const manufacturerSizeTypeFromSibling = product?.variants?.[0]?.manufacturerSizes?.[0]?.type
   const internalSizes = getInternalSizes(productType)
+  const isUniversal = manufacturerSizeTypeFromSibling === "Universal" || manufacturerSizeType === "Universal"
 
   const fieldNameToName = fieldName => `${variantIndex}_${fieldName.toLowerCase().replace(" ", "")}`
 
@@ -102,7 +103,7 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
                     choices={getFormSelectChoices(internalSizes)}
                     initialValue={size}
                     requiredString
-                    disabled={isEditing}
+                    disabled={isEditing || isUniversal}
                   />
                 </Box>
               </Box>

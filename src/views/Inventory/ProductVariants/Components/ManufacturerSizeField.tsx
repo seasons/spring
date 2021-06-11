@@ -17,6 +17,8 @@ export const ManufacturerSizeField = ({ namePrefix, sizeType }: ManufacturerSize
   const manufacturerSizeTypeChoices = getFormSelectChoices(MANUFACTURER_SIZE_TYPES)
   const manufacturerSizes = getManufacturerSizes(manufacturerSizeType)
 
+  const isUniversalSize = manufacturerSizeType === "Universal"
+
   return (
     <Box display="flex" flex={1} mb={1}>
       <Box flex={1} display="flex" alignItems="center">
@@ -37,6 +39,8 @@ export const ManufacturerSizeField = ({ namePrefix, sizeType }: ManufacturerSize
           <Text variant="h5">Value</Text>
           <Spacer mt={1} />
           <SelectField
+            disabled={isUniversalSize}
+            initialValue={isUniversalSize ? "Universal" : undefined}
             name={`${namePrefix}_manufacturerSize`}
             choices={getFormSelectChoices(manufacturerSizes)}
             requiredString

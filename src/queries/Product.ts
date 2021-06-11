@@ -13,6 +13,7 @@ export const ProductFragment = gql`
     updatedAt
     publishedAt
     retailPrice
+    type
     images(size: Small, options: { retina: true }) {
       url
     }

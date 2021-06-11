@@ -16,7 +16,6 @@ import {
   SeasonString,
   ProductTierName,
   SizeType,
-  LetterSize,
 } from "./globalTypes"
 
 // ====================================================
@@ -40,25 +39,11 @@ export interface ProductFragment_category {
   name: string
 }
 
-export interface ProductFragment_variants_internalSize_top {
-  __typename: "TopSize"
-  id: string
-  letter: LetterSize | null
-}
-
-export interface ProductFragment_variants_internalSize_bottom {
-  __typename: "BottomSize"
-  id: string
-  value: string | null
-}
-
 export interface ProductFragment_variants_internalSize {
   __typename: "Size"
   id: string
   display: string
   productType: ProductType | null
-  top: ProductFragment_variants_internalSize_top | null
-  bottom: ProductFragment_variants_internalSize_bottom | null
 }
 
 export interface ProductFragment_variants_physicalProducts_warehouseLocation {
