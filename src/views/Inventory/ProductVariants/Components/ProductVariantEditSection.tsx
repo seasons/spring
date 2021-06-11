@@ -112,9 +112,15 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
             <Box mb={8}>
               <Text variant="h4">Measurements</Text>
               <Spacer mt={4} />
-              {typeSpecificFields.map((field, index) => (
-                <RenderTextField fieldName={field} type="number" key={field + index} />
-              ))}
+              {typeSpecificFields.map((field, index) => {
+                let name = field
+                if (field === "Width") {
+                  name = "Lense width (mm)"
+                } else if (name === "Bridge" || name === "Length") {
+                  name = `${field} (mm)`
+                }
+                return <RenderTextField fieldName={name} type="number" key={field + index} />
+              })}
             </Box>
           </Grid>
         </Grid>
