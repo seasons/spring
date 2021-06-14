@@ -43,8 +43,10 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
     type = "text",
     initialValue,
     disabled,
+    displayName,
   }: {
     fieldName: string
+    displayName?: string
     isRequired?: boolean
     type?: "text" | "number"
     initialValue?: string | number
@@ -54,7 +56,7 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
       <Box display="flex" alignContent="center" mb={1}>
         <Box flex={1} display="flex" alignItems="center">
           <Text variant="h5">
-            {fieldName}
+            {displayName ? displayName : fieldName}
             {isRequired && " *"}
           </Text>
         </Box>
@@ -119,7 +121,7 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
                 } else if (name === "Bridge" || name === "Length") {
                   name = `${field} (mm)`
                 }
-                return <RenderTextField fieldName={name} type="number" key={field + index} />
+                return <RenderTextField displayName={name} fieldName={field} type="number" key={field + index} />
               })}
             </Box>
           </Grid>
