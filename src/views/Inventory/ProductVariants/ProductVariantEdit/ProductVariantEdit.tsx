@@ -77,7 +77,6 @@ export const ProductVariantEdit: React.FC = () => {
   }
 
   const onSubmit = async values => {
-    console.log("values", values)
     if (!internalSize?.productType || !internalSize?.display) {
       return
     }
