@@ -12,6 +12,7 @@ interface SeasonsSectionProps {
 
 export const SeasonsSection: React.FC<SeasonsSectionProps> = () => {
   const wearableSeasonChoices = [
+    { display: "-", value: "" },
     { display: "Spring", value: "Spring" },
     { display: "Summer", value: "Summer" },
     { display: "Fall", value: "Fall" },
@@ -19,11 +20,13 @@ export const SeasonsSection: React.FC<SeasonsSectionProps> = () => {
   ]
 
   const internalSeasons = [
+    { display: "-", value: "" },
     { display: "Fall Winter", value: "FW" },
     { display: "Spring Summer", value: "SS" },
   ]
 
   const vendorSeasons = [
+    { display: "-", value: "" },
     { display: "Fall Winter", value: "FW" },
     { display: "Spring Summer", value: "SS" },
     { display: "Pre-Spring", value: "PS" },
@@ -35,7 +38,7 @@ export const SeasonsSection: React.FC<SeasonsSectionProps> = () => {
   const currentYear = new Date().getFullYear()
   const getRange = (start, stop, step) => Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step)
   const yearRanges = getRange(currentYear + 1, 2019, -1)
-  const years = yearRanges.map(year => ({ display: year, value: year }))
+  const years = [{ display: "-", value: "" }, ...yearRanges.map(year => ({ display: year, value: year }))]
 
   return (
     <ExpandableSection
