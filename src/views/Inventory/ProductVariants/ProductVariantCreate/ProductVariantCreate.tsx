@@ -22,6 +22,10 @@ export const ProductVariantCreate: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const { showSnackbar } = useSnackbarContext()
+  const { data, loading, error } = useQuery(PRODUCT_VARIANT_UPSERT_QUERY, {
+    variables: { input: { id: productID } },
+  })
+  const productType = data?.product.type
   const [upsertVariants] = useMutation(UPSERT_VARIANTS, {
     onCompleted: () => {
       setIsSubmitting(false)
@@ -39,12 +43,9 @@ export const ProductVariantCreate: React.FC = () => {
     refetchQueries: [
       {
         query: PRODUCT_EDIT_QUERY,
-        variables: { input: { id: productID } },
+        variables: { input: { id: productID }, productType },
       },
     ],
-  })
-  const { data, loading, error } = useQuery(PRODUCT_VARIANT_UPSERT_QUERY, {
-    variables: { input: { id: productID } },
   })
 
   if (loading || error || !data) {

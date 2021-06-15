@@ -22,17 +22,23 @@ import { DateTime } from "luxon"
 import { PRODUCT_EDIT_QUERY } from "../../queries"
 import { SeasonsSection } from "./Components/SeasonsSection"
 import { useSnackbarContext } from "components/Snackbar"
-import { wxlBottomSizes, US_LETTER_SIZES, getManufacturerSizes } from "utils/sizes"
+import { wxlBottomSizes, US_LETTER_SIZES, getManufacturerSizes, ACCESSORY_SIZE_TYPES } from "utils/sizes"
 import { useField } from "react-final-form"
 
 export interface ProductOverviewStepProps {
   data: ProductUpsertQuery
   product?: ProductEditQuery_product
+  productType: string
+  setProductType: (string) => void
 }
 
-export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({ data, product }) => {
+export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
+  data,
+  product,
+  productType,
+  setProductType,
+}) => {
   const location = useLocation()
-  const [productType, setProductType] = useState(product?.type || "Top")
   const manufacturerSizeTypeField = useField("manufacturerSizeType")
   const manufacturerSizeType = manufacturerSizeTypeField?.input?.value
 
@@ -43,7 +49,7 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({ data, 
     refetchQueries: [
       {
         query: PRODUCT_EDIT_QUERY,
-        variables: { input: { id: product?.id } },
+        variables: { input: { id: product?.id }, productType },
       },
     ],
     onError: error => {
@@ -99,6 +105,9 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({ data, 
       break
     case "Bottom":
       internalSizes = getFormSelectChoices(wxlBottomSizes())
+      break
+    case "Accessory":
+      internalSizes = getFormSelectChoices(ACCESSORY_SIZE_TYPES)
       break
   }
 
@@ -231,6 +240,7 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({ data, 
           <GeneralSection
             brands={data.brands.filter(Boolean) as ProductUpsertQuery_brands[]}
             isEditing={isEditing}
+            productType={productType}
             internalSizes={internalSizes}
             availabilityStatuses={availabilityStatuses}
             photographyStatuses={photographyStatuses}
@@ -259,7 +269,11 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({ data, 
           {isEditing && product && (
             <>
               <Spacer mt={6} />
-              <ProductOverviewVariantsSection productID={product.id} variants={product?.variants || []} />
+              <ProductOverviewVariantsSection
+                productID={product.id}
+                variants={product?.variants || []}
+                productType={productType}
+              />
               <Spacer mt={6} />
             </>
           )}

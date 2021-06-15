@@ -23,6 +23,12 @@ export const UpdateVariantFragment = gql`
       id
       display
       productType
+      accessory {
+        id
+        width
+        bridge
+        length
+      }
       top {
         id
         sleeve

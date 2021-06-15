@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { ProductType } from "./globalTypes"
+
 // ====================================================
 // GraphQL query operation: ProductUpsertQuery
 // ====================================================
@@ -89,4 +91,8 @@ export interface ProductUpsertQuery {
   productModels: (ProductUpsertQuery_productModels | null)[]
   productTypes: ProductUpsertQuery_productTypes | null
   tags: (ProductUpsertQuery_tags | null)[]
+}
+
+export interface ProductUpsertQueryVariables {
+  productType?: ProductType | null
 }

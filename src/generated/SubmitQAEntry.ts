@@ -22,6 +22,8 @@ export interface SubmitQAEntryVariables {
   notes: string
   type?: PhysicalProductDamageType | null
   damageTypes?: PhysicalProductDamageType[] | null
+  score?: number | null
+  published: boolean
   physicalProductID: string
   userID: string
 }

@@ -165,6 +165,7 @@ export const PRODUCT_VARIANT_UPSERT_QUERY = gql`
     }
 
     product(where: $input) {
+      id
       slug
       ...ProductFragment
     }
@@ -194,8 +195,8 @@ export const PHYSICAL_PRODUCT_STATUSES_QUERY = gql`
   }
 `
 export const PRODUCT_EDIT_QUERY = gql`
-  query ProductEditQuery($input: ProductWhereUniqueInput!) {
-    categories(where: { children_every: { id: null } }, orderBy: name_ASC) {
+  query ProductEditQuery($input: ProductWhereUniqueInput!, $productType: ProductType) {
+    categories(where: { AND: [{ children_every: { id: null } }, { productType: $productType }] }, orderBy: name_ASC) {
       id
       name
     }
@@ -215,8 +216,8 @@ export const PRODUCT_EDIT_QUERY = gql`
 `
 
 export const PRODUCT_UPSERT_QUERY = gql`
-  query ProductUpsertQuery {
-    categories(where: { children_every: { id: null } }, orderBy: name_ASC) {
+  query ProductUpsertQuery($productType: ProductType) {
+    categories(where: { AND: [{ children_every: { id: null } }, { productType: $productType }] }, orderBy: name_ASC) {
       id
       name
     }

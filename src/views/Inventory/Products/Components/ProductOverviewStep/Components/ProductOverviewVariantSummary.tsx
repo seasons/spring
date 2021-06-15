@@ -15,9 +15,13 @@ import PlusOneRoundedIcon from "@material-ui/icons/PlusOneRounded"
 
 export interface ProductOverviewVariantSummaryProps {
   variant: ProductEditQuery_product_variants
+  productType: string
 }
 
-export const ProductOverviewVariantSummary: React.FC<ProductOverviewVariantSummaryProps> = ({ variant }) => {
+export const ProductOverviewVariantSummary: React.FC<ProductOverviewVariantSummaryProps> = ({
+  variant,
+  productType,
+}) => {
   const history = useHistory()
   const refresh = useRefresh()
   const [openOffloadPhysicalProductModal, setOpenOffloadPhysicalProductModal] = useState(false)
@@ -125,6 +129,7 @@ export const ProductOverviewVariantSummary: React.FC<ProductOverviewVariantSumma
           />
         )}
         <AddPhysicalProductModal
+          productType={productType}
           open={openAddPhysicalProductModal}
           productVariant={variant}
           onSuccess={() => {

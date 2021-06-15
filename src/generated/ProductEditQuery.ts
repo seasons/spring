@@ -5,8 +5,8 @@
 
 import {
   ProductWhereUniqueInput,
-  PhotographyStatus,
   ProductType,
+  PhotographyStatus,
   PhysicalProductStatus,
   InventoryStatus,
   PhysicalProductOffloadMethod,
@@ -17,7 +17,6 @@ import {
   SeasonString,
   ProductTierName,
   SizeType,
-  LetterSize,
   CustomerStyle,
 } from "./globalTypes"
 
@@ -114,25 +113,11 @@ export interface ProductEditQuery_product_category {
   name: string
 }
 
-export interface ProductEditQuery_product_variants_internalSize_top {
-  __typename: "TopSize"
-  id: string
-  letter: LetterSize | null
-}
-
-export interface ProductEditQuery_product_variants_internalSize_bottom {
-  __typename: "BottomSize"
-  id: string
-  value: string | null
-}
-
 export interface ProductEditQuery_product_variants_internalSize {
   __typename: "Size"
   id: string
   display: string
   productType: ProductType | null
-  top: ProductEditQuery_product_variants_internalSize_top | null
-  bottom: ProductEditQuery_product_variants_internalSize_bottom | null
 }
 
 export interface ProductEditQuery_product_variants_physicalProducts_warehouseLocation {
@@ -302,4 +287,5 @@ export interface ProductEditQuery {
 
 export interface ProductEditQueryVariables {
   input: ProductWhereUniqueInput
+  productType?: ProductType | null
 }
