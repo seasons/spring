@@ -100,7 +100,7 @@ export const AddPhysicalProductModal: React.FC<PickPhysicalProductModalProps> = 
                 const num = String(productVariant?.physicalProducts.length + 1).padStart(2, "0")
                 const newPhysicalProduct = {
                   seasonsUID: productVariant.sku + "-" + num,
-                  inventoryStatus: "Reservable",
+                  inventoryStatus: "NonReservable",
                   productStatus: "New",
                 }
 

@@ -95,11 +95,11 @@ export const getLocaleDateString = (date?: string) => {
 }
 
 /**
- * Uses [values] to form the data used in the productUpsert mutation
+ * Uses [values] to form the data used in the createProduct mutation
  * inside the New product flow.
  * @param values: set of values retrieved from the Product Create form
  */
-export const getProductUpsertData: any = (values: any) => {
+export const getProductCreateData: any = (values: any) => {
   const {
     architecture,
     brand,
@@ -129,6 +129,8 @@ export const getProductUpsertData: any = (values: any) => {
     internalSeasonYear,
     vendorSeasonSeasonCode,
     vendorSeasonYear,
+    externalURL,
+    styles,
   } = values
 
   // Get the image files which are stored as image_0, image_1, etc.
@@ -267,6 +269,8 @@ export const getProductUpsertData: any = (values: any) => {
     type: productType,
     variants: variantsData,
     season,
+    externalURL,
+    styles,
   }
   return productsData
 }
@@ -366,7 +370,7 @@ export const getProductUpdateData = (values: any) => {
  * inside the New variants flow.
  * @param values: set of values retrieved from the New variants form
  */
-export const getProductVariantUpsertData = ({ values, product }) => {
+export const getProductVariantCreateData = ({ values, product }) => {
   const productType = product?.type
   let maxVariantIndex = -1
   Object.keys(values).forEach(key => {
