@@ -173,8 +173,8 @@ export interface ProductVariantUpsertQuery_product_tags {
 
 export interface ProductVariantUpsertQuery_product {
   __typename: "Product"
-  slug: string
   id: string
+  slug: string
   name: string
   description: string | null
   photographyStatus: PhotographyStatus | null

@@ -42,9 +42,9 @@ export const UPDATE_PRODUCT = gql`
   }
 `
 
-export const UPSERT_VARIANTS = gql`
-  mutation UpsertProductVariants($productID: ID!, $inputs: [UpsertVariantInput!]!) {
-    upsertProductVariants(productID: $productID, inputs: $inputs) {
+export const CREATE_VARIANTS = gql`
+  mutation CreateProductVariants($productID: ID!, $inputs: [CreateVariantInput!]!) {
+    createProductVariants(productID: $productID, inputs: $inputs) {
       id
       sku
       total

@@ -7,8 +7,8 @@ import { Spacer, Wizard } from "components"
 import { ProductVariantCreateStep } from "./Components"
 import { useRefresh } from "@seasons/react-admin"
 import { PRODUCT_EDIT_QUERY, PRODUCT_VARIANT_UPSERT_QUERY } from "../../Products/queries"
-import { UPSERT_VARIANTS } from "../../Products/mutations"
-import { getProductVariantUpsertData } from "../../Products/utils"
+import { CREATE_VARIANTS } from "../../Products/mutations"
+import { getProductVariantCreateData } from "../../Products/utils"
 import { ProductVariantUpsertQuery } from "generated/ProductVariantUpsertQuery"
 import { PhysicalProductsCreate as PhysicalProductsCreateStep } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
 import { useSnackbarContext } from "components/Snackbar"
@@ -26,7 +26,7 @@ export const ProductVariantCreate: React.FC = () => {
     variables: { input: { id: productID } },
   })
   const productType = data?.product.type
-  const [upsertVariants] = useMutation(UPSERT_VARIANTS, {
+  const [createVariants] = useMutation(CREATE_VARIANTS, {
     onCompleted: () => {
       setIsSubmitting(false)
       // Redirect to product edit page for this product
@@ -65,11 +65,11 @@ export const ProductVariantCreate: React.FC = () => {
   }
 
   const onSubmit = async values => {
-    const variantUpsertData = getProductVariantUpsertData({
+    const variantUpsertData = getProductVariantCreateData({
       values,
       product,
     })
-    await upsertVariants({
+    await createVariants({
       variables: {
         productID: product.slug,
         inputs: variantUpsertData,
