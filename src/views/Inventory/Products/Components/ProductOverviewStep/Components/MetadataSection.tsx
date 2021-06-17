@@ -71,10 +71,9 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
     value: a.colorCode,
   })
   const primaryColorChoices = primaryColors.map(createColorChoice)
-  const secondaryColorChoices = secondaryColors.map(createColorChoice)
+  const secondaryColorChoices = [...primaryColorChoices, ...secondaryColors.map(createColorChoice)]
 
   const productFitChoices = [
-    { display: "-", value: "" },
     { display: "Runs small", value: "RunsSmall" },
     { display: "True to size", value: "TrueToSize" },
     { display: "Runs big", value: "RunsBig" },
@@ -133,7 +132,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Fit</Text>
             <Spacer mt={1} />
-            <SelectField name="productFit" choices={[{ display: "-", value: "" }, ...productFitChoices]} />
+            <SelectField name="productFit" choices={productFitChoices} />
           </Grid>
           <Grid item xs={12}>
             <Text variant="h6">Product tier</Text>
