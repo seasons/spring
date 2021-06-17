@@ -21,6 +21,7 @@ export interface MetadataSectionProps {
   buyUsedEnabled: boolean
   buyUsedPrice: number | null | undefined
   productTiers: FormSelectChoice[]
+  isEditing: boolean
 }
 
 export const MetadataSection: React.FC<MetadataSectionProps> = ({
@@ -31,6 +32,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
   buyUsedEnabled,
   buyUsedPrice,
   productTiers,
+  isEditing,
 }) => {
   const { values: formValues } = useFormState()
   const formBrand = formValues?.brand?.value
@@ -116,7 +118,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Color *</Text>
             <Spacer mt={1} />
-            <SelectField name="color" choices={primaryColorChoices} requiredString />
+            <SelectField name="color" choices={primaryColorChoices} requiredString disabled={isEditing} />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Secondary color</Text>

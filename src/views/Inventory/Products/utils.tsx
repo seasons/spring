@@ -335,12 +335,10 @@ export const getProductUpdateData = (values: any) => {
 
   return {
     architecture,
-    brand: { connect: { id: brand.value } },
     buyNewEnabled,
     buyUsedPrice: parseFloat(buyUsedPrice) * 100,
     buyUsedEnabled,
     category: { connect: { id: categoryID } },
-    color: { connect: { colorCode } },
     description,
     externalURL,
     functions,

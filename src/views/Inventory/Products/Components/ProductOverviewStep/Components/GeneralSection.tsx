@@ -69,6 +69,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
                 options={brandChoices.map(a => ({ label: a.display, value: a.value }))}
                 requiredString
                 multiple={false}
+                disabled={isEditing}
                 getOptionSelected={(option, value) => option.value === value.value}
               />
             </Grid>

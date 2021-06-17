@@ -16,6 +16,7 @@ export type AutocompleteFieldProps = ChildFieldProps & {
   multiple?: boolean
   onInputChange?: (event: any) => void
   getOptionSelected?: (option, value) => boolean
+  disabled?: boolean
 }
 
 export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
@@ -25,6 +26,7 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
   multiple = true,
   onInputChange,
   getOptionSelected = (option, value) => option === value,
+  disabled = false,
 }) => {
   const [value, setValue] = useState<Option>(options?.[0] || "")
 
@@ -36,6 +38,7 @@ export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
         return (
           <FormControl error={meta.touched && meta.error}>
             <Autocomplete
+              disabled={disabled}
               multiple={multiple}
               onChange={(event: any, value: any) => {
                 input.onChange({ target: { name, value } })
