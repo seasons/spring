@@ -258,6 +258,7 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
             buyUsedEnabled={buyUsedEnabled}
             buyUsedPrice={buyUsedPrice}
             productTiers={productTiers}
+            isEditing={isEditing}
           />
           <Spacer mt={6} />
           <SeasonsSection
