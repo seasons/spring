@@ -93,6 +93,7 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
               <ManufacturerSizeField
                 namePrefix={String(variantIndex)}
                 sizeType={manufacturerSizeTypeFromSibling || manufacturerSizeType}
+                productType={productType}
               />
 
               <Box display="flex" mb={1}>

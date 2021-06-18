@@ -6,7 +6,7 @@ import { ExpandableSection } from "components/ExpandableSection"
 import { AutocompleteField, SelectField, TextField } from "fields"
 import { FormSelectChoice, getFormSelectChoices } from "utils/form"
 import { ProductUpsertQuery_brands, ProductUpsertQuery_categories } from "generated/ProductUpsertQuery"
-import { ACCESSORY_SIZE_TYPES, MANUFACTURER_SIZE_TYPES } from "utils/sizes"
+import { ACCESSORY_SIZE_TYPES, MANUFACTURER_BOTTOM_SIZE_TYPES, MANUFACTURER_TOP_SIZE_TYPES } from "utils/sizes"
 import { ProductEditQuery_product } from "generated/ProductEditQuery"
 
 export interface GeneralSectionProps {
@@ -47,10 +47,15 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   let manufacturerSizeTypeChoices: any[] = []
   switch (productType) {
     case "Top":
+      manufacturerSizeTypeChoices = getFormSelectChoices(MANUFACTURER_TOP_SIZE_TYPES)
+      // EU, JP, Letter
+      break
     case "Bottom":
-      manufacturerSizeTypeChoices = getFormSelectChoices(MANUFACTURER_SIZE_TYPES)
+      // EU, JP, US, WxL
+      manufacturerSizeTypeChoices = getFormSelectChoices(MANUFACTURER_BOTTOM_SIZE_TYPES)
       break
     case "Accessory":
+      // Universal
       manufacturerSizeTypeChoices = getFormSelectChoices(ACCESSORY_SIZE_TYPES)
       break
   }

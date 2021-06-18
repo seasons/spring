@@ -11,14 +11,16 @@ const euSizes = [44, 46, 48, 50, 52, 54]
 
 export const ACCESSORY_SIZE_TYPES: AccessorySizeType[] = ["Universal"]
 export const US_LETTER_SIZES = ["XS", "S", "M", "L", "XL", "XXL"]
-export const MANUFACTURER_SIZE_TYPES: ManufacturerSizeType[] = [
-  "EU",
-  "JP",
-  "US",
-  "WxL",
-  "Letter",
-  ...ACCESSORY_SIZE_TYPES,
-]
+export const MANUFACTURER_TOP_SIZE_TYPES = ["EU", "JP", "Letter"]
+export const MANUFACTURER_BOTTOM_SIZE_TYPES = ["EU", "JP", "US", "WxL"]
+// export const MANUFACTURER_SIZE_TYPES: ManufacturerSizeType[] = [
+//   "EU",
+//   "JP",
+//   "US",
+//   "WxL",
+//   "Letter",
+//   ...ACCESSORY_SIZE_TYPES,
+// ]
 
 export const wxlBottomSizes = () => {
   return usWaistSizes.flatMap(waistSize => {
