@@ -7,6 +7,7 @@ import {
   ProductVariantWhereUniqueInput,
   SizeType,
   ProductType,
+  MeasurementType,
   PhysicalProductStatus,
   InventoryStatus,
 } from "./globalTypes"
@@ -28,11 +29,19 @@ export interface VariantEditQuery_productVariant_product_brand {
   id: string
 }
 
+export interface VariantEditQuery_productVariant_product_category {
+  __typename: "Category"
+  id: string
+  name: string
+  measurementType: MeasurementType | null
+}
+
 export interface VariantEditQuery_productVariant_product {
   __typename: "Product"
   id: string
   name: string
   brand: VariantEditQuery_productVariant_product_brand
+  category: VariantEditQuery_productVariant_product_category
 }
 
 export interface VariantEditQuery_productVariant_internalSize_accessory {

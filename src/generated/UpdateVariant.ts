@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { SizeType, ProductType, PhysicalProductStatus, InventoryStatus } from "./globalTypes"
+import { SizeType, ProductType, MeasurementType, PhysicalProductStatus, InventoryStatus } from "./globalTypes"
 
 // ====================================================
 // GraphQL fragment: UpdateVariant
@@ -22,11 +22,19 @@ export interface UpdateVariant_product_brand {
   id: string
 }
 
+export interface UpdateVariant_product_category {
+  __typename: "Category"
+  id: string
+  name: string
+  measurementType: MeasurementType | null
+}
+
 export interface UpdateVariant_product {
   __typename: "Product"
   id: string
   name: string
   brand: UpdateVariant_product_brand
+  category: UpdateVariant_product_category
 }
 
 export interface UpdateVariant_internalSize_accessory {

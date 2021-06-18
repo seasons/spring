@@ -15,6 +15,7 @@ import {
   ProductFit,
   SeasonCode,
   SeasonString,
+  MeasurementType,
   ProductTierName,
   SizeType,
   CustomerStyle,
@@ -111,6 +112,8 @@ export interface ProductEditQuery_product_category {
   __typename: "Category"
   id: string
   name: string
+  slug: string
+  measurementType: MeasurementType | null
 }
 
 export interface ProductEditQuery_product_variants_internalSize {
