@@ -83,7 +83,7 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
               <Text variant="h4">General</Text>
               <Spacer mt={4} />
               <RenderTextField fieldName="SKU" type="text" disabled initialValue={sku} />
-              <RenderTextField fieldName="Total count" type="number" initialValue={1} isRequired />
+              <RenderTextField fieldName="Total count" type="number" initialValue={1} isRequired disabled={isEditing} />
             </Box>
 
             <Box mb={8}>
