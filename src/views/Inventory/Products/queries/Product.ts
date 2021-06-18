@@ -88,6 +88,11 @@ export const ProductFragment = gql`
       }
       wearableSeasons
     }
+    category {
+      id
+      slug
+      measurementType
+    }
     tier {
       id
       tier
@@ -196,7 +201,7 @@ export const PHYSICAL_PRODUCT_STATUSES_QUERY = gql`
 `
 export const PRODUCT_EDIT_QUERY = gql`
   query ProductEditQuery($input: ProductWhereUniqueInput!, $productType: ProductType) {
-    categories(where: { AND: [{ children_every: { id: null } }, { productType: $productType }] }, orderBy: name_ASC) {
+    categories(where: { AND: [{ children_none: { id: null } }, { productType: $productType }] }, orderBy: name_ASC) {
       id
       name
     }
@@ -217,9 +222,10 @@ export const PRODUCT_EDIT_QUERY = gql`
 
 export const PRODUCT_UPSERT_QUERY = gql`
   query ProductUpsertQuery($productType: ProductType) {
-    categories(where: { AND: [{ children_every: { id: null } }, { productType: $productType }] }, orderBy: name_ASC) {
+    categories(where: { AND: [{ children_none: { id: null } }, { productType: $productType }] }, orderBy: name_ASC) {
       id
       name
+      measurementType
     }
     ...ProductUpsert
   }

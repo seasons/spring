@@ -8,7 +8,6 @@ import { ProductOverviewStep } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
 import { CREATE_PRODUCT } from "../mutations"
 import { getProductCreateData } from "../utils"
-import { useLocation } from "react-router"
 import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
 import { useSnackbarContext } from "components/Snackbar"
 import { PhysicalProductsCreate as PhysicalProductsCreateStep } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
@@ -21,7 +20,6 @@ export const ProductCreate: React.FC = () => {
   const { data, error } = useQuery(PRODUCT_UPSERT_QUERY, {
     variables: { productType },
   })
-  const location = useLocation()
   const { showSnackbar } = useSnackbarContext()
   const [createProduct] = useMutation(CREATE_PRODUCT, {
     onCompleted: result => {
@@ -79,7 +77,7 @@ export const ProductCreate: React.FC = () => {
     <Container maxWidth={false}>
       <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
         <ProductOverviewStep data={productUpsertQueryData} productType={productType} setProductType={setProductType} />
-        <ProductVariantEditFormStep createData={values} />
+        <ProductVariantEditFormStep createData={values} productCreateData={productUpsertQueryData} />
         <PhysicalProductsCreateStep
           newProductCreateData={values}
           inventoryStatuses={productUpsertQueryData.inventoryStatuses?.enumValues || []}
