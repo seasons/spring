@@ -9,14 +9,19 @@ import { ProductVariantEditForm as ProductVariantEditFormStep } from "../Compone
 import { VARIANT_EDIT_QUERY } from "../queries"
 import { UPDATE_VARIANT } from "../../Products/mutations"
 import { extractVariantSizeFields } from "../../Products/utils"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const ProductVariantEdit: React.FC = () => {
   const history = useHistory()
   const { variantID } = useParams() as any
+  const { showSnackbar } = useSnackbarContext()
   const { data, loading, error, refetch } = useQuery(VARIANT_EDIT_QUERY, {
     variables: { where: { id: variantID } },
   })
-  const [updateProductVariant] = useMutation(UPDATE_VARIANT)
+  const [updateProductVariant] = useMutation(UPDATE_VARIANT, {
+    onCompleted: () => showSnackbar({ message: "Success!", status: "success" }),
+    onError: err => showSnackbar({ message: err.message, status: "error" }),
+  })
 
   if (loading || error || !data) {
     return <Loading />

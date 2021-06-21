@@ -35,6 +35,14 @@ export interface VariantEditQuery_productVariant_product {
   brand: VariantEditQuery_productVariant_product_brand
 }
 
+export interface VariantEditQuery_productVariant_internalSize_accessory {
+  __typename: "AccessorySize"
+  id: string
+  width: number | null
+  bridge: number | null
+  length: number | null
+}
+
 export interface VariantEditQuery_productVariant_internalSize_top {
   __typename: "TopSize"
   id: string
@@ -59,6 +67,7 @@ export interface VariantEditQuery_productVariant_internalSize {
   id: string
   display: string
   productType: ProductType | null
+  accessory: VariantEditQuery_productVariant_internalSize_accessory | null
   top: VariantEditQuery_productVariant_internalSize_top | null
   bottom: VariantEditQuery_productVariant_internalSize_bottom | null
 }

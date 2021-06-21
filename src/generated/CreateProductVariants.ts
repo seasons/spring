@@ -3,13 +3,13 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { UpsertVariantInput } from "./globalTypes"
+import { CreateVariantInput } from "./globalTypes"
 
 // ====================================================
-// GraphQL mutation operation: UpsertProductVariants
+// GraphQL mutation operation: CreateProductVariants
 // ====================================================
 
-export interface UpsertProductVariants_upsertProductVariants {
+export interface CreateProductVariants_createProductVariants {
   __typename: "ProductVariant"
   id: string
   sku: string | null
@@ -17,11 +17,11 @@ export interface UpsertProductVariants_upsertProductVariants {
   weight: number | null
 }
 
-export interface UpsertProductVariants {
-  upsertProductVariants: UpsertProductVariants_upsertProductVariants[] | null
+export interface CreateProductVariants {
+  createProductVariants: CreateProductVariants_createProductVariants[] | null
 }
 
-export interface UpsertProductVariantsVariables {
+export interface CreateProductVariantsVariables {
   productID: string
-  inputs: UpsertVariantInput[]
+  inputs: CreateVariantInput[]
 }

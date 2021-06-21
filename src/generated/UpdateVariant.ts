@@ -29,6 +29,14 @@ export interface UpdateVariant_product {
   brand: UpdateVariant_product_brand
 }
 
+export interface UpdateVariant_internalSize_accessory {
+  __typename: "AccessorySize"
+  id: string
+  width: number | null
+  bridge: number | null
+  length: number | null
+}
+
 export interface UpdateVariant_internalSize_top {
   __typename: "TopSize"
   id: string
@@ -53,6 +61,7 @@ export interface UpdateVariant_internalSize {
   id: string
   display: string
   productType: ProductType | null
+  accessory: UpdateVariant_internalSize_accessory | null
   top: UpdateVariant_internalSize_top | null
   bottom: UpdateVariant_internalSize_bottom | null
 }

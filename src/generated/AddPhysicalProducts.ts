@@ -13,7 +13,7 @@ export interface AddPhysicalProducts_addPhysicalProductsToVariant {
 }
 
 export interface AddPhysicalProducts {
-  addPhysicalProductsToVariant: AddPhysicalProducts_addPhysicalProductsToVariant[] | null
+  addPhysicalProductsToVariant: AddPhysicalProducts_addPhysicalProductsToVariant
 }
 
 export interface AddPhysicalProductsVariables {

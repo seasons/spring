@@ -6,8 +6,8 @@ import { useHistory } from "react-router-dom"
 import { Spacer, Wizard } from "components"
 import { ProductOverviewStep } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
-import { UPSERT_PRODUCT } from "../mutations"
-import { getProductUpsertData } from "../utils"
+import { CREATE_PRODUCT } from "../mutations"
+import { getProductCreateData } from "../utils"
 import { useLocation } from "react-router"
 import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
 import { useSnackbarContext } from "components/Snackbar"
@@ -23,13 +23,13 @@ export const ProductCreate: React.FC = () => {
   })
   const location = useLocation()
   const { showSnackbar } = useSnackbarContext()
-  const [upsertProduct] = useMutation(UPSERT_PRODUCT, {
+  const [createProduct] = useMutation(CREATE_PRODUCT, {
     onCompleted: result => {
       setIsSubmitting(false)
 
       // Redirect to product edit page for this product
-      const { upsertProduct } = result
-      history.push(`/inventory/products/${upsertProduct.id}`)
+      const { createProduct } = result
+      history.push(`/inventory/products/${createProduct.id}`)
       showSnackbar({
         message: "Success!",
         status: "success",
@@ -57,11 +57,11 @@ export const ProductCreate: React.FC = () => {
   const onSubmit = async values => {
     setIsSubmitting(true)
     // Extract appropriate values from the WizardForm
-    const productUpsertData = getProductUpsertData(values)
-    productUpsertData.createNew = location.pathname.includes("new")
-    await upsertProduct({
+    const productCreateData = getProductCreateData(values)
+    // productCreateData.createNew = location.pathname.includes("new")
+    await createProduct({
       variables: {
-        input: productUpsertData,
+        input: productCreateData,
       },
     })
   }

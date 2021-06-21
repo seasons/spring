@@ -95,6 +95,29 @@ export interface GetReservation_returnedPackage {
   weight: number | null
 }
 
+export interface GetReservation_returnedProducts_productVariant_product_images {
+  __typename: "Image"
+  url: string | null
+}
+
+export interface GetReservation_returnedProducts_productVariant_product {
+  __typename: "Product"
+  id: string
+  images: GetReservation_returnedProducts_productVariant_product_images[]
+}
+
+export interface GetReservation_returnedProducts_productVariant {
+  __typename: "ProductVariant"
+  id: string
+  product: GetReservation_returnedProducts_productVariant_product
+}
+
+export interface GetReservation_returnedProducts {
+  __typename: "PhysicalProduct"
+  id: string
+  productVariant: GetReservation_returnedProducts_productVariant | null
+}
+
 export interface GetReservation_packageEvents {
   __typename: "PackageTransitEvent"
   id: string
@@ -228,6 +251,7 @@ export interface GetReservation {
   customer: GetReservation_customer
   sentPackage: GetReservation_sentPackage | null
   returnedPackage: GetReservation_returnedPackage | null
+  returnedProducts: GetReservation_returnedProducts[]
   packageEvents: GetReservation_packageEvents[] | null
   adminLogs: GetReservation_adminLogs[]
   lastLocation: GetReservation_lastLocation | null
