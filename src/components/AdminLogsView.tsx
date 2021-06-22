@@ -1,7 +1,7 @@
 import React from "react"
 import { SinceDateField } from "fields"
 import { Box, Typography, Table, TableBody, TableRow, TableCell, Card, TableHead } from "@material-ui/core"
-import { upperFirst } from "lodash"
+import { orderBy, upperFirst } from "lodash"
 
 interface AdminLogsViewProps {
   logs: any
@@ -12,13 +12,13 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ logs }) => {
     return null
   }
 
+  const sortedLogs = orderBy(logs, "triggeredAt", "desc")
   const databaseActionToReadableActionMap = {
     Insert: "Created",
     Delete: "Deleted",
     Update: "Updated",
     Truncate: "Truncated",
   }
-  console.log(logs)
   return (
     <Box>
       <Card>
@@ -32,7 +32,7 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ logs }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {logs.map(log => {
+            {sortedLogs.map(log => {
               const {
                 action,
                 activeAdminUser: { fullName },
