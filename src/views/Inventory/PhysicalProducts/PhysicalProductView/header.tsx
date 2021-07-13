@@ -7,6 +7,7 @@ import { PrintBarcodeModal } from "../Components/PrintBarcodeModal"
 
 export const PhysicalProductDetailViewHeader = ({ data: physicalProduct }: HeaderRenderProps) => {
   const { productVariant, seasonsUID } = physicalProduct
+  const { warehouseLocation } = physicalProduct
   const refresh = useRefresh()
 
   // Modal handlers
@@ -44,10 +45,6 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct }: Heade
   // Create menu items
   const menuItems = [
     {
-      text: "Pick",
-      action: async () => setOpenPickModal(true),
-    },
-    {
       text: "Print barcode",
       action: async () => setOpenPrintBarcodeModal(true),
     },
@@ -56,6 +53,12 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct }: Heade
     menuItems.push({
       text: "Offload",
       action: async () => setOpenOffloadModal(true),
+    })
+  }
+  if (!!warehouseLocation) {
+    menuItems.push({
+      text: "Pick",
+      action: async () => setOpenPickModal(true),
     })
   }
 
