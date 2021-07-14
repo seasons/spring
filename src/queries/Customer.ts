@@ -142,7 +142,7 @@ const CustomerDetails = gql`
         status
       }
     }
-    reservations {
+    reservations(orderBy: createdAt_DESC) {
       id
       reservationNumber
       shipped
