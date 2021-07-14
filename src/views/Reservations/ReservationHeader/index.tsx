@@ -28,19 +28,34 @@ export const ReservationHeader = ({ data }) => {
 
   const session = useSelector(state => state.session)
 
-  const mutationConfig = {
+  const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED, {
     onCompleted: () => {
       setIsMutating(false)
+      showSnackbar({ message: `Reservation status successfully set to picked`, status: "success" })
+      toggleModal(false)
       refresh()
     },
-    onError: () => {
+    onError: error => {
       setIsMutating(false)
+      showSnackbar({ message: error.message, status: "error" })
+      toggleModal(false)
       refresh()
     },
-  }
-
-  const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED, mutationConfig)
-  const [markReservationPacked] = useMutation(MARK_RESERVATION_PACKED, mutationConfig)
+  })
+  const [markReservationPacked] = useMutation(MARK_RESERVATION_PACKED, {
+    onCompleted: () => {
+      setIsMutating(false)
+      showSnackbar({ message: `Reservation status successfully set to packed`, status: "success" })
+      toggleModal(false)
+      refresh()
+    },
+    onError: error => {
+      setIsMutating(false)
+      showSnackbar({ message: error.message, status: "error" })
+      toggleModal(false)
+      refresh()
+    },
+  })
 
   const { showSnackbar } = useSnackbarContext()
 
@@ -50,12 +65,18 @@ export const ReservationHeader = ({ data }) => {
         message: "Reservation status updated",
         status: "success",
       })
+      setIsMutating(false)
+      toggleUpdateStatusModal(false)
+      refresh()
     },
     onError: error => {
       showSnackbar({
         message: error?.message,
         status: "error",
       })
+      setIsMutating(false)
+      toggleUpdateStatusModal(false)
+      refresh()
     },
   })
 
@@ -84,10 +105,16 @@ export const ReservationHeader = ({ data }) => {
 
   const refresh = useRefresh()
 
-  const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(
-    PROCESS_RESERVATION,
-    mutationConfig
-  )
+  const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(PROCESS_RESERVATION, {
+    onCompleted: () => {
+      showSnackbar({ message: "Returned items successfully processed", status: "success" })
+      refresh()
+    },
+    onError: error => {
+      showSnackbar({ message: error?.message, status: "error" })
+      refresh()
+    },
+  })
 
   return (
     <>
@@ -128,8 +155,6 @@ export const ReservationHeader = ({ data }) => {
               } else if ((params["status"] = "Packed")) {
                 await markReservationPacked({ variables: { reservationNumber: data.reservationNumber } })
               }
-              setIsMutating(false)
-              message = `Reservation status successfully set to ${params["status"]}`
             } else {
               const mutationData: ProcessReservationMutationVariables = {
                 data: {
@@ -160,16 +185,7 @@ export const ReservationHeader = ({ data }) => {
 
               await processReservation({ variables: mutationData })
               setIsMutating(false)
-              message = "Returned items successfully processed"
             }
-
-            // TODO: check result to see if there are any backend errors
-            refresh()
-            toggleModal(false)
-            showSnackbar({
-              message,
-              status: "success",
-            })
           } catch (e) {
             console.error(e)
             showSnackbar({
@@ -191,9 +207,6 @@ export const ReservationHeader = ({ data }) => {
               status: values.reservationStatus,
             },
           })
-          refresh()
-          setIsMutating(false)
-          toggleUpdateStatusModal(false)
         }}
         onClose={() => {
           toggleUpdateStatusModal(false)
