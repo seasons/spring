@@ -8,6 +8,9 @@ import { WidgetTitle } from "./Components/WidgetTitle"
 // Currently over-focused on monthly time series. Would need to generalize for
 // other usecases
 export const LinechartWidget = ({ data }) => {
+  if (!data?.result) {
+    return <></>
+  }
   const alphabetizedLabels = Object.keys(data?.result).sort()
   const formattedLabels = alphabetizedLabels.map(a => {
     const d = moment(a)

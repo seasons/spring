@@ -76,7 +76,7 @@ export const MapchartWidget = ({ data }) => {
   }, [])
 
   const renderData = React.useMemo(() => {
-    const features = unfurledData.filter(a => {
+    const features = unfurledData?.filter(a => {
       const { customerStatus, subscriptionStatus, admissable } = a.properties
       if (showActive && subscriptionStatus === "active") {
         return true
