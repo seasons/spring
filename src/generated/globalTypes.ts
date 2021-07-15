@@ -207,6 +207,11 @@ export enum LocationType {
   Warehouse = "Warehouse",
 }
 
+export enum MeasurementType {
+  Inches = "Inches",
+  Millimeters = "Millimeters",
+}
+
 export enum NotificationBarID {
   AuthorizedReminder = "AuthorizedReminder",
   PastDueInvoice = "PastDueInvoice",
@@ -1371,6 +1376,7 @@ export interface CategoryCreateInput {
   products?: ProductCreateManyWithoutCategoryInput | null
   children?: CategoryCreateManyWithoutChildrenInput | null
   productType?: ProductType | null
+  measurementType?: MeasurementType | null
 }
 
 export interface CategoryCreateManyWithoutChildrenInput {
@@ -1397,6 +1403,7 @@ export interface CategoryCreateWithoutChildrenInput {
   visible?: boolean | null
   products?: ProductCreateManyWithoutCategoryInput | null
   productType?: ProductType | null
+  measurementType?: MeasurementType | null
 }
 
 export interface CategoryCreateWithoutProductsInput {
@@ -1408,6 +1415,7 @@ export interface CategoryCreateWithoutProductsInput {
   visible?: boolean | null
   children?: CategoryCreateManyWithoutChildrenInput | null
   productType?: ProductType | null
+  measurementType?: MeasurementType | null
 }
 
 export interface CategoryScalarWhereInput {
@@ -1481,6 +1489,10 @@ export interface CategoryScalarWhereInput {
   productType_not?: ProductType | null
   productType_in?: ProductType[] | null
   productType_not_in?: ProductType[] | null
+  measurementType?: MeasurementType | null
+  measurementType_not?: MeasurementType | null
+  measurementType_in?: MeasurementType[] | null
+  measurementType_not_in?: MeasurementType[] | null
   AND?: CategoryScalarWhereInput[] | null
   OR?: CategoryScalarWhereInput[] | null
   NOT?: CategoryScalarWhereInput[] | null
@@ -1495,6 +1507,7 @@ export interface CategoryUpdateDataInput {
   products?: ProductUpdateManyWithoutCategoryInput | null
   children?: CategoryUpdateManyWithoutChildrenInput | null
   productType?: ProductType | null
+  measurementType?: MeasurementType | null
 }
 
 export interface CategoryUpdateManyDataInput {
@@ -1504,6 +1517,7 @@ export interface CategoryUpdateManyDataInput {
   description?: string | null
   visible?: boolean | null
   productType?: ProductType | null
+  measurementType?: MeasurementType | null
 }
 
 export interface CategoryUpdateManyWithWhereNestedInput {
@@ -1550,6 +1564,7 @@ export interface CategoryUpdateWithoutChildrenDataInput {
   visible?: boolean | null
   products?: ProductUpdateManyWithoutCategoryInput | null
   productType?: ProductType | null
+  measurementType?: MeasurementType | null
 }
 
 export interface CategoryUpdateWithoutProductsDataInput {
@@ -1560,6 +1575,7 @@ export interface CategoryUpdateWithoutProductsDataInput {
   visible?: boolean | null
   children?: CategoryUpdateManyWithoutChildrenInput | null
   productType?: ProductType | null
+  measurementType?: MeasurementType | null
 }
 
 export interface CategoryUpsertNestedInput {
@@ -1655,6 +1671,10 @@ export interface CategoryWhereInput {
   productType_not?: ProductType | null
   productType_in?: ProductType[] | null
   productType_not_in?: ProductType[] | null
+  measurementType?: MeasurementType | null
+  measurementType_not?: MeasurementType | null
+  measurementType_in?: MeasurementType[] | null
+  measurementType_not_in?: MeasurementType[] | null
   AND?: CategoryWhereInput[] | null
   OR?: CategoryWhereInput[] | null
   NOT?: CategoryWhereInput[] | null
@@ -1924,9 +1944,7 @@ export interface CustomLaunchUpsertInput {
 
 export interface CustomProductUpdateInput {
   architecture?: ProductArchitecture | null
-  brand?: BrandUpdateOneRequiredWithoutProductsInput | null
   category?: CategoryUpdateOneRequiredWithoutProductsInput | null
-  color?: ColorUpdateOneRequiredInput | null
   description?: string | null
   externalURL?: string | null
   productFit?: ProductFit | null

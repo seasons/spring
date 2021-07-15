@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useQuery } from "react-apollo"
 import { useLocation } from "react-router-dom"
-import { Box, Grid, styled as muiStyled } from "@material-ui/core"
+import { Box, Grid } from "@material-ui/core"
 import { ExpandableSection, Header, Spacer, Text } from "components"
 import { Loading } from "@seasons/react-admin"
 import { GetGeneratedVariantSkus } from "generated/GetGeneratedVariantSkus"
@@ -12,17 +12,20 @@ import { AddPhysicalProductModal } from "views/Inventory/ProductVariants/AddPhys
 import { useField } from "react-final-form"
 import { ProductVariantEditSection } from "./ProductVariantEditSection"
 import { PhysicalProductSummary } from "views/Inventory/PhysicalProducts/Components"
+import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
 
 export interface ProductVariantEditSectionProps {
   createData?: any // Passed in when creating new variants
   variants?: VariantEditQuery_productVariant[] // Passed in when editing variants
   refetch?: () => void
+  productCreateData?: ProductUpsertQuery
 }
 
 export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = ({
   createData,
   variants,
   refetch: refreshPage,
+  productCreateData,
 }) => {
   const location = useLocation()
   const manufacturerSizeTypeField = useField("manufacturerSizeType")
@@ -75,6 +78,15 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
     return null
   }
 
+  let category
+  if (productCreateData && createData?.category) {
+    category = productCreateData?.categories?.find(cat => {
+      return cat?.id === createData.category
+    })
+  } else if (variants && variants?.length > 0) {
+    category = variants?.[0]?.product?.category
+  }
+
   if (!variantsData || !productType) {
     return null
   }
@@ -123,6 +135,7 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
               sku={variant.sku}
               size={variant?.size}
               product={variant?.product}
+              category={category}
               productType={productType}
               manufacturerSizeType={manufacturerSizeType}
               isEditing={isEditing}

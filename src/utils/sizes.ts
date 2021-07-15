@@ -59,3 +59,12 @@ export const getManufacturerSizes = (sizeType: ManufacturerSizeType | null): str
       return []
   }
 }
+
+export const measurementTypeDisplayShort = (measurementType): string => {
+  switch (measurementType) {
+    case "Millimeters":
+      return "(mm)"
+    default:
+      return "(in)"
+  }
+}
