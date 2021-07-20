@@ -15,6 +15,7 @@ import {
   ProductFit,
   SeasonCode,
   SeasonString,
+  MeasurementType,
   ProductTierName,
   SizeType,
 } from "./globalTypes"
@@ -48,6 +49,8 @@ export interface ProductVariantUpsertQuery_product_category {
   __typename: "Category"
   id: string
   name: string
+  slug: string
+  measurementType: MeasurementType | null
 }
 
 export interface ProductVariantUpsertQuery_product_variants_internalSize {

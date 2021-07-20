@@ -14,6 +14,7 @@ import {
   ProductFit,
   SeasonCode,
   SeasonString,
+  MeasurementType,
   ProductTierName,
   SizeType,
 } from "./globalTypes"
@@ -37,6 +38,8 @@ export interface ProductFragment_category {
   __typename: "Category"
   id: string
   name: string
+  slug: string
+  measurementType: MeasurementType | null
 }
 
 export interface ProductFragment_variants_internalSize {

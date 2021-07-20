@@ -2,11 +2,12 @@ import React from "react"
 import { Box, Grid } from "@material-ui/core"
 import { ExpandableSection, Spacer, Text } from "components"
 import { TextField, SelectField } from "fields"
-import { getInternalSizes, ManufacturerSizeType } from "utils/sizes"
+import { getInternalSizes, ManufacturerSizeType, measurementTypeDisplayShort } from "utils/sizes"
 import { getFormSelectChoices } from "utils/form"
 import { getTypeSpecificVariantFields } from "views/Inventory/Products/utils"
 import { ManufacturerSizeField } from "./ManufacturerSizeField"
 import { ProductType } from "generated/globalTypes"
+import { VariantEditQuery_productVariant_product_category } from "generated/VariantEditQuery"
 
 export interface ProductVariantEditSectionProps {
   product: any
@@ -16,6 +17,7 @@ export interface ProductVariantEditSectionProps {
   productType: ProductType
   manufacturerSizeType?: ManufacturerSizeType
   isEditing?: boolean
+  category: VariantEditQuery_productVariant_product_category
 }
 
 export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps> = ({
@@ -26,6 +28,7 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
   size,
   isEditing,
   manufacturerSizeType,
+  category,
 }) => {
   const typeSpecificFields = getTypeSpecificVariantFields(productType)
 
@@ -34,6 +37,7 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
   const manufacturerSizeTypeFromSibling = product?.variants?.[0]?.manufacturerSizes?.[0]?.type
   const internalSizes = getInternalSizes(productType)
   const isUniversal = manufacturerSizeTypeFromSibling === "Universal" || manufacturerSizeType === "Universal"
+  const measurementType = category?.measurementType
 
   const fieldNameToName = fieldName => `${variantIndex}_${fieldName.toLowerCase().replace(" ", "")}`
 
@@ -115,11 +119,17 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
               <Text variant="h4">Measurements</Text>
               <Spacer mt={4} />
               {typeSpecificFields.map((field, index) => {
-                let name = field
-                if (field === "Width") {
-                  name = "Lense width (mm)"
-                } else if (name === "Bridge" || name === "Length") {
-                  name = `${field} (mm)`
+                let fieldName = field
+                let name
+                if (field === "Width" && category?.name === "Eyewear") {
+                  fieldName = "Lens width"
+                }
+                if (fieldName === "Weight") {
+                  name = "Weight (lbs)"
+                } else if (!!measurementType) {
+                  name = `${fieldName} ${measurementTypeDisplayShort(measurementType)}`
+                } else {
+                  name = `${fieldName} (in)`
                 }
                 return <RenderTextField displayName={name} fieldName={field} type="number" key={field + index} />
               })}

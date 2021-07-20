@@ -12,7 +12,6 @@ interface SeasonsSectionProps {
 
 export const SeasonsSection: React.FC<SeasonsSectionProps> = () => {
   const wearableSeasonChoices = [
-    { display: "-", value: "" },
     { display: "Spring", value: "Spring" },
     { display: "Summer", value: "Summer" },
     { display: "Fall", value: "Fall" },

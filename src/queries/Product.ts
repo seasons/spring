@@ -24,6 +24,7 @@ export const ProductFragment = gql`
     category {
       id
       name
+      measurementType
     }
   }
 `

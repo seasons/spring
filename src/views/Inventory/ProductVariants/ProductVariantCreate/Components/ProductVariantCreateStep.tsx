@@ -18,6 +18,7 @@ export const ProductVariantCreateStep: React.FC<ProductVariantCreateStepProps> =
   const [numVariants, setNumVariants] = useState(1)
 
   if (!product) return null
+  const category = product.category
   const title = "New product variants"
   const breadcrumbs = [
     {
@@ -54,6 +55,7 @@ export const ProductVariantCreateStep: React.FC<ProductVariantCreateStepProps> =
             variantIndex={index}
             productType={product.type!}
             isEditing={isEditing}
+            category={category}
           />
         ))}
       </ContainerGrid>

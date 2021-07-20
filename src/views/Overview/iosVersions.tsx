@@ -29,22 +29,25 @@ export const IOSVersionsWidget = ({ data }) => {
   })
 
   const series = React.useMemo(() => {
-    const series = orderedLabels.map(a => {
-      const labelCountsByStatus = data?.result?.[a]
-      let overallLabelCount = 0
-      if (showActive) {
-        overallLabelCount += labelCountsByStatus?.["active"] || 0
-      }
-      if (showPaused) {
-        overallLabelCount += labelCountsByStatus?.["paused"] || 0
-      }
-      if (showAdmissable) {
-        overallLabelCount += labelCountsByStatus?.["admissable"] || 0
-      }
-      return overallLabelCount
-    })
+    let series
+    if (data?.result) {
+      series = orderedLabels?.map(a => {
+        const labelCountsByStatus = data?.result?.[a]
+        let overallLabelCount = 0
+        if (showActive) {
+          overallLabelCount += labelCountsByStatus?.["active"] || 0
+        }
+        if (showPaused) {
+          overallLabelCount += labelCountsByStatus?.["paused"] || 0
+        }
+        if (showAdmissable) {
+          overallLabelCount += labelCountsByStatus?.["admissable"] || 0
+        }
+        return overallLabelCount
+      })
+    }
     return series
-  }, [showActive, showPaused, showAdmissable])
+  }, [showActive, showPaused, showAdmissable, data])
 
   const renderData = {
     series: [

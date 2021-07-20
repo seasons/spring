@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductType } from "./globalTypes"
+import { ProductType, MeasurementType } from "./globalTypes"
 
 // ====================================================
 // GraphQL query operation: ProductUpsertQuery
@@ -13,6 +13,7 @@ export interface ProductUpsertQuery_categories {
   __typename: "Category"
   id: string
   name: string
+  measurementType: MeasurementType | null
 }
 
 export interface ProductUpsertQuery_brands {

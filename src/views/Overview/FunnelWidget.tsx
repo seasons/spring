@@ -6,7 +6,7 @@ import { startCase } from "lodash"
 import { WidgetTitle } from "./Components/WidgetTitle"
 
 export const FunnelWidget = ({ data }) => {
-  if (!data) {
+  if (!data?.result) {
     return <></>
   }
   const alphabetizedLabels = Object.keys(data?.result).sort()

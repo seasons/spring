@@ -12,6 +12,9 @@ export interface PiechartWidgetProps {
 }
 
 export const PiechartWidget = ({ data, controlPanelProps }: PiechartWidgetProps) => {
+  if (!data?.result) {
+    return <></>
+  }
   const alphabetizedLabels = Object.keys(data?.result).sort()
 
   let series = alphabetizedLabels.map(a => data?.result?.[a])

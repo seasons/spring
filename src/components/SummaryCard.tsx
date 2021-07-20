@@ -32,7 +32,7 @@ export const SummaryCard: React.FunctionComponent<SummaryCardProps> = ({ record,
                 </Grid>
               </TableCell>
             </TableRow>
-            {rows.map(r => {
+            {rows.map((r, i) => {
               let fieldValue
               if (!!r.fieldValuePath) {
                 fieldValue = get(record, r.fieldValuePath)
@@ -41,7 +41,7 @@ export const SummaryCard: React.FunctionComponent<SummaryCardProps> = ({ record,
               } else {
                 throw new Error(`Must pass one of fieldValuePath or fieldValueFunc`)
               }
-              return <SummaryCardRow fieldName={r.fieldName} fieldValue={fieldValue} />
+              return <SummaryCardRow key={i} fieldName={r.fieldName} fieldValue={fieldValue} />
             })}
           </TableBody>
         </Table>
