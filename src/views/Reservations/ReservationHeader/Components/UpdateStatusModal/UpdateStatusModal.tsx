@@ -29,6 +29,7 @@ export const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({
     "Hold",
     "Completed",
     "Cancelled",
+    "Lost",
   ].map(choice => ({
     display: choice,
     value: choice,
