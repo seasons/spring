@@ -124,6 +124,10 @@ const CustomerDetails = gql`
         id
         resumeDate
         pauseDate
+        reason {
+          id
+          reason
+        }
       }
     }
     invoices {

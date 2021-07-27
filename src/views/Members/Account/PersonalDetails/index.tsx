@@ -118,8 +118,10 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
 
   const birthday = moment(member.detail.birthday).format("MM/DD/YYYY")
 
-  const resumeDate = member?.membership?.pauseRequests?.[0]?.resumeDate
-  const pauseDate = member?.membership?.pauseRequests?.[0]?.pauseDate
+  const firstPauseRequest = member?.membership?.pauseRequests?.[0]
+  const resumeDate = firstPauseRequest?.resumeDate
+  const pauseDate = firstPauseRequest?.pauseDate
+  const pauseReason = firstPauseRequest?.reason?.reason
 
   const editEntity = {
     id: {
@@ -186,7 +188,13 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
-
+            {!!pauseReason && member.status === "Paused" && (
+              <TableRow>
+                <TableCell>Pause reason</TableCell>
+                <TableCell>{pauseReason}</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            )}
             {!!resumeDate && member.status === "Paused" && (
               <TableRow>
                 <TableCell>Resume date</TableCell>
