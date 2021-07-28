@@ -55,7 +55,6 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
       status: "error",
     })
   }
-  console.log(values)
 
   const [saveMember] = useMutation(MEMBER_CREATE, {
     onCompleted: resp => updateMember({ variables: { id: resp.signup.customer.id, data: { status: "Invited" } } }),
