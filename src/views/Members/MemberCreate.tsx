@@ -42,13 +42,6 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
       error: false,
       helperText: "This field is required, e.g 123-456-7890",
     },
-    birthday: {
-      label: "Birthday *",
-      type: "date",
-      value: "1990-01-01",
-      error: false,
-      helperText: "This field is required",
-    },
   }
 
   const [values, setValues] = useState<NewMemberProps>(memberValues)
@@ -62,6 +55,8 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
       status: "error",
     })
   }
+  console.log(values)
+
   const [saveMember] = useMutation(MEMBER_CREATE, {
     onCompleted: resp => updateMember({ variables: { id: resp.signup.customer.id, data: { status: "Invited" } } }),
     onError: onNetworkError,
@@ -88,7 +83,6 @@ export const MemberCreateModal: React.FC<CreateMemberProps> = ({ history, open, 
         password: upperFirst(times(9, () => random(35).toString(36)).join("") + "1"),
         details: {
           phoneNumber: values.phone.value,
-          birthday: values.birthday.value,
         },
       },
     })
