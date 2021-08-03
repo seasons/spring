@@ -36,10 +36,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const REMOVE_FROM_BAG = gql`
-  mutation RemoveFromBag($id: ID!, $saved: Boolean!, $customer: ID) {
-    removeFromBag(item: $id, saved: $saved, customer: $customer) {
-      id
-    }
+  mutation DeleteBagItem($itemID: ID!) {
+    deleteBagItem(itemID: $itemID)
   }
 `
 
@@ -59,23 +57,21 @@ export const BagItemCard = props => {
     },
   })
 
-  const { bagItem, member } = props
-  const { product, id } = bagItem.productVariant
+  const { bagItem } = props
+  const { product } = bagItem.productVariant
   const { name, brand } = product
   const image = product.images?.[0]
 
   const onCloseConfirmationDialog = async (agreed: boolean) => {
     // Make sure user has confirmed submission
-    if (!agreed) {
+    if (!agreed || isSubmitting) {
       return
     }
     // Show loading spinner, submit, and then stop loading spinner
     setIsSubmitting(true)
     await deleteBagItem({
       variables: {
-        id: id,
-        saved: false,
-        customer: member.id,
+        itemID: bagItem.id,
       },
     })
     setIsSubmitting(false)

@@ -77,7 +77,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
             </TableRow>
             <TableRow>
               <TableCell>Reservations</TableCell>
-              <TableCell>{reservation?.customer?.reservations.length}</TableCell>
+              <TableCell>{reservation?.customer?.reservations?.length || 0}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Created At</TableCell>

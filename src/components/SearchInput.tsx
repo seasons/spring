@@ -80,6 +80,7 @@ export const SearchInput = ({ onResultItemClicked, searchType, placeholder, onFi
         },
       })
     } catch (error) {
+      console.log("error searching", error)
       //TODO: add snackbar
     } finally {
       setLoading(false)
