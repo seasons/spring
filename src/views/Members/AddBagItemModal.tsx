@@ -62,10 +62,6 @@ const statusChoices: SelectChoice[] = [
     value: "Reserved",
     display: "Reserved",
   },
-  {
-    value: "Received",
-    display: "Received",
-  },
 ]
 
 const trueOrFalseChoices: SelectChoice[] = [
@@ -112,7 +108,7 @@ export const AddBagItemModal = ({ open, onClose, customer }) => {
   })
 
   useEffect(() => {
-    if (productVariantID?.length > 20) {
+    if (productVariantID?.length > 24) {
       getProductVariant({
         variables: {
           id: productVariantID,

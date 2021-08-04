@@ -5,8 +5,6 @@ import { BagItemCard } from "./BagItemCard"
 import { BagItemGrid } from "./BagItemGrid"
 
 export const BagView = ({ member, adminKey }) => {
-  console.log(member)
-
   const bagItems = member?.bagItems?.filter(a => a.saved === false)
 
   return (
