@@ -16,8 +16,8 @@ export interface PhysicalProductFormProps {
   inventoryStatuses?: any[]
   offloadMethods?: any[]
   currentInventoryStatus?: InventoryStatus
-  setCopiedValues?: (x: any) => void
-  copiedValues?: any
+  copyValuesToSiblings?: (key: string, value: string) => void
+  index?: number
 }
 
 export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
@@ -26,8 +26,8 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
   inventoryStatuses = [],
   offloadMethods = [],
   currentInventoryStatus = "",
-  setCopiedValues,
-  copiedValues,
+  copyValuesToSiblings,
+  index,
 }) => {
   const receivedStatusesFromParent = statuses.length > 0 && inventoryStatuses.length > 0 && offloadMethods.length > 0
 
@@ -48,6 +48,7 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
 
   const statusChoices = getFormSelectChoices(statuses.map(status => status.name))
   const offloadMethodChoices = getFormSelectChoices(offloadMethods.map(method => method.name))
+  const isFirstPhysProd = typeof index === "number" && index === 0
 
   return (
     <ContainerGrid container spacing={2}>
@@ -55,21 +56,35 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
         <Text variant="h5">Status *</Text>
         <Spacer mt={1} />
         <SelectField name={`${uid}_physicalProductStatus`} choices={statusChoices} requiredString initialValue="New" />
+        <OnChange name={`${uid}_physicalProductStatus`}>
+          {value => {
+            if (copyValuesToSiblings && isFirstPhysProd) {
+              copyValuesToSiblings("physicalProductStatus", value)
+            }
+          }}
+        </OnChange>
       </Grid>
       <Grid item xs={6}>
         <Text variant="h5">Date ordered</Text>
         <Spacer mt={1} />
         <DatePickerField name={`${uid}_dateOrdered`} optionalDate />
+        <OnChange name={`${uid}_dateOrdered`}>
+          {value => {
+            if (copyValuesToSiblings && isFirstPhysProd) {
+              copyValuesToSiblings("dateOrdered", value)
+            }
+          }}
+        </OnChange>
       </Grid>
       <Spacer grid mt={3} />
       <Grid item xs={6}>
         <Text variant="h5">Unit cost</Text>
         <Spacer mt={1} />
-        <TextField name={`${uid}_unitCost`} type="number" optionalNumber initialValue={copiedValues["unitCost"]} />
+        <TextField name={`${uid}_unitCost`} type="number" optionalNumber />
         <OnChange name={`${uid}_unitCost`}>
-          {(value, previous) => {
-            if (setCopiedValues) {
-              setCopiedValues({ ...copiedValues, unitCost: value })
+          {value => {
+            if (copyValuesToSiblings && isFirstPhysProd) {
+              copyValuesToSiblings("unitCost", value)
             }
           }}
         </OnChange>
@@ -79,9 +94,9 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
         <Spacer mt={1} />
         <DatePickerField name={`${uid}_dateReceived`} optionalDate />
         <OnChange name={`${uid}_dateReceived`}>
-          {(value, previous) => {
-            if (setCopiedValues) {
-              setCopiedValues({ ...copiedValues, unitCost: value })
+          {value => {
+            if (copyValuesToSiblings && isFirstPhysProd) {
+              copyValuesToSiblings("dateReceived", value)
             }
           }}
         </OnChange>
@@ -97,6 +112,13 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
           requiredString
           initialValue="NonReservable"
         />
+        <OnChange name={`${uid}_inventoryStatus`}>
+          {value => {
+            if (copyValuesToSiblings && isFirstPhysProd) {
+              copyValuesToSiblings("inventoryStatus", value)
+            }
+          }}
+        </OnChange>
       </Grid>
       {currentInventoryStatus === "Offloaded" && (
         <Grid item xs={6}>
@@ -109,6 +131,13 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
             requiredString
             initialValue="Other"
           />
+          <OnChange name={`${uid}_offloadMethod`}>
+            {value => {
+              if (copyValuesToSiblings && isFirstPhysProd) {
+                copyValuesToSiblings("offloadMethod", value)
+              }
+            }}
+          </OnChange>
         </Grid>
       )}
       <Spacer grid mt={5} />
