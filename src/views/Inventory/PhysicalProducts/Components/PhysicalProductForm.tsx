@@ -7,7 +7,8 @@ import { getFormSelectChoices } from "utils/form"
 import { useQuery } from "react-apollo"
 import { PHYSICAL_PRODUCT_STATUSES_QUERY } from "views/Inventory/Products/queries/Product"
 import { Loading } from "@seasons/react-admin"
-import { InventoryStatus, PhysicalProductOffloadMethod } from "generated/globalTypes"
+import { InventoryStatus } from "generated/globalTypes"
+import { OnChange } from "react-final-form-listeners"
 
 export interface PhysicalProductFormProps {
   statuses?: any[]
@@ -15,6 +16,8 @@ export interface PhysicalProductFormProps {
   inventoryStatuses?: any[]
   offloadMethods?: any[]
   currentInventoryStatus?: InventoryStatus
+  setCopiedValues?: (x: any) => void
+  copiedValues?: any
 }
 
 export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
@@ -23,6 +26,8 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
   inventoryStatuses = [],
   offloadMethods = [],
   currentInventoryStatus = "",
+  setCopiedValues,
+  copiedValues,
 }) => {
   const receivedStatusesFromParent = statuses.length > 0 && inventoryStatuses.length > 0 && offloadMethods.length > 0
 
@@ -60,12 +65,26 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
       <Grid item xs={6}>
         <Text variant="h5">Unit cost</Text>
         <Spacer mt={1} />
-        <TextField name={`${uid}_unitCost`} type="number" optionalNumber />
+        <TextField name={`${uid}_unitCost`} type="number" optionalNumber initialValue={copiedValues["unitCost"]} />
+        <OnChange name={`${uid}_unitCost`}>
+          {(value, previous) => {
+            if (setCopiedValues) {
+              setCopiedValues({ ...copiedValues, unitCost: value })
+            }
+          }}
+        </OnChange>
       </Grid>
       <Grid item xs={6}>
         <Text variant="h5">Date received</Text>
         <Spacer mt={1} />
         <DatePickerField name={`${uid}_dateReceived`} optionalDate />
+        <OnChange name={`${uid}_dateReceived`}>
+          {(value, previous) => {
+            if (setCopiedValues) {
+              setCopiedValues({ ...copiedValues, unitCost: value })
+            }
+          }}
+        </OnChange>
       </Grid>
       <Spacer grid mt={3} />
       <Grid item xs={6}>

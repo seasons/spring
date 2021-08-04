@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useQuery } from "react-apollo"
 import { useLocation } from "react-router-dom"
 import { Loading } from "@seasons/react-admin"
@@ -28,6 +28,7 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
     mutators: { setValue },
   } = useForm()
   const location = useLocation()
+  const [copiedValues, setCopiedValues] = useState({})
 
   let physicalProductUIDs: string[] = []
 
@@ -163,7 +164,15 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
           <ExpandableSection
             title={uid}
             key={index}
-            content={<PhysicalProductForm inventoryStatuses={inventoryStatuses} statuses={statuses} uid={uid} />}
+            content={
+              <PhysicalProductForm
+                inventoryStatuses={inventoryStatuses}
+                statuses={statuses}
+                uid={uid}
+                setCopiedValues={setCopiedValues}
+                copiedValues={copiedValues}
+              />
+            }
           />
         ))}
         <Spacer mt={2} />
