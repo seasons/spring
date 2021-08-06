@@ -120,10 +120,18 @@ const CustomerDetails = gql`
     }
     membership {
       id
+      plan {
+        id
+        itemCount
+      }
       pauseRequests(orderBy: createdAt_DESC) {
         id
         resumeDate
         pauseDate
+        reason {
+          id
+          reason
+        }
       }
     }
     invoices {

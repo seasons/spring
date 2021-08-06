@@ -25,7 +25,6 @@ export interface NewMemberProps {
   email: MemberEntryValue
   lastName: MemberEntryValue
   phone: MemberEntryValue
-  birthday: MemberEntryValue
 }
 
 export interface MemberSubViewProps {
