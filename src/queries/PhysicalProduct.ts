@@ -8,7 +8,6 @@ const GetOneFragment = gql`
     inventoryStatus
     offloadMethod
     sequenceNumber
-    unitCost
     dateOrdered
     dateReceived
     productStatus
@@ -120,7 +119,6 @@ export const PhysicalProductFragment = gql`
     inventoryStatus
     offloadMethod
     sequenceNumber
-    unitCost
     dateOrdered
     dateReceived
     productStatus

@@ -20,7 +20,6 @@ export const ManageView: React.FC<TabRenderProps> = ({ data }) => {
     productStatus,
     offloadMethod,
     seasonsUID,
-    unitCost,
     warehouseLocation,
   } = data
 
@@ -53,7 +52,6 @@ export const ManageView: React.FC<TabRenderProps> = ({ data }) => {
       inventoryStatus: values[`${seasonsUID}_inventoryStatus`],
       productStatus: values[`${seasonsUID}_physicalProductStatus`],
       offloadMethod: values[`${seasonsUID}_offloadMethod`],
-      unitCost: parseFloat(values[`${seasonsUID}_unitCost`]) || null,
     }
     await updatePhysicalProduct({
       variables: {
@@ -69,7 +67,6 @@ export const ManageView: React.FC<TabRenderProps> = ({ data }) => {
     [`${seasonsUID}_inventoryStatus`]: inventoryStatus,
     [`${seasonsUID}_physicalProductStatus`]: productStatus,
     [`${seasonsUID}_offloadMethod`]: offloadMethod,
-    [`${seasonsUID}_unitCost`]: unitCost || undefined,
   }
 
   return (

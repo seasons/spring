@@ -58,11 +58,6 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
       </Grid>
       <Spacer grid mt={3} />
       <Grid item xs={6}>
-        <Text variant="h5">Unit cost</Text>
-        <Spacer mt={1} />
-        <TextField name={`${uid}_unitCost`} type="number" optionalNumber />
-      </Grid>
-      <Grid item xs={6}>
         <Text variant="h5">Date received</Text>
         <Spacer mt={1} />
         <DatePickerField name={`${uid}_dateReceived`} optionalDate />

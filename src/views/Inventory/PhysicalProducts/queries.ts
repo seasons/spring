@@ -16,7 +16,6 @@ export const UpdatePhysicalProductFragment = gql`
     inventoryStatus
     productStatus
     seasonsUID
-    unitCost
     offloadMethod
     offloadNotes
     price {

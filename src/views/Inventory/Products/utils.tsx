@@ -152,13 +152,7 @@ export const getProductCreateData: any = (values: any) => {
   })
 
   // Get physical products data by using their seasonsUID as the key
-  const physicalProductFieldKeys = [
-    "dateOrdered",
-    "dateReceived",
-    "inventoryStatus",
-    "physicalProductStatus",
-    "unitCost",
-  ]
+  const physicalProductFieldKeys = ["dateOrdered", "dateReceived", "inventoryStatus", "physicalProductStatus"]
   const seasonsUIDToData = {}
   Object.keys(values).forEach(key => {
     const value = values[key]
@@ -169,9 +163,6 @@ export const getProductCreateData: any = (values: any) => {
       if (["dateOrdered", "dateReceived"].includes(fieldKey)) {
         // Convert date to ISO string format
         fieldValue = getDateISOString(value)
-      } else if (["unitCost"].includes(fieldKey)) {
-        // Convert to float
-        fieldValue = parseFloat(value) || null
       } else {
         fieldValue = value
       }
@@ -197,16 +188,13 @@ export const getProductCreateData: any = (values: any) => {
     const physicalProductsData = Object.keys(seasonsUIDToData)
       .map(seasonsUID => {
         if (seasonsUID.includes(sku)) {
-          const { inventoryStatus, physicalProductStatus, dateOrdered, dateReceived, unitCost } = seasonsUIDToData[
-            seasonsUID
-          ]
+          const { inventoryStatus, physicalProductStatus, dateOrdered, dateReceived } = seasonsUIDToData[seasonsUID]
           return {
             dateOrdered,
             dateReceived,
             inventoryStatus,
             productStatus: physicalProductStatus,
             seasonsUID,
-            unitCost,
           }
         } else {
           return null
@@ -381,13 +369,7 @@ export const getProductVariantCreateData = ({ values, product }) => {
 
   const typeSpecificVariantFieldKeys = getTypeSpecificVariantFields(productType).map(key => key.toLowerCase())
   const variantMeasurementFieldKeys = ["weight", "totalcount", ...typeSpecificVariantFieldKeys]
-  const physicalProductFieldKeys = [
-    "dateOrdered",
-    "dateReceived",
-    "inventoryStatus",
-    "physicalProductStatus",
-    "unitCost",
-  ]
+  const physicalProductFieldKeys = ["dateOrdered", "dateReceived", "inventoryStatus", "physicalProductStatus"]
 
   const data = Array.from(Array(numVariants).keys()).map(index => {
     // We will show a manufacturerSizeType field in the create view if no variants
@@ -422,9 +404,6 @@ export const getProductVariantCreateData = ({ values, product }) => {
           if (["dateOrdered", "dateReceived"].includes(key)) {
             // Convert date to ISO string format
             physicalProductValue = getDateISOString(physicalProductValue)
-          } else if (["unitCost"].includes(key)) {
-            // Convert to float
-            physicalProductValue = parseFloat(physicalProductValue) || null
           }
           const dataKey = key === "physicalProductStatus" ? "productStatus" : key
           physicalProductData[dataKey] = physicalProductValue
