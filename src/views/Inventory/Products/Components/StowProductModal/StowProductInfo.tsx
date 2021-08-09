@@ -5,7 +5,6 @@ import { PhysicalProduct } from "generated/PhysicalProduct"
 import { Autocomplete } from "@material-ui/lab"
 import { useQuery } from "react-apollo"
 import { PHYSICAL_PRODUCT_WITH_IMAGES } from "views/Inventory/PhysicalProducts/queries"
-import { Separator } from "components"
 
 const Image = styled.img`
   margin-right: 5px;
