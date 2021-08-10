@@ -145,6 +145,7 @@ export interface GetPhysicalProducts_physicalProducts {
   inventoryStatus: InventoryStatus
   offloadMethod: PhysicalProductOffloadMethod | null
   sequenceNumber: number
+  unitCost: number | null
   dateOrdered: any | null
   dateReceived: any | null
   productStatus: PhysicalProductStatus

@@ -78,6 +78,7 @@ export interface PhysicalProductEditQuery_physicalProduct {
   inventoryStatus: InventoryStatus
   productStatus: PhysicalProductStatus
   seasonsUID: string
+  unitCost: number | null
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
   price: PhysicalProductEditQuery_physicalProduct_price | null

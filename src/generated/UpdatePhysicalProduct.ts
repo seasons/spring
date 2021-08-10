@@ -57,6 +57,7 @@ export interface UpdatePhysicalProduct {
   inventoryStatus: InventoryStatus
   productStatus: PhysicalProductStatus
   seasonsUID: string
+  unitCost: number | null
   offloadMethod: PhysicalProductOffloadMethod | null
   offloadNotes: string | null
   price: UpdatePhysicalProduct_price | null

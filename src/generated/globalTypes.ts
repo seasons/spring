@@ -1958,6 +1958,8 @@ export interface CustomProductUpdateInput {
   name?: string | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
   retailPrice?: number | null
+  wholesalePrice?: number | null
+  recoupment?: number | null
   season?: UpsertSeasonInput | null
   secondaryColor?: ColorUpdateOneInput | null
   slug?: string | null
@@ -6380,6 +6382,8 @@ export interface ProductCreateInput {
   outerMaterials: string[]
   productFit?: ProductFit | null
   retailPrice: number
+  wholesalePrice: number
+  recoupment: number
   season?: UpsertSeasonInput | null
   photographyStatus?: PhotographyStatus | null
   secondaryColorCode?: string | null
