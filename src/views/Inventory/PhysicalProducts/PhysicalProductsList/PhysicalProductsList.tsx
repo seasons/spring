@@ -86,6 +86,7 @@ export const PhysicalProductsList: React.FC<PhysicalProductsListInterface> = ({ 
             "Inventory Status": p.inventoryStatus,
             "Live Date": moment(p.productVariant.product.publishedAt).format("MM/DD/YYYY"),
             Barcode: `SZNS` + `${p.sequenceNumber}`.padStart(5, "0"),
+            "Unit Cost": p.unitCost,
             "Date Ordered": p.dateOrdered,
             "Date Received": p.dateReceived,
             "Product Status": p.productStatus,
