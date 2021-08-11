@@ -8,15 +8,15 @@
 // ====================================================
 
 export interface AddPhysicalProducts_addPhysicalProductsToVariant {
-  __typename: "ProductVariant"
-  id: string
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface AddPhysicalProducts {
-  addPhysicalProductsToVariant: AddPhysicalProducts_addPhysicalProductsToVariant
+  addPhysicalProductsToVariant: AddPhysicalProducts_addPhysicalProductsToVariant;
 }
 
 export interface AddPhysicalProductsVariables {
-  variantID: string
-  count?: number | null
+  variantID: string;
+  count?: number | null;
 }

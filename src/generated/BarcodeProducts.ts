@@ -8,14 +8,14 @@
 // ====================================================
 
 export interface BarcodeProducts_physicalProducts {
-  __typename: "PhysicalProduct"
-  id: string
-  seasonsUID: string
-  sequenceNumber: number
-  barcoded: boolean
-  barcode: string
+  __typename: "PhysicalProduct";
+  id: string;
+  seasonsUID: string;
+  sequenceNumber: number;
+  barcoded: boolean;
+  barcode: string;
 }
 
 export interface BarcodeProducts {
-  physicalProducts: (BarcodeProducts_physicalProducts | null)[]
+  physicalProducts: (BarcodeProducts_physicalProducts | null)[];
 }

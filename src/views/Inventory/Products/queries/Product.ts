@@ -64,6 +64,7 @@ export const ProductFragment = gql`
     ...product
     recoupment
     wholesalePrice
+    rentalPriceOverride
     publishedAt
     externalURL
     architecture

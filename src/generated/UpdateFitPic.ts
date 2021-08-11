@@ -3,17 +3,17 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FitPicUpdateInput } from "./globalTypes"
+import { FitPicUpdateInput } from "./globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateFitPic
 // ====================================================
 
 export interface UpdateFitPic {
-  updateFitPic: boolean
+  updateFitPic: boolean;
 }
 
 export interface UpdateFitPicVariables {
-  id: string
-  data: FitPicUpdateInput
+  id: string;
+  data: FitPicUpdateInput;
 }

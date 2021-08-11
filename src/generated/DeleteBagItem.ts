@@ -8,9 +8,9 @@
 // ====================================================
 
 export interface DeleteBagItem {
-  deleteBagItem: boolean
+  deleteBagItem: boolean;
 }
 
 export interface DeleteBagItemVariables {
-  itemID: string
+  itemID: string;
 }

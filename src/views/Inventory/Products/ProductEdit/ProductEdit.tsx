@@ -83,6 +83,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
       },
       recoupment: product.recoupment,
       wholesalePrice: product.wholesalePrice,
+      rentalPriceOverride: product.rentalPriceOverride,
       category: product.category.id,
       color: product.color.colorCode,
       functions: product.functions?.map(func => func.name),

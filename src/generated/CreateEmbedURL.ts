@@ -3,16 +3,16 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CreateEmbedURLInput } from "./globalTypes"
+import { CreateEmbedURLInput } from "./globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CreateEmbedURL
 // ====================================================
 
 export interface CreateEmbedURL {
-  createEmbedURL: string | null
+  createEmbedURL: string | null;
 }
 
 export interface CreateEmbedURLVariables {
-  input: CreateEmbedURLInput
+  input: CreateEmbedURLInput;
 }

@@ -126,6 +126,17 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <TextField requiredString name="recoupment" type="number" minValue={0} />
           </Grid>
           <Grid item xs={6}>
+            <Text variant="h6">Rental price (override)</Text>
+            <Spacer mt={1} />
+            <TextField
+              requiredString
+              name="rentalPriceOverride"
+              type="number"
+              minValue={0}
+              InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
+            />
+          </Grid>
+          <Grid item xs={6}>
             <Text variant="h6">Architecture</Text>
             <Spacer mt={1} />
             <SelectField name="architecture" choices={[{ display: "-", value: "" }, ...architectureChoices]} />
