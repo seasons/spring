@@ -20,6 +20,7 @@ export const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({
   isMutating = false,
 }) => {
   const [showStatusUpdateDetail, setShowStatusUpdateDetail] = useState(false)
+  const [statusBeingSet, setStatusBeingSet] = useState(null)
 
   const choices = [
     "Queued",
@@ -39,6 +40,7 @@ export const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({
 
   const onChange = event => {
     const selectedValue = event.target.value
+    setStatusBeingSet(selectedValue)
     if (["Lost", "Cancelled"].includes(selectedValue) && selectedValue !== reservation.status) {
       setShowStatusUpdateDetail(true)
     } else if (showStatusUpdateDetail) {
@@ -46,12 +48,34 @@ export const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({
     }
   }
 
-  const statusUpdateDetail = (
+  const defaultStatusUpdateDetail = (
     <>
+      <Text variant="body2">
+        "Warning: Setting this status will also update related physical products, product variants, and bag items."
+      </Text>
+    </>
+  )
+  const alternativeStatusUpdateDetail = (
+    <>
+      <Text variant="body2">
+        Warning: This reservation's items are on their way back and the customer has not filled out the return flow. If
+        you mark it as Lost now, you'll need to manually update the relevant product statuses.
+      </Text>
       <Spacer mt={1} />
       <Text variant="body2">
-        Warning: Setting this status will also update related physical products, product variants, and bag items.
+        If you either have the customer fill out their return flow or you manually return their bag items in the Admin
+        before marking this as Lost, you can avoid that.
       </Text>
+    </>
+  )
+  const useAlternativeStatusUpdateDetail =
+    statusBeingSet === "Lost" &&
+    reservation.phase === "CustomerToBusiness" &&
+    reservation.returnedProducts?.length === 0
+  const statusUpdateDetailComponent = (
+    <>
+      <Spacer mt={1} />
+      {useAlternativeStatusUpdateDetail ? alternativeStatusUpdateDetail : defaultStatusUpdateDetail}
     </>
   )
   return (
@@ -68,7 +92,7 @@ export const UpdateStatusModal: React.FC<UpdateStatusModalProps> = ({
                   <Text variant="h6">Reservation status *</Text>
                   <Spacer mt={1} />
                   <SelectField name="reservationStatus" choices={choices} requiredString onChange={onChange} />
-                  {showStatusUpdateDetail && statusUpdateDetail}
+                  {showStatusUpdateDetail && statusUpdateDetailComponent}
                 </Box>
               </DialogContent>
               <DialogActions>
