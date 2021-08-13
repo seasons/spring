@@ -33,8 +33,8 @@ const ADD_BAG_ITEM = gql`
 `
 
 const GET_PRODUCT_VARIANT = gql`
-  query productVariant($id: ID!) {
-    productVariant(where: { id: $id }) {
+  query productVariant($sku: String!) {
+    productVariant(where: { sku: $sku }) {
       id
       displayShort
       product {
@@ -78,7 +78,7 @@ const trueOrFalseChoices: SelectChoice[] = [
 export const AddBagItemModal = ({ open, onClose, customer }) => {
   const refresh = useRefresh()
   const [selectedProductVariant, setSelectedProductVariant] = useState(null as any)
-  const [productVariantID, setProductVariantID] = useState("")
+  const [productVariantSKU, setProductVariantSKU] = useState("")
   const [getProductVariant, { loading, data }] = useLazyQuery(GET_PRODUCT_VARIANT)
   const initialState = {
     status: "Reserved",
@@ -108,14 +108,15 @@ export const AddBagItemModal = ({ open, onClose, customer }) => {
   })
 
   useEffect(() => {
-    if (productVariantID?.length > 24) {
+    const fourStringsAndThreeDashes = productVariantSKU.split("-").length === 4
+    if (fourStringsAndThreeDashes) {
       getProductVariant({
         variables: {
-          id: productVariantID,
+          sku: productVariantSKU,
         },
       })
     }
-  }, [productVariantID, getProductVariant])
+  }, [productVariantSKU, getProductVariant])
 
   useEffect(() => {
     if (data?.productVariant) {
@@ -158,10 +159,12 @@ export const AddBagItemModal = ({ open, onClose, customer }) => {
             handleSubmit,
             form: {
               mutators: { setValue },
+              getState,
             },
-            values: formValues,
             errors,
+            ...props
           }) => {
+            const formValues = getState().values as any
             return (
               <Box style={{ width: "1000px" }}>
                 <Grid container spacing={2}>
@@ -170,19 +173,22 @@ export const AddBagItemModal = ({ open, onClose, customer }) => {
                     <Spacer mt={1} />
                     <SelectField name="status" choices={statusChoices} />
                     <Spacer mt={2} />
-                    <Text variant="h6">Saved</Text>
-                    <Text variant="caption">If saved item will appear in customer's saved items</Text>
-                    <Spacer mt={1} />
-                    <SelectField name="saved" choices={trueOrFalseChoices} />
-                    <Spacer mt={2} />
-                    <Text variant="h6">Product variant ID</Text>
-                    <Text variant="caption">Paste in the product variant ID</Text>
+                    {formValues?.status === "Added" && (
+                      <>
+                        <Text variant="h6">Saved</Text>
+                        <Text variant="caption">If saved item will appear in customer's saved items</Text>
+                        <Spacer mt={1} />
+                        <SelectField name="saved" choices={trueOrFalseChoices} />
+                        <Spacer mt={2} />
+                      </>
+                    )}
+                    <Text variant="h6">Product variant SKU</Text>
+                    <Text variant="caption">Paste in the product variant SKU (e.g YZY-BLK-MM-002)</Text>
                     <Spacer mt={1} />
                     <MuiTextField
                       fullWidth
-                      onChange={event => setProductVariantID(event.target.value)}
-                      placeholder="Variant ID"
-                      value={productVariantID}
+                      onChange={event => setProductVariantSKU(event.target.value)}
+                      value={productVariantSKU}
                       variant="outlined"
                     />
                     <Spacer mt={2} />
