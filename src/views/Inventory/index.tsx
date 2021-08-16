@@ -58,10 +58,10 @@ export const InventoryView: React.FunctionComponent<InventoryViewProps> = ({ mat
         onChange={(e: any) => {
           history.push("/inventory/" + e.currentTarget.id)
         }}
-        aria-label="simple tabs example"
+        aria-label="inventory tabs"
       >
         {Object.keys(tabs).map(tabKey => {
-          return <Tab label={tabs[tabKey]} id={tabKey} value={tabKey} />
+          return <Tab label={tabs[tabKey]} id={tabKey} value={tabKey} key={tabKey} />
         })}
       </Tabs>
       <div className={classes.content}>

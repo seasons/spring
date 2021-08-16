@@ -27,7 +27,7 @@ interface ImageProps {
 export const Image: React.FC<ImageProps> = ({ size, url }) => {
   return (
     <Box {...sizes[size]} mr={1} bgcolor={colors.black04} key={url}>
-      <img style={{ objectFit: "cover" }} {...sizes[size]} src={url} />
+      <img style={{ objectFit: "cover" }} {...sizes[size]} src={url} alt={url} />
     </Box>
   )
 }

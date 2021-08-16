@@ -148,7 +148,6 @@ export const ReservationHeader = ({ data }) => {
         onSave={async (productStates, params = {}) => {
           setIsMutating(true)
           try {
-            let message = ``
             if (isReservationUnfulfilled) {
               if (params["status"] === "Picked") {
                 await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
