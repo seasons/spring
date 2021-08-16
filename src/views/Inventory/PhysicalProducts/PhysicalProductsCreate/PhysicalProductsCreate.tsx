@@ -1,9 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import { useQuery } from "react-apollo"
 import { useLocation } from "react-router-dom"
 import { Loading } from "@seasons/react-admin"
 import { useForm } from "react-final-form"
-import { Box, Grid, styled as muiStyled } from "@material-ui/core"
+import { Box, Grid, styled as muiStyled, Typography } from "@material-ui/core"
 import { Header, Spacer, Text } from "components"
 import { PhysicalProductEditQuery_physicalProduct } from "generated/PhysicalProductEditQuery"
 import { ProductVariantUpsertQuery_product } from "generated/ProductVariantUpsertQuery"
@@ -28,8 +28,14 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
     mutators: { setValue },
   } = useForm()
   const location = useLocation()
-
   let physicalProductUIDs: string[] = []
+
+  const copyValuesToSiblings = (key, value) => {
+    physicalProductUIDs.forEach(uid => {
+      const field = `${uid}_${key}`
+      setValue(field, value)
+    })
+  }
 
   // Sizes data here is used to get generated seasons UIDs in
   // the create new variants flow
@@ -158,12 +164,24 @@ export const PhysicalProductsCreate: React.FC<PhysicalProductsCreateProps> = ({
   return (
     <Box>
       <Header title={title} subtitle="Add metadata to physical products" breadcrumbs={breadcrumbs} />
+      <Typography variant="body1" color="textPrimary">
+        Note: The first physical product will update all subsequent fields of the same type. It will overwrite the same
+        field on subsequent physical products.
+      </Typography>
       <ContainerGrid container spacing={2}>
         {physicalProductUIDs.map((uid, index) => (
           <ExpandableSection
             title={uid}
             key={index}
-            content={<PhysicalProductForm inventoryStatuses={inventoryStatuses} statuses={statuses} uid={uid} />}
+            content={
+              <PhysicalProductForm
+                inventoryStatuses={inventoryStatuses}
+                statuses={statuses}
+                uid={uid}
+                copyValuesToSiblings={copyValuesToSiblings}
+                index={index}
+              />
+            }
           />
         ))}
         <Spacer mt={2} />
