@@ -8,32 +8,32 @@
 // ====================================================
 
 export interface Package_items {
-  __typename: "PhysicalProduct"
-  id: string
-  seasonsUID: string
+  __typename: "PhysicalProduct";
+  id: string;
+  seasonsUID: string;
 }
 
 export interface Package_shippingLabel {
-  __typename: "Label"
-  id: string
+  __typename: "Label";
+  id: string;
 }
 
 export interface Package_fromAddress {
-  __typename: "Location"
-  id: string
+  __typename: "Location";
+  id: string;
 }
 
 export interface Package_toAddress {
-  __typename: "Location"
-  id: string
+  __typename: "Location";
+  id: string;
 }
 
 export interface Package {
-  __typename: "Package"
-  id: string
-  items: Package_items[] | null
-  shippingLabel: Package_shippingLabel
-  fromAddress: Package_fromAddress
-  toAddress: Package_toAddress
-  weight: number | null
+  __typename: "Package";
+  id: string;
+  items: Package_items[] | null;
+  shippingLabel: Package_shippingLabel;
+  fromAddress: Package_fromAddress;
+  toAddress: Package_toAddress;
+  weight: number | null;
 }

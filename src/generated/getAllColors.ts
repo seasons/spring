@@ -8,11 +8,11 @@
 // ====================================================
 
 export interface getAllColors_colors {
-  __typename: "Color"
-  id: string
-  name: string
+  __typename: "Color";
+  id: string;
+  name: string;
 }
 
 export interface getAllColors {
-  colors: (getAllColors_colors | null)[]
+  colors: (getAllColors_colors | null)[];
 }

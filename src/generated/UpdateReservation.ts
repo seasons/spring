@@ -3,23 +3,23 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ReservationStatus } from "./globalTypes"
+import { ReservationStatus } from "./globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateReservation
 // ====================================================
 
 export interface UpdateReservation_updateReservation {
-  __typename: "Reservation"
-  id: string
-  status: ReservationStatus
+  __typename: "Reservation";
+  id: string;
+  status: ReservationStatus;
 }
 
 export interface UpdateReservation {
-  updateReservation: UpdateReservation_updateReservation | null
+  updateReservation: UpdateReservation_updateReservation | null;
 }
 
 export interface UpdateReservationVariables {
-  reservationNumber: number
-  status: ReservationStatus
+  reservationNumber: number;
+  status: ReservationStatus;
 }

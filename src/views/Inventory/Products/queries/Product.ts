@@ -62,6 +62,9 @@ export const ProductUpsertFragment = gql`
 export const ProductFragment = gql`
   fragment ProductFragment on Product {
     ...product
+    recoupment
+    wholesalePrice
+    rentalPriceOverride
     publishedAt
     externalURL
     architecture
