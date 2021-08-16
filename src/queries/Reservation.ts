@@ -203,6 +203,7 @@ export default {
       shippedAt
       receivedAt
       returnAt
+      phase
       statusUpdatedAt
       createdAt
       updatedAt
