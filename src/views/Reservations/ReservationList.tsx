@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import {
   Datagrid,
   Filter,
@@ -11,9 +11,11 @@ import {
 } from "@seasons/react-admin"
 import { StatusField, SinceDateField, MemberField, ViewEntityField, ImagesField } from "fields"
 import { Box, Container } from "@material-ui/core"
-import { Header, StatusInput } from "components"
+import { Header, Spacer, StatusInput } from "components"
 import { PhaseField } from "fields/PhaseField"
 import { ReservationExpandedRow } from "./ReservationExpandedRow"
+import { ReservationListActions } from "./ReservationListActions"
+import { LookupReservationModal } from "./LookupReservationModal"
 
 const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => {
   return (
@@ -62,6 +64,8 @@ const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => {
 export const ReservationList = ({ staticContext, ...props }) => {
   const dataProvider = useContext(DataProviderContext)
 
+  const [openLookupReservationModal, toggleLookupReservationModal] = useState(false)
+
   if (!dataProvider) {
     return <Loading />
   }
@@ -81,6 +85,12 @@ export const ReservationList = ({ staticContext, ...props }) => {
         <List
           {...props}
           filters={<Filters />}
+          actions={
+            <ReservationListActions
+              onClickLookupReservation={() => toggleLookupReservationModal(true)}
+              // onClickLookupReservation={() => console.log("opening up lookup reservation modal")}
+            />
+          }
           hasCreate={false}
           hasEdit={false}
           hasList={true}
@@ -106,6 +116,15 @@ export const ReservationList = ({ staticContext, ...props }) => {
             <ViewEntityField entityPath="reservation" entityTab="overview" source="id" label="Actions" />
           </Datagrid>
         </List>
+
+        <Spacer mt={6} />
+
+        <LookupReservationModal
+          open={openLookupReservationModal}
+          onClose={() => {
+            toggleLookupReservationModal(false)
+          }}
+        />
       </Box>
     </Container>
   )
