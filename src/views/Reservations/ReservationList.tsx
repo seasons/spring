@@ -85,12 +85,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
         <List
           {...props}
           filters={<Filters />}
-          actions={
-            <ReservationListActions
-              onClickLookupReservation={() => toggleLookupReservationModal(true)}
-              // onClickLookupReservation={() => console.log("opening up lookup reservation modal")}
-            />
-          }
+          actions={<ReservationListActions onClickLookupReservation={() => toggleLookupReservationModal(true)} />}
           hasCreate={false}
           hasEdit={false}
           hasList={true}
@@ -124,6 +119,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
           onClose={() => {
             toggleLookupReservationModal(false)
           }}
+          possibleData={props}
         />
       </Box>
     </Container>

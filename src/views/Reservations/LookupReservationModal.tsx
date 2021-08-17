@@ -14,6 +14,7 @@ interface LookupReservationModalProps {
   onClose?: () => void
   onSave?(): void
   disableButton?: boolean
+  possibleData?: { [x: string]: any }
 }
 
 export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({
@@ -21,6 +22,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({
   open,
   onSave,
   onClose,
+  possibleData,
 }) => {
   const { data, loading } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
 
@@ -49,8 +51,10 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({
     if (!loading) {
       setPhysicalProductsByBarcode(groupBy(data?.physicalProducts, a => a.barcode))
       setValidWarehouseLocationBarcodes(data?.warehouseLocations?.map(a => a.barcode))
+
+      console.log("\n\n possibleData: ", possibleData)
     }
-  }, [data, loading])
+  }, [data, loading, possibleData])
 
   const inputRef = useRef()
 
@@ -133,6 +137,11 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({
               fullWidth
             />
           </Box>
+          {!!selectedPhysicalProduct && console.log("\n selectedPhysicalProduct:", selectedPhysicalProduct) && (
+            <Typography variant="h6" style={{ textAlign: "center" }}>
+              {selectedPhysicalProduct}
+            </Typography>
+          )}
         </DialogContent>
         <DialogActions>
           <Button
