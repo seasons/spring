@@ -134,7 +134,7 @@ export const getProductCreateData: any = (values: any) => {
   } = values
 
   // Get the image files which are stored as image_0, image_1, etc.
-  const numImages = 4
+  const numImages = 8
   const images = [...Array(numImages).keys()].map(index => values[`image_${index}`]).filter(Boolean)
 
   let modelSizeDisplay = modelSizeName
@@ -315,7 +315,7 @@ export const getProductUpdateData = (values: any) => {
   } = values
 
   const modelSizeDisplay = modelSizeName
-  const numImages = 4
+  const numImages = 8
   const images = [...Array(numImages).keys()]
     .map(index => {
       return values[`image_${index}`]
