@@ -131,7 +131,6 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <TextField
               name="rentalPriceOverride"
               type="number"
-              minValue={0}
               InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
             />
           </Grid>
