@@ -129,7 +129,6 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <Text variant="h6">Rental price (override)</Text>
             <Spacer mt={1} />
             <TextField
-              requiredString
               name="rentalPriceOverride"
               type="number"
               minValue={0}
