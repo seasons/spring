@@ -73,7 +73,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ numImages, title, name
           Drag and drop file(s) or tap on any of the images below to update them
         </Text>
         <Spacer mt={2} />
-        <Grid container>
+        <Grid container spacing={2}>
           {[...Array(numImages)].map((_, index) => (
             <Grid item xs={3} key={index}>
               <DropzoneField
