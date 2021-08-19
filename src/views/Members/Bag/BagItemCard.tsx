@@ -10,6 +10,9 @@ import { red } from "@material-ui/core/colors"
 import DeleteIcon from "@material-ui/icons/Delete"
 import { useMutation } from "react-apollo"
 import { gql } from "apollo-boost"
+import { Box } from "@material-ui/core"
+import { SwapButton } from "./SwapButton"
+import { Typography } from "@material-ui/core"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,22 +83,39 @@ export const BagItemCard = props => {
     })
     setIsSubmitting(false)
   }
+  const isReserved = member?.reservations[0]?.status === "Queued" || member?.reservations[0]?.status === "Hold"
+  const isQueuedOrHold = bagItem.status === "Reserved"
+  const newProductVariantIds = member?.reservations[0]?.newProducts?.reduce((a, b) => {
+    a.push(b?.productVariant?.id)
+    return a
+  }, [])
+  const isNewProduct = newProductVariantIds.includes(bagItem?.productVariant?.id)
+
+  const showSwapButton = isReserved && isQueuedOrHold && isNewProduct
 
   return (
     <>
       <Card className={classes.root}>
         <CardHeader
           title={name}
-          subheader={brand.name}
+          subheader={
+            <Box>
+              <Typography>{brand.name}</Typography>
+              <Typography>{bagItem.status}</Typography>
+            </Box>
+          }
           action={
-            <IconButton
-              aria-label="remove"
-              onClick={() => {
-                setIsConfirmationDialogOpen(true)
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
+            <Box>
+              <IconButton
+                aria-label="remove"
+                onClick={() => {
+                  setIsConfirmationDialogOpen(true)
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+              {showSwapButton && <SwapButton product={bagItem.productVariant} />}
+            </Box>
           }
         />
         <CardMedia className={classes.media} image={image.url} />

@@ -166,6 +166,18 @@ const CustomerDetails = gql`
           }
         }
       }
+      newProducts {
+        id
+        productVariant {
+          id
+          product {
+            id
+            images(size: Small) {
+              url
+            }
+          }
+        }
+      }
     }
     utm {
       id
