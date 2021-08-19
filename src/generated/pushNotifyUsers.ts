@@ -15,7 +15,7 @@ export interface pushNotifyUsers_pushNotifyUsers {
 }
 
 export interface pushNotifyUsers {
-  pushNotifyUsers: (pushNotifyUsers_pushNotifyUsers | null)[]
+  pushNotifyUsers: pushNotifyUsers_pushNotifyUsers | null
 }
 
 export interface pushNotifyUsersVariables {

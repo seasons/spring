@@ -1,6 +1,8 @@
 import React from "react"
 import { Box } from "@material-ui/core"
 import { Filter, SelectInput, TextInput } from "@seasons/react-admin"
+import { States } from "utils/USStates"
+export { States } from "utils/USStates"
 
 export const MemberFilter = props => (
   <Box px={2}>
@@ -53,6 +55,8 @@ export const MemberFilter = props => (
         ]}
         alwaysOn
       />
+
+      <SelectInput label="State" source="detail.shippingAddress.state" choices={States} alwaysOn />
     </Filter>
   </Box>
 )

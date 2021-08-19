@@ -68,6 +68,8 @@ export const ProductCreate: React.FC = () => {
     manufacturerSizeType: "Letter",
     productType: "Top",
     retailPrice: 0,
+    recoupment: 4,
+    wholesalePrice: 0,
     status: "NotAvailable",
   }
 

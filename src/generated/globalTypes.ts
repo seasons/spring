@@ -219,10 +219,12 @@ export enum NotificationBarID {
 }
 
 export enum OrderLineItemRecordType {
+  EarlySwap = "EarlySwap",
   ExternalProduct = "ExternalProduct",
   Package = "Package",
   PhysicalProduct = "PhysicalProduct",
   ProductVariant = "ProductVariant",
+  Reservation = "Reservation",
 }
 
 export enum OrderStatus {
@@ -390,6 +392,7 @@ export enum ReservationStatus {
   Completed = "Completed",
   Delivered = "Delivered",
   Hold = "Hold",
+  Lost = "Lost",
   Packed = "Packed",
   Picked = "Picked",
   Queued = "Queued",
@@ -1955,6 +1958,9 @@ export interface CustomProductUpdateInput {
   name?: string | null
   outerMaterials?: ProductUpdateouterMaterialsInput | null
   retailPrice?: number | null
+  rentalPriceOverride?: number | null
+  wholesalePrice?: number | null
+  recoupment?: number | null
   season?: UpsertSeasonInput | null
   secondaryColor?: ColorUpdateOneInput | null
   slug?: string | null
@@ -4565,6 +4571,213 @@ export interface LocationWhereUniqueInput {
   slug?: string | null
 }
 
+export interface OrderLineItemCreateManyWithoutReservationInput {
+  create?: OrderLineItemCreateWithoutReservationInput[] | null
+  connect?: OrderLineItemWhereUniqueInput[] | null
+}
+
+export interface OrderLineItemCreateWithoutReservationInput {
+  id?: string | null
+  recordID: string
+  recordType: OrderLineItemRecordType
+  needShipping?: boolean | null
+  taxRate?: number | null
+  taxName?: string | null
+  name?: string | null
+  taxPercentage?: number | null
+  taxPrice?: number | null
+  price: number
+  currencyCode: string
+}
+
+export interface OrderLineItemScalarWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  recordID?: string | null
+  recordID_not?: string | null
+  recordID_in?: string[] | null
+  recordID_not_in?: string[] | null
+  recordID_lt?: string | null
+  recordID_lte?: string | null
+  recordID_gt?: string | null
+  recordID_gte?: string | null
+  recordID_contains?: string | null
+  recordID_not_contains?: string | null
+  recordID_starts_with?: string | null
+  recordID_not_starts_with?: string | null
+  recordID_ends_with?: string | null
+  recordID_not_ends_with?: string | null
+  recordType?: OrderLineItemRecordType | null
+  recordType_not?: OrderLineItemRecordType | null
+  recordType_in?: OrderLineItemRecordType[] | null
+  recordType_not_in?: OrderLineItemRecordType[] | null
+  needShipping?: boolean | null
+  needShipping_not?: boolean | null
+  taxRate?: number | null
+  taxRate_not?: number | null
+  taxRate_in?: number[] | null
+  taxRate_not_in?: number[] | null
+  taxRate_lt?: number | null
+  taxRate_lte?: number | null
+  taxRate_gt?: number | null
+  taxRate_gte?: number | null
+  taxName?: string | null
+  taxName_not?: string | null
+  taxName_in?: string[] | null
+  taxName_not_in?: string[] | null
+  taxName_lt?: string | null
+  taxName_lte?: string | null
+  taxName_gt?: string | null
+  taxName_gte?: string | null
+  taxName_contains?: string | null
+  taxName_not_contains?: string | null
+  taxName_starts_with?: string | null
+  taxName_not_starts_with?: string | null
+  taxName_ends_with?: string | null
+  taxName_not_ends_with?: string | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[] | null
+  name_not_in?: string[] | null
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
+  taxPercentage?: number | null
+  taxPercentage_not?: number | null
+  taxPercentage_in?: number[] | null
+  taxPercentage_not_in?: number[] | null
+  taxPercentage_lt?: number | null
+  taxPercentage_lte?: number | null
+  taxPercentage_gt?: number | null
+  taxPercentage_gte?: number | null
+  taxPrice?: number | null
+  taxPrice_not?: number | null
+  taxPrice_in?: number[] | null
+  taxPrice_not_in?: number[] | null
+  taxPrice_lt?: number | null
+  taxPrice_lte?: number | null
+  taxPrice_gt?: number | null
+  taxPrice_gte?: number | null
+  price?: number | null
+  price_not?: number | null
+  price_in?: number[] | null
+  price_not_in?: number[] | null
+  price_lt?: number | null
+  price_lte?: number | null
+  price_gt?: number | null
+  price_gte?: number | null
+  currencyCode?: string | null
+  currencyCode_not?: string | null
+  currencyCode_in?: string[] | null
+  currencyCode_not_in?: string[] | null
+  currencyCode_lt?: string | null
+  currencyCode_lte?: string | null
+  currencyCode_gt?: string | null
+  currencyCode_gte?: string | null
+  currencyCode_contains?: string | null
+  currencyCode_not_contains?: string | null
+  currencyCode_starts_with?: string | null
+  currencyCode_not_starts_with?: string | null
+  currencyCode_ends_with?: string | null
+  currencyCode_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  AND?: OrderLineItemScalarWhereInput[] | null
+  OR?: OrderLineItemScalarWhereInput[] | null
+  NOT?: OrderLineItemScalarWhereInput[] | null
+}
+
+export interface OrderLineItemUpdateManyDataInput {
+  recordID?: string | null
+  recordType?: OrderLineItemRecordType | null
+  needShipping?: boolean | null
+  taxRate?: number | null
+  taxName?: string | null
+  name?: string | null
+  taxPercentage?: number | null
+  taxPrice?: number | null
+  price?: number | null
+  currencyCode?: string | null
+}
+
+export interface OrderLineItemUpdateManyWithWhereNestedInput {
+  where: OrderLineItemScalarWhereInput
+  data: OrderLineItemUpdateManyDataInput
+}
+
+export interface OrderLineItemUpdateManyWithoutReservationInput {
+  create?: OrderLineItemCreateWithoutReservationInput[] | null
+  delete?: OrderLineItemWhereUniqueInput[] | null
+  connect?: OrderLineItemWhereUniqueInput[] | null
+  set?: OrderLineItemWhereUniqueInput[] | null
+  disconnect?: OrderLineItemWhereUniqueInput[] | null
+  update?: OrderLineItemUpdateWithWhereUniqueWithoutReservationInput[] | null
+  upsert?: OrderLineItemUpsertWithWhereUniqueWithoutReservationInput[] | null
+  deleteMany?: OrderLineItemScalarWhereInput[] | null
+  updateMany?: OrderLineItemUpdateManyWithWhereNestedInput[] | null
+}
+
+export interface OrderLineItemUpdateWithWhereUniqueWithoutReservationInput {
+  where: OrderLineItemWhereUniqueInput
+  data: OrderLineItemUpdateWithoutReservationDataInput
+}
+
+export interface OrderLineItemUpdateWithoutReservationDataInput {
+  recordID?: string | null
+  recordType?: OrderLineItemRecordType | null
+  needShipping?: boolean | null
+  taxRate?: number | null
+  taxName?: string | null
+  name?: string | null
+  taxPercentage?: number | null
+  taxPrice?: number | null
+  price?: number | null
+  currencyCode?: string | null
+}
+
+export interface OrderLineItemUpsertWithWhereUniqueWithoutReservationInput {
+  where: OrderLineItemWhereUniqueInput
+  update: OrderLineItemUpdateWithoutReservationDataInput
+  create: OrderLineItemCreateWithoutReservationInput
+}
+
+export interface OrderLineItemWhereUniqueInput {
+  id?: string | null
+}
+
 export interface PackageCreateInput {
   id?: string | null
   items?: PhysicalProductCreateManyInput | null
@@ -4923,6 +5136,88 @@ export interface PackageWhereUniqueInput {
   id?: string | null
 }
 
+export interface PauseReasonCreateInput {
+  id?: string | null
+  reason: string
+}
+
+export interface PauseReasonCreateOneInput {
+  create?: PauseReasonCreateInput | null
+  connect?: PauseReasonWhereUniqueInput | null
+}
+
+export interface PauseReasonUpdateDataInput {
+  reason?: string | null
+}
+
+export interface PauseReasonUpdateOneInput {
+  create?: PauseReasonCreateInput | null
+  update?: PauseReasonUpdateDataInput | null
+  upsert?: PauseReasonUpsertNestedInput | null
+  delete?: boolean | null
+  disconnect?: boolean | null
+  connect?: PauseReasonWhereUniqueInput | null
+}
+
+export interface PauseReasonUpsertNestedInput {
+  update: PauseReasonUpdateDataInput
+  create: PauseReasonCreateInput
+}
+
+export interface PauseReasonWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  reason?: string | null
+  reason_not?: string | null
+  reason_in?: string[] | null
+  reason_not_in?: string[] | null
+  reason_lt?: string | null
+  reason_lte?: string | null
+  reason_gt?: string | null
+  reason_gte?: string | null
+  reason_contains?: string | null
+  reason_not_contains?: string | null
+  reason_starts_with?: string | null
+  reason_not_starts_with?: string | null
+  reason_ends_with?: string | null
+  reason_not_ends_with?: string | null
+  AND?: PauseReasonWhereInput[] | null
+  OR?: PauseReasonWhereInput[] | null
+  NOT?: PauseReasonWhereInput[] | null
+}
+
+export interface PauseReasonWhereUniqueInput {
+  id?: string | null
+}
+
 export interface PauseRequestCreateManyWithoutMembershipInput {
   create?: PauseRequestCreateWithoutMembershipInput[] | null
   connect?: PauseRequestWhereUniqueInput[] | null
@@ -4930,6 +5225,7 @@ export interface PauseRequestCreateManyWithoutMembershipInput {
 
 export interface PauseRequestCreateWithoutMembershipInput {
   id?: string | null
+  reason?: PauseReasonCreateOneInput | null
   pausePending: boolean
   pauseType?: PauseType | null
   pauseDate?: any | null
@@ -5028,6 +5324,7 @@ export interface PauseRequestUpdateWithWhereUniqueWithoutMembershipInput {
 }
 
 export interface PauseRequestUpdateWithoutMembershipDataInput {
+  reason?: PauseReasonUpdateOneInput | null
   pausePending?: boolean | null
   pauseType?: PauseType | null
   pauseDate?: any | null
@@ -5056,6 +5353,7 @@ export interface PauseRequestWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  reason?: PauseReasonWhereInput | null
   createdAt?: any | null
   createdAt_not?: any | null
   createdAt_in?: any[] | null
@@ -5296,6 +5594,7 @@ export interface PhysicalProductCreateInput {
   unitCost?: number | null
   price?: PhysicalProductPriceCreateOneInput | null
   reports?: PhysicalProductQualityReportCreateManyWithoutPhysicalProductInput | null
+  packedAt?: any | null
 }
 
 export interface PhysicalProductCreateManyInput {
@@ -5334,6 +5633,7 @@ export interface PhysicalProductCreateWithoutLocationInput {
   unitCost?: number | null
   price?: PhysicalProductPriceCreateOneInput | null
   reports?: PhysicalProductQualityReportCreateManyWithoutPhysicalProductInput | null
+  packedAt?: any | null
 }
 
 export interface PhysicalProductCreateWithoutProductVariantInput {
@@ -5352,6 +5652,7 @@ export interface PhysicalProductCreateWithoutProductVariantInput {
   unitCost?: number | null
   price?: PhysicalProductPriceCreateOneInput | null
   reports?: PhysicalProductQualityReportCreateManyWithoutPhysicalProductInput | null
+  packedAt?: any | null
 }
 
 export interface PhysicalProductPriceCreateInput {
@@ -5730,6 +6031,14 @@ export interface PhysicalProductScalarWhereInput {
   updatedAt_lte?: any | null
   updatedAt_gt?: any | null
   updatedAt_gte?: any | null
+  packedAt?: any | null
+  packedAt_not?: any | null
+  packedAt_in?: any[] | null
+  packedAt_not_in?: any[] | null
+  packedAt_lt?: any | null
+  packedAt_lte?: any | null
+  packedAt_gt?: any | null
+  packedAt_gte?: any | null
   AND?: PhysicalProductScalarWhereInput[] | null
   OR?: PhysicalProductScalarWhereInput[] | null
   NOT?: PhysicalProductScalarWhereInput[] | null
@@ -5764,6 +6073,7 @@ export interface PhysicalProductUpdateDataInput {
   unitCost?: number | null
   price?: PhysicalProductPriceUpdateOneInput | null
   reports?: PhysicalProductQualityReportUpdateManyWithoutPhysicalProductInput | null
+  packedAt?: any | null
 }
 
 export interface PhysicalProductUpdateInput {
@@ -5795,6 +6105,7 @@ export interface PhysicalProductUpdateManyDataInput {
   dateOrdered?: any | null
   dateReceived?: any | null
   unitCost?: number | null
+  packedAt?: any | null
 }
 
 export interface PhysicalProductUpdateManyInput {
@@ -5875,6 +6186,7 @@ export interface PhysicalProductUpdateWithoutLocationDataInput {
   unitCost?: number | null
   price?: PhysicalProductPriceUpdateOneInput | null
   reports?: PhysicalProductQualityReportUpdateManyWithoutPhysicalProductInput | null
+  packedAt?: any | null
 }
 
 export interface PhysicalProductUpdateWithoutProductVariantDataInput {
@@ -5892,6 +6204,7 @@ export interface PhysicalProductUpdateWithoutProductVariantDataInput {
   unitCost?: number | null
   price?: PhysicalProductPriceUpdateOneInput | null
   reports?: PhysicalProductQualityReportUpdateManyWithoutPhysicalProductInput | null
+  packedAt?: any | null
 }
 
 export interface PhysicalProductUpsertNestedInput {
@@ -6029,6 +6342,14 @@ export interface PhysicalProductWhereInput {
   updatedAt_lte?: any | null
   updatedAt_gt?: any | null
   updatedAt_gte?: any | null
+  packedAt?: any | null
+  packedAt_not?: any | null
+  packedAt_in?: any[] | null
+  packedAt_not_in?: any[] | null
+  packedAt_lt?: any | null
+  packedAt_lte?: any | null
+  packedAt_gt?: any | null
+  packedAt_gte?: any | null
   AND?: PhysicalProductWhereInput[] | null
   OR?: PhysicalProductWhereInput[] | null
   NOT?: PhysicalProductWhereInput[] | null
@@ -6062,6 +6383,9 @@ export interface ProductCreateInput {
   outerMaterials: string[]
   productFit?: ProductFit | null
   retailPrice: number
+  wholesalePrice: number
+  recoupment: number
+  rentalPriceOverride?: number | null
   season?: UpsertSeasonInput | null
   photographyStatus?: PhotographyStatus | null
   secondaryColorCode?: string | null
@@ -8349,6 +8673,7 @@ export interface ReservationCreateWithoutCustomerInput {
   reservationNumber: number
   phase: ReservationPhase
   shipped: boolean
+  lineItems?: OrderLineItemCreateManyWithoutReservationInput | null
   status: ReservationStatus
   returnedAt?: any | null
   shippedAt?: any | null
@@ -8374,6 +8699,7 @@ export interface ReservationCreateWithoutPackageEventsInput {
   reservationNumber: number
   phase: ReservationPhase
   shipped: boolean
+  lineItems?: OrderLineItemCreateManyWithoutReservationInput | null
   status: ReservationStatus
   returnedAt?: any | null
   shippedAt?: any | null
@@ -8762,6 +9088,7 @@ export interface ReservationUpdateWithoutCustomerDataInput {
   reservationNumber?: number | null
   phase?: ReservationPhase | null
   shipped?: boolean | null
+  lineItems?: OrderLineItemUpdateManyWithoutReservationInput | null
   status?: ReservationStatus | null
   returnedAt?: any | null
   shippedAt?: any | null
@@ -8786,6 +9113,7 @@ export interface ReservationUpdateWithoutPackageEventsDataInput {
   reservationNumber?: number | null
   phase?: ReservationPhase | null
   shipped?: boolean | null
+  lineItems?: OrderLineItemUpdateManyWithoutReservationInput | null
   status?: ReservationStatus | null
   returnedAt?: any | null
   shippedAt?: any | null

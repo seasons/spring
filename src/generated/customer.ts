@@ -117,16 +117,30 @@ export interface customer_admissions {
   authorizationsCount: number
 }
 
+export interface customer_membership_plan {
+  __typename: "PaymentPlan"
+  id: string
+  itemCount: number | null
+}
+
+export interface customer_membership_pauseRequests_reason {
+  __typename: "PauseReason"
+  id: string
+  reason: string
+}
+
 export interface customer_membership_pauseRequests {
   __typename: "PauseRequest"
   id: string
   resumeDate: any | null
   pauseDate: any | null
+  reason: customer_membership_pauseRequests_reason | null
 }
 
 export interface customer_membership {
   __typename: "CustomerMembership"
   id: string
+  plan: customer_membership_plan | null
   pauseRequests: customer_membership_pauseRequests[] | null
 }
 

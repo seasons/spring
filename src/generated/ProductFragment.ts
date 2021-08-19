@@ -179,6 +179,9 @@ export interface ProductFragment {
   category: ProductFragment_category
   variants: ProductFragment_variants[] | null
   status: ProductStatus | null
+  recoupment: number | null
+  wholesalePrice: number | null
+  rentalPriceOverride: number | null
   externalURL: string | null
   architecture: ProductArchitecture | null
   innerMaterials: string[]
