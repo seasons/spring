@@ -13,7 +13,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
   const name = `${firstName} ${lastName}`
 
   const { shippingLabel } = reservation?.sentPackage || {}
-  const { shippingLabel: returnLabel } = reservation?.returnedPackage || {}
+  const { shippingLabel: returnLabel } = reservation?.returnPackages?.[0] || {}
 
   const Address = ({ address }) => {
     if (!address) {
@@ -149,7 +149,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <Button
                   variant="outlined"
                   onClick={() => {
-                    window.open(reservation?.returnedPackage?.shippingLabel?.trackingURL, "_blank")
+                    window.open(reservation?.returnPackages?.[0]?.shippingLabel?.trackingURL, "_blank")
                   }}
                 >
                   Track

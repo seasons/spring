@@ -87,7 +87,7 @@ export default {
         }
         weight
       }
-      returnedPackage {
+      returnPackages(orderBy: createdAt_DESC) {
         id
         shippingLabel {
           id
