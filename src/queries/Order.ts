@@ -70,31 +70,32 @@ const OrderView = gql`
       price
       currencyCode
       createdAt
-      productVariant {
+      physicalProduct {
         id
-        sku
-        displayLong
-        color {
+        seasonsUID
+        warehouseLocation {
           id
-          name
+          barcode
         }
-        physicalProducts {
-          seasonsUID
-          warehouseLocation {
-            id
-            barcode
-          }
-        }
-        product {
+        productVariant {
           id
-          name
-          slug
-          images {
-            url
-          }
-          brand {
+          sku
+          displayLong
+          color {
             id
             name
+          }
+          product {
+            id
+            name
+            slug
+            images {
+              url
+            }
+            brand {
+              id
+              name
+            }
           }
         }
       }
