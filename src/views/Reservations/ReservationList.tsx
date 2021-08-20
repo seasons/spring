@@ -119,7 +119,6 @@ export const ReservationList = ({ staticContext, ...props }) => {
           onClose={() => {
             toggleLookupReservationModal(false)
           }}
-          possibleData={props}
         />
       </Box>
     </Container>
