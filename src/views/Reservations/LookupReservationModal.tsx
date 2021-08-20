@@ -3,10 +3,12 @@ import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typograph
 import { DialogTitle } from "components"
 import { head, trim, groupBy } from "lodash"
 import { PhysicalProduct } from "generated/PhysicalProduct"
-import { useQuery, useMutation } from "react-apollo"
+import { useQuery, useLazyQuery, useMutation } from "react-apollo"
+import { useHistory } from "react-router-dom"
 import { WAREHOUSE_LOCATION_BARCODE_REGEX, PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/PhysicalProducts/mutations"
 import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/PhysicalProducts/queries"
+import { GET_RESERVATIONS_FOR_PRODUCT_QUERY } from "views/Reservations/queries"
 import { useSnackbarContext } from "components/Snackbar"
 
 interface LookupReservationModalProps {
@@ -24,7 +26,9 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({
   onClose,
   possibleData,
 }) => {
+  const history = useHistory()
   const { data, loading } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
+  const [getReservations, { data: resData }] = useLazyQuery(GET_RESERVATIONS_FOR_PRODUCT_QUERY)
 
   const { showSnackbar } = useSnackbarContext()
   const [updatePhysicalProduct] = useMutation(UPDATE_PHYSICAL_PRODUCT, {
@@ -56,6 +60,17 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({
     }
   }, [data, loading, possibleData])
 
+  useEffect(() => {
+    if (resData) {
+      console.log("\n\n RESERVATIONS:", resData)
+      const reservations = resData?.physicalProduct?.reservations
+      if (reservations.length > 0) {
+        const resID = reservations[0].id
+        history.push(`/reservation/${resID}/overview`)
+      }
+    }
+  })
+
   const inputRef = useRef()
 
   const focusOnInput = () => {
@@ -84,9 +99,15 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({
     focusOnInput()
   }
 
-  const handleBarcodeChange = e => {
+  const handleBarcodeChange = async e => {
     const input = trim(e.target.value)
+    const physicalProduct = head(physicalProductsByBarcode[input]) as any
     setBarcode(input)
+
+    console.log("\n BARCODE:", input)
+    console.log("\n PRODUCT:", physicalProduct)
+
+    getReservations({ variables: { id: physicalProduct.id, orderBy: "createdAt_DESC" } })
 
     if (!selectedPhysicalProduct && input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
       // User has not yet selected a physical product
@@ -138,7 +159,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({
             />
           </Box>
           {!!selectedPhysicalProduct && console.log("\n selectedPhysicalProduct:", selectedPhysicalProduct) && (
-            <Typography variant="h6" style={{ textAlign: "center" }}>
+            <Typography variant="body1" style={{ textAlign: "center" }}>
               {selectedPhysicalProduct}
             </Typography>
           )}
