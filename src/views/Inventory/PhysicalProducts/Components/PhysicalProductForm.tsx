@@ -9,6 +9,7 @@ import { PHYSICAL_PRODUCT_STATUSES_QUERY } from "views/Inventory/Products/querie
 import { Loading } from "@seasons/react-admin"
 import { InventoryStatus } from "generated/globalTypes"
 import { OnChange } from "react-final-form-listeners"
+import { useForm } from "react-final-form"
 
 export interface PhysicalProductFormProps {
   statuses?: any[]
@@ -29,6 +30,9 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
   copyValuesToSiblings,
   index,
 }) => {
+  const { getState } = useForm()
+  const { values } = getState()
+  const wholesalePrice = values.wholesalePrice
   const receivedStatusesFromParent = statuses.length > 0 && inventoryStatuses.length > 0 && offloadMethods.length > 0
 
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_STATUSES_QUERY, {
@@ -80,7 +84,7 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
       <Grid item xs={6}>
         <Text variant="h5">Unit cost</Text>
         <Spacer mt={1} />
-        <TextField name={`${uid}_unitCost`} type="number" optionalNumber />
+        <TextField name={`${uid}_unitCost`} type="number" optionalNumber initialValue={parseInt(wholesalePrice)} />
         <OnChange name={`${uid}_unitCost`}>
           {value => {
             if (copyValuesToSiblings && isFirstPhysProd) {
