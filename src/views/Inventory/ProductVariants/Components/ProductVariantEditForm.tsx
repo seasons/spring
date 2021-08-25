@@ -162,6 +162,7 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
         <>
           {variants?.map((variant, index) => (
             <ExpandableSection
+              key={index}
               title="Physical products"
               content={
                 <Grid container spacing={2}>
