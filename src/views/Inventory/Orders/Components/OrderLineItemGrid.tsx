@@ -1,21 +1,21 @@
 import React from "react"
-import { Table, TableHead, TableCell, TableBody, TableRow, Card, Box, Checkbox } from "@material-ui/core"
+import { Link, Table, TableHead, TableCell, TableBody, TableRow, Card, Box, Checkbox } from "@material-ui/core"
+import { Link as RouterLink } from "react-router-dom"
 import { Indicator } from "components/Indicator"
 import { Image } from "components/Image"
 import { formatPrice } from "utils/price"
 
 export const OrderLineItemRow = ({ lineItem }) => {
-  const { productVariant, recordType, status, taxPrice, price, needShipping } = lineItem
+  const { physicalProduct, recordType, status, taxPrice, price, needShipping } = lineItem
 
   let name = ""
   let image = { url: "" }
-  let physicalProducts = []
+
   switch (recordType) {
     case "PhysicalProduct":
-      const product = productVariant.product
+      const product = physicalProduct.productVariant.product
       name = product?.name
       image = product?.images?.[0]
-      physicalProducts = productVariant.physicalProducts
       break
     case "Package":
       name = "Shipping"
@@ -33,14 +33,16 @@ export const OrderLineItemRow = ({ lineItem }) => {
         </Box>
       </TableCell>
       <TableCell>
-        {physicalProducts.map((physicalProduct: any) => {
-          return <Box>{physicalProduct?.seasonsUID}</Box>
-        })}
+        <Link
+          color="textPrimary"
+          component={RouterLink}
+          to={`/inventory/product/variant/physicalProduct/${physicalProduct?.id}/manage`}
+        >
+          <Box>{physicalProduct?.seasonsUID}</Box>
+        </Link>
       </TableCell>
       <TableCell>
-        {physicalProducts.map((physicalProduct: any) => {
-          return <Box>{physicalProduct?.warehouseLocation?.barcode}</Box>
-        })}
+        <Box>{physicalProduct?.warehouseLocation?.barcode}</Box>
       </TableCell>
       <TableCell>
         <Checkbox checked={needShipping} />
