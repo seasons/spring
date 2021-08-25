@@ -38,59 +38,25 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const REMOVE_FROM_BAG = gql`
-  mutation DeleteBagItem($itemID: ID!, $type: DeleteBagItemType) {
-    deleteBagItem(itemID: $itemID, type: $type)
-  }
-`
-
 export const BagItemCard = props => {
   const classes = useStyles()
   const refresh = useRefresh()
-  const [isDeleteConfirmationDialogOpen, setIsDeleteConfirmationDialogOpen] = useState(false)
   const [isReturnConfirmationDialogOpen, setIsReturnConfirmationDialogOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [deleteBagItem] = useMutation(REMOVE_FROM_BAG, {
-    onCompleted: () => {
-      refresh()
-      setIsDeleteConfirmationDialogOpen(false)
-    },
-    onError: () => {
-      refresh()
-      setIsDeleteConfirmationDialogOpen(false)
-    },
-  })
 
   const { bagItem } = props
   const { product } = bagItem.productVariant
   const { name, brand } = product
   const image = product.images?.[0]
   const { member } = props
-
-  const onCloseConfirmationDialog = async (agreed: boolean, type: "Return" | "Delete") => {
+  const isSwappable = bagItem?.isSwappable
+  const onCloseConfirmationDialog = async (agreed: boolean, type: "Return") => {
     // Make sure user has confirmed submission
     if (!agreed || isSubmitting) {
       return
     }
-    // Show loading spinner, submit, and then stop loading spinner
-    setIsSubmitting(true)
-    await deleteBagItem({
-      variables: {
-        itemID: bagItem.id,
-        type,
-      },
-    })
     setIsSubmitting(false)
   }
-  const isReserved = member?.reservations[0]?.status === "Queued" || member?.reservations[0]?.status === "Hold"
-  const isQueuedOrHold = bagItem.status === "Reserved"
-  const newProductVariantIds = member?.reservations[0]?.newProducts?.reduce((a, b) => {
-    a.push(b?.productVariant?.id)
-    return a
-  }, [])
-  const isNewProduct = newProductVariantIds.includes(bagItem?.productVariant?.id)
-
-  const showSwapButton = isReserved && isQueuedOrHold && isNewProduct
 
   return (
     <>
@@ -112,22 +78,14 @@ export const BagItemCard = props => {
               >
                 <ArchiveIcon />
               </IconButton>
-              {showSwapButton && <SwapButton product={bagItem.productVariant} />}
+              {isSwappable && <SwapButton bagItem={bagItem} customer={member} />}
             </Box>
           }
         />
         <CardMedia className={classes.media} image={image.url} />
-        <Box padding="0px 16px">
+        <Box padding="10px 16px">
           <FlexBox>
             <Typography>{bagItem?.status}</Typography>
-            <IconButton
-              aria-label="delete"
-              onClick={() => {
-                setIsDeleteConfirmationDialogOpen(true)
-              }}
-            >
-              <DeleteIcon fontSize="small" />
-            </IconButton>
           </FlexBox>
         </Box>
       </Card>
@@ -138,14 +96,6 @@ export const BagItemCard = props => {
         open={isReturnConfirmationDialogOpen}
         setOpen={setIsReturnConfirmationDialogOpen}
         onClose={agreed => onCloseConfirmationDialog(agreed, "Return")}
-      />
-
-      <ConfirmationDialog
-        title="Delete Item"
-        body="Warning: Are you sure you want to delete this bag item? This will also remove the item from it's reservation. You should return the item instead of deleting if this item was fully rented by a customer."
-        open={isDeleteConfirmationDialogOpen}
-        setOpen={setIsDeleteConfirmationDialogOpen}
-        onClose={agreed => onCloseConfirmationDialog(agreed, "Delete")}
       />
     </>
   )
