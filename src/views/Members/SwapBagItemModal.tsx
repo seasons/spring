@@ -159,7 +159,7 @@ export const SwapBagItemModal = ({ open, onClose, customer, bagItem }) => {
                     <Spacer mt={2} />
                     <Box my={4}>
                       <Button autoFocus onClick={handleSubmit} color="primary" variant="contained">
-                        Add item
+                        Swap item
                       </Button>
                     </Box>
                   </Grid>
@@ -171,7 +171,7 @@ export const SwapBagItemModal = ({ open, onClose, customer, bagItem }) => {
                         <Box mt={2} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                           <Box style={{ position: "relative", width: "150px", padding: "4px" }}>
                             <RemoveWrapper>
-                              <IconButton onClick={() => selectedPhysicalProduct(null)}>
+                              <IconButton onClick={() => setSelectedPhysicalProduct(null)}>
                                 <CloseIcon />
                               </IconButton>
                             </RemoveWrapper>
