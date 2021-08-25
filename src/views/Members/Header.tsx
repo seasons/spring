@@ -7,7 +7,6 @@ import { useMutation } from "@apollo/react-hooks"
 import { MEMBER_ASSIGN_ROLE } from "./queries"
 import gql from "graphql-tag"
 import { useSnackbarContext } from "components/Snackbar"
-import { AddBagItemModal } from "./AddBagItemModal"
 
 const RESET_PASSWORD = gql`
   mutation ResetPassword($email: String!) {
@@ -53,14 +52,9 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
   })
 
   const [assignRolesModalIsOpen, setAssignRolesModal] = useState(false)
-  const [showAddBagItemModal, setShowAddBagItemModal] = useState(false)
 
   const openAssignRolesModal = () => {
     setAssignRolesModal(true)
-  }
-
-  const openAddBagItemModal = () => {
-    setShowAddBagItemModal(true)
   }
 
   const closeAssignRolesModal = () => {
@@ -116,10 +110,6 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
             text: "Assign roles",
             action: openAssignRolesModal,
           },
-          {
-            text: "Add bag item",
-            action: openAddBagItemModal,
-          },
         ]}
       />
       <AssignRolesModal
@@ -129,7 +119,6 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
         onClose={closeAssignRolesModal}
         open={assignRolesModalIsOpen}
       />
-      <AddBagItemModal customer={member} onClose={() => setShowAddBagItemModal(false)} open={showAddBagItemModal} />
       <ConfirmationDialog
         title="Are you sure you want to send a reset password email?"
         body="This user will receive an email with a reset password link."
