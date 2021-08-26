@@ -113,7 +113,7 @@ export const SwapBagItemModal = ({ open, onClose, customer, bagItem }) => {
     swapBagItem({
       variables: {
         oldItemID: bagItem.id,
-        physicalProductWhere: { id: physicalProduct?.id, seasonsUID: physicalProduct?.seasonsUID },
+        physicalProductWhere: { seasonsUID: physicalProduct?.seasonsUID },
       },
     })
   }
