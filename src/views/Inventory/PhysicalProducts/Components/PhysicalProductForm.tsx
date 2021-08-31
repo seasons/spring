@@ -34,7 +34,6 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
   const { values } = getState()
   const wholesalePrice = values.wholesalePrice
   const receivedStatusesFromParent = statuses.length > 0 && inventoryStatuses.length > 0 && offloadMethods.length > 0
-
   const { data, loading, error } = useQuery(PHYSICAL_PRODUCT_STATUSES_QUERY, {
     skip: receivedStatusesFromParent,
   })
@@ -84,7 +83,12 @@ export const PhysicalProductForm: React.FC<PhysicalProductFormProps> = ({
       <Grid item xs={6}>
         <Text variant="h5">Unit cost</Text>
         <Spacer mt={1} />
-        <TextField name={`${uid}_unitCost`} type="number" optionalNumber initialValue={parseInt(wholesalePrice)} />
+        <TextField
+          name={`${uid}_unitCost`}
+          type="number"
+          optionalNumber
+          initialValue={wholesalePrice ? parseInt(wholesalePrice) : 0}
+        />
         <OnChange name={`${uid}_unitCost`}>
           {value => {
             if (copyValuesToSiblings && isFirstPhysProd) {
