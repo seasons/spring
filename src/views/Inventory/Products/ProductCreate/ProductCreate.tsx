@@ -47,11 +47,6 @@ export const ProductCreate: React.FC = () => {
     return <Loading />
   }
 
-  const onNext = async values => {
-    setValues({ ...values, brand: values.brand.value })
-    return true
-  }
-
   const onSubmit = async values => {
     setIsSubmitting(true)
     // Extract appropriate values from the WizardForm
@@ -62,6 +57,23 @@ export const ProductCreate: React.FC = () => {
         input: productCreateData,
       },
     })
+  }
+
+  const onNext = async values => {
+    if (values.status === "Upcoming") {
+      if (values.photographyStatus !== "Done") {
+        showSnackbar({
+          message: "Photography must be finished for upcoming products",
+          status: "error",
+        })
+      } else {
+        onSubmit(values)
+      }
+      return false
+    } else {
+      setValues({ ...values, brand: values.brand.value })
+      return true
+    }
   }
 
   const initialValues = {
