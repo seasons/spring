@@ -7,7 +7,10 @@ import { useQuery, useLazyQuery } from "react-apollo"
 import { useHistory } from "react-router-dom"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/PhysicalProducts/queries"
-import { GET_RESERVATIONS_FOR_PRODUCT_QUERY } from "views/Reservations/queries"
+import {
+  GET_RESERVATIONS_FOR_PRODUCT_QUERY,
+  GET_RESERVATIONS_FOR_TRACKING_NUMBER_QUERY,
+} from "views/Reservations/queries"
 
 interface LookupReservationModalProps {
   open: boolean
@@ -17,9 +20,13 @@ interface LookupReservationModalProps {
 export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ open, onClose }) => {
   const history = useHistory()
   const { data, loading } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
-  const [getReservations, { data: resData }] = useLazyQuery(GET_RESERVATIONS_FOR_PRODUCT_QUERY)
+  const [getReservationsForProduct, { data: resData }] = useLazyQuery(GET_RESERVATIONS_FOR_PRODUCT_QUERY)
 
-  const [barcode, setBarcode] = useState("")
+  const [getReservationsForTrackingNumber, { data: resysByTrackingNumber }] = useLazyQuery(
+    GET_RESERVATIONS_FOR_TRACKING_NUMBER_QUERY
+  )
+
+  const [barcodeOrTrackingNumber, setBarcodeOrTrackingNumber] = useState("")
   const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState<PhysicalProduct | undefined>(undefined)
   const [physicalProductsByBarcode, setPhysicalProductsByBarcode] = useState({})
 
@@ -39,6 +46,16 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
     }
   })
 
+  useEffect(() => {
+    if (resysByTrackingNumber) {
+      const reservations = resysByTrackingNumber?.reservations
+      if (reservations.length > 0) {
+        const resID = reservations[0].id
+        history.push(`/reservation/${resID}/overview`)
+      }
+    }
+  })
+
   const inputRef = useRef()
 
   const focusOnInput = () => {
@@ -48,14 +65,25 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
 
   const handleBarcodeChange = async e => {
     const input = trim(e.target.value)
-    const physicalProduct = head(physicalProductsByBarcode[input]) as any
-    setBarcode(input)
 
-    getReservations({ variables: { id: physicalProduct.id, orderBy: "createdAt_DESC" } })
+    // All UPS tracking numbers in our system begin with "1Z7"
+    if (/^1Z7/.test(input)) {
+      // this is a tracking number
+      // Get most recent resy where sent or returned package containaed that tracking number
+      getReservationsForTrackingNumber({ variables: { trackingNumber: input } })
+    } else {
+      // this is a barcode
+      // 1. Translate barcode to product ID
+      const physicalProduct = head(physicalProductsByBarcode[input]) as any
+      setBarcodeOrTrackingNumber(input)
 
-    if (!selectedPhysicalProduct && input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
-      setSelectedPhysicalProduct(head(physicalProductsByBarcode[input]))
-      setBarcode("")
+      // 2. Get most recent resy for that product
+      getReservationsForProduct({ variables: { id: physicalProduct.id, orderBy: "createdAt_DESC" } })
+
+      if (!selectedPhysicalProduct && input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
+        setSelectedPhysicalProduct(head(physicalProductsByBarcode[input]))
+        setBarcodeOrTrackingNumber("")
+      }
     }
   }
 
@@ -88,7 +116,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
               type="text"
               variant="outlined"
               onChange={handleBarcodeChange}
-              value={barcode}
+              value={barcodeOrTrackingNumber}
               inputRef={inputRef}
               fullWidth
             />
