@@ -3,26 +3,26 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CustomerStatus } from "./globalTypes";
+import { CustomerStatus } from "./globalTypes"
 
 // ====================================================
 // GraphQL query operation: users
 // ====================================================
 
 export interface users_users_customer {
-  __typename: "Customer";
-  id: string;
-  status: CustomerStatus | null;
+  __typename: "Customer"
+  id: string
+  status: CustomerStatus | null
 }
 
 export interface users_users {
-  __typename: "User";
-  id: string;
-  fullName: string;
-  email: string;
-  customer: users_users_customer | null;
+  __typename: "User"
+  id: string
+  fullName: string
+  email: string
+  customer: users_users_customer | null
 }
 
 export interface users {
-  users: (users_users | null)[];
+  users: (users_users | null)[]
 }
