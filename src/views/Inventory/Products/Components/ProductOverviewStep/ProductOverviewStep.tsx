@@ -234,7 +234,7 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
       />
       <Grid container spacing={5}>
         <Grid item xs={4}>
-          <ImageUpload numImages={4} />
+          <ImageUpload numImages={8} />
         </Grid>
         <Grid item xs={8}>
           <GeneralSection

@@ -22,6 +22,8 @@ import {
   LaunchEdit,
   LaunchCreate,
   SearchView,
+  CategoryEdit,
+  CategoryCreate,
 } from "./views"
 import { NotificationsList } from "views/Notifications/NotificationsList"
 import { CreateFitPicView, FitPicView } from "views/Community"
@@ -90,6 +92,18 @@ export default [
         exact: true,
         component: props => <CollectionsEdit {...props} basePath="/content/collections" resource="Collection" />,
       },
+
+      {
+        path: "/inventory/categories/new",
+        exact: true,
+        component: props => <CategoryCreate {...props} basePath="/inventory/categories/new" resource="Category" />,
+      },
+      {
+        path: "/inventory/categories/:categoryID",
+        exact: true,
+        component: props => <CategoryEdit {...props} basePath="/inventory/categories" resource="Category" />,
+      },
+
       {
         path: "/inventory/:tab",
         exact: true,
