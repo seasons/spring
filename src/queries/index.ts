@@ -1,4 +1,3 @@
-import { GET_LIST } from "@seasons/react-admin"
 import gql from "graphql-tag"
 
 import Brand from "./Brand"
@@ -14,10 +13,12 @@ import PushNotificationReceipt from "./PushNotificationReceipt"
 import FitPic from "./FitPic"
 import Order from "./Order"
 import Launch from "./Launch"
+import Category from "./Category"
 
 export default {
   Product,
   Brand,
+  Category,
   Launch,
   Collection,
   Reservation,
@@ -29,14 +30,6 @@ export default {
   PushNotificationReceipt,
   FitPic,
   Order,
-  Category: {
-    [GET_LIST]: gql`
-      fragment category on Category {
-        id
-        name
-      }
-    `,
-  },
 }
 
 export const getAllBrands = gql`

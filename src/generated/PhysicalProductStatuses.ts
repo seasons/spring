@@ -8,27 +8,27 @@
 // ====================================================
 
 export interface PhysicalProductStatuses_inventoryStatuses_enumValues {
-  __typename: "__EnumValue";
-  name: string;
+  __typename: "__EnumValue"
+  name: string
 }
 
 export interface PhysicalProductStatuses_inventoryStatuses {
-  __typename: "__Type";
-  enumValues: PhysicalProductStatuses_inventoryStatuses_enumValues[] | null;
+  __typename: "__Type"
+  enumValues: PhysicalProductStatuses_inventoryStatuses_enumValues[] | null
 }
 
 export interface PhysicalProductStatuses_physicalProductStatuses_enumValues {
-  __typename: "__EnumValue";
-  name: string;
+  __typename: "__EnumValue"
+  name: string
 }
 
 export interface PhysicalProductStatuses_physicalProductStatuses {
-  __typename: "__Type";
-  enumValues: PhysicalProductStatuses_physicalProductStatuses_enumValues[] | null;
+  __typename: "__Type"
+  enumValues: PhysicalProductStatuses_physicalProductStatuses_enumValues[] | null
 }
 
 export interface PhysicalProductStatuses {
-  __typename: "Query";
-  inventoryStatuses: PhysicalProductStatuses_inventoryStatuses | null;
-  physicalProductStatuses: PhysicalProductStatuses_physicalProductStatuses | null;
+  __typename: "Query"
+  inventoryStatuses: PhysicalProductStatuses_inventoryStatuses | null
+  physicalProductStatuses: PhysicalProductStatuses_physicalProductStatuses | null
 }

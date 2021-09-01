@@ -8,22 +8,22 @@
 // ====================================================
 
 export interface LaunchFragment_brand {
-  __typename: "Brand";
-  id: string;
-  name: string;
+  __typename: "Brand"
+  id: string
+  name: string
 }
 
 export interface LaunchFragment_collection {
-  __typename: "Collection";
-  id: string;
-  title: string | null;
+  __typename: "Collection"
+  id: string
+  title: string | null
 }
 
 export interface LaunchFragment {
-  __typename: "Launch";
-  id: string;
-  launchAt: any;
-  published: boolean;
-  brand: LaunchFragment_brand | null;
-  collection: LaunchFragment_collection | null;
+  __typename: "Launch"
+  id: string
+  launchAt: any
+  published: boolean
+  brand: LaunchFragment_brand | null
+  collection: LaunchFragment_collection | null
 }

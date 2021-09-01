@@ -8,18 +8,18 @@
 // ====================================================
 
 export interface LaunchCreateQuery_brands {
-  __typename: "Brand";
-  id: string;
-  name: string;
+  __typename: "Brand"
+  id: string
+  name: string
 }
 
 export interface LaunchCreateQuery_collections {
-  __typename: "Collection";
-  id: string;
-  title: string | null;
+  __typename: "Collection"
+  id: string
+  title: string | null
 }
 
 export interface LaunchCreateQuery {
-  brands: (LaunchCreateQuery_brands | null)[];
-  collections: (LaunchCreateQuery_collections | null)[];
+  brands: (LaunchCreateQuery_brands | null)[]
+  collections: (LaunchCreateQuery_collections | null)[]
 }
