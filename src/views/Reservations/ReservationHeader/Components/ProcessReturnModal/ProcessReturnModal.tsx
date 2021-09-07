@@ -1,14 +1,25 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Card } from "@material-ui/core"
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Box,
+  TextField,
+  Card,
+  colors,
+  Typography,
+} from "@material-ui/core"
 import CheckCircleIcon from "@material-ui/icons/CheckCircle"
-import { DialogTitle } from "components"
+import { DialogTitle, Spacer } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { PhysicalProductStatus } from "generated/globalTypes"
 import { filter, values, trim } from "lodash"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX, RETURN_LABEL_BARCODE_REGEX } from "views/constants"
 import { useSnackbarContext } from "components/Snackbar"
+import styled from "styled-components"
 
 interface ProductState {
   productUID: string
@@ -124,10 +135,21 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
               fullWidth
             />
           </Box>
-          <Box style={{ display: "flex", justifyContent: "center" }}>
-            <Card style={{ display: "flex", justifyContent: "space-between" }}>
-              {!!trackingNumber && <CheckCircleIcon />}
-              Tracking Number: {trackingNumber}
+          <Box my={1}>
+            <Card elevation={1}>
+              {trackingNumber ? (
+                <TrackingNumber width="100%" py={3}>
+                  <CheckCircleIcon htmlColor={colors.green[500]} />
+                  <Spacer m={1} />
+                  <Typography variant="h5">Tracking Number: {trackingNumber}</Typography>
+                </TrackingNumber>
+              ) : (
+                <TrackingNumber width="100%" py={3}>
+                  <CheckCircleIcon />
+                  <Spacer m={1} />
+                  <Typography variant="h5"> Please scan the label from the return package</Typography>
+                </TrackingNumber>
+              )}
             </Card>
           </Box>
           <Box mt={1} mb={2}>
@@ -161,3 +183,8 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
     </>
   )
 }
+
+const TrackingNumber = styled(Box)`
+  display: flex;
+  justify-content: center;
+`
