@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { Button, Dialog, DialogContent, DialogActions, Box, TextField } from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Card } from "@material-ui/core"
+import CheckCircleIcon from "@material-ui/icons/CheckCircle"
 import { DialogTitle } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { PhysicalProductStatus } from "generated/globalTypes"
 import { filter, values, trim } from "lodash"
-import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
+import { PHYSICAL_PRODUCT_BARCODE_REGEX, RETURN_LABEL_BARCODE_REGEX } from "views/constants"
 import { useSnackbarContext } from "components/Snackbar"
 
 interface ProductState {
@@ -19,7 +20,7 @@ interface ProductState {
 interface ProcessReturnModalProps {
   open: boolean
   onClose?: () => void
-  onSave?(values: ProductStates): void
+  onSave?(values: ProductStates, trackingNumber: string): void
   disableButton?: boolean
   reservation: GetReservation
 }
@@ -48,18 +49,19 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
     ...barcodeMaps,
   })
 
+  const [trackingNumber, setTrackingNumber] = useState("")
+
   const [barcode, setBarcode] = useState("")
 
   const inputRef = useRef()
-  const shouldAllowSave = filter(values(productStates), a => a.returned).length > 0
-
+  const shouldAllowSave = filter(values(productStates), a => a.returned).length > 0 && !!trackingNumber
   const focusOnInput = () => {
     const target: any = inputRef?.current
     target?.focus()
   }
 
   const handleSave = () => {
-    onSave?.(productStates)
+    onSave?.(productStates, trackingNumber)
   }
 
   const { showSnackbar } = useSnackbarContext()
@@ -87,6 +89,8 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
           status: "error",
         })
       }
+    } else if (input.match(RETURN_LABEL_BARCODE_REGEX)) {
+      setTrackingNumber(input)
     } else {
       setBarcode(input)
     }
@@ -119,6 +123,12 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
               inputRef={inputRef}
               fullWidth
             />
+          </Box>
+          <Box style={{ display: "flex", justifyContent: "center" }}>
+            <Card style={{ display: "flex", justifyContent: "space-between" }}>
+              {!!trackingNumber && <CheckCircleIcon />}
+              Tracking Number: {trackingNumber}
+            </Card>
           </Box>
           <Box mt={1} mb={2}>
             {reservation.products.map(product => (

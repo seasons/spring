@@ -145,7 +145,7 @@ export const ReservationHeader = ({ data }) => {
         onClose={() => toggleModal(false)}
         reservation={data}
         disableButton={isMutating}
-        onSave={async (productStates, params = {}) => {
+        onSave={async (productStates, params) => {
           setIsMutating(true)
           try {
             let message = ``
@@ -162,6 +162,7 @@ export const ReservationHeader = ({ data }) => {
                   productStates: Object.values(productStates).map((productState: any) =>
                     omit(productState, "damageType")
                   ) as ProductStateInput[],
+                  trackingNumber: params,
                 },
               }
 
