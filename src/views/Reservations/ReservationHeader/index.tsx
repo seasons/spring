@@ -162,7 +162,7 @@ export const ReservationHeader = ({ data }) => {
                   productStates: Object.values(productStates).map((productState: any) =>
                     omit(productState, "damageType")
                   ) as ProductStateInput[],
-                  trackingNumber: params,
+                  trackingNumber: params.trackingNumber,
                 },
               }
 

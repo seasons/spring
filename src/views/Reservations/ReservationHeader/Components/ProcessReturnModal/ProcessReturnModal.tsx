@@ -31,9 +31,12 @@ interface ProductState {
 interface ProcessReturnModalProps {
   open: boolean
   onClose?: () => void
-  onSave?(values: ProductStates, trackingNumber: string): void
+  onSave?(values: ProductStates, trackingNumber: TrackingNumber): void
   disableButton?: boolean
   reservation: GetReservation
+}
+interface TrackingNumber {
+  trackingNumber: string
 }
 
 type ProductStates = { [key: string]: ProductState }
@@ -72,7 +75,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
   }
 
   const handleSave = () => {
-    onSave?.(productStates, trackingNumber)
+    onSave?.(productStates, { trackingNumber: trackingNumber })
   }
 
   const { showSnackbar } = useSnackbarContext()
