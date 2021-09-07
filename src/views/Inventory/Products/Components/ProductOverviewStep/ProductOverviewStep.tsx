@@ -133,6 +133,10 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
       value: "NotAvailable",
       display: "Not available",
     },
+    {
+      value: "Upcoming",
+      display: "Upcoming",
+    },
   ]
 
   const photographyStatuses: SelectChoice[] = [

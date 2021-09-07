@@ -3,30 +3,30 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CustomerDetailCreateInput } from "./globalTypes";
+import { CustomerDetailCreateInput } from "./globalTypes"
 
 // ====================================================
 // GraphQL mutation operation: signup
 // ====================================================
 
 export interface signup_signup_customer {
-  __typename: "Customer";
-  id: string;
+  __typename: "Customer"
+  id: string
 }
 
 export interface signup_signup {
-  __typename: "SignupPayload";
-  customer: signup_signup_customer;
+  __typename: "SignupPayload"
+  customer: signup_signup_customer
 }
 
 export interface signup {
-  signup: signup_signup;
+  signup: signup_signup
 }
 
 export interface signupVariables {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  details: CustomerDetailCreateInput;
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  details: CustomerDetailCreateInput
 }

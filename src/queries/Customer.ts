@@ -58,6 +58,7 @@ const CustomerDetails = gql`
       id
       saved
       status
+      isSwappable
       productVariant {
         id
         sku
@@ -158,7 +159,34 @@ const CustomerDetails = gql`
       shippedAt
       receivedAt
       createdAt
+      sentPackage {
+        id
+        items {
+          id
+          productVariant {
+            id
+            product {
+              id
+              images(size: Small) {
+                url
+              }
+            }
+          }
+        }
+      }
       products {
+        id
+        productVariant {
+          id
+          product {
+            id
+            images(size: Small) {
+              url
+            }
+          }
+        }
+      }
+      newProducts {
         id
         productVariant {
           id

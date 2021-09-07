@@ -3,25 +3,25 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { BrandWhereUniqueInput, CustomBrandUpdateInput } from "./globalTypes";
+import { BrandWhereUniqueInput, CustomBrandUpdateInput } from "./globalTypes"
 
 // ====================================================
 // GraphQL mutation operation: UpdateBrand
 // ====================================================
 
 export interface UpdateBrand_updateBrand {
-  __typename: "Brand";
-  id: string;
-  name: string;
-  slug: string;
-  brandCode: string;
+  __typename: "Brand"
+  id: string
+  name: string
+  slug: string
+  brandCode: string
 }
 
 export interface UpdateBrand {
-  updateBrand: UpdateBrand_updateBrand | null;
+  updateBrand: UpdateBrand_updateBrand | null
 }
 
 export interface UpdateBrandVariables {
-  where: BrandWhereUniqueInput;
-  data: CustomBrandUpdateInput;
+  where: BrandWhereUniqueInput
+  data: CustomBrandUpdateInput
 }

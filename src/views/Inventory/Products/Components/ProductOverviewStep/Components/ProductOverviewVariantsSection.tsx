@@ -20,7 +20,7 @@ export const ProductOverviewVariantsSection: React.FC<ProductOverviewVariantsSec
   productType,
 }) => {
   const redirect = useRedirect()
-  const isUniversalSize = variants?.[0].internalSize?.display === "Universal"
+  const isUniversalSize = variants?.[0]?.internalSize?.display === "Universal"
   const disableCreateNew = isUniversalSize && variants?.length > 0
 
   return (
