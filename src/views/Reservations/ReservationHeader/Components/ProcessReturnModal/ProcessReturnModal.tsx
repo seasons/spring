@@ -1,13 +1,25 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { Button, Dialog, DialogContent, DialogActions, Box, TextField } from "@material-ui/core"
-import { DialogTitle } from "components"
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Box,
+  TextField,
+  Card,
+  colors,
+  Typography,
+} from "@material-ui/core"
+import CheckCircleIcon from "@material-ui/icons/CheckCircle"
+import { DialogTitle, Spacer } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { ProcessReturnProductCard } from "./ProcessReturnProductCard"
 import { PhysicalProductStatus } from "generated/globalTypes"
 import { filter, values, trim } from "lodash"
-import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
+import { PHYSICAL_PRODUCT_BARCODE_REGEX, RETURN_LABEL_BARCODE_REGEX } from "views/constants"
 import { useSnackbarContext } from "components/Snackbar"
+import styled from "styled-components"
 
 interface ProductState {
   productUID: string
@@ -19,9 +31,12 @@ interface ProductState {
 interface ProcessReturnModalProps {
   open: boolean
   onClose?: () => void
-  onSave?(values: ProductStates): void
+  onSave?(values: ProductStates, trackingNumber: TrackingNumber): void
   disableButton?: boolean
   reservation: GetReservation
+}
+interface TrackingNumber {
+  trackingNumber: string
 }
 
 type ProductStates = { [key: string]: ProductState }
@@ -48,18 +63,19 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
     ...barcodeMaps,
   })
 
+  const [trackingNumber, setTrackingNumber] = useState("")
+
   const [barcode, setBarcode] = useState("")
 
   const inputRef = useRef()
-  const shouldAllowSave = filter(values(productStates), a => a.returned).length > 0
-
+  const shouldAllowSave = filter(values(productStates), a => a.returned).length > 0 && !!trackingNumber
   const focusOnInput = () => {
     const target: any = inputRef?.current
     target?.focus()
   }
 
   const handleSave = () => {
-    onSave?.(productStates)
+    onSave?.(productStates, { trackingNumber: trackingNumber })
   }
 
   const { showSnackbar } = useSnackbarContext()
@@ -87,6 +103,8 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
           status: "error",
         })
       }
+    } else if (input.match(RETURN_LABEL_BARCODE_REGEX)) {
+      setTrackingNumber(input)
     } else {
       setBarcode(input)
     }
@@ -120,6 +138,23 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
               fullWidth
             />
           </Box>
+          <Box my={1}>
+            <Card elevation={1}>
+              {trackingNumber ? (
+                <TrackingNumber width="100%" py={3}>
+                  <CheckCircleIcon htmlColor={colors.green[500]} />
+                  <Spacer m={1} />
+                  <Typography variant="h5">Tracking Number: {trackingNumber}</Typography>
+                </TrackingNumber>
+              ) : (
+                <TrackingNumber width="100%" py={3}>
+                  <CheckCircleIcon />
+                  <Spacer m={1} />
+                  <Typography variant="h5"> Please scan the label from the return package</Typography>
+                </TrackingNumber>
+              )}
+            </Card>
+          </Box>
           <Box mt={1} mb={2}>
             {reservation.products.map(product => (
               <ProcessReturnProductCard
@@ -151,3 +186,8 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
     </>
   )
 }
+
+const TrackingNumber = styled(Box)`
+  display: flex;
+  justify-content: center;
+`
