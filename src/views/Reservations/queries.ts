@@ -26,3 +26,11 @@ export const GET_RESERVATIONS_FOR_TRACKING_NUMBER_QUERY = gql`
     }
   }
 `
+
+export const GET_RESERVATIONS_BY_SEQ_NUM = gql`
+  query GetReservationsBySeqNum($where: ReservationWhereInput) {
+    reservations(where: $where, orderBy: createdAt_DESC, first: 1) {
+      id
+    }
+  }
+`
