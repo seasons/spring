@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Box, Card as MuiCard, styled as muiStyled } from "@material-ui/core"
+import { Box, styled as muiStyled } from "@material-ui/core"
 import { ControlPanel } from "components"
 
 import { useState } from "react"
@@ -73,7 +73,7 @@ export const MapchartWidget = ({ data }) => {
       return acc
     }, [])
     return features
-  }, [])
+  }, [data])
 
   const renderData = React.useMemo(() => {
     const features = unfurledData?.filter(a => {
@@ -92,7 +92,7 @@ export const MapchartWidget = ({ data }) => {
       return false
     })
     return { type: "FeatureCollection", features } as any
-  }, [showActive, showPaused, showAdmissable])
+  }, [unfurledData, showActive, showPaused, showAdmissable])
 
   return (
     <Container>

@@ -18,10 +18,6 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
   const dispatch = useDispatch()
   const user = member.detail
 
-  const handleEditOpen = () => {
-    setOpenEdit(true)
-  }
-
   const handleEditClose = () => {
     setOpenEdit(false)
   }

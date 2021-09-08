@@ -24,7 +24,7 @@ export const PickingPackingProductCard = ({ product, productState, onStateChange
       ...values,
       picked: productState.picked,
     })
-  }, [productState.picked])
+  }, [productState.picked, values])
 
   return (
     <Box my={1}>
