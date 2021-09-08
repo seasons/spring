@@ -25,7 +25,7 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
       ...values,
       returned: productState.returned,
     })
-  }, [productState.returned, values])
+  }, [productState.returned])
 
   return (
     <Box my={1}>

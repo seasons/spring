@@ -1,11 +1,9 @@
 import gql from "graphql-tag"
 
 export const GET_RESERVATIONS_FOR_PRODUCT_QUERY = gql`
-  query GetReservationsForProduct($id: ID!, $orderBy: ReservationOrderByInput) {
-    physicalProduct(where: { id: $id }) {
-      reservations(orderBy: $orderBy) {
-        id
-      }
+  query GetReservationsForProduct($sequenceNumber: Int!) {
+    reservations(where: { products_some: { sequenceNumber: $sequenceNumber } }, orderBy: createdAt_DESC, first: 1) {
+      id
     }
   }
 `

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { Header } from "components"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
@@ -15,6 +15,7 @@ import { useSelector } from "react-redux"
 import { omit } from "lodash"
 import { ProductStateInput } from "generated/globalTypes"
 import { useSnackbarContext } from "components/Snackbar"
+import { useLocation } from "react-router-dom"
 
 export const ReservationHeader = ({ data }) => {
   const [showUpdateStatusModal, toggleUpdateStatusModal] = useState(false)
@@ -102,6 +103,15 @@ export const ReservationHeader = ({ data }) => {
 
     return null
   }
+
+  const location = useLocation()
+  const scannedTrackingNumber: any = location?.state ? location?.state : {}
+
+  useEffect(() => {
+    if (scannedTrackingNumber?.trackingNumber) {
+      toggleModal(true)
+    }
+  }, [scannedTrackingNumber])
 
   const refresh = useRefresh()
 

@@ -20,6 +20,7 @@ import { filter, values, trim } from "lodash"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX, RETURN_LABEL_BARCODE_REGEX } from "views/constants"
 import { useSnackbarContext } from "components/Snackbar"
 import styled from "styled-components"
+import { useLocation } from "react-router-dom"
 
 interface ProductState {
   productUID: string
@@ -58,6 +59,14 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
       notes: "",
     }
   })
+
+  const location = useLocation()
+  const scannedTrackingNumber: any = location?.state ? location?.state : {}
+  useEffect(() => {
+    if (scannedTrackingNumber?.trackingNumber) {
+      setTrackingNumber(scannedTrackingNumber?.trackingNumber)
+    }
+  }, [location])
 
   const [productStates, setProductStates] = useState<ProductStates>({
     ...barcodeMaps,
@@ -105,6 +114,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
       }
     } else if (input.match(RETURN_LABEL_BARCODE_REGEX)) {
       setTrackingNumber(input)
+      setBarcode("")
     } else {
       setBarcode(input)
     }

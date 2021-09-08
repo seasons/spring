@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Dialog, DialogContent, Box, TextField, Typography } from "@material-ui/core"
+import { Dialog, DialogContent, Box, TextField, Typography, Input } from "@material-ui/core"
 import { DialogTitle } from "components"
 import { head, trim, groupBy } from "lodash"
 import { PhysicalProduct } from "generated/PhysicalProduct"
 import { useQuery, useLazyQuery } from "react-apollo"
 import { useHistory } from "react-router-dom"
-import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
+import { PHYSICAL_PRODUCT_BARCODE_REGEX, RETURN_LABEL_BARCODE_REGEX } from "views/constants"
 import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/PhysicalProducts/queries"
 import {
   GET_RESERVATIONS_FOR_PRODUCT_QUERY,
@@ -38,7 +38,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
 
   useEffect(() => {
     if (resData) {
-      const reservations = resData?.physicalProduct?.reservations
+      const reservations = resData?.reservations
       if (reservations.length > 0) {
         const resID = reservations[0].id
         history.push(`/reservation/${resID}/overview`)
@@ -51,7 +51,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
       const reservations = resysByTrackingNumber?.reservations
       if (reservations.length > 0) {
         const resID = reservations[0].id
-        history.push(`/reservation/${resID}/overview`)
+        history.push(`/reservation/${resID}/overview`, { trackingNumber: barcodeOrTrackingNumber })
       }
     }
   })
@@ -66,24 +66,26 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
   const handleBarcodeChange = async e => {
     const input = trim(e.target.value)
 
-    // All UPS tracking numbers in our system begin with "1Z7"
-    if (/^1Z7/.test(input)) {
-      // this is a tracking number
-      // Get most recent resy where sent or returned package containaed that tracking number
+    if (input.match(RETURN_LABEL_BARCODE_REGEX)) {
       getReservationsForTrackingNumber({ variables: { trackingNumber: input } })
-    } else {
-      // this is a barcode
-      // 1. Translate barcode to product ID
-      const physicalProduct = head(physicalProductsByBarcode[input]) as any
-      setBarcodeOrTrackingNumber(input)
-
+    } else if (input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
+      const getSequenceNumber = input => {
+        for (let i = 4; i <= input.length; i++) {
+          if (input[i] > 0) {
+            return parseInt(input.slice(i))
+          }
+        }
+      }
+      const sequenceNumber = getSequenceNumber(input)
       // 2. Get most recent resy for that product
-      getReservationsForProduct({ variables: { id: physicalProduct.id, orderBy: "createdAt_DESC" } })
+      getReservationsForProduct({ variables: { sequenceNumber: sequenceNumber } })
 
       if (!selectedPhysicalProduct && input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
         setSelectedPhysicalProduct(head(physicalProductsByBarcode[input]))
         setBarcodeOrTrackingNumber("")
       }
+    } else {
+      setBarcodeOrTrackingNumber(input)
     }
   }
 
