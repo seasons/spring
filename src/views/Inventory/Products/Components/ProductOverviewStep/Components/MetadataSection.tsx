@@ -130,7 +130,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
               name="recoupment"
               type="number"
               minValue={0}
-              placeholder={`${categoryRecoupment} (recoupment price of the category)`}
+              placeholder={`${categoryRecoupment} (recoupment of the category)`}
             />
           </Grid>
           <Grid item xs={6}>
