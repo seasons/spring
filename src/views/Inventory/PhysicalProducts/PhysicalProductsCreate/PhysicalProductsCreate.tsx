@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { useQuery } from "react-apollo"
 import { useLocation } from "react-router-dom"
 import { Loading } from "@seasons/react-admin"

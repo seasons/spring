@@ -289,12 +289,10 @@ export const getProductCreateData: any = (values: any) => {
 export const getProductUpdateData = (values: any) => {
   const {
     architecture,
-    brand,
     buyNewEnabled,
     buyUsedEnabled,
     buyUsedPrice,
     category: categoryID,
-    color: colorCode,
     description,
     externalURL,
     functions,

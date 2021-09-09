@@ -68,7 +68,7 @@ export const RetentionWidget = ({ data }) => {
     } else {
       setSeries(lastTwelveMonthsData)
     }
-  }, [showLast12Months])
+  }, [allData, lastTwelveMonthsData, showLast12Months])
 
   const formatAxisDate = value => {
     const d = dateStringToDate(value)

@@ -17,7 +17,7 @@ export const DiscoveryWidget = ({ data }) => {
       setResultToRender(rawResultAllTime?.reduce(createReduceRawResult(showConvertedOnly), {}))
       setSubtitle("Since Apr 07, 2021")
     }
-  }, [showLast30Days, showConvertedOnly])
+  }, [showLast30Days, showConvertedOnly, rawResultLast30Days, rawResultAllTime])
 
   const piechartData = {
     title: "Discovery Reference",

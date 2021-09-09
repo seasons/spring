@@ -65,7 +65,7 @@ export const PrintBarcodesModal: React.FC<ProcessReturnModalProps> = ({ disableB
 
   useEffect(() => {
     refetch()
-  }, [open])
+  }, [open, refetch])
 
   const [checkAll, setCheckAll] = useState(false)
   const [barcodeStates, setBarcodeStates] = useState<BarcodeStates>({
