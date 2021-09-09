@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import { Text, Spacer, Image } from "components"
+import { Text, Image } from "components"
 import { omit } from "lodash"
-import { Grid, Typography, Box, IconButton } from "@material-ui/core"
+import { Typography, Box, IconButton } from "@material-ui/core"
 import { Field, ChildFieldProps } from "fields/Field"
 import CloseIcon from "@material-ui/icons/Close"
 

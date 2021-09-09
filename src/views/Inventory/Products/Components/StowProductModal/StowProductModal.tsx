@@ -46,7 +46,7 @@ export const StowProductModal: React.FC<StowProductModalProps> = ({ disableButto
       setPhysicalProductsByBarcode(groupBy(data?.physicalProducts, a => a.barcode))
       setValidWarehouseLocationBarcodes(data?.warehouseLocations?.map(a => a.barcode))
     }
-  }, [loading])
+  }, [data, loading])
 
   const inputRef = useRef()
 

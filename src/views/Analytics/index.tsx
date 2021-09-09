@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import { Box, Container, MenuItem } from "@material-ui/core"
+import { Box, MenuItem } from "@material-ui/core"
 import { Select } from "@material-ui/core"
 import { AnalyticsReport } from "components/AnalyticsReport"
 import { AnalyticsViewType } from "generated/globalTypes"
