@@ -95,6 +95,7 @@ export const ProductFragment = gql`
       id
       slug
       measurementType
+      recoupment
     }
     tier {
       id

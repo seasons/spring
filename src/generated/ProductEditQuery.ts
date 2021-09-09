@@ -114,6 +114,7 @@ export interface ProductEditQuery_product_category {
   name: string
   slug: string
   measurementType: MeasurementType | null
+  recoupment: number
 }
 
 export interface ProductEditQuery_product_variants_internalSize {
