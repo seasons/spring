@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 
-import { Box, Grid, InputAdornment } from "@material-ui/core"
+import { Box, Grid, InputAdornment, styled } from "@material-ui/core"
 
 import { Spacer, Text } from "components"
 import colorsJSON from "data/colors.json"
@@ -22,6 +22,7 @@ export interface MetadataSectionProps {
   buyUsedPrice: number | null | undefined
   productTiers: FormSelectChoice[]
   isEditing: boolean
+  categoryRecoupment: number | null | undefined
 }
 
 export const MetadataSection: React.FC<MetadataSectionProps> = ({
@@ -33,6 +34,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
   buyUsedPrice,
   productTiers,
   isEditing,
+  categoryRecoupment,
 }) => {
   const { values: formValues } = useFormState()
   const formBrand = formValues?.brand?.value
@@ -123,7 +125,13 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Recoupment *</Text>
             <Spacer mt={1} />
-            <TextField requiredString name="recoupment" type="number" minValue={0} />
+            <TextField
+              requiredString
+              name="recoupment"
+              type="number"
+              minValue={0}
+              placeholder={`${categoryRecoupment} (recoupment of the category)`}
+            />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Rental price (override)</Text>
