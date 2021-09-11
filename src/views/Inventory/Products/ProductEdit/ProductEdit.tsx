@@ -81,7 +81,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
         value: product.brand.id,
         label: product.brand.name,
       },
-      recoupment: product.recoupment,
+      recoupment: product.recoupment ? product.recoupment : product.category.recoupment,
       wholesalePrice: product.wholesalePrice,
       rentalPriceOverride: product.rentalPriceOverride,
       category: product.category.id,
