@@ -115,7 +115,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <Text variant="h6">Wholesale price *</Text>
             <Spacer mt={1} />
             <TextField
-              requiredString
+              requiredNumber
               name="wholesalePrice"
               type="number"
               minValue={0}
@@ -126,10 +126,8 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <Text variant="h6">Recoupment *</Text>
             <Spacer mt={1} />
             <TextField
-              requiredString
               name="recoupment"
               type="number"
-              minValue={0}
               placeholder={`${categoryRecoupment} (recoupment of the category)`}
             />
           </Grid>
