@@ -123,7 +123,7 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
           <Grid item xs={6}>
             <Text variant="h6">Recoupment *</Text>
             <Spacer mt={1} />
-            <TextField requiredString name="recoupment" type="number" minValue={0} />
+            <TextField name="recoupment" type="number" />
           </Grid>
           <Grid item xs={6}>
             <Text variant="h6">Rental price (override)</Text>
