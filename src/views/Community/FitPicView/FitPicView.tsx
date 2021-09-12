@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "react-apollo"
 import { useQueryWithStore, Loading } from "@seasons/react-admin"
 import { useRefresh } from "@seasons/react-admin"
 import { Header, Spacer, Text, Wizard } from "components"
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { fitPic } from "generated/fitPic"
 import { SelectField, TextField } from "fields"
 import { DateTime } from "luxon"
@@ -62,7 +63,7 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
     if (selectedProductIDs.length === 0 && data?.products?.length > 0) {
       setSelectedProductIDs(data.products?.map(a => a.id) || [])
     }
-  }, [data])
+  }, [data, selectedProductIDs.length])
 
   if (!loaded && loading) return <Loading />
   if (error || !data) return <Box>{error.message}</Box>

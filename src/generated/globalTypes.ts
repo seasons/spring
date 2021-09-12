@@ -8716,6 +8716,7 @@ export interface ReservationCreateWithoutPackageEventsInput {
 export interface ReservationProcessReturnInput {
   reservationNumber: number
   productStates: ProductStateInput[]
+  trackingNumber: string
 }
 
 export interface ReservationReceiptCreateOneWithoutReservationInput {

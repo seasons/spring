@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { ControlPanel, Text } from "components"
+import { ControlPanel } from "components"
 import ReactApexChart from "react-apexcharts"
 import { Box, Card as MuiCard, styled as muiStyled } from "@material-ui/core"
 import { theme } from "theme/theme"
@@ -47,7 +47,7 @@ export const IOSVersionsWidget = ({ data }) => {
       })
     }
     return series
-  }, [showActive, showPaused, showAdmissable, data])
+  }, [data, orderedLabels, showActive, showPaused, showAdmissable])
 
   const renderData = {
     series: [

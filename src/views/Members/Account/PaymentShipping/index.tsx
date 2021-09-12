@@ -1,5 +1,5 @@
 import { updateCustomer as updateCustomerAction } from "actions/customerActions"
-import { CardContent, ComponentError, EditButton, EditModal, TableHeader } from "components"
+import { CardContent, ComponentError, EditButton, EditModal } from "components"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 

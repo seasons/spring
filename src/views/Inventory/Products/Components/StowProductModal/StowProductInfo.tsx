@@ -19,7 +19,7 @@ const ProductImage = ({ product }: { product: PhysicalProduct }) => {
     if (!loading) {
       setImage(data?.physicalProduct?.productVariant?.product?.images?.[0])
     }
-  }, [loading])
+  }, [data, loading])
 
   return <Image src={image?.url} width={200} height={250} />
 }
@@ -65,7 +65,7 @@ export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, produ
           }}
           value={currentBarcode}
           getOptionSelected={(option, value) => {
-            return currentBarcode == option.barcode
+            return currentBarcode === option.barcode
           }}
           getOptionLabel={option => option.barcode || ""}
           renderInput={params => {
