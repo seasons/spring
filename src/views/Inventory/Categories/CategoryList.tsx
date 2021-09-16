@@ -1,8 +1,20 @@
 import React from "react"
 import { Datagrid, List, TextField } from "@seasons/react-admin"
 import { Header } from "components/Header"
+import { Text } from "components"
 import { useHistory } from "react-router"
 import { CheckField, ViewEntityField } from "fields"
+
+const IntToPriceField = props => {
+  return (
+    <Text variant="body2">
+      {(props?.record?.dryCleaningFee / 100).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })}
+    </Text>
+  )
+}
 
 export const CategoryList = props => {
   const history = useHistory()
@@ -26,7 +38,7 @@ export const CategoryList = props => {
         <Datagrid>
           <TextField source="name" label="Name" />
           <TextField source="recoupment" label="Recoupment" />
-          <TextField source="dryCleaningFee" label="Cleaning fee" />
+          <IntToPriceField source="dryCleaningFee" label="Cleaning fee" />
           <TextField source="name" label="Name" />
           <CheckField source="visible" value={true} />
           <ViewEntityField source="id" entityPath="inventory/categories" label="Actions" />
