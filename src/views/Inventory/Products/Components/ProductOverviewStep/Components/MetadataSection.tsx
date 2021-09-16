@@ -19,7 +19,6 @@ export interface MetadataSectionProps {
   manufacturerSizes: FormSelectChoice[]
   buyNewEnabled: boolean
   buyUsedEnabled: boolean
-  buyUsedPrice: number | null | undefined
   productTiers: FormSelectChoice[]
   isEditing: boolean
   categoryRecoupment: number | null | undefined
@@ -31,12 +30,12 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
   manufacturerSizes,
   buyNewEnabled,
   buyUsedEnabled,
-  buyUsedPrice,
   productTiers,
   isEditing,
   categoryRecoupment,
 }) => {
   const { values: formValues } = useFormState()
+  const isUpcoming = formValues?.status === "Upcoming"
   const formBrand = formValues?.brand?.value
   const [getBrandStyles, { data: brandData }] = useLazyQuery(productCreateBrand_Query, {
     variables: {
@@ -107,7 +106,6 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <TextField
               name="retailPrice"
               type="number"
-              minValue={0}
               InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
             />
           </Grid>
@@ -115,10 +113,9 @@ export const MetadataSection: React.FC<MetadataSectionProps> = ({
             <Text variant="h6">Wholesale price *</Text>
             <Spacer mt={1} />
             <TextField
-              requiredNumber
+              requiredNumber={!isUpcoming}
               name="wholesalePrice"
               type="number"
-              minValue={0}
               InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
             />
           </Grid>
