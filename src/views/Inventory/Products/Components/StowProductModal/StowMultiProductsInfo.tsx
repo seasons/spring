@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import { Typography, Box, Paper, TextField } from "@material-ui/core"
+import { Typography, Box, Paper, IconButton } from "@material-ui/core"
 import { PhysicalProduct } from "generated/PhysicalProduct"
-import { Autocomplete } from "@material-ui/lab"
 import { useQuery } from "react-apollo"
 import { PHYSICAL_PRODUCT_WITH_IMAGES } from "views/Inventory/PhysicalProducts/queries"
+import CloseIcon from "@material-ui/icons/Close"
 import { StowProductInfoReports } from "./StowProductInfoReports"
 
 const Image = styled.img`
@@ -29,53 +29,17 @@ interface StowProductInfoProps {
   product?: PhysicalProduct
   locations?: any[]
   barcode?: string
-  onChange?: (text: string) => void
+
+  onRemove?: (text: string) => void
 }
 
-export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, product, locations, onChange }) => {
-  const productBrandCode = product?.seasonsUID?.split("-")?.[0]
-  const [currentBarcode, setCurrentBarcode] = useState(barcode)
-  const filteredLocations = locations?.filter(({ barcode }) => {
-    if (barcode.startsWith("SR")) {
-      const locationBrandCode = barcode.split("-")[2]
-      if (locationBrandCode !== productBrandCode) {
-        return false
-      }
-    }
-    return true
-  })
-
-  useEffect(() => {
-    setCurrentBarcode(barcode)
-  }, [barcode])
-
+export const StowMultiProductsInfo: React.FC<StowProductInfoProps> = ({ product, onRemove }) => {
   if (!product) {
     return null
   }
 
   return (
     <>
-      <Box mb={2}>
-        <Autocomplete
-          id="combo-box-demo"
-          options={filteredLocations || []}
-          onChange={e => {
-            const id = (e.currentTarget as any).innerText
-            setCurrentBarcode(id)
-            onChange?.(id)
-          }}
-          value={currentBarcode}
-          getOptionSelected={(option, value) => {
-            return currentBarcode === option.barcode
-          }}
-          getOptionLabel={option => option.barcode || ""}
-          renderInput={params => {
-            return <TextField {...params} label="Select Location" variant="outlined" />
-          }}
-          clearOnBlur={false}
-          autoSelect
-        />
-      </Box>
       <Box mt={6} mb={1}>
         <Paper variant="outlined">
           <Box display="flex">
@@ -104,20 +68,21 @@ export const StowProductInfo: React.FC<StowProductInfoProps> = ({ barcode, produ
                 </Box>
               </Box>
             </Box>
+            <RemoveWrapper>
+              <IconButton aria-label="close" onClick={() => onRemove?.(product.id)}>
+                <CloseIcon />
+              </IconButton>
+            </RemoveWrapper>
           </Box>
         </Paper>
         <StowProductInfoReports product={product} />
-        <Box my={1} mt={2}>
-          <Box mt={1}>
-            <Typography variant="overline" color="textSecondary">
-              New Warehouse Location
-            </Typography>
-            <Typography variant="h4" color="textSecondary">
-              {currentBarcode || "-"}
-            </Typography>
-          </Box>
-        </Box>
       </Box>
     </>
   )
 }
+
+const RemoveWrapper = styled.div`
+  position: relative;
+  top: 0;
+  right: 0;
+`
