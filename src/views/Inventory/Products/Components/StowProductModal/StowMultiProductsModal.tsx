@@ -128,7 +128,6 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
     setBarcode("")
     onClose?.()
   }
-  console.log(!location && !!selectedPhysicalProductsIDs)
 
   return (
     <>
