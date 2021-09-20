@@ -208,6 +208,7 @@ export const PRODUCT_EDIT_QUERY = gql`
     categories(where: { AND: [{ children_none: { id: null } }, { productType: $productType }] }, orderBy: name_ASC) {
       id
       name
+      recoupment
     }
     ...ProductUpsert
     product(where: $input) {
@@ -230,6 +231,7 @@ export const PRODUCT_UPSERT_QUERY = gql`
       id
       name
       measurementType
+      recoupment
     }
     ...ProductUpsert
   }
