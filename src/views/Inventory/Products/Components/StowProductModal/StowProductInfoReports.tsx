@@ -9,7 +9,7 @@ interface StowProductInfoReportsProps {
 export const StowProductInfoReports: React.FC<StowProductInfoReportsProps> = ({ product }) => {
   return (
     <Box my={1} mt={2}>
-      {product?.reports?.map(report => {
+      {product?.reports?.map((report, index) => {
         if (!report) {
           return null
         }
@@ -17,7 +17,7 @@ export const StowProductInfoReports: React.FC<StowProductInfoReportsProps> = ({ 
         const { damageTypes, notes } = report
 
         return (
-          <Box>
+          <Box key={index}>
             {damageTypes?.length > 0 && (
               <>
                 <Typography variant="overline" color="textSecondary">
@@ -26,7 +26,7 @@ export const StowProductInfoReports: React.FC<StowProductInfoReportsProps> = ({ 
                 <Typography variant="body1">{damageTypes?.join(", ")}</Typography>
               </>
             )}
-            {(notes || "").length > 0 && (
+            {notes && notes.length > 0 && (
               <>
                 <Typography variant="overline" color="textSecondary">
                   Notes

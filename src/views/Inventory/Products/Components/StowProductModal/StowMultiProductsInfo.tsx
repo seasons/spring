@@ -39,45 +39,43 @@ export const StowMultiProductsInfo: React.FC<StowProductInfoProps> = ({ product,
   }
 
   return (
-    <>
-      <Box mt={6} mb={1}>
-        <Paper variant="outlined">
-          <Box display="flex">
-            <Box>
-              <ProductImage product={product} />
-            </Box>
-            <Box flexGrow={1} px={2}>
-              <Box my={2}>
-                <Box display="flex" flexDirection="column">
-                  <Box pb={2}>
-                    <Typography variant="overline" color="textSecondary">
-                      Seasons UID
-                    </Typography>
-                    <Typography variant="h6" color="textSecondary">
-                      {product.seasonsUID}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="overline" color="textSecondary">
-                      Previous Warehouse Location
-                    </Typography>
-                    <Typography variant="h6" color="textSecondary">
-                      {product?.warehouseLocation?.barcode || "Unknown"}
-                    </Typography>
-                  </Box>
+    <Box mt={6} mb={1}>
+      <Paper variant="outlined">
+        <Box display="flex">
+          <Box>
+            <ProductImage product={product} />
+          </Box>
+          <Box flexGrow={1} px={2}>
+            <Box my={2}>
+              <Box display="flex" flexDirection="column">
+                <Box pb={2}>
+                  <Typography variant="overline" color="textSecondary">
+                    Seasons UID
+                  </Typography>
+                  <Typography variant="h6" color="textSecondary">
+                    {product.seasonsUID}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="overline" color="textSecondary">
+                    Previous Warehouse Location
+                  </Typography>
+                  <Typography variant="h6" color="textSecondary">
+                    {product?.warehouseLocation?.barcode || "Unknown"}
+                  </Typography>
                 </Box>
               </Box>
             </Box>
-            <RemoveWrapper>
-              <IconButton aria-label="close" onClick={() => onRemove?.(product.id)}>
-                <CloseIcon />
-              </IconButton>
-            </RemoveWrapper>
           </Box>
-        </Paper>
-        <StowProductInfoReports product={product} />
-      </Box>
-    </>
+          <RemoveWrapper>
+            <IconButton aria-label="close" onClick={() => onRemove?.(product.id)}>
+              <CloseIcon />
+            </IconButton>
+          </RemoveWrapper>
+        </Box>
+      </Paper>
+      <StowProductInfoReports product={product} />
+    </Box>
   )
 }
 

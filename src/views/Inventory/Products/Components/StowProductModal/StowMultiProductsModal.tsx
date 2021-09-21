@@ -55,12 +55,7 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
     }
   }, [data, loading])
 
-  const inputRef = useRef()
-
-  const focusOnInput = () => {
-    const target: any = inputRef?.current
-    target?.focus()
-  }
+  const inputRef = useRef<any>()
 
   const handleSave = async () => {
     await stowItems({
@@ -71,17 +66,16 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
     })
     setSelectedPhysicalProducts([])
     setSelectedPhysicalProductsIDs([])
-    setLocation("")
     setBarcode("")
     onSave?.()
-    focusOnInput()
+    inputRef?.current?.focus()
   }
 
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
     setBarcode(input)
 
-    if (selectedPhysicalProducts.length === 30) {
+    if (selectedPhysicalProducts.length >= 30) {
       showSnackbar({
         message: `Cannot stow more than 30 items at a given warehouse location`,
         status: "error",
@@ -114,12 +108,12 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
   }, [removePhysicalProduct])
 
   useEffect(() => {
-    const timeout = setTimeout(focusOnInput, 100)
+    const timeout = setTimeout(inputRef?.current?.focus(), 100)
 
     return () => {
       clearTimeout(timeout)
     }
-  }, [open])
+  }, [open, inputRef])
 
   const fullOnClose = () => {
     setSelectedPhysicalProductsIDs([])
@@ -130,66 +124,64 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
   }
 
   return (
-    <>
-      <Dialog onClose={fullOnClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={fullOnClose}>
-          <Typography variant="subtitle1">Stow Multiple Products</Typography>
-        </DialogTitle>
-        <DialogContent dividers>
-          <Box my={2}>
-            <TextField
-              label="Scan Barcode"
-              helperText={`Click into box and scan the barcode of the ${
-                !selectedPhysicalProducts ? "warehouse location" : "product"
-              }`}
-              name="barcode"
-              type="text"
-              variant="outlined"
-              onChange={handleBarcodeChange}
-              value={barcode}
-              inputRef={inputRef}
-              fullWidth
-            />
-          </Box>
-
-          <WarehouseLocationsDropdown
-            locations={data?.warehouseLocations}
-            location={location}
-            onChange={text => {
-              setLocation(text)
-            }}
+    <Dialog onClose={fullOnClose} aria-labelledby="customized-dialog-title" open={open}>
+      <DialogTitle id="customized-dialog-title" onClose={fullOnClose}>
+        <Typography variant="subtitle1">Stow Multiple Products</Typography>
+      </DialogTitle>
+      <DialogContent dividers>
+        <Box my={2}>
+          <TextField
+            label="Scan Barcode"
+            helperText={`Click into box and scan the barcode of the ${
+              !selectedPhysicalProducts ? "warehouse location" : "product"
+            }`}
+            name="barcode"
+            type="text"
+            variant="outlined"
+            onChange={handleBarcodeChange}
+            value={barcode}
+            inputRef={inputRef}
+            fullWidth
           />
+        </Box>
 
-          {!!selectedPhysicalProducts &&
-            selectedPhysicalProducts.map(product => {
-              return (
-                <>
-                  <Box mt={2} mb={2}>
-                    <StowMultiProductsInfo
-                      product={product}
-                      locations={data?.warehouseLocations}
-                      barcode={location}
-                      onRemove={text => {
-                        setRemovePhysicalProduct(text)
-                      }}
-                    />
-                  </Box>
-                </>
-              )
-            })}
-        </DialogContent>
-        <DialogActions>
-          <Button
-            autoFocus
-            onClick={handleSave}
-            color="primary"
-            variant="contained"
-            disabled={!location || disableButton}
-          >
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+        <WarehouseLocationsDropdown
+          locations={data?.warehouseLocations}
+          location={location}
+          onChange={text => {
+            setLocation(text)
+          }}
+        />
+
+        {!!selectedPhysicalProducts &&
+          selectedPhysicalProducts.map(product => {
+            return (
+              <>
+                <Box mt={2} mb={2}>
+                  <StowMultiProductsInfo
+                    product={product}
+                    locations={data?.warehouseLocations}
+                    barcode={location}
+                    onRemove={text => {
+                      setRemovePhysicalProduct(text)
+                    }}
+                  />
+                </Box>
+              </>
+            )
+          })}
+      </DialogContent>
+      <DialogActions>
+        <Button
+          autoFocus
+          onClick={handleSave}
+          color="primary"
+          variant="contained"
+          disabled={!location || disableButton}
+        >
+          Save
+        </Button>
+      </DialogActions>
+    </Dialog>
   )
 }
