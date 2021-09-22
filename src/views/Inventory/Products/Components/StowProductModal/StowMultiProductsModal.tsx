@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typography } from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typography, colors } from "@material-ui/core"
 import { DialogTitle } from "components"
 import { head, trim, groupBy } from "lodash"
 import { useQuery, useMutation } from "react-apollo"
@@ -9,6 +9,7 @@ import { STOW_ITEMS } from "views/Inventory/PhysicalProducts/mutations"
 import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/PhysicalProducts/queries"
 import { useSnackbarContext } from "components/Snackbar"
 import { WarehouseLocationsDropdown } from "./WarehouseLocations"
+import CheckCircleIcon from "@material-ui/icons/CheckCircle"
 
 interface StowMultiProductModalProps {
   open: boolean
@@ -66,6 +67,7 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
     })
     setSelectedPhysicalProducts([])
     setSelectedPhysicalProductsIDs([])
+    setLocation("")
     setBarcode("")
     onSave?.()
     inputRef?.current?.focus()
@@ -86,7 +88,9 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
     if (input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
       // User has not yet selected a physical product
       const selectedPhysicalProduct = head<any>(physicalProductsByBarcode[input])
-      if (!selectedPhysicalProduct) return
+      if (!selectedPhysicalProduct) {
+        return
+      }
       setSelectedPhysicalProducts([selectedPhysicalProduct, ...selectedPhysicalProducts])
       setSelectedPhysicalProductsIDs([...selectedPhysicalProductsIDs, selectedPhysicalProduct?.id])
       setBarcode("")
@@ -152,6 +156,18 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
             setLocation(text)
           }}
         />
+
+        {location ? (
+          <Box display="flex" justifyContent="space-between" width={300}>
+            <CheckCircleIcon htmlColor={colors.green[500]} />
+            <Typography variant="h5">Location: {location}</Typography>
+          </Box>
+        ) : (
+          <Box display="flex" justifyContent="space-between" width={300}>
+            <CheckCircleIcon />
+            <Typography variant="h5"> Please scan warehouse location</Typography>
+          </Box>
+        )}
 
         {!!selectedPhysicalProducts &&
           selectedPhysicalProducts.map(product => {

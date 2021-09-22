@@ -11,7 +11,7 @@ export const UPDATE_PHYSICAL_PRODUCT = gql`
 `
 
 export const STOW_ITEMS = gql`
-  mutation StowItems($ids: [String], $warehouseLocationBarcode: String!) {
+  mutation StowItems($ids: [ID], $warehouseLocationBarcode: String!) {
     stowItems(ids: $ids, warehouseLocationBarcode: $warehouseLocationBarcode)
   }
 `

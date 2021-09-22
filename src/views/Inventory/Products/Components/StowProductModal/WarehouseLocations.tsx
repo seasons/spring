@@ -17,6 +17,7 @@ export const WarehouseLocationsDropdown: React.FC<WarehouseLocationsDropdownProp
       <Autocomplete
         id="combo-box-demo"
         options={locations || []}
+        value={location}
         onChange={e => {
           const id = (e.currentTarget as any).innerText
           onChange?.(id)
