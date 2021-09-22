@@ -8,6 +8,7 @@ import { FormSelectChoice, getFormSelectChoices } from "utils/form"
 import { ProductUpsertQuery_brands, ProductUpsertQuery_categories } from "generated/ProductUpsertQuery"
 import { ACCESSORY_SIZE_TYPES, MANUFACTURER_SIZE_TYPES } from "utils/sizes"
 import { ProductEditQuery_product } from "generated/ProductEditQuery"
+import { useFormState } from "react-final-form"
 
 export interface GeneralSectionProps {
   brands: ProductUpsertQuery_brands[]
@@ -34,11 +35,13 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   product,
   categories,
 }) => {
+  const { values: formValues } = useFormState()
   const currentStatus = product?.status
   const brandChoices = brands.map(brand => ({
     display: brand.name,
     value: brand.id,
   }))
+  const isUpcoming = formValues?.status === "Upcoming"
   const categoriesChoices = categories?.map(c => ({ value: c.id, display: c.name }))
   const typeChoices = getFormSelectChoices(types)
 
@@ -103,10 +106,10 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
               <Text variant="h6">Manufacturer size type *</Text>
               <Spacer mt={1} />
               <SelectField
-                disabled={isEditing && !!manufacturerSizeType}
+                disabled={(isEditing && !!manufacturerSizeType) || isUpcoming}
                 name="manufacturerSizeType"
                 choices={manufacturerSizeTypeChoices}
-                requiredString
+                requiredString={!isUpcoming}
               />
               <Spacer mt={3} />
             </Grid>
@@ -122,7 +125,13 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <Grid item xs={6}>
               <Text variant="h6">Internal sizes</Text>
               <Spacer mt={1} />
-              <SelectField disabled={isEditing} multiple name="sizes" choices={internalSizes} required />
+              <SelectField
+                disabled={(isEditing && formValues?.sizes > 0) || isUpcoming}
+                multiple
+                name="sizes"
+                choices={internalSizes}
+                required
+              />
               <Spacer mt={3} />
             </Grid>
           </Grid>

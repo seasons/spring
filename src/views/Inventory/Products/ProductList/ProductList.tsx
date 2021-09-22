@@ -13,6 +13,7 @@ import { BulkPublishButton } from "./BulkPublishButton"
 import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Components"
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/PhysicalProducts/mutations"
 import { useSnackbarContext } from "components/Snackbar"
+import { StowMultiProductsModal } from "../Components"
 
 export interface ProductListInterface {
   onNewProductBtnPressed: () => void
@@ -22,6 +23,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
   const refresh = useRefresh()
   const [openPrintBarcodesModal, togglePrintBarcodesModal] = useState(false)
   const [openStowProductModal, toggleStowProductModal] = useState(false)
+  const [openStowMultiProductsModal, toggleStowMultiProductsModal] = useState(false)
   const [updatingStatusForPhysicalProduct, setUpdatingStatusForPhysicalProduct] = useState<any>(null)
   const [offloadingPhysicalProduct, setOffloadingPhysicalProduct] = useState<any>(null)
   const [isMutating, setIsMutating] = useState(false)
@@ -52,6 +54,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
           <ProductListActions
             onClickPrintBarcodes={() => togglePrintBarcodesModal(true)}
             onClickStowProduct={() => toggleStowProductModal(true)}
+            onClickStowMultiProducts={() => toggleStowMultiProductsModal(true)}
           />
         }
         sort={{ field: "publishedAt", order: "DESC" }}
@@ -98,6 +101,12 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
         open={openStowProductModal}
         onClose={() => {
           toggleStowProductModal(false)
+        }}
+      />
+      <StowMultiProductsModal
+        open={openStowMultiProductsModal}
+        onClose={() => {
+          toggleStowMultiProductsModal(false)
         }}
       />
 
