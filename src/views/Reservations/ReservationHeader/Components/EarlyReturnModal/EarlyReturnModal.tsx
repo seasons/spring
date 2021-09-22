@@ -3,7 +3,6 @@ import { Button, Dialog, DialogContent, DialogActions, Box } from "@material-ui/
 import { DialogTitle, Spacer } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { EarlyReturnProductCard } from "./EarlyReturnProductCard"
-import styled from "styled-components"
 
 interface EarlyReturnModalProps {
   open: boolean

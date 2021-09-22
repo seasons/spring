@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
-import { Typography, Box, Paper, colors, Button } from "@material-ui/core"
+import { Typography, Box, Paper, colors } from "@material-ui/core"
 import CheckCircleIcon from "@material-ui/icons/CheckCircle"
 import { GetReservation_products } from "generated/GetReservation"
 

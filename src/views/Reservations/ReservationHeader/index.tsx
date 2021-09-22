@@ -156,7 +156,7 @@ export const ReservationHeader = ({ data }) => {
   })
 
   const menuItems: any[] = []
-  if (["Delivered", "Recieved"].includes(data?.status)) {
+  if (["Delivered", "Recieved", "EarlyReturn"].includes(data?.status)) {
     menuItems.push({
       text: "Early return",
       action: () => {
