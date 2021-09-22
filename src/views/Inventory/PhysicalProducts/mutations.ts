@@ -10,6 +10,12 @@ export const UPDATE_PHYSICAL_PRODUCT = gql`
   ${UpdatePhysicalProductFragment}
 `
 
+export const STOW_ITEMS = gql`
+  mutation StowItems($ids: [ID], $warehouseLocationBarcode: String!) {
+    stowItems(ids: $ids, warehouseLocationBarcode: $warehouseLocationBarcode)
+  }
+`
+
 export const UPDATE_PHYSICAL_PRODUCTS = gql`
   mutation UpdateManyPhysicalProducts($where: PhysicalProductWhereInput) {
     updateManyPhysicalProducts(where: $where, data: { barcoded: true }) {
