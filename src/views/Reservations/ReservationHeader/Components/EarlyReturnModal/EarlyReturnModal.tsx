@@ -19,7 +19,8 @@ export const EarlyReturnModal: React.FC<EarlyReturnModalProps> = ({
   onClose,
   reservation,
 }) => {
-  const products = reservation?.products
+  const returnedProducts = reservation?.returnedProducts.map(a => a.id)
+  const products = reservation?.products?.filter(a => !returnedProducts?.includes(a?.id))
   const [selectedProductsIDs, setSelectedProductsIDs] = useState<any>([])
   const shouldAllowSave = selectedProductsIDs.length > 0
   const reservationID = reservation?.id
@@ -33,7 +34,6 @@ export const EarlyReturnModal: React.FC<EarlyReturnModalProps> = ({
       <DialogTitle id="customized-dialog-title" onClose={() => onClose?.()}>
         Early Return
       </DialogTitle>
-      <DialogContent dividers>Choose which products are going to be returned early</DialogContent>
       {!!products &&
         products.map((product, index) => {
           return (
