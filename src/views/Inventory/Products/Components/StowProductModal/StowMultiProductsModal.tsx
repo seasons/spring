@@ -158,14 +158,18 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
         />
 
         {location ? (
-          <Box display="flex" justifyContent="space-between" width={300}>
+          <Box display="flex" justifyContent="space-between" width={300} pt={1}>
             <CheckCircleIcon htmlColor={colors.green[500]} />
-            <Typography variant="h5">Location: {location}</Typography>
+            <Box pt={0.5}>
+              <Typography variant="h5">Location: {location}</Typography>
+            </Box>
           </Box>
         ) : (
-          <Box display="flex" justifyContent="space-between" width={300}>
+          <Box display="flex" justifyContent="space-between" width={300} pt={1}>
             <CheckCircleIcon />
-            <Typography variant="h5"> Please scan warehouse location</Typography>
+            <Box pt={0.5}>
+              <Typography variant="h5"> Please scan warehouse location</Typography>
+            </Box>
           </Box>
         )}
 
