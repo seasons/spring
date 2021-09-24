@@ -12,10 +12,6 @@ const CustomerFragment = gql`
         id
         planID
       }
-      pauseRequests(orderBy: createdAt_DESC) {
-        id
-        resumeDate
-      }
     }
     user {
       id
@@ -127,6 +123,17 @@ const CustomerDetails = gql`
         id
         itemCount
         name
+      }
+      subscription {
+        planPrice
+      }
+      subscriptionId
+      currentRentalInvoice {
+        id
+        billingStartAt
+        billingEndAt
+        createdAt
+        updatedAt
       }
       pauseRequests(orderBy: createdAt_DESC) {
         id

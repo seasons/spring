@@ -19,6 +19,7 @@ import { get } from "lodash"
 import { customer } from "generated/customer"
 import { useSnackbarContext } from "components/Snackbar"
 import { Spacer } from "components"
+import { BillingCard } from "./BillingCard"
 
 const STATUS_REFUNDED = "Refunded"
 
@@ -160,6 +161,8 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
       <Grid container spacing={3}>
         <Grid item lg={6} md={6} xl={6} xs={12}>
           <PersonalDetails adminKey={adminKey} member={member} />
+          <Spacer mt={2} />
+          <BillingCard member={member} />
         </Grid>
         <Grid item lg={6} md={6} xl={6} xs={12}>
           <PaymentShipping adminKey={adminKey} member={member} />

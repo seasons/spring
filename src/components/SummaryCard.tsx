@@ -16,7 +16,7 @@ export interface SummaryCardProps {
   rows: SummaryCardRowInput[]
 }
 
-export const SummaryCard: React.FunctionComponent<SummaryCardProps> = ({ record, title, rows }) => {
+export const SummaryCard: React.FC<SummaryCardProps> = ({ record, title, rows }) => {
   return (
     <Card>
       <CardContent>
