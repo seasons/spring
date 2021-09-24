@@ -92,6 +92,7 @@ const CustomerDetails = gql`
         sendgrid
         mixpanel
         intercom
+        chargebee
       }
       emails {
         id
@@ -121,9 +122,11 @@ const CustomerDetails = gql`
     }
     membership {
       id
+      creditBalance
       plan {
         id
         itemCount
+        name
       }
       pauseRequests(orderBy: createdAt_DESC) {
         id
@@ -159,6 +162,12 @@ const CustomerDetails = gql`
       shippedAt
       receivedAt
       createdAt
+      lineItems {
+        id
+        name
+        price
+        recordType
+      }
       sentPackage {
         id
         items {

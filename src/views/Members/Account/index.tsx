@@ -18,6 +18,7 @@ import { SummaryCard } from "components/SummaryCard"
 import { get } from "lodash"
 import { customer } from "generated/customer"
 import { useSnackbarContext } from "components/Snackbar"
+import { Spacer } from "components"
 
 const STATUS_REFUNDED = "Refunded"
 
@@ -28,18 +29,11 @@ const BtnIcon = styled(OpenInNewIcon)`
 
 const ViewButton = (props: ActionButtonProps) => {
   return (
-    <a
-      style={{ textDecoration: "none" }}
-      href={formatChargebeeInvoiceURL(props.record?.id)}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <Box component="span" mr={2}>
-        <Button color="primary" size="small" variant="outlined">
-          View <BtnIcon />
-        </Button>
-      </Box>
-    </a>
+    <Box component="span" mr={2}>
+      <Button href={formatChargebeeInvoiceURL(props.record?.id)} color="secondary" size="small" variant="outlined">
+        View <BtnIcon />
+      </Button>
+    </Box>
   )
 }
 
@@ -47,7 +41,7 @@ const RefundButton = (props: ActionButtonProps) => {
   return (
     <Button
       disabled={props.record?.status === STATUS_REFUNDED}
-      color="primary"
+      color="secondary"
       size="small"
       variant="outlined"
       onClick={() => props.action(props.record)}
@@ -162,13 +156,36 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
   })
 
   return (
-    <>
+    <Box my={2}>
       <Grid container spacing={3}>
         <Grid item lg={6} md={6} xl={6} xs={12}>
           <PersonalDetails adminKey={adminKey} member={member} />
         </Grid>
         <Grid item lg={6} md={6} xl={6} xs={12}>
           <PaymentShipping adminKey={adminKey} member={member} />
+          <Spacer mt={2} />
+          <SummaryCard
+            title={"Links"}
+            record={member.user.links}
+            rows={[
+              {
+                fieldName: "Chargebee",
+                fieldValueFunc: getCreateUserLinkFunc("chargebee"),
+              },
+              {
+                fieldName: "Mixpanel",
+                fieldValueFunc: getCreateUserLinkFunc("mixpanel"),
+              },
+              {
+                fieldName: "Sendgrid",
+                fieldValueFunc: getCreateUserLinkFunc("sendgrid"),
+              },
+              {
+                fieldName: "Intercom",
+                fieldValueFunc: getCreateUserLinkFunc("intercom"),
+              },
+            ]}
+          />
         </Grid>
         <Grid item lg={6} md={6} xl={6} xs={12}>
           <SummaryCard
@@ -202,26 +219,6 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
               {
                 fieldName: `BagItems Count`,
                 fieldValueFunc: (rec: customer) => rec.bagItems?.length || 0,
-              },
-            ]}
-          />
-        </Grid>
-        <Grid item lg={6} md={6} xl={6} xs={12}>
-          <SummaryCard
-            title={"Links"}
-            record={member.user.links}
-            rows={[
-              {
-                fieldName: "Mixpanel",
-                fieldValueFunc: getCreateUserLinkFunc("mixpanel"),
-              },
-              {
-                fieldName: "Sendgrid",
-                fieldValueFunc: getCreateUserLinkFunc("sendgrid"),
-              },
-              {
-                fieldName: "Intercom",
-                fieldValueFunc: getCreateUserLinkFunc("intercom"),
               },
             ]}
           />
@@ -277,12 +274,12 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
         onClose={handleRefundModalClose}
         open={refundModalIsOpen}
       />
-    </>
+    </Box>
   )
 }
 
 const getCreateUserLinkFunc = linkName => rec => (
-  <a href={get(rec, linkName)} target="_blank" rel="noopener noreferrer">
+  <Button href={get(rec, linkName)} size="small" variant="contained" color="primary">
     View
-  </a>
+  </Button>
 )

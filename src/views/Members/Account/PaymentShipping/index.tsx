@@ -106,6 +106,12 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
     },
   }
 
+  const formatPrice = price =>
+    (price / 100).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    })
+
   return (
     <Card>
       <CardContent>
@@ -116,7 +122,7 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
                 <Grid justify="space-between" container>
                   <Grid item alignItems="center" justify="center">
                     <Box mt={0.5}>
-                      <Typography variant="h4">Payment & Shipping</Typography>
+                      <Typography variant="h4">Billing & Shipping</Typography>
                     </Box>
                   </Grid>
                   <Grid item>
@@ -135,6 +141,10 @@ export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ a
                 {billing?.last_digits}
               </TableCell>
               <TableCell></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Credit Balance</TableCell>
+              <TableCell>{formatPrice(member?.membership?.creditBalance || 0)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Billing address</TableCell>

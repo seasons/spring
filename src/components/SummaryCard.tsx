@@ -1,5 +1,6 @@
 import React from "react"
-import { Box, Card, Grid, CardContent, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
+import { Box, Card, Grid, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
+import { CardContent } from "components"
 import { get } from "lodash"
 
 export interface SummaryCardRowInput {
@@ -22,7 +23,7 @@ export const SummaryCard: React.FunctionComponent<SummaryCardProps> = ({ record,
         <Table>
           <TableBody>
             <TableRow>
-              <TableCell colSpan={3}>
+              <TableCell colSpan={2}>
                 <Grid justify="space-between" container>
                   <Grid item alignItems="center" justify="center">
                     <Box mt={0.5}>
@@ -55,7 +56,6 @@ const SummaryCardRow = ({ fieldName, fieldValue }) => {
     <TableRow>
       <TableCell>{fieldName}</TableCell>
       <TableCell>{fieldValue || "n/a"}</TableCell>
-      <TableCell></TableCell>
     </TableRow>
   )
 }
