@@ -35,7 +35,7 @@ export const UPDATE_RESERVATION = gql`
   }
 `
 export const EARLY_RETURN = gql`
-  mutation EarlyReturn($reservationID: String, $data: [String]) {
+  mutation EarlyReturn($reservationID: String, $data: [ID]) {
     earlyReturn(data: $data, reservationID: $reservationID) {
       id
     }

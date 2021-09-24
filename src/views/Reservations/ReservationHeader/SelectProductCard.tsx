@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { Typography, Box, Paper, colors } from "@material-ui/core"
-import CheckCircleIcon from "@material-ui/icons/CheckCircle"
+
 import { GetReservation_products } from "generated/GetReservation"
 
 const Image = styled.img`
@@ -11,22 +11,26 @@ const Image = styled.img`
 
 const ProductImage = ({ product }: { product: GetReservation_products }) => {
   const image = product?.productVariant?.product.images?.[0]
-  return <Image src={image?.url} width={200} height={250} />
+  return <Image src={image?.url} width={150} height={200} />
 }
 
-export const EarlyReturnProductCard = ({ product, setSelectedProductsIDs, selectedProductsIDs }) => {
+export const SelectProductCard = ({ product, setSelectedProductsIDs, selectedProductsIDs }) => {
   const [selected, setSelected] = useState(false)
+  const brand = product?.productVariant?.product?.brand?.name
+  const productName = product?.productVariant?.product?.name
   const handleClick = product => {
     setSelected(!selected)
     if (selectedProductsIDs?.includes(product.id)) {
-      console.log(product.id)
       return setSelectedProductsIDs([...selectedProductsIDs.filter(a => a != product.id)])
     }
-    console.log(product.id)
     return setSelectedProductsIDs([...selectedProductsIDs, product.id])
   }
+
   return (
-    <div onClick={() => handleClick(product)}>
+    <div
+      onClick={() => handleClick(product)}
+      style={{ borderStyle: "solid", borderColor: selected ? colors.green[500] : "white", borderRadius: "8px" }}
+    >
       <Paper variant="outlined">
         <Box display="flex">
           <Box>
@@ -34,21 +38,16 @@ export const EarlyReturnProductCard = ({ product, setSelectedProductsIDs, select
           </Box>
           <Box flexGrow={1} px={2}>
             <Box my={2}>
-              <Box display="flex" height="30px">
-                <Box flexGrow={1} display="flex" justifyContent="space-between">
-                  <Typography variant="body1" color="textSecondary">
-                    SeasonsUID:
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary">
-                    {product.seasonsUID}
-                  </Typography>
-                </Box>
+              <Box pb={1}>
+                <Typography variant="body1">{productName}</Typography>
               </Box>
-              <Box display={"flex"} pt={1} justifyContent={"space-between"}>
+              <Box pb={1}>
+                <Typography variant="body1">{brand}</Typography>
+              </Box>
+              <Box pb={1}>
                 <Typography variant="body1" color="textSecondary">
-                  Selected for early return:
+                  {product.seasonsUID}
                 </Typography>
-                {selected ? <CheckCircleIcon htmlColor={colors.green[500]} /> : <CheckCircleIcon />}
               </Box>
             </Box>
           </Box>
