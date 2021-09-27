@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import { Box, Button, Grid } from "@material-ui/core"
 import { styled as muiStyled } from "@material-ui/core/styles"
-import { Separator, Spacer, Text } from "components"
+import { Separator, Spacer, Text, LinearProgress } from "components"
 import {
   ProductEditQuery_product_variants,
   ProductEditQuery_product_variants_physicalProducts,
@@ -78,25 +78,40 @@ export const ProductOverviewVariantSummary: React.FC<ProductOverviewVariantSumma
         <Spacer mt={3} />
         <Box display="flex" flexDirection="column">
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Text variant="h5" style={{ flexGrow: 1 }}>
                 SUID
               </Text>
             </Grid>
-            <Grid item xs={6}>
+
+            <Grid item xs={4}>
+              <Text variant="h5" style={{ flexGrow: 1 }}>
+                Recoupment
+              </Text>
+            </Grid>
+
+            <Grid item xs={4}>
               <Text variant="h5" style={{ flexGrow: 1 }}>
                 Inventory status
               </Text>
             </Grid>
+
             {variant.physicalProducts?.map(
               (physicalProduct: ProductEditQuery_product_variants_physicalProducts, index) => (
                 <React.Fragment key={index}>
-                  <Grid item xs={6}>
+                  <Grid item xs={4}>
                     <PhysicalProductField>
                       <Text variant="h6">{physicalProduct.seasonsUID}</Text>
                     </PhysicalProductField>
                   </Grid>
-                  <Grid item xs={6}>
+
+                  <Grid item xs={4}>
+                    <PhysicalProductField>
+                      <LinearProgress value={15} variant="determinate" />
+                    </PhysicalProductField>
+                  </Grid>
+
+                  <Grid item xs={4}>
                     <Box display="flex" alignItems="center">
                       <PhysicalProductField flexGrow={1}>
                         <Text variant="h6">{physicalProduct.inventoryStatus}</Text>

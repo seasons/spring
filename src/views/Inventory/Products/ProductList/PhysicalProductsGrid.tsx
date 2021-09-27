@@ -9,12 +9,12 @@ import {
   Box,
   Menu,
   IconButton,
-  LinearProgress as muiLinearProgress,
   MenuItem,
   styled,
 } from "@material-ui/core"
-import { createStyles, withStyles, Theme } from "@material-ui/core/styles"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+
+import { LinearProgress } from "components"
 
 import { CheckField } from "fields"
 import { colors } from "theme"
@@ -46,15 +46,6 @@ export const PhysicalProductRow = ({
       action: () => setOffloadingPhysicalProduct(physicalProduct),
     },
   ]
-
-  const LinearProgress = withStyles((theme: Theme) =>
-    createStyles({
-      bar: {
-        borderRadius: 5,
-        backgroundColor: "#2FC434",
-      },
-    })
-  )(muiLinearProgress)
 
   return (
     <TableRow>
