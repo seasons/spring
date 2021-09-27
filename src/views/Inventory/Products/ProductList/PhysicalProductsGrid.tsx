@@ -9,9 +9,11 @@ import {
   Box,
   Menu,
   IconButton,
+  LinearProgress as muiLinearProgress,
   MenuItem,
   styled,
 } from "@material-ui/core"
+import { createStyles, withStyles, Theme } from "@material-ui/core/styles"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 
 import { CheckField } from "fields"
@@ -45,10 +47,22 @@ export const PhysicalProductRow = ({
     },
   ]
 
+  const LinearProgress = withStyles((theme: Theme) =>
+    createStyles({
+      bar: {
+        borderRadius: 5,
+        backgroundColor: "#2FC434",
+      },
+    })
+  )(muiLinearProgress)
+
   return (
     <TableRow>
       <TableCell>{seasonsUID}</TableCell>
       <TableCell>{productStatus}</TableCell>
+      <TableCell>
+        <LinearProgress value={15} variant="determinate" />
+      </TableCell>
       <TableCell>{inventoryStatus}</TableCell>
       <TableCell>
         <CheckField record={physicalProduct} source="barcoded" value={true} />
@@ -102,6 +116,7 @@ export const PhysicalProductsGrid: React.FC<PhysicalProductsGridProps> = ({
           <TableHead>
             <TableCell>Seasons UID</TableCell>
             <TableCell>Product status</TableCell>
+            <TableCell>Recoupment</TableCell>
             <TableCell>Inventory status</TableCell>
             <TableCell>Barcoded</TableCell>
             <TableCell>Barcode</TableCell>
