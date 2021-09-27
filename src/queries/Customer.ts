@@ -12,10 +12,6 @@ const CustomerFragment = gql`
         id
         planID
       }
-      pauseRequests(orderBy: createdAt_DESC) {
-        id
-        resumeDate
-      }
     }
     user {
       id
@@ -92,6 +88,7 @@ const CustomerDetails = gql`
         sendgrid
         mixpanel
         intercom
+        chargebee
       }
       emails {
         id
@@ -121,9 +118,22 @@ const CustomerDetails = gql`
     }
     membership {
       id
+      creditBalance
       plan {
         id
         itemCount
+        name
+      }
+      subscription {
+        planPrice
+      }
+      subscriptionId
+      currentRentalInvoice {
+        id
+        billingStartAt
+        billingEndAt
+        createdAt
+        updatedAt
       }
       pauseRequests(orderBy: createdAt_DESC) {
         id
@@ -159,6 +169,12 @@ const CustomerDetails = gql`
       shippedAt
       receivedAt
       createdAt
+      lineItems {
+        id
+        name
+        price
+        recordType
+      }
       sentPackage {
         id
         items {
