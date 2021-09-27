@@ -265,12 +265,12 @@ export const ReservationHeader = ({ data }) => {
 
       <EarlyReturnModal
         open={showEarlyReturnModal}
-        onSave={async (reservationID, data) => {
+        onSave={async (reservationID, physicalProductIDs) => {
           setIsMutating(true)
           await earlyReturn({
             variables: {
               reservationID: reservationID,
-              data: data,
+              physicalProductIDs: physicalProductIDs,
             },
           })
         }}
