@@ -24,7 +24,7 @@ import { useSnackbarContext } from "components/Snackbar"
 import { ContactSupportOutlined } from "@material-ui/icons"
 
 const SWAP_BAG_ITEM = gql`
-  mutation swapBagItem($oldItemID: ID!, $seasonsUID: PhysicalProductWhereUniqueInput!) {
+  mutation swapBagItem($oldItemID: ID!, $seasonsUID: String!) {
     swapBagItem(oldItemID: $oldItemID, seasonsUID: $seasonsUID) {
       id
     }
@@ -113,7 +113,7 @@ export const SwapBagItemModal = ({ open, onClose, customer, bagItem }) => {
     swapBagItem({
       variables: {
         oldItemID: bagItem.id,
-        seasonsUID: { seasonsUID: physicalProduct?.seasonsUID },
+        seasonsUID: physicalProduct?.seasonsUID,
       },
     })
   }
