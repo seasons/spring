@@ -61,8 +61,8 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   }
 
   const handleRecoupmentChange = event => {
-    const recoupoment = categoriesChoices.filter(a => a?.value === event?.target?.value)[0]?.recoupment
-    setCategoryRecoupment(recoupoment)
+    const recoupment = categoriesChoices.find(a => a?.value === event?.target?.value)?.recoupment
+    setCategoryRecoupment(recoupment)
   }
 
   return (
