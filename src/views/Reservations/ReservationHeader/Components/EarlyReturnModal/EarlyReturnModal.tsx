@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Dialog, DialogContent, DialogActions, Box, Typography } from "@material-ui/core"
 import { DialogTitle, Spacer } from "components"
 import { GetReservation } from "generated/GetReservation"
 import { SelectProductCard } from "../../SelectProductCard"
+import { Alert } from "@material-ui/lab"
 
 interface EarlyReturnModalProps {
   open: boolean
@@ -19,8 +20,8 @@ export const EarlyReturnModal: React.FC<EarlyReturnModalProps> = ({
   onClose,
   reservation,
 }) => {
-  const returnedProducts = reservation?.returnedProducts.map(a => a.id)
-  const products = reservation?.products?.filter(a => !returnedProducts?.includes(a?.id))
+  const products = reservation?.products
+
   const [selectedProductsIDs, setSelectedProductsIDs] = useState<any>([])
   const shouldAllowSave = selectedProductsIDs.length > 0
   const reservationID = reservation?.id
@@ -28,6 +29,13 @@ export const EarlyReturnModal: React.FC<EarlyReturnModalProps> = ({
   const handleSave = () => {
     return onSave(reservationID, selectedProductsIDs)
   }
+
+  useEffect(() => {
+    if (reservation) {
+      const returnedProducts = reservation?.returnedProducts.map(a => a.id) || []
+      setSelectedProductsIDs(returnedProducts)
+    }
+  }, [reservation])
 
   return (
     <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -38,17 +46,23 @@ export const EarlyReturnModal: React.FC<EarlyReturnModalProps> = ({
         {products.length > 0 ? (
           <Box>
             <Box pb={2} pl={0.5} display="flex" justifyContent="center">
-              <Typography variant="h5" style={{ textDecoration: "underline" }}>
+              <Alert severity="info" style={{ flex: 1 }}>
                 Items selected will be returned early
-              </Typography>
+              </Alert>
             </Box>
             {products.map((product, index) => {
               return (
                 <Box key={index}>
                   <SelectProductCard
                     product={product}
-                    setSelectedProductsIDs={setSelectedProductsIDs}
-                    selectedProductsIDs={selectedProductsIDs}
+                    isSelected={selectedProductsIDs.includes(product.id)}
+                    onSelect={selected => {
+                      if (selected) {
+                        setSelectedProductsIDs([...selectedProductsIDs, product.id])
+                      } else {
+                        setSelectedProductsIDs([...selectedProductsIDs.filter(a => a !== product.id)])
+                      }
+                    }}
                   />
                   <Spacer mb={2} />
                 </Box>
