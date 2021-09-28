@@ -44,6 +44,7 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
 
   const [isLongTermStorageDialogOpen, setIsLongTermStorageDialogOpen] = useState(false)
   const [isRestoreFromLongTermStorageDialogOpen, setIsRestoreFromLongTermStorageDialogOpen] = useState(false)
+  const [categoryRecoupment, setCategoryRecoupment] = useState<any>(product?.category?.recoupment)
   const { showSnackbar } = useSnackbarContext()
   const [updateProduct] = useMutation(UPDATE_PRODUCT, {
     refetchQueries: [
@@ -120,7 +121,6 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
   const tags = data.tags.map(tag => tag?.name || "").sort()
   const buyNewEnabled = product?.buyNewEnabled || false
   const buyUsedEnabled = product?.buyUsedEnabled || false
-  const categoryRecoupment = product?.category?.recoupment
 
   const isEditing = !!product?.variants
 
@@ -252,6 +252,7 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
             setProductType={setProductType}
             product={product}
             categories={data.categories.filter(Boolean) as ProductUpsertQuery_categories[]}
+            setCategoryRecoupment={setCategoryRecoupment}
           />
           <Spacer mt={6} />
           <MetadataSection
