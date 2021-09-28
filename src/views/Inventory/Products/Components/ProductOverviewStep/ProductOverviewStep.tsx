@@ -121,7 +121,6 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
   const tags = data.tags.map(tag => tag?.name || "").sort()
   const buyNewEnabled = product?.buyNewEnabled || false
   const buyUsedEnabled = product?.buyUsedEnabled || false
-  const buyUsedPrice = product?.buyUsedPrice
 
   const isEditing = !!product?.variants
 
@@ -262,7 +261,6 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
             manufacturerSizes={manufacturerSizes}
             buyNewEnabled={buyNewEnabled}
             buyUsedEnabled={buyUsedEnabled}
-            buyUsedPrice={buyUsedPrice}
             productTiers={productTiers}
             isEditing={isEditing}
             categoryRecoupment={categoryRecoupment}

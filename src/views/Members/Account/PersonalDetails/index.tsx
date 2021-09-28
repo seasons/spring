@@ -117,11 +117,7 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
   }, [member, dispatch])
 
   const birthday = moment(member.detail.birthday).format("MM/DD/YYYY")
-
-  const firstPauseRequest = member?.membership?.pauseRequests?.[0]
-  const resumeDate = firstPauseRequest?.resumeDate
-  const pauseDate = firstPauseRequest?.pauseDate
-  const pauseReason = firstPauseRequest?.reason?.reason
+  const plan = member.membership?.plan
 
   const editEntity = {
     id: {
@@ -186,59 +182,31 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
                   }
                 />
               </TableCell>
-              <TableCell></TableCell>
             </TableRow>
-            {!!pauseReason && member.status === "Paused" && (
-              <TableRow>
-                <TableCell>Pause reason</TableCell>
-                <TableCell>{pauseReason}</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            )}
-            {!!resumeDate && member.status === "Paused" && (
-              <TableRow>
-                <TableCell>Resume date</TableCell>
-                <TableCell>{moment(resumeDate).format("MM/DD/YYYY")}</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            )}
-            {!!pauseDate && member.status === "Paused" && (
-              <TableRow>
-                <TableCell>Pause date</TableCell>
-                <TableCell>{moment(pauseDate).format("MM/DD/YYYY")}</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            )}
             <TableRow>
               <TableCell>Membership</TableCell>
-              <TableCell>{splitTitleCase(member.plan)}</TableCell>
-              <TableCell></TableCell>
+              <TableCell>{splitTitleCase(plan?.name)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Email</TableCell>
               <TableCell>{member.user.email}</TableCell>
-              <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Phone number</TableCell>
               <TableCell>{member.detail.phoneNumber}</TableCell>
-              <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Birthday</TableCell>
               <TableCell>{birthday}</TableCell>
-              <TableCell></TableCell>
             </TableRow>
 
             <TableRow>
               <TableCell>Instagram Handle</TableCell>
               <TableCell>{member.detail.instagramHandle ?? "n/a"}</TableCell>
-              <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Discovery Reference</TableCell>
               <TableCell>{member.detail.discoveryReference ?? "n/a"}</TableCell>
-              <TableCell></TableCell>
             </TableRow>
           </TableBody>
         </Table>

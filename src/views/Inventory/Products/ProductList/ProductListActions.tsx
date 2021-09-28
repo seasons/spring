@@ -22,6 +22,7 @@ export const ProductListActions: React.FC<any> = ({
   total,
   onClickPrintBarcodes,
   onClickStowProduct,
+  onClickStowMultiProducts,
   ...rest
 }) => (
   <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
@@ -55,6 +56,14 @@ export const ProductListActions: React.FC<any> = ({
         onClickStowProduct?.()
       }}
       label="Stow Product"
+    >
+      <InputIcon />
+    </Button>
+    <Button
+      onClick={() => {
+        onClickStowMultiProducts?.()
+      }}
+      label="Stow Multiple Products"
     >
       <InputIcon />
     </Button>

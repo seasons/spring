@@ -8,7 +8,7 @@ export interface EditButtonProps {
 
 export const EditButton: React.FC<EditButtonProps> = ({ onClick }) => {
   return (
-    <Button color="primary" onClick={onClick} size="small" variant="outlined">
+    <Button color="secondary" onClick={onClick} size="small" variant="outlined">
       Edit
     </Button>
   )
