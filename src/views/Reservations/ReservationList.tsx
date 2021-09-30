@@ -32,6 +32,7 @@ const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => {
             { id: "Shipped", name: "Shipped" },
             { id: "Delivered", name: "Delivered" },
             { id: "Completed", name: "Completed" },
+            { id: "ReturnPending", name: "ReturnPending" },
             { id: "Cancelled", name: "Cancelled" },
             { id: "Hold", name: "Hold" },
             { id: "Blocked", name: "Blocked" },
