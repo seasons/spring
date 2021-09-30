@@ -207,6 +207,7 @@ export default {
       statusUpdatedAt
       createdAt
       updatedAt
+      adminMessage
     }
   `,
 }
