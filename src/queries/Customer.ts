@@ -50,6 +50,7 @@ const CustomerDetails = gql`
     id
     plan
     status
+    iOSAppStatus
     bagItems {
       id
       saved
