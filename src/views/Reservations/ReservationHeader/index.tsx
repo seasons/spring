@@ -122,7 +122,7 @@ export const ReservationHeader = ({ data }) => {
       }
     }
 
-    if (["Delivered", "Received", "EarlyReturn"].includes(data?.status)) {
+    if (["Delivered", "Received", "EarlyReturned"].includes(data?.status)) {
       return {
         text: "Process Returns",
         action: () => toggleModal(true),
@@ -156,7 +156,7 @@ export const ReservationHeader = ({ data }) => {
   })
 
   const menuItems: any[] = []
-  if (["Delivered", "EarlyReturn", "Received", "Shipped"].includes(data?.status)) {
+  if (["Delivered", "EarlyReturned", "Received", "Shipped"].includes(data?.status)) {
     menuItems.push({
       text: "Early return",
       action: () => {
