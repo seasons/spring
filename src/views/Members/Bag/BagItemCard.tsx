@@ -70,14 +70,14 @@ export const BagItemCard = props => {
           }
           action={
             <Box>
-              <IconButton
+              {/* <IconButton
                 aria-label="return"
                 onClick={() => {
                   setIsReturnConfirmationDialogOpen(true)
                 }}
               >
                 <ArchiveIcon />
-              </IconButton>
+              </IconButton> */}
               {isSwappable && <SwapButton bagItem={bagItem} customer={member} />}
             </Box>
           }
