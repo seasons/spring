@@ -19,6 +19,7 @@ export const ReservationListActions: React.FC<any> = ({
   showFilter,
   total,
   onClickLookupReservation,
+  onClickProcessItemReturn,
   ...rest
 }) => (
   <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
@@ -38,6 +39,12 @@ export const ReservationListActions: React.FC<any> = ({
     >
       <InputIcon />
     </Button>
+    <Button
+      onClick={() => {
+        onClickProcessItemReturn?.()
+      }}
+      label="Process Item Return"
+    ></Button>
   </TopToolbar>
 )
 

@@ -1,16 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Box,
-  TextField,
-  Card,
-  colors,
-  Typography,
-} from "@material-ui/core"
+import { Button, Dialog, DialogContent, DialogActions, Box, TextField } from "@material-ui/core"
 import CheckCircleIcon from "@material-ui/icons/CheckCircle"
 import { DialogTitle, Spacer } from "components"
 import { GetReservation } from "generated/GetReservation"
@@ -19,8 +9,8 @@ import { PhysicalProductStatus } from "generated/globalTypes"
 import { filter, values, trim } from "lodash"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX, RETURN_LABEL_BARCODE_REGEX } from "views/constants"
 import { useSnackbarContext } from "components/Snackbar"
-import styled from "styled-components"
 import { useLocation } from "react-router-dom"
+import { TrackingNumberCheckCircle } from "views/Reservations/TrackingNumberCheckCircle"
 
 interface ProductState {
   productUID: string
@@ -149,21 +139,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
             />
           </Box>
           <Box my={1}>
-            <Card elevation={1}>
-              {trackingNumber ? (
-                <TrackingNumber width="100%" py={3}>
-                  <CheckCircleIcon htmlColor={colors.green[500]} />
-                  <Spacer m={1} />
-                  <Typography variant="h5">Tracking Number: {trackingNumber}</Typography>
-                </TrackingNumber>
-              ) : (
-                <TrackingNumber width="100%" py={3}>
-                  <CheckCircleIcon />
-                  <Spacer m={1} />
-                  <Typography variant="h5"> Please scan the label from the return package</Typography>
-                </TrackingNumber>
-              )}
-            </Card>
+            <TrackingNumberCheckCircle trackingNumber={trackingNumber} />
           </Box>
           <Box mt={1} mb={2}>
             {reservation.products.map(product => (
@@ -196,8 +172,3 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
     </>
   )
 }
-
-const TrackingNumber = styled(Box)`
-  display: flex;
-  justify-content: center;
-`
