@@ -23,6 +23,8 @@ import { TrackingNumberCheckCircle } from "views/Reservations/TrackingNumberChec
 import { ContactSupportOutlined } from "@material-ui/icons"
 import { PhysicalProductFragment } from "queries/PhysicalProduct"
 import gql from "graphql-tag"
+import { ProcessReturnProductCard } from "../ProcessReturnModal/ProcessReturnProductCard"
+import { AnyRecord } from "dns"
 
 interface ProductState {
   productUID: string
@@ -41,6 +43,8 @@ interface TrackingNumber {
   trackingNumber: string
 }
 
+type ProductStates = { [key: string]: ProductState }
+
 const GET_PHYSICAL_PRODUCT_FOR_MULTI_ITEM_RETURN = gql`
   query GetPhysicalProductForMultiItemReturn($sequenceNumber: Int) {
     physicalProducts(where: { sequenceNumber: $sequenceNumber }, first: 1) {
@@ -49,9 +53,6 @@ const GET_PHYSICAL_PRODUCT_FOR_MULTI_ITEM_RETURN = gql`
   }
   ${PhysicalProductFragment}
 `
-
-type ProductStates = { [key: string]: ProductState }
-
 export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ disableButton, open, onSave, onClose }) => {
   const location = useLocation()
   const scannedTrackingNumber: any = location?.state ? location?.state : {}
@@ -62,6 +63,8 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ disableBu
   }, [location])
 
   const [productStates, setProductStates] = useState<ProductStates>({})
+  const barcodeMaps = {}
+  const [physicalProducts, setPhysicalProducts] = useState<any>([])
 
   const [trackingNumber, setTrackingNumber] = useState("")
 
@@ -86,18 +89,29 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ disableBu
   const { showSnackbar } = useSnackbarContext()
 
   useEffect(() => {
-    newPhysicalProduct({
-      variables: {
-        sequenceNumber: sequenceNumber,
-      },
-    })
+    if (sequenceNumber) {
+      newPhysicalProduct({
+        variables: {
+          sequenceNumber: sequenceNumber,
+        },
+      })
+    }
   }, [sequenceNumber])
-
-  // useEffect(() => {
-  //   if (data?.physicalProducts) {
-  //     (data?.physicalProduct)
-  //   }
-  // }, [data, loading])
+  const Dirty = "Dirty"
+  useEffect(() => {
+    if (data?.physicalProducts) {
+      const physicalProduct = data.physicalProducts[0]
+      barcodeMaps[physicalProduct.barcode] = {
+        productUID: physicalProduct.seasonsUID,
+        returned: false,
+        damageType: [],
+        productStatus: "Dirty",
+        notes: "",
+      }
+      setProductStates({ ...barcodeMaps, ...productStates })
+      setPhysicalProducts([physicalProduct, ...physicalProducts])
+    }
+  }, [data])
 
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
@@ -111,7 +125,6 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ disableBu
           }
         }
       }
-
       setSequenceNumber(getSequenceNumber(input))
       setBarcode("")
     } else if (input.match(RETURN_LABEL_BARCODE_REGEX)) {
@@ -129,7 +142,6 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ disableBu
       clearTimeout(timeout)
     }
   }, [open])
-  // console.log(sequenceNumber)
   return (
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -154,6 +166,24 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ disableBu
             <TrackingNumberCheckCircle trackingNumber={trackingNumber} />
           </Box>
         </DialogContent>
+        <Box mt={1} mb={2}>
+          {physicalProducts.map(product => {
+            console.log(product)
+            return (
+              <ProcessReturnProductCard
+                key={product.id}
+                product={product}
+                productState={productStates[product.barcode]}
+                onStateChange={state => {
+                  setProductStates({
+                    ...productStates,
+                    [product.barcode]: state,
+                  })
+                }}
+              />
+            )
+          })}
+        </Box>
         <DialogActions>
           <Button
             autoFocus
