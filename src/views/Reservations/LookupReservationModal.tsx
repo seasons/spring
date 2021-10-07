@@ -41,7 +41,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
       const reservations = resData?.reservations
       if (reservations.length > 0) {
         const returnPendingReservation = reservations?.find(a => a.status === "ReturnPending")
-        const resID = returnPendingReservation ? returnPendingReservation.id : reservations[0].id
+        const resID = returnPendingReservation ? returnPendingReservation?.id : reservations[0].id
         history.push(`/reservation/${resID}/overview`)
       }
     }
@@ -52,7 +52,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
       const reservations = resysByTrackingNumber?.reservations
       if (reservations.length > 0) {
         const returnPendingReservation = reservations?.find(a => a.status === "ReturnPending")
-        const resID = returnPendingReservation ? returnPendingReservation.id : reservations[0].id
+        const resID = returnPendingReservation ? returnPendingReservation?.id : reservations[0].id
         history.push(`/reservation/${resID}/overview`)
       }
     }
