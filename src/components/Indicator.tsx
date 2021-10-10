@@ -25,10 +25,17 @@ const FitPicStatusMap = {
   Reported: colors.red[500],
 }
 
+const iOSAppStatusMap = {
+  UpToDate: colors.green[500],
+  Outdated: colors.yellow[500],
+  NoRecord: colors.grey[500],
+}
+
 export const IndicatorMap = {
   ...ReservationStatusMap,
   ...InvoiceStatusMap,
   ...FitPicStatusMap,
+  ...iOSAppStatusMap,
   New: colors.green[100],
   Used: colors.green[200],
   Waitlisted: colors.black15,
