@@ -29,6 +29,7 @@ const authLink = setContext(async (_, { headers: oldHeaders }) => {
       },
     }
   } catch (e) {
+    console.log("!!!")
     console.error(e, "no access token present!")
     return {
       headers,
@@ -38,8 +39,6 @@ const authLink = setContext(async (_, { headers: oldHeaders }) => {
 
 const errorLink = onError(({ networkError, operation, forward }) => {
   if (networkError) {
-    console.log("networkError", networkError)
-
     const error = networkError as any
 
     // User access token has expired
