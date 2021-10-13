@@ -1,15 +1,5 @@
 import React from "react"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Box,
-  TextField,
-  Card,
-  colors,
-  Typography,
-} from "@material-ui/core"
+import { Box, Card, colors, Typography } from "@material-ui/core"
 import CheckCircleIcon from "@material-ui/icons/CheckCircle"
 import styled from "styled-components"
 import { Spacer } from "components"

@@ -45,11 +45,9 @@ export const EARLY_RETURN = gql`
 export const RETURN_MULTI_ITEMS = gql`
   mutation ReturnMultiItems(
     $trackingNumber: String
-    $productStates: ProductStateInput
+    $productStates: [ProductStateInput!]!
     $droppedOffBy: ReservationDropOffAgent
   ) {
-    returnMultiItems(trackingNumber: $trackingNumber, productStates: $productStates, droppedOffBy: $droppedOffBy) {
-      id
-    }
+    returnMultiItems(trackingNumber: $trackingNumber, productStates: $productStates, droppedOffBy: $droppedOffBy)
   }
 `
