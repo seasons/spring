@@ -40,6 +40,7 @@ export interface ProductFragment_category {
   name: string
   slug: string
   measurementType: MeasurementType | null
+  recoupment: number | null
 }
 
 export interface ProductFragment_variants_internalSize {

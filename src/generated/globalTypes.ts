@@ -97,6 +97,12 @@ export enum CreditNoteStatus {
   Voided = "Voided",
 }
 
+export enum CustomerIOSAppStatus {
+  NoRecord = "NoRecord",
+  Outdated = "Outdated",
+  UpToDate = "UpToDate",
+}
+
 export enum CustomerStatus {
   Active = "Active",
   Authorized = "Authorized",
@@ -221,10 +227,11 @@ export enum NotificationBarID {
 export enum OrderLineItemRecordType {
   EarlySwap = "EarlySwap",
   ExternalProduct = "ExternalProduct",
+  Fee = "Fee",
   Package = "Package",
   PhysicalProduct = "PhysicalProduct",
   ProductVariant = "ProductVariant",
-  Reservation = "Reservation",
+  Total = "Total",
 }
 
 export enum OrderStatus {
@@ -294,8 +301,10 @@ export enum PauseType {
 }
 
 export enum PaymentPlanTier {
+  Access = "Access",
   AllAccess = "AllAccess",
   Essential = "Essential",
+  Guest = "Guest",
   Pause = "Pause",
 }
 
@@ -357,6 +366,7 @@ export enum ProductStatus {
   NotAvailable = "NotAvailable",
   Offloaded = "Offloaded",
   Stored = "Stored",
+  Upcoming = "Upcoming",
 }
 
 export enum ProductTierName {
@@ -381,6 +391,20 @@ export enum PushNotificationStatus {
   Granted = "Granted",
 }
 
+export enum ReservationAdminMessage {
+  None = "None",
+  PartiallyPacked = "PartiallyPacked",
+  PreviousReservationOnHold = "PreviousReservationOnHold",
+}
+
+export enum ReservationLineItemRecordType {
+  Credit = "Credit",
+  Fee = "Fee",
+  ProductVariant = "ProductVariant",
+  Reservation = "Reservation",
+  Total = "Total",
+}
+
 export enum ReservationPhase {
   BusinessToCustomer = "BusinessToCustomer",
   CustomerToBusiness = "CustomerToBusiness",
@@ -396,7 +420,7 @@ export enum ReservationStatus {
   Packed = "Packed",
   Picked = "Picked",
   Queued = "Queued",
-  Received = "Received",
+  ReturnPending = "ReturnPending",
   Shipped = "Shipped",
   Unknown = "Unknown",
 }
@@ -1937,6 +1961,16 @@ export interface CustomBrandUpdateInput {
   shopifyShop?: ShopifyShopInput | null
 }
 
+export interface CustomCategoryUpsertInput {
+  name?: string | null
+  singularName?: string | null
+  dryCleaningFee?: number | null
+  recoupment?: number | null
+  visible?: boolean | null
+  description?: string | null
+  slug?: string | null
+}
+
 export interface CustomLaunchUpsertInput {
   id?: string | null
   launchAt?: any | null
@@ -2177,9 +2211,12 @@ export interface CustomerCreateWithoutReservationsInput {
 
 export interface CustomerDetailCreateInput {
   id?: string | null
+  ageRange?: string | null
   phoneNumber?: string | null
   birthday?: any | null
   height?: number | null
+  shoeSize?: number | null
+  pantLength?: number | null
   weight?: CustomerDetailCreateweightInput | null
   bodyType?: string | null
   averageTopSize?: string | null
@@ -2198,6 +2235,8 @@ export interface CustomerDetailCreateInput {
   commuteStyle?: string | null
   stylePreferences?: StylePreferencesCreateOneInput | null
   shippingAddress?: LocationCreateOneInput | null
+  signupReasons?: CustomerDetailCreatesignupReasonsInput | null
+  signupLikedProducts?: CustomerDetailCreatesignupLikedProductsInput | null
   phoneOS?: string | null
   insureShipment?: boolean | null
   instagramHandle?: string | null
@@ -2208,6 +2247,14 @@ export interface CustomerDetailCreateInput {
 export interface CustomerDetailCreateOneInput {
   create?: CustomerDetailCreateInput | null
   connect?: CustomerDetailWhereUniqueInput | null
+}
+
+export interface CustomerDetailCreatesignupLikedProductsInput {
+  connect?: ProductWhereUniqueInput[] | null
+}
+
+export interface CustomerDetailCreatesignupReasonsInput {
+  set?: string[] | null
 }
 
 export interface CustomerDetailCreatestylesInput {
@@ -8716,7 +8763,7 @@ export interface ReservationCreateWithoutPackageEventsInput {
 export interface ReservationProcessReturnInput {
   reservationNumber: number
   productStates: ProductStateInput[]
-  trackingNumber: string
+  trackingNumber?: string | null
 }
 
 export interface ReservationReceiptCreateOneWithoutReservationInput {
@@ -9158,6 +9205,9 @@ export interface ReservationWhereInput {
   customer?: CustomerWhereInput | null
   sentPackage?: PackageWhereInput | null
   returnedPackage?: PackageWhereInput | null
+  returnPackages_some?: PackageWhereInput | null
+  returnPackages_every?: PackageWhereInput | null
+  returnPackages_none?: PackageWhereInput | null
   products_every?: PhysicalProductWhereInput | null
   products_some?: PhysicalProductWhereInput | null
   products_none?: PhysicalProductWhereInput | null

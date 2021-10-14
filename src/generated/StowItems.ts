@@ -4,13 +4,14 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: DeleteBagItem
+// GraphQL mutation operation: StowItems
 // ====================================================
 
-export interface DeleteBagItem {
-  deleteBagItem: boolean
+export interface StowItems {
+  stowItems: boolean | null
 }
 
-export interface DeleteBagItemVariables {
-  itemID: string
+export interface StowItemsVariables {
+  ids?: (string | null)[] | null
+  warehouseLocationBarcode: string
 }
