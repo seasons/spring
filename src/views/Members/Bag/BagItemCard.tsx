@@ -55,7 +55,6 @@ export const BagItemCard = props => {
   }
 
   const physicalProductId = bagItem?.physicalProduct?.id
-  console.log("physicalProductId", physicalProductId)
 
   const linkUrl = !!physicalProductId
     ? `/inventory/product/variant/physicalProduct/${physicalProductId}/manage`
