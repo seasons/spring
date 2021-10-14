@@ -20,6 +20,7 @@ export interface HeaderProps {
   breadcrumbs?: Array<{ url: string; title: string }>
   menuItems?: Array<{ text: string; action?: () => void }>
   publishedAt?: string
+  secondarySubtitle?: string
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -29,6 +30,7 @@ export const Header: React.FC<HeaderProps> = ({
   breadcrumbs,
   menuItems,
   publishedAt,
+  secondarySubtitle,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -73,6 +75,14 @@ export const Header: React.FC<HeaderProps> = ({
           <Text variant="h5" opacity={0.5}>
             {subtitle}
           </Text>
+        )}
+        {secondarySubtitle && (
+          <>
+            <Spacer mb={0.5} />
+            <Text variant="h5" opacity={0.5}>
+              {secondarySubtitle}
+            </Text>
+          </>
         )}
       </Box>
       <Box display="flex" alignItems="flex-end" justifyContent="flex-start" flexDirection="column">
