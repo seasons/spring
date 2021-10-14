@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Typography, Box, Paper, TextField } from "@material-ui/core"
-import { PhysicalProduct } from "generated/PhysicalProduct"
 import { Autocomplete } from "@material-ui/lab"
 import { useQuery } from "react-apollo"
 import { PHYSICAL_PRODUCT_WITH_IMAGES } from "views/Inventory/PhysicalProducts/queries"
@@ -12,7 +11,7 @@ const Image = styled.img`
   height: 100%;
 `
 
-const ProductImage = ({ product }: { product: PhysicalProduct }) => {
+const ProductImage = ({ product }: { product }) => {
   const { data, loading } = useQuery(PHYSICAL_PRODUCT_WITH_IMAGES, { variables: { id: product.id } })
   const [image, setImage] = useState({ url: "" })
 
@@ -26,7 +25,7 @@ const ProductImage = ({ product }: { product: PhysicalProduct }) => {
 }
 
 interface StowProductInfoProps {
-  product?: PhysicalProduct
+  product?: any
   locations?: any[]
   barcode?: string
   onChange?: (text: string) => void

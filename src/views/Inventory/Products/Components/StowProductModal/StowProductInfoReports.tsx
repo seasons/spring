@@ -1,9 +1,8 @@
 import React from "react"
 import { Typography, Box } from "@material-ui/core"
-import { PhysicalProduct } from "generated/PhysicalProduct"
 
 interface StowProductInfoReportsProps {
-  product?: PhysicalProduct
+  product?: any
 }
 
 export const StowProductInfoReports: React.FC<StowProductInfoReportsProps> = ({ product }) => {

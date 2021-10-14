@@ -5,10 +5,10 @@ import { Field, ChildFieldProps } from "./Field"
 import { FormControl } from "../components/FormControl"
 
 export type SelectChoice = {
-  disabled?: boolean
   display: any
   value: any
-  recoupment?: number
+  disabled?: boolean
+  recoupment?: number | null
 }
 
 export type SelectFieldProps = ChildFieldProps & {
