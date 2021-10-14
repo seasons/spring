@@ -9,24 +9,27 @@ export const IOSVersionsWidget = ({ data }) => {
   const [showPaused, setShowPaused] = useState(false)
   const [showAdmissable, setShowAdmissable] = useState(false)
 
-  const orderedLabels = Object.keys(data?.result).sort((a, b) => {
-    const [aMajorV, aMinorV, aHellaMinorV] = a.split(".")
-    const [bMajorV, bMinorV, bHellaMinorV] = b.split(".")
-    if (Number(aMajorV) < Number(bMajorV)) {
-      return -1
-    }
-    if (Number(aMajorV) === Number(bMajorV) && Number(aMinorV) < Number(bMinorV)) {
-      return -1
-    }
-    if (
-      Number(aMajorV) === Number(bMajorV) &&
-      Number(aMinorV) === Number(bMinorV) &&
-      Number(aHellaMinorV) < Number(bHellaMinorV)
-    ) {
-      return -1
-    }
-    return 1
-  })
+  let orderedLabels
+  if (data?.result) {
+    orderedLabels = Object.keys(data.result)?.sort((a, b) => {
+      const [aMajorV, aMinorV, aHellaMinorV] = a.split(".")
+      const [bMajorV, bMinorV, bHellaMinorV] = b.split(".")
+      if (Number(aMajorV) < Number(bMajorV)) {
+        return -1
+      }
+      if (Number(aMajorV) === Number(bMajorV) && Number(aMinorV) < Number(bMinorV)) {
+        return -1
+      }
+      if (
+        Number(aMajorV) === Number(bMajorV) &&
+        Number(aMinorV) === Number(bMinorV) &&
+        Number(aHellaMinorV) < Number(bHellaMinorV)
+      ) {
+        return -1
+      }
+      return 1
+    })
+  }
 
   const series = React.useMemo(() => {
     let series

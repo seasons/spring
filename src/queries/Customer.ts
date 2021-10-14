@@ -56,9 +56,13 @@ const CustomerDetails = gql`
       saved
       status
       isSwappable
+      physicalProduct {
+        id
+      }
       productVariant {
         id
         sku
+        displayShort
         internalSize {
           id
           display
