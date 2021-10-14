@@ -4,15 +4,12 @@ import { makeStyles, styled } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
 import CardHeader from "@material-ui/core/CardHeader"
 import CardMedia from "@material-ui/core/CardMedia"
-import IconButton from "@material-ui/core/IconButton"
 import { ConfirmationDialog } from "components/ConfirmationDialog"
 import { red } from "@material-ui/core/colors"
-import DeleteIcon from "@material-ui/icons/Delete"
-import ArchiveIcon from "@material-ui/icons/Archive"
-import { useMutation } from "react-apollo"
-import { gql } from "apollo-boost"
-import { Box, Typography } from "@material-ui/core"
+import { Box, Typography, Button } from "@material-ui/core"
 import { SwapButton } from "./SwapButton"
+import { Link } from "@material-ui/core"
+import { Link as RouterLink, useHistory } from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,10 +37,9 @@ const useStyles = makeStyles(theme => ({
 
 export const BagItemCard = props => {
   const classes = useStyles()
-  const refresh = useRefresh()
   const [isReturnConfirmationDialogOpen, setIsReturnConfirmationDialogOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-
+  const router = useHistory()
   const { bagItem } = props
   const { product } = bagItem.productVariant
   const { name, brand } = product
@@ -58,38 +54,56 @@ export const BagItemCard = props => {
     setIsSubmitting(false)
   }
 
+  const physicalProductId = bagItem?.physicalProduct?.id
+  console.log("physicalProductId", physicalProductId)
+
+  const linkUrl = !!physicalProductId
+    ? `/inventory/product/variant/physicalProduct/${physicalProductId}/manage`
+    : `/inventory/product/variants/${bagItem.productVariant.id}`
+
   return (
     <>
       <Card className={classes.root}>
         <CardHeader
-          title={name}
+          title={
+            <Link
+              component={RouterLink}
+              to={linkUrl}
+              variant="body1"
+              color="primary"
+              onClick={e => e.stopPropagation()}
+              style={{ color: "black" }}
+            >
+              <Box>
+                <Typography>{name}</Typography>
+              </Box>
+            </Link>
+          }
           subheader={
             <Box>
               <Typography>{brand.name}</Typography>
+              <Typography>{bagItem.productVariant.displayShort}</Typography>
             </Box>
           }
-          action={
-            <Box>
-              {/* <IconButton
-                aria-label="return"
-                onClick={() => {
-                  setIsReturnConfirmationDialogOpen(true)
-                }}
-              >
-                <ArchiveIcon />
-              </IconButton> */}
-              {isSwappable && <SwapButton bagItem={bagItem} customer={member} />}
-            </Box>
-          }
+          action={<Box>{isSwappable && <SwapButton bagItem={bagItem} customer={member} />}</Box>}
         />
-        <CardMedia className={classes.media} image={image.url} />
+
+        <Link
+          component={RouterLink}
+          to={linkUrl}
+          variant="body1"
+          color="primary"
+          onClick={e => e.stopPropagation()}
+          style={{ color: "black" }}
+        >
+          <CardMedia className={classes.media} image={image.url} />
+        </Link>
         <Box padding="10px 16px">
           <FlexBox>
             <Typography>{bagItem?.status}</Typography>
           </FlexBox>
         </Box>
       </Card>
-
       <ConfirmationDialog
         title="Return Item"
         body="Are you sure you want to mark this item as returned?"
