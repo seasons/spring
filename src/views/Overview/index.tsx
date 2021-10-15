@@ -6,6 +6,7 @@ import { gql } from "apollo-boost"
 import { Loading } from "@seasons/react-admin"
 import { useQuery } from "react-apollo"
 import { Spacer } from "components"
+import { useDispatch } from "react-redux"
 
 import PeopleIcon from "@material-ui/icons/People"
 import GroupAddIcon from "@material-ui/icons/GroupAdd"
@@ -17,6 +18,7 @@ import { MapchartWidget } from "./MapchartWidget"
 import { IOSVersionsWidget } from "./iosVersions"
 import { RetentionWidget } from "./RetentionWidget"
 import { DiscoveryWidget } from "./DiscoveryWidget"
+import { logout as logoutAction } from "actions/sessionActions"
 
 export interface OverviewViewProps {}
 
@@ -38,9 +40,16 @@ const GET_DASHBOARD = gql`
 `
 
 export const OverviewView: React.FC<OverviewViewProps> = () => {
-  const { data, loading } = useQuery(GET_DASHBOARD, {
+  const dispatch = useDispatch()
+
+  const { data, loading, error } = useQuery(GET_DASHBOARD, {
     pollInterval: 10000,
   })
+
+  if (error?.message.includes("Unauthorized")) {
+    dispatch(logoutAction())
+    window.location.href = "/login"
+  }
 
   const elements = data?.dashboard?.elements || []
 

@@ -122,7 +122,7 @@ export const ReservationHeader = ({ data }) => {
       }
     }
 
-    if (["Delivered", "Received", "EarlyReturned"].includes(data?.status)) {
+    if (["Delivered", "Received", "EarlyReturn", "ReturnPending"].includes(data?.status)) {
       return {
         text: "Process Returns",
         action: () => toggleModal(true),
