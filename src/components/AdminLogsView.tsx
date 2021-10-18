@@ -20,7 +20,7 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ logs }) => {
     Truncate: "Truncated",
   }
   return (
-    <Box>
+    <Box pt={3}>
       <Card>
         <Table>
           <TableHead>

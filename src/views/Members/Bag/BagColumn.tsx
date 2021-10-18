@@ -4,11 +4,11 @@ import React from "react"
 import { BagItemCard } from "./BagItemCard"
 import { Droppable } from "react-beautiful-dnd"
 
-export const BagColumn = ({ column }) => {
+export const BagColumn = ({ column, index }) => {
   const bagItems = column.bagItems
 
   return (
-    <Wrapper mr={2}>
+    <Wrapper mr={2} pl={index === 0 ? 2 : 0}>
       <Typography variant="h4">{column.title}</Typography>
       <Spacer mb={1} />
       <Separator />

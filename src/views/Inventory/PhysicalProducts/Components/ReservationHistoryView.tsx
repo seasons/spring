@@ -15,7 +15,7 @@ export const ReservationHistoryView: React.FC<TabRenderProps> = ({ data }) => {
   }
 
   return (
-    <Box>
+    <Box pt={3}>
       <Card>
         <Table>
           <TableHead>

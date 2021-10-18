@@ -61,6 +61,7 @@ const CustomerDetails = gql`
         isSwappable
         physicalProduct {
           id
+          seasonsUID
         }
         productVariant {
           id

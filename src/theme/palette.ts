@@ -10,7 +10,7 @@ export default {
   secondary: {
     contrastText: colors.white100,
     dark: colors.black85,
-    main: "#BABABC",
+    main: colors.black50,
     light: colors.black50,
   },
   error: {

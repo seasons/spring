@@ -61,7 +61,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ numImages, title, name
           />
         ) : (
           <>
-            <Box display="flex" justifyContent="center" alignItems="center" bgcolor={colors.white95} height={height}>
+            <Box display="flex" justifyContent="center" alignItems="center" bgcolor={colors.black04} height={height}>
               <Text variant="h6" opacity={0.5}>
                 No images uploaded yet
               </Text>

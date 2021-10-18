@@ -9,6 +9,7 @@ import { DetailView } from "components/DetailView"
 import { Header } from "./Header"
 import { BagView } from "./Bag"
 import { EmailReceiptsView } from "./EmailsView"
+import { Box } from "@material-ui/core"
 
 export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, props }) => {
   return (
@@ -16,7 +17,11 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
       match={match}
       resource={"Customer"}
       renderHeader={({ data: member }) => {
-        return <Header member={member} />
+        return (
+          <Box px={2}>
+            <Header member={member} />
+          </Box>
+        )
       }}
       tabs={[
         {
@@ -30,41 +35,51 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
           value: "account",
           label: "Account",
           render: ({ data, adminKey, match, recordID }) => (
-            <AccountView
-              {...props}
-              member={data}
-              adminKey={adminKey}
-              basePath={`/members/${recordID}/bag`}
-              match={match}
-            />
+            <Box px={2}>
+              <AccountView
+                {...props}
+                member={data}
+                adminKey={adminKey}
+                basePath={`/members/${recordID}/bag`}
+                match={match}
+              />
+            </Box>
           ),
         },
         {
           value: "personal",
           label: "Personal",
           render: ({ data, adminKey, recordID }) => (
-            <PersonalView {...props} basePath={`/members/${recordID}/personal`} member={data} adminKey={adminKey} />
+            <Box px={2}>
+              <PersonalView {...props} basePath={`/members/${recordID}/personal`} member={data} adminKey={adminKey} />
+            </Box>
           ),
         },
         {
           value: "history",
           label: "History",
           render: ({ data, recordID }) => (
-            <HistoryView {...props} basePath={`/members/${recordID}/history`} member={data} />
+            <Box px={2}>
+              <HistoryView {...props} basePath={`/members/${recordID}/history`} member={data} />
+            </Box>
           ),
         },
         {
           value: "notifs",
           label: "Notifications",
           render: ({ data, recordID }) => (
-            <PushNotificationsView {...props} basePath={`/members/${recordID}/notifs`} member={data} />
+            <Box px={2}>
+              <PushNotificationsView {...props} basePath={`/members/${recordID}/notifs`} member={data} />
+            </Box>
           ),
         },
         {
           value: "emails",
           label: "Email Receipts",
           render: ({ data, recordID }) => (
-            <EmailReceiptsView {...props} basePath={`/members/${recordID}/emails`} member={data} />
+            <Box px={2}>
+              <EmailReceiptsView {...props} basePath={`/members/${recordID}/emails`} member={data} />
+            </Box>
           ),
         },
       ]}

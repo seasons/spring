@@ -1,6 +1,7 @@
 import { Box, styled } from "@material-ui/core"
 import React, { useEffect, useState } from "react"
 import { DragDropContext } from "react-beautiful-dnd"
+import { colors } from "theme/colors"
 import { BagColumn } from "./BagColumn"
 
 const columnData = {
@@ -30,13 +31,18 @@ const columnData = {
       title: "At Home",
       bagItems: [],
     },
-    returning: {
-      id: "returning",
+    returnPending: {
+      id: "returnPending",
       title: "Returning",
       bagItems: [],
     },
+    customerToBusiness: {
+      id: "customerToBusiness",
+      title: "On the way back",
+      bagItems: [],
+    },
   },
-  columnOrder: ["queued", "picked", "packed", "shipped", "atHome", "returning"],
+  columnOrder: ["queued", "picked", "packed", "shipped", "atHome", "returnPending", "customerToBusiness"],
 }
 
 export const BagColumns = ({ bagSections }) => {
@@ -108,7 +114,7 @@ export const BagColumns = ({ bagSections }) => {
     <DragDropContext onDragEnd={onDragEnd}>
       <FlexBox py={5}>
         {columnData.columnOrder.map((columnId, index) => {
-          return <BagColumn column={columnsWithItems[columnId]} key={index} />
+          return <BagColumn column={columnsWithItems[columnId]} key={index} index={index} />
         })}
       </FlexBox>
     </DragDropContext>
@@ -121,4 +127,5 @@ const FlexBox = styled(Box)({
   flexDirection: "row",
   flexWrap: "nowrap",
   overflowX: "auto",
+  backgroundColor: colors.black04,
 })
