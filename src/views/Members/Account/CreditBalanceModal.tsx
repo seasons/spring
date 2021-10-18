@@ -49,11 +49,12 @@ interface CreditBalanceModalProps {
   open: boolean
   onClose: () => any
   creditBalance: any
+  membershipId: string
 }
 
 export const UPDATE_CREDIT_BALACE = gql`
-  mutation updateCreditBalance($newCreditBalance: Int, $update: Int, $reason: String) {
-    updateCreditBalance(newCreditBalance: $newCreditBalance, update: $update, reason: $reason)
+  mutation updateCreditBalance($membershipId: ID, $amount: Int, $reason: String) {
+    updateCreditBalance(membershipId: $membershipId, amount: $amount, reason: $reason)
   }
 `
 
@@ -61,12 +62,13 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
   open,
   onClose,
   creditBalance,
+  membershipId,
 }) => {
   const [value, setValue] = useState<any>(0)
   const [operation, setOperation] = useState<string>("Add")
-  const updateValue = parseInt(value)
-  const result =
-    (operation === "Add" ? creditBalance + updateValue * 100 : creditBalance - updateValue * 100) || creditBalance
+  const amount = operation === "Add" ? value : -value
+  const result = creditBalance + amount || creditBalance
+
   const formatPrice = price => {
     return (price / 100).toLocaleString("en-US", {
       style: "currency",
@@ -93,10 +95,10 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
     },
   })
 
-  const allowSave = updateValue > 0
+  const allowSave = amount != 0 && creditUpdateNotes.length > 0
   const handleSave = () => {
     updateCreditBalance({
-      variables: { newCreditBalance: result, update: updateValue, reason: creditUpdateNotes },
+      variables: { membershipId: membershipId, amount: amount, reason: creditUpdateNotes },
     })
   }
 
@@ -107,17 +109,17 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
     return Number(String(s).replace(/[^0-9.-]+/g, ""))
   }
 
-  var currency = "USD"
-  var currencyInput = document?.querySelector('input[type="currency"]')
+  const currency = "USD"
+  const currencyInput = document?.querySelector('input[type="currency"]')
   currencyInput?.addEventListener("focus", function onFocus(e: any) {
-    var value = e.target.value
+    const value = e.target.value
     e.target.value = value ? localStringToNumber(value) : ""
   })
 
   currencyInput?.addEventListener("blur", function onBlur(e: any) {
-    var value = e?.target?.value
+    const value = e?.target?.value
 
-    var options = {
+    const options = {
       maximumFractionDigits: 2,
       currency: currency,
       style: "currency",
@@ -126,6 +128,7 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
 
     e.target.value = value ? formatPrice(localStringToNumber(value) * 100) : ""
   })
+
   return (
     <Modal onClose={onClose} open={open}>
       <Card>
@@ -137,12 +140,18 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
               <ToggleButtonGroup color="primary" value="" exclusive>
                 <ToggleButton
                   value="Add"
-                  onClick={() => setOperation("Add")}
-                  {...(operation === "Add" ? "selected" : "")}
+                  onClick={() => {
+                    setOperation("Add")
+                  }}
                 >
                   Add
                 </ToggleButton>
-                <ToggleButton value="Deduct" onClick={() => setOperation("Deduct")}>
+                <ToggleButton
+                  value="Deduct"
+                  onClick={() => {
+                    setOperation("Deduct")
+                  }}
+                >
                   Deduct
                 </ToggleButton>
               </ToggleButtonGroup>
@@ -157,7 +166,7 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
                     type="currency"
                     placeholder={`Credits ${operation}ed`}
                     onChange={e => {
-                      setValue(e.target.value)
+                      setValue(parseInt(e.target.value) * 100)
                     }}
                   />
                   <Spacer mt={1} />

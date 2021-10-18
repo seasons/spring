@@ -16,7 +16,7 @@ export const BillingCard = ({ member }) => {
       style: "currency",
       currency: "USD",
     })
-  console.log(membership)
+
   return (
     <>
       <SummaryCard
@@ -46,6 +46,7 @@ export const BillingCard = ({ member }) => {
         open={openModal}
         onClose={() => setOpenModal(false)}
         creditBalance={membership?.creditBalance}
+        membershipId={membership.id}
       />
     </>
   )
