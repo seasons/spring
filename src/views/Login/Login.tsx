@@ -39,6 +39,7 @@ export const LoginView: React.FunctionComponent<LoginViewProps> = props => {
       setError(err.message)
     },
   })
+  // @ts-ignore
   const session = useSelector(state => state.session)
   const dispatch = useDispatch()
 

@@ -51,37 +51,42 @@ const CustomerDetails = gql`
     plan
     status
     iOSAppStatus
-    bagItems {
+    bagSections {
       id
-      saved
       status
-      isSwappable
-      physicalProduct {
+      bagItems {
         id
-      }
-      productVariant {
-        id
-        sku
-        displayShort
-        internalSize {
+        saved
+        status
+        isSwappable
+        physicalProduct {
           id
-          display
         }
-        product {
+        productVariant {
           id
-          slug
-          name
-          images(size: Thumb) {
+          sku
+          displayShort
+          internalSize {
             id
-            url
+            display
           }
-          brand {
+          product {
             id
+            slug
             name
+            images(size: Thumb) {
+              id
+              url
+            }
+            brand {
+              id
+              name
+            }
           }
         }
       }
     }
+
     user {
       id
       email

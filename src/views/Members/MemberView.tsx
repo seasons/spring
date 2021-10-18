@@ -20,6 +20,13 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
       }}
       tabs={[
         {
+          value: "bag",
+          label: "Bag",
+          render: ({ data, adminKey, recordID }) => (
+            <BagView {...props} basePath={`/members/${recordID}/bag`} customer={data} />
+          ),
+        },
+        {
           value: "account",
           label: "Account",
           render: ({ data, adminKey, match, recordID }) => (
@@ -27,7 +34,7 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
               {...props}
               member={data}
               adminKey={adminKey}
-              basePath={`/members/${recordID}/account`}
+              basePath={`/members/${recordID}/bag`}
               match={match}
             />
           ),
@@ -37,13 +44,6 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
           label: "Personal",
           render: ({ data, adminKey, recordID }) => (
             <PersonalView {...props} basePath={`/members/${recordID}/personal`} member={data} adminKey={adminKey} />
-          ),
-        },
-        {
-          value: "bag",
-          label: "Bag",
-          render: ({ data, adminKey, recordID }) => (
-            <BagView {...props} basePath={`/members/${recordID}/bag`} member={data} />
           ),
         },
         {
