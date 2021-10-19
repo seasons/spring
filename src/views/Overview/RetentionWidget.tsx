@@ -10,22 +10,26 @@ export const RetentionWidget = ({ data }) => {
 
   // We didn't add any customers in 04 2020. So we fib some data there to make
   // the graph cleaner
-  const adjustedResult = [
-    ...data?.result?.slice(0, 5),
-    {
-      cohort: "2020-04",
-      counts: Object.keys(data?.result?.[0]?.counts).reduce((acc, curval) => {
-        acc[curval] = null
-        const thisMonth = dateStringToDate(curval)
-        const cohortStartmonth = dateStringToDate("2020-04")
-        if (thisMonth >= cohortStartmonth) {
-          acc[curval] = 0
-        }
-        return acc
-      }, {}),
-    },
-    ...data?.result.slice(5),
-  ]
+  let adjustedResult
+  if (data?.result) {
+    adjustedResult = [
+      ...data?.result?.slice(0, 5),
+      {
+        cohort: "2020-04",
+        counts: Object.keys(data?.result?.[0]?.counts).reduce((acc, curval) => {
+          acc[curval] = null
+          const thisMonth = dateStringToDate(curval)
+          const cohortStartmonth = dateStringToDate("2020-04")
+          if (thisMonth >= cohortStartmonth) {
+            acc[curval] = 0
+          }
+          return acc
+        }, {}),
+      },
+      ...data?.result.slice(5),
+    ]
+  }
+
   const allData = adjustedResult?.map(a => ({
     name: a.cohort,
     data: Object.keys(a.counts).map(thisMonth => {
@@ -52,7 +56,7 @@ export const RetentionWidget = ({ data }) => {
     }),
   }))
 
-  const lastTwelveMonthsData = allData.slice(-12).map(a => {
+  const lastTwelveMonthsData = allData?.slice(-12).map(a => {
     const newData = a.data.filter(b => {
       const dataMonth = dateStringToDate(b["x"])
       const firstMonthInSeries = dateStringToDate(allData.slice(-12, -11)[0].name)

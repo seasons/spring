@@ -208,6 +208,19 @@ export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ a
               <TableCell>Discovery Reference</TableCell>
               <TableCell>{member.detail.discoveryReference ?? "n/a"}</TableCell>
             </TableRow>
+            <TableRow>
+              <TableCell>iOS App Status</TableCell>
+              <TableCell>
+                <Chip
+                  label={member.iOSAppStatus}
+                  icon={
+                    <Box pl={1}>
+                      <Indicator status={member.iOSAppStatus} />
+                    </Box>
+                  }
+                />
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </CardContent>
