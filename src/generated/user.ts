@@ -28,5 +28,5 @@ export interface user {
   createdAt: any
   updatedAt: any
   links: user_links | null
-  creditUpdateHistory: credit_balance_update_logs
+  creditUpdateHistory: credit_balance_update_logs[]
 }
