@@ -54,7 +54,7 @@ interface CreditBalanceModalProps {
 }
 
 export const UPDATE_CREDIT_BALACE = gql`
-  mutation updateCreditBalance($membershipId: ID, $amount: Int, $reason: String) {
+  mutation updateCreditBalance($membershipId: ID!, $amount: Int!, $reason: String!) {
     updateCreditBalance(membershipId: $membershipId, amount: $amount, reason: $reason)
   }
 `
