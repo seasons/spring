@@ -15,6 +15,7 @@ import {
   CreditNoteStatus,
   ReservationStatus,
 } from "./globalTypes"
+import { user } from "./user"
 
 // ====================================================
 // GraphQL fragment: customer
@@ -142,6 +143,18 @@ export interface customer_membership {
   id: string
   plan: customer_membership_plan | null
   pauseRequests: customer_membership_pauseRequests[] | null
+  creditUpdateHistory: credit_balance_update_logs[]
+}
+
+export interface credit_balance_update_logs {
+  id: string
+  membership: customer_membership
+  membershipId: string
+  amount: number
+  reason: string
+  createdAt: any
+  adminUser: user
+  adminUserId: string
 }
 
 export interface customer_invoices_creditNotes {

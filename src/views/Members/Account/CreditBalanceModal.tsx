@@ -67,8 +67,10 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
   const [value, setValue] = useState<any>(0)
   const [operation, setOperation] = useState<string>("Add")
   const amount = operation === "Add" ? value : -value
-  const result = creditBalance + amount || creditBalance
-
+  const result = creditBalance + amount
+  if (creditBalance + amount < 0) {
+    setValue(creditBalance)
+  }
   const formatPrice = price => {
     return (price / 100).toLocaleString("en-US", {
       style: "currency",
@@ -171,7 +173,8 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
                   />
                   <Spacer mt={1} />
                   <Typography variant="h6">
-                    After {`${operation}ing`}: {formatPrice(result)}
+                    After {`${operation}ing`}:{" "}
+                    {typeof result === "number" ? formatPrice(result) : formatPrice(creditBalance)}
                   </Typography>
                 </Box>
                 <Box display="flex" flexDirection="column">
