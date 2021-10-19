@@ -62,7 +62,8 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ open, onC
     if (scannedTrackingNumber?.trackingNumber) {
       setTrackingNumber(scannedTrackingNumber?.trackingNumber)
     }
-  }, [location])
+  }, [location, scannedTrackingNumber])
+
   const refresh = useRefresh()
   let barcodeMaps = {}
   const [productStates, setProductStates] = useState<ProductStates>({})
