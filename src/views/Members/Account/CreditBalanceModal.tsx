@@ -23,6 +23,7 @@ import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab"
 import { gql } from "apollo-boost"
 import { useRefresh } from "ra-core"
 import { useSnackbarContext } from "components/Snackbar"
+import { formatPrice } from "utils/price"
 
 export const Card = styled(muiCard)`
   top: 50%;
@@ -70,12 +71,6 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
   const result = creditBalance + amount
   if (creditBalance + amount < 0) {
     setValue(creditBalance)
-  }
-  const formatPrice = price => {
-    return (price / 100).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    })
   }
 
   const [creditUpdateNotes, setCreditUpdateNotes] = useState<string>("")
