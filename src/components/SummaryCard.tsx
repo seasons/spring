@@ -60,8 +60,7 @@ const SummaryCardRow = ({ fieldName, fieldValue, openModal }) => {
       <TableCell>
         {openModal && (
           <Button color="secondary" variant="outlined" onClick={() => openModal(true)}>
-            {" "}
-            Edit{" "}
+            Edit
           </Button>
         )}
       </TableCell>
