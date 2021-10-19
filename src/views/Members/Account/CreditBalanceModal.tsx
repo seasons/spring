@@ -83,6 +83,8 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
         status: "success",
       })
       refresh()
+      setValue(0)
+      setCreditUpdateNotes("")
     },
     onError: error => {
       showSnackbar({
