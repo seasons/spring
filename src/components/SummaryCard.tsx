@@ -34,17 +34,20 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ record, title, rows })
                 </Grid>
               </TableCell>
             </TableRow>
-            {rows.map((r, i) => {
-              let fieldValue
-              if (!!r.fieldValuePath) {
-                fieldValue = get(record, r.fieldValuePath)
-              } else if (!!r.fieldValueFunc) {
-                fieldValue = r.fieldValueFunc(record)
-              } else {
-                throw new Error(`Must pass one of fieldValuePath or fieldValueFunc`)
-              }
-              return <SummaryCardRow key={i} fieldName={r.fieldName} fieldValue={fieldValue} openModal={r.openModal} />
-            })}
+            {record &&
+              rows.map((r, i) => {
+                let fieldValue
+                if (!!r.fieldValuePath) {
+                  fieldValue = get(record, r.fieldValuePath)
+                } else if (!!r.fieldValueFunc) {
+                  fieldValue = r.fieldValueFunc(record)
+                } else {
+                  throw new Error(`Must pass one of fieldValuePath or fieldValueFunc`)
+                }
+                return (
+                  <SummaryCardRow key={i} fieldName={r.fieldName} fieldValue={fieldValue} openModal={r.openModal} />
+                )
+              })}
           </TableBody>
         </Table>
       </CardContent>
