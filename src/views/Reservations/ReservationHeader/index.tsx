@@ -34,7 +34,7 @@ export const ReservationHeader = ({ data }) => {
   const [showModal, toggleModal] = useState(false)
 
   const [isMutating, setIsMutating] = useState(false)
-
+  // @ts-ignore
   const session = useSelector(state => state.session)
 
   const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED, {
