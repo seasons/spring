@@ -6,6 +6,7 @@ import { ManageView } from "../Components/ManageView"
 import { ReservationHistoryView } from "../Components/ReservationHistoryView"
 import { PhysicalProductQAView } from "./PhysicalProductQAEntries"
 import { AdminLogsView } from "components/AdminLogsView"
+import { Container } from "@material-ui/core"
 
 export interface PhysicalProductViewProps {
   match: any
@@ -13,35 +14,37 @@ export interface PhysicalProductViewProps {
 
 export const PhysicalProductView: React.FC<PhysicalProductViewProps> = ({ match }) => {
   return (
-    <DetailView
-      match={match}
-      resource={"PhysicalProduct"}
-      //@ts-ignore
-      renderHeader={({ data }) => <PhysicalProductDetailViewHeader data={data} />}
-      tabs={[
-        {
-          value: "manage",
-          label: "Manage",
-          //@ts-ignore
-          render: ({ data }) => <ManageView data={data} />,
-        },
-        {
-          value: "quality",
-          label: "QA Entries",
-          render: ({ data }) => <PhysicalProductQAView data={data} />,
-        },
-        {
-          value: "history",
-          label: "History",
-          //@ts-ignore
-          render: ({ data }) => <ReservationHistoryView data={data} />,
-        },
-        {
-          value: "logs",
-          label: "Admin Logs",
-          render: ({ data }) => <AdminLogsView logs={data.adminLogs} />,
-        },
-      ]}
-    />
+    <Container maxWidth={false}>
+      <DetailView
+        match={match}
+        resource={"PhysicalProduct"}
+        //@ts-ignore
+        renderHeader={({ data }) => <PhysicalProductDetailViewHeader data={data} />}
+        tabs={[
+          {
+            value: "manage",
+            label: "Manage",
+            //@ts-ignore
+            render: ({ data }) => <ManageView data={data} />,
+          },
+          {
+            value: "quality",
+            label: "QA Entries",
+            render: ({ data }) => <PhysicalProductQAView data={data} />,
+          },
+          {
+            value: "history",
+            label: "History",
+            //@ts-ignore
+            render: ({ data }) => <ReservationHistoryView data={data} />,
+          },
+          {
+            value: "logs",
+            label: "Admin Logs",
+            render: ({ data }) => <AdminLogsView logs={data.adminLogs} />,
+          },
+        ]}
+      />
+    </Container>
   )
 }

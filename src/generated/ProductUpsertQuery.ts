@@ -14,7 +14,7 @@ export interface ProductUpsertQuery_categories {
   id: string
   name: string
   measurementType: MeasurementType | null
-  recoupment: number
+  recoupment: number | null
 }
 
 export interface ProductUpsertQuery_brands {

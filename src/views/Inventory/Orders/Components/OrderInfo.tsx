@@ -36,7 +36,7 @@ export const OrderInfo = ({ order, ...rest }) => {
             <TableRow>
               <TableCell>Customer</TableCell>
               <TableCell>
-                <Link component={RouterLink} to={`/members/${customer.id}/account`}>
+                <Link component={RouterLink} to={`/members/${customer.id}/bag`}>
                   {fullName}
                 </Link>
               </TableCell>

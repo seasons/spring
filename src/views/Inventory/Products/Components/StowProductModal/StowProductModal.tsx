@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react"
 import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typography } from "@material-ui/core"
 import { DialogTitle } from "components"
 import { head, trim, groupBy } from "lodash"
-import { PhysicalProduct } from "generated/PhysicalProduct"
 import { useQuery, useMutation } from "react-apollo"
 import { StowProductInfo } from "./StowProductInfo"
 import { WAREHOUSE_LOCATION_BARCODE_REGEX, PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
@@ -36,7 +35,8 @@ export const StowProductModal: React.FC<StowProductModalProps> = ({ disableButto
     },
   })
   const [barcode, setBarcode] = useState("")
-  const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState<PhysicalProduct | undefined>(undefined)
+  const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState<any>(undefined)
+  // @ts-ignore
   const [location, setLocation] = useState(selectedPhysicalProduct?.warehouseLocation?.barcode || "")
   const [physicalProductsByBarcode, setPhysicalProductsByBarcode] = useState({})
   const [validWarehouseLocationBarcodes, setValidWarehouseLocationBarcodes] = useState<string[]>([])
@@ -56,6 +56,9 @@ export const StowProductModal: React.FC<StowProductModalProps> = ({ disableButto
   }
 
   const handleSave = async () => {
+    if (!selectedPhysicalProduct) {
+      return
+    }
     await updatePhysicalProduct({
       variables: {
         where: {

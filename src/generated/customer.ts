@@ -6,6 +6,7 @@
 import {
   Plan,
   CustomerStatus,
+  CustomerIOSAppStatus,
   BagItemStatus,
   UserRole,
   EmailId,
@@ -14,12 +15,18 @@ import {
   CreditNoteReasonCode,
   CreditNoteStatus,
   ReservationStatus,
+  ReservationLineItemRecordType,
 } from "./globalTypes"
 import { user } from "./user"
 
 // ====================================================
 // GraphQL fragment: customer
 // ====================================================
+
+export interface customer_bagItems_physicalProduct {
+  __typename: "PhysicalProduct"
+  id: string
+}
 
 export interface customer_bagItems_productVariant_internalSize {
   __typename: "Size"
@@ -52,6 +59,7 @@ export interface customer_bagItems_productVariant {
   __typename: "ProductVariant"
   id: string
   sku: string | null
+  displayShort: string | null
   internalSize: customer_bagItems_productVariant_internalSize | null
   product: customer_bagItems_productVariant_product
 }
@@ -61,6 +69,8 @@ export interface customer_bagItems {
   id: string
   saved: boolean | null
   status: BagItemStatus
+  isSwappable: boolean
+  physicalProduct: customer_bagItems_physicalProduct | null
   productVariant: customer_bagItems_productVariant
 }
 
@@ -69,6 +79,7 @@ export interface customer_user_links {
   sendgrid: string
   mixpanel: string
   intercom: string
+  chargebee: string
 }
 
 export interface customer_user_emails {
@@ -122,6 +133,21 @@ export interface customer_membership_plan {
   __typename: "PaymentPlan"
   id: string
   itemCount: number | null
+  name: string | null
+}
+
+export interface customer_membership_subscription {
+  __typename: "CustomerMembershipSubscriptionData"
+  planPrice: number
+}
+
+export interface customer_membership_currentRentalInvoice {
+  __typename: "RentalInvoice"
+  id: string
+  billingStartAt: any
+  billingEndAt: any
+  createdAt: any
+  updatedAt: any
 }
 
 export interface customer_membership_pauseRequests_reason {
@@ -141,7 +167,11 @@ export interface customer_membership_pauseRequests {
 export interface customer_membership {
   __typename: "CustomerMembership"
   id: string
+  creditBalance: number | null
   plan: customer_membership_plan | null
+  subscription: customer_membership_subscription | null
+  subscriptionId: string
+  currentRentalInvoice: customer_membership_currentRentalInvoice | null
   pauseRequests: customer_membership_pauseRequests[] | null
   creditUpdateHistory: credit_balance_update_logs[]
 }
@@ -178,6 +208,43 @@ export interface customer_invoices {
   creditNotes: (customer_invoices_creditNotes | null)[] | null
 }
 
+export interface customer_reservations_lineItems {
+  __typename: "ReservationLineItem"
+  id: string
+  name: string | null
+  price: number
+  recordType: ReservationLineItemRecordType
+}
+
+export interface customer_reservations_sentPackage_items_productVariant_product_images {
+  __typename: "Image"
+  url: string | null
+}
+
+export interface customer_reservations_sentPackage_items_productVariant_product {
+  __typename: "Product"
+  id: string
+  images: customer_reservations_sentPackage_items_productVariant_product_images[]
+}
+
+export interface customer_reservations_sentPackage_items_productVariant {
+  __typename: "ProductVariant"
+  id: string
+  product: customer_reservations_sentPackage_items_productVariant_product
+}
+
+export interface customer_reservations_sentPackage_items {
+  __typename: "PhysicalProduct"
+  id: string
+  productVariant: customer_reservations_sentPackage_items_productVariant | null
+}
+
+export interface customer_reservations_sentPackage {
+  __typename: "Package"
+  id: string
+  items: customer_reservations_sentPackage_items[] | null
+}
+
 export interface customer_reservations_products_productVariant_product_images {
   __typename: "Image"
   url: string | null
@@ -201,6 +268,29 @@ export interface customer_reservations_products {
   productVariant: customer_reservations_products_productVariant | null
 }
 
+export interface customer_reservations_newProducts_productVariant_product_images {
+  __typename: "Image"
+  url: string | null
+}
+
+export interface customer_reservations_newProducts_productVariant_product {
+  __typename: "Product"
+  id: string
+  images: customer_reservations_newProducts_productVariant_product_images[]
+}
+
+export interface customer_reservations_newProducts_productVariant {
+  __typename: "ProductVariant"
+  id: string
+  product: customer_reservations_newProducts_productVariant_product
+}
+
+export interface customer_reservations_newProducts {
+  __typename: "PhysicalProduct"
+  id: string
+  productVariant: customer_reservations_newProducts_productVariant | null
+}
+
 export interface customer_reservations {
   __typename: "Reservation"
   id: string
@@ -210,7 +300,10 @@ export interface customer_reservations {
   shippedAt: any | null
   receivedAt: any | null
   createdAt: any
+  lineItems: (customer_reservations_lineItems | null)[] | null
+  sentPackage: customer_reservations_sentPackage | null
   products: customer_reservations_products[]
+  newProducts: customer_reservations_newProducts[]
 }
 
 export interface customer_utm {
@@ -278,6 +371,7 @@ export interface customer {
   id: string
   plan: Plan | null
   status: CustomerStatus | null
+  iOSAppStatus: CustomerIOSAppStatus | null
   bagItems: customer_bagItems[] | null
   user: customer_user
   admissions: customer_admissions | null
