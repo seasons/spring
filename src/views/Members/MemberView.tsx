@@ -9,6 +9,7 @@ import { DetailView } from "components/DetailView"
 import { Header } from "./Header"
 import { BagView } from "./Bag"
 import { EmailReceiptsView } from "./EmailsView"
+import { CreditBalanceUpdateHistory } from "./CreditUpdateHistory"
 
 export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, props }) => {
   return (
@@ -65,6 +66,13 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
           label: "Email Receipts",
           render: ({ data, recordID }) => (
             <EmailReceiptsView {...props} basePath={`/members/${recordID}/emails`} member={data} />
+          ),
+        },
+        {
+          value: "creditBalanceUpdateHistory",
+          label: "Credit Update History",
+          render: ({ data, recordID }) => (
+            <CreditBalanceUpdateHistory {...props} basePath={`/members/${recordID}/history`} member={data} />
           ),
         },
       ]}
