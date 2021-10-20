@@ -124,6 +124,16 @@ const CustomerDetails = gql`
     membership {
       id
       creditBalance
+      creditUpdateHistory {
+        id
+        amount
+        reason
+        adminUser {
+          firstName
+          lastName
+        }
+        createdAt
+      }
       plan {
         id
         itemCount
