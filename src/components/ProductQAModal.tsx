@@ -49,6 +49,7 @@ export const SUBMIT_QA_ENTRY = gql`
 `
 
 export const ProductQAModal = ({ data, open, onSave, onClose }) => {
+  // @ts-ignore
   const session = useSelector(state => state.session)
   const [submitQAEntry] = useMutation(SUBMIT_QA_ENTRY, {
     onCompleted: onSave,

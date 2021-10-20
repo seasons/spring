@@ -50,7 +50,7 @@ interface CreditBalanceModalProps {
   open: boolean
   onClose: () => any
   creditBalance: any
-  membershipId: string
+  membership: any
 }
 
 export const UPDATE_CREDIT_BALACE = gql`
@@ -63,7 +63,7 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
   open,
   onClose,
   creditBalance,
-  membershipId,
+  membership,
 }) => {
   const [value, setValue] = useState<any>(0)
   const [operation, setOperation] = useState<string>("Add")
@@ -94,10 +94,14 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
     },
   })
 
+  if (!membership) {
+    return null
+  }
+
   const allowSave = amount != 0 && creditUpdateNotes.length > 0
   const handleSave = () => {
     updateCreditBalance({
-      variables: { membershipId: membershipId, amount: amount, reason: creditUpdateNotes },
+      variables: { membershipId: membership.id, amount: amount, reason: creditUpdateNotes },
     })
   }
 

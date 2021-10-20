@@ -46,7 +46,7 @@ export const BillingCard = ({ member }) => {
         open={openModal}
         onClose={() => setOpenModal(false)}
         creditBalance={membership?.creditBalance}
-        membershipId={membership.id}
+        membership={membership}
       />
     </>
   )
