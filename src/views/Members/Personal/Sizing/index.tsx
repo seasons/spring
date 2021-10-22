@@ -111,7 +111,11 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
               formatFunc={a => {
                 const feet = Math.floor(a / 12)
                 const inches = a - 12 * feet
-                return `${feet}'${inches}"`
+                if (feet && inches) {
+                  return `${feet}'${inches}"`
+                } else {
+                  return ""
+                }
               }}
             />
             <SizeTableRow fieldName="Body type" fieldValue={customerDetail.bodyType ?? ""} />
