@@ -10,7 +10,7 @@ export default [
         href: "/analytics",
       },
       {
-        title: "Members",
+        title: "Customers",
         href: "/members",
       },
       {
