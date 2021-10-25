@@ -4,9 +4,10 @@ import { DateTime } from "luxon"
 import { Button, Card, Link, Table, TableBody, TableCell, TableRow, Box, Chip } from "@material-ui/core"
 import { Indicator } from "components/Indicator"
 import { Spacer } from "components"
+import { Alert } from "@material-ui/lab"
 
 export const ReservationInfo = ({ reservation, ...rest }) => {
-  const { reservationNumber } = reservation
+  const { adminMessage, reservationNumber } = reservation
 
   const customer = reservation?.customer
   const { firstName, lastName } = customer?.user
@@ -31,9 +32,17 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
   }
 
   const billingStatus = customer?.status === "PaymentFailed" ? "Delinquent" : "Paid"
+
+  const warningMessage =
+    adminMessage === "PartiallyPacked"
+      ? "This reservation is partially packed. Please retrieve the existing bag and replace the shipping label."
+      : adminMessage === "PreviousReservationOnHold"
+      ? "Previous reservation is in Hold status."
+      : null
   return (
     <>
       <Card {...rest}>
+        {!!warningMessage && <Alert severity="warning">{warningMessage}</Alert>}
         <Table>
           <TableBody>
             <TableRow>
@@ -96,6 +105,18 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <Address address={reservation?.lastLocation} />
               </TableCell>
             </TableRow>
+            {reservation?.pickupDate && (
+              <TableRow>
+                <TableCell>Pickup Date</TableCell>
+                <TableCell>{DateTime.fromISO(reservation.pickupDate).toLocaleString(DateTime.DATE_MED)}</TableCell>
+              </TableRow>
+            )}
+            {reservation?.pickupWindow && (
+              <TableRow>
+                <TableCell>Pickup Window</TableCell>
+                <TableCell>{reservation?.pickupWindow?.display}</TableCell>
+              </TableRow>
+            )}
             <TableRow>
               <TableCell>Shipping Label</TableCell>
               <TableCell>

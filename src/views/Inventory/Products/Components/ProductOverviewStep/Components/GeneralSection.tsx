@@ -21,6 +21,7 @@ export interface GeneralSectionProps {
   productType: string
   setProductType: (string) => void
   product: ProductEditQuery_product | undefined
+  setCategoryRecoupment: (number) => void
 }
 
 export const GeneralSection: React.FC<GeneralSectionProps> = ({
@@ -34,6 +35,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   setProductType,
   product,
   categories,
+  setCategoryRecoupment,
 }) => {
   const { values: formValues } = useFormState()
   const currentStatus = product?.status
@@ -42,7 +44,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
     value: brand.id,
   }))
   const isUpcoming = formValues?.status === "Upcoming"
-  const categoriesChoices = categories?.map(c => ({ value: c.id, display: c.name }))
+  const categoriesChoices = categories?.map(c => ({ value: c.id, display: c.name, recoupment: c.recoupment }))
   const typeChoices = getFormSelectChoices(types)
 
   const manufacturerSizeType = product?.variants?.[0]?.manufacturerSizes?.[0]?.type
@@ -56,6 +58,11 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
     case "Accessory":
       manufacturerSizeTypeChoices = getFormSelectChoices(ACCESSORY_SIZE_TYPES)
       break
+  }
+
+  const handleRecoupmentChange = event => {
+    const recoupment = categoriesChoices.find(a => a?.value === event?.target?.value)?.recoupment
+    setCategoryRecoupment(recoupment)
   }
 
   return (
@@ -119,7 +126,12 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
             <Grid item xs={6}>
               <Text variant="h6">Category *</Text>
               <Spacer mt={1} />
-              <SelectField name="category" choices={categoriesChoices} requiredString />
+              <SelectField
+                name="category"
+                choices={categoriesChoices}
+                requiredString
+                onChange={event => handleRecoupmentChange(event)}
+              />
               <Spacer mt={3} />
             </Grid>
             <Grid item xs={6}>

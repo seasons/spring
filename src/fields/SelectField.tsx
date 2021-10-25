@@ -8,6 +8,7 @@ export type SelectChoice = {
   disabled?: boolean
   display: any
   value: any
+  recoupment?: number
 }
 
 export type SelectFieldProps = ChildFieldProps & {

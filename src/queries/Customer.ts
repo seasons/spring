@@ -12,10 +12,6 @@ const CustomerFragment = gql`
         id
         planID
       }
-      pauseRequests(orderBy: createdAt_DESC) {
-        id
-        resumeDate
-      }
     }
     user {
       id
@@ -54,14 +50,19 @@ const CustomerDetails = gql`
     id
     plan
     status
+    iOSAppStatus
     bagItems {
       id
       saved
       status
       isSwappable
+      physicalProduct {
+        id
+      }
       productVariant {
         id
         sku
+        displayShort
         internalSize {
           id
           display
@@ -92,6 +93,7 @@ const CustomerDetails = gql`
         sendgrid
         mixpanel
         intercom
+        chargebee
       }
       emails {
         id
@@ -121,9 +123,32 @@ const CustomerDetails = gql`
     }
     membership {
       id
+      creditBalance
+      creditUpdateHistory {
+        id
+        amount
+        reason
+        adminUser {
+          firstName
+          lastName
+        }
+        createdAt
+      }
       plan {
         id
         itemCount
+        name
+      }
+      subscription {
+        planPrice
+      }
+      subscriptionId
+      currentRentalInvoice {
+        id
+        billingStartAt
+        billingEndAt
+        createdAt
+        updatedAt
       }
       pauseRequests(orderBy: createdAt_DESC) {
         id
@@ -159,6 +184,12 @@ const CustomerDetails = gql`
       shippedAt
       receivedAt
       createdAt
+      lineItems {
+        id
+        name
+        price
+        recordType
+      }
       sentPackage {
         id
         items {

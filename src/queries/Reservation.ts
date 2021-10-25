@@ -139,6 +139,13 @@ export default {
         city
         state
       }
+      pickupDate
+      pickupWindow {
+        id
+        startTime
+        endTime
+        display
+      }
       products {
         id
         seasonsUID
@@ -207,6 +214,7 @@ export default {
       statusUpdatedAt
       createdAt
       updatedAt
+      adminMessage
     }
   `,
 }

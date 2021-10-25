@@ -1,5 +1,6 @@
-import React from "react"
-import { Box, Card, Grid, CardContent, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
+import React, { useState } from "react"
+import { Box, Button, Card, Grid, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
+import { CardContent } from "components"
 import { get } from "lodash"
 
 export interface SummaryCardRowInput {
@@ -7,6 +8,7 @@ export interface SummaryCardRowInput {
   fieldValuePath?: string
   fieldValueFunc?: (any) => any
   formatFunc?: (any) => any
+  openModal?: () => any
 }
 
 export interface SummaryCardProps {
@@ -15,7 +17,7 @@ export interface SummaryCardProps {
   rows: SummaryCardRowInput[]
 }
 
-export const SummaryCard: React.FunctionComponent<SummaryCardProps> = ({ record, title, rows }) => {
+export const SummaryCard: React.FC<SummaryCardProps> = ({ record, title, rows }) => {
   return (
     <Card>
       <CardContent>
@@ -32,17 +34,20 @@ export const SummaryCard: React.FunctionComponent<SummaryCardProps> = ({ record,
                 </Grid>
               </TableCell>
             </TableRow>
-            {rows.map((r, i) => {
-              let fieldValue
-              if (!!r.fieldValuePath) {
-                fieldValue = get(record, r.fieldValuePath)
-              } else if (!!r.fieldValueFunc) {
-                fieldValue = r.fieldValueFunc(record)
-              } else {
-                throw new Error(`Must pass one of fieldValuePath or fieldValueFunc`)
-              }
-              return <SummaryCardRow key={i} fieldName={r.fieldName} fieldValue={fieldValue} />
-            })}
+            {record &&
+              rows.map((r, i) => {
+                let fieldValue
+                if (!!r.fieldValuePath) {
+                  fieldValue = get(record, r.fieldValuePath)
+                } else if (!!r.fieldValueFunc) {
+                  fieldValue = r.fieldValueFunc(record)
+                } else {
+                  throw new Error(`Must pass one of fieldValuePath or fieldValueFunc`)
+                }
+                return (
+                  <SummaryCardRow key={i} fieldName={r.fieldName} fieldValue={fieldValue} openModal={r.openModal} />
+                )
+              })}
           </TableBody>
         </Table>
       </CardContent>
@@ -50,12 +55,18 @@ export const SummaryCard: React.FunctionComponent<SummaryCardProps> = ({ record,
   )
 }
 
-const SummaryCardRow = ({ fieldName, fieldValue }) => {
+const SummaryCardRow = ({ fieldName, fieldValue, openModal }) => {
   return (
     <TableRow>
       <TableCell>{fieldName}</TableCell>
       <TableCell>{fieldValue || "n/a"}</TableCell>
-      <TableCell></TableCell>
+      <TableCell>
+        {openModal && (
+          <Button color="secondary" variant="outlined" onClick={() => openModal(true)}>
+            Edit
+          </Button>
+        )}
+      </TableCell>
     </TableRow>
   )
 }

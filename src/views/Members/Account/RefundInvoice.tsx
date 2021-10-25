@@ -137,7 +137,7 @@ export const RefundInvoiceModal: React.FunctionComponent<RefundInvoiceModalProps
       </DialogContent>
       <DialogActions>
         <Box mr={3} my={1}>
-          <Button autoFocus onClick={() => onSave(values)} color="primary" variant="contained">
+          <Button autoFocus onClick={() => onSave(values)} color="secondary" variant="contained">
             Issue Refund
           </Button>
         </Box>
