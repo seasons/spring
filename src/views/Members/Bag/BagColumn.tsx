@@ -16,7 +16,7 @@ export const BagColumn = ({ column, index, onColumnButtonClick }) => {
           {buttons.map((button, index) => {
             return (
               <Box key={index} ml={1}>
-                <Button variant="contained" onClick={() => onColumnButtonClick(button.id)}>
+                <Button variant="contained" onClick={() => onColumnButtonClick(button.id, bagItems)}>
                   {button.title}
                 </Button>
               </Box>

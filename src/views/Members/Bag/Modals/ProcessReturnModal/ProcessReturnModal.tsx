@@ -50,8 +50,9 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
 }) => {
   const barcodeMaps = {}
   bagItems.forEach(bagItem => {
-    barcodeMaps[bagItem.product.barcode] = {
-      productUID: bagItem.product.seasonsUID,
+    const physicalProduct = bagItem.physicalProduct
+    barcodeMaps[physicalProduct.barcode] = {
+      productUID: physicalProduct.seasonsUID,
       returned: false,
       damageType: [],
       productStatus: "Dirty",
@@ -166,16 +167,17 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
           </Box>
           <Box mt={1} mb={2}>
             {bagItems.map(bagItem => {
-              const product = bagItem.product
+              const physicalProduct = bagItem.physicalProduct
+              const product = bagItem.productVariant.product
               return (
                 <ProcessReturnProductCard
                   key={product.id}
                   product={product}
-                  productState={productStates[product.barcode]}
+                  productState={productStates[physicalProduct.barcode]}
                   onStateChange={state => {
                     setProductStates({
                       ...productStates,
-                      [product.barcode]: state,
+                      [physicalProduct.barcode]: state,
                     })
                   }}
                 />

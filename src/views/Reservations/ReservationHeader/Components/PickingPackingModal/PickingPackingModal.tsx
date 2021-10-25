@@ -19,8 +19,7 @@ interface PickingPackingModalProps {
   onClose?: () => void
   onSave?: (values: ProductStates, params?: any) => void
   disableButton?: boolean
-  bagItems: any
-  mode: "Pick" | "Pack"
+  reservation: GetReservation
 }
 
 type ProductStates = { [key: string]: ProductState }
@@ -30,13 +29,12 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
   open,
   onSave,
   onClose,
-  bagItems,
-  mode,
+  reservation,
 }) => {
   const barcodeMaps = {}
-  bagItems?.forEach(bagItem => {
-    barcodeMaps[bagItem.product.barcode] = {
-      productUID: bagItem.product.seasonsUID,
+  reservation?.newProducts.forEach(product => {
+    barcodeMaps[product.barcode] = {
+      productUID: product.seasonsUID,
       picked: false,
     }
   })
@@ -45,17 +43,12 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
     ...barcodeMaps,
   })
 
-  // FIXME:
-  // const { shippingLabel } = reservation?.sentPackage!
-  const shippingLabel = { image: "" }
+  const { shippingLabel } = reservation?.sentPackage!
 
   const [barcode, setBarcode] = useState("")
   const [shouldAllowSave, setShouldAllowSave] = useState(false)
 
-  // FIXME:
-  // const alreadyPacked = reservation.status === "Packed"
-  const alreadyPacked = false
-
+  const alreadyPacked = reservation.status === "Packed"
   const inputRef = useRef()
 
   const focusOnInput = () => {
@@ -88,8 +81,7 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
         setProductStates(updatedProductStates)
 
         const pickedCount = Object.values(updatedProductStates).filter((a: any) => !!a.picked).length
-        // FIXME:
-        // setShouldAllowSave(pickedCount === reservation?.newProducts?.length)
+        setShouldAllowSave(pickedCount === reservation?.newProducts?.length)
       } else {
         showSnackbar({
           message: `Barcode not found`,
@@ -109,13 +101,13 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
     }
   }, [open])
 
+  const mode = reservation?.status === "Queued" ? "Pick" : "Pack"
+
   const title = mode === "Pick" ? "Pick items" : "Pack items"
   const listItemOneTitle = mode === "Pick" ? "Picking items" : "Packing items"
-  // FIXME:
-  // const newProductsWithData = reservation?.products.filter(a =>
-  //   reservation?.newProducts.map(b => b.seasonsUID).includes(a.seasonsUID)
-  // )
-  const newProductsWithData = []
+  const newProductsWithData = reservation?.products.filter(a =>
+    reservation?.newProducts.map(b => b.seasonsUID).includes(a.seasonsUID)
+  )
   return (
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -145,25 +137,21 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
           )}
           <Box mt={2} mb={2}>
             <Typography variant="subtitle1">{`1. ${listItemOneTitle}`}</Typography>
-            {newProductsWithData.map(product => {
-              return null
-              // FIXME:
-              // return (
-              //   <Box mb={2} key={`product-card-${product.id}`}>
-              //     <PickingPackingProductCard
-              //       product={product}
-              //       productState={productStates[product.barcode]}
-              //       donePicking={alreadyPacked}
-              //       onStateChange={state => {
-              //         setProductStates({
-              //           ...productStates,
-              //           [product.barcode]: state,
-              //         })
-              //       }}
-              //     />
-              //   </Box>
-              // )
-            })}
+            {newProductsWithData.map(product => (
+              <Box mb={2} key={`product-card-${product.id}`}>
+                <PickingPackingProductCard
+                  product={product}
+                  productState={productStates[product.barcode]}
+                  donePicking={alreadyPacked}
+                  onStateChange={state => {
+                    setProductStates({
+                      ...productStates,
+                      [product.barcode]: state,
+                    })
+                  }}
+                />
+              </Box>
+            ))}
           </Box>
           <Box mt={4} mb={2}>
             <Typography variant="subtitle1">2. Print shipping label</Typography>

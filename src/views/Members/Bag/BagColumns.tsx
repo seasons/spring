@@ -120,10 +120,14 @@ export const BagColumns = ({ bagSections, setModalBagItems, setShowModal }) => {
     }
   }
 
-  const onColumnButtonClick = buttonId => {
+  const onColumnButtonClick = (buttonId, bagItems) => {
+    setModalBagItems(bagItems)
+
     switch (buttonId) {
       case "pickItems":
+        return setShowModal("PickingModal")
       case "packItems":
+        return setShowModal("PackingModal")
       case "pickedUp":
       case "printlabel":
       case "trackShippment":

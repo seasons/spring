@@ -62,6 +62,7 @@ const CustomerDetails = gql`
         physicalProduct {
           id
           seasonsUID
+          barcode
         }
         productVariant {
           id

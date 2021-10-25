@@ -35,8 +35,9 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
 }) => {
   const barcodeMaps = {}
   bagItems?.forEach(bagItem => {
-    barcodeMaps[bagItem.product.barcode] = {
-      productUID: bagItem.product.seasonsUID,
+    const physicalProduct = bagItem.physicalProduct
+    barcodeMaps[physicalProduct.barcode] = {
+      productUID: physicalProduct.seasonsUID,
       picked: false,
     }
   })
