@@ -32,7 +32,7 @@ export const BagColumn = ({ column, index, onColumnButtonClick }) => {
           return (
             <Box ref={provided.innerRef} {...provided.droppableProps}>
               {bagItems?.map((bagItem, index) => {
-                return <BagItemCard bagItem={bagItem} key={index} index={index} />
+                return <BagItemCard bagItem={bagItem} key={index} index={index} columnId={column.id} />
               })}
               {provided.placeholder}
             </Box>

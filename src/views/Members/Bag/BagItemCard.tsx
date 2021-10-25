@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const BagItemCard = ({ bagItem, index }) => {
+export const BagItemCard = ({ bagItem, index, columnId }) => {
   const classes = useStyles()
   const [isReturnConfirmationDialogOpen, setIsReturnConfirmationDialogOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -71,7 +71,7 @@ export const BagItemCard = ({ bagItem, index }) => {
                     <Typography color="secondary">{physicalProduct?.seasonsUID}</Typography>
                   </Box>
                   <StatusWrapper>
-                    <Typography style={{ textDecoration: "underline" }}>{bagItem?.status}</Typography>
+                    <Typography style={{ textDecoration: "underline" }}>{bagItem?.physicalProduct?.barcode}</Typography>
                     <Button color="primary" variant="contained" onClick={() => router.push(linkUrl)}>
                       View
                     </Button>

@@ -8,6 +8,22 @@ import { Alert } from "@material-ui/lab"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { trim } from "lodash"
 import { useSnackbarContext } from "components/Snackbar"
+import gql from "graphql-tag"
+
+export const CreditBalanceFragment_Customer = gql`
+  fragment CreditBalanceFragment_Customer on Customer {
+    membership {
+      id
+      adjustedCreditBalance
+      currentBalance
+      currentRentalInvoice {
+        estimatedTotal
+        billingStartAt
+        billingEndAt
+      }
+    }
+  }
+`
 
 interface ProductState {
   productUID: string
