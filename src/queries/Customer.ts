@@ -1,8 +1,9 @@
 import { GET_LIST, GET_ONE } from "@seasons/react-admin"
 import gql from "graphql-tag"
+import { PickingPackingModalFragment_BagSection } from "views/Members/Bag/Modals/PickingPackingModal/PickingPackingModal"
 
-const CustomerFragment = gql`
-  fragment customer on Customer {
+const CustomerGetListFragment_Customer = gql`
+  fragment CustomerGetListFragment_Customer on Customer {
     id
     plan
     status
@@ -45,8 +46,8 @@ const CustomerFragment = gql`
   }
 `
 
-const CustomerDetails = gql`
-  fragment customer on Customer {
+const CustomerGetOneFragment_Customer = gql`
+  fragment CustomerGetOneFragment_Customer on Customer {
     id
     plan
     status
@@ -63,6 +64,12 @@ const CustomerDetails = gql`
           id
           seasonsUID
           barcode
+          warehouseLocation {
+            id
+            type
+            locationCode
+            itemCode
+          }
         }
         productVariant {
           id
@@ -88,7 +95,6 @@ const CustomerDetails = gql`
         }
       }
     }
-
     user {
       id
       email
@@ -282,6 +288,6 @@ const CustomerDetails = gql`
 `
 
 export default {
-  [GET_LIST]: CustomerFragment,
-  [GET_ONE]: CustomerDetails,
+  [GET_LIST]: CustomerGetListFragment_Customer,
+  [GET_ONE]: CustomerGetOneFragment_Customer,
 }

@@ -2,27 +2,33 @@ import React, { useEffect, useRef, useState } from "react"
 
 import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typography, Card } from "@material-ui/core"
 import { DialogTitle, Spacer } from "components"
-import { GetReservation } from "generated/GetReservation"
-import { PickingPackingProductCard } from "./PickingPackingProductCard"
+import { PickingPackingProductCard, PickingPackingProductCardFragment_BagSection } from "./PickingPackingProductCard"
 import { Alert } from "@material-ui/lab"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
-import { trim } from "lodash"
+import { trim, isEmpty } from "lodash"
 import { useSnackbarContext } from "components/Snackbar"
 import gql from "graphql-tag"
 
-export const CreditBalanceFragment_Customer = gql`
-  fragment CreditBalanceFragment_Customer on Customer {
-    membership {
+export const PickingPackingModalFragment_BagSection = gql`
+  fragment PickingPackingModalFragment_BagSection on BagSection {
+    id
+    bagItems {
       id
-      adjustedCreditBalance
-      currentBalance
-      currentRentalInvoice {
-        estimatedTotal
-        billingStartAt
-        billingEndAt
+      physicalProduct {
+        id
+        barCode
+        seasonsUID
+      }
+      productVariant {
+        id
+        product {
+          id
+        }
       }
     }
+    ...PickingPackingProductCardFragment_BagSection
   }
+  ${PickingPackingProductCardFragment_BagSection}
 `
 
 interface ProductState {
@@ -49,19 +55,24 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
   bagItems,
   mode,
 }) => {
-  const barcodeMaps = {}
-  bagItems?.forEach(bagItem => {
-    const physicalProduct = bagItem.physicalProduct
-    barcodeMaps[physicalProduct.barcode] = {
-      productUID: physicalProduct.seasonsUID,
-      picked: false,
+  const [productStates, setProductStates] = useState<ProductStates>({})
+
+  useEffect(() => {
+    if (isEmpty(productStates) && bagItems?.length > 0) {
+      const barcodeMaps = {}
+      bagItems?.forEach(bagItem => {
+        console.log("bagItem", bagItem)
+        const physicalProduct = bagItem.physicalProduct
+        barcodeMaps[physicalProduct.barcode] = {
+          productUID: physicalProduct.seasonsUID,
+          picked: false,
+        }
+      })
+      setProductStates(barcodeMaps)
     }
-  })
+  }, [bagItems, setProductStates])
 
-  const [productStates, setProductStates] = useState<ProductStates>({
-    ...barcodeMaps,
-  })
-
+  console.log("barcodeMaps", productStates)
   // FIXME:
   // const { shippingLabel } = reservation?.sentPackage!
   const shippingLabel = { image: "" }
@@ -128,11 +139,7 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
 
   const title = mode === "Pick" ? "Pick items" : "Pack items"
   const listItemOneTitle = mode === "Pick" ? "Picking items" : "Packing items"
-  // FIXME:
-  // const newProductsWithData = reservation?.products.filter(a =>
-  //   reservation?.newProducts.map(b => b.seasonsUID).includes(a.seasonsUID)
-  // )
-  const newProductsWithData = []
+
   return (
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -162,24 +169,24 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
           )}
           <Box mt={2} mb={2}>
             <Typography variant="subtitle1">{`1. ${listItemOneTitle}`}</Typography>
-            {newProductsWithData.map(product => {
-              return null
-              // FIXME:
-              // return (
-              //   <Box mb={2} key={`product-card-${product.id}`}>
-              //     <PickingPackingProductCard
-              //       product={product}
-              //       productState={productStates[product.barcode]}
-              //       donePicking={alreadyPacked}
-              //       onStateChange={state => {
-              //         setProductStates({
-              //           ...productStates,
-              //           [product.barcode]: state,
-              //         })
-              //       }}
-              //     />
-              //   </Box>
-              // )
+            {bagItems.map(bagItem => {
+              const physicalProduct = bagItem.physicalProduct
+
+              return (
+                <Box mb={2} key={physicalProduct.id}>
+                  <PickingPackingProductCard
+                    bagItem={bagItem}
+                    productState={productStates[physicalProduct.barcode]}
+                    donePicking={alreadyPacked}
+                    onStateChange={state => {
+                      setProductStates({
+                        ...productStates,
+                        [physicalProduct.barcode]: state,
+                      })
+                    }}
+                  />
+                </Box>
+              )
             })}
           </Box>
           <Box mt={4} mb={2}>
