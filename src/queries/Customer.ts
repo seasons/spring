@@ -138,6 +138,7 @@ const CustomerDetails = gql`
           firstName
           lastName
         }
+        balance
         createdAt
       }
       plan {

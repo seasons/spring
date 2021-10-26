@@ -185,6 +185,7 @@ export interface credit_balance_update_logs {
   createdAt: any
   adminUser: user
   adminUserId: string
+  balance: number
 }
 
 export interface customer_invoices_creditNotes {

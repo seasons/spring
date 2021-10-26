@@ -169,7 +169,7 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
                     type="currency"
                     placeholder={`Credits ${operation}ed`}
                     onChange={e => {
-                      setValue(parseInt(e.target.value) * 100)
+                      setValue(parseFloat(e.target.value) * 100)
                     }}
                   />
                   <Spacer mt={1} />
