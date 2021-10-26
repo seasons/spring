@@ -26,12 +26,15 @@ export const CreditBalanceUpdateHistory: React.FC<MemberSubViewProps> = ({ membe
                 <TableCell>Amount</TableCell>
                 <TableCell>Who</TableCell>
                 <TableCell>Details</TableCell>
+                <TableCell>Balance</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {creditUpdateHistory &&
                 creditUpdateHistory?.map(log => {
-                  const fullName = log?.adminUser?.firstName + " " + log?.adminUser?.lastName
+                  const firstName = log?.adminUser?.firstName
+                  const lastName = log?.adminUser?.lastName
+                  const fullName = firstName ? firstName + " " + lastName : "System"
                   return (
                     <TableRow>
                       {/* When did it happen */}
@@ -65,6 +68,11 @@ export const CreditBalanceUpdateHistory: React.FC<MemberSubViewProps> = ({ membe
                         <Box width="25%" style={{ overflow: "hidden" }}>
                           <Typography variant="h6">{log.reason}</Typography>
                         </Box>
+                      </TableCell>
+
+                      {/* Credit Balance after update */}
+                      <TableCell>
+                        <Typography variant="h6">{formatPrice(log.balance)}</Typography>
                       </TableCell>
                     </TableRow>
                   )
