@@ -10,6 +10,7 @@ import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventor
 import { useSnackbarContext } from "components/Snackbar"
 import { WarehouseLocationsDropdown } from "./WarehouseLocations"
 import CheckCircleIcon from "@material-ui/icons/CheckCircle"
+import { useRefresh } from "@seasons/react-admin"
 
 interface StowMultiProductModalProps {
   open: boolean
@@ -25,7 +26,7 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
   onClose,
 }) => {
   const { data, loading } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
-
+  const refresh = useRefresh()
   const { showSnackbar } = useSnackbarContext()
   const [stowItems] = useMutation(STOW_ITEMS, {
     onCompleted: () => {
@@ -33,6 +34,13 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
         message: `Physical products stowed at ${location}`,
         status: "success",
       })
+      setSelectedPhysicalProducts([])
+      setSelectedPhysicalProductsIDs([])
+      setLocation("")
+      setBarcode("")
+      onSave?.()
+      refresh()
+      inputRef?.current?.focus()
     },
     onError: error => {
       showSnackbar({
@@ -47,7 +55,7 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
   const [validWarehouseLocationBarcodes, setValidWarehouseLocationBarcodes] = useState<string[]>([])
   const [selectedPhysicalProducts, setSelectedPhysicalProducts] = useState<any>([])
   const [selectedPhysicalProductsIDs, setSelectedPhysicalProductsIDs] = useState<string[]>([])
-  const [removePhysicalProduct, setRemovePhysicalProduct] = useState("")
+  const [removePhysicalProduct, setRemovePhysicalProduct] = useState<any>()
 
   useEffect(() => {
     if (!loading) {
@@ -65,12 +73,6 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
         warehouseLocationBarcode: location,
       },
     })
-    setSelectedPhysicalProducts([])
-    setSelectedPhysicalProductsIDs([])
-    setLocation("")
-    setBarcode("")
-    onSave?.()
-    inputRef?.current?.focus()
   }
 
   const handleBarcodeChange = e => {
@@ -106,9 +108,13 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
   }
 
   useEffect(() => {
-    const filteredPhysicalProducts = selectedPhysicalProducts.filter(a => a.id !== removePhysicalProduct)
-    setSelectedPhysicalProductsIDs(filteredPhysicalProducts)
-    setSelectedPhysicalProducts(filteredPhysicalProducts)
+    const remainingPhysProds = selectedPhysicalProducts
+      .slice(0, removePhysicalProduct)
+      .concat(selectedPhysicalProducts.slice(removePhysicalProduct + 1))
+
+    const remainingPhysProdsIds = remainingPhysProds.map(a => a.id)
+    setSelectedPhysicalProductsIDs(remainingPhysProdsIds)
+    setSelectedPhysicalProducts(remainingPhysProds)
   }, [removePhysicalProduct])
 
   useEffect(() => {
@@ -126,7 +132,8 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
     setBarcode("")
     onClose?.()
   }
-
+  console.log(selectedPhysicalProducts)
+  console.log(selectedPhysicalProductsIDs)
   return (
     <Dialog onClose={fullOnClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogTitle id="customized-dialog-title" onClose={fullOnClose}>
@@ -174,7 +181,7 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
         )}
 
         {!!selectedPhysicalProducts &&
-          selectedPhysicalProducts.map(product => {
+          selectedPhysicalProducts.map((product, index) => {
             return (
               <>
                 <Box mt={2} mb={2}>
@@ -182,9 +189,7 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
                     product={product}
                     locations={data?.warehouseLocations}
                     barcode={location}
-                    onRemove={text => {
-                      setRemovePhysicalProduct(text)
-                    }}
+                    onRemove={() => setRemovePhysicalProduct(index)}
                   />
                 </Box>
               </>

@@ -30,7 +30,7 @@ interface StowProductInfoProps {
   locations?: any[]
   barcode?: string
 
-  onRemove?: (text: string) => void
+  onRemove?: () => void
 }
 
 export const StowMultiProductsInfo: React.FC<StowProductInfoProps> = ({ product, onRemove }) => {
@@ -68,7 +68,7 @@ export const StowMultiProductsInfo: React.FC<StowProductInfoProps> = ({ product,
             </Box>
           </Box>
           <RemoveWrapper>
-            <IconButton aria-label="close" onClick={() => onRemove?.(product.id)}>
+            <IconButton aria-label="close" onClick={onRemove}>
               <CloseIcon />
             </IconButton>
           </RemoveWrapper>
