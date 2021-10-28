@@ -23,7 +23,7 @@ export const LinearProgress: React.FC<LPProps> = ({ value, variant, barColor }) 
     <Grid container spacing={0} alignItems="center">
       <Grid item xs={3}>
         <Text variant="h5" style={{ flexGrow: 1 }}>
-          {value}%
+          {value?.toFixed(0)}%
         </Text>
       </Grid>
 

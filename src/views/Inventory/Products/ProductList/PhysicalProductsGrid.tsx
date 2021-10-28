@@ -24,7 +24,14 @@ export const PhysicalProductRow = ({
   setUpdatingStatusForPhysicalProduct,
   setOffloadingPhysicalProduct,
 }) => {
-  const { seasonsUID, productStatus, inventoryStatus, barcode, warehouseLocation } = physicalProduct
+  const {
+    recoupmentPercentage,
+    seasonsUID,
+    productStatus,
+    inventoryStatus,
+    barcode,
+    warehouseLocation,
+  } = physicalProduct
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -52,7 +59,7 @@ export const PhysicalProductRow = ({
       <TableCell>{seasonsUID}</TableCell>
       <TableCell>{productStatus}</TableCell>
       <TableCell>
-        <LinearProgress value={15} variant="determinate" />
+        <LinearProgress value={recoupmentPercentage} variant="determinate" />
       </TableCell>
       <TableCell>{inventoryStatus}</TableCell>
       <TableCell>

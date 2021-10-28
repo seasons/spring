@@ -127,6 +127,7 @@ export const PhysicalProductFragment = gql`
     createdAt
     barcoded
     barcode
+    amountRecouped
     price {
       id
       buyUsedPrice

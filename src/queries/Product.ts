@@ -69,6 +69,8 @@ export default {
           inventoryStatus
           offloadMethod
           offloadNotes
+          amountRecouped
+          recoupmentPercentage
           warehouseLocation {
             id
             barcode
