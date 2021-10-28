@@ -113,7 +113,6 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
     if (!agreed) {
       return
     }
-    console.log(member)
     await cancelCustomer({
       variables: {
         customerId: member.id,
