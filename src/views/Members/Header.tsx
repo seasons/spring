@@ -16,8 +16,15 @@ const RESET_PASSWORD = gql`
   }
 `
 
+const CANCEL_CUSTOMER = gql`
+  mutation CancelCustomer($customerId: ID!) {
+    cancelCustomer(customerId: $customerId)
+  }
+`
+
 export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) => {
   const [showResetPasswordConfirmation, setShowResetPasswordConfirmation] = useState(false)
+  const [showCancelConfirmation, setShowCancelConfirmation] = useState(false)
   const { showSnackbar } = useSnackbarContext()
   const [assignMemberRoles] = useMutation<any, any>(MEMBER_ASSIGN_ROLE, {
     onCompleted: () => {
@@ -46,6 +53,21 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
     onError: () => {
       showSnackbar({
         message: "Error sending reset password email",
+        status: "error",
+      })
+    },
+  })
+
+  const [cancelCustomer] = useMutation(CANCEL_CUSTOMER, {
+    onCompleted: () => {
+      showSnackbar({
+        message: "Customer Cancelled",
+        status: "success",
+      })
+    },
+    onError: err => {
+      showSnackbar({
+        message: err.message,
         status: "error",
       })
     },
@@ -86,6 +108,18 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
     })
   }
 
+  const onCloseCancelConfirmationDialog = async (agreed: boolean) => {
+    // Make sure user has confirmed submission
+    if (!agreed) {
+      return
+    }
+    await cancelCustomer({
+      variables: {
+        customerId: member.id,
+      },
+    })
+  }
+
   return (
     <>
       <BaseHeader
@@ -110,6 +144,7 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
             text: "Assign roles",
             action: openAssignRolesModal,
           },
+          { text: "Cancel Customer", action: () => setShowCancelConfirmation(true) },
         ]}
       />
       <AssignRolesModal
@@ -125,6 +160,13 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
         open={showResetPasswordConfirmation}
         setOpen={setShowResetPasswordConfirmation}
         onClose={onCloseResetPasswordConfirmationDialog}
+      />
+      <ConfirmationDialog
+        title="Are you sure you want to cancel the customer?"
+        body="This will bill any outstanding charges, cancel their subscription, and mark them as deactivated."
+        open={showCancelConfirmation}
+        setOpen={setShowCancelConfirmation}
+        onClose={onCloseCancelConfirmationDialog}
       />
     </>
   )

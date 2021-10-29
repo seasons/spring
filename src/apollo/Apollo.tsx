@@ -72,8 +72,6 @@ const errorLink = onError(({ networkError, operation, forward }) => {
           })
       })
     }
-  } else {
-    return forward(operation)
   }
 })
 
