@@ -132,8 +132,7 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
     setBarcode("")
     onClose?.()
   }
-  console.log(selectedPhysicalProducts)
-  console.log(selectedPhysicalProductsIDs)
+
   return (
     <Dialog onClose={fullOnClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogTitle id="customized-dialog-title" onClose={fullOnClose}>
