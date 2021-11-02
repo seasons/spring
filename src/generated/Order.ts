@@ -54,58 +54,59 @@ export interface Order_sentPackage {
   weight: number | null
 }
 
-export interface Order_lineItems_productVariant_color {
-  __typename: "Color"
-  id: string
-  name: string
-}
-
-export interface Order_lineItems_productVariant_physicalProducts_warehouseLocation {
+export interface Order_lineItems_physicalProduct_warehouseLocation {
   __typename: "WarehouseLocation"
   id: string
   barcode: string
 }
 
-export interface Order_lineItems_productVariant_physicalProducts {
-  __typename: "PhysicalProduct"
-  seasonsUID: string
-  warehouseLocation: Order_lineItems_productVariant_physicalProducts_warehouseLocation | null
+export interface Order_lineItems_physicalProduct_productVariant_color {
+  __typename: "Color"
+  id: string
+  name: string
 }
 
-export interface Order_lineItems_productVariant_product_images {
+export interface Order_lineItems_physicalProduct_productVariant_product_images {
   __typename: "Image"
   url: string | null
 }
 
-export interface Order_lineItems_productVariant_product_brand {
+export interface Order_lineItems_physicalProduct_productVariant_product_brand {
   __typename: "Brand"
   id: string
   name: string
 }
 
-export interface Order_lineItems_productVariant_product {
+export interface Order_lineItems_physicalProduct_productVariant_product {
   __typename: "Product"
   id: string
   name: string
   slug: string
-  images: Order_lineItems_productVariant_product_images[]
-  brand: Order_lineItems_productVariant_product_brand
+  images: Order_lineItems_physicalProduct_productVariant_product_images[]
+  brand: Order_lineItems_physicalProduct_productVariant_product_brand
 }
 
-export interface Order_lineItems_productVariant {
+export interface Order_lineItems_physicalProduct_productVariant {
   __typename: "ProductVariant"
   id: string
   sku: string | null
   displayLong: string | null
-  color: Order_lineItems_productVariant_color
-  physicalProducts: Order_lineItems_productVariant_physicalProducts[] | null
-  product: Order_lineItems_productVariant_product
+  color: Order_lineItems_physicalProduct_productVariant_color
+  product: Order_lineItems_physicalProduct_productVariant_product
+}
+
+export interface Order_lineItems_physicalProduct {
+  __typename: "PhysicalProduct"
+  id: string
+  seasonsUID: string
+  warehouseLocation: Order_lineItems_physicalProduct_warehouseLocation | null
+  productVariant: Order_lineItems_physicalProduct_productVariant | null
 }
 
 export interface Order_lineItems {
   __typename: "OrderLineItem"
   id: string
-  recordID: string
+  recordID: string | null
   recordType: OrderLineItemRecordType
   needShipping: boolean | null
   taxRate: number | null
@@ -115,7 +116,7 @@ export interface Order_lineItems {
   price: number
   currencyCode: string
   createdAt: any
-  productVariant: Order_lineItems_productVariant | null
+  physicalProduct: Order_lineItems_physicalProduct | null
 }
 
 export interface Order {

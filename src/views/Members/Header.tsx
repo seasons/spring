@@ -98,7 +98,7 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
           },
           {
             title: `Member: ${fullName}`,
-            url: `/members/${member.id}/account`,
+            url: `/members/${member.id}/bag`,
           },
         ]}
         menuItems={[

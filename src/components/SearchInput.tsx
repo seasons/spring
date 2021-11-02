@@ -1,7 +1,7 @@
 import React from "react"
 import { useLazyQuery } from "react-apollo"
 import styled from "styled-components"
-import { gql } from "apollo-boost"
+import gql from "graphql-tag"
 
 import { Box, CircularProgress, IconButton, Button as MuiButton, TextField } from "@material-ui/core"
 import { SearchResultCard } from "components/Search/SearchResultCard"

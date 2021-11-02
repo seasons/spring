@@ -29,7 +29,6 @@ const authLink = setContext(async (_, { headers: oldHeaders }) => {
       },
     }
   } catch (e) {
-    console.log("!!!")
     console.error(e, "no access token present!")
     return {
       headers,

@@ -11,6 +11,7 @@ import { MemberSubViewProps } from "../../interfaces"
 
 export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
+  // @ts-ignore
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
   const [member, updateMember] = useState(memberFromStore)
   const [updateDetails] = useMutation(MEMBER_DETAIL_UPDATE)

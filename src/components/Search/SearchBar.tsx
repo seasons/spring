@@ -89,7 +89,7 @@ const AutoComplete = ({ hits, currentRefinement, refine }) => {
               url = `/inventory/products/${result.objectID}`
               break
             case "Customer":
-              url = `/members/${result.objectID}/account`
+              url = `/members/${result.objectID}/bag`
               break
             case "Brand":
               url = `/inventory/brands/${result.objectID}`

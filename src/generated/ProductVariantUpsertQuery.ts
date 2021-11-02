@@ -51,6 +51,7 @@ export interface ProductVariantUpsertQuery_product_category {
   name: string
   slug: string
   measurementType: MeasurementType | null
+  recoupment: number | null
 }
 
 export interface ProductVariantUpsertQuery_product_variants_internalSize {

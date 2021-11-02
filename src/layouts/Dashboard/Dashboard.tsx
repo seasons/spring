@@ -19,6 +19,8 @@ const Container = styled.div`
 const Content = styled.div`
   ${({ theme }) => `
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   max-width: 100%;
   overflow: hidden;
   background-color: ${theme.palette.primary.light};

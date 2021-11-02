@@ -29,6 +29,7 @@ export interface ProductEditQuery_categories {
   __typename: "Category"
   id: string
   name: string
+  recoupment: number | null
 }
 
 export interface ProductEditQuery_brands {
@@ -114,7 +115,7 @@ export interface ProductEditQuery_product_category {
   name: string
   slug: string
   measurementType: MeasurementType | null
-  recoupment: number
+  recoupment: number | null
 }
 
 export interface ProductEditQuery_product_variants_internalSize {
@@ -241,6 +242,7 @@ export interface ProductEditQuery_product_tags {
 export interface ProductEditQuery_product {
   __typename: "Product"
   id: string
+  rentalPrice: number | null
   name: string
   slug: string
   description: string | null
