@@ -57,21 +57,20 @@ const columnData = {
 export const BagColumns = ({ bagSections, setModalBagItems, setShowModal }) => {
   const [columnsWithItems, setColumnsWithItems] = useState(columnData.columns)
 
-  // useEffect(() => {
-  //   // FIXME: Remove uniqueID once proper bagitems are passed
-  //   let newObj = { ...columnData.columns }
-  //   columnData.columnOrder.forEach(c => {
-  //     newObj = {
-  //       ...newObj,
-  //       [c]: {
-  //         ...newObj[c],
-  //         bagItems: bagSections?.[1].bagItems.map((bi, index) => ({ ...bi, uniqueID: `${bi.id}-${index}-${c}` })),
-  //       },
-  //     }
-  //   })
+  useEffect(() => {
+    let newObj = { ...columnData.columns }
+    columnData.columnOrder.forEach(c => {
+      newObj = {
+        ...newObj,
+        [c]: {
+          ...newObj[c],
+          bagItems: bagSections?.[1].bagItems,
+        },
+      }
+    })
 
-  //   setColumnsWithItems(newObj)
-  // }, [bagSections])
+    setColumnsWithItems(newObj)
+  }, [bagSections])
 
   const onColumnButtonClick = (buttonId, bagItems) => {
     setModalBagItems(bagItems)
