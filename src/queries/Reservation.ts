@@ -47,12 +47,6 @@ export default {
   [GET_ONE]: gql`
     fragment GetReservation on Reservation {
       id
-      user {
-        id
-        email
-        firstName
-        lastName
-      }
       customer {
         id
         status

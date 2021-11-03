@@ -61,12 +61,12 @@ export const BagColumns = ({ bagSections, setModalBagItems, setShowModal }) => {
   useEffect(() => {
     // FIXME: Remove uniqueID once proper bagitems are passed
     let newObj = { ...columnData.columns }
-    columnData.columnOrder.forEach(c => {
+    columnData.columnOrder.forEach((c, i) => {
       newObj = {
         ...newObj,
         [c]: {
           ...newObj[c],
-          bagItems: bagSections?.[1].bagItems.map((bi, index) => ({ ...bi, uniqueID: `${bi.id}-${index}-${c}` })),
+          bagItems: bagSections?.[i].bagItems,
         },
       }
     })

@@ -17,6 +17,7 @@ export const BagView = ({ customer, adminKey }) => {
   const { showSnackbar } = useSnackbarContext()
 
   const bagSections = customer?.bagSections
+  console.log("bag sections", bagSections)
 
   return (
     <>
