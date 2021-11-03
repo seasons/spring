@@ -7,7 +7,6 @@ import { ConfirmationDialog } from "components/ConfirmationDialog"
 import { Box, Typography, Button } from "@material-ui/core"
 import { SwapButton } from "./SwapButton"
 import { Link as RouterLink, useHistory } from "react-router-dom"
-import { Draggable } from "react-beautiful-dnd"
 import { colors } from "theme/colors"
 
 const useStyles = makeStyles(theme => ({
@@ -52,44 +51,38 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
 
   // FIXME: Remove uniqueID once proper bagitems are passed and use bagItem.id
   return (
-    <Draggable draggableId={bagItem.uniqueID} index={index}>
-      {provided => {
-        return (
-          <Box {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-            <Card className={classes.root}>
-              <ContentWrapper>
-                <CardMedia className={classes.media} image={image?.url ?? ""} />
-                <TextWrapper pl={2}>
-                  <Box>
-                    <Typography>{product?.brand?.name}</Typography>
-                    <Typography color="secondary">
-                      {truncate(product?.name, {
-                        length: 22,
-                        omission: "...",
-                      })}
-                    </Typography>
-                    <Typography color="secondary">{physicalProduct?.seasonsUID}</Typography>
-                  </Box>
-                  <StatusWrapper>
-                    <Typography style={{ textDecoration: "underline" }}>{bagItem?.physicalProduct?.barcode}</Typography>
-                    <Button color="primary" variant="contained" onClick={() => router.push(linkUrl)}>
-                      View
-                    </Button>
-                  </StatusWrapper>
-                </TextWrapper>
-              </ContentWrapper>
-            </Card>
-            <ConfirmationDialog
-              title="Return Item"
-              body="Are you sure you want to mark this item as returned?"
-              open={isReturnConfirmationDialogOpen}
-              setOpen={setIsReturnConfirmationDialogOpen}
-              onClose={agreed => onCloseConfirmationDialog(agreed, "Return")}
-            />
-          </Box>
-        )
-      }}
-    </Draggable>
+    <Box>
+      <Card className={classes.root}>
+        <ContentWrapper>
+          <CardMedia className={classes.media} image={image?.url ?? ""} />
+          <TextWrapper pl={2}>
+            <Box>
+              <Typography>{product?.brand?.name}</Typography>
+              <Typography color="secondary">
+                {truncate(product?.name, {
+                  length: 22,
+                  omission: "...",
+                })}
+              </Typography>
+              <Typography color="secondary">{physicalProduct?.seasonsUID}</Typography>
+            </Box>
+            <StatusWrapper>
+              <Typography style={{ textDecoration: "underline" }}>{bagItem?.physicalProduct?.barcode}</Typography>
+              <Button color="primary" variant="contained" onClick={() => router.push(linkUrl)}>
+                View
+              </Button>
+            </StatusWrapper>
+          </TextWrapper>
+        </ContentWrapper>
+      </Card>
+      <ConfirmationDialog
+        title="Return Item"
+        body="Are you sure you want to mark this item as returned?"
+        open={isReturnConfirmationDialogOpen}
+        setOpen={setIsReturnConfirmationDialogOpen}
+        onClose={agreed => onCloseConfirmationDialog(agreed, "Return")}
+      />
+    </Box>
   )
 }
 
