@@ -7,6 +7,9 @@ import { useMutation } from "@apollo/react-hooks"
 import { MEMBER_ASSIGN_ROLE } from "./queries"
 import gql from "graphql-tag"
 import { useSnackbarContext } from "components/Snackbar"
+import { Box, Button, IconButton, styled } from "@material-ui/core"
+import { colors } from "theme"
+import { LostItemModal } from "./LostItemModal"
 
 const RESET_PASSWORD = gql`
   mutation ResetPassword($email: String!) {
@@ -23,8 +26,10 @@ const CANCEL_CUSTOMER = gql`
 `
 
 export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) => {
+  console.log(member)
   const [showResetPasswordConfirmation, setShowResetPasswordConfirmation] = useState(false)
   const [showCancelConfirmation, setShowCancelConfirmation] = useState(false)
+  const [openLostItemModal, setOpenLostItemModal] = useState(false)
   const { showSnackbar } = useSnackbarContext()
   const [assignMemberRoles] = useMutation<any, any>(MEMBER_ASSIGN_ROLE, {
     onCompleted: () => {
@@ -147,6 +152,10 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
           { text: "Cancel Customer", action: () => setShowCancelConfirmation(true) },
         ]}
       />
+      <Box display="flex" justifyContent="right">
+        <BorderedButton onClick={() => setOpenLostItemModal(true)}>Process Lost Item(s)</BorderedButton>
+      </Box>
+
       <AssignRolesModal
         title="Assign roles to member"
         member={member}
@@ -168,6 +177,13 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
         setOpen={setShowCancelConfirmation}
         onClose={onCloseCancelConfirmationDialog}
       />
+      <LostItemModal open={openLostItemModal} onClose={() => setOpenLostItemModal(false)} bagItems={member.bagItems} />
     </>
   )
 }
+
+const BorderedButton = styled(Button)({
+  border: `1px solid ${colors.grey[300]}`,
+  borderRadius: `8px`,
+  padding: "12px 24px",
+})
