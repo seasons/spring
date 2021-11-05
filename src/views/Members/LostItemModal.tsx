@@ -33,7 +33,6 @@ export const LostItemModal: React.FC<LostItemModalProps> = ({ open, onClose, bag
       setSelectedBagItems(selectedBagItems.filter(a => a !== bagItemId))
     }
   }
-  console.log(bagItems)
 
   useEffect(() => {
     if (bagItems) {
@@ -69,7 +68,7 @@ export const LostItemModal: React.FC<LostItemModalProps> = ({ open, onClose, bag
             })}
           </Box>
         ) : (
-          <Typography variant="body1">No items to return</Typography>
+          <Typography variant="body1">No items to mark as lost</Typography>
         )}
       </DialogContent>
       <DialogActions>
