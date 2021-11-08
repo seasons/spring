@@ -77,9 +77,9 @@ export const Overview: React.FC<{
               <SelectField name="published" choices={trueOrFalseSelectFields} />
             </Grid>
             <Grid item xs={6}>
-              <Text variant="h6">Placements</Text>
+              <Text variant="h6">Featured</Text>
               <Spacer mt={1} />
-              <SelectField name="placements" choices={placementChoices} multiple />
+              <SelectField name="featured" choices={trueOrFalseSelectFields} />
             </Grid>
           </Grid>
 
@@ -112,6 +112,11 @@ export const Overview: React.FC<{
                   }
                 }}
               />
+            </Grid>
+            <Grid item xs={6}>
+              <Text variant="h6">Placements</Text>
+              <Spacer mt={1} />
+              <SelectField name="placements" choices={placementChoices} multiple />
             </Grid>
           </Grid>
           <Spacer mt={3} />
