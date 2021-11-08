@@ -16,6 +16,7 @@ const CollectionFragment = gql`
     descriptions
     published
     placements
+    featured
     products {
       id
       name
