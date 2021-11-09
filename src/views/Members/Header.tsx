@@ -7,6 +7,8 @@ import { useMutation } from "@apollo/react-hooks"
 import { MEMBER_ASSIGN_ROLE } from "./queries"
 import gql from "graphql-tag"
 import { useSnackbarContext } from "components/Snackbar"
+import { Button } from "@material-ui/core"
+import { MultiItemReturnModal } from "./MultiItemReturn"
 
 const RESET_PASSWORD = gql`
   mutation ResetPassword($email: String!) {
@@ -19,6 +21,7 @@ const RESET_PASSWORD = gql`
 export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) => {
   const [showResetPasswordConfirmation, setShowResetPasswordConfirmation] = useState(false)
   const { showSnackbar } = useSnackbarContext()
+  const [openProcessItemReturnModal, toggleProcessItemReturnModal] = useState(false)
   const [assignMemberRoles] = useMutation<any, any>(MEMBER_ASSIGN_ROLE, {
     onCompleted: () => {
       closeAssignRolesModal()
@@ -111,6 +114,13 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
             action: openAssignRolesModal,
           },
         ]}
+      />
+      <Button onClick={() => toggleProcessItemReturnModal(true)}>Process Item Return</Button>
+      <MultiItemReturnModal
+        open={openProcessItemReturnModal}
+        onClose={() => {
+          toggleProcessItemReturnModal(false)
+        }}
       />
       <AssignRolesModal
         title="Assign roles to member"
