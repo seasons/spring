@@ -34,14 +34,6 @@ export const UPDATE_RESERVATION = gql`
     }
   }
 `
-export const EARLY_RETURN = gql`
-  mutation EarlyReturn($reservationID: String, $physicalProductIDs: [ID]) {
-    earlyReturn(reservationID: $reservationID, physicalProductIDs: $physicalProductIDs) {
-      id
-    }
-  }
-`
-
 export const RETURN_MULTI_ITEMS = gql`
   mutation ReturnMultiItems(
     $trackingNumber: String

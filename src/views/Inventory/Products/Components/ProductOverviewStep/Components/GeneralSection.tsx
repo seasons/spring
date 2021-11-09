@@ -45,6 +45,7 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
   }))
   const isUpcoming = formValues?.status === "Upcoming"
   const categoriesChoices = categories?.map(c => ({ value: c.id, display: c.name, recoupment: c.recoupment }))
+
   const typeChoices = getFormSelectChoices(types)
 
   const manufacturerSizeType = product?.variants?.[0]?.manufacturerSizes?.[0]?.type

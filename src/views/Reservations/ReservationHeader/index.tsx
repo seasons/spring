@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react"
-
 import { Header } from "components"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
 import ArchiveIcon from "@material-ui/icons/Archive"
 import { useMutation } from "react-apollo"
 import { useRefresh } from "@seasons/react-admin"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
-import {
-  MARK_RESERVATION_PICKED,
-  UPDATE_RESERVATION,
-  PROCESS_RESERVATION,
-  MARK_RESERVATION_PACKED,
-  EARLY_RETURN,
-} from "../mutations"
+import { MARK_RESERVATION_PICKED, UPDATE_RESERVATION, PROCESS_RESERVATION, MARK_RESERVATION_PACKED } from "../mutations"
 import { PickingPackingModal } from "./Components/PickingPackingModal/PickingPackingModal"
 import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessReturnModal"
 import { UpdateStatusModal } from "./Components/UpdateStatusModal/UpdateStatusModal"
-import { EarlyReturnModal } from "./Components/EarlyReturnModal/EarlyReturnModal"
 import { SUBMIT_QA_ENTRY } from "components/ProductQAModal"
 import { useSelector } from "react-redux"
 import { omit } from "lodash"
@@ -26,7 +18,6 @@ import { useLocation } from "react-router-dom"
 
 export const ReservationHeader = ({ data }) => {
   const [showUpdateStatusModal, toggleUpdateStatusModal] = useState(false)
-  const [showEarlyReturnModal, toggleEarlyReturnModal] = useState(false)
 
   const isReservationUnfulfilled = ["Queued", "Picked", "Packed"].includes(data?.status)
   const Modal = isReservationUnfulfilled ? PickingPackingModal : ProcessReturnModal
@@ -34,7 +25,7 @@ export const ReservationHeader = ({ data }) => {
   const [showModal, toggleModal] = useState(false)
 
   const [isMutating, setIsMutating] = useState(false)
-
+  // @ts-ignore
   const session = useSelector(state => state.session)
 
   const [markReservationPicked] = useMutation(MARK_RESERVATION_PICKED, {
@@ -89,27 +80,6 @@ export const ReservationHeader = ({ data }) => {
     },
   })
 
-  const [earlyReturn] = useMutation(EARLY_RETURN, {
-    onCompleted: () => {
-      showSnackbar({
-        message: "Selected items have been successfully returned",
-        status: "success",
-      })
-      setIsMutating(false)
-      toggleEarlyReturnModal(false)
-      refresh()
-    },
-    onError: error => {
-      showSnackbar({
-        message: error?.message,
-        status: "error",
-      })
-      setIsMutating(false)
-      toggleEarlyReturnModal(false)
-      refresh()
-    },
-  })
-
   const [submitQAEntry] = useMutation(SUBMIT_QA_ENTRY)
 
   let primaryButton = () => {
@@ -156,14 +126,6 @@ export const ReservationHeader = ({ data }) => {
   })
 
   const menuItems: any[] = []
-  if (["Delivered", "EarlyReturn", "Received", "Shipped"].includes(data?.status)) {
-    menuItems.push({
-      text: "Early return",
-      action: () => {
-        toggleEarlyReturnModal(true)
-      },
-    })
-  }
 
   return (
     <>
@@ -261,22 +223,6 @@ export const ReservationHeader = ({ data }) => {
         onClose={() => {
           toggleUpdateStatusModal(false)
         }}
-      />
-
-      <EarlyReturnModal
-        open={showEarlyReturnModal}
-        onSave={async (reservationID, physicalProductIDs) => {
-          setIsMutating(true)
-          await earlyReturn({
-            variables: {
-              reservationID: reservationID,
-              physicalProductIDs: physicalProductIDs,
-            },
-          })
-        }}
-        onClose={() => toggleEarlyReturnModal(false)}
-        disableButton={true}
-        reservation={data}
       />
     </>
   )

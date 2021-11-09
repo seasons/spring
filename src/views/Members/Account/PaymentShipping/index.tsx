@@ -12,6 +12,7 @@ import { ActionButtons } from "fields"
 
 export const PaymentShipping: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
+  // @ts-ignore
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
   const [openEdit, setOpenEdit] = useState(false)
   const [member, updateMember] = useState(memberFromStore)

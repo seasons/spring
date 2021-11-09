@@ -18,6 +18,7 @@ import { MEMBER_DETAIL_UPDATE_WITHOUT_CONTACT } from "../../queries"
 
 export const PersonalDetails: React.FunctionComponent<MemberSubViewProps> = ({ adminKey }) => {
   const adminStoreKey = adminKey || ""
+  // @ts-ignore
   const memberFromStore = useSelector(state => state.admin.customQueries[adminStoreKey].data)
 
   const { showSnackbar } = useSnackbarContext()

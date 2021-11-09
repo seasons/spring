@@ -96,6 +96,7 @@ function reduceChildRoutes({ acc, pathname, item, depth = 0 }) {
 export const NavBar: React.FC<any> = ({ openMobile, onMobileClose, openSearch, ...rest }: any) => {
   const classes = useStyles()
   const location = useLocation()
+  // @ts-ignore
   const session = useSelector(state => state.session)
   const dispatch = useDispatch()
 

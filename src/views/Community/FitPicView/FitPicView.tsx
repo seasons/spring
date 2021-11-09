@@ -109,7 +109,7 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
             <Grid item xs={4}>
               <Box
                 display="flex"
-                style={{ backgroundColor: colors.white95 }}
+                style={{ backgroundColor: colors.black04 }}
                 borderRadius={4}
                 height={400}
                 flexDirection="column"

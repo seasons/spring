@@ -1,8 +1,9 @@
 import { GET_LIST, GET_ONE } from "@seasons/react-admin"
 import gql from "graphql-tag"
+import { PickingPackingModalFragment_BagSection } from "views/Members/Bag/Modals/PickingPackingModal/PickingPackingModal"
 
-const CustomerFragment = gql`
-  fragment customer on Customer {
+const CustomerGetListFragment_Customer = gql`
+  fragment CustomerGetListFragment_Customer on Customer {
     id
     plan
     status
@@ -45,39 +46,61 @@ const CustomerFragment = gql`
   }
 `
 
-const CustomerDetails = gql`
-  fragment customer on Customer {
+const CustomerGetOneFragment_Customer = gql`
+  fragment CustomerGetOneFragment_Customer on Customer {
     id
     plan
     status
     iOSAppStatus
-    bagItems {
+    bagSections {
       id
-      saved
       status
-      isSwappable
-      physicalProduct {
+      bagItems {
         id
-      }
-      productVariant {
-        id
-        sku
-        displayShort
-        internalSize {
+        saved
+        status
+        isSwappable
+        physicalProduct {
           id
-          display
-        }
-        product {
-          id
-          slug
-          name
-          images(size: Thumb) {
+          seasonsUID
+          barcode
+          price {
             id
-            url
+            buyUsedPrice
+            buyUsedEnabled
           }
-          brand {
+          warehouseLocation {
             id
+            type
+            locationCode
+            itemCode
+          }
+        }
+        productVariant {
+          id
+          sku
+          displayShort
+          price {
+            id
+            buyNewPrice
+            buyNewEnabled
+          }
+          internalSize {
+            id
+            display
+          }
+          product {
+            id
+            slug
             name
+            images(size: Thumb) {
+              id
+              url
+            }
+            brand {
+              id
+              name
+            }
           }
         }
       }
@@ -275,6 +298,6 @@ const CustomerDetails = gql`
 `
 
 export default {
-  [GET_LIST]: CustomerFragment,
-  [GET_ONE]: CustomerDetails,
+  [GET_LIST]: CustomerGetListFragment_Customer,
+  [GET_ONE]: CustomerGetOneFragment_Customer,
 }

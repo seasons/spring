@@ -16,7 +16,7 @@ import {
   Checkbox,
 } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
-import { gql } from "apollo-boost"
+import gql from "graphql-tag"
 import { useSelector } from "react-redux"
 import { useMutation } from "react-apollo"
 
@@ -49,6 +49,7 @@ export const SUBMIT_QA_ENTRY = gql`
 `
 
 export const ProductQAModal = ({ data, open, onSave, onClose }) => {
+  // @ts-ignore
   const session = useSelector(state => state.session)
   const [submitQAEntry] = useMutation(SUBMIT_QA_ENTRY, {
     onCompleted: onSave,

@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Dialog, DialogContent, Box, TextField, Typography, Input } from "@material-ui/core"
+import { Dialog, DialogContent, Box, TextField, Typography } from "@material-ui/core"
 import { DialogTitle } from "components"
 import { head, trim, groupBy } from "lodash"
-import { PhysicalProduct } from "generated/PhysicalProduct"
 import { useQuery, useLazyQuery } from "react-apollo"
 import { useHistory } from "react-router-dom"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX, RETURN_LABEL_BARCODE_REGEX } from "views/constants"
@@ -27,7 +26,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
   )
 
   const [barcodeOrTrackingNumber, setBarcodeOrTrackingNumber] = useState("")
-  const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState<PhysicalProduct | undefined>(undefined)
+  const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState(undefined)
   const [physicalProductsByBarcode, setPhysicalProductsByBarcode] = useState({})
 
   useEffect(() => {
