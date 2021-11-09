@@ -16,7 +16,6 @@ import { PhaseField } from "fields/PhaseField"
 import { ReservationExpandedRow } from "./ReservationExpandedRow"
 import { ReservationListActions } from "./ReservationListActions"
 import { LookupReservationModal } from "./LookupReservationModal"
-import { MultiItemReturnModal } from "./ReservationHeader/Components/MultiItemReturn/MultiItemReturn"
 
 const Filters: React.FC<any> = ({ modifiedSinceLastSubmit, ...rest }) => {
   return (
@@ -89,12 +88,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
         <List
           {...props}
           filters={<Filters />}
-          actions={
-            <ReservationListActions
-              onClickLookupReservation={() => toggleLookupReservationModal(true)}
-              onClickProcessItemReturn={() => toggleProcessItemReturnModal(true)}
-            />
-          }
+          actions={<ReservationListActions onClickLookupReservation={() => toggleLookupReservationModal(true)} />}
           hasCreate={false}
           hasEdit={false}
           hasList={true}
@@ -127,12 +121,6 @@ export const ReservationList = ({ staticContext, ...props }) => {
           open={openLookupReservationModal}
           onClose={() => {
             toggleLookupReservationModal(false)
-          }}
-        />
-        <MultiItemReturnModal
-          open={openProcessItemReturnModal}
-          onClose={() => {
-            toggleProcessItemReturnModal(false)
           }}
         />
       </Box>

@@ -39,12 +39,6 @@ export const ReservationListActions: React.FC<any> = ({
     >
       <InputIcon />
     </Button>
-    <Button
-      onClick={() => {
-        onClickProcessItemReturn?.()
-      }}
-      label="Process Item Return"
-    ></Button>
   </TopToolbar>
 )
 
