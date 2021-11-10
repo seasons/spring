@@ -26,11 +26,12 @@ import { TrackingNumberCheckCircle } from "views/Reservations/TrackingNumberChec
 import { PhysicalProductFragment } from "queries/PhysicalProduct"
 import gql from "graphql-tag"
 import { MultiItemReturnProductCard } from "./MultiItemReturnProductCard"
-import { RETURN_MULTI_ITEMS } from "views/Reservations/mutations"
+
 import { useRefresh } from "@seasons/react-admin"
 import { useMutation } from "react-apollo"
 import { SUBMIT_QA_ENTRY } from "components/ProductQAModal"
 import { useSelector } from "react-redux"
+import { RETURN_MULTI_ITEMS } from "./queries"
 
 interface ProductState {
   productUID: string
