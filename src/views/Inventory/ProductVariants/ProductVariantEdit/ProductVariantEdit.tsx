@@ -32,6 +32,8 @@ export const ProductVariantEdit: React.FC = () => {
   const { id, internalSize, product, total, weight, manufacturerSizes } = productVariant
   const manufacturerSize = manufacturerSizes?.[0]
 
+  console.log("productVariant", productVariant)
+
   if (internalSize) {
     const size = internalSize?.display
     switch (internalSize.productType) {
@@ -65,7 +67,10 @@ export const ProductVariantEdit: React.FC = () => {
           [`${size}_width`]: parseFloat(accessory?.width) || undefined,
           [`${size}_bridge`]: parseFloat(accessory?.bridge) || undefined,
           [`${size}_length`]: parseFloat(accessory?.length) || undefined,
+          [`${size}_height`]: parseFloat(accessory?.height) || undefined,
           [`${size}_weight`]: parseFloat(weight) || undefined,
+          [`${size}_minDrop`]: parseFloat(accessory?.minDrop) || undefined,
+          [`${size}_maxDrop`]: parseFloat(accessory?.maxDrop) || undefined,
         }
         break
       default:
