@@ -124,10 +124,15 @@ export const ProductVariantEditSection: React.FC<ProductVariantEditSectionProps>
                 if (field === "Width" && category?.name === "Eyewear") {
                   fieldName = "Lens width"
                 }
+
                 if (fieldName === "Weight") {
                   name = "Weight (lbs)"
                 } else if (!!measurementType) {
                   name = `${fieldName} ${measurementTypeDisplayShort(measurementType)}`
+                } else if (fieldName === "MaxDrop") {
+                  name = "Max drop (in)"
+                } else if (fieldName === "MinDrop") {
+                  name = "Min drop (in)"
                 } else {
                   name = `${fieldName} (in)`
                 }
