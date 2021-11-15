@@ -43,12 +43,20 @@ export const CollectionsList = props => {
           <DateField source="createdAt" label="CreatedAt" />
           <DateField source="updatedAt" label="UpdatedAt" />
           <PublishedField label="Published" />
+          <FeaturedField label="Featured" />
           <LocationsField label="Placements" />
           <ViewEntityField source="id" entityPath="content/collections" label="Actions" />
         </Datagrid>
       </List>
     </Box>
   )
+}
+
+const FeaturedField: React.FC<{ label: string; record?: any }> = ({ label, record }) => {
+  if (!record) {
+    return null
+  }
+  return <Indicator status={record.featured ? "True" : "False"} />
 }
 
 const PublishedField: React.FC<{ label: string; record?: any }> = ({ label, record }) => {
