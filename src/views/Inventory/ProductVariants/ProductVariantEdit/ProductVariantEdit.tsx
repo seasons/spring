@@ -32,8 +32,6 @@ export const ProductVariantEdit: React.FC = () => {
   const { id, internalSize, product, total, weight, manufacturerSizes } = productVariant
   const manufacturerSize = manufacturerSizes?.[0]
 
-  console.log("productVariant", productVariant)
-
   if (internalSize) {
     const size = internalSize?.display
     switch (internalSize.productType) {
