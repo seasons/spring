@@ -34,3 +34,15 @@ export const UPDATE_RESERVATION = gql`
     }
   }
 `
+
+export const PICK_ITEMS = gql`
+  mutation PickItems($ids: [ID!]!) {
+    pickItems(bagItemIDs: $ids)
+  }
+`
+
+export const PACK_ITEMS = gql`
+  mutation PackItems($ids: [ID!]!) {
+    packItems(bagItemIDs: $ids)
+  }
+`
