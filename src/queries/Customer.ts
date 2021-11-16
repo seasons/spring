@@ -55,6 +55,7 @@ const CustomerGetOneFragment_Customer = gql`
     bagSections {
       id
       status
+      title
       bagItems {
         id
         saved
