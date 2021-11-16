@@ -9,6 +9,7 @@ import { Box, Typography, Button, IconButton } from "@material-ui/core"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 
 import { useHistory } from "react-router-dom"
+import { SwapBagItemModal } from "../SwapBagItemModal"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,6 +36,7 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [isReturnConfirmationDialogOpen, setIsReturnConfirmationDialogOpen] = useState(false)
+  const [isSwapItemModalOpen, setIsSwapItemModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useHistory()
   const variant = bagItem?.productVariant
@@ -58,6 +60,14 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
     setAnchorEl(null)
   }
 
+  const handleOpenSwapModal = () => {
+    setIsSwapItemModalOpen(true)
+  }
+
+  const handleCloseSwapModal = () => {
+    setIsSwapItemModalOpen(false)
+  }
+
   const physicalProductId = bagItem?.physicalProduct?.id
 
   const linkUrl = !!physicalProductId
@@ -72,10 +82,12 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
       menuItems = [
         { text: "Hold item", action: () => null },
         { text: "Mark as lost", action: () => null },
+        { text: "Swap Item", action: () => handleOpenSwapModal() },
       ]
       MetaData = () => <Typography>{bagItem?.physicalProduct?.barcode}</Typography>
       break
     case "picked":
+      menuItems = [{ text: "Swap Item", action: () => handleOpenSwapModal() }]
     case "packed":
       MetaData = () => <Typography style={{ textDecoration: "underline" }}>{bagItem?.status}</Typography>
       break
@@ -169,6 +181,12 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
         open={isReturnConfirmationDialogOpen}
         setOpen={setIsReturnConfirmationDialogOpen}
         onClose={agreed => onCloseConfirmationDialog(agreed, "Return")}
+      />
+      <SwapBagItemModal
+        open={isSwapItemModalOpen}
+        onClose={() => handleCloseSwapModal()}
+        bagItem={bagItem}
+        customer={bagItem.customer}
       />
     </Box>
   )
