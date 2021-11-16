@@ -7,15 +7,7 @@ export const BagColumns = ({ bagSections, setModalBagItems, setShowModal }) => {
   return (
     <FlexBox py={5}>
       {bagSections.map((bagSection, index) => {
-        return (
-          <BagColumn
-            bagSection={bagSection}
-            key={index}
-            index={index}
-            setModalBagItems={setModalBagItems}
-            setShowModal={setShowModal}
-          />
-        )
+        return <BagColumn bagSection={bagSection} key={index} index={index} setShowModal={setShowModal} />
       })}
     </FlexBox>
   )
