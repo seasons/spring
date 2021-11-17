@@ -14,6 +14,7 @@ import { OffloadPhysicalProductModal } from "views/Inventory/PhysicalProducts/Co
 import { UPDATE_PHYSICAL_PRODUCT } from "views/Inventory/PhysicalProducts/mutations"
 import { useSnackbarContext } from "components/Snackbar"
 import { StowMultiProductsModal } from "../Components"
+import { DraftProductList } from "./DraftProductList"
 
 export interface ProductListInterface {
   onNewProductBtnPressed: () => void
@@ -47,6 +48,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
   return (
     <>
       <Header title="Products" primaryButton={{ text: "New Product", action: onNewProductBtnPressed }} />
+      <DraftProductList />
       <List
         {...rest}
         filters={<ProductFilter />}

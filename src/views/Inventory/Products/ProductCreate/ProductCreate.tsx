@@ -13,10 +13,13 @@ import { useSnackbarContext } from "components/Snackbar"
 import { PhysicalProductsCreate as PhysicalProductsCreateStep } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
 import { ProductVariantEditForm as ProductVariantEditFormStep } from "views/Inventory/ProductVariants"
 
+import cuid from "cuid"
+
 export const ProductCreate: React.FC = () => {
   const history = useHistory()
   const [productType, setProductType] = useState("Top")
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [cacheKey] = useState(cuid())
   const { data, error } = useQuery(PRODUCT_UPSERT_QUERY, {
     variables: { productType },
   })
@@ -89,7 +92,13 @@ export const ProductCreate: React.FC = () => {
 
   return (
     <Container maxWidth={false}>
-      <Wizard initialValues={initialValues} onNext={onNext} onSubmit={onSubmit} submitting={isSubmitting}>
+      <Wizard
+        initialValues={initialValues}
+        onNext={onNext}
+        onSubmit={onSubmit}
+        submitting={isSubmitting}
+        cacheKey={cacheKey}
+      >
         <ProductOverviewStep data={productUpsertQueryData} productType={productType} setProductType={setProductType} />
         <ProductVariantEditFormStep createData={values} productCreateData={productUpsertQueryData} />
         <PhysicalProductsCreateStep
