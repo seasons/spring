@@ -31,7 +31,7 @@ import { useRefresh } from "@seasons/react-admin"
 import { useMutation } from "react-apollo"
 import { SUBMIT_QA_ENTRY } from "components/ProductQAModal"
 import { useSelector } from "react-redux"
-import { RETURN_MULTI_ITEMS } from "./queries"
+import { PROCESS_RETURN } from "./queries"
 
 interface ProductState {
   productUID: string
@@ -74,7 +74,7 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ open, onC
   const [sequenceNumber, setSequenceNumber] = useState<any>()
   const [droppedOffBy, setDroppedOffBy] = useState<any>("UPS")
 
-  const [returnMultiItems] = useMutation(RETURN_MULTI_ITEMS, {
+  const [processReturn] = useMutation(PROCESS_RETURN, {
     onCompleted: () => {
       showSnackbar({
         message: "Items have been successfully returned",
@@ -186,7 +186,7 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ open, onC
       })
     }
 
-    returnMultiItems({
+    processReturn({
       variables: {
         trackingNumber: trackingNumber,
         productStates: Object.values(productStates).map((productState: any) => omit(productState, "damageType")),

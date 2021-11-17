@@ -46,12 +46,12 @@ export const MEMBER_ASSIGN_ROLE = gql`
   }
 `
 
-export const RETURN_MULTI_ITEMS = gql`
-  mutation ReturnMultiItems(
+export const PROCESS_RETURN = gql`
+  mutation ProcessReturn(
     $trackingNumber: String
     $productStates: [ProductStateInput!]!
     $droppedOffBy: ReservationDropOffAgent
   ) {
-    returnMultiItems(trackingNumber: $trackingNumber, productStates: $productStates, droppedOffBy: $droppedOffBy)
+    processReturn(trackingNumber: $trackingNumber, productStates: $productStates, droppedOffBy: $droppedOffBy)
   }
 `
