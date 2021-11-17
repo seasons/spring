@@ -2,7 +2,7 @@ import { Container } from "@material-ui/core"
 import React, { useState } from "react"
 import { Loading } from "@seasons/react-admin"
 import { useQuery, useMutation } from "react-apollo"
-import { useHistory } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 import { Spacer, Wizard } from "components"
 import { ProductOverviewStep } from "../Components"
 import { PRODUCT_UPSERT_QUERY } from "../queries"
@@ -12,7 +12,7 @@ import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
 import { useSnackbarContext } from "components/Snackbar"
 import { PhysicalProductsCreate as PhysicalProductsCreateStep } from "views/Inventory/PhysicalProducts/PhysicalProductsCreate"
 import { ProductVariantEditForm as ProductVariantEditFormStep } from "views/Inventory/ProductVariants"
-
+import { deleteDraftFromCache } from "components/FormCache"
 import cuid from "cuid"
 
 export const ProductCreate: React.FC = () => {
@@ -20,6 +20,7 @@ export const ProductCreate: React.FC = () => {
   const [productType, setProductType] = useState("Top")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [cacheKey] = useState(cuid())
+  const location = useLocation()
   const { data, error } = useQuery(PRODUCT_UPSERT_QUERY, {
     variables: { productType },
   })
@@ -54,12 +55,14 @@ export const ProductCreate: React.FC = () => {
     setIsSubmitting(true)
     // Extract appropriate values from the WizardForm
     const productCreateData = getProductCreateData(values)
-    // productCreateData.createNew = location.pathname.includes("new")
+
     await createProduct({
       variables: {
         input: productCreateData,
       },
     })
+
+    deleteDraftFromCache(location)
   }
 
   const onNext = async values => {

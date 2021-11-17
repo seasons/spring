@@ -1,8 +1,27 @@
-import React, { useCallback, useEffect, useState } from "react"
-import cuid from "cuid"
+import React, { useEffect, useState } from "react"
 import { useForm } from "react-final-form"
 import { useLocation } from "react-router-dom"
 import { debounce } from "lodash"
+
+const CACHE_DATA_KEY = "draftProducts"
+
+export const deleteDraftFromCache = location => {
+  const cacheKey = location.search.replace("?cacheKey=", "")
+
+  let cacheData = readCacheData()
+  delete cacheData[cacheKey]
+  localStorage.setItem(CACHE_DATA_KEY, JSON.stringify(cacheData))
+}
+
+const readCacheData = () => {
+  let cacheData = {}
+
+  try {
+    cacheData = JSON.parse(localStorage.getItem(CACHE_DATA_KEY) ?? "{}")
+  } catch (e) {}
+
+  return cacheData
+}
 
 export const FormCache = props => {
   const { cacheKey: id } = props
@@ -14,21 +33,18 @@ export const FormCache = props => {
     return location.search.replace("?cacheKey=", "")
   }
 
-  const readCacheData = () => {
-    let cacheData = {}
-
-    try {
-      cacheData = JSON.parse(localStorage.getItem("draftProducts") ?? "{}")
-    } catch (e) {}
-
-    return cacheData
-  }
+  useEffect(() => {
+    if (cacheId === "") {
+      setCacheId(id)
+    }
+  }, [id])
 
   useEffect(() => {
     let cacheKey = cacheKeyFromLocation()
-    setCacheId(cacheKey ?? id)
 
     if (cacheKey) {
+      setCacheId(cacheKey)
+
       const cacheData = readCacheData()
 
       if (cacheData[cacheKey]) {
@@ -43,7 +59,7 @@ export const FormCache = props => {
     if (cacheId && values && values?.name?.length > 5) {
       const cacheData = readCacheData()
       localStorage.setItem(
-        "draftProducts",
+        CACHE_DATA_KEY,
         JSON.stringify({
           ...cacheData,
           [cacheId]: {
