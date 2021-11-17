@@ -1,5 +1,4 @@
-import { capitalize } from "lodash"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useMutation } from "@apollo/react-hooks"
 
@@ -20,7 +19,7 @@ import {
 
 import { Spacer } from "components"
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab"
-import { gql } from "apollo-boost"
+import { gql } from "graphql-tag"
 import { useRefresh } from "ra-core"
 import { useSnackbarContext } from "components/Snackbar"
 import { formatPrice } from "utils/price"
@@ -69,9 +68,6 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
   const [operation, setOperation] = useState<string>("Add")
   const amount = operation === "Add" ? value : -value
   const result = creditBalance + amount
-  if (creditBalance + amount < 0) {
-    setValue(creditBalance)
-  }
 
   const [creditUpdateNotes, setCreditUpdateNotes] = useState<string>("")
   const { showSnackbar } = useSnackbarContext()
@@ -94,6 +90,12 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
     },
   })
 
+  useEffect(() => {
+    if (creditBalance && creditBalance + amount < 0) {
+      setValue(creditBalance)
+    }
+  }, [setValue, creditBalance, amount])
+
   if (!membership) {
     return null
   }
@@ -112,7 +114,6 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
     return Number(String(s).replace(/[^0-9.-]+/g, ""))
   }
 
-  const currency = "USD"
   const currencyInput = document?.querySelector('input[type="currency"]')
   currencyInput?.addEventListener("focus", function onFocus(e: any) {
     const value = e.target.value
@@ -121,13 +122,6 @@ export const CreditBalanceModal: React.FunctionComponent<CreditBalanceModalProps
 
   currencyInput?.addEventListener("blur", function onBlur(e: any) {
     const value = e?.target?.value
-
-    const options = {
-      maximumFractionDigits: 2,
-      currency: currency,
-      style: "currency",
-      currencyDisplay: "symbol",
-    }
 
     e.target.value = value ? formatPrice(localStringToNumber(value) * 100) : ""
   })
