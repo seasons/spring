@@ -45,3 +45,19 @@ export const MEMBER_ASSIGN_ROLE = gql`
     }
   }
 `
+
+export const PROCESS_RETURN = gql`
+  mutation ProcessReturn(
+    $trackingNumber: String
+    $productStates: [ProductStateInput!]!
+    $droppedOffBy: ReservationDropOffAgent!
+    $customerId: String
+  ) {
+    processReturn(
+      trackingNumber: $trackingNumber
+      productStates: $productStates
+      droppedOffBy: $droppedOffBy
+      customerId: $customerId
+    )
+  }
+`

@@ -19,6 +19,7 @@ export const ReservationListActions: React.FC<any> = ({
   showFilter,
   total,
   onClickLookupReservation,
+  onClickProcessItemReturn,
   ...rest
 }) => (
   <TopToolbar className={className} {...sanitizeListRestProps(rest)}>

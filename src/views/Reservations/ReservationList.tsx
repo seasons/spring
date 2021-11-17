@@ -67,6 +67,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
   const dataProvider = useContext(DataProviderContext)
 
   const [openLookupReservationModal, toggleLookupReservationModal] = useState(false)
+  const [openProcessItemReturnModal, toggleProcessItemReturnModal] = useState(false)
 
   if (!dataProvider) {
     return <Loading />

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import { AccountView } from "./Account"
 import { HistoryView } from "./History"
@@ -13,6 +13,8 @@ import { CreditBalanceUpdateHistory } from "./CreditUpdateHistory"
 import { Box } from "@material-ui/core"
 
 export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, props }) => {
+  const [openProcessItemReturnModal, toggleProcessItemReturnModal] = useState(false)
+
   return (
     <DetailView
       match={match}
