@@ -105,6 +105,18 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 <Address address={reservation?.lastLocation} />
               </TableCell>
             </TableRow>
+            {reservation?.pickupDate && (
+              <TableRow>
+                <TableCell>Pickup Date</TableCell>
+                <TableCell>{DateTime.fromISO(reservation.pickupDate).toLocaleString(DateTime.DATE_MED)}</TableCell>
+              </TableRow>
+            )}
+            {reservation?.pickupWindow && (
+              <TableRow>
+                <TableCell>Pickup Window</TableCell>
+                <TableCell>{reservation?.pickupWindow?.display}</TableCell>
+              </TableRow>
+            )}
             <TableRow>
               <TableCell>Shipping Label</TableCell>
               <TableCell>

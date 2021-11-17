@@ -148,6 +148,17 @@ const CustomerGetOneFragment_Customer = gql`
     membership {
       id
       creditBalance
+      creditUpdateHistory {
+        id
+        amount
+        reason
+        adminUser {
+          firstName
+          lastName
+        }
+        balance
+        createdAt
+      }
       plan {
         id
         itemCount

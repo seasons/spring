@@ -9,6 +9,7 @@ import { DetailView } from "components/DetailView"
 import { Header } from "./Header"
 import { BagView } from "./Bag"
 import { EmailReceiptsView } from "./EmailsView"
+import { CreditBalanceUpdateHistory } from "./CreditUpdateHistory"
 import { Box } from "@material-ui/core"
 
 export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, props }) => {
@@ -80,6 +81,13 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
             <Box px={2}>
               <EmailReceiptsView {...props} basePath={`/members/${recordID}/emails`} member={data} />
             </Box>
+          ),
+        },
+        {
+          value: "creditBalanceUpdateHistory",
+          label: "Credit Update History",
+          render: ({ data, recordID }) => (
+            <CreditBalanceUpdateHistory {...props} basePath={`/members/${recordID}/history`} member={data} />
           ),
         },
       ]}
