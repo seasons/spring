@@ -3,6 +3,7 @@ import { Form } from "react-final-form"
 import { Mutator } from "final-form"
 
 import { ConfirmationDialog } from "components"
+import { FormCache } from "components/FormCache"
 import { WizardBottomNavBar } from "./WizardBottomNavBar"
 
 export interface WizardProps {
@@ -10,6 +11,7 @@ export interface WizardProps {
   initialValues?: Object
   submitButtonTitle?: string
   submitting?: boolean
+  cacheKey?: string
 
   // Returns boolean representing whether or not to continue
   onNext?: (values: any) => Promise<boolean>
@@ -27,6 +29,7 @@ export const Wizard: React.FC<WizardProps> = ({
   submitting = false,
   onNext,
   onSubmit,
+  cacheKey,
 }) => {
   const [pageIndex, setPageIndex] = useState(0)
   const [values, setValues] = useState(initialValues)
@@ -81,14 +84,7 @@ export const Wizard: React.FC<WizardProps> = ({
       subscription={{ submitting: true, pristine: true }}
       mutators={{ setValue }}
     >
-      {({
-        handleSubmit,
-        form: {
-          mutators: { setValue },
-        },
-        values: formValues,
-        errors,
-      }) => {
+      {({ handleSubmit, form }) => {
         return (
           <>
             <form onSubmit={handleSubmit}>
@@ -108,6 +104,7 @@ export const Wizard: React.FC<WizardProps> = ({
               setOpen={setIsConfirmationDialogOpen}
               onClose={onCloseConfirmationDialog}
             />
+            {cacheKey && <FormCache cacheKey={cacheKey} />}
           </>
         )
       }}
