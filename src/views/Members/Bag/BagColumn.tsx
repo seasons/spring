@@ -2,21 +2,45 @@ import { Box, Typography, styled, Button } from "@material-ui/core"
 import { Separator, Spacer } from "components"
 import React from "react"
 import { BagItemCard } from "./BagItemCard"
-import { Droppable } from "react-beautiful-dnd"
 
-export const BagColumn = ({ column, index, onColumnButtonClick }) => {
-  const bagItems = column.bagItems
-  const buttons = column.buttons
+export const BagColumn = ({ bagSection, index, setShowModal }) => {
+  const bagItems = bagSection.bagItems
+
+  let buttons
+  switch (bagSection.id) {
+    case "queued":
+      buttons = [{ id: "pickItems", title: "Pick items", onClick: () => setShowModal("PickingModal") }]
+      break
+    case "picked":
+      buttons = [{ id: "packItems", title: "Pack items", onClick: () => setShowModal("PackingModal") }]
+      break
+    case "packed":
+      buttons = [
+        { id: "pickedUp", title: "Picked up", onClick: () => null },
+        { id: "printlabel", title: "Print label", onClick: () => null },
+      ]
+      break
+    case "outbound":
+      buttons = [{ id: "trackShippment", title: "Track shipment", onClick: () => null }]
+      break
+    case "deliveredToCustomer":
+      buttons = [{ id: "returnLabel", title: "Return label", onClick: () => null }]
+      break
+    case "inbound":
+      buttons = [{ id: "trackReturn", title: "Track return", onClick: () => null }]
+      break
+  }
 
   return (
     <Wrapper mr={2} pl={index === 0 ? 2 : 0}>
       <FlexHeader>
-        <Typography variant="h4">{column.title}</Typography>
+        <Typography variant="h4">{bagSection.title}</Typography>
         <Flex>
-          {buttons.map((button, index) => {
+          {buttons?.map((button, index) => {
+            const { onClick } = button
             return (
               <Box key={index} ml={1}>
-                <Button variant="contained" onClick={() => onColumnButtonClick(button.id, bagItems)}>
+                <Button variant="contained" onClick={onClick}>
                   {button.title}
                 </Button>
               </Box>
@@ -27,18 +51,11 @@ export const BagColumn = ({ column, index, onColumnButtonClick }) => {
       <Spacer mb={1} />
       <Separator />
       <Spacer mb={2} />
-      <Droppable droppableId={column.id}>
-        {provided => {
-          return (
-            <Box ref={provided.innerRef} {...provided.droppableProps}>
-              {bagItems?.map((bagItem, index) => {
-                return <BagItemCard bagItem={bagItem} key={index} index={index} columnId={column.id} />
-              })}
-              {provided.placeholder}
-            </Box>
-          )
-        }}
-      </Droppable>
+      <Box>
+        {bagItems?.map((bagItem, index) => {
+          return <BagItemCard bagItem={bagItem} key={index} index={index} columnId={bagSection.id} />
+        })}
+      </Box>
     </Wrapper>
   )
 }

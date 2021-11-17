@@ -54,6 +54,7 @@ const CustomerGetOneFragment_Customer = gql`
     bagSections {
       id
       status
+      title
       bagItems {
         id
         saved
@@ -63,6 +64,11 @@ const CustomerGetOneFragment_Customer = gql`
           id
           seasonsUID
           barcode
+          price {
+            id
+            buyUsedPrice
+            buyUsedEnabled
+          }
           warehouseLocation {
             id
             type
@@ -74,6 +80,11 @@ const CustomerGetOneFragment_Customer = gql`
           id
           sku
           displayShort
+          price {
+            id
+            buyNewPrice
+            buyNewEnabled
+          }
           internalSize {
             id
             display
