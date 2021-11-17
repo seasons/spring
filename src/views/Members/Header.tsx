@@ -125,6 +125,7 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
         onClose={() => {
           toggleProcessItemReturnModal(false)
         }}
+        customerId={member.id}
       />
       <AssignRolesModal
         title="Assign roles to member"

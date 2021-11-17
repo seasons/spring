@@ -50,8 +50,14 @@ export const PROCESS_RETURN = gql`
   mutation ProcessReturn(
     $trackingNumber: String
     $productStates: [ProductStateInput!]!
-    $droppedOffBy: ReservationDropOffAgent
+    $droppedOffBy: ReservationDropOffAgent!
+    $customerId: String
   ) {
-    processReturn(trackingNumber: $trackingNumber, productStates: $productStates, droppedOffBy: $droppedOffBy)
+    processReturn(
+      trackingNumber: $trackingNumber
+      productStates: $productStates
+      droppedOffBy: $droppedOffBy
+      customerId: $customerId
+    )
   }
 `

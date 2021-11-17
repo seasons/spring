@@ -43,6 +43,7 @@ interface ProductState {
 interface MultiItemReturnProps {
   open: boolean
   onClose?: () => void
+  customerId: string
 }
 
 type ProductStates = { [key: string]: ProductState }
@@ -55,7 +56,7 @@ const GET_PHYSICAL_PRODUCT_FOR_MULTI_ITEM_RETURN = gql`
   }
   ${PhysicalProductFragment}
 `
-export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ open, onClose }) => {
+export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ open, onClose, customerId }) => {
   const session = useSelector(state => state.session)
   const location = useLocation()
   const scannedTrackingNumber: any = location?.state ? location?.state : {}
@@ -169,8 +170,6 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ open, onC
   const handleSave = () => {
     const productStateArr = Object.values(productStates) as any[]
 
-    console.log(trackingNumber, productStates, { [droppedOffBy]: droppedOffBy })
-
     for (let i = 0; i < productStateArr.length; i++) {
       const productState = productStateArr[i]
       const product = physicalProducts[i]
@@ -191,6 +190,7 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ open, onC
         trackingNumber: trackingNumber,
         productStates: Object.values(productStates).map((productState: any) => omit(productState, "damageType")),
         droppedOffBy: droppedOffBy,
+        customerId,
       },
     })
   }
