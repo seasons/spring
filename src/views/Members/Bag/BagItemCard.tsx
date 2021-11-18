@@ -1,12 +1,15 @@
 import React, { useState } from "react"
 import { makeStyles, styled } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
+import { useMutation } from "react-apollo"
 import { truncate } from "lodash"
 import { Menu, MenuItem } from "@material-ui/core"
 import CardMedia from "@material-ui/core/CardMedia"
 import { ConfirmationDialog } from "components/ConfirmationDialog"
 import { Box, Typography, Button, IconButton } from "@material-ui/core"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+import gql from "graphql-tag"
+import { useRefresh } from "@seasons/react-admin"
 
 import { useHistory } from "react-router-dom"
 import { SwapBagItemModal } from "../SwapBagItemModal"
@@ -32,8 +35,20 @@ interface MenuItem {
   action: () => void
 }
 
-export const BagItemCard = ({ bagItem, index, columnId }) => {
+export const UPDATE_RESERVATION_PHYSICAL_PRODUCT = gql`
+  mutation UpdateReservationPhysicalProduct(
+    $where: ReservationPhysicalProductWhereUniqueInput!
+    $data: ReservationPhysicalProductUpdateInput!
+  ) {
+    updateReservationPhysicalProduct(where: $where, data: $data) {
+      id
+    }
+  }
+`
+
+export const BagItemCard = ({ bagItem, columnId }) => {
   const classes = useStyles()
+  const refresh = useRefresh()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [isReturnConfirmationDialogOpen, setIsReturnConfirmationDialogOpen] = useState(false)
   const [isSwapItemModalOpen, setIsSwapItemModalOpen] = useState(false)
@@ -43,6 +58,18 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
   const product = variant?.product
   const physicalProduct = bagItem?.physicalProduct
   const image = product?.images?.[0]
+  const reservationPhysicalProduct = bagItem?.reservationPhysicalProduct
+  const isOnHold = reservationPhysicalProduct?.isOnHold
+
+  const [updateReservationPhysicalProduct] = useMutation(UPDATE_RESERVATION_PHYSICAL_PRODUCT, {
+    onCompleted: data => {
+      console.log(data)
+      refresh()
+    },
+    onError: error => {
+      console.log(error)
+    },
+  })
 
   const onCloseConfirmationDialog = async (agreed: boolean, type: "Return") => {
     // Make sure user has confirmed submission
@@ -68,6 +95,17 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
     setIsSwapItemModalOpen(false)
   }
 
+  const toggleHold = () => {
+    updateReservationPhysicalProduct({
+      variables: {
+        where: { id: reservationPhysicalProduct.id },
+        data: {
+          isOnHold: !isOnHold,
+        },
+      },
+    })
+  }
+
   const physicalProductId = bagItem?.physicalProduct?.id
 
   const linkUrl = !!physicalProductId
@@ -80,7 +118,7 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
   switch (columnId) {
     case "queued":
       menuItems = [
-        { text: "Hold item", action: () => null },
+        { text: isOnHold ? "Release hold" : "Hold item", action: () => toggleHold() },
         { text: "Mark as lost", action: () => null },
         { text: "Swap Item", action: () => handleOpenSwapModal() },
       ]
@@ -126,7 +164,12 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
   // FIXME: Remove uniqueID once proper bagitems are passed and use bagItem.id
   return (
     <Box>
-      <Card className={classes.root}>
+      <Card className={classes.root} style={{ backgroundColor: isOnHold ? "#ffb8b8" : "white" }}>
+        {isOnHold && (
+          <Box pb={1}>
+            <Typography>ON HOLD</Typography>
+          </Box>
+        )}
         <ContentWrapper>
           <CardMedia className={classes.media} image={image?.url ?? ""} />
           <TextWrapper pl={2}>
@@ -216,6 +259,7 @@ const TextWrapper = styled(Box)({
 const FlexWrapper = styled(Box)({
   display: "flex",
   flexDirection: "row",
+  alignItems: "flex-start",
   width: "100%",
   justifyContent: "space-between",
 })

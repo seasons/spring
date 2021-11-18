@@ -53,7 +53,7 @@ export const BagColumn = ({ bagSection, index, setShowModal }) => {
       <Spacer mb={2} />
       <Box>
         {bagItems?.map((bagItem, index) => {
-          return <BagItemCard bagItem={bagItem} key={index} index={index} columnId={bagSection.id} />
+          return <BagItemCard bagItem={bagItem} key={index} columnId={bagSection.id} />
         })}
       </Box>
     </Wrapper>
