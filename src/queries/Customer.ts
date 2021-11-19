@@ -1,6 +1,5 @@
 import { GET_LIST, GET_ONE } from "@seasons/react-admin"
 import gql from "graphql-tag"
-import { PickingPackingModalFragment_BagSection } from "views/Members/Bag/Modals/PickingPackingModal/PickingPackingModal"
 
 const CustomerGetListFragment_Customer = gql`
   fragment CustomerGetListFragment_Customer on Customer {
