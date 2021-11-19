@@ -152,9 +152,6 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
           { text: "Cancel Customer", action: () => setShowCancelConfirmation(true) },
         ]}
       />
-      <Box display="flex" justifyContent="right">
-        <BorderedButton onClick={() => toggleProcessItemReturnModal(true)}>Process Item Return</BorderedButton>
-      </Box>
       <MultiItemReturnModal
         open={openProcessItemReturnModal}
         onClose={() => {
