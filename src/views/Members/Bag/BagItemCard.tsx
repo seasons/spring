@@ -10,8 +10,6 @@ import { Box, Typography, Button, IconButton } from "@material-ui/core"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import gql from "graphql-tag"
 import { useRefresh } from "@seasons/react-admin"
-
-import { useHistory } from "react-router-dom"
 import { SwapBagItemModal } from "../SwapBagItemModal"
 
 const useStyles = makeStyles(theme => ({
@@ -51,7 +49,6 @@ export const BagItemCard = ({ bagItem, columnId }) => {
   const [isReturnConfirmationDialogOpen, setIsReturnConfirmationDialogOpen] = useState(false)
   const [isSwapItemModalOpen, setIsSwapItemModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const router = useHistory()
   const variant = bagItem?.productVariant
   const product = variant?.product
   const physicalProduct = bagItem?.physicalProduct
@@ -110,22 +107,18 @@ export const BagItemCard = ({ bagItem, columnId }) => {
     ? `/inventory/product/variant/physicalProduct/${physicalProductId}/manage`
     : `/inventory/product/variants/${variant?.id}`
 
-  let MetaData
+  let MetaData = () => <Box />
   let menuItems: MenuItem[] = []
 
   switch (columnId) {
     case "queued":
+    case "picked":
+    case "packed":
       menuItems = [
         { text: isOnHold ? "Release hold" : "Hold item", action: () => toggleHold() },
-        { text: "Mark as lost", action: () => null },
         { text: "Swap Item", action: () => handleOpenSwapModal() },
       ]
       MetaData = () => <Typography>{bagItem?.physicalProduct?.barcode}</Typography>
-      break
-    case "picked":
-      menuItems = [{ text: "Swap Item", action: () => handleOpenSwapModal() }]
-    case "packed":
-      MetaData = () => <Typography style={{ textDecoration: "underline" }}>{bagItem?.status}</Typography>
       break
     case "atHome":
       const physicalProductPrice = bagItem?.physicalProduct?.price
@@ -145,23 +138,31 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       })
       if (price) {
         MetaData = () => <Typography>{price}</Typography>
-      } else {
-        MetaData = () => <Box />
       }
-
+      menuItems = [
+        { text: "Mark as lost", action: () => null },
+        { text: "Set delivered to business", action: () => null },
+      ]
       break
     case "shipped":
-    case "returnLabel":
-    case "returnPending":
     case "customerToBusiness":
+      menuItems = [{ text: "Mark as lost", action: () => null }]
+      break
+    case "lost":
+      menuItems = [{ text: "Process losted item", action: () => null }]
+      break
+    case "deliveredToBusiness":
+      menuItems = [{ text: "Set as at home", action: () => null }]
+      break
+    case "returnPending":
+      menuItems = [{ text: "Set delivered to business", action: () => null }]
+      break
     default:
-      MetaData = () => <Box />
       break
   }
 
   const redBackgroundColor = "#C84347"
 
-  // FIXME: Remove uniqueID once proper bagitems are passed and use bagItem.id
   return (
     <Box width="345px">
       <Card className={classes.root} style={{ border: isOnHold ? `1px solid ${redBackgroundColor}` : "none" }}>
@@ -211,7 +212,13 @@ export const BagItemCard = ({ bagItem, columnId }) => {
             </Menu>
             <StatusWrapper>
               <MetaData />
-              <Button color="primary" variant="contained" onClick={() => router.push(linkUrl)}>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  window.open(linkUrl, "_blank")
+                }}
+              >
                 View
               </Button>
             </StatusWrapper>

@@ -129,7 +129,7 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
         // setShouldAllowSave(pickedCount === reservation?.newProducts?.length)
       } else {
         showSnackbar({
-          message: `Barcode not found`,
+          message: `Barcode not found 222`,
           status: "error",
         })
       }

@@ -83,7 +83,10 @@ export const BagView = ({ customer }) => {
         onSave={async bagItems => {
           setIsMutating(false)
           setShowModal(null)
-          showSnackbar({ message: `Reservation status successfully set to picked`, status: "success" })
+          showSnackbar({
+            message: `Items successfully ${showModal === "PickingModal" ? "picked" : "packed"}`,
+            status: "success",
+          })
           refresh()
         }}
         bagItems={modalBagItems}

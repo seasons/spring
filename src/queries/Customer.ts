@@ -62,8 +62,8 @@ const CustomerGetOneFragment_Customer = gql`
         isSwappable
         physicalProduct {
           id
-          seasonsUID
           barcode
+          seasonsUID
           price {
             id
             buyUsedPrice
@@ -72,6 +72,7 @@ const CustomerGetOneFragment_Customer = gql`
           warehouseLocation {
             id
             type
+            barcode
             locationCode
             itemCode
           }
