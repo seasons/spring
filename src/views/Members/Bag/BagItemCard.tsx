@@ -1,20 +1,19 @@
 import React, { useState } from "react"
 import { makeStyles, styled } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
+import { useMutation } from "react-apollo"
 import { truncate } from "lodash"
 import { Menu, MenuItem } from "@material-ui/core"
 import CardMedia from "@material-ui/core/CardMedia"
 import { ConfirmationDialog } from "components/ConfirmationDialog"
 import { Box, Typography, Button, IconButton } from "@material-ui/core"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
-
-import { useHistory } from "react-router-dom"
+import gql from "graphql-tag"
+import { useRefresh } from "@seasons/react-admin"
 import { SwapBagItemModal } from "../SwapBagItemModal"
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: "16px",
-    maxWidth: 345,
     marginBottom: "8px",
     borderRadius: "8px",
   },
@@ -32,17 +31,40 @@ interface MenuItem {
   action: () => void
 }
 
-export const BagItemCard = ({ bagItem, index, columnId }) => {
+export const UPDATE_RESERVATION_PHYSICAL_PRODUCT = gql`
+  mutation UpdateReservationPhysicalProduct(
+    $where: ReservationPhysicalProductWhereUniqueInput!
+    $data: ReservationPhysicalProductUpdateInput!
+  ) {
+    updateReservationPhysicalProduct(where: $where, data: $data) {
+      id
+    }
+  }
+`
+
+export const BagItemCard = ({ bagItem, columnId }) => {
   const classes = useStyles()
+  const refresh = useRefresh()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [isReturnConfirmationDialogOpen, setIsReturnConfirmationDialogOpen] = useState(false)
   const [isSwapItemModalOpen, setIsSwapItemModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const router = useHistory()
   const variant = bagItem?.productVariant
   const product = variant?.product
   const physicalProduct = bagItem?.physicalProduct
   const image = product?.images?.[0]
+  const reservationPhysicalProduct = bagItem?.reservationPhysicalProduct
+  const isOnHold = reservationPhysicalProduct?.isOnHold
+
+  const [updateReservationPhysicalProduct] = useMutation(UPDATE_RESERVATION_PHYSICAL_PRODUCT, {
+    onCompleted: data => {
+      console.log(data)
+      refresh()
+    },
+    onError: error => {
+      console.log(error)
+    },
+  })
 
   const onCloseConfirmationDialog = async (agreed: boolean, type: "Return") => {
     // Make sure user has confirmed submission
@@ -68,28 +90,35 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
     setIsSwapItemModalOpen(false)
   }
 
+  const toggleHold = () => {
+    updateReservationPhysicalProduct({
+      variables: {
+        where: { id: reservationPhysicalProduct.id },
+        data: {
+          isOnHold: !isOnHold,
+        },
+      },
+    })
+  }
+
   const physicalProductId = bagItem?.physicalProduct?.id
 
   const linkUrl = !!physicalProductId
     ? `/inventory/product/variant/physicalProduct/${physicalProductId}/manage`
     : `/inventory/product/variants/${variant?.id}`
 
-  let MetaData
+  let MetaData = () => <Box />
   let menuItems: MenuItem[] = []
 
   switch (columnId) {
     case "queued":
+    case "picked":
+    case "packed":
       menuItems = [
-        { text: "Hold item", action: () => null },
-        { text: "Mark as lost", action: () => null },
+        { text: isOnHold ? "Release hold" : "Hold item", action: () => toggleHold() },
         { text: "Swap Item", action: () => handleOpenSwapModal() },
       ]
       MetaData = () => <Typography>{bagItem?.physicalProduct?.barcode}</Typography>
-      break
-    case "picked":
-      menuItems = [{ text: "Swap Item", action: () => handleOpenSwapModal() }]
-    case "packed":
-      MetaData = () => <Typography style={{ textDecoration: "underline" }}>{bagItem?.status}</Typography>
       break
     case "atHome":
       const physicalProductPrice = bagItem?.physicalProduct?.price
@@ -109,25 +138,40 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
       })
       if (price) {
         MetaData = () => <Typography>{price}</Typography>
-      } else {
-        MetaData = () => <Box />
       }
-
+      menuItems = [
+        { text: "Mark as lost", action: () => null },
+        { text: "Set delivered to business", action: () => null },
+      ]
       break
     case "shipped":
-    case "returnLabel":
-    case "returnPending":
     case "customerToBusiness":
+      menuItems = [{ text: "Mark as lost", action: () => null }]
+      break
+    case "lost":
+      menuItems = [{ text: "Process losted item", action: () => null }]
+      break
+    case "deliveredToBusiness":
+      menuItems = [{ text: "Set as at home", action: () => null }]
+      break
+    case "returnPending":
+      menuItems = [{ text: "Set delivered to business", action: () => null }]
+      break
     default:
-      MetaData = () => <Box />
       break
   }
 
-  // FIXME: Remove uniqueID once proper bagitems are passed and use bagItem.id
+  const redBackgroundColor = "#C84347"
+
   return (
-    <Box>
-      <Card className={classes.root}>
-        <ContentWrapper>
+    <Box width="345px">
+      <Card className={classes.root} style={{ border: isOnHold ? `1px solid ${redBackgroundColor}` : "none" }}>
+        {isOnHold && (
+          <Box px={2} py={1} style={{ backgroundColor: redBackgroundColor }}>
+            <Typography color="primary">On Hold</Typography>
+          </Box>
+        )}
+        <ContentWrapper px={2} py={2}>
           <CardMedia className={classes.media} image={image?.url ?? ""} />
           <TextWrapper pl={2}>
             <FlexWrapper>
@@ -168,7 +212,13 @@ export const BagItemCard = ({ bagItem, index, columnId }) => {
             </Menu>
             <StatusWrapper>
               <MetaData />
-              <Button color="primary" variant="contained" onClick={() => router.push(linkUrl)}>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  window.open(linkUrl, "_blank")
+                }}
+              >
                 View
               </Button>
             </StatusWrapper>
@@ -203,7 +253,7 @@ const StatusWrapper = styled(Box)({
 const ContentWrapper = styled(Box)({
   display: "flex",
   flexDirection: "row",
-  width: "100%",
+  width: "313px",
 })
 
 const TextWrapper = styled(Box)({
@@ -216,6 +266,7 @@ const TextWrapper = styled(Box)({
 const FlexWrapper = styled(Box)({
   display: "flex",
   flexDirection: "row",
+  alignItems: "flex-start",
   width: "100%",
   justifyContent: "space-between",
 })

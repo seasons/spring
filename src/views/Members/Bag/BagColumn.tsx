@@ -3,16 +3,34 @@ import { Separator, Spacer } from "components"
 import React from "react"
 import { BagItemCard } from "./BagItemCard"
 
-export const BagColumn = ({ bagSection, index, setShowModal }) => {
+export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems }) => {
   const bagItems = bagSection.bagItems
 
   let buttons
   switch (bagSection.id) {
     case "queued":
-      buttons = [{ id: "pickItems", title: "Pick items", onClick: () => setShowModal("PickingModal") }]
+      buttons = [
+        {
+          id: "pickItems",
+          title: "Pick items",
+          onClick: () => {
+            setModalBagItems(bagItems)
+            setShowModal("PickingModal")
+          },
+        },
+      ]
       break
     case "picked":
-      buttons = [{ id: "packItems", title: "Pack items", onClick: () => setShowModal("PackingModal") }]
+      buttons = [
+        {
+          id: "packItems",
+          title: "Pack items",
+          onClick: () => {
+            setModalBagItems(bagItems)
+            setShowModal("PackingModal")
+          },
+        },
+      ]
       break
     case "packed":
       buttons = [
@@ -29,6 +47,9 @@ export const BagColumn = ({ bagSection, index, setShowModal }) => {
     case "inbound":
       buttons = [{ id: "trackReturn", title: "Track return", onClick: () => null }]
       break
+    case "deliveredToBusiness":
+      buttons = [{ id: "process", title: "Process", onClick: () => null }]
+      break
   }
 
   return (
@@ -40,7 +61,7 @@ export const BagColumn = ({ bagSection, index, setShowModal }) => {
             const { onClick } = button
             return (
               <Box key={index} ml={1}>
-                <Button variant="contained" onClick={onClick}>
+                <Button variant="contained" onClick={onClick} disabled={!bagItems?.length}>
                   {button.title}
                 </Button>
               </Box>
@@ -53,7 +74,7 @@ export const BagColumn = ({ bagSection, index, setShowModal }) => {
       <Spacer mb={2} />
       <Box>
         {bagItems?.map((bagItem, index) => {
-          return <BagItemCard bagItem={bagItem} key={index} index={index} columnId={bagSection.id} />
+          return <BagItemCard bagItem={bagItem} key={index} columnId={bagSection.id} />
         })}
       </Box>
     </Wrapper>
