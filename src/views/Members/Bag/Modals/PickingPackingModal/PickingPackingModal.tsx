@@ -8,6 +8,8 @@ import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { trim, isEmpty } from "lodash"
 import { useSnackbarContext } from "components/Snackbar"
 import gql from "graphql-tag"
+import { useMutation } from "@apollo/react-hooks"
+import { PACK_ITEMS, PICK_ITEMS } from "views/Reservations/mutations"
 
 export const PickingPackingModalFragment_BagSection = gql`
   fragment PickingPackingModalFragment_BagSection on BagSection {
@@ -32,6 +34,7 @@ export const PickingPackingModalFragment_BagSection = gql`
 `
 
 interface ProductState {
+  bagItemID: string
   productUID: string
   picked: boolean
 }
@@ -40,22 +43,16 @@ interface PickingPackingModalProps {
   open: boolean
   onClose?: () => void
   onSave?: (values: ProductStates, params?: any) => void
-  disableButton?: boolean
   bagItems: any
   mode: "Pick" | "Pack"
 }
 
 type ProductStates = { [key: string]: ProductState }
 
-export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
-  disableButton,
-  open,
-  onSave,
-  onClose,
-  bagItems,
-  mode,
-}) => {
+export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, onSave, onClose, bagItems, mode }) => {
   const [productStates, setProductStates] = useState<ProductStates>({})
+  const [pickItems] = useMutation(PICK_ITEMS)
+  const [packItems] = useMutation(PACK_ITEMS)
 
   useEffect(() => {
     if (isEmpty(productStates) && bagItems?.length > 0) {
@@ -64,6 +61,7 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
         console.log("bagItem", bagItem)
         const physicalProduct = bagItem.physicalProduct
         barcodeMaps[physicalProduct.barcode] = {
+          bagItemID: bagItem.id,
           productUID: physicalProduct.seasonsUID,
           picked: false,
         }
@@ -91,7 +89,17 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
     target?.focus()
   }
 
-  const handleSave = status => {
+  const handleSave = async status => {
+    const fn = mode === "Pick" ? pickItems : packItems
+
+    await fn({
+      variables: {
+        ids: Object.values(productStates)
+          .filter(p => p.picked)
+          .map(p => p.bagItemID),
+      },
+    })
+
     onSave?.(productStates, { status })
   }
 
@@ -114,6 +122,7 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
           },
         }
         setProductStates(updatedProductStates)
+        setShouldAllowSave(true)
 
         const pickedCount = Object.values(updatedProductStates).filter((a: any) => !!a.picked).length
         // FIXME:
@@ -189,50 +198,17 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
               )
             })}
           </Box>
-          <Box mt={4} mb={2}>
-            <Typography variant="subtitle1">2. Print shipping label</Typography>
-            <Spacer mt={1} />
-            <Card>
-              <Box display="flex" alignItems="center" py={2} px={1}>
-                <Box flex={1}>
-                  <Typography variant="body1">Shipping Label</Typography>
-                </Box>
-                <Box>
-                  <Button
-                    variant="outlined"
-                    onClick={() => {
-                      window.open(shippingLabel?.image!, "_blank")
-                    }}
-                  >
-                    Print
-                  </Button>
-                </Box>
-              </Box>
-            </Card>
-          </Box>
         </DialogContent>
         <DialogActions>
           <Button
             autoFocus
-            onClick={() => handleSave("Packed")}
-            color="secondary"
+            onClick={() => handleSave(mode)}
+            color="primary"
             variant="contained"
-            disabled={!shouldAllowSave || disableButton}
+            disabled={!shouldAllowSave}
           >
-            Mark as packed
+            Mark as {mode}ed
           </Button>
-
-          {mode === "Pick" && (
-            <Button
-              autoFocus
-              onClick={() => handleSave("Picked")}
-              color="primary"
-              variant="contained"
-              disabled={!shouldAllowSave || disableButton}
-            >
-              Mark as picked
-            </Button>
-          )}
         </DialogActions>
       </Dialog>
     </>

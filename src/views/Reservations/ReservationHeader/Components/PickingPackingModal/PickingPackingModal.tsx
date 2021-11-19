@@ -153,27 +153,6 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
               </Box>
             ))}
           </Box>
-          <Box mt={4} mb={2}>
-            <Typography variant="subtitle1">2. Print shipping label</Typography>
-            <Spacer mt={1} />
-            <Card>
-              <Box display="flex" alignItems="center" py={2} px={1}>
-                <Box flex={1}>
-                  <Typography variant="body1">Shipping Label</Typography>
-                </Box>
-                <Box>
-                  <Button
-                    variant="outlined"
-                    onClick={() => {
-                      window.open(shippingLabel?.image!, "_blank")
-                    }}
-                  >
-                    Print
-                  </Button>
-                </Box>
-              </Box>
-            </Card>
-          </Box>
         </DialogContent>
         <DialogActions>
           <Button
