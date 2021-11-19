@@ -16,8 +16,6 @@ import { SwapBagItemModal } from "../SwapBagItemModal"
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: "16px",
-    maxWidth: 345,
     marginBottom: "8px",
     borderRadius: "8px",
   },
@@ -161,16 +159,18 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       break
   }
 
+  const redBackgroundColor = "#C84347"
+
   // FIXME: Remove uniqueID once proper bagitems are passed and use bagItem.id
   return (
-    <Box>
-      <Card className={classes.root} style={{ backgroundColor: isOnHold ? "#ffb8b8" : "white" }}>
+    <Box width="345px">
+      <Card className={classes.root} style={{ border: isOnHold ? `1px solid ${redBackgroundColor}` : "none" }}>
         {isOnHold && (
-          <Box pb={1}>
-            <Typography>ON HOLD</Typography>
+          <Box px={2} py={1} style={{ backgroundColor: redBackgroundColor }}>
+            <Typography color="primary">On Hold</Typography>
           </Box>
         )}
-        <ContentWrapper>
+        <ContentWrapper px={2} py={2}>
           <CardMedia className={classes.media} image={image?.url ?? ""} />
           <TextWrapper pl={2}>
             <FlexWrapper>
@@ -246,7 +246,7 @@ const StatusWrapper = styled(Box)({
 const ContentWrapper = styled(Box)({
   display: "flex",
   flexDirection: "row",
-  width: "100%",
+  width: "313px",
 })
 
 const TextWrapper = styled(Box)({
