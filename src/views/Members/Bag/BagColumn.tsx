@@ -5,6 +5,7 @@ import { BagItemCard } from "./BagItemCard"
 
 export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems }) => {
   const bagItems = bagSection.bagItems
+  const trackingUrl = bagSection.deliveryTrackingUrl
 
   let buttons
   switch (bagSection.id) {
@@ -17,6 +18,7 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
             setModalBagItems(bagItems)
             setShowModal("PickingModal")
           },
+          disabled: false,
         },
       ]
       break
@@ -29,26 +31,41 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
             setModalBagItems(bagItems)
             setShowModal("PackingModal")
           },
+          disabled: false,
         },
       ]
       break
     case "packed":
       buttons = [
-        { id: "pickedUp", title: "Picked up", onClick: () => null },
-        { id: "printlabel", title: "Print label", onClick: () => null },
+        { id: "pickedUp", title: "Picked up", onClick: () => null, disabled: false },
+        { id: "printlabel", title: "Print label", onClick: () => null, disabled: false },
       ]
       break
     case "outbound":
-      buttons = [{ id: "trackShippment", title: "Track shipment", onClick: () => null }]
+      buttons = [
+        {
+          id: "trackShippment",
+          title: "Track shipment",
+          onClick: () => window.open(trackingUrl, "_blank"),
+          disabled: !trackingUrl,
+        },
+      ]
       break
     case "deliveredToCustomer":
-      buttons = [{ id: "returnLabel", title: "Return label", onClick: () => null }]
+      buttons = [{ id: "returnLabel", title: "Return label", onClick: () => null, disabled: false }]
       break
     case "inbound":
-      buttons = [{ id: "trackReturn", title: "Track return", onClick: () => null }]
+      buttons = [
+        {
+          id: "trackReturn",
+          title: "Track return",
+          onClick: () => window.open(trackingUrl, "_blank"),
+          disabled: !trackingUrl,
+        },
+      ]
       break
     case "deliveredToBusiness":
-      buttons = [{ id: "process", title: "Process", onClick: () => null }]
+      buttons = [{ id: "process", title: "Process", onClick: () => null, disabled: false }]
       break
   }
 
@@ -61,7 +78,7 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
             const { onClick } = button
             return (
               <Box key={index} ml={1}>
-                <Button variant="contained" onClick={onClick} disabled={!bagItems?.length}>
+                <Button variant="contained" onClick={onClick} disabled={!bagItems?.length || button.disabled}>
                   {button.title}
                 </Button>
               </Box>

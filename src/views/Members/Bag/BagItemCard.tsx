@@ -90,13 +90,11 @@ export const BagItemCard = ({ bagItem, columnId }) => {
     setIsSwapItemModalOpen(false)
   }
 
-  const toggleHold = () => {
+  const onUpdateReservationPhysicalProduct = data => {
     updateReservationPhysicalProduct({
       variables: {
         where: { id: reservationPhysicalProduct.id },
-        data: {
-          isOnHold: !isOnHold,
-        },
+        data,
       },
     })
   }
@@ -115,7 +113,13 @@ export const BagItemCard = ({ bagItem, columnId }) => {
     case "picked":
     case "packed":
       menuItems = [
-        { text: isOnHold ? "Release hold" : "Hold item", action: () => toggleHold() },
+        {
+          text: isOnHold ? "Release hold" : "Hold item",
+          action: () =>
+            onUpdateReservationPhysicalProduct({
+              isOnHold: !isOnHold,
+            }),
+        },
         { text: "Swap Item", action: () => handleOpenSwapModal() },
       ]
       MetaData = () => <Typography>{bagItem?.physicalProduct?.barcode}</Typography>
@@ -139,10 +143,7 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       if (price) {
         MetaData = () => <Typography>{price}</Typography>
       }
-      menuItems = [
-        { text: "Mark as lost", action: () => null },
-        { text: "Set delivered to business", action: () => null },
-      ]
+      menuItems = [{ text: "Mark as lost", action: () => null }]
       break
     case "shipped":
     case "customerToBusiness":
@@ -152,10 +153,15 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       menuItems = [{ text: "Process losted item", action: () => null }]
       break
     case "deliveredToBusiness":
-      menuItems = [{ text: "Set as at home", action: () => null }]
-      break
-    case "returnPending":
-      menuItems = [{ text: "Set delivered to business", action: () => null }]
+      menuItems = [
+        {
+          text: "Mark not received",
+          action: () =>
+            onUpdateReservationPhysicalProduct({
+              status: "DeliveredToCustomer",
+            }),
+        },
+      ]
       break
     default:
       break
