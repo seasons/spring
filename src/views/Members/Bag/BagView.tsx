@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { useRefresh } from "@seasons/react-admin"
 import { BagColumns } from "./BagColumns"
 import { PickingPackingModal } from "./Modals/PickingPackingModal/PickingPackingModal"
-import { MultiItemReturnModal } from "../MultiItemReturn"
+import { ProcessReturnModal } from "./Modals/ProcessReturnModal/ProcessReturnModal"
 
 enum Modals {
   ProcessReturnModal = "ProcessReturnModal",
@@ -23,10 +23,11 @@ export const BagView = ({ customer }) => {
   return (
     <>
       <BagColumns bagSections={bagSections} setModalBagItems={setModalBagItems} setShowModal={setShowModal} />
-      <MultiItemReturnModal
+      <ProcessReturnModal
         open={showModal === "ProcessReturnModal"}
         onClose={() => setShowModal(null)}
         customerId={customer.id}
+        bagSections={bagSections}
       />
       <PickingPackingModal
         open={showModal === "PickingModal" || showModal === "PackingModal"}
