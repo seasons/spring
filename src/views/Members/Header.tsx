@@ -152,13 +152,6 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
           { text: "Cancel Customer", action: () => setShowCancelConfirmation(true) },
         ]}
       />
-      <MultiItemReturnModal
-        open={openProcessItemReturnModal}
-        onClose={() => {
-          toggleProcessItemReturnModal(false)
-        }}
-        customerId={member.id}
-      />
       <AssignRolesModal
         title="Assign roles to member"
         member={member}

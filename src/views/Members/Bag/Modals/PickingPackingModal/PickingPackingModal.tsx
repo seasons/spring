@@ -163,7 +163,7 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
           ) : (
             <Box my={2} width={["400px"]}>
               <TextField
-                label="Scan Barcode"
+                label="Scan barcode"
                 helperText="Click into box and scan the barcode to mark as picked"
                 name="barcode"
                 type="text"

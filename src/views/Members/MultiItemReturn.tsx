@@ -31,7 +31,22 @@ import { useRefresh } from "@seasons/react-admin"
 import { useMutation } from "react-apollo"
 import { SUBMIT_QA_ENTRY } from "components/ProductQAModal"
 import { useSelector } from "react-redux"
-import { PROCESS_RETURN } from "./queries"
+
+const PROCESS_RETURN = gql`
+  mutation ProcessReturn(
+    $trackingNumber: String
+    $productStates: [ProductStateInput!]!
+    $droppedOffBy: ReservationDropOffAgent!
+    $customerId: String
+  ) {
+    processReturn(
+      trackingNumber: $trackingNumber
+      productStates: $productStates
+      droppedOffBy: $droppedOffBy
+      customerId: $customerId
+    )
+  }
+`
 
 interface ProductState {
   productUID: string
@@ -222,7 +237,7 @@ export const MultiItemReturnModal: React.FC<MultiItemReturnProps> = ({ open, onC
         <DialogContent dividers>
           <Box my={2} width={["550px"]}>
             <TextField
-              label="Scan Barcode"
+              label="Scan barcode"
               helperText="Click into box and scan the barcode to mark as returned"
               name="barcode"
               type="text"

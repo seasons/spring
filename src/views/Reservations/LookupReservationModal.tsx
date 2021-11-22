@@ -109,7 +109,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
         <DialogContent dividers>
           <Box my={2}>
             <TextField
-              label="Scan Barcode"
+              label="Scan barcode"
               helperText={`Click into box and scan the barcode of the ${
                 !!selectedPhysicalProduct ? "warehouse location" : "product"
               }`}
