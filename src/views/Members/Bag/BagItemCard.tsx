@@ -42,6 +42,17 @@ export const UPDATE_RESERVATION_PHYSICAL_PRODUCT = gql`
   }
 `
 
+// trackingNumber: String
+// productStates: [ProductStateInput!]!
+// droppedOffBy: ReservationDropOffAgent!
+// customerId: String
+
+const MARK_AS_LOST = gql`
+  mutation MarkAsLost($lostBagItemId: ID!) {
+    markAsLost(lostBagItemId: $lostBagItemId)
+  }
+`
+
 export const BagItemCard = ({ bagItem, columnId }) => {
   const classes = useStyles()
   const refresh = useRefresh()
@@ -55,6 +66,16 @@ export const BagItemCard = ({ bagItem, columnId }) => {
   const image = product?.images?.[0]
   const reservationPhysicalProduct = bagItem?.reservationPhysicalProduct
   const isOnHold = reservationPhysicalProduct?.isOnHold
+
+  const [markAsLost] = useMutation(MARK_AS_LOST, {
+    onCompleted: data => {
+      console.log(data)
+      refresh()
+    },
+    onError: error => {
+      console.log(error)
+    },
+  })
 
   const [updateReservationPhysicalProduct] = useMutation(UPDATE_RESERVATION_PHYSICAL_PRODUCT, {
     onCompleted: data => {
@@ -99,6 +120,14 @@ export const BagItemCard = ({ bagItem, columnId }) => {
     })
   }
 
+  const onMarkAsLost = () => {
+    markAsLost({
+      variables: {
+        lostBagItemId: bagItem.id,
+      },
+    })
+  }
+
   const physicalProductId = bagItem?.physicalProduct?.id
 
   const linkUrl = !!physicalProductId
@@ -124,7 +153,7 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       ]
       MetaData = () => <Typography>{bagItem?.physicalProduct?.barcode}</Typography>
       break
-    case "atHome":
+    case "deliveredToCustomer":
       const physicalProductPrice = bagItem?.physicalProduct?.price
       const productVariantPrice = bagItem?.productVariant?.price
       let priceInDollars
@@ -143,14 +172,14 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       if (price) {
         MetaData = () => <Typography>{price}</Typography>
       }
-      menuItems = [{ text: "Mark as lost", action: () => null }]
+      menuItems = [{ text: "Mark as lost", action: () => onMarkAsLost() }]
       break
     case "shipped":
     case "customerToBusiness":
-      menuItems = [{ text: "Mark as lost", action: () => null }]
+      menuItems = [{ text: "Mark as lost", action: () => onMarkAsLost() }]
       break
     case "lost":
-      menuItems = [{ text: "Process losted item", action: () => null }]
+      menuItems = [{ text: "Mark as found", action: () => null }]
       break
     case "deliveredToBusiness":
       menuItems = [
@@ -162,6 +191,9 @@ export const BagItemCard = ({ bagItem, columnId }) => {
             }),
         },
       ]
+      break
+    case "returnPending":
+      menuItems = [{ text: "Mark as lost", action: () => onMarkAsLost() }]
       break
     default:
       break

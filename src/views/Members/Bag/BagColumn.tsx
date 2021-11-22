@@ -65,7 +65,17 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
       ]
       break
     case "deliveredToBusiness":
-      buttons = [{ id: "process", title: "Process", onClick: () => null, disabled: false }]
+      buttons = [
+        {
+          id: "process",
+          title: "Process",
+          onClick: () => {
+            setModalBagItems(bagItems)
+            setShowModal("ProcessReturnModal")
+          },
+          disabled: false,
+        },
+      ]
       break
   }
 

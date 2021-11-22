@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react"
-
 import {
   Button,
   Dialog,
@@ -137,7 +136,7 @@ export const ProcessReturnModal: React.FC<ProcessReturnModalProps> = ({
         <DialogContent dividers>
           <Box my={2} width={["550px"]}>
             <TextField
-              label="Scan Barcode"
+              label="Scan barcode"
               helperText="Click into box and scan the barcode to mark as returned"
               name="barcode"
               type="text"
