@@ -1,11 +1,13 @@
 import { Box, Typography, styled, Button } from "@material-ui/core"
 import { Separator, Spacer } from "components"
+import { truncate } from "lodash"
 import React from "react"
 import { BagItemCard } from "./BagItemCard"
 
 export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems }) => {
   const bagItems = bagSection.bagItems
   const trackingUrl = bagSection.deliveryTrackingUrl
+  const hasBagItems = bagItems?.length > 0
 
   let buttons
   switch (bagSection.id) {
@@ -36,10 +38,24 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
       ]
       break
     case "packed":
+      const includesPickUpItems = bagItems.some(
+        item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup"
+      )
       buttons = [
-        { id: "pickedUp", title: "Picked up", onClick: () => null, disabled: false },
+        {
+          id: "pickedUp",
+          title: "Picked up",
+          onClick: () => {
+            setModalBagItems(bagItems)
+            setShowModal("PickupModal")
+          },
+          disabled: false,
+        },
         { id: "printlabel", title: "Print label", onClick: () => null, disabled: false },
       ]
+      // if(includesPickUpItems){
+      //   buttons.push({ id: "pickedUp", title: "Picked up", onClick: () => null, disabled: false })
+      // }
       break
     case "outbound":
       buttons = [
@@ -80,20 +96,28 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
   }
 
   return (
-    <Wrapper mr={2} pl={index === 0 ? 2 : 0}>
+    <Wrapper mr={2} pl={index === 0 ? 2 : 0} width={hasBagItems ? "343px" : "130px"}>
       <FlexHeader>
-        <Typography variant="h4">{bagSection.title}</Typography>
+        <Typography variant={hasBagItems ? "h4" : "h6"} color={hasBagItems ? "textPrimary" : "secondary"}>
+          {hasBagItems
+            ? bagSection.title
+            : truncate(bagSection.title, {
+                length: 17,
+                omission: "...",
+              })}
+        </Typography>
         <Flex>
-          {buttons?.map((button, index) => {
-            const { onClick } = button
-            return (
-              <Box key={index} ml={1}>
-                <Button variant="contained" onClick={onClick} disabled={!bagItems?.length || button.disabled}>
-                  {button.title}
-                </Button>
-              </Box>
-            )
-          })}
+          {hasBagItems &&
+            buttons?.map((button, index) => {
+              const { onClick } = button
+              return (
+                <Box key={index} ml={1}>
+                  <Button variant="contained" onClick={onClick} disabled={!bagItems?.length || button.disabled}>
+                    {button.title}
+                  </Button>
+                </Box>
+              )
+            })}
         </Flex>
       </FlexHeader>
       <Spacer mb={1} />
@@ -108,8 +132,7 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
   )
 }
 
-const Wrapper = styled(Box)({
-  width: "343px",
+const Wrapper = styled(Box)<{ hasBagItems: boolean }>({
   flex: "none",
 })
 
