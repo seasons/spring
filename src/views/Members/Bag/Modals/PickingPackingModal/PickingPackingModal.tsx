@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 
 import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typography, Card } from "@material-ui/core"
-import { DialogTitle, Spacer } from "components"
+import { DialogTitle } from "components"
 import { PickingPackingProductCard, PickingPackingProductCardFragment_BagSection } from "./PickingPackingProductCard"
 import { Alert } from "@material-ui/lab"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
@@ -58,7 +58,6 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
     if (isEmpty(productStates) && bagItems?.length > 0) {
       const barcodeMaps = {}
       bagItems?.forEach(bagItem => {
-        console.log("bagItem", bagItem)
         const physicalProduct = bagItem.physicalProduct
         barcodeMaps[physicalProduct.barcode] = {
           bagItemID: bagItem.id,
@@ -70,16 +69,9 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
     }
   }, [bagItems, setProductStates])
 
-  console.log("barcodeMaps", productStates)
-  // FIXME:
-  // const { shippingLabel } = reservation?.sentPackage!
-  const shippingLabel = { image: "" }
-
   const [barcode, setBarcode] = useState("")
   const [shouldAllowSave, setShouldAllowSave] = useState(false)
 
-  // FIXME:
-  // const alreadyPacked = reservation.status === "Packed"
   const alreadyPacked = false
 
   const inputRef = useRef()

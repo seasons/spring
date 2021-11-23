@@ -82,6 +82,10 @@ const CustomerGetOneFragment_Customer = gql`
           id
           status
           isOnHold
+          shippingMethod {
+            id
+            code
+          }
         }
 
         productVariant {
@@ -159,12 +163,12 @@ const CustomerGetOneFragment_Customer = gql`
         id
         amount
         reason
+        balance
+        createdAt
         adminUser {
           firstName
           lastName
         }
-        balance
-        createdAt
       }
       plan {
         id
@@ -172,6 +176,7 @@ const CustomerGetOneFragment_Customer = gql`
         name
       }
       subscription {
+        id
         planPrice
       }
       subscriptionId
