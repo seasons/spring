@@ -13,8 +13,6 @@ import { CreditBalanceUpdateHistory } from "./CreditUpdateHistory"
 import { Box } from "@material-ui/core"
 
 export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, props }) => {
-  const [openProcessItemReturnModal, toggleProcessItemReturnModal] = useState(false)
-
   return (
     <DetailView
       match={match}

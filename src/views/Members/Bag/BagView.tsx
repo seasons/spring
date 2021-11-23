@@ -4,11 +4,13 @@ import { useRefresh } from "@seasons/react-admin"
 import { BagColumns } from "./BagColumns"
 import { PickingPackingModal } from "./Modals/PickingPackingModal/PickingPackingModal"
 import { MultiItemReturnModal } from "../MultiItemReturn"
+import { PickupModal } from "./Modals/PickupModal/PickupModal"
 
 enum Modals {
   ProcessReturnModal = "ProcessReturnModal",
   PickingModal = "PickingModal",
   PackingModal = "PackingModal",
+  PickupModal = "PickupModal",
 }
 
 export const BagView = ({ customer }) => {
@@ -23,6 +25,7 @@ export const BagView = ({ customer }) => {
   return (
     <>
       <BagColumns bagSections={bagSections} setModalBagItems={setModalBagItems} setShowModal={setShowModal} />
+      <PickupModal open={showModal === "PickupModal"} onClose={() => setShowModal(null)} bagItems={modalBagItems} />
       <MultiItemReturnModal
         open={showModal === "ProcessReturnModal"}
         onClose={() => setShowModal(null)}
