@@ -6,10 +6,11 @@ import { PickingPackingProductCard, PickingPackingProductCardFragment_BagSection
 import { Alert } from "@material-ui/lab"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { trim, isEmpty } from "lodash"
-import { useSnackbarContext } from "components/Snackbar"
 import gql from "graphql-tag"
 import { useMutation } from "@apollo/react-hooks"
 import { PACK_ITEMS, PICK_ITEMS } from "views/Reservations/mutations"
+import { useRefresh } from "@seasons/react-admin"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const PickingPackingModalFragment_BagSection = gql`
   fragment PickingPackingModalFragment_BagSection on BagSection {
@@ -53,6 +54,8 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
   const [productStates, setProductStates] = useState<ProductStates>({})
   const [pickItems] = useMutation(PICK_ITEMS)
   const [packItems] = useMutation(PACK_ITEMS)
+  const { showSnackbar } = useSnackbarContext()
+  const refresh = useRefresh()
 
   useEffect(() => {
     if (isEmpty(productStates) && bagItems?.length > 0) {
@@ -92,10 +95,15 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
       },
     })
 
+    showSnackbar({
+      message: `Items successfully ${mode === "Pick" ? "picked" : "packed"}`,
+      status: "success",
+    })
+    refresh()
+    onClose?.()
     onSave?.(productStates, { status })
   }
 
-  const { showSnackbar } = useSnackbarContext()
   const handleBarcodeChange = e => {
     const input = trim(e.target.value)
     if (input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
