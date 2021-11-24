@@ -10,6 +10,10 @@ export default [
         href: "/analytics",
       },
       {
+        title: "History",
+        href: "/history",
+      },
+      {
         title: "Members",
         href: "/members",
       },
