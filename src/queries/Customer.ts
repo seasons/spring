@@ -86,6 +86,26 @@ const CustomerGetOneFragment_Customer = gql`
             id
             code
           }
+          inboundPackage {
+            id
+            direction
+            shippingLabel {
+              id
+              trackingNumber
+              trackingURL
+              image
+            }
+          }
+          outboundPackage {
+            id
+            direction
+            shippingLabel {
+              id
+              trackingNumber
+              trackingURL
+              image
+            }
+          }
         }
 
         productVariant {

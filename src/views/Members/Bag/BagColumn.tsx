@@ -1,13 +1,18 @@
+import { useMutation } from "@apollo/react-hooks"
 import { Box, Typography, styled, Button } from "@material-ui/core"
 import { Separator, Spacer } from "components"
 import { truncate } from "lodash"
 import React from "react"
 import { BagItemCard } from "./BagItemCard"
+import { GENERATE_LABELS } from "./mutations"
+import { ModalType } from "../Bag/BagView"
 
-export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems }) => {
+export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }) => {
   const bagItems = bagSection.bagItems
   const trackingUrl = bagSection.deliveryTrackingUrl
   const hasBagItems = bagItems?.length > 0
+
+  const [generateLabels] = useMutation(GENERATE_LABELS)
 
   let buttons
   switch (bagSection.id) {
@@ -17,7 +22,7 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
           id: "pickItems",
           title: "Pick items",
           onClick: () => {
-            setModalBagItems(bagItems)
+            setData(bagItems)
             setShowModal("PickingModal")
           },
           disabled: false,
@@ -30,7 +35,7 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
           id: "packItems",
           title: "Pack items",
           onClick: () => {
-            setModalBagItems(bagItems)
+            setData(bagItems)
             setShowModal("PackingModal")
           },
           disabled: false,
@@ -46,12 +51,30 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
           id: "pickedUp",
           title: "Picked up",
           onClick: () => {
-            setModalBagItems(bagItems)
+            setData(bagItems)
             setShowModal("PickupModal")
           },
           disabled: false,
         },
-        { id: "printlabel", title: "Print label", onClick: () => null, disabled: false },
+        {
+          id: "printlabel",
+          title: "Print labels",
+          onClick: async () => {
+            const inboundPackages = bagItems.map(item => item.reservationPhysicalProduct?.inboundPackage)
+            const allBagItemsHavePackages = inboundPackages.every(p => p)
+
+            if (allBagItemsHavePackages) {
+              const bagItem = bagItems?.[0].reservationPhysicalProduct
+              setData([bagItem.inboundPackage, bagItem.outboundPackage])
+            } else {
+              const response = await generateLabels({ variables: { customerID: customer.id } })
+              setData(response?.data?.generateLabels)
+            }
+
+            setShowModal(ModalType.PrintLabels)
+          },
+          disabled: false,
+        },
       ]
       // if(includesPickUpItems){
       //   buttons.push({ id: "pickedUp", title: "Picked up", onClick: () => null, disabled: false })
@@ -86,7 +109,7 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
           id: "process",
           title: "Process",
           onClick: () => {
-            setModalBagItems(bagItems)
+            setData(bagItems)
             setShowModal("ProcessReturnModal")
           },
           disabled: false,

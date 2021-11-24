@@ -3,17 +3,18 @@ import React from "react"
 import { colors } from "theme/colors"
 import { BagColumn } from "./BagColumn"
 
-export const BagColumns = ({ bagSections, setModalBagItems, setShowModal }) => {
+export const BagColumns = ({ customer, bagSections, setData, setShowModal }) => {
   return (
     <FlexBox py={5}>
       {bagSections.map((bagSection, index) => {
         return (
           <BagColumn
+            customer={customer}
             bagSection={bagSection}
             key={index}
             index={index}
             setShowModal={setShowModal}
-            setModalBagItems={setModalBagItems}
+            setData={setData}
           />
         )
       })}
