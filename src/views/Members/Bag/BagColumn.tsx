@@ -98,7 +98,7 @@ export const BagColumn = ({ bagSection, index, setShowModal, setModalBagItems })
   return (
     <Wrapper mr={2} pl={index === 0 ? 2 : 0} width={hasBagItems ? "343px" : "130px"}>
       <FlexHeader>
-        <Typography variant={hasBagItems ? "h4" : "h6"} color={hasBagItems ? "textPrimary" : "secondary"}>
+        <Typography variant="h4" color={hasBagItems ? "textPrimary" : "secondary"}>
           {hasBagItems
             ? bagSection.title
             : truncate(bagSection.title, {
