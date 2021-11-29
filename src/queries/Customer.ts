@@ -82,6 +82,31 @@ const CustomerGetOneFragment_Customer = gql`
           id
           status
           isOnHold
+          lostInPhase
+          shippingMethod {
+            id
+            code
+          }
+          inboundPackage {
+            id
+            direction
+            shippingLabel {
+              id
+              trackingNumber
+              trackingURL
+              image
+            }
+          }
+          outboundPackage {
+            id
+            direction
+            shippingLabel {
+              id
+              trackingNumber
+              trackingURL
+              image
+            }
+          }
         }
 
         productVariant {
@@ -159,12 +184,12 @@ const CustomerGetOneFragment_Customer = gql`
         id
         amount
         reason
+        balance
+        createdAt
         adminUser {
           firstName
           lastName
         }
-        balance
-        createdAt
       }
       plan {
         id
@@ -172,6 +197,7 @@ const CustomerGetOneFragment_Customer = gql`
         name
       }
       subscription {
+        id
         planPrice
       }
       subscriptionId

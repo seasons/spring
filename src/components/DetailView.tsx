@@ -63,6 +63,7 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
     resource,
     payload: { id: recordID },
   })
+  console.log("error", error)
   if (!loaded || loading) return <Loading />
   if (error || !data) return <ComponentError />
 

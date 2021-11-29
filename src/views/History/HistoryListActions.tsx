@@ -3,7 +3,7 @@ import { cloneElement } from "react"
 import { TopToolbar, Button, sanitizeListRestProps } from "@seasons/react-admin"
 import InputIcon from "@material-ui/icons/Input"
 
-export const ReservationListActions: React.FC<any> = ({
+export const HistoryListActions: React.FC<any> = ({
   currentSort,
   className,
   resource,
@@ -41,8 +41,3 @@ export const ReservationListActions: React.FC<any> = ({
     </Button>
   </TopToolbar>
 )
-
-ReservationListActions.defaultProps = {
-  selectedIds: [],
-  onUnselectItems: () => null,
-}

@@ -29,6 +29,7 @@ import { NotificationsList } from "views/Notifications/NotificationsList"
 import { CreateFitPicView, FitPicView } from "views/Community"
 import { CollectionsList, CollectionsEdit, CollectionsCreate } from "views/Collections"
 import { OrderList, OrderView } from "views/Inventory/Orders"
+import { HistoryList } from "views/History/HistoryList"
 
 export default [
   {
@@ -157,6 +158,11 @@ export default [
         path: "/inventory/launches/:launchID",
         exact: true,
         component: props => <LaunchEdit {...props} basePath="/inventory/launches" resource="Launch" />,
+      },
+      {
+        path: "/history",
+        exact: true,
+        component: props => <HistoryList {...props} basePath="/history" resource="Reservation" />,
       },
       {
         path: "/members",
