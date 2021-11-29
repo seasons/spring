@@ -42,11 +42,6 @@ export const UPDATE_RESERVATION_PHYSICAL_PRODUCT = gql`
   }
 `
 
-// trackingNumber: String
-// productStates: [ProductStateInput!]!
-// droppedOffBy: ReservationDropOffAgent!
-// customerId: String
-
 const MARK_AS_LOST = gql`
   mutation MarkAsLost($lostBagItemId: ID!) {
     markAsLost(lostBagItemId: $lostBagItemId)
@@ -179,7 +174,14 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       menuItems = [{ text: "Mark as lost", action: () => onMarkAsLost() }]
       break
     case "lost":
-      menuItems = [{ text: "Mark as found", action: () => null }]
+      // FIXME: Implement mark as found
+      menuItems = [{ text: "Mark as found", action: () => alert("Need to implement") }]
+      const lostInPhaseDisplay =
+        reservationPhysicalProduct.lostInPhase &&
+        (reservationPhysicalProduct.lostInPhase === "BusinessToCustomer" ? "Lost inbound" : "Lost outbound")
+      if (lostInPhaseDisplay) {
+        MetaData = () => <Typography>{lostInPhaseDisplay}</Typography>
+      }
       break
     case "deliveredToBusiness":
       menuItems = [
