@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import { BagColumns } from "./BagColumns"
 import { PickingPackingModal } from "./Modals/PickingPackingModal/PickingPackingModal"
-import { MultiItemReturnModal } from "../MultiItemReturn"
+import { ProcessReturnModal } from "./Modals/ProcessReturnModal/ProcessReturnModal"
 import { PickupModal } from "./Modals/PickupModal/PickupModal"
 import { PrintLabelsModal } from "./Modals/PrintLabelsModal/PrintLabelsModal"
 
@@ -26,7 +26,14 @@ export const BagView = ({ customer }) => {
 
   switch (showModal) {
     case ModalType.ProcessReturn:
-      Modal = <MultiItemReturnModal open onClose={onClose} customerId={customer.id} />
+      Modal = (
+        <ProcessReturnModal
+          open={showModal === "ProcessReturnModal"}
+          onClose={() => setShowModal(null)}
+          customerId={customer.id}
+          bagSections={bagSections}
+        />
+      )
       break
     case ModalType.Packing:
     case ModalType.Picking:

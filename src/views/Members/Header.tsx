@@ -8,7 +8,6 @@ import { MEMBER_ASSIGN_ROLE } from "./queries"
 import gql from "graphql-tag"
 import { useSnackbarContext } from "components/Snackbar"
 import { Box, Button } from "@material-ui/core"
-import { MultiItemReturnModal } from "./MultiItemReturn"
 import { colors } from "theme"
 import styled from "styled-components"
 
