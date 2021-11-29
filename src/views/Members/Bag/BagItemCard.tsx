@@ -177,8 +177,8 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       // FIXME: Implement mark as found
       menuItems = [{ text: "Mark as found", action: () => alert("Need to implement") }]
       const lostInPhaseDisplay =
-        reservationPhysicalProduct.lostInPhase &&
-        (reservationPhysicalProduct.lostInPhase === "BusinessToCustomer" ? "Lost inbound" : "Lost outbound")
+        reservationPhysicalProduct?.lostInPhase &&
+        (reservationPhysicalProduct?.lostInPhase === "BusinessToCustomer" ? "Lost outbound" : "Lost inbound")
       if (lostInPhaseDisplay) {
         MetaData = () => <Typography>{lostInPhaseDisplay}</Typography>
       }
