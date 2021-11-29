@@ -16,6 +16,21 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
   const { shippingLabel } = reservation?.sentPackage || {}
   const { shippingLabel: returnLabel } = reservation?.returnedPackage || {}
 
+  const newProductIds = reservation.newProducts.map(p => p.id)
+  const newProductsWithData = reservation?.products.filter(p => newProductIds.includes(p.id))
+
+  const totalRentalPrice = reservation?.products
+    ?.map(p => p.productVariant.product.rentalPrice)
+    .reduce((acc, curval) => {
+      return acc + curval
+    })
+
+  const totalRentalPriceNewProds = newProductsWithData
+    ?.map(p => p.productVariant.product.rentalPrice)
+    .reduce((acc, curval) => {
+      return acc + curval
+    })
+
   const Address = ({ address }) => {
     if (!address) {
       return <>Not Available</>
@@ -53,6 +68,18 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
                 </Link>
                 <Address address={customer?.detail?.shippingAddress} />
               </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Rental price all products</TableCell>
+              <TableCell>${totalRentalPrice} / month</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Rental price new products</TableCell>
+              <TableCell>${totalRentalPriceNewProds} / month</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>40% floor charge</TableCell>
+              <TableCell>${totalRentalPriceNewProds * 0.4}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Billing Status</TableCell>

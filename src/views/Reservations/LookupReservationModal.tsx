@@ -37,24 +37,13 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
   }, [data, loading])
 
   useEffect(() => {
-    if (resData) {
-      const reservations = resData?.reservations
-      if (reservations.length > 0) {
-        const resID = reservations[0].id
-        history.push(`/reservation/${resID}/overview`)
-      }
+    const reservations = resData ? resData?.reservations : resysByTrackingNumber?.reservations
+    if (reservations && reservations.length > 0) {
+      const returnPendingReservation = reservations?.find(a => a.status === "ReturnPending")
+      const resID = returnPendingReservation ? returnPendingReservation?.id : reservations[0].id
+      history.push(`/reservation/${resID}/overview`)
     }
-  })
-
-  useEffect(() => {
-    if (resysByTrackingNumber) {
-      const reservations = resysByTrackingNumber?.reservations
-      if (reservations.length > 0) {
-        const resID = reservations[0].id
-        history.push(`/reservation/${resID}/overview`, { trackingNumber: barcodeOrTrackingNumber })
-      }
-    }
-  })
+  }, [resysByTrackingNumber, resData])
 
   const inputRef = useRef()
 
