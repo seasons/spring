@@ -73,7 +73,7 @@ const GET_PHYSICAL_PRODUCT_FOR_MULTI_ITEM_RETURN = gql`
   ${PhysicalProductFragment}
 `
 export const ProcessReturnModal: React.FC<MultiItemReturnProps> = ({ open, onClose, customerId, bagSections }) => {
-  const session = useSelector(state => state.session)
+  const session: any = useSelector<{ session: any }>(state => state.session)
   const location = useLocation()
   const scannedTrackingNumber: any = location?.state ? location?.state : {}
   useEffect(() => {
