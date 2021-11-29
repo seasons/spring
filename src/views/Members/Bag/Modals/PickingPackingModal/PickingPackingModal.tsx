@@ -45,12 +45,22 @@ interface PickingPackingModalProps {
   onClose?: () => void
   onSave?: (values: ProductStates, params?: any) => void
   bagItems: any
+  customer: {
+    id: string
+  }
   mode: "Pick" | "Pack"
 }
 
 type ProductStates = { [key: string]: ProductState }
 
-export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, onSave, onClose, bagItems, mode }) => {
+export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({
+  open,
+  onSave,
+  onClose,
+  bagItems,
+  customer,
+  mode,
+}) => {
   const [productStates, setProductStates] = useState<ProductStates>({})
   const [pickItems] = useMutation(PICK_ITEMS)
   const [packItems] = useMutation(PACK_ITEMS)
@@ -89,6 +99,7 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
 
     await fn({
       variables: {
+        customerID: customer.id,
         ids: Object.values(productStates)
           .filter(p => p.picked)
           .map(p => p.bagItemID),

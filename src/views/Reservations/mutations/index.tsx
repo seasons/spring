@@ -36,16 +36,16 @@ export const UPDATE_RESERVATION = gql`
 `
 
 export const PICK_ITEMS = gql`
-  mutation PickItems($ids: [ID!]!) {
-    pickItems(bagItemIDs: $ids) {
+  mutation PickItems($customerID: ID!, $ids: [ID!]!) {
+    pickItems(customerID: $customerID, bagItemIDs: $ids) {
       id
     }
   }
 `
 
 export const PACK_ITEMS = gql`
-  mutation PackItems($ids: [ID!]!) {
-    packItems(bagItemIDs: $ids) {
+  mutation PackItems($customerID: ID!, $ids: [ID!]!) {
+    packItems(customerID: $customerID, bagItemIDs: $ids) {
       id
     }
   }
