@@ -119,10 +119,10 @@ export const Sizing: React.FC<MemberSubViewProps> = ({ adminKey }) => {
               }}
             />
             <SizeTableRow fieldName="Body type" fieldValue={customerDetail.bodyType ?? ""} />
-            <SizeTableRow fieldName="Top sizes" fieldValue={`${customerDetail.topSizes ?? ""}`} />
-            <SizeTableRow fieldName="Waist sizes" fieldValue={`${customerDetail.waistSizes ?? ""}`} />
-            <SizeTableRow fieldName="Pant length" fieldValue={`${customerDetail.pantLength ?? ""}`} />
-            <SizeTableRow fieldName="Shoe size" fieldValue={`${customerDetail.shoeSize ?? ""}`} />
+            <SizeTableRow fieldName="Top sizes" fieldValue={customerDetail.topSizes ?? ""} />
+            <SizeTableRow fieldName="Waist sizes" fieldValue={customerDetail.waistSizes ?? ""} />
+            <SizeTableRow fieldName="Pant length" fieldValue={customerDetail.pantLength ?? ""} />
+            <SizeTableRow fieldName="Shoe size" fieldValue={customerDetail.shoeSize ?? ""} />
           </TableBody>
         </Table>
       </CardContent>
