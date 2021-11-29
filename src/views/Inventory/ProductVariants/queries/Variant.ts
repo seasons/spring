@@ -33,6 +33,9 @@ export const UpdateVariantFragment = gql`
         width
         bridge
         length
+        minDrop
+        maxDrop
+        height
       }
       top {
         id

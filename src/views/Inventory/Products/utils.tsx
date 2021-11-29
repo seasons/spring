@@ -8,7 +8,7 @@ export const getTypeSpecificVariantFields = productType => {
       fields = ["Waist", "Rise", "Hem", "Inseam"]
       break
     case "Accessory":
-      fields = ["Bridge", "Length", "Width"]
+      fields = ["Bridge", "Length", "Width", "Height", "MaxDrop", "MinDrop"]
       break
   }
   return ["Weight", ...fields]
@@ -65,7 +65,7 @@ export const extractVariantSizeFields = ({
       break
     case "Accessory":
       internalSizeType = sizeType
-      measurementKeys = ["bridge", "length", "width", ...genericMeasurementKeys]
+      measurementKeys = ["bridge", "length", "width", "maxDrop", "minDrop", ...genericMeasurementKeys]
       break
   }
   measurementKeys.forEach(measurementKey => {

@@ -318,8 +318,9 @@ const CustomerGetOneFragment_Customer = gql`
       bodyType
       topSizes
       waistSizes
+      pantLength
+      shoeSize
       discoveryReference
-      averagePantLength
       preferredPronouns
       profession
       partyFrequency
