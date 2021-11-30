@@ -30,15 +30,6 @@ const InboundOutboundFragment_reservationPhysicalProduct = gql`
   }
 `
 
-export const GET_RESERVATIONS_FOR_PRODUCT_QUERY = gql`
-  query GetReservationsForProduct($sequenceNumber: Int!) {
-    reservations(where: { products_some: { sequenceNumber: $sequenceNumber } }, orderBy: createdAt_DESC) {
-      id
-      status
-    }
-  }
-`
-
 export const GET_INBOUND_RESERVATIONS = gql`
   query InboundReservations {
     inboundReservations {
@@ -54,22 +45,4 @@ export const GET_OUTBOUND_RESERVATIONS = gql`
       ...InboundOutboundFragment_reservationPhysicalProduct
     }
   }
-`
-
-export const GET_RESERVATIONS_FOR_TRACKING_NUMBER_QUERY = gql`
-  query GetReservationsForTrackingNumber($trackingNumber: String!) {
-    reservations(
-      where: {
-        OR: [
-          { sentPackage: { shippingLabel: { trackingNumber: $trackingNumber } } }
-          { returnPackages_some: { shippingLabel: { trackingNumber: $trackingNumber } } }
-        ]
-      }
-      orderBy: createdAt_DESC
-    ) {
-      id
-      status
-    }
-  }
-  ${InboundOutboundFragment_reservationPhysicalProduct}
 `
