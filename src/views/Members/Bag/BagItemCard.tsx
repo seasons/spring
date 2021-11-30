@@ -42,11 +42,6 @@ export const UPDATE_RESERVATION_PHYSICAL_PRODUCT = gql`
   }
 `
 
-// trackingNumber: String
-// productStates: [ProductStateInput!]!
-// droppedOffBy: ReservationDropOffAgent!
-// customerId: String
-
 const MARK_AS_LOST = gql`
   mutation MarkAsLost($lostBagItemId: ID!) {
     markAsLost(lostBagItemId: $lostBagItemId)
