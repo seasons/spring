@@ -162,6 +162,7 @@ export default {
           product {
             id
             name
+            rentalPrice
             brand {
               id
               name

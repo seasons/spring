@@ -109,6 +109,10 @@ export const ProductCard = props => {
                 ></WarehouseLocationPopover>
               </TableCell>
             </TableRow>
+            <TableRow>
+              <TableCell>Rental price</TableCell>
+              <TableCell align="right">${product?.rentalPrice}</TableCell>
+            </TableRow>
           </TableBody>
         </Table>
         <CardActions disableSpacing>
