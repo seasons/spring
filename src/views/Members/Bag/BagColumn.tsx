@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/react-hooks"
 import { Box, Typography, styled, Button } from "@material-ui/core"
 import { Separator, Spacer } from "components"
-import { truncate } from "lodash"
+import { head, truncate } from "lodash"
 import React from "react"
 import { BagItemCard } from "./BagItemCard"
 import { GENERATE_LABELS } from "./mutations"
@@ -64,8 +64,8 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
             const allBagItemsHavePackages = inboundPackages.every(p => p)
 
             if (allBagItemsHavePackages) {
-              const bagItem = bagItems?.[0].reservationPhysicalProduct
-              setData([bagItem.inboundPackage, bagItem.outboundPackage])
+              const rpp = bagItems?.[0].reservationPhysicalProduct
+              setData([rpp.inboundPackage, rpp.outboundPackage])
             } else {
               const response = await generateLabels({ variables: { customerID: customer.id } })
               setData(response?.data?.generateLabels)
@@ -91,7 +91,18 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
       ]
       break
     case "deliveredToCustomer":
-      buttons = [{ id: "returnLabel", title: "Return label", onClick: () => null, disabled: false }]
+      buttons = [
+        {
+          id: "returnLabel",
+          title: "Return label",
+          onClick: () => {
+            const rpp = bagItems?.[0].reservationPhysicalProduct
+            const labelURL = rpp.inboundPackage.shippingLabel.image
+            window.open(labelURL, "_blank")
+          },
+          disabled: false,
+        },
+      ]
       break
     case "inbound":
       buttons = [
