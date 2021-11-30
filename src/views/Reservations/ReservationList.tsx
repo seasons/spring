@@ -55,6 +55,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
     }
   }, [resProcessingData])
   const { currentNumQueuedItems, currentNumQueuedReservations, currentNumDeliveredToBusiness } = state
+
   if (loading) {
     return <Loading />
   }
