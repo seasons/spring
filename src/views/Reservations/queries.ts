@@ -47,3 +47,14 @@ export const GET_OUTBOUND_RESERVATIONS = gql`
   }
   ${InboundOutboundFragment_reservationPhysicalProduct}
 `
+export const GET_RESERVATION_PROCESSING_STATS = gql`
+  query reservationProcessingStats {
+    reservationProcessingStats {
+      currentNumQueuedItems
+      currentNumQueuedReservations
+      currentNumDeliveredToBusinessItems
+      day
+      updatedAt
+    }
+  }
+`

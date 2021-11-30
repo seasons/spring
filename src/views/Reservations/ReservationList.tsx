@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Loading } from "@seasons/react-admin"
 import { Box, Container, Grid, Tab, Tabs, Typography, Button } from "@material-ui/core"
 import { Header, Separator } from "components"
@@ -6,7 +6,8 @@ import { useQuery } from "react-apollo"
 import { Link as RouterLink } from "react-router-dom"
 import styled from "styled-components"
 import { DateTime } from "luxon"
-import { GET_INBOUND_RESERVATIONS, GET_OUTBOUND_RESERVATIONS } from "./queries"
+import { GET_INBOUND_RESERVATIONS, GET_OUTBOUND_RESERVATIONS, GET_RESERVATION_PROCESSING_STATS } from "./queries"
+import { NumberWidget } from "views/Overview/NumberWidget"
 
 type TabId = "outbound" | "inbound"
 type TabLabel = "Outbound" | "Inbound"
@@ -33,9 +34,27 @@ export const ReservationList = ({ staticContext, ...props }) => {
     { id: "inbound", label: "Inbound" },
   ]
   const [currentTab, setCurrentTab] = useState<TabId>(tabs[0].id)
+  const [state, setState] = useState({
+    currentNumQueuedItems: 0,
+    currentNumQueuedReservations: 0,
+    currentNumDeliveredToBusiness: 0,
+  })
   const isOutbound = currentTab === "outbound"
   const { data, loading } = useQuery(isOutbound ? GET_OUTBOUND_RESERVATIONS : GET_INBOUND_RESERVATIONS)
+  const { data: resProcessingData, loading: resProcessingLoading } = useQuery(GET_RESERVATION_PROCESSING_STATS, {
+    pollInterval: 10000,
+  })
 
+  useEffect(() => {
+    if (resProcessingData) {
+      setState({
+        currentNumQueuedItems: resProcessingData?.reservationProcessingStats.currentNumQueuedItems,
+        currentNumQueuedReservations: resProcessingData?.reservationProcessingStats.currentNumQueuedReservations,
+        currentNumDeliveredToBusiness: resProcessingData?.reservationProcessingStats.currentNumDeliveredToBusinessItems,
+      })
+    }
+  }, [resProcessingData])
+  const { currentNumQueuedItems, currentNumQueuedReservations, currentNumDeliveredToBusiness } = state
   if (loading) {
     return <Loading />
   }
@@ -53,6 +72,21 @@ export const ReservationList = ({ staticContext, ...props }) => {
           },
         ]}
       />
+      <Box display="flex">
+        <Grid container spacing={3}>
+          <Grid item lg={4} sm={6} xs={12}>
+            <NumberWidget data={{ title: "Number of items to process", result: [currentNumQueuedItems] }} />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <NumberWidget
+              data={{ title: "Number of reservations to process", result: [currentNumQueuedReservations] }}
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <NumberWidget data={{ title: "Number of items to return", result: [currentNumDeliveredToBusiness] }} />
+          </Grid>
+        </Grid>
+      </Box>
       <Tabs
         scrollButtons="auto"
         textColor="secondary"
