@@ -42,6 +42,14 @@ export const UPDATE_RESERVATION_PHYSICAL_PRODUCT = gql`
   }
 `
 
+const MARK_NOT_RETURNED = gql`
+  mutation MarkNotReturned($rppId: ID!) {
+    markNotReturned(rppId: $rppId) {
+      id
+    }
+  }
+`
+
 const MARK_AS_LOST = gql`
   mutation MarkAsLost($lostBagItemId: ID!) {
     markAsLost(lostBagItemId: $lostBagItemId)
@@ -61,6 +69,16 @@ export const BagItemCard = ({ bagItem, columnId }) => {
   const image = product?.images?.[0]
   const reservationPhysicalProduct = bagItem?.reservationPhysicalProduct
   const isOnHold = reservationPhysicalProduct?.isOnHold
+
+  const [markNotReturned] = useMutation(MARK_NOT_RETURNED, {
+    onCompleted: data => {
+      console.log(data)
+      refresh()
+    },
+    onError: error => {
+      console.log(error)
+    },
+  })
 
   const [markAsLost] = useMutation(MARK_AS_LOST, {
     onCompleted: data => {
@@ -123,6 +141,14 @@ export const BagItemCard = ({ bagItem, columnId }) => {
     })
   }
 
+  const handleMarkNotReturned = () => {
+    markNotReturned({
+      variables: {
+        rppId: reservationPhysicalProduct.id,
+      },
+    })
+  }
+
   const physicalProductId = bagItem?.physicalProduct?.id
 
   const linkUrl = !!physicalProductId
@@ -179,11 +205,8 @@ export const BagItemCard = ({ bagItem, columnId }) => {
     case "deliveredToBusiness":
       menuItems = [
         {
-          text: "Mark not received",
-          action: () =>
-            onUpdateReservationPhysicalProduct({
-              status: "DeliveredToCustomer",
-            }),
+          text: "Mark not returned",
+          action: () => handleMarkNotReturned(),
         },
       ]
       break
