@@ -200,7 +200,14 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       menuItems = [{ text: "Mark as lost", action: () => onMarkAsLost() }]
       break
     case "lost":
-      menuItems = [{ text: "Mark as found", action: () => null }]
+      // FIXME: Implement mark as found
+      menuItems = [{ text: "Mark as found", action: () => alert("Need to implement") }]
+      const lostInPhaseDisplay =
+        reservationPhysicalProduct?.lostInPhase &&
+        (reservationPhysicalProduct?.lostInPhase === "BusinessToCustomer" ? "Lost outbound" : "Lost inbound")
+      if (lostInPhaseDisplay) {
+        MetaData = () => <Typography>{lostInPhaseDisplay}</Typography>
+      }
       break
     case "deliveredToBusiness":
       menuItems = [

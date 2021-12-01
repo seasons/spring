@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
-import { Typography, Box, Paper, TextField, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core"
-import CheckCircleIcon from "@material-ui/icons/CheckCircle"
+import {
+  Typography,
+  Box,
+  Paper,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  IconButton,
+} from "@material-ui/core"
 import { GetReservation_products } from "generated/GetReservation"
+import CloseIcon from "@material-ui/icons/Close"
 
 const Image = styled.img`
   margin-right: 5px;
@@ -15,17 +25,13 @@ const ProductImage = ({ product }: { product: GetReservation_products }) => {
   return <Image src={image?.url} width={200} height={250} />
 }
 
-export const ProcessReturnProductCard = ({ product, productState, onStateChange }) => {
+export const ProcessReturnProductCard = ({ product, productState, onStateChange, onRemove, index }) => {
   const [values, setValues] = useState(
     productState ?? { productStatus: "Dirty", damageType: [], returned: false, notes: "" }
   )
-
   useEffect(() => {
-    setValues({
-      ...values,
-      returned: productState.returned,
-    })
-  }, [productState.returned])
+    onStateChange(values)
+  }, [values])
 
   return (
     <Box my={1}>
@@ -35,15 +41,21 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
             <ProductImage product={product} />
           </Box>
           <Box flexGrow={1} px={2}>
-            <Box my={2}>
-              <Box display="flex" height="30px">
-                <Box flexGrow={1}>
-                  <Typography variant="body1" color="textSecondary">
-                    {product.seasonsUID}
-                  </Typography>
+            <Box display="flex" justifyContent="space-between">
+              <Box my={2}>
+                <Box display="flex" height="30px">
+                  <Box flexGrow={1}>
+                    <Typography variant="body1" color="textSecondary">
+                      {product.seasonsUID}
+                    </Typography>
+                  </Box>
                 </Box>
-                <Box>{productState.returned && <CheckCircleIcon />}</Box>
               </Box>
+              <RemoveWrapper>
+                <IconButton aria-label="close" onClick={() => onRemove(index)}>
+                  <CloseIcon />
+                </IconButton>
+              </RemoveWrapper>
             </Box>
 
             <Box my={1}>
@@ -61,10 +73,8 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
                     }
 
                     setValues(updatedState)
-                    onStateChange(values)
                   }}
                   label="Product Status"
-                  disabled={!productState.returned}
                   fullWidth
                 >
                   <MenuItem value="">
@@ -84,7 +94,6 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
                   label="Damage Type"
                   variant="outlined"
                   value={values.damageType}
-                  disabled={!productState.returned}
                   onChange={e => {
                     const newValue = e.target.value
                     const updatedState = {
@@ -124,7 +133,6 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
                   onStateChange(values)
                 }}
                 value={values.note}
-                disabled={!productState.returned}
                 rows={4}
                 fullWidth
                 multiline
@@ -136,3 +144,10 @@ export const ProcessReturnProductCard = ({ product, productState, onStateChange 
     </Box>
   )
 }
+
+const RemoveWrapper = styled.div`
+  position: relative;
+  top: 0;
+  right: 0;
+  height: 0;
+`
