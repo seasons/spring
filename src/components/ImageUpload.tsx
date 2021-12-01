@@ -30,7 +30,11 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ numImages, title, name
         return imageURL
       }
 
-      return URL.createObjectURL(imageURL)
+      try {
+        return URL.createObjectURL(imageURL)
+      } catch (e) {
+        return null
+      }
     })
   )
 
