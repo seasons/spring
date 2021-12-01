@@ -1,49 +1,54 @@
 import gql from "graphql-tag"
 
-const InboundOutboundFragment_reservationPhysicalProduct = gql`
-  fragment InboundOutboundFragment_reservationPhysicalProduct on ReservationPhysicalProduct {
-    id
-    customer {
-      id
-      reservations {
+const InboundOutboundFragment_reservationPhysicalProductConnection = gql`
+  fragment InboundOutboundFragment_reservationPhysicalProductConnection on ReservationPhysicalProductConnection {
+    totalCount
+    edges {
+      node {
         id
-      }
-      detail {
-        id
-        shippingAddress {
+        customer {
           id
-          city
-          state
+          reservations {
+            id
+          }
+          detail {
+            id
+            shippingAddress {
+              id
+              city
+              state
+            }
+          }
+          user {
+            id
+            firstName
+            lastName
+          }
+          reservationPhysicalProducts {
+            id
+            status
+            createdAt
+          }
         }
-      }
-      user {
-        id
-        firstName
-        lastName
-      }
-      reservationPhysicalProducts {
-        id
-        status
-        createdAt
       }
     }
   }
 `
 
 export const GET_INBOUND_RESERVATIONS = gql`
-  query InboundReservations {
-    inboundReservations {
-      ...InboundOutboundFragment_reservationPhysicalProduct
+  query InboundReservations($take: Int!, $skip: Int!) {
+    inboundReservations(take: $take, skip: $skip) {
+      ...InboundOutboundFragment_reservationPhysicalProductConnection
     }
   }
-  ${InboundOutboundFragment_reservationPhysicalProduct}
+  ${InboundOutboundFragment_reservationPhysicalProductConnection}
 `
 
 export const GET_OUTBOUND_RESERVATIONS = gql`
-  query OutboundReservations {
-    outboundReservations {
-      ...InboundOutboundFragment_reservationPhysicalProduct
+  query OutboundReservations($take: Int!, $skip: Int!) {
+    outboundReservations(take: $take, skip: $skip) {
+      ...InboundOutboundFragment_reservationPhysicalProductConnection
     }
   }
-  ${InboundOutboundFragment_reservationPhysicalProduct}
+  ${InboundOutboundFragment_reservationPhysicalProductConnection}
 `

@@ -27,20 +27,48 @@ const formatAddress = address => {
   return `${address.city}, ${address.state}`
 }
 
-export const ReservationList = ({ staticContext, ...props }) => {
+const take = 25
+
+export const ReservationList = () => {
   const tabs: TabTypes[] = [
     { id: "outbound", label: "Outbound" },
     { id: "inbound", label: "Inbound" },
   ]
   const [currentTab, setCurrentTab] = useState<TabId>(tabs[0].id)
+  const [skipState, setSkipState] = useState({
+    inbound: 0,
+    outbound: 0,
+  })
   const isOutbound = currentTab === "outbound"
-  const { data, loading } = useQuery(isOutbound ? GET_OUTBOUND_RESERVATIONS : GET_INBOUND_RESERVATIONS)
+  const skip = isOutbound ? skipState.outbound : skipState.inbound
+  const { data, loading } = useQuery(isOutbound ? GET_OUTBOUND_RESERVATIONS : GET_INBOUND_RESERVATIONS, {
+    variables: {
+      take,
+      skip,
+    },
+  })
+
+  const onClickPrevious = () => {
+    if (skip > take - 1 && skip !== 0) {
+      setSkipState({
+        inbound: isOutbound ? skipState.inbound : skipState.inbound - take,
+        outbound: isOutbound ? skipState.outbound - take : skipState.outbound,
+      })
+    }
+  }
+  const onClickNext = () => {
+    setSkipState({
+      inbound: isOutbound ? skipState.inbound : skipState.inbound + take,
+      outbound: isOutbound ? skipState.outbound + take : skipState.outbound,
+    })
+  }
 
   if (loading) {
     return <Loading />
   }
 
-  const customers = data?.[isOutbound ? "outboundReservations" : "inboundReservations"]?.map(x => x.customer)
+  const edges = data?.[isOutbound ? "outboundReservations" : "inboundReservations"]?.edges
+  const totalRecords = data?.[isOutbound ? "outboundReservations" : "inboundReservations"]?.totalCount
 
   return (
     <Container maxWidth={false}>
@@ -90,15 +118,20 @@ export const ReservationList = ({ staticContext, ...props }) => {
           </Grid>
         </Box>
         <Separator />
-        {customers?.map(customer => {
+        {edges?.map(edge => {
+          const customer = edge.node.customer
           const count = customer.reservationPhysicalProducts.length
           const customerName = `${customer.user.firstName} ${customer.user.lastName}`
           const entityLink = `/members/${customer.id}/bag`
           const reservationCount = customer.reservations.length
-          const oldestCreatedAt = customer.reservationPhysicalProducts.reduce((a, b) => {
-            return a.createdAt > b.createdAt ? a.createdAt : b.createdAt
-          })
-
+          let oldestCreatedAt
+          if (customer.reservationPhysicalProducts.length > 1) {
+            oldestCreatedAt = customer.reservationPhysicalProducts.reduce((a, b) => {
+              return a.createdAt > b.createdAt ? a.createdAt : b.createdAt
+            })
+          } else {
+            oldestCreatedAt = customer.reservationPhysicalProducts?.[0]?.createdAt
+          }
           return (
             <Box key={customer.id}>
               <Box p={2}>
@@ -131,6 +164,27 @@ export const ReservationList = ({ staticContext, ...props }) => {
             </Box>
           )
         })}
+        <Box display="flex" justifyContent="space-between" flexDirection="row" alignItems="center">
+          <Box p={2}>
+            <Button size="small" variant="contained" color="primary" onClick={onClickPrevious} disabled={skip === 0}>
+              Previous
+            </Button>
+          </Box>
+          <Typography variant="h6">
+            Page {Math.ceil(skip / take) + 1} of {Math.ceil(totalRecords / take)}
+          </Typography>
+          <Box p={2}>
+            <Button
+              size="small"
+              variant="contained"
+              color="primary"
+              onClick={onClickNext}
+              disabled={skip + take >= totalRecords}
+            >
+              Next
+            </Button>
+          </Box>
+        </Box>
       </Wrapper>
     </Container>
   )
