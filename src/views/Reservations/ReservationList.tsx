@@ -171,7 +171,7 @@ export const ReservationList = () => {
             </Button>
           </Box>
           <Typography variant="h6">
-            Viewing {skip + take} of {totalRecords}
+            Page {Math.ceil(skip / take) + 1} of {Math.ceil(totalRecords / take)}
           </Typography>
           <Box p={2}>
             <Button
