@@ -35,6 +35,13 @@ export const GET_INBOUND_RESERVATIONS = gql`
     inboundReservations {
       ...InboundOutboundFragment_reservationPhysicalProduct
     }
+    reservationProcessingStats {
+      currentNumQueuedItems
+      currentNumQueuedReservations
+      currentNumDeliveredToBusinessItems
+      day
+      updatedAt
+    }
   }
   ${InboundOutboundFragment_reservationPhysicalProduct}
 `
@@ -44,11 +51,6 @@ export const GET_OUTBOUND_RESERVATIONS = gql`
     outboundReservations {
       ...InboundOutboundFragment_reservationPhysicalProduct
     }
-  }
-  ${InboundOutboundFragment_reservationPhysicalProduct}
-`
-export const GET_RESERVATION_PROCESSING_STATS = gql`
-  query reservationProcessingStats {
     reservationProcessingStats {
       currentNumQueuedItems
       currentNumQueuedReservations
@@ -57,4 +59,5 @@ export const GET_RESERVATION_PROCESSING_STATS = gql`
       updatedAt
     }
   }
+  ${InboundOutboundFragment_reservationPhysicalProduct}
 `

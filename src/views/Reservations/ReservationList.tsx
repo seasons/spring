@@ -6,7 +6,7 @@ import { useQuery } from "react-apollo"
 import { Link as RouterLink } from "react-router-dom"
 import styled from "styled-components"
 import { DateTime } from "luxon"
-import { GET_INBOUND_RESERVATIONS, GET_OUTBOUND_RESERVATIONS, GET_RESERVATION_PROCESSING_STATS } from "./queries"
+import { GET_INBOUND_RESERVATIONS, GET_OUTBOUND_RESERVATIONS } from "./queries"
 import { NumberWidget } from "views/Overview/NumberWidget"
 
 type TabId = "outbound" | "inbound"
@@ -40,12 +40,12 @@ export const ReservationList = ({ staticContext, ...props }) => {
     currentNumDeliveredToBusiness: 0,
   })
   const isOutbound = currentTab === "outbound"
-  const { data, loading } = useQuery(isOutbound ? GET_OUTBOUND_RESERVATIONS : GET_INBOUND_RESERVATIONS)
-  const { data: resProcessingData, loading: resProcessingLoading } = useQuery(GET_RESERVATION_PROCESSING_STATS, {
-    pollInterval: 10000,
+  const { data, loading } = useQuery(isOutbound ? GET_OUTBOUND_RESERVATIONS : GET_INBOUND_RESERVATIONS, {
+    pollInterval: 60000,
   })
 
   useEffect(() => {
+    const resProcessingData = data?.resProcessingData
     if (resProcessingData) {
       setState({
         currentNumQueuedItems: resProcessingData?.reservationProcessingStats.currentNumQueuedItems,
@@ -53,7 +53,7 @@ export const ReservationList = ({ staticContext, ...props }) => {
         currentNumDeliveredToBusiness: resProcessingData?.reservationProcessingStats.currentNumDeliveredToBusinessItems,
       })
     }
-  }, [resProcessingData])
+  }, [data])
   const { currentNumQueuedItems, currentNumQueuedReservations, currentNumDeliveredToBusiness } = state
 
   if (loading) {
@@ -76,15 +76,22 @@ export const ReservationList = ({ staticContext, ...props }) => {
       <Box display="flex">
         <Grid container spacing={3}>
           <Grid item lg={4} sm={6} xs={12}>
-            <NumberWidget data={{ title: "Number of items to process", result: [currentNumQueuedItems] }} />
+            <NumberWidget
+              data={{ title: "Number of items to process", result: [currentNumQueuedItems] }}
+              icon={undefined}
+            />
           </Grid>
           <Grid item lg={4} sm={6} xs={12}>
             <NumberWidget
               data={{ title: "Number of reservations to process", result: [currentNumQueuedReservations] }}
+              icon={undefined}
             />
           </Grid>
           <Grid item lg={4} sm={6} xs={12}>
-            <NumberWidget data={{ title: "Number of items to return", result: [currentNumDeliveredToBusiness] }} />
+            <NumberWidget
+              data={{ title: "Number of items to return", result: [currentNumDeliveredToBusiness] }}
+              icon={undefined}
+            />
           </Grid>
         </Grid>
       </Box>
