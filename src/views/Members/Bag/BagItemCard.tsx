@@ -50,6 +50,12 @@ const MARK_NOT_RETURNED = gql`
   }
 `
 
+const MARK_AS_FOUND = gql`
+  mutation MarkAsFound($rppId: ID!, $status: String!) {
+    markAsFound(rppId: $rppId, status: $status)
+  }
+`
+
 const MARK_AS_LOST = gql`
   mutation MarkAsLost($lostBagItemId: ID!) {
     markAsLost(lostBagItemId: $lostBagItemId)
@@ -69,6 +75,16 @@ export const BagItemCard = ({ bagItem, columnId }) => {
   const image = product?.images?.[0]
   const reservationPhysicalProduct = bagItem?.reservationPhysicalProduct
   const isOnHold = reservationPhysicalProduct?.isOnHold
+
+  const [markAsFound] = useMutation(MARK_AS_FOUND, {
+    onCompleted: data => {
+      console.log(data)
+      refresh()
+    },
+    onError: error => {
+      console.log(error)
+    },
+  })
 
   const [markNotReturned] = useMutation(MARK_NOT_RETURNED, {
     onCompleted: data => {
@@ -129,6 +145,18 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       variables: {
         where: { id: reservationPhysicalProduct.id },
         data,
+      },
+    })
+  }
+
+  const onMarkIsFound = () => {
+    markAsFound({
+      variables: {
+        rppId: reservationPhysicalProduct.id,
+        status:
+          reservationPhysicalProduct.lostInPhase === "CustomerToBusiness"
+            ? "DeliveredToBusiness"
+            : "DeliveredToCustomer",
       },
     })
   }
@@ -201,13 +229,13 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       break
     case "lost":
       // FIXME: Implement mark as found
-      menuItems = [{ text: "Mark as found", action: () => alert("Need to implement") }]
       const lostInPhaseDisplay =
         reservationPhysicalProduct?.lostInPhase &&
         (reservationPhysicalProduct?.lostInPhase === "BusinessToCustomer" ? "Lost outbound" : "Lost inbound")
       if (lostInPhaseDisplay) {
         MetaData = () => <Typography>{lostInPhaseDisplay}</Typography>
       }
+      menuItems = [{ text: "Mark as found", action: () => onMarkIsFound() }]
       break
     case "deliveredToBusiness":
       menuItems = [
