@@ -9,7 +9,7 @@ import { BagItemCard } from "./BagItemCard"
 
 export const MARKED_PICKED_UP = gql`
   mutation MarkAsPickedUp($bagItemIds: [ID]!) {
-    markAsPickedUp(bagItemIDs: $bagItemIds)
+    markAsPickedUp(bagItemIds: $bagItemIds)
   }
 `
 
