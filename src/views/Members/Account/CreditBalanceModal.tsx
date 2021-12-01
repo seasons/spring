@@ -19,7 +19,7 @@ import {
 
 import { Spacer } from "components"
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab"
-import { gql } from "apollo-boost"
+import { gql } from "graphql-tag"
 import { useRefresh } from "ra-core"
 import { useSnackbarContext } from "components/Snackbar"
 import { formatPrice } from "utils/price"
