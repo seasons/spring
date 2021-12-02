@@ -14,7 +14,7 @@ export default [
         href: "/history",
       },
       {
-        title: "Members",
+        title: "Customers",
         href: "/members",
       },
       {
