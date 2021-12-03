@@ -52,7 +52,6 @@ export const ReservationList = () => {
       take,
       skip,
     },
-    pollInterval: 60000,
   })
 
   useEffect(() => {
