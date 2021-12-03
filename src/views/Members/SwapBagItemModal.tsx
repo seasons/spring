@@ -18,7 +18,7 @@ import CloseIcon from "@material-ui/icons/Close"
 import styled from "styled-components"
 import { useLazyQuery, useMutation } from "react-apollo"
 import { Link as RouterLink } from "react-router-dom"
-import { gql } from "graphql-tag"
+import gql from "graphql-tag"
 import { useEffect } from "react"
 import { useSnackbarContext } from "components/Snackbar"
 
