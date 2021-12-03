@@ -1,4 +1,4 @@
-import { gql } from "graphql-tag"
+import gql from "graphql-tag"
 import { CategoryFragment } from "queries/Category"
 
 export const UPSERT_CATEGORY = gql`
