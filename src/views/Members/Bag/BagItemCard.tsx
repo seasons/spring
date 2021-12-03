@@ -54,6 +54,7 @@ export const BagItemCard = ({ bagItem, columnId }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [isReturnConfirmationDialogOpen, setIsReturnConfirmationDialogOpen] = useState(false)
   const [isSwapItemModalOpen, setIsSwapItemModalOpen] = useState(false)
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const variant = bagItem?.productVariant
   const product = variant?.product
@@ -106,6 +107,14 @@ export const BagItemCard = ({ bagItem, columnId }) => {
     setIsSwapItemModalOpen(false)
   }
 
+  const handleOpenCancelModal = () => {
+    setIsCancelModalOpen(true)
+  }
+
+  const handleCloseCancelModal = () => {
+    setIsCancelModalOpen(false)
+  }
+
   const onUpdateReservationPhysicalProduct = data => {
     updateReservationPhysicalProduct({
       variables: {
@@ -145,6 +154,7 @@ export const BagItemCard = ({ bagItem, columnId }) => {
             }),
         },
         { text: "Swap Item", action: () => handleOpenSwapModal() },
+        { text: "Cancel Item", action: () => {} },
       ]
       MetaData = () => <Typography>{bagItem?.physicalProduct?.barcode}</Typography>
       break
