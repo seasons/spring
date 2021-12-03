@@ -56,7 +56,7 @@ export const ReservationList = () => {
 
   useEffect(() => {
     const resProcessingStats = data?.reservationProcessingStats
-    console.log(data)
+
     if (resProcessingStats) {
       setState({
         currentNumQueuedItems: resProcessingStats?.currentNumQueuedItems,
