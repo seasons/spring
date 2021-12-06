@@ -235,7 +235,7 @@ export const BagItemCard: React.FC<{ bagItem: any; columnId: string; isForPickup
       }
       menuItems = [{ text: "Mark as lost", action: () => onMarkAsLost() }]
       break
-    case "shipped":
+    case "outbound":
     case "customerToBusiness":
       menuItems = [{ text: "Mark as lost", action: () => onMarkAsLost() }]
       break
