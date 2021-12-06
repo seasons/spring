@@ -36,7 +36,7 @@ const getPickupDateDisplay = ({ pickupDate, pickupWindowDisplay }) => {
   if (!pickupDate || !pickupWindowDisplay) {
     return ""
   }
-  const isToday = DateTime.fromISO(pickupDate).hasSame(DateTime.local(), "day")
+  const isToday = DateTime.fromISO(pickupDate).toISODate() === DateTime.local().toISODate()
   return `${pickupWindowDisplay}, ${isToday ? "Today" : DateTime.fromISO(pickupDate).toLocaleString(DateTime.DATE_MED)}`
 }
 
