@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/react-hooks"
 import { Box, Typography, styled, Button } from "@material-ui/core"
 import { Separator, Spacer } from "components"
-import { head, truncate } from "lodash"
+import { truncate } from "lodash"
 import React from "react"
 import { BagItemCard } from "./BagItemCard"
 import { GENERATE_LABELS } from "./mutations"
@@ -15,7 +15,6 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
   const [generateLabels] = useMutation(GENERATE_LABELS)
 
   const isForPickup = bagItems.some(item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup")
-  console.log("bagItems", bagItems)
 
   let buttons
   switch (bagSection.id) {
