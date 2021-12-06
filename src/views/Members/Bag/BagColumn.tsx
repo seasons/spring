@@ -47,15 +47,6 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
     case "packed":
       buttons = [
         {
-          id: "pickedUp",
-          title: "Picked up",
-          onClick: () => {
-            setData(bagItems)
-            setShowModal("PickupModal")
-          },
-          disabled: false,
-        },
-        {
           id: "printlabel",
           title: "Print labels",
           onClick: async () => {
@@ -76,7 +67,15 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
         },
       ]
       if (isForPickup) {
-        buttons.push({ id: "pickedUp", title: "Picked up", onClick: () => null, disabled: false })
+        buttons.push({
+          id: "pickedUp",
+          title: "Picked up",
+          onClick: () => {
+            setData(bagItems)
+            setShowModal("PickupModal")
+          },
+          disabled: false,
+        })
       }
       break
     case "outbound":
