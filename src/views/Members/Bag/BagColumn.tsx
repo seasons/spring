@@ -7,12 +7,14 @@ import { BagItemCard } from "./BagItemCard"
 import { GENERATE_LABELS } from "./mutations"
 import { ModalType } from "../Bag/BagView"
 
-export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }) => {
+export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, hasQueuedItems }) => {
   const bagItems = bagSection.bagItems
   const trackingUrl = bagSection.deliveryTrackingUrl
   const hasBagItems = bagItems?.length > 0
 
   const [generateLabels] = useMutation(GENERATE_LABELS)
+
+  console.log("hasQueuedItems", hasQueuedItems)
 
   const isForPickup = bagItems.some(item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup")
 
@@ -40,7 +42,7 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
             setData(bagItems)
             setShowModal("PackingModal")
           },
-          disabled: false,
+          disabled: hasQueuedItems,
         },
       ]
       break
