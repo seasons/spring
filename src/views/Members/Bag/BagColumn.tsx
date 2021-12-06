@@ -14,6 +14,9 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
 
   const [generateLabels] = useMutation(GENERATE_LABELS)
 
+  const isForPickup = bagItems.some(item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup")
+  console.log("bagItems", bagItems)
+
   let buttons
   switch (bagSection.id) {
     case "queued":
@@ -43,9 +46,6 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
       ]
       break
     case "packed":
-      const includesPickUpItems = bagItems.some(
-        item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup"
-      )
       buttons = [
         {
           id: "pickedUp",
@@ -76,9 +76,9 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
           disabled: false,
         },
       ]
-      // if(includesPickUpItems){
-      //   buttons.push({ id: "pickedUp", title: "Picked up", onClick: () => null, disabled: false })
-      // }
+      if (isForPickup) {
+        buttons.push({ id: "pickedUp", title: "Picked up", onClick: () => null, disabled: false })
+      }
       break
     case "outbound":
       buttons = [
@@ -159,7 +159,7 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
       <Spacer mb={2} />
       <Box>
         {bagItems?.map((bagItem, index) => {
-          return <BagItemCard bagItem={bagItem} key={index} columnId={bagSection.id} />
+          return <BagItemCard bagItem={bagItem} key={index} columnId={bagSection.id} isForPickup={isForPickup} />
         })}
       </Box>
     </Wrapper>

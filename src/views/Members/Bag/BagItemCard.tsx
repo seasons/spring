@@ -11,6 +11,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import gql from "graphql-tag"
 import { useRefresh } from "@seasons/react-admin"
 import { SwapBagItemModal } from "../SwapBagItemModal"
+import { DateTime } from "luxon"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,6 +32,14 @@ interface MenuItem {
   action: () => void
 }
 
+const getPickupDateDisplay = ({ pickupDate, pickupWindowDisplay }) => {
+  if (!pickupDate || !pickupWindowDisplay) {
+    return ""
+  }
+  const isToday = DateTime.fromISO(pickupDate).hasSame(DateTime.local(), "day")
+  return `${pickupWindowDisplay}, ${isToday ? "Today" : DateTime.fromISO(pickupDate).toLocaleString(DateTime.DATE_MED)}`
+}
+
 export const UPDATE_RESERVATION_PHYSICAL_PRODUCT = gql`
   mutation UpdateReservationPhysicalProduct(
     $where: ReservationPhysicalProductWhereUniqueInput!
@@ -48,7 +57,11 @@ const MARK_AS_LOST = gql`
   }
 `
 
-export const BagItemCard = ({ bagItem, columnId }) => {
+export const BagItemCard: React.FC<{ bagItem: any; columnId: string; isForPickup: boolean }> = ({
+  bagItem,
+  columnId,
+  isForPickup,
+}) => {
   const classes = useStyles()
   const refresh = useRefresh()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -61,6 +74,7 @@ export const BagItemCard = ({ bagItem, columnId }) => {
   const image = product?.images?.[0]
   const reservationPhysicalProduct = bagItem?.reservationPhysicalProduct
   const isOnHold = reservationPhysicalProduct?.isOnHold
+  const reservation = reservationPhysicalProduct?.reservation
 
   const [markAsLost] = useMutation(MARK_AS_LOST, {
     onCompleted: data => {
@@ -131,11 +145,13 @@ export const BagItemCard = ({ bagItem, columnId }) => {
 
   let MetaData = () => <Box />
   let menuItems: MenuItem[] = []
+  let isOutboundColumn = false
 
   switch (columnId) {
     case "queued":
     case "picked":
     case "packed":
+      isOutboundColumn = true
       menuItems = [
         {
           text: isOnHold ? "Release hold" : "Hold item",
@@ -201,14 +217,32 @@ export const BagItemCard = ({ bagItem, columnId }) => {
       break
   }
 
-  const redBackgroundColor = "#C84347"
+  const pickupDate = reservation?.pickupDate
+  const pickupWindowDisplay = reservation?.pickupWindow?.display
+  const showStatusBar = (isOnHold || isForPickup) && isOutboundColumn
+  let statusBarColor = isOnHold ? "#C84347" : "black"
+  let statusBarText = isOnHold ? "On hold" : isForPickup ? "Pickup" : ""
+  let statusBarSecondaryText = isOnHold
+    ? ""
+    : isForPickup
+    ? getPickupDateDisplay({ pickupDate, pickupWindowDisplay })
+    : ""
 
   return (
     <Box width="345px">
-      <Card className={classes.root} style={{ border: isOnHold ? `1px solid ${redBackgroundColor}` : "none" }}>
-        {isOnHold && (
-          <Box px={2} py={1} style={{ backgroundColor: redBackgroundColor }}>
-            <Typography color="primary">On Hold</Typography>
+      <Card className={classes.root} style={{ border: showStatusBar ? `1px solid ${statusBarColor}` : "none" }}>
+        {showStatusBar && (
+          <Box
+            px={2}
+            py={1}
+            style={{ backgroundColor: statusBarColor }}
+            display="flex"
+            flexDirection="row"
+            flexWrap="nowrap"
+            justifyContent="space-between"
+          >
+            <Typography color="primary">{statusBarText}</Typography>
+            <Typography color="primary">{statusBarSecondaryText}</Typography>
           </Box>
         )}
         <ContentWrapper px={2} py={2}>
