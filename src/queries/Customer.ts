@@ -82,7 +82,12 @@ const CustomerGetOneFragment_Customer = gql`
           id
           status
           isOnHold
+          hasBeenLost
+          lostAt
           lostInPhase
+          hasBeenPurchased
+          purchasedAt
+          pickedAt
           shippingMethod {
             id
             code
