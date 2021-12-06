@@ -78,7 +78,6 @@ export const BagItemCard = ({ bagItem, columnId }) => {
 
   const [markAsFound] = useMutation(MARK_AS_FOUND, {
     onCompleted: data => {
-      console.log(data)
       refresh()
     },
     onError: error => {
@@ -88,7 +87,6 @@ export const BagItemCard = ({ bagItem, columnId }) => {
 
   const [markNotReturned] = useMutation(MARK_NOT_RETURNED, {
     onCompleted: data => {
-      console.log(data)
       refresh()
     },
     onError: error => {
@@ -98,7 +96,6 @@ export const BagItemCard = ({ bagItem, columnId }) => {
 
   const [markAsLost] = useMutation(MARK_AS_LOST, {
     onCompleted: data => {
-      console.log(data)
       refresh()
     },
     onError: error => {
@@ -108,7 +105,6 @@ export const BagItemCard = ({ bagItem, columnId }) => {
 
   const [updateReservationPhysicalProduct] = useMutation(UPDATE_RESERVATION_PHYSICAL_PRODUCT, {
     onCompleted: data => {
-      console.log(data)
       refresh()
     },
     onError: error => {
