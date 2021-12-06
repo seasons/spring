@@ -67,9 +67,7 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
           },
           disabled: false,
         },
-      ]
-      if (isForPickup) {
-        buttons.push({
+        {
           id: "pickedUp",
           title: "Picked up",
           onClick: () => {
@@ -77,8 +75,8 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
             setShowModal("PickupModal")
           },
           disabled: false,
-        })
-      }
+        },
+      ]
       break
     case "outbound":
       buttons = [
