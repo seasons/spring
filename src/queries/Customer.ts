@@ -88,6 +88,13 @@ const CustomerGetOneFragment_Customer = gql`
           hasBeenPurchased
           purchasedAt
           pickedAt
+          reservation {
+            id
+            pickupDate
+            pickupWindow {
+              display
+            }
+          }
           shippingMethod {
             id
             code

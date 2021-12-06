@@ -7,12 +7,16 @@ import { BagItemCard } from "./BagItemCard"
 import { GENERATE_LABELS } from "./mutations"
 import { ModalType } from "../Bag/BagView"
 
-export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }) => {
+export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, hasQueuedItems }) => {
   const bagItems = bagSection.bagItems
   const trackingUrl = bagSection.deliveryTrackingUrl
   const hasBagItems = bagItems?.length > 0
 
   const [generateLabels] = useMutation(GENERATE_LABELS)
+
+  console.log("hasQueuedItems", hasQueuedItems)
+
+  const isForPickup = bagItems.some(item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup")
 
   let buttons
   switch (bagSection.id) {
@@ -38,24 +42,12 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
             setData(bagItems)
             setShowModal("PackingModal")
           },
-          disabled: false,
+          disabled: hasQueuedItems,
         },
       ]
       break
     case "packed":
-      const includesPickUpItems = bagItems.some(
-        item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup"
-      )
       buttons = [
-        {
-          id: "pickedUp",
-          title: "Picked up",
-          onClick: () => {
-            setData(bagItems)
-            setShowModal("PickupModal")
-          },
-          disabled: false,
-        },
         {
           id: "printlabel",
           title: "Print labels",
@@ -75,10 +67,16 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
           },
           disabled: false,
         },
+        {
+          id: "pickedUp",
+          title: "Picked up",
+          onClick: () => {
+            setData(bagItems)
+            setShowModal("PickupModal")
+          },
+          disabled: false,
+        },
       ]
-      // if(includesPickUpItems){
-      //   buttons.push({ id: "pickedUp", title: "Picked up", onClick: () => null, disabled: false })
-      // }
       break
     case "outbound":
       buttons = [
@@ -160,7 +158,7 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData }
       <Spacer mb={2} />
       <Box>
         {bagItems?.map((bagItem, index) => {
-          return <BagItemCard bagItem={bagItem} key={index} columnId={bagSection.id} />
+          return <BagItemCard bagItem={bagItem} key={index} columnId={bagSection.id} isForPickup={isForPickup} />
         })}
       </Box>
     </Wrapper>
