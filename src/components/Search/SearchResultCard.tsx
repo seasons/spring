@@ -24,7 +24,7 @@ export const SearchResultCard = ({ result }) => {
       const { user } = data
       return (
         <Box>
-          <Link variant="h4" color="textPrimary" component={RouterLink} to={`/members/${data.objectID}/account`}>
+          <Link variant="h4" color="textPrimary" component={RouterLink} to={`/members/${data.objectID}/bag`}>
             {`${user?.firstName} ${user.lastName}`}
           </Link>
           <Typography variant="body2" color="textPrimary">

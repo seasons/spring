@@ -29,7 +29,7 @@ export const PhysicalProductSummary: React.FC<PhysicalProductSummaryProps> = ({ 
           display="flex"
           justifyContent="center"
           alignItems="center"
-          bgcolor={colors.white95}
+          bgcolor={colors.black04}
           borderRadius={20}
           style={{ cursor: "pointer" }}
           onClick={onClickView}
@@ -73,6 +73,6 @@ const Container = muiStyled(Box)({
 
 const PhysicalProductField = muiStyled(Box)({
   padding: "14px 16px",
-  backgroundColor: colors.white95,
+  backgroundColor: colors.black04,
   borderRadius: 4,
 })

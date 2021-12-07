@@ -9,7 +9,6 @@ import { makeStyles } from "@material-ui/styles"
 const useStyles = makeStyles<Theme>(theme => ({
   tabs: {
     marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(5),
   },
   divider: {
     backgroundColor: colors.grey[300],
@@ -64,7 +63,8 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
     resource,
     payload: { id: recordID },
   })
-  if (!loaded || loading) return <Loading />
+  console.log("error", error)
+  if (!loaded) return <Loading />
   if (error || !data) return <ComponentError />
 
   // Edge Case
@@ -81,9 +81,8 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
     return activeTab?.render({ data, adminKey: adminStoreKey, match, recordID: match.params.id })
   }
   return (
-    <Container maxWidth={false}>
+    <>
       {renderHeader({ data })}
-      <Spacer mt={2} />
       <Tabs
         indicatorColor={"primary"}
         onChange={(event, value) => {
@@ -98,7 +97,7 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
         ))}
       </Tabs>
       <Divider className={classes.divider} />
-      <Box mt={2}>{renderCurrentTab()}</Box>
-    </Container>
+      {renderCurrentTab()}
+    </>
   )
 }

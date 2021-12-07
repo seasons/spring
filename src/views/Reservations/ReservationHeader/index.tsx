@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from "react"
-
 import { Header } from "components"
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox"
 import ArchiveIcon from "@material-ui/icons/Archive"
 import { useMutation } from "react-apollo"
 import { useRefresh } from "@seasons/react-admin"
 import { ProcessReservationMutationVariables } from "generated/ProcessReservationMutation"
-import {
-  MARK_RESERVATION_PICKED,
-  UPDATE_RESERVATION,
-  PROCESS_RESERVATION,
-  MARK_RESERVATION_PACKED,
-  EARLY_RETURN,
-} from "../mutations"
-import { PickingPackingModal } from "./Components/PickingPackingModal/PickingPackingModal"
-import { ProcessReturnModal } from "./Components/ProcessReturnModal/ProcessReturnModal"
+import { MARK_RESERVATION_PICKED, UPDATE_RESERVATION, PROCESS_RESERVATION, MARK_RESERVATION_PACKED } from "../mutations"
 import { UpdateStatusModal } from "./Components/UpdateStatusModal/UpdateStatusModal"
-import { EarlyReturnModal } from "./Components/EarlyReturnModal/EarlyReturnModal"
 import { SUBMIT_QA_ENTRY } from "components/ProductQAModal"
 import { useSelector } from "react-redux"
 import { omit } from "lodash"
@@ -26,10 +16,8 @@ import { useLocation } from "react-router-dom"
 
 export const ReservationHeader = ({ data }) => {
   const [showUpdateStatusModal, toggleUpdateStatusModal] = useState(false)
-  const [showEarlyReturnModal, toggleEarlyReturnModal] = useState(false)
 
   const isReservationUnfulfilled = ["Queued", "Picked", "Packed"].includes(data?.status)
-  const Modal = isReservationUnfulfilled ? PickingPackingModal : ProcessReturnModal
 
   const [showModal, toggleModal] = useState(false)
 
@@ -89,27 +77,6 @@ export const ReservationHeader = ({ data }) => {
     },
   })
 
-  const [earlyReturn] = useMutation(EARLY_RETURN, {
-    onCompleted: () => {
-      showSnackbar({
-        message: "Selected items have been successfully returned",
-        status: "success",
-      })
-      setIsMutating(false)
-      toggleEarlyReturnModal(false)
-      refresh()
-    },
-    onError: error => {
-      showSnackbar({
-        message: error?.message,
-        status: "error",
-      })
-      setIsMutating(false)
-      toggleEarlyReturnModal(false)
-      refresh()
-    },
-  })
-
   const [submitQAEntry] = useMutation(SUBMIT_QA_ENTRY)
 
   let primaryButton = () => {
@@ -144,26 +111,7 @@ export const ReservationHeader = ({ data }) => {
 
   const refresh = useRefresh()
 
-  const [processReservation] = useMutation<any, ProcessReservationMutationVariables>(PROCESS_RESERVATION, {
-    onCompleted: () => {
-      showSnackbar({ message: "Returned items successfully processed", status: "success" })
-      refresh()
-    },
-    onError: error => {
-      showSnackbar({ message: error?.message, status: "error" })
-      refresh()
-    },
-  })
-
   const menuItems: any[] = []
-  if (["Delivered", "EarlyReturn", "Received", "Shipped"].includes(data?.status)) {
-    menuItems.push({
-      text: "Early return",
-      action: () => {
-        toggleEarlyReturnModal(true)
-      },
-    })
-  }
 
   return (
     <>
@@ -190,61 +138,6 @@ export const ReservationHeader = ({ data }) => {
           ...menuItems,
         ]}
       />
-      <Modal
-        open={showModal}
-        onClose={() => toggleModal(false)}
-        reservation={data}
-        disableButton={isMutating}
-        onSave={async (productStates, params) => {
-          setIsMutating(true)
-          try {
-            if (isReservationUnfulfilled) {
-              if (params["status"] === "Picked") {
-                await markReservationPicked({ variables: { reservationNumber: data.reservationNumber } })
-              } else if ((params["status"] = "Packed")) {
-                await markReservationPacked({ variables: { reservationNumber: data.reservationNumber } })
-              }
-            } else {
-              const mutationData: ProcessReservationMutationVariables = {
-                data: {
-                  reservationNumber: data.reservationNumber,
-                  productStates: Object.values(productStates).map((productState: any) =>
-                    omit(productState, "damageType")
-                  ) as ProductStateInput[],
-                  trackingNumber: params.trackingNumber,
-                },
-              }
-
-              // Create PhysicalProductQualityEntry records
-              const productStateArr = Object.values(productStates) as any[]
-
-              for (let i = 0; i < productStateArr.length; i++) {
-                const productState = productStateArr[i]
-                const product = data.products?.[i]
-                await submitQAEntry({
-                  variables: {
-                    notes: productState.notes,
-                    type: productState.damageType?.[0],
-                    damageTypes: productState.damageType,
-                    physicalProductID: product.id,
-                    userID: session.user.id,
-                    published: false,
-                  },
-                })
-              }
-
-              await processReservation({ variables: mutationData })
-              setIsMutating(false)
-            }
-          } catch (e) {
-            console.error(e)
-            showSnackbar({
-              message: `Error: ${e.message}`,
-              status: "error",
-            })
-          }
-        }}
-      />
       <UpdateStatusModal
         open={showUpdateStatusModal}
         reservation={data}
@@ -261,22 +154,6 @@ export const ReservationHeader = ({ data }) => {
         onClose={() => {
           toggleUpdateStatusModal(false)
         }}
-      />
-
-      <EarlyReturnModal
-        open={showEarlyReturnModal}
-        onSave={async (reservationID, physicalProductIDs) => {
-          setIsMutating(true)
-          await earlyReturn({
-            variables: {
-              reservationID: reservationID,
-              physicalProductIDs: physicalProductIDs,
-            },
-          })
-        }}
-        onClose={() => toggleEarlyReturnModal(false)}
-        disableButton={true}
-        reservation={data}
       />
     </>
   )

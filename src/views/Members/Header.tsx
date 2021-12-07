@@ -7,6 +7,9 @@ import { useMutation } from "@apollo/react-hooks"
 import { MEMBER_ASSIGN_ROLE } from "./queries"
 import gql from "graphql-tag"
 import { useSnackbarContext } from "components/Snackbar"
+import { Box, Button } from "@material-ui/core"
+import { colors } from "theme"
+import styled from "styled-components"
 
 const RESET_PASSWORD = gql`
   mutation ResetPassword($email: String!) {
@@ -26,6 +29,7 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
   const [showResetPasswordConfirmation, setShowResetPasswordConfirmation] = useState(false)
   const [showCancelConfirmation, setShowCancelConfirmation] = useState(false)
   const { showSnackbar } = useSnackbarContext()
+  const [openProcessItemReturnModal, toggleProcessItemReturnModal] = useState(false)
   const [assignMemberRoles] = useMutation<any, any>(MEMBER_ASSIGN_ROLE, {
     onCompleted: () => {
       closeAssignRolesModal()
@@ -132,7 +136,7 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
           },
           {
             title: `Member: ${fullName}`,
-            url: `/members/${member.id}/account`,
+            url: `/members/${member.id}/bag`,
           },
         ]}
         menuItems={[
@@ -171,3 +175,9 @@ export const Header: React.FunctionComponent<MemberSubViewProps> = ({ member }) 
     </>
   )
 }
+
+const BorderedButton = styled(Button)({
+  border: `1px solid ${colors.grey[300]}`,
+  borderRadius: `8px`,
+  padding: "12px 24px",
+})

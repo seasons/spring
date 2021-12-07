@@ -197,6 +197,10 @@ export const PhysicalProductFragment = gql`
           id
           name
         }
+        images {
+          id
+          url
+        }
         architecture
         materialCategory {
           id

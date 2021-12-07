@@ -15,7 +15,7 @@ import { useSnackbarContext } from "components/Snackbar"
 
 const ViewButton = (props: ActionButtonProps) => {
   const id = props.record?.id
-  const entityLink = `/members/${id}/account`
+  const entityLink = `/members/${id}/bag`
   return (
     <Button component={RouterLink} size="small" to={entityLink} variant="contained" color="primary">
       View

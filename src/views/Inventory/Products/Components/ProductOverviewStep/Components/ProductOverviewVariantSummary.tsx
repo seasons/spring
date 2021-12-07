@@ -68,7 +68,7 @@ export const ProductOverviewVariantSummary: React.FC<ProductOverviewVariantSumma
             >
               Add
             </Button>
-            <ActionBox ml={1} px={2} py={0.5} bgcolor={colors.white95} onClick={onClickView}>
+            <ActionBox ml={1} px={2} py={0.5} bgcolor={colors.black04} onClick={onClickView}>
               <Text variant="h6">View</Text>
             </ActionBox>
           </Box>
@@ -107,7 +107,7 @@ export const ProductOverviewVariantSummary: React.FC<ProductOverviewVariantSumma
                           <ActionBox
                             px={2}
                             py={1}
-                            bgcolor={colors.white95}
+                            bgcolor={colors.black04}
                             onClick={() => onClickOffloadPhysicalProduct(physicalProduct)}
                           >
                             <Text variant="h6">Offload</Text>
@@ -148,7 +148,7 @@ const Container = muiStyled(Box)({
 
 const PhysicalProductField = muiStyled(Box)({
   padding: "14px 16px",
-  backgroundColor: colors.white95,
+  backgroundColor: colors.black04,
   borderRadius: 4,
 })
 

@@ -1,51 +1,131 @@
 import React, { useState } from "react"
-import { useRefresh } from "@seasons/react-admin"
 import { makeStyles, styled } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
-import CardHeader from "@material-ui/core/CardHeader"
+import { useMutation } from "react-apollo"
+import { truncate } from "lodash"
+import { Menu, MenuItem } from "@material-ui/core"
 import CardMedia from "@material-ui/core/CardMedia"
 import { ConfirmationDialog } from "components/ConfirmationDialog"
-import { red } from "@material-ui/core/colors"
-import { Box, Typography, Button } from "@material-ui/core"
-import { SwapButton } from "./SwapButton"
-import { Link } from "@material-ui/core"
-import { Link as RouterLink, useHistory } from "react-router-dom"
+import { Box, Typography, Button, IconButton } from "@material-ui/core"
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+import gql from "graphql-tag"
+import { useRefresh } from "@seasons/react-admin"
+import { SwapBagItemModal } from "../SwapBagItemModal"
+import { DateTime } from "luxon"
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 345,
+    marginBottom: "8px",
+    borderRadius: "8px",
   },
   media: {
-    height: 0,
-    paddingTop: "125%",
-    width: "100%", // 16:9
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: red[500],
+    borderRadius: "8px",
+    width: "108px",
+    height: "136px",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
   },
 }))
 
-export const BagItemCard = props => {
+interface MenuItem {
+  text: string
+  action: () => void
+}
+
+const getPickupDateDisplay = ({ pickupDate, pickupWindowDisplay }) => {
+  if (!pickupDate || !pickupWindowDisplay) {
+    return ""
+  }
+  const isToday = DateTime.fromISO(pickupDate).toISODate() === DateTime.local().toISODate()
+  return `${pickupWindowDisplay}, ${isToday ? "Today" : DateTime.fromISO(pickupDate).toLocaleString(DateTime.DATE_MED)}`
+}
+
+export const UPDATE_RESERVATION_PHYSICAL_PRODUCT = gql`
+  mutation UpdateReservationPhysicalProduct(
+    $where: ReservationPhysicalProductWhereUniqueInput!
+    $data: ReservationPhysicalProductUpdateInput!
+  ) {
+    updateReservationPhysicalProduct(where: $where, data: $data) {
+      id
+    }
+  }
+`
+
+const MARK_NOT_RETURNED = gql`
+  mutation MarkNotReturned($rppId: ID!) {
+    markNotReturned(rppId: $rppId) {
+      id
+    }
+  }
+`
+
+const MARK_AS_FOUND = gql`
+  mutation MarkAsFound($rppId: ID!, $status: String!) {
+    markAsFound(rppId: $rppId, status: $status)
+  }
+`
+
+const MARK_AS_LOST = gql`
+  mutation MarkAsLost($lostBagItemId: ID!) {
+    markAsLost(lostBagItemId: $lostBagItemId)
+  }
+`
+
+export const BagItemCard: React.FC<{ bagItem: any; columnId: string; isForPickup: boolean }> = ({
+  bagItem,
+  columnId,
+  isForPickup,
+}) => {
   const classes = useStyles()
+  const refresh = useRefresh()
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [isReturnConfirmationDialogOpen, setIsReturnConfirmationDialogOpen] = useState(false)
+  const [isSwapItemModalOpen, setIsSwapItemModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const router = useHistory()
-  const { bagItem } = props
-  const { product } = bagItem.productVariant
-  const { name, brand } = product
-  const image = product.images?.[0]
-  const { member } = props
-  const isSwappable = bagItem?.isSwappable
+  const variant = bagItem?.productVariant
+  const product = variant?.product
+  const physicalProduct = bagItem?.physicalProduct
+  const image = product?.images?.[0]
+  const reservationPhysicalProduct = bagItem?.reservationPhysicalProduct
+  const isOnHold = reservationPhysicalProduct?.isOnHold
+  const reservation = reservationPhysicalProduct?.reservation
+
+  const [markAsFound] = useMutation(MARK_AS_FOUND, {
+    onCompleted: data => {
+      refresh()
+    },
+    onError: error => {
+      console.log(error)
+    },
+  })
+
+  const [markNotReturned] = useMutation(MARK_NOT_RETURNED, {
+    onCompleted: data => {
+      refresh()
+    },
+    onError: error => {
+      console.log(error)
+    },
+  })
+
+  const [markAsLost] = useMutation(MARK_AS_LOST, {
+    onCompleted: data => {
+      refresh()
+    },
+    onError: error => {
+      console.log(error)
+    },
+  })
+
+  const [updateReservationPhysicalProduct] = useMutation(UPDATE_RESERVATION_PHYSICAL_PRODUCT, {
+    onCompleted: data => {
+      refresh()
+    },
+    onError: error => {
+      console.log(error)
+    },
+  })
+
   const onCloseConfirmationDialog = async (agreed: boolean, type: "Return") => {
     // Make sure user has confirmed submission
     if (!agreed || isSubmitting) {
@@ -54,54 +134,217 @@ export const BagItemCard = props => {
     setIsSubmitting(false)
   }
 
+  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null)
+  }
+
+  const handleOpenSwapModal = () => {
+    setIsSwapItemModalOpen(true)
+  }
+
+  const handleCloseSwapModal = () => {
+    setIsSwapItemModalOpen(false)
+  }
+
+  const onUpdateReservationPhysicalProduct = data => {
+    updateReservationPhysicalProduct({
+      variables: {
+        where: { id: reservationPhysicalProduct.id },
+        data,
+      },
+    })
+  }
+
+  const onMarkIsFound = () => {
+    markAsFound({
+      variables: {
+        rppId: reservationPhysicalProduct.id,
+        status:
+          reservationPhysicalProduct.lostInPhase === "CustomerToBusiness"
+            ? "DeliveredToBusiness"
+            : "DeliveredToCustomer",
+      },
+    })
+  }
+
+  const onMarkAsLost = () => {
+    markAsLost({
+      variables: {
+        lostBagItemId: bagItem.id,
+      },
+    })
+  }
+
+  const handleMarkNotReturned = () => {
+    markNotReturned({
+      variables: {
+        rppId: reservationPhysicalProduct.id,
+      },
+    })
+  }
+
   const physicalProductId = bagItem?.physicalProduct?.id
 
   const linkUrl = !!physicalProductId
     ? `/inventory/product/variant/physicalProduct/${physicalProductId}/manage`
-    : `/inventory/product/variants/${bagItem.productVariant.id}`
+    : `/inventory/product/variants/${variant?.id}`
+
+  let MetaData = () => <Box />
+  let menuItems: MenuItem[] = []
+  let isOutboundColumn = false
+
+  switch (columnId) {
+    case "queued":
+    case "picked":
+    case "packed":
+      isOutboundColumn = true
+      menuItems = [
+        {
+          text: isOnHold ? "Release hold" : "Hold item",
+          action: () =>
+            onUpdateReservationPhysicalProduct({
+              isOnHold: !isOnHold,
+            }),
+        },
+        { text: "Swap Item", action: () => handleOpenSwapModal() },
+      ]
+      MetaData = () => <Typography>{bagItem?.physicalProduct?.barcode}</Typography>
+      break
+    case "deliveredToCustomer":
+      const physicalProductPrice = bagItem?.physicalProduct?.price
+      const productVariantPrice = bagItem?.productVariant?.price
+      let priceInDollars
+      if (physicalProductPrice?.buyUsedEnabled && physicalProductPrice?.buyUsedPrice) {
+        priceInDollars = physicalProductPrice?.buyUsedPrice / 100
+      } else if (productVariantPrice?.buyNewEnabled && productVariantPrice?.buyNewPrice) {
+        priceInDollars = productVariantPrice?.buyNewPrice / 100
+      }
+
+      const price = priceInDollars?.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      })
+      if (price) {
+        MetaData = () => <Typography>{price}</Typography>
+      }
+      menuItems = [{ text: "Mark as lost", action: () => onMarkAsLost() }]
+      break
+    case "outbound":
+    case "customerToBusiness":
+      menuItems = [{ text: "Mark as lost", action: () => onMarkAsLost() }]
+      break
+    case "lost":
+      // FIXME: Implement mark as found
+      const lostInPhaseDisplay =
+        reservationPhysicalProduct?.lostInPhase &&
+        (reservationPhysicalProduct?.lostInPhase === "BusinessToCustomer" ? "Lost outbound" : "Lost inbound")
+      if (lostInPhaseDisplay) {
+        MetaData = () => <Typography>{lostInPhaseDisplay}</Typography>
+      }
+      menuItems = [{ text: "Mark as found", action: () => onMarkIsFound() }]
+      break
+    case "deliveredToBusiness":
+      menuItems = [
+        {
+          text: "Mark not returned",
+          action: () => handleMarkNotReturned(),
+        },
+      ]
+      break
+    case "returnPending":
+      menuItems = [{ text: "Mark as lost", action: () => onMarkAsLost() }]
+      break
+    default:
+      break
+  }
+
+  const pickupDate = reservation?.pickupDate
+  const pickupWindowDisplay = reservation?.pickupWindow?.display
+  const showStatusBar = (isOnHold || isForPickup) && isOutboundColumn
+  let statusBarColor = isOnHold ? "#C84347" : "black"
+  let statusBarText = isOnHold ? "On hold" : isForPickup ? "Pickup" : ""
+  let statusBarSecondaryText = isOnHold
+    ? ""
+    : isForPickup
+    ? getPickupDateDisplay({ pickupDate, pickupWindowDisplay })
+    : ""
 
   return (
-    <>
-      <Card className={classes.root}>
-        <CardHeader
-          title={
-            <Link
-              component={RouterLink}
-              to={linkUrl}
-              variant="body1"
-              color="primary"
-              onClick={e => e.stopPropagation()}
-              style={{ color: "black" }}
-            >
+    <Box width="345px">
+      <Card className={classes.root} style={{ border: showStatusBar ? `1px solid ${statusBarColor}` : "none" }}>
+        {showStatusBar && (
+          <Box
+            px={2}
+            py={1}
+            style={{ backgroundColor: statusBarColor }}
+            display="flex"
+            flexDirection="row"
+            flexWrap="nowrap"
+            justifyContent="space-between"
+          >
+            <Typography color="primary">{statusBarText}</Typography>
+            <Typography color="primary">{statusBarSecondaryText}</Typography>
+          </Box>
+        )}
+        <ContentWrapper px={2} py={2}>
+          <CardMedia className={classes.media} image={image?.url ?? ""} />
+          <TextWrapper pl={2}>
+            <FlexWrapper>
               <Box>
-                <Typography>{name}</Typography>
+                <Typography>{product?.brand?.name}</Typography>
+                <Typography color="secondary">
+                  {truncate(product?.name, {
+                    length: 22,
+                    omission: "...",
+                  })}
+                </Typography>
+                <Typography color="secondary">{physicalProduct?.seasonsUID}</Typography>
               </Box>
-            </Link>
-          }
-          subheader={
-            <Box>
-              <Typography>{brand.name}</Typography>
-              <Typography>{bagItem.productVariant.displayShort}</Typography>
-            </Box>
-          }
-          action={<Box>{isSwappable && <SwapButton bagItem={bagItem} customer={member} />}</Box>}
-        />
-
-        <Link
-          component={RouterLink}
-          to={linkUrl}
-          variant="body1"
-          color="primary"
-          onClick={e => e.stopPropagation()}
-          style={{ color: "black" }}
-        >
-          <CardMedia className={classes.media} image={image.url} />
-        </Link>
-        <Box padding="10px 16px">
-          <FlexBox>
-            <Typography>{bagItem?.status}</Typography>
-          </FlexBox>
-        </Box>
+              {menuItems.length > 0 && (
+                <BorderedIconButton onClick={handleOpenMenu} size="small">
+                  <MoreHorizIcon />
+                </BorderedIconButton>
+              )}
+            </FlexWrapper>
+            <Menu
+              id={`simple-menu-${bagItem.id}`}
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleCloseMenu}
+            >
+              {menuItems.map((item, i) => (
+                <MenuItem
+                  key={`menuitem-${item.text + i}`}
+                  onClick={() => {
+                    handleCloseMenu()
+                    item?.action?.()
+                  }}
+                >
+                  {item.text}
+                </MenuItem>
+              ))}
+            </Menu>
+            <StatusWrapper>
+              <MetaData />
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  window.open(linkUrl, "_blank")
+                }}
+              >
+                View
+              </Button>
+            </StatusWrapper>
+          </TextWrapper>
+        </ContentWrapper>
       </Card>
       <ConfirmationDialog
         title="Return Item"
@@ -110,13 +353,46 @@ export const BagItemCard = props => {
         setOpen={setIsReturnConfirmationDialogOpen}
         onClose={agreed => onCloseConfirmationDialog(agreed, "Return")}
       />
-    </>
+      <SwapBagItemModal
+        open={isSwapItemModalOpen}
+        onClose={() => handleCloseSwapModal()}
+        bagItem={bagItem}
+        customer={bagItem.customer}
+      />
+    </Box>
   )
 }
 
-const FlexBox = styled(Box)({
+const StatusWrapper = styled(Box)({
   display: "flex",
-  justifyContent: "space-between",
+  flexDirection: "row",
   width: "100%",
-  alignItems: "center",
+  alignItems: "baseline",
+  justifyContent: "space-between",
+})
+
+const ContentWrapper = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  width: "313px",
+})
+
+const TextWrapper = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  flex: 1,
+  justifyContent: "space-between",
+})
+
+const FlexWrapper = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "flex-start",
+  width: "100%",
+  justifyContent: "space-between",
+})
+
+const BorderedIconButton = styled(IconButton)({
+  paddingLeft: "5px",
+  transform: "rotate(90deg)",
 })

@@ -1,36 +1,63 @@
-import React from "react"
+import React, { useState } from "react"
 
-import { Box, Container, Grid, Typography } from "@material-ui/core"
-import { BagItemCard } from "./BagItemCard"
-import { BagItemGrid } from "./BagItemGrid"
+import { BagColumns } from "./BagColumns"
+import { PickingPackingModal } from "./Modals/PickingPackingModal/PickingPackingModal"
+import { ProcessReturnModal } from "./Modals/ProcessReturnModal/ProcessReturnModal"
+import { PickupModal } from "./Modals/PickupModal/PickupModal"
+import { PrintLabelsModal } from "./Modals/PrintLabelsModal/PrintLabelsModal"
 
-export const BagView = ({ member, adminKey }) => {
-  const bagItems = member?.bagItems?.filter(a => a.saved === false)
+export enum ModalType {
+  ProcessReturn = "ProcessReturnModal",
+  Picking = "PickingModal",
+  Packing = "PackingModal",
+  Pickup = "PickupModal",
+  PrintLabels = "PrintLabelsModal",
+}
+
+export const BagView = ({ customer }) => {
+  const [showModal, setShowModal] = useState<ModalType | null>(null)
+  const [data, setData] = useState([])
+
+  const bagSections = customer?.bagSections
+
+  let Modal: JSX.Element = <></>
+
+  const onClose = () => setShowModal(null)
+
+  switch (showModal) {
+    case ModalType.ProcessReturn:
+      Modal = (
+        <ProcessReturnModal
+          open={showModal === "ProcessReturnModal"}
+          onClose={() => setShowModal(null)}
+          customerId={customer.id}
+          bagSections={bagSections}
+        />
+      )
+      break
+    case ModalType.Packing:
+    case ModalType.Picking:
+      Modal = (
+        <PickingPackingModal
+          open
+          mode={showModal === "PickingModal" ? "Pick" : "Pack"}
+          onClose={onClose}
+          bagItems={data}
+        />
+      )
+      break
+    case ModalType.PrintLabels:
+      Modal = <PrintLabelsModal data={data} open onClose={onClose} />
+      break
+    case ModalType.Pickup:
+      Modal = <PickupModal open onClose={onClose} bagItems={data} />
+      break
+  }
 
   return (
-    <Box>
-      <Container maxWidth={false}>
-        <Box mt={4} mb={4}>
-          <Box mt={1} mb={2}>
-            <Typography variant="h3">{`Bag (${bagItems?.length}/${member?.membership?.plan?.itemCount})`}</Typography>
-          </Box>
-          <Grid container spacing={2}>
-            {bagItems?.map(bagItem => {
-              return (
-                <Grid item lg={4} md={4} sm={4} xs={12} key={`product-card`}>
-                  <BagItemCard bagItem={bagItem} member={member} />
-                </Grid>
-              )
-            })}
-          </Grid>
-        </Box>
-        <Box mt={4} mb={4}>
-          <Box mt={1} mb={2}>
-            <Typography variant="h3">Saved Items</Typography>
-          </Box>
-          <BagItemGrid bagItems={member.bagItems.filter(a => a.saved === true)} />
-        </Box>
-      </Container>
-    </Box>
+    <>
+      <BagColumns customer={customer} bagSections={bagSections} setData={setData} setShowModal={setShowModal} />
+      {Modal}
+    </>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
+import gql from "graphql-tag"
 
 import { Typography, Box, Paper, Divider } from "@material-ui/core"
 import CheckCircleIcon from "@material-ui/icons/CheckCircle"
@@ -10,39 +11,62 @@ const Image = styled.img`
   height: 100%;
 `
 
-const ProductImage = ({ product }: { product: GetReservation_products }) => {
-  const image = product?.productVariant?.product.images?.[0]
-  return <Image src={image?.url} width={100} height={125} />
-}
+export const PickingPackingProductCardFragment_BagSection = gql`
+  fragment PickingPackingProductCardFragment_BagSection on BagSection {
+    physicalProduct {
+      id
+      seasonsUID
+      warehouseLocation {
+        id
+        type
+        locationCode
+        itemCode
+      }
+      productVariant {
+        id
+        product {
+          id
+          images {
+            id
+            url
+          }
+        }
+      }
+    }
+  }
+`
 
-export const PickingPackingProductCard = ({ product, productState, onStateChange, donePicking }) => {
+export const PickingPackingProductCard = ({ bagItem, productState, onStateChange, donePicking }) => {
   const [values, setValues] = useState(productState ?? { productStatus: "Dirty", picked: false, notes: "" })
-  const { warehouseLocation } = product
+  const product = bagItem?.productVariant?.product
+  const warehouseLocation = bagItem?.physicalProduct?.warehouseLocation
+
+  const picked = productState?.picked
 
   useEffect(() => {
     setValues({
       ...values,
-      picked: productState.picked,
+      picked,
     })
-  }, [productState.picked])
+  }, [picked, setValues])
 
   return (
     <Box my={1}>
       <Paper variant="outlined">
         <Box display="flex">
           <Box>
-            <ProductImage product={product} />
+            <Image src={product?.images?.[0]?.url} width={100} height={125} />
           </Box>
           <Box flexGrow={1}>
             <Box my={2}>
               <Box display="flex" height="30px">
                 <Box flexGrow={1} p={1}>
                   <Typography variant="body1" color="secondary" style={{ letterSpacing: 1, fontSize: 18 }}>
-                    {product.seasonsUID}
+                    {bagItem?.physicalProduct?.seasonsUID}
                   </Typography>
                 </Box>
                 <Box py={"5px"} px={2}>
-                  {(donePicking || productState.picked) && <CheckCircleIcon />}
+                  {(donePicking || picked) && <CheckCircleIcon />}
                 </Box>
               </Box>
             </Box>
