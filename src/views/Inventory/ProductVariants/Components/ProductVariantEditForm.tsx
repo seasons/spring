@@ -13,7 +13,7 @@ import { useField } from "react-final-form"
 import { ProductVariantEditSection } from "./ProductVariantEditSection"
 import { PhysicalProductSummary } from "views/Inventory/PhysicalProducts/Components"
 import { ProductUpsertQuery } from "generated/ProductUpsertQuery"
-
+import slugify from "slugify"
 export interface ProductVariantEditSectionProps {
   createData?: any // Passed in when creating new variants
   variants?: VariantEditQuery_productVariant[] // Passed in when editing variants
@@ -33,13 +33,16 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
   const colorCode = createData?.color || ""
   const sizeNames = createData?.sizes || []
   const productType = createData?.productType || variants?.[0]?.internalSize?.productType
+  const slug = slugify(createData?.name)
   const [openModal, toggleModal] = useState(false)
+
   const { data, loading, error, refetch } = useQuery(GET_VARIANT_SKUS_AND_SIZE_TYPES, {
     variables: {
       input: {
         brandID,
         colorCode,
         sizeNames,
+        slug,
       },
     },
   })

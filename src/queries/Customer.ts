@@ -83,6 +83,13 @@ const CustomerGetOneFragment_Customer = gql`
           status
           isOnHold
           lostInPhase
+          reservation {
+            id
+            pickupDate
+            pickupWindow {
+              display
+            }
+          }
           shippingMethod {
             id
             code
