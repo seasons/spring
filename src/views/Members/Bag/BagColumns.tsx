@@ -1,11 +1,26 @@
-import { Box, styled } from "@material-ui/core"
+import { Box, Button, styled } from "@material-ui/core"
 import React from "react"
 import { colors } from "theme/colors"
 import { BagColumn } from "./BagColumn"
 
 export const BagColumns = ({ customer, bagSections, setData, setShowModal }) => {
+  const cancellableBagItems = bagSections
+    .filter(a => ["Queued", "Picked", "Packed"].includes(a.title))
+    .reduce((bagItems, a) => {
+      bagItems.push(...a.bagItems)
+      return bagItems
+    }, [])
+
   return (
     <FlexBox py={5}>
+      <Button
+        onClick={() => {
+          setShowModal("CancelItems")
+          setData(cancellableBagItems)
+        }}
+      >
+        Cancel Items
+      </Button>
       {bagSections.map((bagSection, index) => {
         return (
           <BagColumn

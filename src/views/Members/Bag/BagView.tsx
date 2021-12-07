@@ -5,6 +5,7 @@ import { PickingPackingModal } from "./Modals/PickingPackingModal/PickingPacking
 import { ProcessReturnModal } from "./Modals/ProcessReturnModal/ProcessReturnModal"
 import { PickupModal } from "./Modals/PickupModal/PickupModal"
 import { PrintLabelsModal } from "./Modals/PrintLabelsModal/PrintLabelsModal"
+import { CancelItemsModal } from "./Modals/CancelItemsModal/CancelItemsModal"
 
 export enum ModalType {
   ProcessReturn = "ProcessReturnModal",
@@ -12,6 +13,7 @@ export enum ModalType {
   Packing = "PackingModal",
   Pickup = "PickupModal",
   PrintLabels = "PrintLabelsModal",
+  CancelItems = "CancelItems",
 }
 
 export const BagView = ({ customer }) => {
@@ -51,6 +53,9 @@ export const BagView = ({ customer }) => {
       break
     case ModalType.Pickup:
       Modal = <PickupModal open onClose={onClose} bagItems={data} />
+      break
+    case ModalType.CancelItems:
+      Modal = <CancelItemsModal open={true} bagItems={data} onClose={onClose} />
       break
   }
 

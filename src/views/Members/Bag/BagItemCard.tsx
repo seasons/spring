@@ -107,14 +107,6 @@ export const BagItemCard = ({ bagItem, columnId }) => {
     setIsSwapItemModalOpen(false)
   }
 
-  const handleOpenCancelModal = () => {
-    setIsCancelModalOpen(true)
-  }
-
-  const handleCloseCancelModal = () => {
-    setIsCancelModalOpen(false)
-  }
-
   const onUpdateReservationPhysicalProduct = data => {
     updateReservationPhysicalProduct({
       variables: {
@@ -154,7 +146,6 @@ export const BagItemCard = ({ bagItem, columnId }) => {
             }),
         },
         { text: "Swap Item", action: () => handleOpenSwapModal() },
-        { text: "Cancel Item", action: () => {} },
       ]
       MetaData = () => <Typography>{bagItem?.physicalProduct?.barcode}</Typography>
       break
