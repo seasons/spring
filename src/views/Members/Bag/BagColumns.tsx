@@ -13,26 +13,32 @@ export const BagColumns = ({ customer, bagSections, setData, setShowModal }) => 
 
   return (
     <FlexBox py={5}>
-      <Button
-        onClick={() => {
-          setShowModal("CancelItems")
-          setData(cancellableBagItems)
-        }}
-      >
-        Cancel Items
-      </Button>
-      {bagSections.map((bagSection, index) => {
-        return (
-          <BagColumn
-            customer={customer}
-            bagSection={bagSection}
-            key={index}
-            index={index}
-            setShowModal={setShowModal}
-            setData={setData}
-          />
-        )
-      })}
+      <Box display="flex" flexDirection="row">
+        <Box display="flex">
+          <Button
+            onClick={() => {
+              setShowModal("CancelItems")
+              setData(cancellableBagItems)
+            }}
+          >
+            Cancel Items
+          </Button>
+        </Box>
+        <Box>
+          {bagSections.map((bagSection, index) => {
+            return (
+              <BagColumn
+                customer={customer}
+                bagSection={bagSection}
+                key={index}
+                index={index}
+                setShowModal={setShowModal}
+                setData={setData}
+              />
+            )
+          })}
+        </Box>
+      </Box>
     </FlexBox>
   )
 }
