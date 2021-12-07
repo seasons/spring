@@ -52,8 +52,22 @@ type ProductStates = { [key: string]: ProductState }
 
 export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, onSave, onClose, bagItems, mode }) => {
   const [productStates, setProductStates] = useState<ProductStates>({})
-  const [pickItems] = useMutation(PICK_ITEMS)
-  const [packItems] = useMutation(PACK_ITEMS)
+  const [pickItems] = useMutation(PICK_ITEMS, {
+    onError: e => {
+      showSnackbar({
+        message: e.message,
+        status: "error",
+      })
+    },
+  })
+  const [packItems] = useMutation(PACK_ITEMS, {
+    onError: e => {
+      showSnackbar({
+        message: e.message,
+        status: "error",
+      })
+    },
+  })
   const { showSnackbar } = useSnackbarContext()
   const refresh = useRefresh()
 
@@ -87,7 +101,7 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
   const handleSave = async status => {
     const fn = mode === "Pick" ? pickItems : packItems
 
-    await fn({
+    const result = await fn({
       variables: {
         ids: Object.values(productStates)
           .filter(p => p.picked)
@@ -95,13 +109,15 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
       },
     })
 
-    showSnackbar({
-      message: `Items successfully ${mode === "Pick" ? "picked" : "packed"}`,
-      status: "success",
-    })
-    refresh()
-    onClose?.()
-    onSave?.(productStates, { status })
+    if (result) {
+      showSnackbar({
+        message: `Items successfully ${mode === "Pick" ? "picked" : "packed"}`,
+        status: "success",
+      })
+      refresh()
+      onClose?.()
+      onSave?.(productStates, { status })
+    }
   }
 
   const handleBarcodeChange = e => {

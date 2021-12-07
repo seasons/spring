@@ -4,6 +4,9 @@ import { colors } from "theme/colors"
 import { BagColumn } from "./BagColumn"
 
 export const BagColumns = ({ customer, bagSections, setData, setShowModal }) => {
+  const queuedSection = bagSections.find(section => section.status === "Queued")
+
+  console.log("queuedSection", queuedSection)
   return (
     <FlexBox py={5}>
       {bagSections.map((bagSection, index) => {
@@ -15,6 +18,7 @@ export const BagColumns = ({ customer, bagSections, setData, setShowModal }) => 
             index={index}
             setShowModal={setShowModal}
             setData={setData}
+            hasQueuedItems={queuedSection?.bagItems.length > 0}
           />
         )
       })}

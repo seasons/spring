@@ -15,7 +15,7 @@ export const MARKED_PICKED_UP = gql`
 
 interface PickupModal {
   open: boolean
-  onClose?: () => void
+  onClose: () => void
   bagItems: any
 }
 
@@ -29,6 +29,7 @@ export const PickupModal: React.FC<PickupModal> = ({ open, onClose, bagItems }) 
   })
 
   const handleSave = () => {
+    onClose()
     markPickedUp({
       variables: {
         bagItemIds: selectedBagItems,
