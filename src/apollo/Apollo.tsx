@@ -117,4 +117,5 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 export const client = new ApolloClient({
   cache: new InMemoryCache({ fragmentMatcher }),
   link: ApolloLink.from([authLink, errorLink, link]),
+  name: "Spring",
 })
