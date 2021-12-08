@@ -23,6 +23,7 @@ export const CancelItemsModal: React.FC<CancelItemsModalProps> = ({ open, onClos
         message: "Items Cancelled",
         status: "success",
       })
+      refresh()
     },
     onError: error => {
       showSnackbar({
@@ -86,7 +87,6 @@ export const CancelItemsModal: React.FC<CancelItemsModalProps> = ({ open, onClos
               bagItemIds: selectedBagItems,
             },
           })
-          refresh()
         }}
         mutationName={"cancelled"}
       />
