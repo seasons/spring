@@ -11,6 +11,7 @@ export const BagColumns = ({ customer, bagSections, setData, setShowModal }) => 
       bagItems.push(...a.bagItems)
       return bagItems
     }, [])
+  const queuedSection = bagSections.find(section => section.status === "Queued")
 
   return (
     <FlexBox py={5}>
@@ -37,6 +38,7 @@ export const BagColumns = ({ customer, bagSections, setData, setShowModal }) => 
                 index={index}
                 setShowModal={setShowModal}
                 setData={setData}
+                hasQueuedItems={queuedSection?.bagItems.length > 0}
               />
             )
           })}
