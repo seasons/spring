@@ -23,13 +23,13 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
     ?.map(p => p.productVariant.product.rentalPrice)
     .reduce((acc, curval) => {
       return acc + curval
-    })
+    }, 0)
 
   const totalRentalPriceNewProds = newProductsWithData
     ?.map(p => p.productVariant.product.rentalPrice)
     .reduce((acc, curval) => {
       return acc + curval
-    })
+    }, 0)
 
   const Address = ({ address }) => {
     if (!address) {
