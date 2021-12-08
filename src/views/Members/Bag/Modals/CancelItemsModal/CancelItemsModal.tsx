@@ -3,6 +3,10 @@ import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typograph
 import { DialogTitle } from "components"
 import { BagItemCard } from "../PickupModal/BagItemCard"
 import { ConfirmationModal } from "../ConfirmationModal"
+import { MARK_AS_CANCELLED } from "views/Reservations/mutations"
+import { useMutation } from "@apollo/react-hooks"
+import { useSnackbarContext } from "components/Snackbar"
+import { useRefresh } from "@seasons/react-admin"
 
 interface CancelItemsModalProps {
   open: boolean
@@ -11,6 +15,22 @@ interface CancelItemsModalProps {
 }
 
 export const CancelItemsModal: React.FC<CancelItemsModalProps> = ({ open, onClose, bagItems }) => {
+  const { showSnackbar } = useSnackbarContext()
+  const refresh = useRefresh()
+  const [markAsCancelled] = useMutation(MARK_AS_CANCELLED, {
+    onCompleted: result => {
+      showSnackbar({
+        message: "Items Cancelled",
+        status: "success",
+      })
+    },
+    onError: error => {
+      showSnackbar({
+        message: error.message,
+        status: "error",
+      })
+    },
+  })
   const [selectedBagItems, setSelectedBagItems] = useState<any>([])
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false)
 
@@ -60,7 +80,14 @@ export const CancelItemsModal: React.FC<CancelItemsModalProps> = ({ open, onClos
       <ConfirmationModal
         open={openConfirmationModal}
         onClose={() => setOpenConfirmationModal(false)}
-        handleMutation={() => {}}
+        handleMutation={() => {
+          markAsCancelled({
+            variables: {
+              bagItemIds: selectedBagItems,
+            },
+          })
+          refresh()
+        }}
         mutationName={"cancelled"}
       />
     </>

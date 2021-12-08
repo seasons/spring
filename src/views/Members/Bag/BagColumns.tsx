@@ -1,4 +1,5 @@
 import { Box, Button, styled } from "@material-ui/core"
+import { Spacer } from "components"
 import React from "react"
 import { colors } from "theme/colors"
 import { BagColumn } from "./BagColumn"
@@ -13,18 +14,20 @@ export const BagColumns = ({ customer, bagSections, setData, setShowModal }) => 
 
   return (
     <FlexBox py={5}>
-      <Box display="flex" flexDirection="row">
-        <Box display="flex">
+      <Box display="flex" flexDirection="column">
+        <Box display="flex" justifyContent="right">
           <Button
             onClick={() => {
               setShowModal("CancelItems")
               setData(cancellableBagItems)
             }}
+            variant="contained"
           >
             Cancel Items
           </Button>
         </Box>
-        <Box>
+        <Spacer mb={4} />
+        <Box display="flex" flexDirection="row">
           {bagSections.map((bagSection, index) => {
             return (
               <BagColumn
