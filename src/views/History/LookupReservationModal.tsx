@@ -1,16 +1,12 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Dialog, DialogContent, Box, TextField, Typography, Input } from "@material-ui/core"
+import { Dialog, DialogContent, Box, TextField, Typography } from "@material-ui/core"
 import { DialogTitle } from "components"
 import { head, trim, groupBy } from "lodash"
-import { PhysicalProduct } from "generated/PhysicalProduct"
 import { useQuery, useLazyQuery } from "react-apollo"
 import { useHistory } from "react-router-dom"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX, RETURN_LABEL_BARCODE_REGEX } from "views/constants"
 import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/PhysicalProducts/queries"
-import {
-  GET_RESERVATIONS_FOR_PRODUCT_QUERY,
-  GET_RESERVATIONS_FOR_TRACKING_NUMBER_QUERY,
-} from "views/Reservations/queries"
+import { GET_RESERVATIONS_FOR_PRODUCT_QUERY, GET_RESERVATIONS_FOR_TRACKING_NUMBER_QUERY } from "views/History/queries"
 
 interface LookupReservationModalProps {
   open: boolean
@@ -27,7 +23,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
   )
 
   const [barcodeOrTrackingNumber, setBarcodeOrTrackingNumber] = useState("")
-  const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState<PhysicalProduct | undefined>(undefined)
+  const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState(undefined)
   const [physicalProductsByBarcode, setPhysicalProductsByBarcode] = useState({})
 
   useEffect(() => {
@@ -99,7 +95,7 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
         <DialogContent dividers>
           <Box my={2}>
             <TextField
-              label="Scan Barcode"
+              label="Scan barcode"
               helperText={`Click into box and scan the barcode of the ${
                 !!selectedPhysicalProduct ? "warehouse location" : "product"
               }`}

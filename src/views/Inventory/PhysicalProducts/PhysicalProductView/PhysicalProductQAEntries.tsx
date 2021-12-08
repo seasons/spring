@@ -24,7 +24,7 @@ export const PhysicalProductQAView = ({ data }) => {
   }
 
   return (
-    <Box>
+    <Box pt={3}>
       <Box display="flex" alignItems="center" justifyContent="flex-end" flexDirection="row" mb={2}>
         <Box>
           <Button

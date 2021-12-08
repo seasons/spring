@@ -63,7 +63,7 @@ export const ReservationInfo = ({ reservation, ...rest }) => {
             <TableRow>
               <TableCell>Customer</TableCell>
               <TableCell>
-                <Link component={RouterLink} to={`/members/${customer.id}/account`}>
+                <Link component={RouterLink} to={`/members/${customer.id}/bag`}>
                   {name}
                 </Link>
                 <Address address={customer?.detail?.shippingAddress} />

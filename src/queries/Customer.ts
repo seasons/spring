@@ -1,8 +1,8 @@
 import { GET_LIST, GET_ONE } from "@seasons/react-admin"
 import gql from "graphql-tag"
 
-const CustomerFragment = gql`
-  fragment customer on Customer {
+const CustomerGetListFragment_Customer = gql`
+  fragment CustomerGetListFragment_Customer on Customer {
     id
     plan
     status
@@ -45,39 +45,102 @@ const CustomerFragment = gql`
   }
 `
 
-const CustomerDetails = gql`
-  fragment customer on Customer {
+const CustomerGetOneFragment_Customer = gql`
+  fragment CustomerGetOneFragment_Customer on Customer {
     id
     plan
     status
     iOSAppStatus
-    bagItems {
+    bagSections {
       id
-      saved
       status
-      isSwappable
-      physicalProduct {
+      title
+      deliveryTrackingUrl
+      bagItems {
         id
-      }
-      productVariant {
-        id
-        sku
-        displayShort
-        internalSize {
+        saved
+        status
+        isSwappable
+        physicalProduct {
           id
-          display
-        }
-        product {
-          id
-          slug
-          name
-          images(size: Thumb) {
+          barcode
+          seasonsUID
+          price {
             id
-            url
+            buyUsedPrice
+            buyUsedEnabled
           }
-          brand {
+          warehouseLocation {
             id
+            type
+            barcode
+            locationCode
+            itemCode
+          }
+        }
+        reservationPhysicalProduct {
+          id
+          status
+          isOnHold
+          lostInPhase
+          reservation {
+            id
+            pickupDate
+            pickupWindow {
+              display
+            }
+          }
+          shippingMethod {
+            id
+            code
+          }
+          inboundPackage {
+            id
+            direction
+            shippingLabel {
+              id
+              trackingNumber
+              trackingURL
+              image
+            }
+          }
+          outboundPackage {
+            id
+            direction
+            shippingLabel {
+              id
+              trackingNumber
+              trackingURL
+              image
+            }
+          }
+        }
+
+        productVariant {
+          id
+          sku
+          displayShort
+          price {
+            id
+            buyNewPrice
+            buyNewEnabled
+          }
+          internalSize {
+            id
+            display
+          }
+          product {
+            id
+            slug
             name
+            images(size: Thumb) {
+              id
+              url
+            }
+            brand {
+              id
+              name
+            }
           }
         }
       }
@@ -128,12 +191,12 @@ const CustomerDetails = gql`
         id
         amount
         reason
+        balance
+        createdAt
         adminUser {
           firstName
           lastName
         }
-        balance
-        createdAt
       }
       plan {
         id
@@ -141,6 +204,7 @@ const CustomerDetails = gql`
         name
       }
       subscription {
+        id
         planPrice
       }
       subscriptionId
@@ -287,6 +351,6 @@ const CustomerDetails = gql`
 `
 
 export default {
-  [GET_LIST]: CustomerFragment,
-  [GET_ONE]: CustomerDetails,
+  [GET_LIST]: CustomerGetListFragment_Customer,
+  [GET_ONE]: CustomerGetOneFragment_Customer,
 }

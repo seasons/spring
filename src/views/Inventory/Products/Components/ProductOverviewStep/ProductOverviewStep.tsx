@@ -189,6 +189,7 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
 
   const headerTitle = product?.name || "New product"
   const headerSubtitle = product?.brand?.name || "Please fill out all required fields"
+  const secondarySubtitle = `Rental price: $${product?.rentalPrice}` ?? ""
 
   const menuItems = [
     {
@@ -222,6 +223,7 @@ export const ProductOverviewStep: React.FC<ProductOverviewStepProps> = ({
       <Header
         title={headerTitle}
         subtitle={headerSubtitle}
+        secondarySubtitle={secondarySubtitle}
         publishedAt={product?.publishedAt}
         breadcrumbs={[
           {

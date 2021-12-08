@@ -3,13 +3,13 @@ import { Table, TableHead, TableCell, TableBody, TableRow, Card, Box } from "@ma
 import { Image } from "components/Image"
 import { SinceDateField } from "fields"
 
-interface ReservationExpandedRowProps {
+interface HistoryExpandedRowProps {
   id?: string
   record?: any
   resource?: string
 }
 
-export const ReservationExpandedRow = ({ record: reservation }: ReservationExpandedRowProps) => {
+export const HistoryExpandedRow = ({ record: reservation }: HistoryExpandedRowProps) => {
   const returnedItemImages = reservation?.returnedProducts?.map(p => p.productVariant?.product?.images?.[0])
 
   return (

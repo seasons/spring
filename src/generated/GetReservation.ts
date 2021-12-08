@@ -13,6 +13,8 @@ import {
   ProductStatus,
   ProductType,
   ReservationStatus,
+  ReservationPhase,
+  ReservationAdminMessage,
 } from "./globalTypes"
 
 // ====================================================
@@ -264,7 +266,9 @@ export interface GetReservation {
   shippedAt: any | null
   receivedAt: any | null
   returnAt: any | null
+  phase: ReservationPhase
   statusUpdatedAt: any | null
   createdAt: any
   updatedAt: any
+  adminMessage: ReservationAdminMessage
 }
