@@ -1,27 +1,49 @@
-import { Box, styled } from "@material-ui/core"
+import { Box, Button, styled } from "@material-ui/core"
+import { Spacer } from "components"
 import React from "react"
 import { colors } from "theme/colors"
 import { BagColumn } from "./BagColumn"
 
 export const BagColumns = ({ customer, bagSections, setData, setShowModal }) => {
+  const cancellableBagItems = bagSections
+    .filter(a => ["Queued", "Picked", "Packed"].includes(a.title))
+    .reduce((bagItems, a) => {
+      bagItems.push(...a.bagItems)
+      return bagItems
+    }, [])
   const queuedSection = bagSections.find(section => section.status === "Queued")
 
-  console.log("queuedSection", queuedSection)
   return (
     <FlexBox py={5}>
-      {bagSections.map((bagSection, index) => {
-        return (
-          <BagColumn
-            customer={customer}
-            bagSection={bagSection}
-            key={index}
-            index={index}
-            setShowModal={setShowModal}
-            setData={setData}
-            hasQueuedItems={queuedSection?.bagItems.length > 0}
-          />
-        )
-      })}
+      <Box display="flex" flexDirection="column">
+        <Box display="flex" justifyContent="right">
+          <Button
+            onClick={() => {
+              setShowModal("CancelItems")
+              setData(cancellableBagItems)
+            }}
+            variant="contained"
+          >
+            Cancel Items
+          </Button>
+        </Box>
+        <Spacer mb={4} />
+        <Box display="flex" flexDirection="row">
+          {bagSections.map((bagSection, index) => {
+            return (
+              <BagColumn
+                customer={customer}
+                bagSection={bagSection}
+                key={index}
+                index={index}
+                setShowModal={setShowModal}
+                setData={setData}
+                hasQueuedItems={queuedSection?.bagItems.length > 0}
+              />
+            )
+          })}
+        </Box>
+      </Box>
     </FlexBox>
   )
 }

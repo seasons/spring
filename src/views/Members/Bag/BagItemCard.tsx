@@ -81,6 +81,7 @@ export const BagItemCard: React.FC<{ bagItem: any; columnId: string; isForPickup
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [isReturnConfirmationDialogOpen, setIsReturnConfirmationDialogOpen] = useState(false)
   const [isSwapItemModalOpen, setIsSwapItemModalOpen] = useState(false)
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const variant = bagItem?.productVariant
   const product = variant?.product
