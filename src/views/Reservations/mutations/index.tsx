@@ -50,3 +50,9 @@ export const PACK_ITEMS = gql`
     }
   }
 `
+
+export const MARK_AS_CANCELLED = gql`
+  mutation MarkAsCancelled($bagItemIds: [ID]!) {
+    markAsCancelled(bagItemIds: $bagItemIds)
+  }
+`
