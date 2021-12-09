@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Dialog, DialogContent, Box, TextField, Typography } from "@material-ui/core"
 import { DialogTitle } from "components"
-import { head, trim, groupBy } from "lodash"
-import { useQuery, useLazyQuery } from "react-apollo"
+import { trim } from "lodash"
+import { useLazyQuery } from "react-apollo"
 import { useHistory } from "react-router-dom"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX, RETURN_LABEL_BARCODE_REGEX } from "views/constants"
-import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/PhysicalProducts/queries"
 import { GET_RESERVATIONS_FOR_PRODUCT_QUERY, GET_RESERVATIONS_FOR_TRACKING_NUMBER_QUERY } from "views/History/queries"
+import { barcodeToSequenceNumber } from "views/Inventory/PhysicalProducts/utils"
 
 interface LookupReservationModalProps {
   open: boolean
@@ -15,7 +15,6 @@ interface LookupReservationModalProps {
 
 export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ open, onClose }) => {
   const history = useHistory()
-  const { data, loading } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
   const [getReservationsForProduct, { data: resData }] = useLazyQuery(GET_RESERVATIONS_FOR_PRODUCT_QUERY)
 
   const [getReservationsForTrackingNumber, { data: resysByTrackingNumber }] = useLazyQuery(
@@ -23,14 +22,6 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
   )
 
   const [barcodeOrTrackingNumber, setBarcodeOrTrackingNumber] = useState("")
-  const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState(undefined)
-  const [physicalProductsByBarcode, setPhysicalProductsByBarcode] = useState({})
-
-  useEffect(() => {
-    if (!loading) {
-      setPhysicalProductsByBarcode(groupBy(data?.physicalProducts, a => a.barcode))
-    }
-  }, [data, loading])
 
   useEffect(() => {
     const reservations = resData ? resData?.reservations : resysByTrackingNumber?.reservations
@@ -54,21 +45,9 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
     if (input.match(RETURN_LABEL_BARCODE_REGEX)) {
       getReservationsForTrackingNumber({ variables: { trackingNumber: input } })
     } else if (input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
-      const getSequenceNumber = input => {
-        for (let i = 4; i <= input.length; i++) {
-          if (input[i] > 0) {
-            return parseInt(input.slice(i))
-          }
-        }
-      }
-      const sequenceNumber = getSequenceNumber(input)
-      // 2. Get most recent resy for that product
-      getReservationsForProduct({ variables: { sequenceNumber: sequenceNumber } })
-
-      if (!selectedPhysicalProduct && input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
-        setSelectedPhysicalProduct(head(physicalProductsByBarcode[input]))
-        setBarcodeOrTrackingNumber("")
-      }
+      const sequenceNumber = barcodeToSequenceNumber(input)
+      getReservationsForProduct({ variables: { sequenceNumber } })
+      setBarcodeOrTrackingNumber(input)
     } else {
       setBarcodeOrTrackingNumber(input)
     }
@@ -82,23 +61,17 @@ export const LookupReservationModal: React.FC<LookupReservationModalProps> = ({ 
     }
   }, [open])
 
-  const fullOnClose = () => {
-    setSelectedPhysicalProduct(undefined)
-    onClose?.()
-  }
   return (
     <>
-      <Dialog onClose={fullOnClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={fullOnClose}>
+      <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle id="customized-dialog-title" onClose={onClose as any}>
           <Typography variant="subtitle1">Lookup Reservation</Typography>
         </DialogTitle>
         <DialogContent dividers>
           <Box my={2}>
             <TextField
               label="Scan barcode"
-              helperText={`Click into box and scan the barcode of the ${
-                !!selectedPhysicalProduct ? "warehouse location" : "product"
-              }`}
+              helperText={`Click into box and scan the barcode of the product`}
               name="barcode"
               type="text"
               variant="outlined"
