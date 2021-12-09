@@ -91,7 +91,6 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
           id: "trackShippment",
           title: "Track shipment",
           onClick: () => window.open(trackingUrl, "_blank"),
-          disabled: !trackingUrl,
         },
       ]
       break
@@ -115,15 +114,26 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
           id: "trackReturn",
           title: "Track return",
           onClick: () => window.open(trackingUrl, "_blank"),
-          disabled: !trackingUrl,
         },
-      ]
-      break
-    case "deliveredToBusiness":
-      buttons = [
         {
           id: "process",
           title: "Process",
+          onClick: () => {
+            setData(bagItems)
+            setShowModal("ProcessReturnModal")
+          },
+          disabled: false,
+        },
+      ]
+      break
+    case "atHome":
+    case "inTransitInbound":
+    case "deliveredToBusiness":
+    case "returnPending":
+      buttons = [
+        {
+          id: "process",
+          title: "Process return",
           onClick: () => {
             setData(bagItems)
             setShowModal("ProcessReturnModal")
