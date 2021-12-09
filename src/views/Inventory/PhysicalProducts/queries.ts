@@ -72,6 +72,19 @@ export const PHYSICAL_PRODUCT_VIEW_QUERY = gql`
   ${PhysicalProductStatusesFragment}
 `
 
+export const WAREHOUSE_LOCATIONS_QUERY = gql`
+  query GetAllWarehouseLocations {
+    warehouseLocations {
+      id
+      barcode
+      locationCode
+      itemCode
+      type
+    }
+  }
+`
+
+// TODO: Delete this.
 export const PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY = gql`
   query GetPhysicalProductsAndWarehouseLocations {
     physicalProducts {
@@ -87,13 +100,18 @@ export const PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY = gql`
         notes
       }
     }
+  }
+`
 
-    warehouseLocations {
+export const PHYSICAL_PRODUCT_FOR_STOW = gql`
+  query GetPhysicalProductForStow($sequenceNumber: Int!) {
+    physicalProduct(where: { sequenceNumber: $sequenceNumber }) {
       id
-      barcode
-      locationCode
-      itemCode
-      type
+      seasonsUID
+      warehouseLocation {
+        id
+        barcode
+      }
     }
   }
 `
