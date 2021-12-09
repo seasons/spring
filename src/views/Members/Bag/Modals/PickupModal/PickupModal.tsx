@@ -8,7 +8,7 @@ import { useMutation } from "@apollo/react-hooks"
 import { BagItemCard } from "./BagItemCard"
 
 export const MARKED_PICKED_UP = gql`
-  mutation MarkAsPickedUp($bagItemIds: [ID]!) {
+  mutation MarkAsPickedUp($bagItemIds: [ID!]!) {
     markAsPickedUp(bagItemIds: $bagItemIds)
   }
 `

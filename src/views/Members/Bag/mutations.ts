@@ -1,8 +1,8 @@
 import gql from "graphql-tag"
 
 export const GENERATE_LABELS = gql`
-  mutation generateLabels($customerID: ID!) {
-    generateShippingLabels(customerID: $customerID) {
+  mutation generateLabels($bagItemIds: [ID!]!) {
+    generateShippingLabels(bagItemIds: $bagItemIds) {
       id
       direction
       shippingLabel {
