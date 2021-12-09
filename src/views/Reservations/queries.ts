@@ -40,6 +40,13 @@ export const GET_INBOUND_RESERVATIONS = gql`
     inboundReservations(take: $take, skip: $skip) {
       ...InboundOutboundFragment_reservationPhysicalProductConnection
     }
+    reservationProcessingStats {
+      currentNumQueuedItems
+      currentNumQueuedReservations
+      currentNumDeliveredToBusinessItems
+      day
+      updatedAt
+    }
   }
   ${InboundOutboundFragment_reservationPhysicalProductConnection}
 `
@@ -48,6 +55,13 @@ export const GET_OUTBOUND_RESERVATIONS = gql`
   query OutboundReservations($take: Int!, $skip: Int!) {
     outboundReservations(take: $take, skip: $skip) {
       ...InboundOutboundFragment_reservationPhysicalProductConnection
+    }
+    reservationProcessingStats {
+      currentNumQueuedItems
+      currentNumQueuedReservations
+      currentNumDeliveredToBusinessItems
+      day
+      updatedAt
     }
   }
   ${InboundOutboundFragment_reservationPhysicalProductConnection}
