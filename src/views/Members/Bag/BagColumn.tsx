@@ -6,15 +6,22 @@ import React from "react"
 import { BagItemCard } from "./BagItemCard"
 import { GENERATE_LABELS } from "./mutations"
 import { ModalType } from "../Bag/BagView"
+import { useSnackbarContext } from "components/Snackbar"
 
 export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, hasQueuedItems }) => {
   const bagItems = bagSection.bagItems
   const trackingUrl = bagSection.deliveryTrackingUrl
   const hasBagItems = bagItems?.length > 0
 
-  const [generateLabels] = useMutation(GENERATE_LABELS)
-
-  console.log("hasQueuedItems", hasQueuedItems)
+  const { showSnackbar } = useSnackbarContext()
+  const [generateLabels] = useMutation(GENERATE_LABELS, {
+    onError: error => {
+      showSnackbar({
+        message: error?.message,
+        status: "error",
+      })
+    },
+  })
 
   const isForPickup = bagItems.some(item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup")
 
@@ -59,7 +66,7 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
               const rpp = bagItems?.[0].reservationPhysicalProduct
               setData([rpp.inboundPackage, rpp.outboundPackage])
             } else {
-              const response = await generateLabels({ variables: { customerID: customer.id } })
+              const response = await generateLabels({ variables: { bagItemIds: bagItems.map(b => b.id) } })
               setData(response?.data?.generateLabels)
             }
 

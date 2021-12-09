@@ -11,6 +11,10 @@ interface PrintLabelsModalProps {
 }
 
 export const PrintLabelsModal: React.FC<PrintLabelsModalProps> = ({ data, open, onClose }) => {
+  if (!data) {
+    return null
+  }
+
   return (
     <>
       <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
