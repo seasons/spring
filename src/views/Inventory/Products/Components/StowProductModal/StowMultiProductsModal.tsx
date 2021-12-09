@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typography, colors } from "@material-ui/core"
 import { DialogTitle } from "components"
-import { head, trim, groupBy } from "lodash"
-import { useQuery, useMutation } from "react-apollo"
+import { trim } from "lodash"
+import { useQuery, useMutation, useLazyQuery } from "react-apollo"
 import { StowMultiProductsInfo } from "./StowMultiProductsInfo"
 import { WAREHOUSE_LOCATION_BARCODE_REGEX, PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { STOW_ITEMS } from "views/Inventory/PhysicalProducts/mutations"
-import { PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/PhysicalProducts/queries"
+import { PHYSICAL_PRODUCT_FOR_STOW, WAREHOUSE_LOCATIONS_QUERY } from "views/Inventory/PhysicalProducts/queries"
 import { useSnackbarContext } from "components/Snackbar"
 import { WarehouseLocationsDropdown } from "./WarehouseLocations"
 import CheckCircleIcon from "@material-ui/icons/CheckCircle"
 import { useRefresh } from "@seasons/react-admin"
+import { barcodeToSequenceNumber } from "views/Inventory/PhysicalProducts/utils"
 
 interface StowMultiProductModalProps {
   open: boolean
@@ -25,7 +26,11 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
   onSave,
   onClose,
 }) => {
-  const { data, loading } = useQuery(PHYSICAL_PRODUCTS_WITH_WAREHOUSE_LOCATIONS_QUERY)
+  const { data, loading } = useQuery(WAREHOUSE_LOCATIONS_QUERY)
+  const [getSelectedPhysicalProduct, { data: selectedPhysProdData, loading: loadingPhysProdForStow }] = useLazyQuery(
+    PHYSICAL_PRODUCT_FOR_STOW
+  )
+
   const refresh = useRefresh()
   const { showSnackbar } = useSnackbarContext()
   const [stowItems] = useMutation(STOW_ITEMS, {
@@ -51,18 +56,26 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
   })
   const [barcode, setBarcode] = useState("")
   const [location, setLocation] = useState("")
-  const [physicalProductsByBarcode, setPhysicalProductsByBarcode] = useState({})
   const [validWarehouseLocationBarcodes, setValidWarehouseLocationBarcodes] = useState<string[]>([])
+  const [selectedPhysicalProduct, setSelectedPhysicalProduct] = useState<any>(undefined)
   const [selectedPhysicalProducts, setSelectedPhysicalProducts] = useState<any>([])
   const [selectedPhysicalProductsIDs, setSelectedPhysicalProductsIDs] = useState<string[]>([])
   const [removePhysicalProduct, setRemovePhysicalProduct] = useState<any>()
 
   useEffect(() => {
     if (!loading) {
-      setPhysicalProductsByBarcode(groupBy(data?.physicalProducts, a => a.barcode))
       setValidWarehouseLocationBarcodes(data?.warehouseLocations?.map(a => a.barcode))
     }
   }, [data, loading])
+
+  useEffect(() => {
+    if (!!selectedPhysProdData?.physicalProduct) {
+      const selectedPhysicalProduct = selectedPhysProdData?.physicalProduct
+      setSelectedPhysicalProducts([selectedPhysicalProduct, ...selectedPhysicalProducts])
+      setSelectedPhysicalProductsIDs([...selectedPhysicalProductsIDs, selectedPhysicalProduct?.id])
+      setSelectedPhysicalProduct(selectedPhysProdData?.physicalProduct)
+    }
+  }, [selectedPhysProdData, loadingPhysProdForStow])
 
   const inputRef = useRef<any>()
 
@@ -88,13 +101,8 @@ export const StowMultiProductsModal: React.FC<StowMultiProductModalProps> = ({
     }
 
     if (input.match(PHYSICAL_PRODUCT_BARCODE_REGEX)) {
-      // User has not yet selected a physical product
-      const selectedPhysicalProduct = head<any>(physicalProductsByBarcode[input])
-      if (!selectedPhysicalProduct) {
-        return
-      }
-      setSelectedPhysicalProducts([selectedPhysicalProduct, ...selectedPhysicalProducts])
-      setSelectedPhysicalProductsIDs([...selectedPhysicalProductsIDs, selectedPhysicalProduct?.id])
+      const sn = barcodeToSequenceNumber(input)
+      getSelectedPhysicalProduct({ variables: { sequenceNumber: sn } })
       setBarcode("")
     } else if (
       !!selectedPhysicalProducts &&
