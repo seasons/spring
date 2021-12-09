@@ -25,6 +25,16 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
 
   const isForPickup = bagItems.some(item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup")
 
+  const returnLabelButton = {
+    id: "process",
+    title: "Process return",
+    onClick: () => {
+      setData(bagItems)
+      setShowModal("ProcessReturnModal")
+    },
+    disabled: false,
+  }
+
   let buttons
   switch (bagSection.id) {
     case "queued":
@@ -106,6 +116,7 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
           },
           disabled: false,
         },
+        returnLabelButton,
       ]
       break
     case "inbound":
@@ -115,32 +126,13 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
           title: "Track return",
           onClick: () => window.open(trackingUrl, "_blank"),
         },
-        {
-          id: "process",
-          title: "Process",
-          onClick: () => {
-            setData(bagItems)
-            setShowModal("ProcessReturnModal")
-          },
-          disabled: false,
-        },
       ]
       break
     case "atHome":
     case "inTransitInbound":
     case "deliveredToBusiness":
     case "returnPending":
-      buttons = [
-        {
-          id: "process",
-          title: "Process return",
-          onClick: () => {
-            setData(bagItems)
-            setShowModal("ProcessReturnModal")
-          },
-          disabled: false,
-        },
-      ]
+      buttons = [returnLabelButton]
       break
   }
 
