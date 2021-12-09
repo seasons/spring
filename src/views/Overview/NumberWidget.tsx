@@ -26,7 +26,7 @@ export const NumberWidget: React.FC<NumberWidgetProps> = ({
   return (
     <Card>
       <Box display="flex" flexDirection="column" alignItems="center" flexGrow={1}>
-        <Avatar>{icon}</Avatar>
+        {icon && <Avatar>{icon}</Avatar>}
         <Box my={2}>
           <Typography
             component="h2"
