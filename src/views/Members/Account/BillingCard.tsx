@@ -20,7 +20,7 @@ export const BillingCard = ({ member }) => {
   return (
     <>
       <SummaryCard
-        title="Billing"
+        title="Billing Details"
         record={membership}
         rows={[
           {
