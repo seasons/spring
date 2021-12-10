@@ -28,12 +28,13 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
   productCreateData,
 }) => {
   const location = useLocation()
+  console.log(variants)
   const manufacturerSizeTypeField = useField("manufacturerSizeType")
   const brandID = createData?.brand || variants?.[0]?.product?.brand?.id
   const colorCode = createData?.color || ""
   const sizeNames = createData?.sizes || []
   const productType = createData?.productType || variants?.[0]?.internalSize?.productType
-  const slug = slugify(createData?.name)
+  const slug = slugify(createData?.name || variants?.[0]?.product?.name)
   const [openModal, toggleModal] = useState(false)
 
   const { data, loading, error, refetch } = useQuery(GET_VARIANT_SKUS_AND_SIZE_TYPES, {
