@@ -33,7 +33,7 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
   const colorCode = createData?.color || ""
   const sizeNames = createData?.sizes || []
   const productType = createData?.productType || variants?.[0]?.internalSize?.productType
-  const slug = slugify(createData?.name)
+  const slug = slugify(createData?.name || variants?.[0]?.product?.name)
   const [openModal, toggleModal] = useState(false)
 
   const { data, loading, error, refetch } = useQuery(GET_VARIANT_SKUS_AND_SIZE_TYPES, {
