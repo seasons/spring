@@ -28,7 +28,6 @@ export const ProductVariantEditForm: React.FC<ProductVariantEditSectionProps> = 
   productCreateData,
 }) => {
   const location = useLocation()
-  console.log(variants)
   const manufacturerSizeTypeField = useField("manufacturerSizeType")
   const brandID = createData?.brand || variants?.[0]?.product?.brand?.id
   const colorCode = createData?.color || ""
