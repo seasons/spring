@@ -8,6 +8,7 @@ import styled from "styled-components"
 import { DateTime } from "luxon"
 import { GET_INBOUND_RESERVATIONS, GET_OUTBOUND_RESERVATIONS } from "./queries"
 import { NumberWidget } from "views/Overview/NumberWidget"
+import { Image } from "components/Image"
 
 type TabId = "outbound" | "inbound"
 type TabLabel = "Outbound" | "Inbound"
@@ -139,18 +140,21 @@ export const ReservationList = () => {
         ))}
       </Tabs>
       <Wrapper mb={2}>
-        <Box py={4} px={2}>
+        <Box py={1} px={2}>
           <Grid container>
             <Grid item xs={2}>
               <Typography variant="h6">Items to process</Typography>
             </Grid>
             <Grid item xs={3}>
+              <Typography variant="h6">Images</Typography>
+            </Grid>
+            <Grid item xs={2}>
               <Typography variant="h6">Customer name</Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography variant="h6">Created at</Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1}>
               <Typography variant="h6">Ship to</Typography>
             </Grid>
             <Grid item xs={1}>
@@ -173,6 +177,13 @@ export const ReservationList = () => {
           } else {
             oldestCreatedAt = customer.reservationPhysicalProducts?.[0]?.createdAt
           }
+
+          const images = customer.reservationPhysicalProducts.map(product => {
+            const url = product.physicalProduct.productVariant.product.images?.[0]?.url
+
+            return <Image key={url} url={url} size="medium" />
+          })
+
           return (
             <Box key={customer.id}>
               <Box p={2}>
@@ -181,18 +192,23 @@ export const ReservationList = () => {
                     <Typography variant="h6">{count}</Typography>
                   </Grid>
                   <Grid item xs={3}>
+                    <Box display="flex" flexDirection="row">
+                      {images}
+                    </Box>
+                  </Grid>
+                  <Grid item xs={2}>
                     <Typography variant="h6">{customerName}</Typography>
                   </Grid>
                   <Grid item xs={2}>
                     <Typography variant="h6">{formatDate(oldestCreatedAt)}</Typography>
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={1}>
                     <Typography variant="h6">{formatAddress(customer.detail.shippingAddress)}</Typography>
                   </Grid>
                   <Grid item xs={1}>
                     <Typography variant="h6">{reservationCount}</Typography>
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={1}>
                     <Box display="flex" justifyContent="flex-end">
                       <Button component={RouterLink} size="small" to={entityLink} variant="contained" color="primary">
                         View bag
