@@ -94,7 +94,7 @@ const CustomerGetOneFragment_Customer = gql`
             id
             code
           }
-          inboundPackage {
+          potentialInboundPackage {
             id
             direction
             shippingLabel {

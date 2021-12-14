@@ -17,7 +17,7 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
   return (
     <DetailView
       match={match}
-      resource={"Customer"}
+      resource="Customer"
       renderHeader={({ data: member }) => {
         return (
           <Box px={2}>
@@ -29,8 +29,8 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
         {
           value: "bag",
           label: "Bag",
-          render: ({ data, adminKey, recordID }) => (
-            <BagView {...props} basePath={`/members/${recordID}/bag`} customer={data} />
+          render: ({ data, recordID, refetch }) => (
+            <BagView {...props} basePath={`/members/${recordID}/bag`} customer={data} refetch={refetch} />
           ),
         },
         {

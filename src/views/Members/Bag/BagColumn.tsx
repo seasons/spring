@@ -1,29 +1,35 @@
-import { useMutation } from "@apollo/react-hooks"
 import { Box, Typography, styled, Button } from "@material-ui/core"
 import { Separator, Spacer } from "components"
 import { truncate } from "lodash"
 import React from "react"
 import { BagItemCard } from "./BagItemCard"
-import { GENERATE_LABELS } from "./mutations"
+
 import { ModalType } from "../Bag/BagView"
-import { useSnackbarContext } from "components/Snackbar"
 
 export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, hasQueuedItems }) => {
   const bagItems = bagSection.bagItems
-  const trackingUrl = bagSection.deliveryTrackingUrl
   const hasBagItems = bagItems?.length > 0
 
-  const { showSnackbar } = useSnackbarContext()
-  const [generateLabels] = useMutation(GENERATE_LABELS, {
-    onError: error => {
-      showSnackbar({
-        message: error?.message,
-        status: "error",
-      })
-    },
-  })
-
   const isForPickup = bagItems.some(item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup")
+
+  const returnLabelButton = {
+    id: "process",
+    title: "Process return",
+    onClick: () => {
+      setData(bagItems)
+      setShowModal("ProcessReturnModal")
+    },
+    disabled: false,
+  }
+
+  const trackReturnButton = {
+    id: "trackReturn",
+    title: "Track return",
+    onClick: () => {
+      const trackingUrl = bagItems[0].reservationPhysicalProduct.potentialInboundPackage?.label?.trackingURL
+      window.open(trackingUrl, "_blank")
+    },
+  }
 
   let buttons
   switch (bagSection.id) {
@@ -59,17 +65,7 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
           id: "printlabel",
           title: "Print labels",
           onClick: async () => {
-            const inboundPackages = bagItems.map(item => item.reservationPhysicalProduct?.inboundPackage)
-            const allBagItemsHavePackages = inboundPackages.every(p => p)
-
-            if (allBagItemsHavePackages) {
-              const rpp = bagItems?.[0].reservationPhysicalProduct
-              setData([rpp.inboundPackage, rpp.outboundPackage])
-            } else {
-              const response = await generateLabels({ variables: { bagItemIds: bagItems.map(b => b.id) } })
-              setData(response?.data?.generateLabels)
-            }
-
+            setData(bagItems)
             setShowModal(ModalType.PrintLabels)
           },
           disabled: false,
@@ -87,11 +83,22 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
       break
     case "outbound":
       buttons = [
-        {
-          id: "trackShippment",
-          title: "Track shipment",
-          onClick: () => window.open(trackingUrl, "_blank"),
-        },
+        isForPickup
+          ? {}
+          : {
+              id: "trackShipment",
+              title: "Track shipment",
+              onClick: () => {
+                const bagItem = bagItems[0]
+                if (bagItem) {
+                  const trackingUrl = bagItem.reservationPhysicalProduct.outboundPackage?.label?.trackingURL
+
+                  if (trackingUrl) {
+                    window.open(trackingUrl, "_blank")
+                  }
+                }
+              },
+            },
       ]
       break
     case "deliveredToCustomer":
@@ -101,46 +108,19 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
           title: "Return label",
           onClick: () => {
             const rpp = bagItems?.[0].reservationPhysicalProduct
-            const labelURL = rpp.inboundPackage.shippingLabel.image
+            const labelURL = rpp.potentialInboundPackage.shippingLabel.image
             window.open(labelURL, "_blank")
           },
           disabled: false,
         },
-      ]
-      break
-    case "inbound":
-      buttons = [
-        {
-          id: "trackReturn",
-          title: "Track return",
-          onClick: () => window.open(trackingUrl, "_blank"),
-        },
-        {
-          id: "process",
-          title: "Process",
-          onClick: () => {
-            setData(bagItems)
-            setShowModal("ProcessReturnModal")
-          },
-          disabled: false,
-        },
+        returnLabelButton,
       ]
       break
     case "atHome":
     case "inTransitInbound":
     case "deliveredToBusiness":
     case "returnPending":
-      buttons = [
-        {
-          id: "process",
-          title: "Process return",
-          onClick: () => {
-            setData(bagItems)
-            setShowModal("ProcessReturnModal")
-          },
-          disabled: false,
-        },
-      ]
+      buttons = [trackReturnButton, returnLabelButton]
       break
   }
 

@@ -28,6 +28,7 @@ export interface TabRenderProps {
   adminKey: string
   recordID: string
   match: DetailViewMatch
+  refetch?: () => void
 }
 
 export interface HeaderRenderProps {
@@ -58,12 +59,12 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
   const history = useHistory()
 
   // Get the data
-  const { data, loading, loaded, error } = useQueryWithStore({
+  const { data, loading, loaded, error, refetch } = useQueryWithStore({
     type: "getOne",
     resource,
     payload: { id: recordID },
   })
-  console.log("error", error)
+
   if (!loaded) return <Loading />
   if (error || !data) return <ComponentError />
 
@@ -78,7 +79,7 @@ export const DetailView: React.FunctionComponent<DetailViewProps> = ({
   const renderCurrentTab = () => {
     const activeTab = tabs.find(t => t.value === currentTab)
     const adminStoreKey = JSON.stringify({ type: "GET_ONE", resource, payload: { id: data.id } })
-    return activeTab?.render({ data, adminKey: adminStoreKey, match, recordID: match.params.id })
+    return activeTab?.render({ data, adminKey: adminStoreKey, match, recordID: match.params.id, refetch })
   }
   return (
     <>

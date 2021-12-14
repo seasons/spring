@@ -98,7 +98,7 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
     target?.focus()
   }
 
-  const handleSave = async status => {
+  const handleSave = async mode => {
     const fn = mode === "Pick" ? pickItems : packItems
 
     const result = await fn({
@@ -116,7 +116,7 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
       })
       refresh()
       onClose?.()
-      onSave?.(productStates, { status })
+      onSave?.(productStates, { status: "success" })
     }
   }
 
@@ -218,12 +218,21 @@ export const PickingPackingModal: React.FC<PickingPackingModalProps> = ({ open, 
         <DialogActions>
           <Button
             autoFocus
-            onClick={() => handleSave(mode)}
+            onClick={() => handleSave("Pick")}
             color="primary"
             variant="contained"
             disabled={!shouldAllowSave}
           >
-            Mark as {mode}ed
+            Mark as Picked
+          </Button>
+          <Button
+            autoFocus
+            onClick={() => handleSave("Pack")}
+            color="primary"
+            variant="contained"
+            disabled={!shouldAllowSave}
+          >
+            Mark as Packed
           </Button>
         </DialogActions>
       </Dialog>
