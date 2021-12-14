@@ -27,6 +27,19 @@ const InboundOutboundFragment_reservationPhysicalProductConnection = gql`
           reservationPhysicalProducts {
             id
             status
+            physicalProduct {
+              id
+              productVariant {
+                id
+                product {
+                  id
+                  images {
+                    id
+                    url
+                  }
+                }
+              }
+            }
             createdAt
           }
         }
