@@ -117,7 +117,8 @@ export const ProcessReturnModal: React.FC<MultiItemReturnProps> = ({ open, onClo
           a.id === "returnPending" ||
           a.id === "inbound" ||
           a.id === "deliveredToBusiness" ||
-          a.id === "deliveredToCustomer"
+          a.id === "deliveredToCustomer" ||
+          a.id === "added"
         ) &&
         bagItems
       ) {
