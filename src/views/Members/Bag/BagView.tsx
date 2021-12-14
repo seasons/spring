@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { BagColumns } from "./BagColumns"
 import { PickingPackingModal } from "./Modals/PickingPackingModal/PickingPackingModal"
@@ -16,9 +16,13 @@ export enum ModalType {
   CancelItems = "CancelItems",
 }
 
-export const BagView = ({ customer }) => {
+export const BagView = ({ customer, refetch }) => {
   const [showModal, setShowModal] = useState<ModalType | null>(null)
   const [data, setData] = useState([])
+
+  useEffect(() => {
+    setData(data)
+  }, [customer])
 
   const bagSections = customer?.bagSections
 
@@ -49,7 +53,7 @@ export const BagView = ({ customer }) => {
       )
       break
     case ModalType.PrintLabels:
-      Modal = <PrintLabelsModal data={data} open onClose={onClose} />
+      Modal = <PrintLabelsModal data={data} open onClose={onClose} refetch={refetch} />
       break
     case ModalType.Pickup:
       Modal = <PickupModal open onClose={onClose} bagItems={data} />

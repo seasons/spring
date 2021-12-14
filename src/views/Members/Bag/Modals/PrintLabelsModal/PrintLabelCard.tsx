@@ -1,16 +1,32 @@
-import { Box, Button, Link, Typography, Card, styled } from "@material-ui/core"
+import { Box, Button, Link, Typography, styled } from "@material-ui/core"
+import { Alert } from "@material-ui/lab"
+
 import React from "react"
 
 export const PrintLabelCard = ({ data }) => {
+  if (!data) {
+    return null
+  }
+
   const { shippingLabel, direction } = data
+
+  if (!shippingLabel) {
+    return (
+      <Box pt={2}>
+        <Alert severity="info">Need to generate label</Alert>
+      </Box>
+    )
+  }
+
   const { trackingNumber, image, trackingURL } = shippingLabel
   return (
-    <Card>
-      <FlexBox p={2} display="flex" justifyContent="space-between" alignItems="center">
+    <>
+      <Box py={1}>
+        <Typography variant="caption">Shipping method</Typography>
+        <Typography variant="body1">{direction}</Typography>
+      </Box>
+      <FlexBox display="flex" justifyContent="space-between" alignItems="center">
         <Box>
-          <Typography variant="h6" style={{ fontWeight: "bold" }}>
-            {direction}
-          </Typography>
           <Link
             variant="body1"
             onClick={e => {
@@ -31,7 +47,7 @@ export const PrintLabelCard = ({ data }) => {
           </Button>
         </Box>
       </FlexBox>
-    </Card>
+    </>
   )
 }
 

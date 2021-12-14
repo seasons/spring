@@ -32,7 +32,7 @@ interface MenuItem {
   action: () => void
 }
 
-const getPickupDateDisplay = ({ pickupDate, pickupWindowDisplay }) => {
+export const getPickupDateDisplay = ({ pickupDate, pickupWindowDisplay }) => {
   if (!pickupDate || !pickupWindowDisplay) {
     return ""
   }
