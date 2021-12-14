@@ -216,7 +216,15 @@ const CustomerGetOneFragment_Customer = gql`
         updatedAt
       }
       financeMetrics {
-        estimatedTotal
+        id
+        name
+        amount
+        lineItems {
+          daysRented
+          rentalStartedAt
+          price
+          name
+        }
       }
       rentalInvoices {
         id
