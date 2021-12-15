@@ -134,7 +134,7 @@ export const PrintLabelsModal: React.FC<PrintLabelsModalProps> = ({ data, open, 
         },
       },
     })
-    // refresh?.()
+
     refetch?.()
   }
 

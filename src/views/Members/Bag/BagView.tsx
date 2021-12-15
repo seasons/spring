@@ -6,8 +6,10 @@ import { ProcessReturnModal } from "./Modals/ProcessReturnModal/ProcessReturnMod
 import { PickupModal } from "./Modals/PickupModal/PickupModal"
 import { PrintLabelsModal } from "./Modals/PrintLabelsModal/PrintLabelsModal"
 import { CancelItemsModal } from "./Modals/CancelItemsModal/CancelItemsModal"
+import { PlaceReservationModal } from "./Modals/PlaceReservationModal/PlaceReservationModal"
 
 export enum ModalType {
+  PlaceReservation = "PlaceReservationModal",
   ProcessReturn = "ProcessReturnModal",
   Picking = "PickingModal",
   Packing = "PackingModal",
@@ -20,10 +22,6 @@ export const BagView = ({ customer, refetch }) => {
   const [showModal, setShowModal] = useState<ModalType | null>(null)
   const [data, setData] = useState([])
 
-  useEffect(() => {
-    setData(data)
-  }, [customer])
-
   const bagSections = customer?.bagSections
 
   let Modal: JSX.Element = <></>
@@ -31,10 +29,15 @@ export const BagView = ({ customer, refetch }) => {
   const onClose = () => setShowModal(null)
 
   switch (showModal) {
+    case ModalType.PlaceReservation:
+      Modal = (
+        <PlaceReservationModal open={showModal === ModalType.PlaceReservation} onClose={onClose} customer={customer} />
+      )
+      break
     case ModalType.ProcessReturn:
       Modal = (
         <ProcessReturnModal
-          open={showModal === "ProcessReturnModal"}
+          open={showModal === ModalType.ProcessReturn}
           onClose={() => setShowModal(null)}
           customerId={customer.id}
           bagSections={bagSections}
@@ -59,7 +62,7 @@ export const BagView = ({ customer, refetch }) => {
       Modal = <PickupModal open onClose={onClose} bagItems={data} />
       break
     case ModalType.CancelItems:
-      Modal = <CancelItemsModal open={true} bagItems={data} onClose={onClose} />
+      Modal = <CancelItemsModal open bagItems={data} onClose={onClose} />
       break
   }
 

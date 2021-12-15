@@ -306,6 +306,7 @@ export const BagItemCard: React.FC<{ bagItem: any; columnId: string; isForPickup
                   })}
                 </Typography>
                 <Typography color="secondary">{physicalProduct?.seasonsUID}</Typography>
+                <Typography color="secondary">{physicalProduct?.barcode}</Typography>
               </Box>
               {menuItems.length > 0 && (
                 <BorderedIconButton onClick={handleOpenMenu} size="small">
