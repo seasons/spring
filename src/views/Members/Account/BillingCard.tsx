@@ -25,13 +25,13 @@ export const BillingCard = ({ member }) => {
     })
 
   const financeMetrics = member?.membership?.financeMetrics?.map(a => {
-    const name = a.name
+    const name = a?.name
     return {
       fieldName: name,
       fieldValueFunc: () => formatPrice(a?.amount || 0),
       openModal: () => {
         handleOpenLineItemModal(name)
-        setLineItems(a.lineItems)
+        setLineItems(a?.lineItems)
       },
       buttonText: "View Line Items",
     }

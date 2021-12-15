@@ -222,6 +222,7 @@ const CustomerGetOneFragment_Customer = gql`
         lineItems {
           daysRented
           rentalStartedAt
+          rentalEndedAt
           price
           name
         }

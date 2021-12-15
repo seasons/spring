@@ -18,7 +18,7 @@ import { DateTime } from "luxon"
 
 export const RentalInvoiceCard = ({ membership }) => {
   console.log(membership)
-  const rentalInvoices = membership?.rentalInvoices
+  const rentalInvoices = membership?.rentalInvoices.splice(1)
   console.log(rentalInvoices)
   const date = new Date()
   const formatDate = date => {
@@ -33,17 +33,16 @@ export const RentalInvoiceCard = ({ membership }) => {
       <Grid justify="space-between" container>
         <Grid item alignItems="center" justify="center">
           <Box mt={0.5}>
-            <Typography variant="h4">Rental Invoices</Typography>
+            <Typography variant="h4">Billed Rental Invoices</Typography>
           </Box>
         </Grid>
       </Grid>
       <Table>
         <TableHead>
-          <TableCell>ID</TableCell>
-          <TableCell>Billing Start</TableCell>
-          <TableCell>Billing End</TableCell>
           <TableCell>Status</TableCell>
           <TableCell>Total</TableCell>
+          <TableCell>Billing Start</TableCell>
+          <TableCell>Billing End</TableCell>
         </TableHead>
         <TableBody>
           {rentalInvoices &&
@@ -52,11 +51,10 @@ export const RentalInvoiceCard = ({ membership }) => {
               const billingEndAt = formatDate(a.billingEndAt)
               return (
                 <TableRow key={id}>
-                  <TableCell>{a.id}</TableCell>
-                  <TableCell>{billingStartAt}</TableCell>
-                  <TableCell>{billingEndAt}</TableCell>
                   <TableCell>{a.status}</TableCell>
                   <TableCell>{a.total ? a.total : 0}</TableCell>
+                  <TableCell>{billingStartAt}</TableCell>
+                  <TableCell>{billingEndAt}</TableCell>
                 </TableRow>
               )
             })}
