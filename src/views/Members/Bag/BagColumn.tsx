@@ -12,9 +12,9 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
 
   const isForPickup = bagItems.some(item => item?.reservationPhysicalProduct?.shippingMethod?.code === "Pickup")
 
-  const returnLabelButton = {
+  const processReturnButton = {
     id: "process",
-    title: "Process return",
+    title: "Process",
     onClick: () => {
       setData(bagItems)
       setShowModal("ProcessReturnModal")
@@ -24,7 +24,7 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
 
   const trackReturnButton = {
     id: "trackReturn",
-    title: "Track return",
+    title: "Track",
     onClick: () => {
       const trackingUrl = bagItems[0].reservationPhysicalProduct.potentialInboundPackage?.label?.trackingURL
       window.open(trackingUrl, "_blank")
@@ -33,6 +33,18 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
 
   let buttons
   switch (bagSection.id) {
+    case "added":
+      buttons = [
+        {
+          id: "placeReservation",
+          title: "Place reservation",
+          onClick: () => {
+            setData(bagItems)
+            setShowModal("PlaceReservationModal")
+          },
+        },
+      ]
+      break
     case "queued":
       buttons = [
         {
@@ -113,14 +125,15 @@ export const BagColumn = ({ customer, bagSection, index, setShowModal, setData, 
           },
           disabled: false,
         },
-        returnLabelButton,
+        processReturnButton,
       ]
       break
     case "atHome":
+    case "inbound":
     case "inTransitInbound":
     case "deliveredToBusiness":
     case "returnPending":
-      buttons = [trackReturnButton, returnLabelButton]
+      buttons = [trackReturnButton, processReturnButton]
       break
   }
 
