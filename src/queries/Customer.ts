@@ -225,12 +225,31 @@ const CustomerGetOneFragment_Customer = gql`
           rentalEndedAt
           price
           name
+          type
         }
       }
       rentalInvoices {
         id
+        total
         lineItems {
           id
+          daysRented
+          rentalStartedAt
+          rentalEndedAt
+          price
+          name
+          type
+          comment
+          physicalProduct {
+            id
+            productVariant {
+              id
+              product {
+                id
+                name
+              }
+            }
+          }
         }
         billingStartAt
         billingEndAt

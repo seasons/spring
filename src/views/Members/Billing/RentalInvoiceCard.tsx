@@ -12,14 +12,11 @@ import {
   Typography,
   Collapse,
 } from "@material-ui/core"
-
-import { DateField } from "@seasons/react-admin"
 import { DateTime } from "luxon"
+import { formatPrice } from "utils/price"
 
-export const RentalInvoiceCard = ({ membership }) => {
-  console.log(membership)
-  const rentalInvoices = membership?.rentalInvoices.splice(1)
-  console.log(rentalInvoices)
+export const RentalInvoiceCard = ({ membership, handleOpenLineItemModal }) => {
+  const rentalInvoices = membership?.rentalInvoices.slice(1)
   const date = new Date()
   const formatDate = date => {
     const dateTime = DateTime.fromISO(date)
@@ -33,7 +30,7 @@ export const RentalInvoiceCard = ({ membership }) => {
       <Grid justify="space-between" container>
         <Grid item alignItems="center" justify="center">
           <Box mt={0.5}>
-            <Typography variant="h4">Billed Rental Invoices</Typography>
+            <Typography variant="h4">Previous Rental Invoices</Typography>
           </Box>
         </Grid>
       </Grid>
@@ -43,6 +40,7 @@ export const RentalInvoiceCard = ({ membership }) => {
           <TableCell>Total</TableCell>
           <TableCell>Billing Start</TableCell>
           <TableCell>Billing End</TableCell>
+          <TableCell></TableCell>
         </TableHead>
         <TableBody>
           {rentalInvoices &&
@@ -52,9 +50,18 @@ export const RentalInvoiceCard = ({ membership }) => {
               return (
                 <TableRow key={id}>
                   <TableCell>{a.status}</TableCell>
-                  <TableCell>{a.total ? a.total : 0}</TableCell>
+                  <TableCell>{formatPrice(a.total)}</TableCell>
                   <TableCell>{billingStartAt}</TableCell>
                   <TableCell>{billingEndAt}</TableCell>
+                  <TableCell>
+                    <Button
+                      color="secondary"
+                      variant="outlined"
+                      onClick={() => handleOpenLineItemModal("Previous rental", a?.lineItems)}
+                    >
+                      View line items
+                    </Button>
+                  </TableCell>
                 </TableRow>
               )
             })}

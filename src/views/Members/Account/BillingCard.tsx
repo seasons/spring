@@ -4,17 +4,11 @@ import moment from "moment"
 import { CreditBalanceModal } from "./CreditBalanceModal"
 import { LineItemModal } from "./LineItemModal"
 
-export const BillingCard = ({ member }) => {
+export const BillingCard = ({ member, handleOpenLineItemModal }) => {
   const [openCreditModal, setOpeCreditModal] = useState(false)
-  const [showLineItemModal, setShowLineItemModal] = useState<string | null>(null)
-  const [lineItems, setLineItems] = useState<any>(null)
 
   const handleOpenCreditModal = () => {
     setOpeCreditModal(true)
-  }
-
-  const handleOpenLineItemModal = (lineItemType: "Current balance" | "Estimated total") => {
-    setShowLineItemModal(lineItemType)
   }
 
   const membership = member?.membership
@@ -24,18 +18,18 @@ export const BillingCard = ({ member }) => {
       currency: "USD",
     })
 
-  const financeMetrics = member?.membership?.financeMetrics?.map(a => {
-    const name = a?.name
-    return {
-      fieldName: name,
-      fieldValueFunc: () => formatPrice(a?.amount || 0),
-      openModal: () => {
-        handleOpenLineItemModal(name)
-        setLineItems(a?.lineItems)
-      },
-      buttonText: "View Line Items",
-    }
-  })
+  const financeMetrics =
+    member?.membership?.financeMetrics?.map(a => {
+      const name = a?.name
+      return {
+        fieldName: name,
+        fieldValueFunc: () => formatPrice(a?.amount || 0),
+        openModal: () => {
+          handleOpenLineItemModal(name, a?.lineItems)
+        },
+        buttonText: "View Line Items",
+      }
+    }) || []
 
   return (
     <>
@@ -63,12 +57,6 @@ export const BillingCard = ({ member }) => {
           },
           ...financeMetrics,
         ]}
-      />
-      <LineItemModal
-        open={!!showLineItemModal}
-        onClose={() => setShowLineItemModal(null)}
-        mode={showLineItemModal}
-        lineItems={lineItems}
       />
       <CreditBalanceModal
         open={openCreditModal}
