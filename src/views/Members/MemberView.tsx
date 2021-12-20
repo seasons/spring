@@ -11,6 +11,7 @@ import { BagView } from "./Bag"
 import { EmailReceiptsView } from "./EmailsView"
 import { CreditBalanceUpdateHistory } from "./CreditUpdateHistory"
 import { Box } from "@material-ui/core"
+import { BillingView } from "./Billing/BillingView"
 
 export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, props }) => {
   return (
@@ -43,6 +44,21 @@ export const MemberView: React.FunctionComponent<MemberViewProps> = ({ match, pr
                 adminKey={adminKey}
                 basePath={`/members/${recordID}/bag`}
                 match={match}
+              />
+            </Box>
+          ),
+        },
+        {
+          value: "billing",
+          label: "Billing",
+          render: ({ data, adminKey, match, recordID }) => (
+            <Box px={2}>
+              <BillingView
+                // {...props}
+                member={data}
+                // adminKey={adminKey}
+                // basePath={`/members/${recordID}/bag`}
+                // match={match}
               />
             </Box>
           ),

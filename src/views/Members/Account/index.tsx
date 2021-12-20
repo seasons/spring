@@ -19,7 +19,6 @@ import { get } from "lodash"
 import { customer } from "generated/customer"
 import { useSnackbarContext } from "components/Snackbar"
 import { Spacer } from "components"
-import { BillingCard } from "./BillingCard"
 
 const STATUS_REFUNDED = "Refunded"
 
@@ -162,35 +161,6 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
         <Grid item lg={6} md={6} xl={6} xs={12}>
           <PersonalDetails adminKey={adminKey} member={member} />
           <Spacer mt={2} />
-          <BillingCard member={member} />
-        </Grid>
-        <Grid item lg={6} md={6} xl={6} xs={12}>
-          <PaymentShipping adminKey={adminKey} member={member} />
-          <Spacer mt={2} />
-          <SummaryCard
-            title={"Links"}
-            record={member.user.links}
-            rows={[
-              {
-                fieldName: "Chargebee",
-                fieldValueFunc: getCreateUserLinkFunc("chargebee"),
-              },
-              {
-                fieldName: "Mixpanel",
-                fieldValueFunc: getCreateUserLinkFunc("mixpanel"),
-              },
-              {
-                fieldName: "Sendgrid",
-                fieldValueFunc: getCreateUserLinkFunc("sendgrid"),
-              },
-              {
-                fieldName: "Intercom",
-                fieldValueFunc: getCreateUserLinkFunc("intercom"),
-              },
-            ]}
-          />
-        </Grid>
-        <Grid item lg={6} md={6} xl={6} xs={12}>
           <SummaryCard
             title={"Admissions"}
             record={member}
@@ -227,6 +197,32 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
           />
         </Grid>
         <Grid item lg={6} md={6} xl={6} xs={12}>
+          <PaymentShipping adminKey={adminKey} member={member} />
+          <Spacer mt={2} />
+          <SummaryCard
+            title={"Links"}
+            record={member.user.links}
+            rows={[
+              {
+                fieldName: "Chargebee",
+                fieldValueFunc: getCreateUserLinkFunc("chargebee"),
+              },
+              {
+                fieldName: "Mixpanel",
+                fieldValueFunc: getCreateUserLinkFunc("mixpanel"),
+              },
+              {
+                fieldName: "Sendgrid",
+                fieldValueFunc: getCreateUserLinkFunc("sendgrid"),
+              },
+              {
+                fieldName: "Intercom",
+                fieldValueFunc: getCreateUserLinkFunc("intercom"),
+              },
+            ]}
+          />
+        </Grid>
+        <Grid item lg={6} md={6} xl={6} xs={12}>
           <SummaryCard
             title={"UTM"}
             record={member.utm}
@@ -251,7 +247,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
             ]}
           />
         </Grid>
-        <Grid item lg={12} md={12} xl={12} xs={12}>
+        {/* <Grid item lg={12} md={12} xl={12} xs={12}>
           <Card>
             <CardHeader className={classes.cardHeader} title="Invoices" />
             <Divider />
@@ -268,7 +264,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
               </ActionButtons>
             </Datagrid>
           </Card>
-        </Grid>
+        </Grid> */}
       </Grid>
       <RefundInvoiceModal
         title="Refund Invoice"

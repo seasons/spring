@@ -215,6 +215,48 @@ const CustomerGetOneFragment_Customer = gql`
         createdAt
         updatedAt
       }
+      financeMetrics {
+        id
+        name
+        amount
+        lineItems {
+          daysRented
+          rentalStartedAt
+          rentalEndedAt
+          price
+          name
+          type
+        }
+      }
+      rentalInvoices {
+        id
+        total
+        lineItems {
+          id
+          daysRented
+          rentalStartedAt
+          rentalEndedAt
+          price
+          name
+          type
+          comment
+          physicalProduct {
+            id
+            productVariant {
+              id
+              product {
+                id
+                name
+              }
+            }
+          }
+        }
+        billingStartAt
+        billingEndAt
+        status
+        createdAt
+        updatedAt
+      }
       pauseRequests(orderBy: createdAt_DESC) {
         id
         resumeDate
