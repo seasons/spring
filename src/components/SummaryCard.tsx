@@ -9,6 +9,7 @@ export interface SummaryCardRowInput {
   fieldValueFunc?: (any) => any
   formatFunc?: (any) => any
   openModal?: () => any
+  buttonText?: string
 }
 
 export interface SummaryCardProps {
@@ -45,7 +46,13 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ record, title, rows })
                   throw new Error(`Must pass one of fieldValuePath or fieldValueFunc`)
                 }
                 return (
-                  <SummaryCardRow key={i} fieldName={r.fieldName} fieldValue={fieldValue} openModal={r.openModal} />
+                  <SummaryCardRow
+                    key={i}
+                    fieldName={r.fieldName}
+                    fieldValue={fieldValue}
+                    openModal={r.openModal}
+                    buttonText={r.buttonText}
+                  />
                 )
               })}
           </TableBody>
@@ -55,7 +62,7 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ record, title, rows })
   )
 }
 
-const SummaryCardRow = ({ fieldName, fieldValue, openModal }) => {
+const SummaryCardRow = ({ fieldName, fieldValue, openModal, buttonText }) => {
   return (
     <TableRow>
       <TableCell>{fieldName}</TableCell>
@@ -63,7 +70,7 @@ const SummaryCardRow = ({ fieldName, fieldValue, openModal }) => {
       <TableCell>
         {openModal && (
           <Button color="secondary" variant="outlined" onClick={() => openModal(true)}>
-            Edit
+            {buttonText}
           </Button>
         )}
       </TableCell>
