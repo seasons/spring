@@ -218,7 +218,7 @@ export const PrintLabelsModal: React.FC<PrintLabelsModalProps> = ({ data, open, 
                               <>
                                 <Box m={2}>
                                   <Typography variant="body2">{item.physicalProduct.seasonsUID}</Typography>
-                                  {pkg.id === "unset" && codeToLabel(shippingMethod.code)}
+                                  {pkg.id === "unset" && codeToLabel(shippingMethod?.code)}
                                 </Box>
                                 {i !== data.bagItems.length - 1 && <Separator />}
                               </>
