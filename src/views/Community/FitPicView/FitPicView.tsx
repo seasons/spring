@@ -60,10 +60,10 @@ export const FitPicView: React.FC<{ match: any; history: any }> = ({ match, hist
   })
 
   useEffect(() => {
-    if (selectedProductIDs.length === 0 && data?.products?.length > 0) {
-      setSelectedProductIDs(data.products?.map(a => a.id) || [])
+    if (data?.products?.length > 0) {
+      setSelectedProductIDs(data.products.map(a => a.id))
     }
-  }, [data, selectedProductIDs.length])
+  }, [data])
 
   if (!loaded && loading) return <Loading />
   if (error || !data) return <Box>{error.message}</Box>
