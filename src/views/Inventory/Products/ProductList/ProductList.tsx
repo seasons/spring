@@ -80,6 +80,7 @@ export const ProductList: React.FC<ProductListInterface> = ({ onNewProductBtnPre
           <ImagesField source="images" />
           <TextField source="name" />
           <BrandField label="Brand" />
+          <CheckField source="isRentable" value={true} label="Rentable" />
           <TextField source="category.name" label="Category" />
           <SinceDateField source="publishedAt" label="Published" />
           <CheckField source="status" value="Available" />

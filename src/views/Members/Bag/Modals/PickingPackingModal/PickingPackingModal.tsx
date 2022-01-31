@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 
 import { Button, Dialog, DialogContent, DialogActions, Box, TextField, Typography, Card } from "@material-ui/core"
 import { DialogTitle } from "components"
-import { PickingPackingProductCard, PickingPackingProductCardFragment_BagSection } from "./PickingPackingProductCard"
+import { PickingPackingProductCard, PickingPackingProductCardFragment_BagItem } from "./PickingPackingProductCard"
 import { Alert } from "@material-ui/lab"
 import { PHYSICAL_PRODUCT_BARCODE_REGEX } from "views/constants"
 import { trim, isEmpty } from "lodash"
@@ -19,7 +19,7 @@ export const PickingPackingModalFragment_BagSection = gql`
       id
       physicalProduct {
         id
-        barCode
+        barcode
         seasonsUID
       }
       productVariant {
@@ -28,10 +28,10 @@ export const PickingPackingModalFragment_BagSection = gql`
           id
         }
       }
+      ...PickingPackingProductCardFragment_BagItem
     }
-    ...PickingPackingProductCardFragment_BagSection
   }
-  ${PickingPackingProductCardFragment_BagSection}
+  ${PickingPackingProductCardFragment_BagItem}
 `
 
 interface ProductState {

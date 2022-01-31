@@ -16,7 +16,6 @@ import { useMutation } from "@apollo/react-hooks"
 import { RefundInvoiceModal } from "./RefundInvoice"
 import { SummaryCard } from "components/SummaryCard"
 import { get } from "lodash"
-import { customer } from "generated/customer"
 import { useSnackbarContext } from "components/Snackbar"
 import { Spacer } from "components"
 
@@ -191,7 +190,7 @@ export const AccountView: React.FunctionComponent<MemberSubViewProps> = ({ membe
               },
               {
                 fieldName: `BagItems Count`,
-                fieldValueFunc: (rec: customer) => rec.bagItems?.length || 0,
+                fieldValueFunc: rec => rec.bagItems?.length || 0,
               },
             ]}
           />

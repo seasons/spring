@@ -30,8 +30,8 @@ export interface PhysicalProduct_price {
 export interface PhysicalProduct_reservations_customer_user {
   __typename: "User"
   id: string
-  firstName: string
-  lastName: string
+  firstName: string | null
+  lastName: string | null
   email: string
 }
 
@@ -109,6 +109,12 @@ export interface PhysicalProduct_productVariant_product_brand {
   name: string
 }
 
+export interface PhysicalProduct_productVariant_product_images {
+  __typename: "Image"
+  id: string
+  url: string | null
+}
+
 export interface PhysicalProduct_productVariant_product_materialCategory {
   __typename: "ProductMaterialCategory"
   id: string
@@ -123,6 +129,7 @@ export interface PhysicalProduct_productVariant_product {
   category: PhysicalProduct_productVariant_product_category
   createdAt: any
   brand: PhysicalProduct_productVariant_product_brand
+  images: PhysicalProduct_productVariant_product_images[]
   architecture: ProductArchitecture | null
   materialCategory: PhysicalProduct_productVariant_product_materialCategory | null
   photographyStatus: PhotographyStatus | null

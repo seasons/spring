@@ -16,8 +16,8 @@ export interface pushNotificationReceipt_users {
   __typename: "User"
   id: string
   email: string
-  firstName: string
-  lastName: string
+  firstName: string | null
+  lastName: string | null
   fullName: string
   customer: pushNotificationReceipt_users_customer | null
 }

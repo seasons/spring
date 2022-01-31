@@ -89,6 +89,7 @@ export const ProductCreate: React.FC = () => {
     recoupment: 4,
     wholesalePrice: 0,
     status: "NotAvailable",
+    isRentable: true,
   }
 
   const productUpsertQueryData: ProductUpsertQuery = data

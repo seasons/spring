@@ -43,6 +43,9 @@ export interface UpdateVariant_internalSize_accessory {
   width: number | null
   bridge: number | null
   length: number | null
+  minDrop: number | null
+  maxDrop: number | null
+  height: number | null
 }
 
 export interface UpdateVariant_internalSize_top {

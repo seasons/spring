@@ -1,5 +1,4 @@
 import { History } from "history"
-import { customer } from "generated/customer"
 
 interface EditEntity {
   id: object
@@ -29,7 +28,7 @@ export interface NewMemberProps {
 
 export interface MemberSubViewProps {
   adminKey?: string
-  member: customer
+  member
   match?: { params: { id: string } }
 }
 

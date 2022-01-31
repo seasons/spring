@@ -59,12 +59,6 @@ const MARK_NOT_RETURNED = gql`
   }
 `
 
-const MARK_AS_FOUND = gql`
-  mutation MarkAsFound($rppId: ID!, $status: String!) {
-    markAsFound(rppId: $rppId, status: $status)
-  }
-`
-
 const MARK_AS_LOST = gql`
   mutation MarkAsLost($lostBagItemId: ID!) {
     markAsLost(lostBagItemId: $lostBagItemId)
@@ -90,15 +84,6 @@ export const BagItemCard: React.FC<{ bagItem: any; columnId: string; isForPickup
   const reservationPhysicalProduct = bagItem?.reservationPhysicalProduct
   const isOnHold = reservationPhysicalProduct?.isOnHold
   const reservation = reservationPhysicalProduct?.reservation
-
-  const [markAsFound] = useMutation(MARK_AS_FOUND, {
-    onCompleted: data => {
-      refresh()
-    },
-    onError: error => {
-      console.log(error)
-    },
-  })
 
   const [markNotReturned] = useMutation(MARK_NOT_RETURNED, {
     onCompleted: data => {
@@ -160,17 +145,7 @@ export const BagItemCard: React.FC<{ bagItem: any; columnId: string; isForPickup
     })
   }
 
-  const onMarkIsFound = () => {
-    markAsFound({
-      variables: {
-        rppId: reservationPhysicalProduct.id,
-        status:
-          reservationPhysicalProduct.lostInPhase === "CustomerToBusiness"
-            ? "DeliveredToBusiness"
-            : "DeliveredToCustomer",
-      },
-    })
-  }
+  const onMarkIsFound = () => {}
 
   const onMarkAsLost = () => {
     markAsLost({
