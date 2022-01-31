@@ -14,6 +14,7 @@ export const ProductFragment = gql`
     publishedAt
     retailPrice
     type
+    isRentable
     images(size: Small, options: { retina: true }) {
       url
     }
@@ -37,6 +38,7 @@ export default {
       slug
       description
       photographyStatus
+      isRentable
       images(size: XSmall, options: { retina: false }) {
         url
       }
