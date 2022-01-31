@@ -213,6 +213,7 @@ export const PRODUCT_EDIT_QUERY = gql`
     ...ProductUpsert
     product(where: $input) {
       id
+      isRentable
       rentalPrice
       ...ProductFragment
       brand {

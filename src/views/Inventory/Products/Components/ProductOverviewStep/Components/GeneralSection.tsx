@@ -9,6 +9,7 @@ import { ProductUpsertQuery_brands, ProductUpsertQuery_categories } from "genera
 import { ACCESSORY_SIZE_TYPES, MANUFACTURER_SIZE_TYPES } from "utils/sizes"
 import { ProductEditQuery_product } from "generated/ProductEditQuery"
 import { useFormState } from "react-final-form"
+import { SelectChoice } from "fields/SelectField"
 
 export interface GeneralSectionProps {
   brands: ProductUpsertQuery_brands[]
@@ -48,6 +49,11 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
 
   const typeChoices = getFormSelectChoices(types)
 
+  const trueOrFalseSelectFields: SelectChoice[] = [
+    { display: "True", value: true },
+    { display: "False", value: false },
+  ]
+
   const manufacturerSizeType = product?.variants?.[0]?.manufacturerSizes?.[0]?.type
 
   let manufacturerSizeTypeChoices: any[] = []
@@ -72,6 +78,12 @@ export const GeneralSection: React.FC<GeneralSectionProps> = ({
       content={
         <>
           <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Text variant="h6">Is rentable</Text>
+              <Spacer mt={1} />
+              <SelectField name="isRentable" choices={trueOrFalseSelectFields} />
+            </Grid>
+            <Grid item xs={6} />
             <Grid item xs={6}>
               <Text variant="h6">Brand *</Text>
               <Spacer mt={1} />

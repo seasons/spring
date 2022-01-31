@@ -46,6 +46,7 @@ export interface CollectionFragment {
   descriptions: string[]
   published: boolean
   placements: CollectionPlacement[]
+  featured: boolean
   products: CollectionFragment_products[] | null
   createdAt: any
   updatedAt: any | null

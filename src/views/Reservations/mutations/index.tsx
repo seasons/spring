@@ -1,13 +1,5 @@
 import gql from "graphql-tag"
 
-export const PROCESS_RESERVATION = gql`
-  mutation ProcessReservationMutation($data: ReservationProcessReturnInput!) {
-    processReservation(data: $data) {
-      id
-    }
-  }
-`
-
 export const MARK_RESERVATION_PICKED = gql`
   mutation MarkReservationPicked($reservationNumber: Int!) {
     updateReservation(data: { status: Picked }, where: { reservationNumber: $reservationNumber }) {

@@ -3,7 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { credit_balance_update_logs } from "./customer"
 import { UserRole } from "./globalTypes"
 
 // ====================================================
@@ -22,11 +21,10 @@ export interface user {
   id: string
   auth0Id: string
   email: string
-  firstName: string
-  lastName: string
+  firstName: string | null
+  lastName: string | null
   roles: UserRole[]
   createdAt: any
   updatedAt: any
   links: user_links | null
-  creditUpdateHistory: credit_balance_update_logs[]
 }

@@ -11,8 +11,8 @@ export interface LogIn_login_user {
   __typename: "User"
   id: string
   email: string
-  firstName: string
-  lastName: string
+  firstName: string | null
+  lastName: string | null
 }
 
 export interface LogIn_login {

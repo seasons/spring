@@ -30,8 +30,8 @@ export interface GetPhysicalProducts_physicalProducts_price {
 export interface GetPhysicalProducts_physicalProducts_reservations_customer_user {
   __typename: "User"
   id: string
-  firstName: string
-  lastName: string
+  firstName: string | null
+  lastName: string | null
   email: string
 }
 
@@ -109,6 +109,12 @@ export interface GetPhysicalProducts_physicalProducts_productVariant_product_bra
   name: string
 }
 
+export interface GetPhysicalProducts_physicalProducts_productVariant_product_images {
+  __typename: "Image"
+  id: string
+  url: string | null
+}
+
 export interface GetPhysicalProducts_physicalProducts_productVariant_product_materialCategory {
   __typename: "ProductMaterialCategory"
   id: string
@@ -123,6 +129,7 @@ export interface GetPhysicalProducts_physicalProducts_productVariant_product {
   category: GetPhysicalProducts_physicalProducts_productVariant_product_category
   createdAt: any
   brand: GetPhysicalProducts_physicalProducts_productVariant_product_brand
+  images: GetPhysicalProducts_physicalProducts_productVariant_product_images[]
   architecture: ProductArchitecture | null
   materialCategory: GetPhysicalProducts_physicalProducts_productVariant_product_materialCategory | null
   photographyStatus: PhotographyStatus | null

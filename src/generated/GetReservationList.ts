@@ -12,8 +12,8 @@ import { CustomerStatus, ReservationPhase, ReservationStatus } from "./globalTyp
 export interface GetReservationList_customer_user {
   __typename: "User"
   id: string
-  firstName: string
-  lastName: string
+  firstName: string | null
+  lastName: string | null
   email: string
 }
 
