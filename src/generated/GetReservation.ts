@@ -21,19 +21,11 @@ import {
 // GraphQL fragment: GetReservation
 // ====================================================
 
-export interface GetReservation_user {
-  __typename: "User"
-  id: string
-  email: string
-  firstName: string
-  lastName: string
-}
-
 export interface GetReservation_customer_user {
   __typename: "User"
   id: string
-  firstName: string
-  lastName: string
+  firstName: string | null
+  lastName: string | null
   email: string
 }
 
@@ -162,6 +154,14 @@ export interface GetReservation_lastLocation {
   state: string | null
 }
 
+export interface GetReservation_pickupWindow {
+  __typename: "TimeWindow"
+  id: string
+  startTime: number | null
+  endTime: number | null
+  display: string | null
+}
+
 export interface GetReservation_products_location {
   __typename: "Location"
   id: string
@@ -207,6 +207,7 @@ export interface GetReservation_products_productVariant_product {
   __typename: "Product"
   id: string
   name: string
+  rentalPrice: number | null
   brand: GetReservation_products_productVariant_product_brand
   description: string | null
   color: GetReservation_products_productVariant_product_color
@@ -249,7 +250,6 @@ export interface GetReservation_images {
 export interface GetReservation {
   __typename: "Reservation"
   id: string
-  user: GetReservation_user
   customer: GetReservation_customer
   sentPackage: GetReservation_sentPackage | null
   returnedPackage: GetReservation_returnedPackage | null
@@ -257,6 +257,8 @@ export interface GetReservation {
   packageEvents: GetReservation_packageEvents[] | null
   adminLogs: GetReservation_adminLogs[]
   lastLocation: GetReservation_lastLocation | null
+  pickupDate: any | null
+  pickupWindow: GetReservation_pickupWindow | null
   products: GetReservation_products[]
   newProducts: GetReservation_newProducts[]
   images: GetReservation_images[]

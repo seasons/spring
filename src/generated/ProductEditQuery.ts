@@ -242,6 +242,7 @@ export interface ProductEditQuery_product_tags {
 export interface ProductEditQuery_product {
   __typename: "Product"
   id: string
+  isRentable: boolean
   rentalPrice: number | null
   name: string
   slug: string

@@ -76,6 +76,7 @@ export const ProductEdit: React.FC<ProductEditProps> = props => {
 
     // Extract current values of the product to display
     initialValues = {
+      isRentable: product.isRentable,
       architecture: product.architecture,
       brand: {
         value: product.brand.id,

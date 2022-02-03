@@ -42,6 +42,27 @@ export enum BagItemStatus {
   Reserved = "Reserved",
 }
 
+export enum BagSectionStatus {
+  Added = "Added",
+  AtHome = "AtHome",
+  DeliveredToBusiness = "DeliveredToBusiness",
+  DeliveredToCustomer = "DeliveredToCustomer",
+  InTransitInbound = "InTransitInbound",
+  InTransitOutbound = "InTransitOutbound",
+  Inbound = "Inbound",
+  Lost = "Lost",
+  Outbound = "Outbound",
+  Packed = "Packed",
+  Picked = "Picked",
+  Processing = "Processing",
+  Queued = "Queued",
+  ResetEarly = "ResetEarly",
+  ReturnPending = "ReturnPending",
+  ReturnProcessed = "ReturnProcessed",
+  ScannedOnInbound = "ScannedOnInbound",
+  ScannedOnOutbound = "ScannedOnOutbound",
+}
+
 export enum BottomSizeType {
   EU = "EU",
   JP = "JP",
@@ -108,6 +129,7 @@ export enum CustomerStatus {
   Authorized = "Authorized",
   Created = "Created",
   Deactivated = "Deactivated",
+  Guest = "Guest",
   Invited = "Invited",
   Paused = "Paused",
   PaymentFailed = "PaymentFailed",
@@ -145,7 +167,9 @@ export enum EmailId {
   RecommendedItemsNurture = "RecommendedItemsNurture",
   ReferralConfirmation = "ReferralConfirmation",
   ReservationConfirmation = "ReservationConfirmation",
+  ReservationProcessed = "ReservationProcessed",
   ReservationReturnConfirmation = "ReservationReturnConfirmation",
+  RestockNotification = "RestockNotification",
   ResumeConfirmation = "ResumeConfirmation",
   ResumeReminder = "ResumeReminder",
   ReturnReminder = "ReturnReminder",
@@ -225,12 +249,14 @@ export enum NotificationBarID {
 }
 
 export enum OrderLineItemRecordType {
+  Credit = "Credit",
   EarlySwap = "EarlySwap",
   ExternalProduct = "ExternalProduct",
   Fee = "Fee",
   Package = "Package",
   PhysicalProduct = "PhysicalProduct",
   ProductVariant = "ProductVariant",
+  PurchaseCredit = "PurchaseCredit",
   Total = "Total",
 }
 
@@ -245,6 +271,11 @@ export enum OrderStatus {
 export enum OrderType {
   New = "New",
   Used = "Used",
+}
+
+export enum PackageDirection {
+  Inbound = "Inbound",
+  Outbound = "Outbound",
 }
 
 export enum PackageStatus {
@@ -391,10 +422,29 @@ export enum PushNotificationStatus {
   Granted = "Granted",
 }
 
+export enum RentalInvoiceLineItemType {
+  Package = "Package",
+  PhysicalProduct = "PhysicalProduct",
+  ProcessingFee = "ProcessingFee",
+}
+
+export enum RentalInvoiceStatus {
+  Billed = "Billed",
+  Cancelled = "Cancelled",
+  ChargeFailed = "ChargeFailed",
+  ChargePending = "ChargePending",
+  Draft = "Draft",
+}
+
 export enum ReservationAdminMessage {
   None = "None",
   PartiallyPacked = "PartiallyPacked",
   PreviousReservationOnHold = "PreviousReservationOnHold",
+}
+
+export enum ReservationDropOffAgent {
+  Customer = "Customer",
+  UPS = "UPS",
 }
 
 export enum ReservationLineItemRecordType {
@@ -410,6 +460,24 @@ export enum ReservationPhase {
   CustomerToBusiness = "CustomerToBusiness",
 }
 
+export enum ReservationPhysicalProductStatus {
+  AtHome = "AtHome",
+  Cancelled = "Cancelled",
+  DeliveredToBusiness = "DeliveredToBusiness",
+  DeliveredToCustomer = "DeliveredToCustomer",
+  InTransitInbound = "InTransitInbound",
+  InTransitOutbound = "InTransitOutbound",
+  Lost = "Lost",
+  Packed = "Packed",
+  Picked = "Picked",
+  Queued = "Queued",
+  ResetEarly = "ResetEarly",
+  ReturnPending = "ReturnPending",
+  ReturnProcessed = "ReturnProcessed",
+  ScannedOnInbound = "ScannedOnInbound",
+  ScannedOnOutbound = "ScannedOnOutbound",
+}
+
 export enum ReservationStatus {
   Blocked = "Blocked",
   Cancelled = "Cancelled",
@@ -423,6 +491,14 @@ export enum ReservationStatus {
   ReturnPending = "ReturnPending",
   Shipped = "Shipped",
   Unknown = "Unknown",
+}
+
+export enum ReturnReason {
+  DoneWearing = "DoneWearing",
+  FitTooBig = "FitTooBig",
+  FitTooSmall = "FitTooSmall",
+  Other = "Other",
+  WasDamaged = "WasDamaged",
 }
 
 export enum SearchResultType {
@@ -450,6 +526,7 @@ export enum SeasonString {
 }
 
 export enum ShippingCode {
+  Pickup = "Pickup",
   UPSGround = "UPSGround",
   UPSSelect = "UPSSelect",
 }
@@ -658,6 +735,14 @@ export interface BagItemScalarWhereInput {
   AND?: BagItemScalarWhereInput[] | null
   OR?: BagItemScalarWhereInput[] | null
   NOT?: BagItemScalarWhereInput[] | null
+}
+
+export interface BagItemUpdateInput {
+  customer?: CustomerUpdateOneRequiredWithoutBagItemsInput | null
+  productVariant?: ProductVariantUpdateOneRequiredInput | null
+  position?: number | null
+  saved?: boolean | null
+  status?: BagItemStatus | null
 }
 
 export interface BagItemUpdateManyDataInput {
@@ -1723,6 +1808,7 @@ export interface CollectionUpsertInput {
   images?: any[] | null
   title?: string | null
   subTitle?: string | null
+  featured?: boolean | null
   descriptions?: CollectionCreatedescriptionsInput | null
   productIDs?: (string | null)[] | null
   published?: boolean | null
@@ -2144,6 +2230,27 @@ export interface CustomerCreateOneWithoutReferreesInput {
 export interface CustomerCreateOneWithoutReservationsInput {
   create?: CustomerCreateWithoutReservationsInput | null
   connect?: CustomerWhereUniqueInput | null
+}
+
+export interface CustomerCreateWithoutBagItemsInput {
+  id?: string | null
+  user: UserCreateOneInput
+  status?: CustomerStatus | null
+  detail?: CustomerDetailCreateOneInput | null
+  billingInfo?: BillingInfoCreateOneInput | null
+  plan?: Plan | null
+  membership?: CustomerMembershipCreateOneWithoutCustomerInput | null
+  reservations?: ReservationCreateManyWithoutCustomerInput | null
+  referralLink?: string | null
+  referrerId?: string | null
+  referrer?: CustomerCreateOneWithoutReferreesInput | null
+  referrees?: CustomerCreateManyWithoutReferrerInput | null
+  emailedProducts?: ProductCreateManyInput | null
+  admissions?: CustomerAdmissionsDataCreateOneWithoutCustomerInput | null
+  authorizedAt?: any | null
+  utm?: UTMDataCreateOneWithoutCustomerInput | null
+  notificationBarReceipts?: CustomerNotificationBarReceiptCreateManyWithoutCustomerInput | null
+  impactSyncTimings?: SyncTimingCreateManyInput | null
 }
 
 export interface CustomerCreateWithoutReferreesInput {
@@ -3173,6 +3280,13 @@ export interface CustomerUpdateManyWithoutReferrerInput {
   updateMany?: CustomerUpdateManyWithWhereNestedInput[] | null
 }
 
+export interface CustomerUpdateOneRequiredWithoutBagItemsInput {
+  create?: CustomerCreateWithoutBagItemsInput | null
+  update?: CustomerUpdateWithoutBagItemsDataInput | null
+  upsert?: CustomerUpsertWithoutBagItemsInput | null
+  connect?: CustomerWhereUniqueInput | null
+}
+
 export interface CustomerUpdateOneRequiredWithoutReservationsInput {
   create?: CustomerCreateWithoutReservationsInput | null
   update?: CustomerUpdateWithoutReservationsDataInput | null
@@ -3192,6 +3306,26 @@ export interface CustomerUpdateOneWithoutReferreesInput {
 export interface CustomerUpdateWithWhereUniqueWithoutReferrerInput {
   where: CustomerWhereUniqueInput
   data: CustomerUpdateWithoutReferrerDataInput
+}
+
+export interface CustomerUpdateWithoutBagItemsDataInput {
+  user?: UserUpdateOneRequiredInput | null
+  status?: CustomerStatus | null
+  detail?: CustomerDetailUpdateOneInput | null
+  billingInfo?: BillingInfoUpdateOneInput | null
+  plan?: Plan | null
+  membership?: CustomerMembershipUpdateOneWithoutCustomerInput | null
+  reservations?: ReservationUpdateManyWithoutCustomerInput | null
+  referralLink?: string | null
+  referrerId?: string | null
+  referrer?: CustomerUpdateOneWithoutReferreesInput | null
+  referrees?: CustomerUpdateManyWithoutReferrerInput | null
+  emailedProducts?: ProductUpdateManyInput | null
+  admissions?: CustomerAdmissionsDataUpdateOneWithoutCustomerInput | null
+  authorizedAt?: any | null
+  utm?: UTMDataUpdateOneWithoutCustomerInput | null
+  notificationBarReceipts?: CustomerNotificationBarReceiptUpdateManyWithoutCustomerInput | null
+  impactSyncTimings?: SyncTimingUpdateManyInput | null
 }
 
 export interface CustomerUpdateWithoutReferreesDataInput {
@@ -3258,6 +3392,11 @@ export interface CustomerUpsertWithWhereUniqueWithoutReferrerInput {
   where: CustomerWhereUniqueInput
   update: CustomerUpdateWithoutReferrerDataInput
   create: CustomerCreateWithoutReferrerInput
+}
+
+export interface CustomerUpsertWithoutBagItemsInput {
+  update: CustomerUpdateWithoutBagItemsDataInput
+  create: CustomerCreateWithoutBagItemsInput
 }
 
 export interface CustomerUpsertWithoutReferreesInput {
@@ -3807,6 +3946,10 @@ export interface FitPicWhereInput {
 
 export interface FitPicWhereUniqueInput {
   id?: string | null
+}
+
+export interface GenerateShippingLabelOptionsInput {
+  includeLabelForPickups?: boolean | null
 }
 
 export interface ImageCreateInput {
@@ -6405,6 +6548,7 @@ export interface PhysicalProductWhereInput {
 export interface PhysicalProductWhereUniqueInput {
   id?: string | null
   seasonsUID?: string | null
+  sequenceNumber?: number | null
 }
 
 export interface ProductCreateInput {
@@ -7549,8 +7693,10 @@ export interface ProductVariantPriceWhereUniqueInput {
 
 export interface ProductVariantSKUsInput {
   brandID: string
+  productID?: string | null
   colorCode: string
   sizeNames: string[]
+  slug?: string | null
 }
 
 export interface ProductVariantScalarWhereInput {
@@ -8760,10 +8906,69 @@ export interface ReservationCreateWithoutPackageEventsInput {
   shippingOption?: ShippingOptionCreateOneInput | null
 }
 
-export interface ReservationProcessReturnInput {
-  reservationNumber: number
-  productStates: ProductStateInput[]
-  trackingNumber?: string | null
+export interface ReservationPhysicalProductUpdateInput {
+  physicalProduct?: PhysicalProductUpdateInput | null
+  reservation?: ReservationUpdateInput | null
+  bagItem?: BagItemUpdateInput | null
+  isOnHold?: boolean | null
+  returnReason?: ReturnReason | null
+  shippingMethod?: ShippingMethodUpdateInput | null
+  isNew?: boolean | null
+  isPurchased?: boolean | null
+  purchasedAt?: any | null
+  droppedOffBy?: ReservationDropOffAgent | null
+  droppedOffAt?: any | null
+  hasReturnProcessed?: boolean | null
+  returnProcessedAt?: any | null
+  isResetEarlyByAdmin?: boolean | null
+  resetEarlyByAdminAt?: any | null
+  hasCustomerReturnIntent?: boolean | null
+  customerReturnIntentAt?: any | null
+  isLost?: boolean | null
+  lostAt?: any | null
+  lostInPhase?: ReservationPhase | null
+  isDeliveredToCustomer?: boolean | null
+  deliveredToCustomerAt?: any | null
+  isDeliveredToBusiness?: boolean | null
+  deliveredToBusinessAt?: any | null
+  hasBeenScannedOnInbound?: boolean | null
+  scannedOnInboundAt?: any | null
+  hasBeenScannedOnOutbound?: boolean | null
+  scannedOnOutboundAt?: any | null
+  status?: ReservationPhysicalProductStatus | null
+}
+
+export interface ReservationPhysicalProductWhereUniqueInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
 }
 
 export interface ReservationReceiptCreateOneWithoutReservationInput {
@@ -9080,6 +9285,32 @@ export interface ReservationScalarWhereInput {
   NOT?: ReservationScalarWhereInput[] | null
 }
 
+export interface ReservationUpdateInput {
+  user?: UserUpdateOneRequiredInput | null
+  customer?: CustomerUpdateOneRequiredWithoutReservationsInput | null
+  sentPackage?: PackageUpdateOneInput | null
+  returnedPackage?: PackageUpdateOneInput | null
+  products?: PhysicalProductUpdateManyInput | null
+  newProducts?: PhysicalProductUpdateManyInput | null
+  returnedProducts?: PhysicalProductUpdateManyInput | null
+  packageEvents?: PackageTransitEventUpdateManyWithoutReservationInput | null
+  reservationNumber?: number | null
+  phase?: ReservationPhase | null
+  shipped?: boolean | null
+  lineItems?: OrderLineItemUpdateManyWithoutReservationInput | null
+  status?: ReservationStatus | null
+  returnedAt?: any | null
+  shippedAt?: any | null
+  receivedAt?: any | null
+  reminderSentAt?: any | null
+  statusUpdatedAt?: any | null
+  completedAt?: any | null
+  cancelledAt?: any | null
+  receipt?: ReservationReceiptUpdateOneWithoutReservationInput | null
+  lastLocation?: LocationUpdateOneInput | null
+  shippingOption?: ShippingOptionUpdateOneInput | null
+}
+
 export interface ReservationUpdateManyDataInput {
   reservationNumber?: number | null
   phase?: ReservationPhase | null
@@ -9371,6 +9602,11 @@ export interface ShippingMethodCreateOneInput {
 }
 
 export interface ShippingMethodUpdateDataInput {
+  code?: ShippingCode | null
+  displayText?: string | null
+}
+
+export interface ShippingMethodUpdateInput {
   code?: ShippingCode | null
   displayText?: string | null
 }

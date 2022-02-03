@@ -11,8 +11,8 @@ const Image = styled.img`
   height: 100%;
 `
 
-export const PickingPackingProductCardFragment_BagSection = gql`
-  fragment PickingPackingProductCardFragment_BagSection on BagSection {
+export const PickingPackingProductCardFragment_BagItem = gql`
+  fragment PickingPackingProductCardFragment_BagItem on BagItem {
     physicalProduct {
       id
       seasonsUID
