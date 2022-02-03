@@ -12,5 +12,15 @@ export const OrderFilter = props => (
       ]}
       alwaysOn
     />
+    <SelectInput
+      label="Status"
+      source="status"
+      choices={[
+        { id: "Drafted", name: "Drafted" },
+        { id: "Submitted", name: "Submitted" },
+        { id: "Fulfilled", name: "Fulfilled" },
+      ]}
+      alwaysOn
+    />
   </Filter>
 )
