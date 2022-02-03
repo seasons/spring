@@ -10,10 +10,12 @@ export const OrderInfo = ({ order, ...rest }) => {
   const { orderNumber } = order
 
   const customer = order?.customer
-  const { fullName } = customer?.user
+  const email = customer?.user?.email
+  const fullName = customer?.user?.fullName
 
   const { shippingLabel } = order?.sentPackage || {}
 
+  console.log("fullName", fullName)
   const Address = ({ address }) => {
     if (!address) {
       return <>Not Available</>
@@ -30,16 +32,20 @@ export const OrderInfo = ({ order, ...rest }) => {
   }
   return (
     <>
-      <Card {...rest}>
+      <Card {...rest} style={{ overflow: "scroll" }}>
         <Table>
           <TableBody>
             <TableRow>
-              <TableCell>Customer</TableCell>
+              <TableCell>Customer name</TableCell>
               <TableCell>
                 <Link component={RouterLink} to={`/members/${customer.id}/bag`}>
-                  {fullName}
+                  {!!fullName?.includes("null") ? "Guest customer" : fullName}
                 </Link>
               </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Email</TableCell>
+              <TableCell>{email}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>ID</TableCell>
