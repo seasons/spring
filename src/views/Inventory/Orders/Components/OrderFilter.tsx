@@ -1,5 +1,5 @@
 import React from "react"
-import { Filter, SelectInput } from "@seasons/react-admin"
+import { Filter, SelectInput, TextInput } from "@seasons/react-admin"
 
 export const OrderFilter = props => (
   <Filter {...props}>
@@ -22,5 +22,7 @@ export const OrderFilter = props => (
       ]}
       alwaysOn
     />
+    <TextInput label="Search first name" source="customer.user.firstName_contains" alwaysOn />
+    <TextInput label="Search email" source="customer.user.email_contains" alwaysOn />
   </Filter>
 )
