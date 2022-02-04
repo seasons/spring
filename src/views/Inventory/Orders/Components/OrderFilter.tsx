@@ -24,5 +24,6 @@ export const OrderFilter = props => (
     />
     <TextInput label="Search first name" source="customer.user.firstName_contains" alwaysOn />
     <TextInput label="Search email" source="customer.user.email_contains" alwaysOn />
+    <TextInput label="Search physical product id" source="lineItems_some.recordID_contains" alwaysOn />
   </Filter>
 )
