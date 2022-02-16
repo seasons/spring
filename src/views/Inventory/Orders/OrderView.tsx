@@ -1,49 +1,22 @@
 import { ComponentError } from "components"
-import React from "react"
+import React, { useState } from "react"
 import { Loading, useQueryWithStore } from "@seasons/react-admin"
-
+import { OrderStatusModal } from "./Components/OrderStatusModal"
 import { Header } from "components"
 import { Container, Box, Typography, Grid } from "@material-ui/core"
 import { OrderInfo } from "./Components/OrderInfo"
 import { OrderLineItemGrid } from "./Components/OrderLineItemGrid"
 import { useRefresh } from "@seasons/react-admin"
-import gql from "graphql-tag"
-import { useMutation } from "react-apollo"
-import { useSnackbarContext } from "components/Snackbar"
 import { Order } from "generated/Order"
-
-const UPDATE_ORDER_STATUS = gql`
-  mutation UpdateOrderStatus($orderID: ID!, $status: OrderStatus!) {
-    updateOrderStatus(orderID: $orderID, status: $status) {
-      id
-      status
-    }
-  }
-`
 
 export const OrderView = ({ match }) => {
   const { orderID } = match.params
-  const refresh = useRefresh()
+  const [showModal, toggleModal] = useState(false)
 
   const { data, loading, loaded, error } = useQueryWithStore<Order>({
     type: "getOne",
     resource: "Order",
     payload: { id: orderID },
-  })
-  const { showSnackbar } = useSnackbarContext()
-  const [updateOrderStatus] = useMutation(UPDATE_ORDER_STATUS, {
-    onCompleted: () => {
-      showSnackbar({
-        message: "Order status updated",
-        status: "success",
-      })
-    },
-    onError: error => {
-      showSnackbar({
-        message: error?.message,
-        status: "error",
-      })
-    },
   })
 
   if (!loaded || loading) return <Loading />
@@ -54,12 +27,9 @@ export const OrderView = ({ match }) => {
   let primaryButton = () => {
     if (!isOrderFulfilled && data.status !== "Drafted") {
       return {
-        text: "Mark as Fulfilled",
+        text: "Update Status",
         action: async () => {
-          await updateOrderStatus({
-            variables: { orderID, status: "Fulfilled" },
-          })
-          refresh()
+          toggleModal(true)
         },
       }
     }
@@ -103,6 +73,13 @@ export const OrderView = ({ match }) => {
           </Grid>
         </Grid>
       </Box>
+      <OrderStatusModal
+        open={showModal}
+        data={data}
+        onClose={() => {
+          toggleModal(false)
+        }}
+      />
     </Container>
   )
 }
