@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { Button, Dialog, DialogContent, DialogActions, Box, DialogTitle, Select, MenuItem } from "@material-ui/core"
 import { useSnackbarContext } from "components/Snackbar"
@@ -15,13 +15,19 @@ const UPDATE_ORDER_STATUS = gql`
 `
 
 interface OrderStatusModalProps {
-  data: any
+  data: {
+    order: {
+      status: string
+    }
+  } | null
   open: boolean
   onSave?: () => void
   onClose?: () => void
 }
 
 export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ data, open, onSave, onClose }) => {
+  const [order, setOrder] = useState<any>(null)
+  const [status, setStatus] = useState<string>()
   const { showSnackbar } = useSnackbarContext()
   const [updateOrderStatus] = useMutation(UPDATE_ORDER_STATUS, {
     onCompleted: () => {
@@ -37,9 +43,19 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ data, open, 
       })
     },
   })
-  const [status, setStatus] = useState<string>(data.status)
 
-  const orderID = data?.order?.id
+  useEffect(() => {
+    if (data) {
+      setOrder(data?.order)
+      setStatus(data?.order?.status)
+    }
+  }, [data])
+
+  if (!data) {
+    return <></>
+  }
+
+  const orderID = order?.id
 
   const handleSave = async () => {
     await updateOrderStatus({
