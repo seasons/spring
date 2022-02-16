@@ -6,7 +6,6 @@ import { Header } from "components"
 import { Container, Box, Typography, Grid } from "@material-ui/core"
 import { OrderInfo } from "./Components/OrderInfo"
 import { OrderLineItemGrid } from "./Components/OrderLineItemGrid"
-import { useRefresh } from "@seasons/react-admin"
 import { Order } from "generated/Order"
 
 export const OrderView = ({ match }) => {
@@ -22,21 +21,6 @@ export const OrderView = ({ match }) => {
   if (!loaded || loading) return <Loading />
   if (error || !data) return <ComponentError />
 
-  const isOrderFulfilled = data.status === "Fulfilled"
-
-  let primaryButton = () => {
-    if (!isOrderFulfilled && data.status !== "Drafted") {
-      return {
-        text: "Update Status",
-        action: async () => {
-          toggleModal(true)
-        },
-      }
-    }
-
-    return null
-  }
-
   return (
     <Container maxWidth={false}>
       <Header
@@ -51,7 +35,12 @@ export const OrderView = ({ match }) => {
             url: `/orders/${data.id}`,
           },
         ]}
-        primaryButton={primaryButton()}
+        primaryButton={{
+          text: "Update Status",
+          action: async () => {
+            toggleModal(true)
+          },
+        }}
       />
       <Box>
         <Grid container spacing={3}>
