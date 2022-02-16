@@ -10,6 +10,12 @@ export const UPDATE_PHYSICAL_PRODUCT = gql`
   ${UpdatePhysicalProductFragment}
 `
 
+export const UNDO_OFFLOAD = gql`
+  mutation UndoOffload($where: PhysicalProductWhereUniqueInput!) {
+    undoOffload(where: $where)
+  }
+`
+
 export const STOW_ITEMS = gql`
   mutation StowItems($ids: [ID], $warehouseLocationBarcode: String!) {
     stowItems(ids: $ids, warehouseLocationBarcode: $warehouseLocationBarcode)

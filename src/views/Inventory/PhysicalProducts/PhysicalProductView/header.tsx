@@ -4,6 +4,7 @@ import { HeaderRenderProps } from "components/DetailView"
 import { useRefresh } from "@seasons/react-admin"
 import { OffloadPhysicalProductModal, PickPhysicalProductModal } from "../Components"
 import { PrintBarcodeModal } from "../Components/PrintBarcodeModal"
+import { UndoOffloadModal } from "../Components/UndoOffloadModal"
 
 export const PhysicalProductDetailViewHeader = ({ data: physicalProduct }: HeaderRenderProps) => {
   const { productVariant, seasonsUID } = physicalProduct
@@ -12,6 +13,7 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct }: Heade
 
   // Modal handlers
   const [openOffloadModal, setOpenOffloadModal] = useState(false)
+  const [openUndoOffloadModal, setUndoOffloadModal] = useState(false)
   const [openPickModal, setOpenPickModal] = useState(false)
   const [openPrintBarcodeModal, setOpenPrintBarcodeModal] = useState(false)
   const onCloseOffloadModal = () => {
@@ -61,6 +63,12 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct }: Heade
       action: async () => setOpenPickModal(true),
     })
   }
+  if (physicalProduct.inventoryStatus === "Offloaded") {
+    menuItems.push({
+      text: "Undo offload",
+      action: async () => setUndoOffloadModal(true),
+    })
+  }
 
   return (
     <>
@@ -90,6 +98,9 @@ export const PhysicalProductDetailViewHeader = ({ data: physicalProduct }: Heade
           open={openPrintBarcodeModal}
           setOpen={setOpenPrintBarcodeModal}
         />
+      )}
+      {openUndoOffloadModal && (
+        <UndoOffloadModal physicalProduct={physicalProduct} open={openUndoOffloadModal} setOpen={setUndoOffloadModal} />
       )}
     </>
   )
