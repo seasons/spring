@@ -17,8 +17,10 @@ export const OrderFilter = props => (
       source="status"
       choices={[
         { id: "Drafted", name: "Drafted" },
+        { id: "Hold", name: "Hold" },
         { id: "Submitted", name: "Submitted" },
         { id: "Fulfilled", name: "Fulfilled" },
+        { id: "Cancelled", name: "Cancelled" },
       ]}
       alwaysOn
     />
