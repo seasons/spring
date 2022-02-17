@@ -16,9 +16,7 @@ const UPDATE_ORDER_STATUS = gql`
 
 interface OrderStatusModalProps {
   data: {
-    order: {
-      status: string
-    }
+    status: string
   } | null
   open: boolean
   onSave?: () => void
@@ -46,8 +44,8 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ data, open, 
 
   useEffect(() => {
     if (data) {
-      setOrder(data?.order)
-      setStatus(data?.order?.status)
+      setOrder(data)
+      setStatus(data?.status)
     }
   }, [data])
 
@@ -70,7 +68,7 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ data, open, 
         <DialogTitle id="customized-dialog-title">Update Order Status</DialogTitle>
         <DialogContent dividers>
           <Box my={2} width={["550px"]}>
-            <Box mb={4}>
+            <Box mx={2}>
               <Select
                 label="Status"
                 variant="outlined"

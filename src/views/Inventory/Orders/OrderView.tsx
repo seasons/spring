@@ -1,6 +1,6 @@
 import { ComponentError } from "components"
 import React, { useState } from "react"
-import { Loading, useQueryWithStore } from "@seasons/react-admin"
+import { Loading, useQueryWithStore, useRefresh } from "@seasons/react-admin"
 import { OrderStatusModal } from "./Components/OrderStatusModal"
 import { Header } from "components"
 import { Container, Box, Typography, Grid } from "@material-ui/core"
@@ -9,6 +9,7 @@ import { OrderLineItemGrid } from "./Components/OrderLineItemGrid"
 import { Order } from "generated/Order"
 
 export const OrderView = ({ match }) => {
+  const refresh = useRefresh()
   const { orderID } = match.params
   const [showModal, toggleModal] = useState(false)
 
@@ -67,6 +68,7 @@ export const OrderView = ({ match }) => {
         data={data}
         onClose={() => {
           toggleModal(false)
+          refresh()
         }}
       />
     </Container>
